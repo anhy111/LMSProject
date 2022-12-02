@@ -7,9 +7,8 @@
 <body>
 <h1>
 	Hello world!
-	hahahaha;
 </h1>
-aaa
-<P>  The time on the    server is ${serverTime}. </P>
+asas
+<P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
