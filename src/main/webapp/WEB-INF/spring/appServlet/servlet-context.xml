@@ -59,6 +59,24 @@ http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>
 	</beans:bean>
 	
+	<!-- Tiles 설정 시작 -->
+   <beans:bean id="tilesConfigurer" 
+      class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+      <beans:property name="definitions">
+         <beans:list>
+            <beans:value>/WEB-INF/spring/tiles-config.xml</beans:value>
+         </beans:list>
+      </beans:property>
+   </beans:bean>
+   <!-- UrlBasedViewResolver tilesViewResolver = new UrlBasedViewResolver(); -->
+   <beans:bean id="tilesViewResolver" 
+      class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+      <beans:property name="viewClass" 
+      value="org.springframework.web.servlet.view.tiles3.TilesView" />
+      <beans:property name="order" value="1" />
+   </beans:bean>
+   <!-- Tiles 설정 끝 -->
+	
 	<!-- 스프링 시큐리티 애너테이션 활성화
 		pre-post-annotations -> 골뱅이PreAuthorize, 골뱅이PostAuthorize 활성화
 		***골뱅이PreAuthorize : 특정 메소드를 실행하기 전에 role(권한)을 체킹	
