@@ -15,7 +15,6 @@ aaa
 <P>  kyskyskys</P>
 <P>  kyskyskys</P>
 asas
-하이 하이
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
