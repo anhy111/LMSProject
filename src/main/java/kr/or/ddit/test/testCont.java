@@ -11,5 +11,4 @@ public class testCont {
 		return "test/home";
 	}
 	
-
 }
