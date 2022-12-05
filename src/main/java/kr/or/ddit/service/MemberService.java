@@ -1,5 +1,8 @@
 package kr.or.ddit.service;
 
-public class MemberService {
+import java.util.List;
 
+import kr.or.ddit.domain.Member;
+
+public interface MemberService {
 }

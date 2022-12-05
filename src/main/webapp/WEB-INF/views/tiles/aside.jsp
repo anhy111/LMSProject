@@ -13,24 +13,6 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <!-- 로그인 하지 않은 경우 -->
-      <sec:authorize access="isAnonymous()">
-      </sec:authorize>
-      <!-- 인증된 사용자인 경우 -->
-      <sec:authorize access="isAuthenticated()">
-	      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-	        <div class="image">
-	          <img src="/resources/adminlte/dist/img/문상훈17.jpg" class="img-circle elevation-2" alt="User Image">
-	        </div>
-	        <div class="info">
-		          <a href="#" class="d-block"> <sec:authentication property="principal.memberVO.memName" />님   ദ്ദി ᵔ∇ᵔ )   </a>
-		          <form action="/logout" method="post">
-					<button type="submit" class="btn btn-outline-light btn-sm">logout</button>
-					<sec:csrfInput/>
-				</form>
-	        </div>
-	      </div>
-      </sec:authorize>
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
