@@ -14,21 +14,10 @@ import kr.or.ddit.domain.Member;
 import kr.or.ddit.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 
-
-
 @Slf4j
 @Controller
 public class testCont {
 
-	@Autowired
-	MemberService memberService;
-	
-	@PreAuthorize("hasRole('ROLE_STUDENT')")
-	@GetMapping("/test/home")
-	public String test() {
-
-		return "test/home";
-	}
 
 	@GetMapping("/th")
 	public String testThymeleaf(Model model) {

@@ -29,21 +29,51 @@
 		</div>
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
-		<sec:authorize access="isAuthenticated()">
-			<div class="user-panel d-flex">
-				<div class="image">
-					<img src="/resources/adminlte/dist/img/문상훈17.jpg"
-						class="img-circle elevation-2" alt="User Image">
-				</div>
-				<div class="info">
-					<a href="#" class="d-block"> 문상훈 님 ദ്ദി ᵔ∇ᵔ ) </a>
-					<form action="/logout" method="post">
-						<button type="submit" class="btn btn-outline-light btn-sm">logout</button>
-						<sec:csrfInput />
-					</form>
-				</div>
-			</div>
-		</sec:authorize>
+<%-- 		<sec:authorize access="hasRole('ROLE_STUDENT')"> --%>
+<!-- 			<div class="user-panel d-flex"> -->
+<!-- 				<div class="image"> -->
+<!-- 					<img src="/resources/adminlte/dist/img/문상훈17.jpg" -->
+<!-- 						class="img-circle elevation-2" alt="User Image"> -->
+<!-- 				</div> -->
+<!-- 				<div class="info"> -->
+<%-- 					<a href="#" class="d-block"> <sec:authentication property="principal.memberVO.stuNo" />님 ദ്ദി ᵔ∇ᵔ ) </a> --%>
+<!-- 					<form action="/logout" method="post"> -->
+<!-- 						<button type="submit" class="btn btn-outline-light btn-sm">logout</button> -->
+<%-- 						<sec:csrfInput /> --%>
+<!-- 					</form> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<%-- 		</sec:authorize> --%>
+<%-- 		<sec:authorize access="hasRole('ROLE_PROFESSOR')"> --%>
+<!-- 			<div class="user-panel d-flex"> -->
+<!-- 				<div class="image"> -->
+<!-- 					<img src="/resources/adminlte/dist/img/문상훈17.jpg" -->
+<!-- 						class="img-circle elevation-2" alt="User Image"> -->
+<!-- 				</div> -->
+<!-- 				<div class="info"> -->
+<%-- 					<a href="#" class="d-block"> <sec:authentication property="principal.employeeVO.empNm" />님 ദ്ദി ᵔ∇ᵔ ) </a> --%>
+<!-- 					<form action="/logout" method="post"> -->
+<!-- 						<button type="submit" class="btn btn-outline-light btn-sm">logout</button> -->
+<%-- 						<sec:csrfInput /> --%>
+<!-- 					</form> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<%-- 		</sec:authorize> --%>
+<%-- 		<sec:authorize access="hasRole('ROLE_MANAGER')"> --%>
+<!-- 			<div class="user-panel d-flex"> -->
+<!-- 				<div class="image"> -->
+<!-- 					<img src="/resources/adminlte/dist/img/문상훈17.jpg" -->
+<!-- 						class="img-circle elevation-2" alt="User Image"> -->
+<!-- 				</div> -->
+<!-- 				<div class="info"> -->
+<%-- 					<a href="#" class="d-block"> <sec:authentication property="principal.employeeVO.empNm" />님 ദ്ദി ᵔ∇ᵔ ) </a> --%>
+<!-- 					<form action="/logout" method="post"> -->
+<!-- 						<button type="submit" class="btn btn-outline-light btn-sm">logout</button> -->
+<%-- 						<sec:csrfInput /> --%>
+<!-- 					</form> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<%-- 		</sec:authorize> --%>
 		<!-- Navbar Search -->
 		<li class="nav-item"><a class="nav-link"
 			data-widget="navbar-search" href="#" role="button"> <i
