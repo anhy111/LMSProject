@@ -61,13 +61,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/book/list" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>수강 편람</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>수강평가</p>
                 </a>
@@ -85,31 +85,31 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/book/list" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>휴학 신청</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>복학 신청</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>자퇴 신청</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>졸업</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>학적 변동 현황</p>
                 </a>
@@ -126,19 +126,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/book/list" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>전체 성적 조회</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>전체 학기 성적 조회</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>성적 이의 신청</p>
                 </a>
@@ -155,19 +155,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/book/list" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>등록금 납부 내역</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>등록금 고지서</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>장학 내역 조회</p>
                 </a>
@@ -194,19 +194,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/book/list" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>전체 강의 조회</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>강의 개설</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>담당 강의 조회</p>
                 </a>
@@ -224,7 +224,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/book/list" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>수업 평가 조회</p>
                 </a>
@@ -257,13 +257,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/book/list" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>학생 목록</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/book/insert" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>장학생 추천</p>
                 </a>
