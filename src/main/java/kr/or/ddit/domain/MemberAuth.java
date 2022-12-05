@@ -1,10 +1,10 @@
 package kr.or.ddit.domain;
 
-public class MemberAuthVO {
+public class MemberAuth {
 	private int memNo;
 	private String auth;
 	
-	public MemberAuthVO() {}
+	public MemberAuth() {}
 
 	public int getMemNo() {
 		return memNo;

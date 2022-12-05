@@ -2,15 +2,15 @@ package kr.or.ddit.domain;
 
 import java.util.List;
 
-public class MemberVO {
+public class Member {
 
 	private int memNo;
 	private String memMl;
 	private String memPass;
 	//1:N
-	private List<MemberAuthVO> memberAuthVOList;
+	private List<MemberAuth> memberAuthVOList;
 	
-	public MemberVO() {}
+	public Member() {}
 
 	public int getMemNo() {
 		return memNo;
@@ -37,11 +37,11 @@ public class MemberVO {
 	}
 
 	
-	public List<MemberAuthVO> getMemberAuthVOList() {
+	public List<MemberAuth> getMemberAuthVOList() {
 		return memberAuthVOList;
 	}
 
-	public void setMemberAuthVOList(List<MemberAuthVO> memberAuthVOList) {
+	public void setMemberAuthVOList(List<MemberAuth> memberAuthVOList) {
 		this.memberAuthVOList = memberAuthVOList;
 	}
 
