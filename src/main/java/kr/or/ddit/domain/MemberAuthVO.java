@@ -1,4 +1,4 @@
-package kr.or.ddit.vo;
+package kr.or.ddit.domain;
 
 public class MemberAuthVO {
 	private int memNo;
