@@ -1,32 +1,20 @@
 package kr.or.ddit.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class MemberAuth {
-	private int memNo;
-	private String auth;
-	
-	public MemberAuth() {}
+    private int memNo;
+    private String auth;
 
-	public int getMemNo() {
-		return memNo;
-	}
+    public MemberAuth() {
+    }
 
-	public void setMemNo(int memNo) {
-		this.memNo = memNo;
-	}
+    @Override
+    public String toString() {
+        return "MemberAuthVO [memNo=" + memNo + ", auth=" + auth + "]";
+    }
 
-	public String getAuth() {
-		return auth;
-	}
 
-	public void setAuth(String auth) {
-		this.auth = auth;
-	}
-
-	@Override
-	public String toString() {
-		return "MemberAuthVO [memNo=" + memNo + ", auth=" + auth + "]";
-	}
-
-	
-	
 }

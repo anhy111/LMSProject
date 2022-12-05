@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Slf4j
 @RequestMapping("/professor/lectureApply")
-public class LectureApplyController {
+public class
+LectureApplyController {
     @GetMapping("/main")
     public String list() {
         return "professor/lectureApply/main";
