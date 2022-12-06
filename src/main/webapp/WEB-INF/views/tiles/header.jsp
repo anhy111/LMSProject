@@ -9,6 +9,7 @@
 	String name = String.valueOf(session.getAttribute("name"));
 	String position = String.valueOf(session.getAttribute("position"));
 	String division = String.valueOf(session.getAttribute("division"));
+	String department = String.valueOf(session.getAttribute("department"));
 %>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -44,7 +45,7 @@
 						class="img-circle elevation-2" alt="User Image">
 				</div>
 				<div class="info">
-					<a href="#" class="d-block"><%=name %> 님 ദ്ദി ᵔ∇ᵔ ) </a>
+					<a href="#" class="d-block"><%=name %> 님 ദ്ദി ᵔ∇ᵔ )  |   <%=department %> </a>
 					<form action="/logout" method="post">
 						<button type="submit" class="btn btn-outline-light btn-sm">logout</button>
 						<sec:csrfInput />

@@ -20,5 +20,6 @@ public class Student {
 	private String stuDepo;
 	private String stuAct;
 	private String stuPic;
+	private String depNm;
 
 }
