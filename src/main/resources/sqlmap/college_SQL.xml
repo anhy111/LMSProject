@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : xml파일은 여러개일 수 있음. 
+이를 구별하기 위한 식별 용도로 사용 -->
+<mapper namespace="kr.or.ddit.mapper.CollegeMapper">
+
+
+<!-- 결재요청 목록 -->
+<select id="CollegeList" resultType="College">
+SELECT COL_CD, COL_NM, COL_DES, COL_TEL, COL_ADDR, COL_IMG_URL
+FROM COLLEGE
+</select>
+
+<!-- 상세 -->
+<!-- 수정 -->
+<!-- 입력 -->
+<!-- 삭제 -->
+</mapper>
+
