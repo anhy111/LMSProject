@@ -17,7 +17,6 @@ public class MemberController {
 	@GetMapping("/test/home")
 	public String test() {
 		
-		
 
 		return "test/home";
 	}
