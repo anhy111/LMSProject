@@ -14,7 +14,9 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Manager;
 import kr.or.ddit.domain.Member;
+import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.MemberMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -43,17 +45,29 @@ public class CustomLoginSuccessHandler extends
 		//로그인 아이디
 		log.info("username : " + customUser.getUsername());
 		Member member = customUser.getMemberVO();
-		Member read = memberMapper.read(member.getMemNo());
+//		Member read = memberMapper.read(member.getMemNo());
 		Employee readEmployee = memberMapper.readEmployee(member.getMemNo());
 		Student readStudent = memberMapper.readStudent(member.getMemNo());
+		Professor readProfessor = memberMapper.readProfessor(member.getMemNo());
+		Manager readManager = memberMapper.readManager(member.getMemNo());
 		
 		log.info("이렇게하면 들어올까욤? " + readEmployee);
 		
 		HttpSession session = request.getSession();
 		if(readEmployee != null) {
-			session.setAttribute("name", readEmployee.getEmpNm());
+			if(readProfessor != null) {
+				session.setAttribute("name", readEmployee.getEmpNm());
+				session.setAttribute("position", readProfessor.getProPos());
+			}else {
+				session.setAttribute("name", readEmployee.getEmpNm());
+				session.setAttribute("position", readManager.getMgrPos());
+				session.setAttribute("division", readManager.getMgrDiv());
+			}
 		}else {
 			session.setAttribute("name", readStudent.getStuNm());
+			String name = String.valueOf(session.getAttribute("name"));
+			
+			log.info("name은??" + name);
 		}
 		
 		super.onAuthenticationSuccess(request, response, auth);

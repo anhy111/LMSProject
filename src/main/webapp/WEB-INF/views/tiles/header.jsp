@@ -2,6 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%
+	//스크립틀릿
+	//장바구니 = 세션
+	//장바구니 고유번호 = session.getId();
+	String name = String.valueOf(session.getAttribute("name"));
+	String position = String.valueOf(session.getAttribute("position"));
+	String division = String.valueOf(session.getAttribute("division"));
+%>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 	<!-- Left navbar links -->
@@ -29,51 +37,51 @@
 		</div>
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
-<%-- 		<sec:authorize access="hasRole('ROLE_STUDENT')"> --%>
-<!-- 			<div class="user-panel d-flex"> -->
-<!-- 				<div class="image"> -->
-<!-- 					<img src="/resources/adminlte/dist/img/문상훈17.jpg" -->
-<!-- 						class="img-circle elevation-2" alt="User Image"> -->
-<!-- 				</div> -->
-<!-- 				<div class="info"> -->
-<%-- 					<a href="#" class="d-block"> <sec:authentication property="principal.memberVO.stuNo" />님 ദ്ദി ᵔ∇ᵔ ) </a> --%>
-<!-- 					<form action="/logout" method="post"> -->
-<!-- 						<button type="submit" class="btn btn-outline-light btn-sm">logout</button> -->
-<%-- 						<sec:csrfInput /> --%>
-<!-- 					</form> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<%-- 		</sec:authorize> --%>
-<%-- 		<sec:authorize access="hasRole('ROLE_PROFESSOR')"> --%>
-<!-- 			<div class="user-panel d-flex"> -->
-<!-- 				<div class="image"> -->
-<!-- 					<img src="/resources/adminlte/dist/img/문상훈17.jpg" -->
-<!-- 						class="img-circle elevation-2" alt="User Image"> -->
-<!-- 				</div> -->
-<!-- 				<div class="info"> -->
-<%-- 					<a href="#" class="d-block"> <sec:authentication property="principal.employeeVO.empNm" />님 ദ്ദി ᵔ∇ᵔ ) </a> --%>
-<!-- 					<form action="/logout" method="post"> -->
-<!-- 						<button type="submit" class="btn btn-outline-light btn-sm">logout</button> -->
-<%-- 						<sec:csrfInput /> --%>
-<!-- 					</form> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<%-- 		</sec:authorize> --%>
-<%-- 		<sec:authorize access="hasRole('ROLE_MANAGER')"> --%>
-<!-- 			<div class="user-panel d-flex"> -->
-<!-- 				<div class="image"> -->
-<!-- 					<img src="/resources/adminlte/dist/img/문상훈17.jpg" -->
-<!-- 						class="img-circle elevation-2" alt="User Image"> -->
-<!-- 				</div> -->
-<!-- 				<div class="info"> -->
-<%-- 					<a href="#" class="d-block"> <sec:authentication property="principal.employeeVO.empNm" />님 ദ്ദി ᵔ∇ᵔ ) </a> --%>
-<!-- 					<form action="/logout" method="post"> -->
-<!-- 						<button type="submit" class="btn btn-outline-light btn-sm">logout</button> -->
-<%-- 						<sec:csrfInput /> --%>
-<!-- 					</form> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<%-- 		</sec:authorize> --%>
+		<sec:authorize access="hasRole('ROLE_STUDENT')">
+			<div class="user-panel d-flex">
+				<div class="image">
+					<img src="/resources/adminlte/dist/img/문상훈17.jpg"
+						class="img-circle elevation-2" alt="User Image">
+				</div>
+				<div class="info">
+					<a href="#" class="d-block"><%=name %> 님 ദ്ദി ᵔ∇ᵔ ) </a>
+					<form action="/logout" method="post">
+						<button type="submit" class="btn btn-outline-light btn-sm">logout</button>
+						<sec:csrfInput />
+					</form>
+				</div>
+			</div>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
+			<div class="user-panel d-flex">
+				<div class="image">
+					<img src="/resources/adminlte/dist/img/문상훈17.jpg"
+						class="img-circle elevation-2" alt="User Image">
+				</div>
+				<div class="info">
+					<a href="#" class="d-block"> <%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=position %> </a>
+					<form action="/logout" method="post">
+						<button type="submit" class="btn btn-outline-light btn-sm">logout</button>
+						<sec:csrfInput />
+					</form>
+				</div>
+			</div>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_MANAGER')">
+			<div class="user-panel d-flex">
+				<div class="image">
+					<img src="/resources/adminlte/dist/img/문상훈17.jpg"
+						class="img-circle elevation-2" alt="User Image">
+				</div>
+				<div class="info">
+					<a href="#" class="d-block"> <%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=division %>   |   <%=position %>  </a>
+					<form action="/logout" method="post">
+						<button type="submit" class="btn btn-outline-light btn-sm">logout</button>
+						<sec:csrfInput />
+					</form>
+				</div>
+			</div>
+		</sec:authorize>
 
 		<!-- Navbar Search -->
 		<li class="nav-item"><a class="nav-link"
