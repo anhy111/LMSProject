@@ -13,4 +13,5 @@ public class Lecture {
 	private String lecaYn;// 승인여부
 	private int depCd;// 학과코드
 	private LecApply lecApply;
+	private Employee employee;
 }
