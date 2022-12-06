@@ -14,7 +14,6 @@
           <element id="module-output" name="ddit" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: javax.persistence:javax.persistence-api:2.2" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.5.RELEASE" />
