@@ -20,7 +20,7 @@
 			<div class="card-body table-responsive p-0" style="height: 400px;">
                 <table class="table table-head-fixed text-nowrap mb-2">
                   <thead>
-                    <tr>
+                    <tr> 
                       <th>ID</th>
                       <th>User</th>
                       <th>Date</th>
