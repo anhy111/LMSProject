@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.LectureMapper">
+
+
+	<resultMap type="lecture" id="lectureMap">
+		<result property="lecaCd" column="LECA_CD" />
+		<result property="subCd" column="SUB_CD" />
+		<result property="lecYn" column="LEC_YN" />
+		<result property="lecHcnt" column="LEC_HCNT" />
+		<result property="lecaYn" column="LECA_YN" />
+		<result property="depCd" column="DEP_CD" />
+		<collection property="lecApply" resultMap="lecApplyMap"></collection>
+	</resultMap>
+
+	<resultMap type="lecApply" id="lecApplyMap">
+		<result property="lecaCd" column="LECA_CD" />
+		<result property="lecaYr" column="LECA_YR" />
+		<result property="lecaSem" column="LECA_SEM" />
+		<result property="lecaNm" column="LECA_NM" />
+		<result property="lecaCon" column="LECA_CON" />
+		<result property="lecaTrg" column="LECA_TRG" />
+		<result property="lecaCrd" column="LECA_CRD" />
+		<result property="lecaPer" column="LECA_PER" />
+		<result property="lecaCap" column="LECA_CAP" />
+		<result property="lecaTm" column="LECA_TM" />
+		<result property="lecaWk" column="LECA_WK" />
+		<result property="lecaHall" column="LECA_HALL" />
+		<result property="lecaUnit" column="LECA_UNIT" />
+		<result property="lecaBook" column="LECA_BOOK" />
+		<result property="lecaNote" column="LECA_NOTE" />
+		<result property="lecaDt" column="LECA_DT" />
+		<result property="lecaGrade" column="LECA_GRADE" />
+		<result property="lecaImsiYn" column="LECA_IMSI_YN" />
+		<result property="lecaCate" column="LECA_CATE" />
+		<result property="lecaMp" column="LECA_MP" />
+		<result property="lecaFp" column="LECA_FP" />
+		<result property="lecaTp" column="LECA_TP" />
+		<result property="lecaAp" column="LECA_AP" />
+	</resultMap>
+
+	<select id="lectureSearch" resultMap="lectureMap">
+		SELECT
+		      a.LECA_CD   , a.SUB_CD , a.LEC_YN  , a.LEC_HCNT , a.LECA_YN  , a.DEP_CD  , b.LECA_YR 
+		    , DECODE(SUBSTR(b.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '3', 1, '4' , 1, '5' , 1 , '6' , 1) "LECA_SEM"
+		    , b.LECA_NM, b.LECA_CON, b.LECA_TRG, b.LECA_CRD, b.LECA_PER, b.LECA_CAP, b.LECA_TM 
+		    , b.LECA_WK, b.LECA_HALL, b.LECA_UNIT, b.LECA_BOOK, b.LECA_NOTE, b.LECA_DT, b.LECA_GRADE, b.LECA_IMSI_YN
+		    , b.LECA_CATE, b.LECA_MP, b.LECA_FP, b.LECA_TP, b.LECA_AP
+		FROM LECTURE a, LEC_APPLY b                                                                                  
+		WHERE a.LECA_CD = B.LECA_CD
+		AND a.LEC_YN = 'Y' AND a.LECA_YN = 'Y'
+		AND SUBSTR(SYSDATE,1,2) =  SUBSTR(LECA_YR,3,2)
+		AND DECODE(SUBSTR(b.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '3', 1, '4' , 1, '5' , 1 , '6' , 1) = DECODE(SUBSTR(SYSDATE,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '3', 1, '4' , 1, '5' , 1 , '6' , 1)
+	</select>
+</mapper>
+
+
+
+
+
+
+
