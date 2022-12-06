@@ -3,6 +3,7 @@ package kr.or.ddit.controller;
 import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +47,7 @@ public class CollegeController {
 		return "college/detail";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_PROFESSOR', 'ROLE_MANAGER')")
 	@PostMapping("/updatePost")
 	public String updatePost(@ModelAttribute  College college) {
 		log.info("업데이트");
