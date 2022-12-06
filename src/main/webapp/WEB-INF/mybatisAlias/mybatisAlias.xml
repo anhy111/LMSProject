@@ -17,5 +17,10 @@
 		<typeAlias type="kr.or.ddit.domain.Professor" alias="professor"/> 
 		<typeAlias type="kr.or.ddit.domain.Manager" alias="manager"/> 
 		<typeAlias type="kr.or.ddit.domain.Employee" alias="employee"/> 
+		<typeAlias type="kr.or.ddit.domain.LecNotice" alias="LecNotice"/><!-- 강의 공지사항 -->
+		<typeAlias type="kr.or.ddit.domain.LecQna" alias="LecQna"/><!-- 질문 게시판 -->
+		<typeAlias type="kr.or.ddit.domain.Approval" alias="Approval"/><!-- 결재 게시판 -->
+		<typeAlias type="kr.or.ddit.domain.College" alias="College"/><!-- 단과대학 테이블 -->
+		<typeAlias type="kr.or.ddit.domain.Counsel" alias="Counsel"/><!-- 상담 테이블 -->
 	</typeAliases>
 </configuration>
