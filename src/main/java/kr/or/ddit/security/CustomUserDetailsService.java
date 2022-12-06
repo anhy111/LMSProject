@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		log.warn("Load User By UserName : " + username);
 		
 		//사용자 아이디를 통해 MEMBER테이블의 1행 데이터를 받아서 MemberVO에 넣쟈
-		Member memberVO = this.memberMapper.read(username);
+		Member memberVO = this.memberMapper.read(Integer.parseInt(username));
 		
 		log.info("queried by member mapper : " + memberVO.toString());
 		

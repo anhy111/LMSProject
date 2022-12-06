@@ -28,7 +28,7 @@ public class CustomUser extends User{
 		
 		//사용자아이디, 비밀번호, 권한 리스트memberVO.getMemberAuthVOList()
 		super(String.valueOf(memberVO.getMemNo()), memberVO.getMemPass(),
-				memberVO.getMemberAuthVOList().stream().map(auth->new SimpleGrantedAuthority(auth.getAuth()))
+				memberVO.getMemberAuthList().stream().map(auth->new SimpleGrantedAuthority(auth.getAuth()))
 				.collect(Collectors.toList())
 				);
 		

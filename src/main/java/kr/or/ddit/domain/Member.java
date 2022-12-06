@@ -12,15 +12,15 @@ public class Member {
     private String memMl;
     private String memPass;
     //1:N
-    private List<MemberAuth> memberAuthVOList;
+    private List<MemberAuth> memberAuthList;
 
     public Member() {
     }
 
     @Override
     public String toString() {
-        return "MemberVO [memNo=" + memNo + ", memMl=" + memMl + ", memPass=" + memPass + ", memberAuthVOList="
-                + memberAuthVOList + "]";
+        return "MemberVO [memNo=" + memNo + ", memMl=" + memMl + ", memPass=" + memPass + ", memberAuthList="
+                + memberAuthList + "]";
     }
 
 

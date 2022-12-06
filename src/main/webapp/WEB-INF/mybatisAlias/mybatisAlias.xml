@@ -9,9 +9,13 @@
 	</settings>
 	<!-- 자주 사용하는 타입의 별칭을 세팅 -->
 	<typeAliases>
-		<typeAlias type="kr.or.ddit.domain.Member" alias="memberVO"/>
-		<typeAlias type="kr.or.ddit.domain.MemberAuth" alias="memberAuthVO"/>
+		<typeAlias type="kr.or.ddit.domain.Member" alias="member"/>
+		<typeAlias type="kr.or.ddit.domain.MemberAuth" alias="memberAuth"/>
 		<typeAlias type="kr.or.ddit.domain.Lecture" alias="lecture"/>
 		<typeAlias type="kr.or.ddit.domain.LecApply" alias="lecApply"/>
+		<typeAlias type="kr.or.ddit.domain.Student" alias="student"/> 
+		<typeAlias type="kr.or.ddit.domain.Professor" alias="professor"/> 
+		<typeAlias type="kr.or.ddit.domain.Manager" alias="manager"/> 
+		<typeAlias type="kr.or.ddit.domain.Employee" alias="employee"/> 
 	</typeAliases>
 </configuration>
