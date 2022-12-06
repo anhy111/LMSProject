@@ -1,13 +1,23 @@
 package kr.or.ddit.mapper;
 
-import java.util.List;
 
-import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Manager;
 import kr.or.ddit.domain.Member;
+import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Student;
 
 public interface MemberMapper  {
 	
 	//회원 로그인 확인
-	public Member read(String memNo);
+	public Member read(int memNo);
+	
+	public Student readStudent(int memNo);
+	
+	public Employee	readEmployee(int memNo);
+	
+	public Manager readManager(int memNo);
+	
+	public Professor readProfessor(int memNo);
 
 }

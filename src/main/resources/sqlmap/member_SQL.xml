@@ -2,25 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.MemberMapper">
 
-<!--	<resultMap type="member" id="memberMap">-->
-<!--		<result property="memNo" column="MEM_NO" />-->
-<!--		<result property="memPass" column="MEM_PASS" />-->
-<!--		<result property="memMl" column="MEM_ML" />-->
+	<resultMap type="member" id="memberMap">
+		<result property="memNo" column="MEM_NO" />
+		<result property="memPass" column="MEM_PASS" />
+		<result property="memMl" column="MEM_ML" />
 
-<!--		<collection property="memberAuthList" resultMap="authMap"></collection>-->
-<!--	</resultMap>-->
+		<collection property="memberAuthList" resultMap="authMap"></collection> 
+	</resultMap>
 
-<!--	<resultMap type="memberAuth" id="authMap">-->
-<!--		<result property="memNo" column="MEM_NO" />-->
-<!--		<result property="auth" column="AUTH" />-->
-<!--	</resultMap>-->
+	<resultMap type="memberAuth" id="authMap">
+		<result property="memNo" column="MEM_NO" />
+		<result property="auth" column="AUTH" />
+	</resultMap>
 
-<!--	&lt;!&ndash; 회원로그인 확인 &ndash;&gt;-->
-<!--	<select id="read" parameterType="String" resultMap="memberMap">-->
-<!--		SELECT A.MEM_NO, A.MEM_ML, A.MEM_PASS, AUTH.AUTH-->
-<!--		FROM   MEMBER A LEFT OUTER JOIN MEMBER_AUTH AUTH ON(A.MEM_NO = AUTH.MEM_NO)-->
-<!--		WHERE  A.MEM_NO = #{memNo}-->
-<!--	</select>-->
+	<select id="read" parameterType="int" resultMap="memberMap">
+		SELECT A.MEM_NO, A.MEM_ML, A.MEM_PASS, AUTH.AUTH
+		FROM   MEMBER A LEFT OUTER JOIN MEMBER_AUTH AUTH ON(A.MEM_NO = AUTH.MEM_NO)
+		WHERE  A.MEM_NO = #{memNo}
+	</select>
+	
+	<select id="readStudent" parameterType="int" resultType="student">
+		SELECT STU_NO, DEP_CD, STU_YR, STU_SEM, STU_NM, STU_NME, STU_TEL, STU_ZIP, STU_ADDR1, STU_ADDR2, STU_REG, STU_BANK_CD, STU_DEPO, STU_ACT, STU_PIC
+		FROM STUDENT
+		WHERE STU_NO = #{memNo} 
+	</select>
+	
+	<select id="readEmployee" parameterType="int" resultType="employee">
+		SELECT EMP_NO, EMP_NM, EMP_NME, EMP_TEL, EMP_TEL2, MEM_ZIP, EMP_ADDR1, EMP_ADDR2, EMP_REG, EMP_BANK_CD, EMP_DEPO, EMP_ACT, EMP_PIC, EMP_JOIN, EMP_RET
+		FROM EMPLOYEE
+		WHERE EMP_NO = #{memNo}
+	</select>
+	
+	<select id="readManager" parameterType="int" resultType="manager">
+		SELECT MGR_NO, MGR_DIV, MGR_POS
+		FROM MANAGER
+		WHERE MGR_NO = #{memNo}
+	</select>
+	
+	<select id="readProfessor" parameterType="int" resultType="professor">
+		SELECT PRO_NO, DEP_CD, PRO_POS
+		FROM PROFESSOR
+		WHERE PRO_NO = #{memNo}
+	</select>
+	
+	
 
 
 
