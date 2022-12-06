@@ -1,10 +1,10 @@
 package kr.or.ddit.repository;
 
-import jakarta.persistence.EntityManager;
-import jpabook.jpashop.domain.notice.Notice;
+import kr.or.ddit.domain.notice.Notice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository

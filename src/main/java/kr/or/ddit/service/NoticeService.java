@@ -1,7 +1,7 @@
 package kr.or.ddit.service;
 
-import jpabook.jpashop.domain.notice.Notice;
-import jpabook.jpashop.repository.NoticeRepository;
+import kr.or.ddit.domain.notice.Notice;
+import kr.or.ddit.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

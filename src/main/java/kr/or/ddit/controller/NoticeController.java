@@ -1,8 +1,8 @@
 package kr.or.ddit.controller;
 
-import jpabook.jpashop.domain.notice.Book;
-import jpabook.jpashop.domain.notice.Notice;
-import jpabook.jpashop.service.NoticeService;
+import kr.or.ddit.domain.notice.Book;
+import kr.or.ddit.domain.notice.Notice;
+import kr.or.ddit.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

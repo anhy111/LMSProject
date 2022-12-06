@@ -1,10 +1,10 @@
 package kr.or.ddit.domain;
 
-import jakarta.persistence.*;
-import jpabook.jpashop.domain.notice.Notice;
+import kr.or.ddit.domain.notice.Notice;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

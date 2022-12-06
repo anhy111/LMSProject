@@ -1,8 +1,9 @@
 package kr.or.ddit.domain.notice;
 
-import jakarta.persistence.*;
-import jpabook.jpashop.domain.Category;
-import jpabook.jpashop.exception.NotEnoughStockException;
+import javax.persistence.*;
+
+import kr.or.ddit.domain.Category;
+import kr.or.ddit.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 

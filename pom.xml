@@ -16,6 +16,14 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>2.2</version>
+		</dependency>
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -145,7 +153,7 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
-		<!-- dbcp : database connection pool => 커넥션객체를 미리 만들어놓고 쓰고/반납 최근에는 hikaricp를 
+		<!-- dbcp : database connection pool => 커넥션객체를 미리 만들어놓고 쓰고/반납 최근에는 hikaricp를
 			사용하는 경우도 있음 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -205,7 +213,7 @@
 		<!-- 파일업로드 끝 -->
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-		<!-- 1) 자바빈 클래스(VO)의 getter/setter메소드, toString 자동처리 2) log.info() 메소드로 
+		<!-- 1) 자바빈 클래스(VO)의 getter/setter메소드, toString 자동처리 2) log.info() 메소드로
 			sysout대신 로그를 console에 출력 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -262,10 +270,10 @@
 
 		<!-- 타일즈 끝 -->
 
-		<!-- 입력값을 검증하기 위한 라이브러리 의존 관계 정의 시작 스프링 M(Model) : Service, ServiceImple, 
-			Mapper V(View) : JSP C(Controller) : Controller Bean(자바빈 클래스, ArticleVO) 
-			Validation(유효성검사) 기능을 이용해 요청 파라미터 값이 바인딩된(멤버변수에 세팅된) 도메인 클래스(ArticleVO)의 
-			입력값 검증을 함 요청 파라미터 : ?articleNo=112&title=개똥이 public String write(골뱅이ModelAttribute 
+		<!-- 입력값을 검증하기 위한 라이브러리 의존 관계 정의 시작 스프링 M(Model) : Service, ServiceImple,
+			Mapper V(View) : JSP C(Controller) : Controller Bean(자바빈 클래스, ArticleVO)
+			Validation(유효성검사) 기능을 이용해 요청 파라미터 값이 바인딩된(멤버변수에 세팅된) 도메인 클래스(ArticleVO)의
+			입력값 검증을 함 요청 파라미터 : ?articleNo=112&title=개똥이 public String write(골뱅이ModelAttribute
 			ArticleVO articleVO) -->
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
 		<dependency>
@@ -293,11 +301,11 @@
 			<version>5.0.7.RELEASE</version>
 		</dependency>
 
-		<!-- 스프링 시큐리티 일반 기능 
-			1)인증(athentication) : 로그인 
+		<!-- 스프링 시큐리티 일반 기능
+			1)인증(athentication) : 로그인
 			2)인가(authorization) : 권한(role)
 				-CSRF(Cross-site request forgery(위조)) 토큰
-		
+
 		-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
