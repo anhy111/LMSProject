@@ -11,5 +11,7 @@
 	<typeAliases>
 		<typeAlias type="kr.or.ddit.domain.Member" alias="memberVO"/>
 		<typeAlias type="kr.or.ddit.domain.MemberAuth" alias="memberAuthVO"/>
+		<typeAlias type="kr.or.ddit.domain.Lecture" alias="lecture"/>
+		<typeAlias type="kr.or.ddit.domain.LecApply" alias="lecApply"/>
 	</typeAliases>
 </configuration>

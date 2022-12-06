@@ -11,4 +11,5 @@ public class Lecture {
 	private int lecHcnt;// 수강인원
 	private String lecaYn;// 승인여부
 	private int depCd;// 학과코드
+	private LecApply lecApply;
 }
