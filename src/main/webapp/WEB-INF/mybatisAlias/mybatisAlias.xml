@@ -14,6 +14,8 @@
 	</settings>
 	<!-- 자주 사용하는 타입의 별칭을 세팅 -->
 	<typeAliases>
+		<typeAlias type="kr.or.ddit.domain.Lecture" alias="lecture"/><!-- 강의 공지사항 -->
+		<typeAlias type="kr.or.ddit.domain.LecApply" alias="lecApply"/><!-- 강의 공지사항 -->
 		<typeAlias type="kr.or.ddit.domain.LecNotice" alias="LecNotice"/><!-- 강의 공지사항 -->
 		<typeAlias type="kr.or.ddit.domain.LecQna" alias="LecQna"/><!-- 질문 게시판 -->
 		<typeAlias type="kr.or.ddit.domain.Approval" alias="Approval"/><!-- 결재 게시판 -->
