@@ -22,7 +22,6 @@
 		WHERE  A.MEM_NO = #{memNo}
 	</select>
 	
-	
 
 	
 </mapper>
