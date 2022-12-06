@@ -1,32 +1,35 @@
-package kr.or.ddit.controller;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
-
-@Controller
-@RequiredArgsConstructor
-@Slf4j
-public class NoticeController {
-
-
-//    private final NoticeService noticeService;
-
-    @GetMapping("/notices/new")
-    public String createForm(Model model) {
-
-        model.addAttribute("form", new BookForm());
-
-        return "notices/createNoticeForm";
-    }
-
+//package kr.or.ddit.controller;
+//
+////import kr.or.ddit.domain.notice.Book;
+////import kr.or.ddit.domain.notice.Notice;
+//import kr.or.ddit.service.NoticeService;
+//import lombok.RequiredArgsConstructor;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.ModelAttribute;
+//import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PostMapping;
+//
+//import java.util.List;
+//
+//@Controller
+//@RequiredArgsConstructor
+//@Slf4j
+//public class NoticeController {
+//
+//
+////    private final NoticeService noticeService;
+//
+//    @GetMapping("/notices/new")
+//    public String createForm(Model model) {
+//
+//        model.addAttribute("form", new BookForm());
+//
+//        return "notices/createNoticeForm";
+//    }
+//
 //    @PostMapping("/notices/new")
 //    public String create(BookForm form) {
 //        Book book = new Book(); //생성자로 Setter 삭제 ->
@@ -84,5 +87,5 @@ public class NoticeController {
 //        noticeService.updateNotice(noticeId, form.getName(), form.getPrice(), form.getStockQuantity());
 //        return "redirect:/notices";
 //    }
-
-}
+//
+//}
