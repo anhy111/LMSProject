@@ -24,10 +24,19 @@ public class CollegeServiceImpl implements CollegeService {
 	public College CollegeDetail(int colCd) {
 		return this.collegeMapper.CollegeDetail(colCd);
 		}
-	
 	// 단과대학 수정
 	@Override
 	public  int CollegeUpdate(College college) {
 		return this.collegeMapper.CollegeUpdate(college);
+	}
+	// 단과대학 정보삭제
+	@Override
+	public int CollegeDelete(int colCd) {
+		return this.collegeMapper.CollegeDelete(colCd);
+	}
+	// 단과대학 등록
+	@Override
+	public int CollegeRegist(College college) {
+		return this.collegeMapper.CollegeRegist(college);
 	}
 }

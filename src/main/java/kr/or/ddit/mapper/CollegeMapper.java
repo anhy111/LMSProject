@@ -12,4 +12,8 @@ public interface CollegeMapper {
 	public College CollegeDetail(int colCd);
 	// 단과대학 수정
 	public  int CollegeUpdate(College college);
+	// 단과대학 정보삭제
+	public int CollegeDelete(int colCd);
+	// 단과대학 등록
+	public int CollegeRegist(College college);
 }
