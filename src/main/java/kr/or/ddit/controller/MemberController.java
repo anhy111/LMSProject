@@ -16,6 +16,8 @@ public class MemberController {
 	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@GetMapping("/test/home")
 	public String test() {
+		
+		
 
 		return "test/home";
 	}
