@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kr.or</groupId>
 	<artifactId>ddit</artifactId>
@@ -23,6 +24,13 @@
 <!--			<artifactId>javax.persistence-api</artifactId>-->
 <!--			<version>2.2</version>-->
 <!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>2.2</version>
+		</dependency>
 
 		<!-- Spring -->
 		<dependency>
