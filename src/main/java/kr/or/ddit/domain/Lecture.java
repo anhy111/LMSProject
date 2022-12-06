@@ -14,4 +14,6 @@ public class Lecture {
 	private int depCd;// 학과코드
 	private LecApply lecApply;
 	private Employee employee;
+	private Department department;
+	
 }

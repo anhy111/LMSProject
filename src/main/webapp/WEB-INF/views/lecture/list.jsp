@@ -85,6 +85,10 @@
 									명</th>
 								<th class="sorting" tabindex="0" aria-controls="example2"
 									rowspan="1" colspan="1"
+									aria-label="Engine version: activate to sort column ascending">학과
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="example2"
+									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending">담당
 									교수</th>
 								<th class="sorting" tabindex="0" aria-controls="example2"
@@ -102,6 +106,7 @@
 									<td>${row.lecApply.lecaYr}</td>
 									<td>${row.lecApply.lecaSem}</td>
 									<td>${row.lecApply.lecaNm}</td>
+									<td>${row.department.depNm}</td>
 									<td>${row.employee.empNm}</td>
 									<td>${row.lecApply.lecaCap}</td>
 									<td>${row.lecApply.lecaCate}</td>
