@@ -11,9 +11,23 @@
 SELECT COL_CD, COL_NM, COL_DES, COL_TEL, COL_ADDR, COL_IMG_URL
 FROM COLLEGE
 </select>
-
 <!-- 상세 -->
+<select id="CollegeDetail" parameterType="int" resultType="College">
+SELECT COL_CD, COL_NM, COL_DES, COL_TEL, COL_ADDR, COL_IMG_URL
+FROM COLLEGE
+WHERE COL_CD = #{colCd}
+</select>
 <!-- 수정 -->
+<update id="CollegeUpdate" parameterType="College">
+UPDATE COLLEGE
+SET   
+      COL_NM = #{colNm}
+    , COL_DES = #{colDes}
+    , COL_TEL = #{colTel}
+    , COL_ADDR = #{colAddr}
+    , COL_IMG_URL = #{colImgUrl} 
+WHERE COL_CD = #{colCd}
+</update>
 <!-- 입력 -->
 <!-- 삭제 -->
 </mapper>
