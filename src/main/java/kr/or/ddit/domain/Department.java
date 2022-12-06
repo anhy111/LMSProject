@@ -3,7 +3,7 @@ package kr.or.ddit.domain;
 import lombok.Data;
 
 @Data
-public class DepartMent {
+public class Department {
 
     private int depCd; // 학과코드
     private int colCd; // 단과대코드

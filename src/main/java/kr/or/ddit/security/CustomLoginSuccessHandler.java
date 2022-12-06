@@ -66,6 +66,7 @@ public class CustomLoginSuccessHandler extends
 		}else {
 			session.setAttribute("name", readStudent.getStuNm());
 			String name = String.valueOf(session.getAttribute("name"));
+			session.setAttribute("department", readStudent.getDepNm());
 			
 			log.info("name은??" + name);
 		}
