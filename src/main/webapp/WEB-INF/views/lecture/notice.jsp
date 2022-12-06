@@ -38,15 +38,15 @@
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach var="LectureNotice" items="${LectureNoticeList}" varStatus="stat">
+						<c:forEach var="lectureNotice" items="${lectureNoticeList}" varStatus="stat">
 							<c:if test="${stat.count%2!=0 }"><tr class="odd"></c:if>
 							<c:if test="${stat.count%2==0 }"><tr class="even"></c:if>
-							<td class="dtr-control sorting_1" tabindex="0">${LectureNotice.lntcCd}</td>
-								<td>${LectureNotice.lecaCd }</td>
-								<td><a href="${LectureNotice.lntcCd }#">${LectureNotice.lntcTtl}</a></td>
-								<td>${LectureNotice.lntcCon }</td>
-								<td><fmt:formatDate value="${LectureNotice.lntcReg }" pattern="yyyy년 MM월 dd일"/> </td>
-								<td><fmt:formatDate value="${LectureNotice.lntcUpd }" pattern="yyyy년 MM월 dd일"/> </td>
+							<td class="dtr-control sorting_1" tabindex="0">${lectureNotice.lntcCd}</td>
+								<td>${lectureNotice.lecaCd }</td>
+								<td><a href="${lectureNotice.lntcCd }#">${lectureNotice.lntcTtl}</a></td>
+								<td>${lectureNotice.lntcCon }</td>
+								<td><fmt:formatDate value="${lectureNotice.lntcReg }" pattern="yyyy년 MM월 dd일"/> </td>
+								<td><fmt:formatDate value="${lectureNotice.lntcUpd }" pattern="yyyy년 MM월 dd일"/> </td>
 							</c:forEach>
 						</tbody>
 						<tfoot>

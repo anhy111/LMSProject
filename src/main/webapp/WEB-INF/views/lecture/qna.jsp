@@ -42,7 +42,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="LectureQnaList" items="${LectureQnaList}"
+							<c:forEach var="lectureQnaList" items="${lectureQnaList}"
 								varStatus="stat">
 								<c:if test="${stat.count%2!=0 }">
 									<tr class="odd">
@@ -50,13 +50,13 @@
 								<c:if test="${stat.count%2==0 }">
 									<tr class="even">
 								</c:if>
-							<td class="dtr-control sorting_1" tabindex="0">${LectureQnaList.lqnaCd}</td>
-								<td>${LectureQnaList.lecaCd }</td>
-								<td>${LectureQnaList.stuNo }</td>
-								<td><a href="/book/detail?bookId=${LectureQnaList.lqnaCd }">${LectureQnaList.lqnaTtl}</a></td>
-								<td>${LectureQnaList.lqnaCon }</td>
-								<td><fmt:formatDate value="${LectureQnaList.lqnaDt }" pattern="yyyy년 MM월 dd일"/> </td>
-								<td>${LectureQnaList.lqnaHit }</td>
+							<td class="dtr-control sorting_1" tabindex="0">${lectureQnaList.lqnaCd}</td>
+								<td>${lectureQnaList.lecaCd }</td>
+								<td>${lectureQnaList.stuNo }</td>
+								<td><a href="/book/detail?bookId=${lectureQnaList.lqnaCd }">${lectureQnaList.lqnaTtl}</a></td>
+								<td>${lectureQnaList.lqnaCon }</td>
+								<td><fmt:formatDate value="${lectureQnaList.lqnaDt }" pattern="yyyy년 MM월 dd일"/> </td>
+								<td>${lectureQnaList.lqnaHit }</td>
 							</c:forEach>
 						</tbody>
 						<tfoot>

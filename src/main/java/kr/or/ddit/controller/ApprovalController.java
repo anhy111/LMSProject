@@ -21,12 +21,12 @@ public class ApprovalController {
 	
 	@GetMapping("/main")
 	public String ApprovalList(Model model) {
-		List<Approval> ApprovalList = this.approvalService.ApprovalList();
-		log.info("ApprovalList : " + ApprovalList);
+		List<Approval> approvalList = this.approvalService.ApprovalList();
+		log.info("approvalList : " + approvalList);
 		
 		//공통 약속
 		model.addAttribute("bodyTitle","결재요청목록");
-		model.addAttribute("ApprovalList", ApprovalList);
+		model.addAttribute("approvalList", approvalList);
 		
 		//forwarding
 		return "approval/main";

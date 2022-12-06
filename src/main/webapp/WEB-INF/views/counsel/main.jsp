@@ -15,31 +15,39 @@
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Rendering engine: activate to sort column ascending"
-									cursorshover="true">결재 코드</th>
+									cursorshover="true">상담코드</th>
 								<th class="sorting sorting_desc" tabindex="0"
 									aria-controls="example1" rowspan="1" colspan="1"
 									aria-label="Browser: activate to sort column ascending"
-									cursorshover="true" aria-sort="descending">결재 대상</th>
+									cursorshover="true" aria-sort="descending">학번</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Platform(s): activate to sort column ascending"
-									cursorshover="true">종류</th>
+									cursorshover="true">카테고리</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">승인 여부</th>
+									cursorshover="true">제목</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">반려사유</th>
+									cursorshover="true">내용</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">승인 일자</th>
+									cursorshover="true">신청일자</th>
+								<th class="sorting" tabindex="0" aria-controls="example1"
+									rowspan="1" colspan="1"
+									aria-label="CSS grade: activate to sort column ascending"
+									cursorshover="true">상담일자</th>
+								<th class="sorting" tabindex="0" aria-controls="example1"
+									rowspan="1" colspan="1"
+									aria-label="CSS grade: activate to sort column ascending"
+									cursorshover="true">답변</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="approvalList" items="${approvalList}"
+							<c:forEach var="counselList" items="${counselList}"
 								varStatus="stat">
 								<c:if test="${stat.count%2!=0 }">
 									<tr class="odd">
@@ -47,24 +55,29 @@
 								<c:if test="${stat.count%2==0 }">
 									<tr class="even">
 								</c:if>
-								<td class="dtr-control sorting_1" tabindex="0">${approvalList.apprCd}</td>
+								<td class="dtr-control sorting_1" tabindex="0">${counselList.cnslCd}</td>
 								<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
-								<td>${approvalList.proNo}</td>
-								<td>${approvalList.apprCate }</td>
-								<td>${approvalList.apprYn }</td>
-								<td>${approvalList.apprRsn }</td>
-								<td><fmt:formatDate value="${approvalList.apprDt }"
+								<td>${counselList.stuNo}</td>
+								<td>${counselList.cnslCate }</td>
+								<td>${counselList.cnslTtl }</td>
+								<td>${counselList.cnslCon }</td>
+								<td><fmt:formatDate value="${counselList.cnslReg }"
 										pattern="yyyy년 MM월 dd일" /></td>
+								<td><fmt:formatDate value="${counselList.cnslDt }"
+										pattern="yyyy년 MM월 dd일" /></td>
+								<td>${counselList.cnslRpl }</td>
 							</c:forEach>
 						</tbody>
 						<tfoot>
 							<tr>
-								<th rowspan="1" colspan="1">결재 코드</th>
-								<th rowspan="1" colspan="1">결재 대상</th>
-								<th rowspan="1" colspan="1">종류</th>
-								<th rowspan="1" colspan="1">승인 여부</th>
-								<th rowspan="1" colspan="1">반려 사유</th>
-								<th rowspan="1" colspan="1">승인 일자</th>
+								<th rowspan="1" colspan="1">상담코드</th>
+								<th rowspan="1" colspan="1">학번</th>
+								<th rowspan="1" colspan="1">카테고리</th>
+								<th rowspan="1" colspan="1">제목</th>
+								<th rowspan="1" colspan="1">내용</th>
+								<th rowspan="1" colspan="1">신청일</th>
+								<th rowspan="1" colspan="1">상담일</th>
+								<th rowspan="1" colspan="1">답변</th>
 							</tr>
 						</tfoot>
 					</table>

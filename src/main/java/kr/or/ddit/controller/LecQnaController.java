@@ -21,12 +21,11 @@ public class LecQnaController {
 	
 	@GetMapping("/qna")
 	public String LectureNoticeList(Model model) {
-			List<LecQna> LectureQnaList = this.lecQnaService.LecQnaList();
-			log.info("LectureQnaList : " + LectureQnaList);
+			List<LecQna> lectureQnaList = this.lecQnaService.LecQnaList();
 			
 			//공통 약속
 			model.addAttribute("bodyTitle","질문게시판");
-			model.addAttribute("LectureQnaList", LectureQnaList);
+			model.addAttribute("lectureQnaList", lectureQnaList);
 			
 			//forwarding
 			return "lecture/qna";

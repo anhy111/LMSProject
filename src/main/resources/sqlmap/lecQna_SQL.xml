@@ -6,7 +6,7 @@
 <mapper namespace="kr.or.ddit.mapper.LecQnaMapper">
 
 
-<!-- 결재요청 목록 -->
+<!-- 질문 목록 -->
 <select id="LecQnaList" resultType="LecQna">
 SELECT LQNA_CD, LECA_CD, STU_NO, LQNA_TTL, LQNA_CON, LQNA_DT, LQNA_HIT
 FROM LEC_QNA

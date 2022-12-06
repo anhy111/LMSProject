@@ -21,12 +21,11 @@ public class LecNoticeController {
 	
 	@GetMapping("/notice")
 	public String LectureNoticeList(Model model) {
-			List<LecNotice> LectureNoticeList = this.lecNoticeService.LectureNoticeList();
-			log.info("LectureNoticeList : " + LectureNoticeList);
+			List<LecNotice> lectureNoticeList = this.lecNoticeService.LectureNoticeList();
 			
 			//공통 약속
 			model.addAttribute("bodyTitle","공지사항목록");
-			model.addAttribute("LectureNoticeList", LectureNoticeList);
+			model.addAttribute("lectureNoticeList", lectureNoticeList);
 			
 			//forwarding
 			return "lecture/notice";
