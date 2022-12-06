@@ -14,6 +14,7 @@
           <element id="module-output" name="ddit" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.persistence:javax.persistence-api:2.2" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.5.RELEASE" />
@@ -96,10 +97,6 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.0.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.5.4" />
           <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
-          <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf-spring5:3.1.0.RELEASE" />
-          <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf:3.1.0.RELEASE" />
-          <element id="library" level="project" name="Maven: org.attoparser:attoparser:2.0.6.RELEASE" />
-          <element id="library" level="project" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
