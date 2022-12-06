@@ -12,7 +12,7 @@ public class Employee {
     private String empNme;    //영문 이름
     private String empTel;    //전화번호
     private String empTel2; //비상연락처
-    private int memZip;        //우편번호
+    private int empZip;        //우편번호
     private String empAddr1;//기본주소
     private String empAddr2;//상세주소
     private String empReg;    //주민번호

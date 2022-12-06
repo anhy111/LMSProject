@@ -13,11 +13,11 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@PreAuthorize("hasRole('ROLE_STUDENT')")
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_PROFESSOR', 'ROLE_MANAGER')")
 	@GetMapping("/test/home")
 	public String test() {
 		
-
+		
 		return "test/home";
 	}
 	
