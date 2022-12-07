@@ -58,11 +58,7 @@ top: 0px;
 							<div class="icon" id="book">
 								<i class="ion-ios-book"></i>
 							</div>
-<<<<<<< HEAD
-							<a href="/lecture/lectureBoard?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기 <i
-=======
 							<a href="/lectureBoard/lectureBoard?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기 <i
->>>>>>> branch 'master' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 								class="fas fa-arrow-circle-right"></i></a>
 						</div>
 					</c:forEach>
