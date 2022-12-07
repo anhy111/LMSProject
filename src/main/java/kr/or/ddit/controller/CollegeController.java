@@ -76,7 +76,7 @@ public class CollegeController {
 	}
 	
 	@PostMapping("/registPost")
-	public String insertPost(@ModelAttribute College college) {
+	public String RegistPost(@ModelAttribute College college) {
 		
 		this.collegeService.CollegeRegist(college);
 		 
