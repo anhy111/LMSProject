@@ -16,7 +16,7 @@
 	</resultMap>
 
 	<select id="read" parameterType="int" resultMap="memberMap">
-		SELECT A.MEM_NO, A.MEM_ML, A.MEM_PASS, AUTH.AUTH
+		SELECT A.MEM_NO, A.MEM_TEL, A.MEM_PASS, AUTH.AUTH
 		FROM   MEMBER A LEFT OUTER JOIN MEMBER_AUTH AUTH ON(A.MEM_NO = AUTH.MEM_NO)
 		WHERE  A.MEM_NO = #{memNo}
 	</select>
@@ -46,6 +46,21 @@
 		SELECT PRO_NO, DEP_CD, PRO_POS
 		FROM PROFESSOR
 		WHERE PRO_NO = #{memNo}
+	</select>
+	
+	<select id="searchId" parameterType="map" resultType="String">
+		SELECT MEM_NO 
+		FROM MEMBER LEFT OUTER JOIN STUDENT ON(MEM_NO = STU_NO) 
+		WHERE STU_NM = #{memNm}
+		AND STU_BIR = #{memBir}
+		AND STU_TEL = #{memTel}
+	</select>
+	
+	<select id="changePw" parameterType="map"> 
+		UPDATE MEMBER
+		SET MEM_PASS = #{memPass}
+		WHERE MEM_TEL = #{memTel}
+		AND MEM_NO = #{memNo}
 	</select>
 
 </mapper>
