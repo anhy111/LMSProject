@@ -22,9 +22,12 @@
 	</select>
 	
 	<select id="readStudent" parameterType="int" resultType="student">
-		SELECT STU_NO, DEP_CD, STU_YR, STU_SEM, STU_NM, STU_NME, STU_TEL, STU_ZIP, STU_ADDR1, STU_ADDR2, STU_REG, STU_BANK_CD, STU_DEPO, STU_ACT, STU_PIC
-		FROM STUDENT
-		WHERE STU_NO = #{memNo} 
+		SELECT S.STU_NO, S.DEP_CD, S.STU_YR, S.STU_SEM, S.STU_NM, S.STU_NME, S.STU_TEL, S.STU_ZIP, 
+        S.STU_ADDR1, S.STU_ADDR2, S.STU_REG, S.STU_BANK_CD, S.STU_DEPO, S.STU_ACT, S.STU_PIC,
+        D.DEP_CD, D.DEP_NM
+		FROM STUDENT S, DEPARTMENT D
+		WHERE S.DEP_CD = D.DEP_CD
+		AND S.STU_NO = #{memNo}
 	</select>
 	
 	<select id="readEmployee" parameterType="int" resultType="employee">
@@ -44,10 +47,6 @@
 		FROM PROFESSOR
 		WHERE PRO_NO = #{memNo}
 	</select>
-	
-	
-
-
 
 </mapper>
 
