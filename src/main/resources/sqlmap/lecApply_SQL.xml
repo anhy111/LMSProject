@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.LectureApplyMapper">
+
+<!-- 	<resultMap type="professor" id="lecApplyMap"> -->
+<!-- 		<result property="proPos" column="PRO_POS" /> -->
+<!-- 		<result property="proNo" column="PRO_NO" /> -->
+		
+<!-- 		<collection property="employeeList" resultMap="authMap"></collection> -->
+<!-- 	</resultMap> -->
+	
+<!-- 	<resultMap type="employee" id="authMap"> -->
+<!-- 		<result property="empNo" column="EMP_NO" /> -->
+<!-- 		<result property="empNm" column="EMP_NM" /> -->
+<!-- 		<result property="empTel" column="EMP_TEL" /> -->
+<!-- 		<result property="empReg" column="EMP_REG" /> -->
+<!-- 	</resultMap> -->
+
+<!-- 	<select id="detail" parameterType="int" resultMap="lecApplyMap"> -->
+<!-- 		SELECT  P.PRO_NO -->
+<!-- 		        , P.DEP_CD -->
+<!-- 		        , P.PRO_POS -->
+<!-- 		        , E.EMP_NO -->
+<!-- 		        , E.EMP_NM -->
+<!-- 		        , E.EMP_NME -->
+<!-- 		        , E.EMP_TEL -->
+<!-- 		        , E.EMP_TEL2 -->
+<!-- 		        , E.EMP_ZIP -->
+<!-- 		        , E.EMP_ADDR1 -->
+<!-- 		        , E.EMP_ADDR2 -->
+<!-- 		        , E.EMP_REG -->
+<!-- 		        , E.EMP_BANK_CD -->
+<!-- 		        , E.EMP_DEPO -->
+<!-- 		        , E.EMP_ACT -->
+<!-- 		        , E.EMP_PIC -->
+<!-- 		        , E.EMP_JOIN -->
+<!-- 		        , E.EMP_RET -->
+<!-- 		FROM    PROFESSOR P INNER JOIN EMPLOYEE E ON(P.PRO_NO = E.EMP_NO) -->
+<!-- 		WHERE   P.PRO_NO = #{proNo} -->
+<!-- 	</select> -->
+	
+	<select id="proInfo" parameterType="int" resultType="professor">
+		SELECT  P.PRO_NO
+		        , E.EMP_NM
+		        , CASE  WHEN SUBSTR(E.EMP_REG, 8, 1) in ('1', '2') THEN '19'
+		                WHEN SUBSTR(E.EMP_REG, 8, 1) in ('3', '4') THEN '20'
+		        END || 
+		        SUBSTR(E.EMP_REG, 1, 2) || '-' ||
+		        SUBSTR(E.EMP_REG, 3, 2) || '-' ||
+		        SUBSTR(E.EMP_REG, 5, 2) ||
+		        CASE WHEN SUBSTR(E.EMP_REG, 8, 1) IN ('1', '3') THEN ' (남)'
+		             WHEN SUBSTR(E.EMP_REG, 8, 1) IN ('2', '4') THEN ' (여)'
+		        END EMP_REG
+		        , E.EMP_TEL
+		        , C.COL_NM || ' ' || D.DEP_NM DEP_NM
+		        , P.PRO_POS PRO_POS
+		        , CASE WHEN E.EMP_RET IS NULL THEN '재직' ELSE '퇴직' END EMP_RET
+		        , E.EMP_PIC
+		FROM    PROFESSOR P, EMPLOYEE E, DEPARTMENT D, COLLEGE C
+		WHERE   P.PRO_NO = E.EMP_NO
+		AND     P.DEP_CD = D.DEP_CD
+		AND     D.COL_CD = C.COL_CD
+		AND     P.PRO_NO = #{empNo}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+

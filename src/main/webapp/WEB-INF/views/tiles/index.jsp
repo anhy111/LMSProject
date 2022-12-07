@@ -3,8 +3,9 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
-<html class>
+<html>
 <head>
+	<link rel="icon" href="/resources/upload/연수대icon.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>학사관리시스템</title>
@@ -105,8 +106,6 @@
 <script src="/resources/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/resources/adminlte/dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/resources/adminlte/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/resources/adminlte/dist/js/pages/dashboard.js"></script>
 <!-- datatables -->

@@ -1,12 +1,14 @@
 package kr.or.ddit.service.Impl;
 
-import kr.or.ddit.domain.LecApply;
-import kr.or.ddit.mapper.LectureApplyMapper;
-import kr.or.ddit.service.LectureApplyService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import kr.or.ddit.domain.LecApply;
+import kr.or.ddit.domain.Professor;
+import kr.or.ddit.mapper.LectureApplyMapper;
+import kr.or.ddit.service.LectureApplyService;
 
 @Service
 public class LectureApplyServiceImpl implements LectureApplyService {
@@ -15,7 +17,14 @@ public class LectureApplyServiceImpl implements LectureApplyService {
     LectureApplyMapper lectureApplyMapper;
 
     @Override
-    public List<LecApply> list() {
-        return this.lectureApplyMapper.list();
+    public Professor proInfo(int proNo) {
+        return this.lectureApplyMapper.proInfo(proNo);
     }
+
+	@Override
+	public List<LecApply> getYrNSem(int proNo) {
+		return this.lectureApplyMapper.getYrNSem(proNo);
+	}
+    
+    
 }

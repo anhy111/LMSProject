@@ -7,7 +7,7 @@ import kr.or.ddit.domain.Student;
 public interface ManagementOfStudentByProfessorService {
 	
 	//학생 조회
-	public List<Student> StudentList();
+	public List<Student> StudentList(int depCd);
 	//학생 상세
 	public Student StudentDetail(int stuNo);
 

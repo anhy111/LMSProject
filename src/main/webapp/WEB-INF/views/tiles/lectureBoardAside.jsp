@@ -129,7 +129,7 @@
 				</sec:authorize>
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-					<li class="nav-header">교수 어사이드</li>
+					<li class="nav-header">교수 어사이드11</li>
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
 							<p>

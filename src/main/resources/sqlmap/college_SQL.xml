@@ -39,5 +39,18 @@ DELETE
 FROM COLLEGE
 WHERE COL_CD = #{colCd}
 </delete>
+<select id="DepartmentByCollegeList"  parameterType="int" resultType="department">
+SELECT 
+  D.DEP_CD
+, D.PRO_NO
+, D.DEP_NM
+, D.DEP_DES
+, D.DEP_CAP
+, D.DEP_TEL
+, D.EMP_NO
+FROM DEPARTMENT D, COLLEGE C
+WHERE D.COL_CD = #{colCd}
+AND D.COL_CD = C.COL_CD
+</select>
 </mapper>
 

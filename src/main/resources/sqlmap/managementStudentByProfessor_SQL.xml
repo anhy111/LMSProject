@@ -7,9 +7,11 @@
 
 
 <!-- 학생 목록 -->
-<select id="StudentList" resultType="student">
-SELECT STU_NO, STU_YR, STU_NM, STU_TEL
-FROM STUDENT
+<select id="StudentList"  parameterType="int" resultType="student">
+SELECT S.STU_NO, S.STU_YR, S.STU_NM, S.STU_TEL
+FROM STUDENT S, PROFESSOR P
+WHERE S.DEP_CD = #{depCd}
+AND S.DEP_CD = P.DEP_CD
 </select>
 <!-- 상세 -->
 <select id="StudentDetail" parameterType="int" resultType="student">

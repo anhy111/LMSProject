@@ -21,5 +21,10 @@ public class LectureServiceImpl implements LectureService{
 	public List<Lecture> lectureSearch(String keyword){
 		return this.lectureMapper.lectureSearch(keyword);
 	}
+	
+	@Override
+	public List<Lecture> professorLecture(String professorId){
+		return this.lectureMapper.professorLecture(professorId);
+	}
 
 }

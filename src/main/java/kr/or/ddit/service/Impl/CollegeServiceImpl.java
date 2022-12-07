@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.College;
+import kr.or.ddit.domain.Department;
 import kr.or.ddit.mapper.CollegeMapper;
 import kr.or.ddit.service.CollegeService;
 
@@ -38,5 +39,10 @@ public class CollegeServiceImpl implements CollegeService {
 	@Override
 	public int CollegeRegist(College college) {
 		return this.collegeMapper.CollegeRegist(college);
+	}
+	// 단과대학별 학과 조회
+	@Override
+	public List<Department> DepartmentByCollegeList(int colCd){
+		return this.collegeMapper.DepartmentByCollegeList(colCd);
 	}
 }

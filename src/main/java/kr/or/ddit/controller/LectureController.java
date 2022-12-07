@@ -1,5 +1,6 @@
 package kr.or.ddit.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,36 @@ public class LectureController {
 	}
 
 	
+	@GetMapping("/lecture/myLecture")
+	public ModelAndView test1(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword,Principal principal) {
+		String professorId = principal.getName(); // 로그인한 아이디 (세션) 가져오기
+		List<Lecture> list = this.lectureservice.professorLecture(professorId);
+		log.info("====================================================");
+		log.info("====================================================");
+		for (Lecture lecture2 : list) {
+			log.info(lecture2.toString());
+		}
+		
+		mav.addObject("lecture", list);
+		mav.setViewName("lecture/myLecture");
+		
+		return mav;
+	}
+	
+	@GetMapping("/lecture/lectureBoard")
+	public ModelAndView test2(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword,Principal principal) {
+		String professorId = principal.getName(); // 로그인한 아이디 (세션) 가져오기
+		List<Lecture> list = this.lectureservice.professorLecture(professorId);
+		log.info("====================================================");
+		log.info("====================================================");
+		for (Lecture lecture2 : list) {
+			log.info(lecture2.toString());
+		}
+		
+		mav.addObject("lecture", list);
+		mav.setViewName("lecture/lectureBoard");
+		
+		return mav;
+	}
 
 }

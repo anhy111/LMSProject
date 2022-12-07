@@ -45,7 +45,6 @@
 								<td> ${studentList.stuNo}</td>
 								<td><a href="/professor/management/detail?stuNo=${studentList.stuNo }">${studentList.stuNm }</a></td>
 								<td>${studentList.stuTel }</td>
-				
 							</c:forEach>
 						</tbody>
 						<tfoot>

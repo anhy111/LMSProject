@@ -13,6 +13,13 @@
 	 	or      LA.LECA_YR    LIKE '%' || #{keyword} || '%')
 	</sql>
 	
+	<sql id="where2">
+		<!-- 강의 검색 -->
+	  	and  (  LA.LECA_NM    LIKE '%' || #{keyword} || '%'
+	 	or      LA.LECA_SEM   LIKE '%' || #{keyword} || '%'
+	 	or      LA.LECA_YR    LIKE '%' || #{keyword} || '%')
+	</sql>
+	
 	<!-- lecture resultMap======================================================================== -->
 	<resultMap type="lecture" id="lectureMap">
 		<result property="lecaCd" column="LECA_CD" />
@@ -104,19 +111,19 @@
 		</if>
 	</select>
 	
-	<!-- 강의 목록 검색(검색기능)======================================================================== -->
-	<select id="lectureSearch2" resultMap="lectureMap">
-		SELECT 
-		       L.LECA_CD 
-		     , E.EMP_NM 
+	<!-- 담당 강의 조회 (교수가 담당한 강의 검색)======================================================================== -->
+	<select id="professorLecture" resultMap="lectureMap" parameterType="string">
+		SELECT L.LECA_CD
 		     , LA.LECA_NM 
-		     , LA.LECA_CRD 
-		     , LA.LECA_CAP 
-		     , LA.LECA_CATE 
 		     , LA.LECA_YR
 		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
-		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA
-		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD
+		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
+		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
+		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
+		AND S.PRO_NO = #{professorId}
+<!-- 		<if test="keyword != null and keyword !=''"> -->
+<!-- 				<include refid="where2"></include> -->
+<!-- 		</if> -->
 	</select>
 </mapper>
 

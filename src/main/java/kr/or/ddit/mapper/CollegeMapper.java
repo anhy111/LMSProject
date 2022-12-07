@@ -3,6 +3,7 @@ package kr.or.ddit.mapper;
 import java.util.List;
 
 import kr.or.ddit.domain.College;
+import kr.or.ddit.domain.Department;
 
 public interface CollegeMapper {
 
@@ -16,4 +17,6 @@ public interface CollegeMapper {
 	public int CollegeDelete(int colCd);
 	// 단과대학 등록
 	public int CollegeRegist(College college);
+	// 단과대학별 학과 조회
+	public List<Department> DepartmentByCollegeList(int colCd);
 }
