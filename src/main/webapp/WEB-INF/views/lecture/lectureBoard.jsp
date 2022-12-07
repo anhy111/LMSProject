@@ -58,7 +58,7 @@ top: 0px;
 							<div class="icon" id="book">
 								<i class="ion-ios-book"></i>
 							</div>
-							<a href="/lecture/lectureBoard?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기 <i
+							<a href="/lecture/lecutureBoard?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기 <i
 								class="fas fa-arrow-circle-right"></i></a>
 						</div>
 					</c:forEach>

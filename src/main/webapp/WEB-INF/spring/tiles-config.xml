@@ -11,6 +11,12 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
+	<definition name="lectureBoard" template="/WEB-INF/views/tiles/index.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="aside" value="/WEB-INF/views/tiles/lectureBoardAside.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
 	<!--
 	    name의 */*은 body의 value에서 1과 2에 해당
 		controller에서 forwarding 시 return "1/2";
@@ -26,6 +32,9 @@
 	</definition>
 	<definition name="lecture/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/lecture/{1}.jsp" />
+	</definition>
+	<definition name="lecture/lectureBoard" extends="lectureBoard">
+		<put-attribute name="body" value="/WEB-INF/views/lecture/lectureBoard.jsp" />
 	</definition>
 	<definition name="notice/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp" />
