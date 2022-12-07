@@ -113,8 +113,8 @@
 	
 	<!-- 담당 강의 조회 (교수가 담당한 강의 검색)======================================================================== -->
 	<select id="professorLecture" resultMap="lectureMap" parameterType="string">
-		SELECT 
-		       LA.LECA_NM 
+		SELECT L.LECA_CD
+		     , LA.LECA_NM 
 		     , LA.LECA_YR
 		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
 		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
