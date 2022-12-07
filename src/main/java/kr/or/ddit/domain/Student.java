@@ -1,5 +1,7 @@
 package kr.or.ddit.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,13 +15,16 @@ public class Student {
 	private String stuNme;
 	private String stuTel;
 	private int stuZip;
-	private String stuAddr1;
+	private String stuAddr1; 
 	private String stuAddr2;
 	private String stuReg;
 	private String stuBankCd;
 	private String stuDepo;
 	private String stuAct;
 	private String stuPic;
+	//학과명 조회 
 	private String depNm;
+	
+
 
 }

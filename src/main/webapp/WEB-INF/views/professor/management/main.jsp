@@ -16,18 +16,10 @@
 									rowspan="1" colspan="1"
 									aria-label="Rendering engine: activate to sort column ascending"
 									cursorshover="true">학년</th>
-								<th class="sorting sorting_desc" tabindex="0"
-									aria-controls="example1" rowspan="1" colspan="1"
-									aria-label="Browser: activate to sort column ascending"
-									cursorshover="true" aria-sort="descending">재학학기</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Platform(s): activate to sort column ascending"
 									cursorshover="true">학번</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="Platform(s): activate to sort column ascending"
-									cursorshover="true">학과코드</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Platform(s): activate to sort column ascending"
@@ -36,10 +28,7 @@
 									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending"
 									cursorshover="true">전화번호</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">주소</th>
+							
 							</tr>
 						</thead>
 						<tbody>
@@ -53,24 +42,18 @@
 								</c:if>
 								
 								<td class="dtr-control sorting_1" tabindex="0">${studentList.stuYr}</td>
-								<td>${studentList.stuSem}</td>
 								<td> ${studentList.stuNo}</td>
-								<td>${studentList.depCd}</td>
 								<td><a href="/professor/management/detail?stuNo=${studentList.stuNo }">${studentList.stuNm }</a></td>
 								<td>${studentList.stuTel }</td>
-								<td>${studentList.stuAddr1 }&nbsp;${studentList.stuAddr2 }</td>
 				
 							</c:forEach>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th rowspan="1" colspan="1">학년</th>
-								<th rowspan="1" colspan="1">재학학기</th>
 								<th rowspan="1" colspan="1">학번</th>
-								<th rowspan="1" colspan="1">학과코드</th>
 								<th rowspan="1" colspan="1">이름</th>
 								<th rowspan="1" colspan="1">전화번호</th>
-								<th rowspan="1" colspan="1">주소</th>
 							</tr>
 						</tfoot>
 					</table>

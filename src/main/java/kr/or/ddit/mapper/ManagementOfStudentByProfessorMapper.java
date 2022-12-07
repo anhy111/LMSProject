@@ -8,4 +8,6 @@ public interface ManagementOfStudentByProfessorMapper {
 
 	//학생 조회
 	public List<Student> StudentList();
+	//학생 상세
+	public Student StudentDetail(int stuNo);
 }

@@ -8,11 +8,28 @@
 
 <!-- 학생 목록 -->
 <select id="StudentList" resultType="student">
-SELECT STU_NO, DEP_CD, STU_YR, STU_SEM, STU_NM, STU_NME, STU_TEL, STU_ZIP, STU_ADDR1, STU_ADDR2
+SELECT STU_NO, STU_YR, STU_NM, STU_TEL
 FROM STUDENT
 </select>
-
 <!-- 상세 -->
+<select id="StudentDetail" parameterType="int" resultType="student">
+SELECT 
+  S.STU_NO
+, S.DEP_CD
+, S.STU_YR
+, S.STU_SEM
+, S.STU_NM
+, S.STU_NME
+, S.STU_TEL
+, S.STU_ADDR1
+, S.STU_ADDR2
+, SUBSTR(S.STU_REG,1,6) AS STU_REG
+, D.DEP_NM
+, S.STU_PIC
+FROM STUDENT S, DEPARTMENT D
+WHERE S.STU_NO = #{stuNo}
+AND S.DEP_CD = D.DEP_CD
+</select>
 <!-- 수정 -->
 <!-- 입력 -->
 <!-- 삭제 -->
