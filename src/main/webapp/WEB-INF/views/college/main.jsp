@@ -42,19 +42,26 @@
 							<div class="text-right">
 								<a href="#" class="btn btn-sm bg-teal"> <i
 									class="fas fa-comments"></i>
-								</a> <a href="/college/detail?colCd=${collegeList.colCd }" class="btn btn-sm btn-primary"> <i
-									class="fas fa-user"></i>상세보기
+								</a> 
+								<a href="/college/detail?colCd=${collegeList.colCd }" class="btn btn-sm btn-primary"> 상세보기
+								</a>
+								<!-- 관리자만 볼 수 있는 버튼으로 구현 예정 -->
+								<a id="collegeDelete"  href="/college/delete?colCd=${collegeList.colCd }" class="btn btn-sm btn-danger"> 정보삭제
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
-
+			
 		</div>
 	</div>
 
 	<div class="card-footer">
+			<div class="col-2">
+				<!-- 관리자만 볼 수 있는 버튼으로 구현 예정 -->
+				<a id="collegeInsert"  href="/college/regist" class="btn btn-sm btn-info"> 단과대등록</a>
+			</div>
 		<nav aria-label="Contacts Page Navigation">
 			<ul class="pagination justify-content-center m-0">
 				<!-- 				<li class="page-item active"><a class="page-link" href="#">1</a></li> -->

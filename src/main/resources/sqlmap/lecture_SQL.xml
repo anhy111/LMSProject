@@ -2,7 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.LectureMapper">
 
-
+	<sql id="where">
+		<!-- 강의 검색 -->
+		and  (  L.LECA_CD     LIKE '%' || #{keyword} || '%'
+	    or      E.EMP_NM      LIKE '%' || #{keyword} || '%'
+	  	or      LA.LECA_NM    LIKE '%' || #{keyword} || '%'
+	 	or      LA.LECA_CRD   LIKE '%' || #{keyword} || '%'
+	 	or      LA.LECA_CAP   LIKE '%' || #{keyword} || '%'
+	 	or      LA.LECA_CATE  LIKE '%' || #{keyword} || '%'
+	 	or      LA.LECA_YR    LIKE '%' || #{keyword} || '%')
+	</sql>
+	
+	<!-- lecture resultMap======================================================================== -->
 	<resultMap type="lecture" id="lectureMap">
 		<result property="lecaCd" column="LECA_CD" />
 		<result property="subCd" column="SUB_CD" />
@@ -12,7 +23,10 @@
 		<result property="depCd" column="DEP_CD" />
 		<collection property="lecApply" resultMap="lecApplyMap"></collection>
 		<collection property="employee" resultMap="employeeMap"></collection>
+		<collection property="department" resultMap="departmentMap"></collection>
 	</resultMap>
+	
+	<!-- employee resultMap======================================================================== -->
 	<resultMap type="employee" id="employeeMap">
 		<result property="empNo"  column="EMP_NO" />
 		<result property="empNm" column="EMP_NM" />
@@ -30,18 +44,20 @@
 		<result property="empJoin"  column="EMP_JOIN" />
 		<result property="empRet" column="EMP_RET" />
 	</resultMap>
+	
+	<!-- lecApply resultMap======================================================================== -->
 	<resultMap type="lecApply" id="lecApplyMap">
-		<result property="lecaCd" column="LECA_CD" />
-		<result property="lecaYr" column="LECA_YR" />
+		<result property="lecaCd"  column="LECA_CD" />
+		<result property="lecaYr"  column="LECA_YR" />
 		<result property="lecaSem" column="LECA_SEM" />
-		<result property="lecaNm" column="LECA_NM" />
+		<result property="lecaNm"  column="LECA_NM" />
 		<result property="lecaCon" column="LECA_CON" />
 		<result property="lecaTrg" column="LECA_TRG" />
 		<result property="lecaCrd" column="LECA_CRD" />
 		<result property="lecaPer" column="LECA_PER" />
 		<result property="lecaCap" column="LECA_CAP" />
-		<result property="lecaTm" column="LECA_TM" />
-		<result property="lecaWk" column="LECA_WK" />
+		<result property="lecaTm"  column="LECA_TM" />
+		<result property="lecaWk"  column="LECA_WK" />
 		<result property="lecaHall" column="LECA_HALL" />
 		<result property="lecaUnit" column="LECA_UNIT" />
 		<result property="lecaBook" column="LECA_BOOK" />
@@ -55,8 +71,41 @@
 		<result property="lecaTp" column="LECA_TP" />
 		<result property="lecaAp" column="LECA_AP" />
 	</resultMap>
+	
+	<!-- DEPARTMENT resultMap======================================================================== -->
+	<resultMap type="department" id="departmentMap">
+		<result property="depCd"  column="DEP_CD" />
+		<result property="colCd"  column="COL_CD" />
+		<result property="proNo"  column="PRO_NO" />
+		<result property="depNm"  column="DEP_NM" />
+		<result property="depDes" column="DEP_DES" />
+		<result property="depCap" column="DEP_CAP" />
+		<result property="depTel" column="DEP_TEL" />
+		<result property="empNo"  column="EMP_NO"/>
+	</resultMap>
 
-	<select id="lectureSearch" resultMap="lectureMap">
+	<!-- 이번 학기 전체 강의 목록======================================================================== -->
+	<select id="lectureSearch" parameterType="string" resultMap="lectureMap">
+		SELECT 
+		       L.LECA_CD 
+		     , E.EMP_NM 
+		     , LA.LECA_NM 
+		     , LA.LECA_CRD 
+		     , D.DEP_NM
+		     , LA.LECA_CAP 
+		     , LA.LECA_CATE 
+		     , LA.LECA_YR
+		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
+		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
+		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
+		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
+		<if test="keyword != null and keyword !=''">
+				<include refid="where"></include>
+		</if>
+	</select>
+	
+	<!-- 강의 목록 검색(검색기능)======================================================================== -->
+	<select id="lectureSearch2" resultMap="lectureMap">
 		SELECT 
 		       L.LECA_CD 
 		     , E.EMP_NM 
@@ -68,7 +117,6 @@
 		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
 		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA
 		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD
-
 	</select>
 </mapper>
 

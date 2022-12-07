@@ -29,6 +29,15 @@ SET
 WHERE COL_CD = #{colCd}
 </update>
 <!-- 입력 -->
+<insert id="CollegeRegist"  parameterType="College">
+INSERT INTO COLLEGE (COL_CD, COL_NM, COL_DES, COL_TEL, COL_ADDR, COL_IMG_URL) 
+VALUES(#{colCd}, #{colNm}, #{colDes}, #{colTel}, #{colAddr}, #{colImgUrl})
+</insert>
 <!-- 삭제 -->
+<delete id="CollegeDelete" parameterType="int">
+DELETE 
+FROM COLLEGE
+WHERE COL_CD = #{colCd}
+</delete>
 </mapper>
 

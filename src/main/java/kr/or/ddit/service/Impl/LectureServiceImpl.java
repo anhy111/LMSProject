@@ -18,8 +18,8 @@ public class LectureServiceImpl implements LectureService{
 	
 	//강의 목록 조회
 	@Override
-	public List<Lecture> lectureSearch(){
-		return this.lectureMapper.lectureSearch();
+	public List<Lecture> lectureSearch(String keyword){
+		return this.lectureMapper.lectureSearch(keyword);
 	}
 
 }
