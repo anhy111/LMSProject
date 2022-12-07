@@ -134,7 +134,7 @@
 						<a href="#" class="nav-link"> 
 							<i class="nav-icon fas fa-book"></i>
 							<p>
-								강의 계획서 <i class="right fas fa-angle-left"></i>
+								강의 계획서</i>
 							</p>
 						</a>
 					</li>
