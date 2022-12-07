@@ -29,49 +29,52 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomLoginSuccessHandler extends 
 	SavedRequestAwareAuthenticationSuccessHandler {
-	
+
 	@Autowired
 	MemberMapper memberMapper;
-	
+
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request,
-			HttpServletResponse response, Authentication auth) 
-					throws ServletException, IOException {
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
+			throws ServletException, IOException {
 		log.warn("onAuthenticationSuccess에 옴 로그인 성공 !!!!");
-		
-		//Authentication(인증) -> 로그인
-		CustomUser customUser = (CustomUser)auth.getPrincipal();
-		
-		//로그인 아이디
+
+		// Authentication(인증) -> 로그인
+		CustomUser customUser = (CustomUser) auth.getPrincipal();
+
+		// 로그인 아이디
 		log.info("username : " + customUser.getUsername());
 		Member member = customUser.getMemberVO();
-//		Member read = memberMapper.read(member.getMemNo());
+		Member read = memberMapper.read(member.getMemNo());
 		Employee readEmployee = memberMapper.readEmployee(member.getMemNo());
 		Student readStudent = memberMapper.readStudent(member.getMemNo());
 		Professor readProfessor = memberMapper.readProfessor(member.getMemNo());
 		Manager readManager = memberMapper.readManager(member.getMemNo());
-		
+
 		log.info("이렇게하면 들어올까욤? " + readEmployee);
-		
 		HttpSession session = request.getSession();
-		if(readEmployee != null) {
-			if(readProfessor != null) {
+
+		session.setAttribute("no", read.getMemNo());
+		String no = String.valueOf(session.getAttribute("no"));
+		log.info("no는?? " + no);
+
+		if (readEmployee != null) {
+			if (readProfessor != null) {
 				session.setAttribute("name", readEmployee.getEmpNm());
 				session.setAttribute("position", readProfessor.getProPos());
-			}else {
+
+			} else {
 				session.setAttribute("name", readEmployee.getEmpNm());
 				session.setAttribute("position", readManager.getMgrPos());
 				session.setAttribute("division", readManager.getMgrDiv());
 			}
-		}else {
+		} else {
 			session.setAttribute("name", readStudent.getStuNm());
 			String name = String.valueOf(session.getAttribute("name"));
 			session.setAttribute("department", readStudent.getDepNm());
-			
 			log.info("name은??" + name);
 		}
-		
+
 		super.onAuthenticationSuccess(request, response, auth);
 	}
-	
+
 }
