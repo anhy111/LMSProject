@@ -4,7 +4,7 @@
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <!-- tiles 설정 -->
 <tiles-definitions>
-	<!-- main layout -->
+	<!-- main layout 모든 타일즈 적용 -->
 	<definition name="tiles-layout" template="/WEB-INF/views/tiles/index.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
 		<put-attribute name="aside" value="/WEB-INF/views/tiles/aside.jsp" />
@@ -14,12 +14,20 @@
 	<!-- name의 */*은 body의 value에서 1과 2에 해당
 		controller에서 forwarding 시 return "1/2";
 	 -->
-	<definition name="*/*" extends="tiles-layout">
-		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+	<definition name="test/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/test/{1}.jsp" />
 	</definition>
-	<definition name="*/*/*" extends="tiles-layout">
-		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+
+
+	<!-- 타일즈 미적용 -->
+	<definition name="no-tiles" template="/WEB-INF/views/tiles/empty.jsp">
+		<put-attribute name="body" value="" />
 	</definition>
+
+	<definition name="login/*" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/login/{1}.jsp" />
+	</definition>
+	
 </tiles-definitions>
 
 

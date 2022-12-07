@@ -23,7 +23,7 @@ public class CommonController {
 	
 	//기본 로그인 페이지가 아닌 사용자가 직접 정의한 로그인 페이지를 사용함
 	//요청 URI : /security/login
-	@RequestMapping("/security/login")
+	@RequestMapping("/login/login")
 	public String loginForm(String error, String logout, Model model) {
 		// 시큐리티에서 DB에 없으면 error를 보내고 없으면 null을 보내냐 보댜 ㅇㅁㅇ
 		log.info("error : " + error);
@@ -40,7 +40,7 @@ public class CommonController {
 		}
 		
 		
-		return "security/loginForm";
+		return "login/loginForm";
 	}
 	
 }
