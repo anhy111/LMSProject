@@ -60,29 +60,12 @@ public class LectureController {
 		return mav;
 	}
 	
-<<<<<<< HEAD
-	@GetMapping("/lecture/lectureBoard")
-	public ModelAndView test2(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword,Principal principal) {
-		String professorId = principal.getName(); // 로그인한 아이디 (세션) 가져오기
-		List<Lecture> list = this.lectureservice.professorLecture(professorId);
-		log.info("====================================================");
-		log.info("====================================================");
-		for (Lecture lecture2 : list) {
-			log.info(lecture2.toString());
-		}
-		
-		mav.addObject("lecture", list);
-		mav.setViewName("lecture/lectureBoard");
-		
-		return mav;
-=======
 	@GetMapping("/lectureBoard/lectureBoard")
 	public String test2() {
 		
 		
 		
 		return "lectureBoard/lectureBoard";
->>>>>>> branch 'master' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 	}
 
 }
