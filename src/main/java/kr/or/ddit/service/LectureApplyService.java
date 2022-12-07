@@ -1,10 +1,8 @@
 package kr.or.ddit.service;
 
-import kr.or.ddit.domain.LecApply;
-
-import java.util.List;
+import kr.or.ddit.domain.Professor;
 
 public interface LectureApplyService {
 
-    public List<LecApply> list();
+	public Professor proInfo(int proNo);
 }

@@ -1,10 +1,9 @@
 package kr.or.ddit.mapper;
 
-import kr.or.ddit.domain.LecApply;
-
-import java.util.List;
+import kr.or.ddit.domain.Professor;
 
 public interface LectureApplyMapper {
 
-    public List<LecApply> list();
+	// 교수 상세
+    public Professor proInfo(int proNo);
 }
