@@ -42,7 +42,7 @@
                         <c:forEach var="noticeBasic" items="${noticeBasicList}" varStatus="stat">
                         <c:if test="${stat.count%2!=0 }">
                         <tr class="odd"></c:if>
-                        <c:if test="${stat.count%2==0 }">
+                            <c:if test="${stat.count%2==0 }">
                         <tr class="even"></c:if>
                             <td class="dtr-control sorting_1" tabindex="0">${noticeBasic.noticeCd}</td>
                             <td><a href="${noticeBasic.noticeCd }#">${noticeBasic.noticeTtl}</a></td>
@@ -51,14 +51,15 @@
                             <td><fmt:formatDate value="${noticeBasic.noticeUpd }" pattern="yyyy년 MM월 dd일"/></td>
                             </c:forEach>
                         </tbody>
+                        <a href="/notice/noticeForm" class="btn btn-sm btn-primary"> 글쓰기
                         <tfoot>
-<%--                        <tr>--%>
-<%--                            <th rowspan="1" colspan="1">공지사항코드</th>--%>
-<%--                            <th rowspan="1" colspan="1">제목</th>--%>
-<%--                            <th rowspan="1" colspan="1">내용</th>--%>
-<%--                            <th rowspan="1" colspan="1">작성일</th>--%>
-<%--                            <th rowspan="1" colspan="1">수정일</th>--%>
-<%--                        </tr>--%>
+                        <%--                        <tr>--%>
+                        <%--                            <th rowspan="1" colspan="1">공지사항코드</th>--%>
+                        <%--                            <th rowspan="1" colspan="1">제목</th>--%>
+                        <%--                            <th rowspan="1" colspan="1">내용</th>--%>
+                        <%--                            <th rowspan="1" colspan="1">작성일</th>--%>
+                        <%--                            <th rowspan="1" colspan="1">수정일</th>--%>
+                        <%--                        </tr>--%>
                         </tfoot>
                     </table>
                 </div>
