@@ -96,6 +96,77 @@
 
 			}
 		});
+		
+		//년도 및 학기 불러오기
+		$.ajax({
+			url : "/professor/getYrNSem",
+			type : "POST",
+			dataType : "JSON",
+			beforeSend:function(xhr) {
+				xhr.setRequestHeader(header,token);
+			},
+			success : function(res) {
+				str = '';
+				
+				$.each(res, function(i, v) {
+					str += '<option value="'+ v.lecaYr + v.lecaSem + '">' + v.lecaYr + '/' + v.lecaSem + '학기</option>';
+				});
+				
+				$('#cateYrNSem').append(str);
+			}
+		});
+		
+		//강의계획서 리스트 가져오기
+		$.ajax({
+			url : "/lecApply/getList",
+			type : "POST",
+			contentType : "application/json;charset=utf-8",
+			dataType : "JSON",
+			beforeSend:function(xhr) {
+				xhr.setRequestHeader(header,token);
+			},
+			success : function(res) {
+				
+				$.each(res, function(i,v){
+					res[i]['btn'] = '<button class="btn btn-outline-secondary btn-sm" style="font-family:Nunito,sans-serif;" onclick="getSyllabus(' + v.lecaCd +')">강의계획서</button>';
+				});
+				
+				grid = new tui.Grid({
+					el : document.getElementById('grid'),
+					data : res,
+					scrollX : true,
+					scrollY : true,
+					bodyHeight : 340,
+					columns : [
+						{header : '년도/학기', name : 'lecaCon', filter : 'select', width:120, align : 'center'},
+						{header : '학년', name : 'lecaTrg', filter : 'select', width : 70, align : 'center'},
+						{header : '과목번호', name : 'subCd', filter : 'select', width : 110, align : 'center'},
+						{header : '과목명', name : 'lecaNm', filter : 'select', width : 280},
+						{header : '제한인원', name : 'lecaMax', width : 90, align : 'center'},
+						{header : '개설이수구분', name : 'lecaCate', width : 120, align : 'center'},
+						{header : '학점', name : 'lecaCrd', width : 70, align : 'center'},
+						{header : '강의시간/강의실', name : 'lecaTt', width : 310},
+						{header : '성적평가방식', name : 'lecaGrade', width : 110, align : 'center'},
+						{header : '승인여부', name : 'lecaBook', filter : 'select', width : 120, align : 'center'},
+						{header : '자세히 보기', name : 'btn', width : 150, align : 'center'}
+					],
+					columnOptions: {
+				        resizable: true
+				    }
+				});
+				
+				//승인 - 그대로, 승인완료 - 파랑, 반려 - 빨강
+				var dataSet = grid.getData();
+				$.each(dataSet, function(i1, v1) {
+					if(v1.lecaBook == '승인') {
+						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorBlue");
+					}else if(v1.lecaBook == '반려') {
+						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorRed");
+					}
+				});
+			}
+		});
+		
 	}
 </script>
 </html>

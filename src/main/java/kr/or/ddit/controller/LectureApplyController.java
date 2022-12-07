@@ -1,5 +1,7 @@
 package kr.or.ddit.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.service.LectureApplyService;
 import lombok.extern.slf4j.Slf4j;
@@ -57,44 +60,25 @@ public class LectureApplyController {
 		return professor;
 	}
 	
-	// 교수 개인정보
-//	@PostMapping("/proInfo")
-//	public String proInfo(int proNo, Model model, HttpSession session) {
-//		
-//		log.info("proNo : " + proNo);
-//		
-//		//책 상세보기 데이터 가져온다
-//		Professor professor = this.lectureApplyService.proInfo(proNo);
-//		log.info("professor : " + professor);
-//		
-//		//공통 약속
-//		model.addAttribute("bodyTitle", "교수 상세");
-//		model.addAttribute("professor", professor);
-//		
-//		return "professor/proInfo";
-//	}
+	//년도 및 학기 불러오기
+	@ResponseBody
+	@PostMapping("/getYrNSem")
+	public List<LecApply> getYrNSem(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		LecApply lecApply = (LecApply)session.getAttribute("memSession");
+		int proNo = 0;
+		
+		if(lecApply == null) {
+			proNo = 201100036;
+		}else {
+			proNo = lecApply.getLecaCd();
+		}
+		
+		List<LecApply> list = this.lectureApplyService.getYrNSem(proNo);
+		
+		return list;
+	}
 	
-	//제출한 강의계획서 리스트 불러오기
-//	@ResponseBody
-//	@PostMapping("/getList")
-//	public List<LecApplyVO> getList(HttpServletRequest request) {
-//		
-//		HttpSession session = request.getSession();
-//		MemberVO memberVO = (MemberVO)session.getAttribute("memSession");
-//		int memCd = 0;
-//		
-//		if(memberVO == null) {
-//			memCd = 201100036;
-//		}else {
-//			memCd = memberVO.getMemCd();
-//		}
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("memCd", memCd);
-//		
-//		List<LecApplyVO> list = this.lectureApplyService.list(map);
-//		
-//		return list;
-//	}
 
 }
