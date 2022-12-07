@@ -14,6 +14,9 @@
 	<!-- name의 */*은 body의 value에서 1과 2에 해당
 		controller에서 forwarding 시 return "1/2";
 	 -->
+	<definition name="test/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/test/{1}.jsp" />
+	</definition>
 	<definition name="professor/*/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/professor/{1}/{2}.jsp" />
 	</definition>

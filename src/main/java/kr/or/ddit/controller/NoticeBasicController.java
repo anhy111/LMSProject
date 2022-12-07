@@ -2,6 +2,8 @@ package kr.or.ddit.controller;
 
 import java.util.List;
 
+import kr.or.ddit.domain.notice.NoticeBasic;
+import kr.or.ddit.service.NoticeBasicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,19 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class NoticeBasicController {
 
-    private final LecNoticeService lecNoticeService;
+    private final NoticeBasicService noticeBasicService;
+
+    @GetMapping("/list")
+    public String LectureNoticeList(Model model) {
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.NoticeBasicList();
+
+        //공통 약속
+        model.addAttribute("bodyTitle","공지사항목록");
+        model.addAttribute("noticeBasicList", noticeBasicList);
+
+        //forwarding
+        return "notice/list";
+    }
 
     @GetMapping("/add")
     public String add() {
