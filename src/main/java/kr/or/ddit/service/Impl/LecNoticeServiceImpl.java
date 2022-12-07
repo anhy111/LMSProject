@@ -14,7 +14,7 @@ public class LecNoticeServiceImpl implements LecNoticeService{
 
 	@Autowired
 	LecNoticeMapper lectureNoticeMapper;
-	
+
 	//공지사항 목록
 	@Override
 	public List<LecNotice> LectureNoticeList(){

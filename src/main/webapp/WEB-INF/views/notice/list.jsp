@@ -16,11 +16,6 @@
                                 aria-label="Rendering engine: activate to sort column ascending"
                                 cursorshover="true">공지사항코드
                             </th>
-                            <th class="sorting sorting_desc" tabindex="0"
-                                aria-controls="example1" rowspan="1" colspan="1"
-                                aria-label="Browser: activate to sort column ascending"
-                                cursorshover="true" aria-sort="descending">강의코드
-                            </th>
                             <th class="sorting" tabindex="0" aria-controls="example1"
                                 rowspan="1" colspan="1"
                                 aria-label="Platform(s): activate to sort column ascending"
@@ -44,23 +39,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="lectureNotice" items="${lectureNoticeList}" varStatus="stat">
+                        <c:forEach var="noticeBasic" items="${noticeBasicList}" varStatus="stat">
                         <c:if test="${stat.count%2!=0 }">
                         <tr class="odd"></c:if>
                         <c:if test="${stat.count%2==0 }">
                         <tr class="even"></c:if>
-                            <td class="dtr-control sorting_1" tabindex="0">${lectureNotice.lntcCd}</td>
-                            <td>${lectureNotice.lecaCd }</td>
-                            <td><a href="${lectureNotice.lntcCd }#">${lectureNotice.lntcTtl}</a></td>
-                            <td>${lectureNotice.lntcCon }</td>
-                            <td><fmt:formatDate value="${lectureNotice.lntcReg }" pattern="yyyy년 MM월 dd일"/></td>
-                            <td><fmt:formatDate value="${lectureNotice.lntcUpd }" pattern="yyyy년 MM월 dd일"/></td>
+                            <td class="dtr-control sorting_1" tabindex="0">${noticeBasic.noticeCd}</td>
+                            <td><a href="${noticeBasic.noticeCd }#">${noticeBasic.noticeTtl}</a></td>
+                            <td>${noticeBasic.noticeCon }</td>
+                            <td><fmt:formatDate value="${noticeBasic.noticeReg }" pattern="yyyy년 MM월 dd일"/></td>
+                            <td><fmt:formatDate value="${noticeBasic.noticeUpd }" pattern="yyyy년 MM월 dd일"/></td>
                             </c:forEach>
                         </tbody>
                         <tfoot>
                         <tr>
                             <th rowspan="1" colspan="1">공지사항코드</th>
-                            <th rowspan="1" colspan="1">강의코드</th>
                             <th rowspan="1" colspan="1">제목</th>
                             <th rowspan="1" colspan="1">내용</th>
                             <th rowspan="1" colspan="1">작성일</th>
