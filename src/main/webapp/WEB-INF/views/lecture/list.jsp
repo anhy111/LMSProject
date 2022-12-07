@@ -12,10 +12,8 @@
 	let month = date.getMonth();
 	var semester;
 
-	if (month == '3' || month == '4' || month == '5' || month == '6')
-		semester = 1;
-	else if (month == '9' || month == '10' || month == '11' || month == '12')
-		semester = 2;
+	if (month == '3' || month == '4' || month == '5' || month == '6') semester = 1;
+	else if (month == '9' || month == '10' || month == '11' || month == '12') semester = 2;
 
 	let lectureListYear = year + "년도 " + semester + "학기 강의목록";
 	console.log(lectureListYear);
