@@ -1,6 +1,9 @@
 package kr.or.ddit.mapper;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Manager;
 import kr.or.ddit.domain.Member;
@@ -19,5 +22,9 @@ public interface MemberMapper  {
 	public Manager readManager(int memNo);
 	
 	public Professor readProfessor(int memNo);
+	
+	public String searchId(HashMap<String, String> map);
+	
+	public void changePw(Map<String, String> map);
 
 }

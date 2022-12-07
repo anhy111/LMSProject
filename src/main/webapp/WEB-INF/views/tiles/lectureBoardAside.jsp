@@ -129,6 +129,70 @@
 				</sec:authorize>
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
+<<<<<<< HEAD
+					<li class="nav-header">교수 어사이드11</li>
+					<li class="nav-item"><a href="#" class="nav-link"> <i
+							class="nav-icon fas fa-book"></i>
+							<p>
+								강의 <i class="right fas fa-angle-left"></i>
+							</p>
+					</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item"><a href="/lecture/list" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>전체 강의 조회</p>
+							</a></li>
+							<li class="nav-item"><a href="/professor/lecApplyInquiry" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>강의 개설</p>
+							</a></li>
+							<li class="nav-item"><a href="/lecture/myLecture" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>담당 강의 조회</p>
+							</a></li>
+						</ul></li>
+					<!-- 학적관리 -->
+					<li class="nav-item"><a href="#" class="nav-link"> <i
+							class="nav-icon fas fa-copy"></i>
+							<p>
+								평가 <i class="right fas fa-angle-left"></i>
+							</p>
+					</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item"><a href="#" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>수업 평가 조회</p>
+							</a></li>
+						</ul></li>
+					<li class="nav-item"><a href="#" class="nav-link"> <i
+							class="nav-icon fas fa-chart-pie"></i>
+							<p>공지사항</p>
+					</a></li>
+					<li class="nav-item"><a href="#" class="nav-link"> <i
+							class="nav-icon fas fa-edit"></i>
+							<p>결재</p>
+					</a></li>
+					<li class="nav-item"><a href="#" class="nav-link"> <i
+							class="nav-icon fas fa-book"></i>
+							<p>
+								학생 관리 <i class="right fas fa-angle-left"></i>
+							</p>
+					</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item"><a href="#" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>학생 목록</p>
+							</a></li>
+							<li class="nav-item"><a href="#" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>장학생 추천</p>
+							</a></li>
+						</ul></li>
+					<li class="nav-item"><a href="#" class="nav-link"> <i
+							class="nav-icon fas fa-book"></i>
+							<p>상담</p>
+					</a></li>
+=======
 					<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
 						<a href="#" class="nav-link"> 
@@ -211,6 +275,7 @@
 <!-- 							class="nav-icon fas fa-book"></i> -->
 <!-- 							<p>상담</p> -->
 <!-- 					</a></li> -->
+>>>>>>> branch 'master' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_MANAGER')">
 					<!-- 학사관리자 어사이드 -->
