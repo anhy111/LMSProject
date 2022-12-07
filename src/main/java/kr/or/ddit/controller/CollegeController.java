@@ -1,6 +1,6 @@
 package kr.or.ddit.controller;
 
-import java.util.List;  
+import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,15 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.service.CollegeService;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("/college")
 public class CollegeController {
@@ -51,7 +48,8 @@ public class CollegeController {
 	
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@PostMapping("/updatePost")
-	public String UpdatePost(@ModelAttribute  College college) {
+	public String updatePost(@ModelAttribute  College college) {
+		
 		
 		this.collegeService.CollegeUpdate(college);
 		return "redirect:/college/detail?colCd="+college.getColCd();
