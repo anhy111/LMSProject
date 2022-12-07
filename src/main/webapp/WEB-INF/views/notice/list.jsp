@@ -52,13 +52,13 @@
                             </c:forEach>
                         </tbody>
                         <tfoot>
-                        <tr>
-                            <th rowspan="1" colspan="1">공지사항코드</th>
-                            <th rowspan="1" colspan="1">제목</th>
-                            <th rowspan="1" colspan="1">내용</th>
-                            <th rowspan="1" colspan="1">작성일</th>
-                            <th rowspan="1" colspan="1">수정일</th>
-                        </tr>
+<%--                        <tr>--%>
+<%--                            <th rowspan="1" colspan="1">공지사항코드</th>--%>
+<%--                            <th rowspan="1" colspan="1">제목</th>--%>
+<%--                            <th rowspan="1" colspan="1">내용</th>--%>
+<%--                            <th rowspan="1" colspan="1">작성일</th>--%>
+<%--                            <th rowspan="1" colspan="1">수정일</th>--%>
+<%--                        </tr>--%>
                         </tfoot>
                     </table>
                 </div>
