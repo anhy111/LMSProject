@@ -124,7 +124,7 @@ $(function(){
 			return;
 		}
 		
-		tel = tel + "-" + tel1 + "-" + tel2;
+		tel = tel  + tel1  + tel2;
 		
 		let data = {"memNo":memNo, "tel":tel};
 		
@@ -157,10 +157,10 @@ $(function(){
 	})
 	
 	$('#passInfoInsertBtn').on('click',function(){
-		$('#memCd').attr('value','21715032');
+		$('#memNo').attr('value','201209001');
 		$('#tel').attr('value','010');
-		$('#tel1').attr('value','5539');
-		$('#tel2').attr('value','5081');
+		$('#tel1').attr('value','9932');
+		$('#tel2').attr('value','7362');
 	})
 	
 });
