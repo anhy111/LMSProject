@@ -27,7 +27,6 @@ public class StudentLectureApplyController {
 		
 //		model.addAttribute("list",list);
 		
-		model.addAttribute("bodyTitle","수강 신청");
 		return "student/lectureApply/lectureList";
 	}
 } 

@@ -32,6 +32,10 @@
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="/resources/adminlte/dist/css/adminlte.min.css">
+  <!-- jQuery -->
+<script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
+<link rel="stylesheet" href="/resources/adminlte/plugins/select2/css/select2.min.css">
 </head>
 <body class="sidebar-mini sidebar-closed sidebar-collapse">
 <div class="wrapper">
@@ -75,8 +79,6 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<!-- jQuery -->
-<script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="/resources/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -85,6 +87,10 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- adminLte -->
+<script src="/resources/adminlte/dist/js/adminlte.min.js"></script>
+<script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<script src="/resources/adminlte/dist/js/demo.js"></script>
 <!-- ChartJS -->
 <script src="/resources/adminlte/plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
