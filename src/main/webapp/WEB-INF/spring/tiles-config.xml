@@ -17,6 +17,10 @@
 	<definition name="professor/*/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/professor/{1}/{2}.jsp" />
 	</definition>
+	<definition name="lecture/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/lecture/{1}.jsp" />
+	</definition>
+
 	
 
 	<!-- 타일즈 미적용 -->
