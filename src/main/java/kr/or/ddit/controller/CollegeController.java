@@ -1,17 +1,14 @@
 package kr.or.ddit.controller;
 
-import java.util.List;  
+import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.service.CollegeService;
@@ -49,37 +46,13 @@ public class CollegeController {
 		return "college/detail";
 	}
 	
-	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@PostMapping("/updatePost")
-	public String UpdatePost(@ModelAttribute  College college) {
+	public String updatePost(@ModelAttribute  College college) {
+		log.info("업데이트");
+		log.info("college : " + college.toString() );
 		
 		this.collegeService.CollegeUpdate(college);
 		return "redirect:/college/detail?colCd="+college.getColCd();
 		}
 	
-	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	@GetMapping("/delete")
-	public String Delete(int colCd) {
-		this.collegeService.CollegeDelete(colCd);
-		
-		return "redirect:/college/main";
-	}
-	
-	@PreAuthorize("hasRole('ROLE_MANAGER')")
-	@GetMapping("/regist")
-	public String CollegeRegist(Model model) {
-		
-		model.addAttribute("bodyTitle","단과대학 등록");
-		
-		//forwarding
-		return "college/regist";
-	}
-	
-	@PostMapping("/registPost")
-	public String insertPost(@ModelAttribute College college) {
-		
-		this.collegeService.CollegeRegist(college);
-		 
-		return "redirect:/college/detail?colCd="+college.getColCd();
-	}
 }

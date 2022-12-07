@@ -20,9 +20,9 @@ public class LectureController {
 	LectureService lectureservice;
 	
 	@GetMapping("/lecture/list")
-	public ModelAndView test(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword) {
+	public ModelAndView test(ModelAndView mav, @ModelAttribute Lecture lecture) {
 		
-		List<Lecture> list = this.lectureservice.lectureSearch(keyword);
+		List<Lecture> list = this.lectureservice.lectureSearch();
 		log.info("====================================================");
 		log.info("====================================================");
 		log.info("====================================================");
@@ -33,6 +33,7 @@ public class LectureController {
 		log.info("====================================================");
 		log.info("====================================================");
 		log.info("====================================================");
+		
 		for (Lecture lecture2 : list) {
 			log.info(lecture2.toString());
 		}

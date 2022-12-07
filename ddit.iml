@@ -22,7 +22,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="ddit" />
+          <factory-entry name="ddit" value="203ee1bb-1bbc-45c3-87a5-5bdb6902155c" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
