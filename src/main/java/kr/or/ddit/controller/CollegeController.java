@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.domain.College;
+import kr.or.ddit.domain.Department;
 import kr.or.ddit.service.CollegeService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,10 +38,12 @@ public class CollegeController {
 	@GetMapping("/detail")
 	public String CollegeDetail(int colCd, Model model) {
 		College collgeDetail = this.collegeService.CollegeDetail(colCd);
+		List<Department> departments = this.collegeService.DepartmentByCollegeList(colCd);
 		
 		//공통 약속
 		model.addAttribute("bodyTitle","단과대학상세");
 		model.addAttribute("collgeDetail", collgeDetail);
+		model.addAttribute("departments", departments);
 		
 		//forwarding
 		return "college/detail";
@@ -80,4 +83,5 @@ public class CollegeController {
 		 
 		return "redirect:/college/detail?colCd="+college.getColCd();
 	}
+	
 }

@@ -92,7 +92,7 @@
 			</div>
 
 
-
+	
 			<div id="spn1" class="card-footer">
 				<div style="text-align: right">
 					<a href="/professor/management/main"

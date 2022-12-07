@@ -1,6 +1,10 @@
 package kr.or.ddit.controller;
 
+import java.security.Principal;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +25,16 @@ public class ManagementOfStudentByProfessorController {
 	ManagementOfStudentByProfessorService managementOfStudentByProfessorService;
 	
 	@GetMapping("/main")
-	public String StudentList(Model model) {
-		List<Student> studentList = this.managementOfStudentByProfessorService.StudentList();
+	public String StudentList(Principal principal, HttpServletRequest request, Model model) {
+		//로그인된 교수 아이디 가져오기 1)
+		int professorId = Integer.parseInt(principal.getName());
+		
+		//로그인된 교수 아이디 가져오기 2)
+		HttpSession session = request.getSession();
+		int depCd = (int)session.getAttribute("no");
+		
+		
+		List<Student> studentList = this.managementOfStudentByProfessorService.StudentList(professorId);
 		
 		//공통 약속
 		model.addAttribute("bodyTitle","학생관리");

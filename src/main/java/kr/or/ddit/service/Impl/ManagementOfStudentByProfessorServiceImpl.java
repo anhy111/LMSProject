@@ -16,8 +16,8 @@ public class ManagementOfStudentByProfessorServiceImpl implements ManagementOfSt
 	
 	//학생 조회
 	@Override
-	public List<Student> StudentList(){
-		return this.managementOfStudentByProfessorMapper.StudentList();
+	public List<Student> StudentList(int depCd){
+		return this.managementOfStudentByProfessorMapper.StudentList(depCd);
 	}
 	//학생 상세
 	@Override
