@@ -111,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
 
 //			    toJson.put("subject","");				// 메시지 제목 * LMS Type에서만 사용할 수 있습니다.
 		toJson.put("content", "<연수대>임시비밀번호[" + temp + "]로 비밀번호가 변경되었습니다."); // 메시지 내용 * Type별로 최대 byte 제한이 다릅니다.* SMS: 80byte/ LMS: 2000byte
-		toJson.put("to", tel.replace("-", "")); // 수신번호 목록 * 최대 50개까지 한번에 전송할 수 있습니다.
+		toJson.put("to", tel); // 수신번호 목록 * 최대 50개까지 한번에 전송할 수 있습니다.
 		toArr.add(toJson);
 
 		bodyJson.put("type", "sms"); // 메시지 Type (sms | lms)
