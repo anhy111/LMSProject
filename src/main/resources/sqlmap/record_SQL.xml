@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : xml파일은 여러개일 수 있음. 
+이를 구별하기 위한 식별 용도로 사용 -->
+<mapper namespace="kr.or.ddit.mapper.RecordMapper">
+
+
+<!-- 신청 -->
+<insert id="RecordApply" parameterType="Record" >
+INSERT INTO RECORD (
+		REC_CD
+		, STU_NO
+		, RGB_CD
+		, REC_YR
+		, REC_SEM
+		, REC_PER
+		, REC_RSN
+		, REC_DT
+		, REC_YN)
+VALUES(
+		RECORD_SEQ.NEXTVAL
+		, #{stuNo}
+		, #{rgbCd}
+		, TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		, #{recSem}
+		, #{recPer}
+		, #{recRsn}
+		', SYSDATE
+		, 0)
+</insert>
+</mapper>
+
