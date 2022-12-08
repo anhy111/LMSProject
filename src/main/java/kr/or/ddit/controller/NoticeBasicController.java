@@ -60,6 +60,8 @@ public class NoticeBasicController {
         noticeBasic.setNoticeReg(new Date());
         noticeBasic.setNoticeUpd(new Date());
 
+        System.out.println(noticeBasic);
+
         //         noticeService.saveNotice(noticeBasic);
 
         return "redirect:notice/list";
