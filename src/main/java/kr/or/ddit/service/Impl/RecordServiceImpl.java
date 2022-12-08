@@ -1,5 +1,7 @@
 package kr.or.ddit.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,10 @@ public class RecordServiceImpl implements RecordService{
 	@Override
 	public int RecordApply(Record record) {
 		return this.recordMapper.RecordApply(record);
+	}
+	//학적변동조회(신청목록조회)
+	@Override
+	public List<Record> RecordList(int stuNo){
+		return this.recordMapper.RecordList(stuNo);
 	}
 }

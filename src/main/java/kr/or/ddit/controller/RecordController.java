@@ -1,6 +1,10 @@
 package kr.or.ddit.controller;
 
 import java.security.Principal;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,23 @@ public class RecordController {
 	@Autowired
 	RecordService recordService;
 	
+	@GetMapping("/main")
+	public String RecordList(Model model, Principal principal, HttpServletRequest request) {
+		//로그인 된 학생 아이디 가져오기 1)
+		int stuNo = Integer.parseInt(principal.getName());
+		//로그인 된 학생 아이디 가져오기 2)
+		HttpSession session = request.getSession();
+		
+		List<Record> recordsList = this.recordService.RecordList(stuNo);
+		
+		//공통 약속
+		model.addAttribute("bodyTitle","학적변동조회");
+		model.addAttribute("recordsList",recordsList);
+		
+		//forwarding
+		return "record/main";
+	}
+	
 	@GetMapping("/apply")
 	public String RecordApply(Principal principal, Model model) {
 		model.addAttribute("bodyTitle", "신청");
@@ -36,8 +57,16 @@ public class RecordController {
 	
 	@PostMapping("/applyPost")
 	public String RecordApplyPost(@ModelAttribute Record record) {
+		log.info("입력포스트 들어왔니");
+		log.info("들어온 값 : " + record.toString());
+		if(record.getRgbCd().contains("휴학")) {
+			String subRbgCd = record.getRgbCd().substring(3,7);
+			record.setRgbCd(subRbgCd);
+		}
+		
 		this.recordService.RecordApply(record);
+		
 		//신청 완료시 신청 내역 페이지(아직 안만듬)로 리다이렉트하게 구현예정 
-		return "redirect:/record/apply";
+		return "redirect:/record/main";
 	}
 }

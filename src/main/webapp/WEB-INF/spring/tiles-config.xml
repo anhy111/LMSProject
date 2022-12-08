@@ -42,6 +42,9 @@
 	<definition name="student/*/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/student/{1}/{2}.jsp" />
 	</definition>
+	<definition name="record/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/record/{1}.jsp" />
+	</definition>
 	
 
 	<!-- 타일즈 미적용 -->
