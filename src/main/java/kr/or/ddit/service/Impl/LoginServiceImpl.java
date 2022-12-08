@@ -28,12 +28,12 @@ import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.MemberMapper;
-import kr.or.ddit.service.MemberService;
+import kr.or.ddit.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class MemberServiceImpl implements MemberService {
+public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	MemberMapper memberMapper;

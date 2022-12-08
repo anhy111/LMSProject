@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.or.ddit.service.MemberService;
+import kr.or.ddit.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class CommonController {
+public class LoginController {
 	
 	@Autowired
-	MemberService memberService;
+	LoginService loginService;
 	
 	//스프링 시큐리티 접근 권한 
 	//접근이 불가능한 페이지라면 접근 거부 처리가 되어 accessError.jsp를 forwarding함.
@@ -84,7 +84,7 @@ public class CommonController {
 		map.put("memBir", memBir);
 		map.put("memTel", memTel);
 		
-		String searchId = memberService.searchId(map);
+		String searchId = loginService.searchId(map);
 		
 		ResponseEntity<String> entity = new ResponseEntity<String>(searchId, HttpStatus.OK);
 		
@@ -100,7 +100,7 @@ public class CommonController {
 		log.info("tel(최초) : " + map.get("tel"));
 		
 		//메시지 발송 + 회원정보변경
-		String temp = this.memberService.changePw(map);
+		String temp = this.loginService.changePw(map);
 		
 		return map.get("tel");
 		
