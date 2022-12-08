@@ -12,4 +12,6 @@ public interface LectureService {
 
 	public List<Lecture> professorLecture(String professorId);
 
+	public Lecture searchTask(String lecaCd);
+
 }

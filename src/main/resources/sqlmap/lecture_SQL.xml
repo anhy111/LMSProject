@@ -31,6 +31,7 @@
 		<collection property="lecApply" resultMap="lecApplyMap"></collection>
 		<collection property="employee" resultMap="employeeMap"></collection>
 		<collection property="department" resultMap="departmentMap"></collection>
+    <collection property="taskList" resultMap="taskMap"></collection>
 	</resultMap>
 	
 	<!-- employee resultMap======================================================================== -->
@@ -90,6 +91,17 @@
 		<result property="depTel" column="DEP_TEL" />
 		<result property="empNo"  column="EMP_NO"/>
 	</resultMap>
+  
+  <!-- DEPARTMENT resultMap======================================================================== -->                                                                                                                                              
+	<resultMap type="task" id="taskMap">                                                                                                                                                                                                               
+		<result property="taskCd" column="TASK_CD"/>                                                                                                                                                                                                   
+		<result property="lecaCd" column="LECA_CD"/>                                                                                                                                                                                                   
+		<result property="taskNm" column="TASK_NM"/>                                                                                                                                                                                                   
+		<result property="taskCon" column="TASK_CON"/>                                                                                                                                                                                                 
+		<result property="taskSdt" column="TASK_SDT"/>                                                                                                                                                                                                 
+		<result property="taskEdt" column="TASK_EDT"/>                                                                                                                                                                                                 
+		<result property="atchFileId" column="ATCH_FILE_ID" />                                                                                                                                                                                         
+	</resultMap>   
 
 	<!-- 이번 학기 전체 강의 목록======================================================================== -->
 	<select id="lectureSearch" parameterType="string" resultMap="lectureMap">
@@ -125,6 +137,20 @@
 <!-- 				<include refid="where2"></include> -->
 <!-- 		</if> -->
 	</select>
+  
+  <select id="searchTask" resultMap="lectureMap" parameterType="String">                                                                                                                                                                                                    
+	select LA.LECA_NM,
+	       LA.LECA_CD,
+	       T.TASK_CD,
+	       T.TASK_NM,
+	       T.TASK_CON,
+	       T.TASK_SDT,
+	       T.TASK_EDT
+	from LECTURE L, TASK T, LEC_APPLY LA
+	WHERE L.LECA_CD = T.LECA_CD
+	AND LA.LECA_CD = L.LECA_CD
+	and LA.LECA_CD = #{lecaCd}                                                                                                                                                                                                                      
+	</select>       
 	
 	<select id="studentNotYetApplyLectureList" parameterType="studentLecture" resultMap="lectureMap">
 	
@@ -154,10 +180,3 @@
 	</select>
 	
 </mapper>
-
-
-
-
-
-
-
