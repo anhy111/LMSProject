@@ -17,4 +17,6 @@ public interface LectureService {
 	
 	// 학생이 수강신청한 강의 리스트
 	public List<Lecture> studentCompleteApplyLectureList(StudentLecture studentLecture);
+	public Lecture searchTask(String lecaCd);
+
 }

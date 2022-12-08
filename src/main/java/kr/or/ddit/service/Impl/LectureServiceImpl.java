@@ -37,5 +37,8 @@ public class LectureServiceImpl implements LectureService{
 	public List<Lecture> studentNotYetApplyLectureList(StudentLecture studentLecture) {
 		return this.lectureMapper.studentNotYetApplyLectureList(studentLecture);
 	}
-
+	@Override
+	public Lecture searchTask(String lecaCd){
+		return this.lectureMapper.searchTask(lecaCd);
+	}
 }

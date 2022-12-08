@@ -20,4 +20,6 @@ public interface LectureMapper {
 	
 	// 학생이 수강신청후 수강인원증가
 	public int increaseHeadcount(StudentLecture studentLecture);
+		
+		public Lecture searchTask(String lecaCd);
 }

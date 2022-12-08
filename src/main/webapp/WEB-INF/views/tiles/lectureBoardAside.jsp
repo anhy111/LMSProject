@@ -151,7 +151,7 @@
 							class="nav-icon fas fa-chart-pie"></i>
 							<p>강의 자료실</p>
 					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
+					<li class="nav-item"><a href="/lectureBoard/subjectList?lecaCd=${param.lecaCd}" class="nav-link"> <i
 							class="nav-icon fas fa-edit"></i>
 							<p>과제 및 평가</p>
 					</a></li>

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.LectureApplyMapper">
+	<sql id="yrNsem">
+		<if test="yrNsem != null and !yrNsem.equals('')">
+			AND     U.LECA_YR || U.LECA_SEM = #{yrNsem}
+		</if>
+	</sql>
 
 <!-- 	<resultMap type="professor" id="lecApplyMap"> -->
 <!-- 		<result property="proPos" column="PRO_POS" /> -->
@@ -61,6 +66,27 @@
 		AND     P.DEP_CD = D.DEP_CD
 		AND     D.COL_CD = C.COL_CD
 		AND     P.PRO_NO = #{empNo}
+	</select>
+	
+	<select id="getYrNSem" parameterType="int" resultType="lecApply">
+		SELECT  L.LECA_YR
+		        , CASE WHEN SUBSTR(L.LECA_SEM, 4, 2) IN ('2', '3', '4', '5', '6', '7', '8') THEN ' 1'
+		               WHEN SUBSTR(L.LECA_SEM, 4, 2) IN ('9') THEN ' 2'
+		               WHEN SUBSTR(L.LECA_SEM, 4, 1) IN ('1', '2') THEN ' 2'
+		               END  LECA_SEM
+		FROM    LEC_APPLY L, LECTURE T
+		WHERE   L.PRO_NO = #{empNo}
+		AND		T.LECA_YN = 'Y'
+		AND     L.LECA_CD = T.LECA_CD
+		ORDER BY L.LECA_YR DESC, LECA_SEM DESC
+	</select>
+	
+	<select id="getCnt" parameterType="hashMap" resultType="int">
+		SELECT  COUNT(L.LECA_CD)
+		FROM    LEC_APPLY L
+		WHERE   L.PRO_NO = #{empNo}
+		<include refid="yrNsem"></include>
+		AND     L.LECA_IMSI_YN IS NULL
 	</select>
 	
 </mapper>

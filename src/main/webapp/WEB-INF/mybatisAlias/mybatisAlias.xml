@@ -26,5 +26,6 @@
 		<typeAlias type="kr.or.ddit.domain.Record" alias="Record"/><!-- 학생의 학적 테이블 --> 
 		<typeAlias type="kr.or.ddit.domain.Department" alias="department"/>
 		<typeAlias type="kr.or.ddit.domain.StudentLecture" alias="studentLecture"/>
+		<typeAlias type="kr.or.ddit.domain.Task" alias="task"/>
 	</typeAliases>
 </configuration>
