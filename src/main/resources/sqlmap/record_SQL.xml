@@ -26,8 +26,24 @@ VALUES(
 		, #{recSem}
 		, #{recPer}
 		, #{recRsn}
-		', SYSDATE
+		, SYSDATE
 		, 0)
 </insert>
-</mapper>
+<!-- 학적 변동 현황 조회(신청 목록 조회) -->
+<select id="RecordList" parameterType="int" resultType="Record">
+SELECT 
+  REC_CD
+, R.STU_NO
+, R.RGB_CD
+, R.REC_YR
+, R.REC_SEM
+, R.REC_PER
+, R.REC_RSN
+, R.REC_DT
+, R.REC_YN
+FROM RECORD R, STUDENT S
+WHERE R.STU_NO = #{stuNo}
+AND R.STU_NO = S.STU_NO
+</select>
+</mapper> 
 
