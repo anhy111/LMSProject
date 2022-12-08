@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 </head>
-<body class="sidebar-mini sidebar-closed sidebar-collapse">
+<body class="sidebar-mini sidebar-closed layout-navbar-fixed">
 <div class="wrapper">
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
