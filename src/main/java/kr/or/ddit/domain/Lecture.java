@@ -1,5 +1,7 @@
 package kr.or.ddit.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -15,5 +17,6 @@ public class Lecture {
 	private LecApply lecApply;
 	private Employee employee;
 	private Department department;
+	private List<Task> taskList;
 	
 }

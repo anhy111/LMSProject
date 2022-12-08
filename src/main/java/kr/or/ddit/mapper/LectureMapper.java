@@ -10,4 +10,6 @@ public interface LectureMapper {
 		public List<Lecture> lectureSearch(String keyword);
 		
 		public List<Lecture> professorLecture(String professorId);
+		
+		public Lecture searchTask(String lecaCd);
 }

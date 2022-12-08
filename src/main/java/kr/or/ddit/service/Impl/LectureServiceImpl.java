@@ -26,5 +26,8 @@ public class LectureServiceImpl implements LectureService{
 	public List<Lecture> professorLecture(String professorId){
 		return this.lectureMapper.professorLecture(professorId);
 	}
-
+	@Override
+	public Lecture searchTask(String lecaCd){
+		return this.lectureMapper.searchTask(lecaCd);
+	}
 }
