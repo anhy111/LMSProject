@@ -125,6 +125,34 @@
 <!-- 				<include refid="where2"></include> -->
 <!-- 		</if> -->
 	</select>
+	
+	<select id="studentNotYetApplyLectureList" parameterType="studentLecture" resultMap="lectureMap">
+	
+	</select>
+	
+	<select id="studentCompleteApplyLectureList" parameterType="studentLecture" resultMap="lectureMap">
+		SELECT 
+		       L.LECA_CD 
+		     , E.EMP_NM 
+		     , LA.LECA_NM 
+		     , LA.LECA_CRD 
+		     , LA.LECA_TRG
+		     , L.LEC_HCNT
+		     , D.DEP_NM
+		     , LA.LECA_CAP 
+		     , LA.LECA_CATE 
+		     , LA.LECA_YR
+		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
+		     , SL.STU_NO
+		FROM PROFESSOR P INNER JOIN EMPLOYEE E ON(E.EMP_NO = P.PRO_NO)
+		                INNER JOIN SUBJECT S ON(P.PRO_NO = S.PRO_NO)
+		                INNER JOIN LECTURE L ON(S.SUB_CD = L.SUB_CD)
+		                INNER JOIN LEC_APPLY LA ON(L.LECA_CD = LA.LECA_CD)
+		                INNER JOIN DEPARTMENT D ON(L.DEP_CD = D.DEP_CD)
+		                LEFT OUTER JOIN STU_LEC SL ON(SL.LECA_CD = L.LECA_CD)
+		WHERE SL.STU_NO = 21811001
+	</select>
+	
 </mapper>
 
 
