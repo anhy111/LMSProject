@@ -47,13 +47,12 @@
 
 
                 <div class="card-body">
-                    <form action="" method="post" id="form" name="form">
+                    <form role="form" action="/notice/noticeForm" method="post" id="form" name="form">
                         <div class="row">
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
                                     <th>제목</th>
-
                                     <td class="table-title"><input class="form-control"
                                                                    id="title" name="title" type="text"
                                                                    style="width:100%"/>
@@ -108,7 +107,7 @@
                                         <input  style="padding-left:210px;" type="file" id="fileUpload" multiple> <br> <br>
                             </div> -->
                         </div>
-                    <button type="submit" >등록</button>
+                        <button type="submit">등록</button>
                     </form>
 
 
