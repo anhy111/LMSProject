@@ -18,7 +18,7 @@ public class LecApply {
     private int lecaCap;        //가능정원
     private String lecaTm;      //강의시작시간
     private String lecaWk;      //강의요일
-    private String lecaHall;       //강의건물
+    private String lecaHall;    //강의건물
     private int lecaUnit;       //강의호
     private String lecaBook;    //교재 및 참고서
     private String lecaNote;    //비고
@@ -30,5 +30,6 @@ public class LecApply {
     private int lecaFp;         //기말고사비율
     private int lecaTp;         //과제비율
     private int lecaAp;         //출결비율
-
+    private int proNo;			//담당교수
+    
 }

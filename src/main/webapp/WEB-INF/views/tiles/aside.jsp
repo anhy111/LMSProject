@@ -141,7 +141,7 @@
 									class="far fa-circle nav-icon"></i>
 									<p>전체 강의 조회</p>
 							</a></li>
-							<li class="nav-item"><a href="/professor/lecApplyInquiry" class="nav-link"> <i
+							<li class="nav-item"><a href="/professor/lecApply/inquiry" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
 									<p>강의 개설</p>
 							</a></li>

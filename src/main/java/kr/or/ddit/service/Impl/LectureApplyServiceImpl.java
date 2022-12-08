@@ -1,6 +1,7 @@
 package kr.or.ddit.service.Impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,14 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		return this.lectureApplyMapper.getYrNSem(proNo);
 	}
     
+	@Override
+	public List<LecApply> list(Map<String, Object> map) {
+		return this.lectureApplyMapper.list(map);
+	}
+	
+	@Override
+	public int getCnt(Map<String, Object> map) {
+		return this.lectureApplyMapper.getCnt(map);
+	}
     
 }
