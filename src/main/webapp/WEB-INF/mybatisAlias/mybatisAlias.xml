@@ -23,7 +23,7 @@
 		<typeAlias type="kr.or.ddit.domain.Approval" alias="Approval"/><!-- 결재 게시판 -->
 		<typeAlias type="kr.or.ddit.domain.College" alias="College"/><!-- 단과대학 테이블 -->
 		<typeAlias type="kr.or.ddit.domain.Counsel" alias="Counsel"/><!-- 상담 테이블 -->
-		<typeAlias type="kr.or.ddit.domain.Record" alias="Record"/><!-- 학생의 학적 테이블 -->
+		<typeAlias type="kr.or.ddit.domain.Record" alias="Record"/><!-- 학생의 학적 테이블 --> 
 		<typeAlias type="kr.or.ddit.domain.Department" alias="department"/>
 		<typeAlias type="kr.or.ddit.domain.StudentLecture" alias="studentLecture"/>
 	</typeAliases>
