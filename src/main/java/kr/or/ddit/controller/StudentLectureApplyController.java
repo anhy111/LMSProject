@@ -66,7 +66,7 @@ public class StudentLectureApplyController {
 	@GetMapping("/completeApplyList")
 	public List<Lecture> completeApplyList(StudentLecture studentLecture){
 		
-		
+		  
 		return null;
 		
 	}
