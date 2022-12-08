@@ -38,7 +38,7 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="/resources/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
 </head>
-<body class="sidebar-mini sidebar-closed sidebar-collapse">
+<body class="sidebar-mini sidebar-closed layout-navbar-fixed">
 <div class="wrapper">
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
