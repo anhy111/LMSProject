@@ -8,5 +8,7 @@
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 </head>
 <body>
+
+여기도 포틀릿 설정으로 해줄까?
 </body>
 </html>
