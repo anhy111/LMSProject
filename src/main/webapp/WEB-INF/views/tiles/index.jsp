@@ -33,8 +33,12 @@
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="/resources/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  
+  <script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/resources/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
 </head>
-<body class="sidebar-mini sidebar-closed sidebar-collapse">
+<body class="sidebar-mini sidebar-closed layout-navbar-fixed">
 <div class="wrapper">
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
@@ -77,9 +81,7 @@
 </div>
 <!-- ./wrapper -->
 <!-- jQuery -->
-<script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="/resources/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
+
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
