@@ -175,7 +175,7 @@ $(function(){
 
 <div id="allRound">
 	<div class="pContainer">
-		<p class="pMent"><img id="logoImg" alt="연수대가로.png" src="/resources/upload/login/연수대가로.png"></p>
+		<p class="pMent"><img id="logoImg" alt="연수대가로.png" src="/resources/upload/연수대가로.png"></p>
 		<p class="pMent" id="pMent1">인재의 바람을 이루고, 세상의 바람을 이끌며, 시대를 이롭게 하는</p>
 		<p class="pMent" id="pMent2"><span style="letter-spacing:2px;">IJU</span>의 미래로 우리의 큰걸음을 내딛습니다.</p>
 	</div>

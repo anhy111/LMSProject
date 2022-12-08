@@ -10,6 +10,8 @@
 	String position = String.valueOf(session.getAttribute("position"));
 	String division = String.valueOf(session.getAttribute("division"));
 	String department = String.valueOf(session.getAttribute("department"));
+	String no = String.valueOf(session.getAttribute("no"));
+	String pic = String.valueOf(session.getAttribute("pic"));
 %>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -44,37 +46,43 @@
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
-			<div class="user-panel d-flex">
-				<div class="image">
-					<img src="/resources/adminlte/dist/img/문상훈17.jpg"
-						class="img-circle elevation-2" alt="User Image">
+			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/resources/upload/img/<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info">
+						<%=name %> 님 ദ്ദി ᵔ∇ᵔ )  |   <%=department %> 
+					</div>
 				</div>
-				<div class="info">
-					<a href="#" class="d-block"><%=name %> 님 ദ്ദി ᵔ∇ᵔ )  |   <%=department %> </a>
-				</div>
-			</div>
+			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-			<div class="user-panel d-flex">
-				<div class="image">
-					<img src="/resources/adminlte/dist/img/문상훈17.jpg"
-						class="img-circle elevation-2" alt="User Image">
+			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block"> 
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/resources/upload/img/<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info">
+						<%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=position %> 
+					</div>
 				</div>
-				<div class="info">
-					<a href="#" class="d-block"> <%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=position %> </a>
-				</div>
-			</div>
+			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
-			<div class="user-panel d-flex">
-				<div class="image">
-					<img src="/resources/adminlte/dist/img/문상훈17.jpg"
-						class="img-circle elevation-2" alt="User Image">
+			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/resources/upload/img/<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info">
+						 <%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=division %>   |   <%=position %>  
+					</div>
 				</div>
-				<div class="info">
-					<a href="#" class="d-block"> <%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=division %>   |   <%=position %>  </a>
-				</div>
-			</div>
+			</a>
 		</sec:authorize>
 
 		<!-- Navbar Search -->
