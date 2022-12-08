@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.mapper.LectureMapper;
 import kr.or.ddit.service.LectureService;
 
@@ -25,6 +26,16 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public List<Lecture> professorLecture(String professorId){
 		return this.lectureMapper.professorLecture(professorId);
+	}
+	
+	@Override
+	public List<Lecture> studentCompleteApplyLectureList(StudentLecture studentLecture) {
+		return this.lectureMapper.studentCompleteApplyLectureList(studentLecture);
+	}
+	
+	@Override
+	public List<Lecture> studentNotYetApplyLectureList(StudentLecture studentLecture) {
+		return this.lectureMapper.studentNotYetApplyLectureList(studentLecture);
 	}
 
 }
