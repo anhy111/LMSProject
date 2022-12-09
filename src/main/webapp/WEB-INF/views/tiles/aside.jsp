@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<% String no = String.valueOf(session.getAttribute("no")); %>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-light-primary elevation-4">
 	<!-- Brand Logo -->
@@ -46,13 +46,13 @@
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="/mypage/mypage" class="nav-link"> 
+								<a href="/mypage/mypage?memNo=<%=no%>" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>내 정보 확인</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="#" class="nav-link"> 
+								<a href="/mypage/changeStuPw" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>비밀번호 변경</p>
 								</a>

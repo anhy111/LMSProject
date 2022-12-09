@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%
 	//스크립틀릿
 	//장바구니 = 세션
@@ -59,7 +58,7 @@
 			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block"> 
+			<a href="#" class="d-block"> 
 				<div class="user-panel d-flex">
 					<div class="image">
 						<img src="/resources/upload/img/<%=pic%>"
@@ -72,7 +71,7 @@
 			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
-			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block">
+			<a href="#" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
 						<img src="/resources/upload/img/<%=pic%>"
