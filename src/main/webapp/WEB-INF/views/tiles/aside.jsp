@@ -248,10 +248,28 @@
 							class="nav-icon fas fa-book"></i>
 							<p>등록/장학</p>
 					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>학생 관리</p>
-					</a></li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
+							<p>
+								학생관리 <i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>학생 목록 조회</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>학생 학적 관리</p>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
 							<p>교수 관리</p>
