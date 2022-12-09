@@ -11,114 +11,216 @@
 			<div class="card mb-0 col-10 offset-1">
 				<div class="card-header tab-regular">
 					<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-						<li class="nav-item"><a class="nav-link active show"
-							id="card-tab-1" data-toggle="tab" href="#card-1" role="tab"
-							aria-controls="card-1" aria-selected="true">수강신청</a></li>
-						<li class="nav-item"><a class="nav-link" id="card-tab-2"
-							data-toggle="tab" href="#card-2" role="tab"
-							aria-controls="card-2" aria-selected="false">예비수강신청</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							id="custom-tabs-four-home-tab" data-toggle="pill"
+							href="#custom-tabs-four-home" role="tab"
+							aria-controls="custom-tabs-four-home" aria-selected="true">수강신청</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="custom-tabs-four-profile-tab" data-toggle="pill"
+							href="#custom-tabs-four-profile" role="tab"
+							aria-controls="custom-tabs-four-profile" aria-selected="false">예비수강신청</a></li>
 					</ul>
 				</div>
 
 				<div class="card-body">
-					<div class="card container-fluid">
-						<div class="row p-3">
-							<div class="form-group col-1">키워드 검색</div>
-							<div class="form-group col-2">
-								<select class="select2bs4 select2-hidden-accessible"
-									style="width: 100%;" aria-hidden="true">
-									<option value="">학과</option>
-									<c:forEach var="department" items="${departmentList}">
-										<option value="department.depNm">${department.depNm}</option>
-									</c:forEach>
-								</select>
-							</div>
-							<div class="form-group col-2 ">
-								<select class="select2bs4 select2-hidden-accessible"
-									style="width: 100%;" aria-hidden="true">
-									<option value="">학년</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-								</select>
-							</div>
-							<div class="form-group col-2">
-								<select class="select2bs4 select2-hidden-accessible"
-									style="width: 100%;" aria-hidden="true">
-									<option value="">이수구분</option>
-									<option value="전공필수">전공필수</option>
-									<option value="전공선택">전공선택</option>
-									<option value="교양필수">교양필수</option>
-									<option value="교양선택">교양선택</option>
-								</select>
-							</div>
+					<div class="tab-content" id="custom-tabs-four-tabContent">
+						<div class="tab-pane fade show active" id="custom-tabs-four-home"
+							role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+							<div class="card container-fluid">
+								<div class="row p-3">
+									<div class="form-group col-1">키워드 검색</div>
+									<div class="form-group col-2">
+										<select class="select2bs4 select2-hidden-accessible"
+											style="width: 100%;" aria-hidden="true">
+											<option value="">학과</option>
+											<c:forEach var="department" items="${departmentList}">
+												<option value="department.depNm">${department.depNm}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="form-group col-2 ">
+										<select class="select2bs4 select2-hidden-accessible"
+											style="width: 100%;" aria-hidden="true">
+											<option value="">학년</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="form-group col-2">
+										<select class="select2bs4 select2-hidden-accessible"
+											style="width: 100%;" aria-hidden="true">
+											<option value="">이수구분</option>
+											<option value="전공필수">전공필수</option>
+											<option value="전공선택">전공선택</option>
+											<option value="교양필수">교양필수</option>
+											<option value="교양선택">교양선택</option>
+										</select>
+									</div>
 
 
-						</div>
-						<hr>
-						<div class="row pl-3">
-							<h3>강의목록</h3>
-						</div>
+								</div>
+								<hr>
+								<div class="row pl-3">
+									<h3>강의목록</h3>
+								</div>
 
-						<div class="row pl-3 pr-3 pb-3">
-							<div class="card-body table-responsive p-0 col-11"
-								style="height: 300px;">
-								<table
-									class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed">
-									<thead>
-										<tr class="text-center p-0">
-											<th>순번</th>
-											<th>이수구분</th>
-											<th>개설학과</th>
-											<th>학년</th>
-											<th>과목명</th>
-											<th>학점</th>
-											<th>최대인원</th>
-											<th>현재인원</th>
-											<th>교수명</th>
-											<th>강의계획서</th>
-											<th>신청</th>
-										</tr>
-									</thead>
-									<tbody id="notApplyLecture">
-										
-									</tbody>
-								</table>
+								<div class="row pl-3 pb-3">
+									<div class="card-body table-responsive col-11"
+										style="height: 300px;">
+										<table
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											<thead>
+												<tr class="text-center">
+													<th width="4%">순번</th>
+													<th width="8%">이수구분</th>
+													<th width="18%">개설학과</th>
+													<th width="4%">학년</th>
+													<th width="20%">과목명</th>
+													<th width="4%">학점</th>
+													<th width="6%">최대인원</th>
+													<th width="10%">현재인원</th>
+													<th>교수명</th>
+													<th>강의계획서</th>
+													<th>신청</th>
+												</tr>
+											</thead>
+											<tbody id="notApplyLecture">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row pl-3">
+									<h3>수강신청된 강의목록</h3>
+								</div>
+								<div class="row pl-3 pb-3">
+									<div class="card-body table-responsive col-11"
+										style="height: 300px;">
+										<table
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											<thead>
+												<tr class="text-center">
+													<th width="4%">순번</th>
+													<th width="8%">이수구분</th>
+													<th width="18%">개설학과</th>
+													<th width="4%">학년</th>
+													<th width="20%">과목명</th>
+													<th width="4%">학점</th>
+													<th width="6%">최대인원</th>
+													<th width="10%">현재인원</th>
+													<th>교수명</th>
+													<th>강의계획서</th>
+													<th>취소</th>
+												</tr>
+											</thead>
+											<tbody id="completeApplyLecture">
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="card-body">
-								<h3>수강신청된 강의목록</h3>
-							</div>
-						</div>
-						<div class="row pl-3 pr-3 pb-3">
-							<div class="card-body table-responsive p-0 col-11"
-								style="height: 300px;">
-								<table
-									class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed">
-									<thead>
-										<tr class="text-center p-0">
-											<th>순번</th>
-											<th>이수구분</th>
-											<th>개설학과</th>
-											<th>학년</th>
-											<th>과목명</th>
-											<th>학점</th>
-											<th>최대인원</th>
-											<th>현재인원</th>
-											<th>교수명</th>
-											<th>강의계획서</th>
-											<th>취소</th>
-										</tr>
-									</thead>
-									<tbody id="completeApplyLecture">
-									</tbody>
-								</table>
-							</div>
+						<div class="tab-pane fade" id="custom-tabs-four-profile"
+							role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+							<div class="card container-fluid">
+								<div class="row p-3">
+									<div class="form-group col-1">키워드 검색</div>
+									<div class="form-group col-2">
+										<select class="select2bs4 select2-hidden-accessible"
+											style="width: 100%;" aria-hidden="true">
+											<option value="">학과</option>
+											<c:forEach var="department" items="${departmentList}">
+												<option value="department.depNm">${department.depNm}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="form-group col-2 ">
+										<select class="select2bs4 select2-hidden-accessible"
+											style="width: 100%;" aria-hidden="true">
+											<option value="">학년</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+									<div class="form-group col-2">
+										<select class="select2bs4 select2-hidden-accessible"
+											style="width: 100%;" aria-hidden="true">
+											<option value="">이수구분</option>
+											<option value="전공필수">전공필수</option>
+											<option value="전공선택">전공선택</option>
+											<option value="교양필수">교양필수</option>
+											<option value="교양선택">교양선택</option>
+										</select>
+									</div>
+
+
+								</div>
+								<hr>
+								<div class="row pl-3">
+									<h3>강의목록</h3>
+								</div>
+
+								<div class="row pl-3 pb-3">
+									<div class="card-body table-responsive col-11"
+										style="height: 300px;">
+										<table
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											<thead>
+												<tr class="text-center">
+													<th width="4%">순번</th>
+													<th width="8%">이수구분</th>
+													<th width="18%">개설학과</th>
+													<th width="4%">학년</th>
+													<th width="20%">과목명</th>
+													<th width="4%">학점</th>
+													<th width="6%">최대인원</th>
+													<th width="10%">현재인원</th>
+													<th>교수명</th>
+													<th>강의계획서</th>
+													<th>신청</th>
+												</tr>
+											</thead>
+											<tbody id="notSaveLecture">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row pl-3">
+									<h3>수강 장바구니</h3>
+								</div>
+								<div class="row pl-3 pb-3">
+									<div class="card-body table-responsive col-11"
+										style="height: 300px;">
+										<table
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											<thead>
+												<tr class="text-center">
+													<th width="4%">순번</th>
+													<th width="8%">이수구분</th>
+													<th width="18%">개설학과</th>
+													<th width="4%">학년</th>
+													<th width="20%">과목명</th>
+													<th width="4%">학점</th>
+													<th width="6%">최대인원</th>
+													<th width="10%">현재인원</th>
+													<th>교수명</th>
+													<th>강의계획서</th>
+													<th>취소</th>
+												</tr>
+											</thead>
+											<tbody id="SaveLecture">
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>							
 						</div>
 					</div>
-					<!-- end container -->
 				</div>
 				<!-- end cardbody -->
 			</div>
@@ -163,8 +265,41 @@
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(result) {
+					if(result == 0){
+						alert("인원이 초과되었습니다.");
+					}
 					loadCompleteApplyLecture();
-					loadNotYetApplyLecture(); 
+					loadNotYetApplyLecture();
+				}
+			});
+		});
+		
+		$(document).on("click",'.applyCancel', function(e) {
+
+			data = {
+				lecaCd : e.target.value,
+				stuNo : stuNo
+			};
+
+			console.log("lecaCd",data.lecaCd);
+			
+			let header = "${_csrf.headerName}";
+			let token = "${_csrf.token}";
+			
+			$.ajax({
+				url : "/student/lectureApply/applyCancel",
+				type : "post",
+				data : JSON.stringify(data),
+				contentType : "application/json; charset=utf-8",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
+				success : function(result) {
+					if(result == 0){
+						alert("인원이 초과되었습니다.");
+					}
+					loadCompleteApplyLecture();
+					loadNotYetApplyLecture();
 				}
 			});
 		});
@@ -200,7 +335,16 @@
 					$("#notApplyLecture").html(str);
 				}
 				$.each(result,function(p_inx, lecture){
-					str += `<tr class="text-center p-0">
+					
+					
+					let percent = (lecture.lecHcnt/lecture.lecApply.lecaCap*100).toFixed(0);
+					let color = "bg-primary";
+					if(percent >= 100){
+						color = "bg-danger";
+					}
+					
+					
+					str += `<tr class="text-center">
 								<td>\${p_inx+1}</td>
 								<td>\${lecture.lecApply.lecaCate}</td>
 								<td>\${lecture.department.depNm}</td>
@@ -208,13 +352,13 @@
 								<td>\${lecture.lecApply.lecaNm}</td>
 								<td>\${lecture.lecApply.lecaCrd}</td>
 								<td>\${lecture.lecApply.lecaCap}</td>
-								<td class="p-2 pt-3">
+								<td class="pt-2">
 									<div class="progress progress-xs progress-striped active">
 										<div class="progress-bar bg-primary"
 											style="width: ` + `\${lecture.lecHcnt/lecture.lecApply.lecaCap*100}%` + `"></div>
 									</div>
 									<div class="text-center">\${lecture.lecHcnt}/\${lecture.lecApply.lecaCap}
-										&nbsp;&nbsp;<span class="badge bg-primary">\${(lecture.lecHcnt/lecture.lecApply.lecaCap*100).toFixed(0)}%</span>
+										&nbsp;&nbsp;<span class="badge \${color}">\${percent}%</span>
 									</div>
 								</td>
 								<td>\${lecture.employee.empNm}</td>
@@ -258,7 +402,7 @@
 					$("#notApplyLecture").html(str);
 				}
 				$.each(result,function(p_inx, lecture){
-					str += `<tr class="text-center p-0">
+					str += `<tr class="text-center">
 								<td>\${p_inx+1}</td>
 								<td>\${lecture.lecApply.lecaCate}</td>
 								<td>\${lecture.department.depNm}</td>
@@ -266,7 +410,7 @@
 								<td>\${lecture.lecApply.lecaNm}</td>
 								<td>\${lecture.lecApply.lecaCrd}</td>
 								<td>\${lecture.lecApply.lecaCap}</td>
-								<td class="p-2 pt-3">
+								<td class="pt-2">
 									<div class="progress progress-xs progress-striped active">
 										<div class="progress-bar bg-primary"
 											style="width: ` + `\${lecture.lecHcnt/lecture.lecApply.lecaCap*100}%` + `"></div>
@@ -280,7 +424,7 @@
 									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
 									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
 								<td><button
-										class="btn btn-block bg-gradient-primary btn-sm apply"
+										class="btn btn-block bg-gradient-primary btn-sm applyCancel"
 										value="\${lecture.lecaCd}">취소</button></td>
 							</tr>`
 				});

@@ -22,16 +22,12 @@ public class StudentLectureApplyServiceImpl implements StudentLectureApplyServic
 	@Autowired
 	StudentLectureApplyMapper studentLectureApplyMapper;
 	
-	@Autowired
-	LectureMapper lectureMapper;
 	
 	@Transactional
 	@Override
 	public int apply(StudentLecture studentLecture) {
 		
 		int headcount = this.studentLectureApplyMapper.checkHeadcount(studentLecture);
-		
-		log.info("headcount : " + headcount);
 		
 		if(headcount == 0) {
 			return 0;
@@ -42,8 +38,16 @@ public class StudentLectureApplyServiceImpl implements StudentLectureApplyServic
 		if(result == 0) {
 			return 0;
 		}
-		result = this.lectureMapper.increaseHeadcount(studentLecture);
-		
-		return result;
+		return this.studentLectureApplyMapper.increaseHeadcount(studentLecture);
+	}
+	
+	@Transactional
+	@Override
+	public int applyCancel(StudentLecture studentLecture) {
+		int result = this.studentLectureApplyMapper.applyCancel(studentLecture);
+		if(result == 0) {
+			return 0;
+		}
+		return this.studentLectureApplyMapper.decreaseHeadcount(studentLecture);
 	}
 }

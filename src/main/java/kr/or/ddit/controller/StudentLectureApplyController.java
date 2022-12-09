@@ -65,6 +65,13 @@ public class StudentLectureApplyController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/applyCancel")
+	public String applyCancel(@RequestBody StudentLecture studentLecture) {
+		int result = this.studentLectureApplyService.applyCancel(studentLecture);
+		return result + "";
+	}
+	
+	@ResponseBody
 	@GetMapping("/completeApplyLectureList")
 	public List<Lecture> completeApplyLectureList(StudentLecture studentLecture){
 		

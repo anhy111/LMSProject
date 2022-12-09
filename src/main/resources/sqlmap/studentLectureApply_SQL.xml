@@ -8,6 +8,24 @@
 	<insert id="apply" parameterType="studentLecture"> 
 		INSERT INTO STU_LEC(STU_NO, LECA_CD) VALUES(#{stuNo}, #{lecaCd})
 	</insert>
+	
+	<delete id="applyCancel" parameterType="studentLecture">
+		DELETE FROM STU_LEC
+		WHERE STU_NO = #{stuNo}
+		AND LECA_CD = #{lecaCd}
+	</delete>
+	
+	<update id="increaseHeadcount" parameterType="studentLecture">
+		UPDATE LECTURE
+		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) + 1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+	
+	<update id="decreaseHeadcount" parameterType="studentLecture"> 
+		UPDATE LECTURE
+		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) - 1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
 
 	<select id="checkHeadcount" parameterType="studentLecture" resultType="int">
 		SELECT COUNT(*)

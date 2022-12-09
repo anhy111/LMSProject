@@ -10,4 +10,7 @@ public interface StudentLectureApplyService {
 	//신청
 	public int apply(StudentLecture studentLecture);
 
+	//수강신청취소
+	public int applyCancel(StudentLecture studentLecture);
+	
 }
