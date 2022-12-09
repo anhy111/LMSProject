@@ -59,21 +59,21 @@ div {
 						</div>
 						<div class="col-4 offset-1">
 							<label for="stuTel" class="form-label">전화번호</label> 
-							<input type="text" class="form-control" id="stuTel" value="${student.stuTel}" readonly />
+							<input type="text" class="form-control" id="stuTel" value="${student.stuTel}" required />
 						</div>
 					</div>
 					<div class="row mt-4 mb-2">
 						<div class="col-3">
 							<label for="stuZip" class="form-label">우편번호</label> 
-							<input type="text" class="form-control" id="stuZip" value="${student.stuZip}" />
+							<input type="text" class="form-control" id="stuZip" value="${student.stuZip}" required />
 						</div>
 						<div class="col-3 offset-1">
 							<label for="stuAddr1" class="form-label">기본주소</label> 
-							<input type="text" class="form-control" id="stuAddr1" value="${student.stuAddr1}" />
+							<input type="text" class="form-control" id="stuAddr1" value="${student.stuAddr1}" required />
 						</div>
 						<div class="col-3 offset-1">
 							<label for="stuAddr2" class="form-label">상세주소</label> 
-							<input type="text" class="form-control" id="stuAddr2" value="${student.stuAddr2}" />
+							<input type="text" class="form-control" id="stuAddr2" value="${student.stuAddr2}" required />
 						</div>
 					</div>
 					<div class="row mt-4 mb-2">
@@ -103,45 +103,57 @@ div {
 						</div>
 						<div class="col-3 offset-1">
 							<label for="stuAct" class="form-label">계좌번호</label> 
-							<input type="text" class="form-control" id="stuAct" value="${student.stuAct}" />
+							<input type="text" class="form-control" id="stuAct" value="${student.stuAct}" required />
 						</div>
 					</div>
-<!-- 					<div class="col-6"> -->
-<!-- 						<label for="inputAddress" class="form-label">Address</label> <input -->
-<!-- 							type="text" class="form-control" id="inputAddress" -->
-<!-- 							placeholder="1234 Main St"> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-6"> -->
-<!-- 						<label for="inputAddress2" class="form-label">Address 2</label> <input -->
-<!-- 							type="text" class="form-control" id="inputAddress2" -->
-<!-- 							placeholder="Apartment, studio, or floor"> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-md-6"> -->
-<!-- 						<label for="inputCity" class="form-label">City</label> <input -->
-<!-- 							type="text" class="form-control" id="inputCity"> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-md-4"> -->
-<!-- 						<label for="inputState" class="form-label">State</label> <select -->
-<!-- 							id="inputState" class="form-select"> -->
-<!-- 							<option selected="">Choose...</option> -->
-<!-- 							<option>...</option> -->
-<!-- 						</select> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-md-2"> -->
-<!-- 						<label for="inputZip" class="form-label">Zip</label> <input -->
-<!-- 							type="text" class="form-control" id="inputZip"> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-12"> -->
-<!-- 						<div class="form-check"> -->
-<!-- 							<input class="form-check-input" type="checkbox" id="gridCheck"> -->
-<!-- 							<label class="form-check-label" for="gridCheck"> Check me -->
-<!-- 								out </label> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
 					<div class="col-12">
 						<button type="submit" class="btn btn-primary">Sign in</button>
 					</div>
 				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8 offset-2">
+			<div class="card card-primary">
+				<div class="card-header">
+					<h3 class="card-title">General</h3>
+					<div class="card-tools">
+						<button type="button" class="btn btn-tool"
+							data-card-widget="collapse" title="Collapse">
+							<i class="fas fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label for="inputName">Project Name</label> <input type="text"
+							id="inputName" class="form-control" value="AdminLTE">
+					</div>
+					<div class="form-group">
+						<label for="inputDescription">Project Description</label>
+						<textarea id="inputDescription" class="form-control" rows="4">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</textarea>
+					</div>
+					<div class="form-group">
+						<label for="inputStatus">Status</label> <select id="inputStatus"
+							class="form-control custom-select">
+							<option disabled="">Select one</option>
+							<option>On Hold</option>
+							<option>Canceled</option>
+							<option selected="">Success</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="inputClientCompany">Client Company</label> <input
+							type="text" id="inputClientCompany" class="form-control"
+							value="Deveint Inc">
+					</div>
+					<div class="form-group">
+						<label for="inputProjectLeader">Project Leader</label> <input
+							type="text" id="inputProjectLeader" class="form-control"
+							value="Tony Chicken">
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
