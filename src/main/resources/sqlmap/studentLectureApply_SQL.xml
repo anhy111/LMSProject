@@ -9,6 +9,17 @@
 		INSERT INTO STU_LEC(STU_NO, LECA_CD) VALUES(#{stuNo}, #{lecaCd})
 	</insert>
 
-
+	<select id="checkHeadcount" parameterType="studentLecture" resultType="int">
+		SELECT COUNT(*)
+		FROM LECTURE L
+		WHERE L.LECA_CD = #{lecaCd}
+		AND L.LEC_HCNT <![CDATA[<]]> (
+		    SELECT LA.LECA_CAP
+		    FROM LEC_APPLY LA
+		    WHERE LA.LECA_CD = #{lecaCd}
+		)
+	</select>
+	
+	
 </mapper>
 

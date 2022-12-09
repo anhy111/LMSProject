@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Department;
@@ -42,11 +43,12 @@ public class StudentLectureApplyController {
 	@GetMapping("/list")
 	public String lectureList(Model model, HttpServletRequest req) {
 		
-		List<Lecture> lectureList = this.lectureService.lectureSearch(null);
-		List<Department> departmentList = this.departmentService.departmentList();
 		Integer stuNo = (Integer)req.getSession().getAttribute("no");
 		
-		model.addAttribute("lectureList",lectureList);
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setStuNo(stuNo);
+		List<Department> departmentList = this.departmentService.departmentList();
+		
 		model.addAttribute("departmentList",departmentList);
 		model.addAttribute("stuNo",stuNo.toString());
 		
@@ -63,13 +65,23 @@ public class StudentLectureApplyController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/completeApplyList")
-	public List<Lecture> completeApplyList(StudentLecture studentLecture){
+	@GetMapping("/completeApplyLectureList")
+	public List<Lecture> completeApplyLectureList(StudentLecture studentLecture){
 		
-		  
-		return null;
+		List<Lecture> list = this.lectureService.studentCompleteApplyLectureList(studentLecture);
+		
+		return list;
 		
 	}
 	
+	@ResponseBody
+	@GetMapping("/notYetApplyLectureList")
+public List<Lecture> notYetApplyLectureList(StudentLecture studentLecture){
+		
+		List<Lecture> list = this.lectureService.studentNotYetApplyLectureList(studentLecture);
+		
+		return list;
+		
+	}
 	
 } 

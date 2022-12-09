@@ -10,7 +10,7 @@ import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Student;
 
-public interface LoginService {
+public interface MemberService {
 	
 	public Member read(int memNo);
 	

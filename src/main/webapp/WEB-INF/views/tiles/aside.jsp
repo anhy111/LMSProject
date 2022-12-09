@@ -37,22 +37,50 @@
 				<!-- 수강관리 -->
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
 					<li class="nav-header">학생 어사이드</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
+							<p>
+								마이페이지 <i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="/mypage/mypage" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>내 정보 확인</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>비밀번호 변경</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
 							<p>
 								수강관리 <i class="right fas fa-angle-left"></i>
 							</p>
-					</a>
+						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
 									<p>수강 편람</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
 									<p>수강평가</p>
-							</a></li>
-						</ul></li>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<!-- 학적관리 -->
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-copy"></i>
@@ -130,11 +158,12 @@
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<li class="nav-header">교수 어사이드</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>
-								강의 <i class="right fas fa-angle-left"></i>
-							</p>
+					<li class="nav-item">
+					<a href="#" class="nav-link"> 
+						<i class="nav-icon fas fa-book"></i>
+						<p>
+							강의 <i class="right fas fa-angle-left"></i>
+						</p>
 					</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item"><a href="/lecture/list" class="nav-link"> <i

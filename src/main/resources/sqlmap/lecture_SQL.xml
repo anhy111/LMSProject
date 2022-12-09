@@ -153,10 +153,41 @@
 	</select>       
 	
 	<select id="studentNotYetApplyLectureList" parameterType="studentLecture" resultMap="lectureMap">
-	
+		WITH T AS (
+		            SELECT
+		                L.LECA_CD,
+		                E.EMP_NM,
+		                LA.LECA_NM,
+		                LA.LECA_CRD,
+		                LA.LECA_TRG,
+		                L.LEC_HCNT,
+		                D.DEP_NM,
+		                LA.LECA_CAP,
+		                LA.LECA_CATE,
+		                LA.LECA_YR,
+		                DECODE(SUBSTR(LA.LECA_SEM,4,2),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학') "LECA_SEM"
+		            FROM
+		                PROFESSOR P
+		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO )
+		                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
+		                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+		                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+		                INNER JOIN DEPARTMENT D ON ( L.DEP_CD = D.DEP_CD )
+		            WHERE
+		                L.LEC_YN = 'Y'
+		            AND DECODE(SUBSTR(LA.LECA_SEM,4,2),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학') = 
+		                DECODE(TO_CHAR(SYSDATE,'MM'),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학')
+		)
+		SELECT * FROM T
+		WHERE NOT EXISTS(
+		    SELECT SL.LECA_CD
+		    FROM STU_LEC SL
+		    WHERE SL.STU_NO = #{stuNo}
+		    AND SL.LECA_CD = T.LECA_CD
+		)
 	</select>
 	
-	<select id="studentCompleteApplyLectureList" parameterType="studentLecture" resultMap="lectureMap">
+	<select id="studentCompleteApplyLectureList" parameterType="studentLecture" resultMap="lectureMap"> 
 		SELECT 
 		       L.LECA_CD 
 		     , E.EMP_NM 
@@ -176,9 +207,9 @@
 		                INNER JOIN LEC_APPLY LA ON(L.LECA_CD = LA.LECA_CD)
 		                INNER JOIN DEPARTMENT D ON(L.DEP_CD = D.DEP_CD)
 		                LEFT OUTER JOIN STU_LEC SL ON(SL.LECA_CD = L.LECA_CD)
-		WHERE SL.STU_NO = 21811001
+		WHERE SL.STU_NO = #{stuNo}
 	</select>
-	
+
 	<insert id="insertTask" parameterType="task">
 		<selectKey keyProperty="atchFileId" order="BEFORE" resultType="int"> 
 			select max(ATCH_FILE_ID) FROM ATTACH
@@ -191,5 +222,12 @@
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT)
             values((SELECT MAX(TASK_CD)+1 FROM TASK_CD),#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt});
 	</insert>
+
+	<update id="increaseHeadcount" parameterType="studentLecture">
+		UPDATE LECTURE
+		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) + 1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+
 	
 </mapper>

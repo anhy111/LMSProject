@@ -49,21 +49,22 @@ public class CustomLoginSuccessHandler extends
 		Student readStudent = memberMapper.readStudent(member.getMemNo());
 		Professor readProfessor = memberMapper.readProfessor(member.getMemNo());
 		Manager readManager = memberMapper.readManager(member.getMemNo());
+		
 
 		log.info("이렇게하면 들어올까욤? " + readEmployee);
 		HttpSession session = request.getSession();
-
+		
 		session.setAttribute("no", read.getMemNo());
 		String no = String.valueOf(session.getAttribute("no"));
 		log.info("no는?? " + no);
 
 		if (readEmployee != null) {
+			session.setAttribute("name", readEmployee.getEmpNm());
+			session.setAttribute("pic", readEmployee.getEmpPic());
 			if (readProfessor != null) {
-				session.setAttribute("name", readEmployee.getEmpNm());
 				session.setAttribute("position", readProfessor.getProPos());
 
 			} else {
-				session.setAttribute("name", readEmployee.getEmpNm());
 				session.setAttribute("position", readManager.getMgrPos());
 				session.setAttribute("division", readManager.getMgrDiv());
 			}
@@ -72,6 +73,7 @@ public class CustomLoginSuccessHandler extends
 			String name = String.valueOf(session.getAttribute("name"));
 			session.setAttribute("department", readStudent.getDepNm());
 			log.info("name은??" + name);
+			session.setAttribute("pic", readStudent.getStuPic());
 		}
 
 		super.onAuthenticationSuccess(request, response, auth);

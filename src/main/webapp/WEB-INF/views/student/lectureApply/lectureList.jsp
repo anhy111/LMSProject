@@ -33,28 +33,24 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div class="form-group col-2">
+							<div class="form-group col-2 ">
 								<select class="select2bs4 select2-hidden-accessible"
 									style="width: 100%;" aria-hidden="true">
-									<option>학년</option>
-									<option>Alaska</option>
-									<option>California</option>
-									<option>Delaware</option>
-									<option>Tennessee</option>
-									<option>Texas</option>
-									<option>Washington</option>
+									<option value="">학년</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
 								</select>
 							</div>
 							<div class="form-group col-2">
 								<select class="select2bs4 select2-hidden-accessible"
 									style="width: 100%;" aria-hidden="true">
-									<option>이수구분</option>
-									<option>Alaska</option>
-									<option>California</option>
-									<option>Delaware</option>
-									<option>Tennessee</option>
-									<option>Texas</option>
-									<option>Washington</option>
+									<option value="">이수구분</option>
+									<option value="전공필수">전공필수</option>
+									<option value="전공선택">전공선택</option>
+									<option value="교양필수">교양필수</option>
+									<option value="교양선택">교양선택</option>
 								</select>
 							</div>
 
@@ -85,37 +81,8 @@
 											<th>신청</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach var="lecture" items="${lectureList}"
-											varStatus="status">
-											<tr class="text-center p-0">
-												<td>${status.count}</td>
-												<td>${lecture.lecApply.lecaCate}</td>
-												<td>${lecture.department.depNm}</td>
-												<td>${lecture.lecApply.lecaTrg}</td>
-												<td>${lecture.lecApply.lecaNm}</td>
-												<td>${lecture.lecApply.lecaCrd}</td>
-												<td>${lecture.lecApply.lecaCap}</td>
-												<td class="p-2 pt-3">
-													<div class="progress progress-xs progress-striped active">
-														<div class="progress-bar bg-primary"
-															style="width: ${lecture.lecHcnt/lecture.lecApply.lecaCap*100}%"></div>
-													</div>
-													<div class="text-center">${lecture.lecHcnt}/${lecture.lecApply.lecaCap}
-														&nbsp;&nbsp;<span class="badge bg-primary"><fmt:formatNumber
-																value="${lecture.lecHcnt/lecture.lecApply.lecaCap*100}"
-																pattern="0"></fmt:formatNumber>%</span>
-													</div>
-												</td>
-												<td>${lecture.employee.empNm}</td>
-												<td><input type="button"
-													class="btn btn-block btn-outline-secondary btn-flat btn-sm"
-													data-number="${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
-												<td><button
-														class="btn btn-block bg-gradient-primary btn-sm apply"
-														value="${lecture.lecaCd}">신청</button></td>
-											</tr>
-										</c:forEach>
+									<tbody id="notApplyLecture">
+										
 									</tbody>
 								</table>
 							</div>
@@ -142,13 +109,10 @@
 											<th>현재인원</th>
 											<th>교수명</th>
 											<th>강의계획서</th>
-											<th>신청</th>
+											<th>취소</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr class="text-center p-0">
-											<td colspan="11">신청된 강의가 없습니다.</td>
-										</tr>
+									<tbody id="completeApplyLecture">
 									</tbody>
 								</table>
 							</div>
@@ -157,7 +121,6 @@
 					<!-- end container -->
 				</div>
 				<!-- end cardbody -->
-
 			</div>
 		</div>
 	</div>
@@ -169,7 +132,7 @@
 <script src="/resources/adminlte/dist/js/demo.js"></script>
 <script>
 	var stuNo = "${stuNo}";
-	console.log("학생번호 ? " + stuNo);
+	
 	$(function() {
 		//Initialize Select2 Elements
 		$('.select2').select2();
@@ -179,16 +142,18 @@
 			theme : 'bootstrap4'
 		});
 
-		$(".apply").on("click", function() {
+		$(document).on("click",'.apply', function(e) {
 
 			data = {
-				lecaCd : this.value,
+				lecaCd : e.target.value,
 				stuNo : stuNo
 			};
 
+			console.log("lecaCd",data.lecaCd);
+			
 			let header = "${_csrf.headerName}";
 			let token = "${_csrf.token}";
-
+			
 			$.ajax({
 				url : "/student/lectureApply/apply",
 				type : "post",
@@ -198,13 +163,73 @@
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(result) {
-					console.log("result : " + result);
+					loadCompleteApplyLecture();
+					loadNotYetApplyLecture(); 
 				}
-			})
-
+			});
 		});
+		
+		loadNotYetApplyLecture(); 
 		loadCompleteApplyLecture();
+		
 	});
+	
+	function loadNotYetApplyLecture(){
+		data = {
+				stuNo : stuNo
+			};
+
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+
+		$.ajax({
+			url : "/student/lectureApply/notYetApplyLectureList",
+			type : "get",
+			data : data,
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result) {
+				$("#notApplyLecture").html("");
+				let str = "";
+				if(result.length == 0){
+					str = "<tr class='text-center p-0'>";
+					str += "<td colspan='11'>신청된 강의가 없습니다.</td>";
+					str += "</tr>";
+					$("#notApplyLecture").html(str);
+				}
+				$.each(result,function(p_inx, lecture){
+					str += `<tr class="text-center p-0">
+								<td>\${p_inx+1}</td>
+								<td>\${lecture.lecApply.lecaCate}</td>
+								<td>\${lecture.department.depNm}</td>
+								<td>\${lecture.lecApply.lecaTrg}</td>
+								<td>\${lecture.lecApply.lecaNm}</td>
+								<td>\${lecture.lecApply.lecaCrd}</td>
+								<td>\${lecture.lecApply.lecaCap}</td>
+								<td class="p-2 pt-3">
+									<div class="progress progress-xs progress-striped active">
+										<div class="progress-bar bg-primary"
+											style="width: ` + `\${lecture.lecHcnt/lecture.lecApply.lecaCap*100}%` + `"></div>
+									</div>
+									<div class="text-center">\${lecture.lecHcnt}/\${lecture.lecApply.lecaCap}
+										&nbsp;&nbsp;<span class="badge bg-primary">\${(lecture.lecHcnt/lecture.lecApply.lecaCap*100).toFixed(0)}%</span>
+									</div>
+								</td>
+								<td>\${lecture.employee.empNm}</td>
+								<td><input type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
+									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button
+										class="btn btn-block bg-gradient-primary btn-sm apply"
+										value="\${lecture.lecaCd}">신청</button></td>
+							</tr>`
+				});
+				$("#notApplyLecture").append(str);
+			}
+		});
+	}
 	
 	function loadCompleteApplyLecture(){
 		
@@ -216,17 +241,54 @@
 		let token = "${_csrf.token}";
 
 		$.ajax({
-			url : "/student/lectureApply/completeApplyList",
+			url : "/student/lectureApply/completeApplyLectureList",
 			type : "get",
-			data : JSON.stringify(data),
+			data : data,
 			contentType : "application/json; charset=utf-8",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(result) {
-				console.log("result : " + result);
+				$("#completeApplyLecture").html("");
+				let str = "";
+				if(result.length == 0){
+					str = "<tr class='text-center p-0'>";
+					str += "<td colspan='11'>등록된 강의가 없습니다.</td>";
+					str += "</tr>";
+					$("#notApplyLecture").html(str);
+				}
+				$.each(result,function(p_inx, lecture){
+					str += `<tr class="text-center p-0">
+								<td>\${p_inx+1}</td>
+								<td>\${lecture.lecApply.lecaCate}</td>
+								<td>\${lecture.department.depNm}</td>
+								<td>\${lecture.lecApply.lecaTrg}</td>
+								<td>\${lecture.lecApply.lecaNm}</td>
+								<td>\${lecture.lecApply.lecaCrd}</td>
+								<td>\${lecture.lecApply.lecaCap}</td>
+								<td class="p-2 pt-3">
+									<div class="progress progress-xs progress-striped active">
+										<div class="progress-bar bg-primary"
+											style="width: ` + `\${lecture.lecHcnt/lecture.lecApply.lecaCap*100}%` + `"></div>
+									</div>
+									<div class="text-center">\${lecture.lecHcnt}/\${lecture.lecApply.lecaCap}
+										&nbsp;&nbsp;<span class="badge bg-primary">\${(lecture.lecHcnt/lecture.lecApply.lecaCap*100).toFixed(0)}%</span>
+									</div>
+								</td>
+								<td>\${lecture.employee.empNm}</td>
+								<td><input type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
+									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button
+										class="btn btn-block bg-gradient-primary btn-sm apply"
+										value="\${lecture.lecaCd}">취소</button></td>
+							</tr>`
+				});
+				$("#completeApplyLecture").append(str);
+				
+				
 			}
-		})
+		}); // end ajax
 		
-	}
+	} // end function
 </script>
