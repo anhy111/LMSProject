@@ -2,7 +2,10 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 
+<%--라이브러리 sec--%>
 <head>
 
     <style>
@@ -48,6 +51,8 @@
 
                 <div class="card-body">
                     <form role="form" action="/notice/noticeForm" method="post" id="form" name="form">
+<%--                        srcf input tag--%>
+                        <sec:csrfInput/>
                         <div class="row">
                             <table class="table table-bordered">
                                 <tbody>
