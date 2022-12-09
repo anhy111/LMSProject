@@ -209,11 +209,25 @@
 		                LEFT OUTER JOIN STU_LEC SL ON(SL.LECA_CD = L.LECA_CD)
 		WHERE SL.STU_NO = #{stuNo}
 	</select>
+
+	<insert id="insertTask" parameterType="task">
+		<selectKey keyProperty="atchFileId" order="BEFORE" resultType="int"> 
+			select max(ATCH_FILE_ID) FROM ATTACH
+		</selectKey>
+		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT, ATCH_FILE_ID)
+            values((SELECT MAX(TASK_CD)+1 FROM TASK_CD),#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},#{atchFileId});
+	</insert>
 	
+	<insert id="insertTask2" parameterType="task">
+		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT)
+            values((SELECT MAX(TASK_CD)+1 FROM TASK_CD),#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt});
+	</insert>
+
 	<update id="increaseHeadcount" parameterType="studentLecture">
 		UPDATE LECTURE
 		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) + 1
 		WHERE LECA_CD = #{lecaCd}
 	</update>
+
 	
 </mapper>
