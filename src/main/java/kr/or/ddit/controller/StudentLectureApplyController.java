@@ -58,37 +58,48 @@ public class StudentLectureApplyController {
 	@ResponseBody
 	@PostMapping("/apply")
 	public String lectureApply(@RequestBody StudentLecture studentLecture) {
-		
-		int result = this.studentLectureApplyService.apply(studentLecture);
-		
-		return result + "";
+		return this.studentLectureApplyService.apply(studentLecture);
+	}
+	
+	@ResponseBody
+	@PostMapping("/save")
+	public String lectureSave(@RequestBody StudentLecture studentLecture) {
+		return this.studentLectureApplyService.save(studentLecture);
 	}
 	
 	@ResponseBody
 	@PostMapping("/applyCancel")
-	public String applyCancel(@RequestBody StudentLecture studentLecture) {
-		int result = this.studentLectureApplyService.applyCancel(studentLecture);
-		return result + "";
+	public int applyCancel(@RequestBody StudentLecture studentLecture) {
+		return this.studentLectureApplyService.applyCancel(studentLecture);
+	}
+	
+	@ResponseBody
+	@PostMapping("/saveCancel")
+	public int saveCancel(@RequestBody StudentLecture studentLecture) {
+		return this.studentLectureApplyService.saveCancel(studentLecture);
 	}
 	
 	@ResponseBody
 	@GetMapping("/completeApplyLectureList")
 	public List<Lecture> completeApplyLectureList(StudentLecture studentLecture){
-		
-		List<Lecture> list = this.lectureService.studentCompleteApplyLectureList(studentLecture);
-		
-		return list;
-		
+		return this.lectureService.studentCompleteApplyLectureList(studentLecture);
 	}
 	
 	@ResponseBody
 	@GetMapping("/notYetApplyLectureList")
-public List<Lecture> notYetApplyLectureList(StudentLecture studentLecture){
-		
-		List<Lecture> list = this.lectureService.studentNotYetApplyLectureList(studentLecture);
-		
-		return list;
-		
+	public List<Lecture> notYetApplyLectureList(StudentLecture studentLecture){
+		return this.lectureService.studentNotYetApplyLectureList(studentLecture);
 	}
 	
+	@ResponseBody
+	@GetMapping("/completeSaveLectureList")
+	public List<Lecture> completeSaveLectureList(StudentLecture studentLecture){
+		return this.lectureService.studentCompleteSaveLectureList(studentLecture);
+	}
+	
+	@ResponseBody
+	@GetMapping("/notYetSaveLectureList")
+	public List<Lecture> notYetSaveLectureList(StudentLecture studentLecture){
+		return this.lectureService.studentNotYetSaveLectureList(studentLecture);
+	}
 } 

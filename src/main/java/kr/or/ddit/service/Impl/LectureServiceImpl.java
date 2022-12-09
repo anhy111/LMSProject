@@ -41,4 +41,12 @@ public class LectureServiceImpl implements LectureService{
 	public Lecture searchTask(String lecaCd){
 		return this.lectureMapper.searchTask(lecaCd);
 	}
+	@Override
+	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture) {
+		return this.lectureMapper.studentCompleteSaveLectureList(studentLecture);
+	}
+	@Override
+	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture) {
+		return this.lectureMapper.studentNotYetSaveLectureList(studentLecture);
+	}
 }
