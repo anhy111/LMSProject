@@ -3,11 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <head>
-
     <style>
-
-
         .drop-zone {
             width: 500px;
             height: 250px;
@@ -23,14 +21,11 @@
         #fileUpload {
         }
 
-
         .drop-zone-dragenter, .drop-zone-dragover {
             background-color: #dbdbe7;
             /*     border: 3px solid pink; */
         }
     </style>
-
-
 </head>
 
 <!-- 게시판상세 -->
@@ -47,7 +42,7 @@
 
 
                 <div class="card-body">
-                    <form role="form" action="/notice/noticeForm" method="post" id="form" name="form">
+                    <form role="form" action="/notice/noticeForm" method="post" name="form">
                         <div class="row">
                             <table class="table table-bordered">
                                 <tbody>
@@ -120,7 +115,7 @@
                         <button class="btn btn-outline-primary" type="button"
                                 onclick="autoFill();">자동완성
                         </button>&nbsp;&nbsp;
-                        <button class="btn btn-outline-primary" form="form" type="submit" id="registBtn">등록
+                        <button class="btn btn-outline-primary" type="submit" id="registBtn">등록
                         </button>
                         &nbsp;&nbsp;
                         <button class="btn btn-outline-danger" type="button"
