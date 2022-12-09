@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : xml파일은 여러개일 수 있음. 
+이를 구별하기 위한 식별 용도로 사용 -->
+<mapper namespace="kr.or.ddit.mapper.AllTimeLecturesMapper">
+	<sql id="where">
+	
+	</sql>
+	
+	<resultMap type="AllTimeLectrues" id="AllTimeLectruesMap">
+		<collection property="lectureList" resultMap="lectureMap"></collection>
+		<collection property="lecApplyList" resultMap="lecApplyMap"></collection>
+		<collection property="subjectList" resultMap="subjectMap"></collection>
+		<collection property="departmentList" resultMap="departmentMap"></collection>
+		<collection property="collegeList" resultMap="collegeMap"></collection>
+		<collection property="professorList" resultMap="professorMap"></collection>
+		<collection property="employeeList" resultMap="employeeMap"></collection>
+	</resultMap>
+	
+	<resultMap type="lecture" id="lectureMap">
+		<result property="lecaCd" column="LECA_CD" />
+		<result property="subCd" column="SUB_CD" />
+		<result property="lecYn" column="LEC_YN" />
+		<result property="lecHcnt" column="LEC_HCNT" />
+		<result property="lecaYn" column="LECA_YN" />
+		<result property="depCd" column="DEP_CD" />
+	</resultMap>
+	
+	<resultMap type="lecApply" id="lecApplyMap">
+		<result property="lecaCd"  column="LECA_CD" />
+		<result property="lecaYr"  column="LECA_YR" />
+		<result property="lecaSem" column="LECA_SEM" />
+		<result property="lecaNm"  column="LECA_NM" />
+		<result property="lecaCon" column="LECA_CON" />
+		<result property="lecaTrg" column="LECA_TRG" />
+		<result property="lecaCrd" column="LECA_CRD" />
+		<result property="lecaPer" column="LECA_PER" />
+		<result property="lecaCap" column="LECA_CAP" />
+		<result property="lecaTm"  column="LECA_TM" />
+		<result property="lecaWk"  column="LECA_WK" />
+		<result property="lecaHall" column="LECA_HALL" />
+		<result property="lecaUnit" column="LECA_UNIT" />
+		<result property="lecaBook" column="LECA_BOOK" />
+		<result property="lecaNote" column="LECA_NOTE" />
+		<result property="lecaDt" column="LECA_DT" />
+		<result property="lecaGrade" column="LECA_GRADE" />
+		<result property="lecaImsiYn" column="LECA_IMSI_YN" />
+		<result property="lecaCate" column="LECA_CATE" />
+		<result property="lecaMp" column="LECA_MP" />
+		<result property="lecaFp" column="LECA_FP" />
+		<result property="lecaTp" column="LECA_TP" />
+		<result property="lecaAp" column="LECA_AP" />
+	</resultMap>
+	
+	<resultMap type="Subject" id="subjectMap">
+		<result property="subCd" column="SUB_CD" />
+		<result property="proNo" column="PRO_NO" />
+		<result property="depCd" column="DEP_CD" />
+		<result property="subNm" column="SUB_NM" />
+	</resultMap>
+	
+	<resultMap type="department" id="departmentMap">
+		<result property="depCd"  column="DEP_CD" />
+		<result property="colCd"  column="COL_CD" />
+		<result property="proNo"  column="PRO_NO" />
+		<result property="depNm"  column="DEP_NM" />
+		<result property="depDes" column="DEP_DES" />
+		<result property="depCap" column="DEP_CAP" />
+		<result property="depTel" column="DEP_TEL" />
+		<result property="empNo"  column="EMP_NO"/>
+	</resultMap>
+	
+	<resultMap type="college" id="collegeMap">
+		<result property="colCd" column="COL_CD" />
+		<result property="colNm" column="COL_NM" />
+		<result property="colDes" column="COL_DES" />
+		<result property="colTel" column="COL_TEL" />
+		<result property="colAddr" column="COL_ADDR" />
+		<result property="colImgUrl" column="COL_IMG_URL" />
+	</resultMap>
+	
+	<resultMap type="professor" id="professorMap">
+		<result property="proNo" column="PRO_NO" />
+		<result property="depCd" column="DEP_CD" />
+		<result property="proPos" column="PRO_POS" />
+	</resultMap>
+	
+	<resultMap type="employee" id="employeeMap">
+		<result property="empNo"  column="EMP_NO" />
+		<result property="empNm" column="EMP_NM" />
+		<result property="empNme" column="EMP_NME" />
+		<result property="empTel" column="EMP_TEL" />
+		<result property="empTel2"  column="EMP_TEL2" />
+		<result property="empZip" column="EMP_ZIP" />
+		<result property="empAddr1"  column="EMP_ADDR1" />
+		<result property="empAddr2"  column="EMP_ADDR2" />
+		<result property="empReg" column="EMP_REG" />
+		<result property="empBankCd"  column="EMP_BANK_CD" />
+		<result property="empDepo"  column="EMP_DEPO" />
+		<result property="empAct" column="EMP_ACT" />
+		<result property="empPic" column="EMP_PIC" />
+		<result property="empJoin"  column="EMP_JOIN" />
+		<result property="empRet" column="EMP_RET" />
+	</resultMap>
+	
+<!-- 역대전체강의 목록 -->
+<select id="AllTimeLectrueList" resultMap="AllTimeLectruesMap">
+SELECT
+		  LA.LECA_YR
+		, CASE WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 3 AND 6 THEN 1
+		          WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 9 AND 12 THEN 2
+		          ELSE NULL 
+		          END AS LECA_SEM
+		, C.COL_NM
+		, D.DEP_NM
+		, S.SUB_NM
+		, LA.LECA_CATE
+		, LA.LECA_NM
+		, CONCAT(CONCAT(P.PRO_POS, ' '), E.EMP_NM) AS EMP_NM
+		, LA.LECA_TRG
+		, LA.LECA_CRD
+		, L.LEC_YN
+		, L.LEC_HCNT
+FROM LECTURE L, LEC_APPLY LA, SUBJECT S, DEPARTMENT D, COLLEGE C, PROFESSOR P, EMPLOYEE E
+WHERE
+		 L.LECA_CD = LA.LECA_CD
+		AND S.DEP_CD = L.DEP_CD
+		AND L.DEP_CD = D.DEP_CD
+		AND D.COL_CD = C.COL_CD 
+		AND S.PRO_NO = P.PRO_NO
+		AND P.PRO_NO = E.EMP_NO
+		<if test="lecYn != null and lecYn != ' ' ">
+		AND L.LEC_YN = #{lecYn} 	
+		</if>
+		<if test="lecaYr != null and lecaYr != ' ' ">
+		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) = #{lecaYn}
+		</if>
+		<if test="lecaSem != null and lecaSem ' ' ">
+		(CASE WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 3 AND 6 THEN 1
+          WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 9 AND 12 THEN 2
+          ELSE NULL 
+          END) = #{lecaSem}
+		</if>
+		<if test="colNm != null and colNm != ' ' ">
+		C.COL_NM = #{colNm}
+		</if>
+		<if test="depNm != null and depNm != ' ' ">
+		D.DEP_NM = #{depNm}
+		</if>
+		<if test="subNm != null and subNm != ' ' ">
+		S.SUB_NM = #{subNm}
+		</if>
+		<if test="lecaCate != null and lecaCate != ' ' ">
+		LA.LECA_CATE = #{lecaCate}
+		</if>
+		<if test="lecaNm != null and lecaNm != ' ' ">
+		LA.LECA_NM LIKE '%' || #{lecaNm} || '%'
+		</if>
+		<if test="empNm != null and empNm != ' ' ">
+		 E.EMP_NM LIKE '%' || #{empNm} || '%'
+		</if>
+</select>
+
+<!-- 상세 -->
+
+</mapper>
+
