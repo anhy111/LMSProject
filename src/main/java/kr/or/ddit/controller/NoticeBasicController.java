@@ -1,6 +1,5 @@
 package kr.or.ddit.controller;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -13,13 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.or.ddit.domain.LecNotice;
-import kr.or.ddit.service.LecNoticeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -30,12 +23,12 @@ public class NoticeBasicController {
     private final NoticeBasicService noticeBasicService;
 
     @GetMapping("/list")
-    public String LectureNoticeList(Model model) {
+    public String NoticeList(Model model) {
 
-        List<NoticeBasic> noticeBasicList = this.noticeBasicService.NoticeBasicList();
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
 
         //공통 약속
-        model.addAttribute("bodyTitle","공지사항목록");
+        model.addAttribute("bodyTitle", "공지사항목록");
         model.addAttribute("noticeBasicList", noticeBasicList);
 
         //forwarding
@@ -60,11 +53,9 @@ public class NoticeBasicController {
         noticeBasic.setNoticeReg(new Date());
         noticeBasic.setNoticeUpd(new Date());
 
-        System.out.println(noticeBasic);
+        noticeBasicService.noticeBasicSave(noticeBasic);
 
-        //         noticeService.saveNotice(noticeBasic);
-
-        return "redirect:notice/list";
+        return "redirect:list";
     }
 
     @GetMapping("/add")

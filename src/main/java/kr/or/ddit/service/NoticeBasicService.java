@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface NoticeBasicService {
 
+    //공지사항 추가
+    void noticeBasicSave(NoticeBasic noticeBasic);
+
     //공지사항 목록
-    public List<NoticeBasic> NoticeBasicList();
+    List<NoticeBasic> noticeBasicList();
+
 }
