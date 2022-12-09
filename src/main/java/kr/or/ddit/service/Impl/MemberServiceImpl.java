@@ -196,5 +196,15 @@ public class MemberServiceImpl implements MemberService {
 
 		return encodeBase64String;
 	}
+	
+	@Override
+	public int stuUpdate(Student student) {
+		return this.memberMapper.stuUpdate(student);
+	}
+	
+	@Override
+	public int updateStuPw(Map<String, String> map) {
+		return this.memberMapper.updateStuPw(map);
+	}
 
 }
