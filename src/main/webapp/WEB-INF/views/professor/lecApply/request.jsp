@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강의계획서 조회</title>
+<title>강의계획서 신청</title>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 </head>
 <body>
@@ -128,118 +128,35 @@
 
 </body>
 <script type="text/javascript" defer="defer">
-	window.onload = function () {
-		console.log("여기까지 오긴하냐?");
+// 	window.onload = function () {
+// 		console.log("여기까지 오긴하냐?");
 
-		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
+// 		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
+// 		let header = "${_csrf.headerName}";
+// 		let token = "${_csrf.token}";
 
-		console.log("header : " + header + ", token : " + token);
+// 		console.log("header : " + header + ", token : " + token);
 
-		//교수 개인정보 가져오기
-		$.ajax({
-			url: "/professor/lecApply/proInfo",
-			type: "POST",
-			dataType: "JSON",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader(header, token);
-			},
-			success: function (data) {
-				console.log("이건 오냐?");
-				$('#proNo').val(data.proNo);
-				$('#empNm').val(data.empNm);
-				$('#empTel').val(data.empTel);
-				$('#proPos').val(data.proPos);
-				$('#depNm').val(data.depNm);
-				$('#empRet').val(data.empRet);
-				$('#empReg').val(data.empReg);
+// 		//교수 개인정보 가져오기
+// 		$.ajax({
+// 			url: "/professor/lecApply/proInfo",
+// 			type: "POST",
+// 			dataType: "JSON",
+// 			beforeSend: function (xhr) {
+// 				xhr.setRequestHeader(header, token);
+// 			},
+// 			success: function (data) {
+// 				console.log("이건 오냐?");
+// 				$('#proNo').val(data.proNo);
+// 				$('#empNm').val(data.empNm);
+// 				$('#empTel').val(data.empTel);
+// 				$('#proPos').val(data.proPos);
+// 				$('#depNm').val(data.depNm);
+// 				$('#empRet').val(data.empRet);
+// 				$('#empReg').val(data.empReg);
 				
-			}
-		});
+// 			}
+// 		});
 
-		//년도 및 학기 불러오기
-		console.log("학기 오나용?");
-		$.ajax({
-			url: "/professor/lecApply/getYrNSem",
-			type: "POST",
-			dataType: "JSON",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader(header, token);
-			},
-			success: function (res) {
-				str = '';
-
-				$.each(res, function (i, v) {
-					str += '<option value="' + v.lecaYr + v.lecaSem + '">' + v.lecaYr + '/' + v.lecaSem + '학기</option>';
-				});
-
-				$('#cateYrNSem').append(str);
-			}
-		});
-
-		//강의계획서 리스트 가져오기
-		$.ajax({
-
-			url: "/professor/lecApply/list",
-			type: "POST",
-			contentType: "application/json;charset=utf-8",
-			dataType: "JSON",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader(header, token);
-			},
-			success: function (data) {
-				console.log("떠라떠라떠랑");
-				console.log("떠라떠라떠랑:",data);
-				let str ="";
-				for(var i=0;i<data.length;i++){
-					str = `
-						<td>\${data[i].lecaYr}</td>
-						<td>\${data[i].lecaTrg }</td>
-						<td>\${data[i].subCd }</td>
-						<td>\${data[i].lecaNm }</td>
-						<td>\${data[i].lecaCap }</td>
-						<td>\${data[i].lecaCate }</td>
-						<td>\${data[i].lecaCrd }</td>
-						<td>\${data[i].lecaWk }</td>
-						<td>\${data[i].lecaGrade }</td>
-						<td>\${data[i].lecaBook }</td>
-						<button onclick='fn_btn(\${data[i].proNo})'></button>
-					`
-				}
-				$("#proList").html(str);
-				//승인 - 그대로, 승인완료 - 파랑, 반려 - 빨강
-// 				var dataSet = data.getData();
-// 				$.each(dataSet, function (i1, v1) {
-// 					if (v1.lecaBook == '승인') {
-// 						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorBlue");
-// 					} else if (v1.lecaBook == '반려') {
-// 						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorRed");
-// // 					}
-// 				});
-			}
-		});
-
-		//count 불러오기
-		function getCnt(yrNsem) {
-
-			yrNsem = $(yrNsem).val();
-
-			let dataObject = {
-				yrNsem: yrNsem
-			};
-
-			$.ajax({
-				url: "/professor/lecApply/getCnt",
-				type: "POST",
-				data: JSON.stringify(dataObject),
-				contentType: "application/json;charset=utf-8",
-				dataType: "JSON",
-				success: function (res) {
-					$("#cntSpan").text(res);
-				}
-			});
-		}
-	}
 </script>
 </html>

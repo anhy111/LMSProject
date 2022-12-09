@@ -76,7 +76,7 @@
 		               END  LECA_SEM
 		FROM    LEC_APPLY L, LECTURE T
 		WHERE   L.PRO_NO = #{empNo}
-		AND		T.LECA_YN = 'Y'
+		AND		T.LECA_YN = 1
 		AND     L.LECA_CD = T.LECA_CD
 		ORDER BY L.LECA_YR DESC, LECA_SEM DESC
 	</select>
@@ -87,6 +87,41 @@
 		WHERE   L.PRO_NO = #{empNo}
 		<include refid="yrNsem"></include>
 		AND     L.LECA_IMSI_YN IS NULL
+	</select>
+	
+	<select id="list" parameterType="hashMap" resultType="lecApply">
+		SELECT  U.LECA_CD,
+		        U.PRO_NO,
+		        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
+		        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
+		        NVL(U.LECA_TRG, 0) LECA_TRG,
+		        U.SUB_CD,
+		        U.LECA_NM,
+		        NVL(U.LECA_CAP, 0) LECA_CAP,
+		        U.LECA_CATE,
+		        NVL(U.LECA_CRD, 0) LECA_CRD,
+		        NVL(TRIM(U.MON || ' ' || U.TUE || ' ' || U.WED || ' ' || U.THU || ' ' || U.FRI), ' - ')
+		        || ' (' || NVL(U.BLD_SNM, '아직 배정되지 않았습니다.') || ' ' || U.ROOM_NO || ')' LECA_TT,
+		        U.LECA_GRADE,
+		        U.LECA_DT,
+		        CASE    WHEN U.LECA_YN = 0 THEN '승인대기'
+		                WHEN U.LECA_YN = 1 THEN '승인'
+		                WHEN U.LECA_YN = 2 THEN '반려'
+		        END LECA_APPROVAL
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM
+		) U
+		WHERE   U.PRO_NO = 1
+		AND     U.LECA_IMSI_YN IS NULL
+		ORDER BY U.LECA_CD DESC
 	</select>
 	
 </mapper>
