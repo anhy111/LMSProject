@@ -27,5 +27,7 @@
 		<typeAlias type="kr.or.ddit.domain.Department" alias="department"/>
 		<typeAlias type="kr.or.ddit.domain.StudentLecture" alias="studentLecture"/>
 		<typeAlias type="kr.or.ddit.domain.Task" alias="task"/>
+		<typeAlias type="kr.or.ddit.domain.GraduateCredit" alias="graduateCredit"/>
+		<typeAlias type="kr.or.ddit.domain.Credit" alias="credit"/>
 	</typeAliases>
 </configuration>

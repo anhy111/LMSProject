@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.GraduateCredit;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.service.DepartmentService;
+import kr.or.ddit.service.GraduateCreditService;
 import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.LectureService;
 import kr.or.ddit.service.StudentLectureApplyService;
@@ -37,6 +39,8 @@ public class StudentLectureApplyController {
 	DepartmentService departmentService;
 	@Autowired
 	StudentLectureApplyService studentLectureApplyService;
+	@Autowired
+	GraduateCreditService graduateCreditService; 
 	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
@@ -48,9 +52,11 @@ public class StudentLectureApplyController {
 		StudentLecture studentLecture = new StudentLecture();
 		studentLecture.setStuNo(stuNo);
 		List<Department> departmentList = this.departmentService.departmentList();
+		GraduateCredit graduateCredit = this.graduateCreditService.studentApplyMaxCredit(stuNo.toString());
 		
 		model.addAttribute("departmentList",departmentList);
 		model.addAttribute("stuNo",stuNo.toString());
+		model.addAttribute("graduateCredit",graduateCredit);
 		
 		return "student/lectureApply/lectureList";
 	}

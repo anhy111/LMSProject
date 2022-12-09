@@ -27,12 +27,33 @@
 						<div class="tab-pane fade show active" id="custom-tabs-four-home"
 							role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
 							<div class="card container-fluid">
+								<div class="row">
+									<div class="card-body container-fluid">
+										<div class="row">
+											<div class="col-2">
+												<label>학과</label><input type="text" class="form-control"
+													value="${graduateCredit.depNm}" readonly />
+											</div>
+											<div class="col-2 offset-1">
+												<label>신청가능학점</label><input type="text" class="form-control"
+													value="${graduateCredit.rdcReqCrd}" readonly />
+											</div>
+											<div class="col-2 offset-1">
+												<label>학년</label><input type="text" class="form-control"
+													value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
+													readonly />
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr>
 								<div class="row p-3">
 									<div class="form-group col-1">
 										<h5>키워드 검색</h5>
 									</div>
 									<div class="form-group col-2">
-										<select id="department" class="select2bs4 select2-hidden-accessible"
+										<select id="department"
+											class="select2bs4 select2-hidden-accessible"
 											style="width: 100%;" aria-hidden="true">
 											<option value="">학과</option>
 											<c:forEach var="department" items="${departmentList}">
@@ -135,113 +156,137 @@
 						<div class="tab-pane fade" id="custom-tabs-four-profile"
 							role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
 							<div class="tab-pane fade show active" id="custom-tabs-four-home"
-							role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
-							<div class="card container-fluid">
-								<div class="row p-3">
-									<div class="form-group col-1">
-										<h5>키워드 검색</h5>
+								role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+								<div class="card container-fluid">
+									<h3>예비수강신청</h3>
+									<div class="row">
+										<div class="card-body container-fluid">
+											<div class="row">
+												<div class="col-2">
+													<label>학과</label><input type="text" class="form-control"
+														value="${graduateCredit.depNm}" readonly />
+												</div>
+												<div class="col-2 offset-1">
+													<label>신청가능학점</label><input type="text"
+														class="form-control" value="${graduateCredit.rdcReqCrd}"
+														readonly />
+												</div>
+												<div class="col-2 offset-1">
+													<label>학년</label><input type="text" class="form-control"
+														value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
+														readonly />
+												</div>
+											</div>
+										</div>
 									</div>
-									<div class="form-group col-2">
-										<select id="cartDepartment" class="select2bs4 select2-hidden-accessible"
-											style="width: 100%;" aria-hidden="true">
-											<option value="">학과</option>
-											<c:forEach var="department" items="${departmentList}">
-												<option value="${department.depNm}">${department.depNm}</option>
-											</c:forEach>
-										</select>
+									<hr>
+									<div class="row p-3">
+										<div class="form-group col-1">
+											<h5>키워드 검색</h5>
+										</div>
+										<div class="form-group col-2">
+											<select id="cartDepartment"
+												class="select2bs4 select2-hidden-accessible"
+												style="width: 100%;" aria-hidden="true">
+												<option value="">학과</option>
+												<c:forEach var="department" items="${departmentList}">
+													<option value="${department.depNm}">${department.depNm}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="form-group col-2 ">
+											<select id="cartYr"
+												class="select2bs4 select2-hidden-accessible"
+												style="width: 100%;" aria-hidden="true">
+												<option value="">학년</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+											</select>
+										</div>
+										<div class="form-group col-2">
+											<select id="cartCategory"
+												class="select2bs4 select2-hidden-accessible"
+												style="width: 100%;" aria-hidden="true">
+												<option value="">이수구분</option>
+												<option value="전필">전공필수</option>
+												<option value="전선">전공선택</option>
+												<option value="교필">교양필수</option>
+												<option value="교선">교양선택</option>
+											</select>
+										</div>
+										<div class="form-gruop col-2">
+											<input id="cartSubject" type="text" class="form-control"
+												placeholder="과목명" />
+										</div>
+
+										<div class="form-group col-1">
+											<button id="cartSearch" type="button"
+												class="btn btn-flat btn-primary" value="">검색</button>
+										</div>
 									</div>
-									<div class="form-group col-2 ">
-										<select id="cartYr" class="select2bs4 select2-hidden-accessible"
-											style="width: 100%;" aria-hidden="true">
-											<option value="">학년</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-										</select>
-									</div>
-									<div class="form-group col-2">
-										<select id="cartCategory"
-											class="select2bs4 select2-hidden-accessible"
-											style="width: 100%;" aria-hidden="true">
-											<option value="">이수구분</option>
-											<option value="전필">전공필수</option>
-											<option value="전선">전공선택</option>
-											<option value="교필">교양필수</option>
-											<option value="교선">교양선택</option>
-										</select>
-									</div>
-									<div class="form-gruop col-2">
-										<input id="cartSubject" type="text" class="form-control"
-											placeholder="과목명" />
+									<hr>
+									<div class="row pl-3">
+										<h3>강의목록</h3>
 									</div>
 
-									<div class="form-group col-1">
-										<button id="cartSearch" type="button"
-											class="btn btn-flat btn-primary" value="">검색</button>
-									</div>
-								</div>
-								<hr>
-								<div class="row pl-3">
-									<h3>강의목록</h3>
-								</div>
+									<div class="row pl-3 pb-3">
+										<div class="card-body table-responsive col-11"
+											style="height: 300px;">
+											<table
+												class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+												<thead>
+													<tr class="text-center">
+														<th width="4%">순번</th>
+														<th width="8%">이수구분</th>
+														<th width="18%">개설학과</th>
+														<th width="4%">학년</th>
+														<th width="20%">과목명</th>
+														<th width="4%">학점</th>
+														<th width="6%">최대인원</th>
+														<th width="10%">현재인원</th>
+														<th>교수명</th>
+														<th>강의계획서</th>
+														<th>신청</th>
+													</tr>
+												</thead>
+												<tbody id="notSaveLecture">
 
-								<div class="row pl-3 pb-3">
-									<div class="card-body table-responsive col-11"
-										style="height: 300px;">
-										<table
-											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
-											<thead>
-												<tr class="text-center">
-													<th width="4%">순번</th>
-													<th width="8%">이수구분</th>
-													<th width="18%">개설학과</th>
-													<th width="4%">학년</th>
-													<th width="20%">과목명</th>
-													<th width="4%">학점</th>
-													<th width="6%">최대인원</th>
-													<th width="10%">현재인원</th>
-													<th>교수명</th>
-													<th>강의계획서</th>
-													<th>신청</th>
-												</tr>
-											</thead>
-											<tbody id="notSaveLecture">
-
-											</tbody>
-										</table>
+												</tbody>
+											</table>
+										</div>
 									</div>
-								</div>
-								<div class="row pl-3">
-									<h3>장바구니</h3>
-								</div>
-								<div class="row pl-3 pb-3">
-									<div class="card-body table-responsive col-11"
-										style="height: 300px;">
-										<table
-											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
-											<thead>
-												<tr class="text-center">
-													<th width="4%">순번</th>
-													<th width="8%">이수구분</th>
-													<th width="18%">개설학과</th>
-													<th width="4%">학년</th>
-													<th width="20%">과목명</th>
-													<th width="4%">학점</th>
-													<th width="6%">최대인원</th>
-													<th width="10%">현재인원</th>
-													<th>교수명</th>
-													<th>강의계획서</th>
-													<th>취소</th>
-												</tr>
-											</thead>
-											<tbody id="completeSaveLecture">
-											</tbody>
-										</table>
+									<div class="row pl-3">
+										<h3>장바구니</h3>
+									</div>
+									<div class="row pl-3 pb-3">
+										<div class="card-body table-responsive col-11"
+											style="height: 300px;">
+											<table
+												class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+												<thead>
+													<tr class="text-center">
+														<th width="4%">순번</th>
+														<th width="8%">이수구분</th>
+														<th width="18%">개설학과</th>
+														<th width="4%">학년</th>
+														<th width="20%">과목명</th>
+														<th width="4%">학점</th>
+														<th width="6%">최대인원</th>
+														<th width="10%">현재인원</th>
+														<th>교수명</th>
+														<th>강의계획서</th>
+														<th>취소</th>
+													</tr>
+												</thead>
+												<tbody id="completeSaveLecture">
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>
