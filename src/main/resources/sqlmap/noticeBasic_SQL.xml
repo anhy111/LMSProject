@@ -18,27 +18,35 @@
 
     </select>
     <!-- 상세 -->
+    <select id="noticeBasicFindNotice" resultType="NoticeBasic">
+        SELECT *
+        FROM NOTICE_BASIC
+        WHERE NOTICE_CD = #{noticeCd}
+    </select>
     <!-- 수정 -->
     <!-- 입력 -->
     <select id="noticeBasicSave" resultType="NoticeBasic">
 
-        INSERT INTO NOTICE_BASIC (
-                                  NOTICE_CD,
+        INSERT INTO NOTICE_BASIC (NOTICE_CD,
                                   NOTICE_TTL,
                                   NOTICE_REG,
                                   NOTICE_UPD,
-                                  NOTICE_CON
-                                  )
+                                  NOTICE_CON)
 
-        VALUES (
-                NOTICEBASIC_SEQ.NEXTVAL,
+        VALUES (NOTICEBASIC_SEQ.NEXTVAL,
                 #{noticeTtl},
                 SYSDATE,
                 SYSDATE,
-                #{noticeCon}
-                )
+                #{noticeCon})
     </select>
+
     <!-- 삭제 -->
+    <delete id="noticeBasicDelete">
+        DELETE
+        FROM NOTICE_BASIC
+        where NOTICE_CD = #{noticetCd}
+    </delete>
+
 </mapper>
 
 

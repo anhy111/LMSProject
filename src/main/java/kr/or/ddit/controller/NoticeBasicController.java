@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,7 +37,7 @@ public class NoticeBasicController {
     }
 
     @GetMapping("/noticeForm")
-    public String getNoticeForm(Model model) {
+    public String createNoticeForm(Model model) {
 
         model.addAttribute("form", new NoticeForm());
 
@@ -44,36 +45,41 @@ public class NoticeBasicController {
     }
 
     @PostMapping("/noticeForm")
-    public String postNoticeForm(NoticeForm form) {
+    public String createNotice(NoticeForm form) {
 
-        NoticeBasic noticeBasic = new NoticeBasic();
-
-        noticeBasic.setNoticeTtl(form.getTitle());
-        noticeBasic.setNoticeCon(form.getContent());
-        noticeBasic.setNoticeReg(new Date());
-        noticeBasic.setNoticeUpd(new Date());
+        NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
         noticeBasicService.noticeBasicSave(noticeBasic);
 
         return "redirect:list";
     }
 
-    @GetMapping("/add")
-    public String add() {
+    @GetMapping("/list/{noticeBasic.noticeCd}/edit")
+    public String detail(@PathVariable("noticeBasic.noticeCd") Long noticeCd, Model model) {
 
-        return "/notice/add";
-    }
+        NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
 
-    @GetMapping("/detail")
-    public String detail() {
+        model.addAttribute("form", noticeBasic);
 
         return "/notice/detail";
     }
 
-    @GetMapping("/update")
-    public String update() {
+    @GetMapping("/update/{form.noticeCd}")
+    public String update(@PathVariable("form.noticeCd") Long noticeCd, Model model) {
 
-        return "/notice/update";
+        NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
+
+        model.addAttribute("form", noticeBasic);
+
+        return "/notice/modifyForm";
+    }
+
+    @GetMapping("/delete/{form.noticeCd}")
+    public String delete(@PathVariable("form.noticeCd") Long noticeCd) {
+
+        noticeBasicService.delete(noticeCd);
+
+        return "redirect:/notice/list";
     }
 
 }
