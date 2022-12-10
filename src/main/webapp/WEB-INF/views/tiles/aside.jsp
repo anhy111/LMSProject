@@ -211,10 +211,12 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>학생 목록</p>
-							</a></li>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+										<p>학생 목록</p>
+								</a>
+							</li>
 							<li class="nav-item"><a href="#" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
 									<p>장학생 추천</p>
@@ -261,7 +263,7 @@
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="#" class="nav-link"> 
+								<a href="/manage/stuManage" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>학생 목록 조회</p>
 								</a>

@@ -46,7 +46,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/mypage/{1}.jsp" />
 	</definition>
 	<definition name="record/*" extends="tiles-layout">
-	<put-attribute name="body" value="/WEB-INF/views/record/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/record/{1}.jsp" />
+	</definition>
+	<definition name="manage/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/manage/{1}.jsp" />
 	</definition>
 	
 
