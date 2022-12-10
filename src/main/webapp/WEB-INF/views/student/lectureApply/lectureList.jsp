@@ -30,6 +30,7 @@
 								<div class="row">
 									<div class="card-body container-fluid">
 										<div class="row">
+											<h5 class="col-1">나의 정보</h5>
 											<div class="col-2">
 												<label>학과</label><input type="text" class="form-control"
 													value="${graduateCredit.depNm}" readonly />
@@ -42,6 +43,34 @@
 												<label>학년</label><input type="text" class="form-control"
 													value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
 													readonly />
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="card-body container-fluid">
+										<div class="row">
+											<h5 class="col-1">이수한 학점</h5>
+											<div class="col-2">
+												<label>전공필수</label><input type="text" class="form-control"
+													value="${studentCurrentCredit.crdMrc}" readonly />
+											</div>
+											<div class="col-2">
+												<label>전공선택</label><input type="text" class="form-control"
+													value="${studentCurrentCredit.crdMoc}" readonly />
+											</div>
+											<div class="col-2">
+												<label>교양필수</label><input type="text" class="form-control"
+													value="${studentCurrentCredit.crdCrc}" readonly />
+											</div>
+											<div class="col-2">
+												<label>교양선택</label><input type="text" class="form-control"
+													value="${studentCurrentCredit.crdCoc}" readonly />
+											</div>
+											<div class="col-2">
+												<label>총학점</label><input type="text" class="form-control"
+													value="${studentCurrentCredit.crdAc}" readonly />
 											</div>
 										</div>
 									</div>
