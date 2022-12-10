@@ -160,6 +160,36 @@
 									</div>
 								</div>
 								<div class="row pl-3">
+									<h3>장바구니 목록</h3>
+								</div>
+
+								<div class="row pl-3 pb-3">
+									<div class="card-body table-responsive col-11"
+										style="height: 300px;">
+										<table
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											<thead>
+												<tr class="text-center">
+													<th width="4%">순번</th>
+													<th width="8%">이수구분</th>
+													<th width="18%">개설학과</th>
+													<th width="4%">학년</th>
+													<th width="20%">과목명</th>
+													<th width="4%">학점</th>
+													<th width="6%">최대인원</th>
+													<th width="10%">현재인원</th>
+													<th>교수명</th>
+													<th>강의계획서</th>
+													<th>신청</th>
+												</tr>
+											</thead>
+											<tbody class="completeSaveLecture">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row pl-3">
 									<h3>수강신청된 강의목록</h3>
 								</div>
 								<div class="row pl-3 pb-3">
@@ -345,7 +375,7 @@
 														<th>취소</th>
 													</tr>
 												</thead>
-												<tbody id="completeSaveLecture">
+												<tbody class="completeSaveLecture">
 												</tbody>
 											</table>
 										</div>
@@ -763,13 +793,17 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(result) {
-				$("#completeSaveLecture").html("");
+				$(".completeSaveLecture").html(function(){
+					return "";
+				});
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
 					str += "<td colspan='11'>담긴 강의가 없습니다.</td>";
 					str += "</tr>";
-					$("#completeSaveLecture").html(str);
+					$(".completeSaveLecture").html(function(){
+						return str;
+					});
 					return;
 				}
 				$.each(result,function(p_inx, lecture){
@@ -799,7 +833,7 @@
 										value="\${lecture.lecaCd}">취소</button></td>
 							</tr>`
 				});
-				$("#completeSaveLecture").append(str);
+				$(".completeSaveLecture").append(str);
 			}
 		}); // end ajax
 	} // end function
