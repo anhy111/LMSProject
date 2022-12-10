@@ -81,13 +81,20 @@
 										<h5>키워드 검색</h5>
 									</div>
 									<div class="form-group col-2">
+										<select id="colleage"
+											class="select2bs4 select2-hidden-accessible"
+											style="width: 100%;" aria-hidden="true">
+											<option value="0">단과대학</option>
+											<c:forEach var="college" items="${collegeList}">
+												<option value="${college.colCd}">${college.colNm}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="form-group col-2">
 										<select id="department"
 											class="select2bs4 select2-hidden-accessible"
 											style="width: 100%;" aria-hidden="true">
 											<option value="">학과</option>
-											<c:forEach var="department" items="${departmentList}">
-												<option value="${department.depNm}">${department.depNm}</option>
-											</c:forEach>
 										</select>
 									</div>
 									<div class="form-group col-2 ">
@@ -187,10 +194,11 @@
 							<div class="tab-pane fade show active" id="custom-tabs-four-home"
 								role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
 								<div class="card container-fluid">
-									<h3>예비수강신청</h3>
+									<h5>예비수강신청</h5>
 									<div class="row">
 										<div class="card-body container-fluid">
 											<div class="row">
+												<h5 class="col-1">나의 정보</h5>
 												<div class="col-2">
 													<label>학과</label><input type="text" class="form-control"
 														value="${graduateCredit.depNm}" readonly />
@@ -204,6 +212,34 @@
 													<label>학년</label><input type="text" class="form-control"
 														value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
 														readonly />
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="card-body container-fluid">
+											<div class="row">
+												<h5 class="col-1">이수한 학점</h5>
+												<div class="col-2">
+													<label>전공필수</label><input type="text" class="form-control"
+														value="${studentCurrentCredit.crdMrc}" readonly />
+												</div>
+												<div class="col-2">
+													<label>전공선택</label><input type="text" class="form-control"
+														value="${studentCurrentCredit.crdMoc}" readonly />
+												</div>
+												<div class="col-2">
+													<label>교양필수</label><input type="text" class="form-control"
+														value="${studentCurrentCredit.crdCrc}" readonly />
+												</div>
+												<div class="col-2">
+													<label>교양선택</label><input type="text" class="form-control"
+														value="${studentCurrentCredit.crdCoc}" readonly />
+												</div>
+												<div class="col-2">
+													<label>총학점</label><input type="text" class="form-control"
+														value="${studentCurrentCredit.crdAc}" readonly />
 												</div>
 											</div>
 										</div>
@@ -344,6 +380,40 @@
 		$("#search").on("click",function(){
 			loadNotYetApplyLecture();
 		});
+		
+		$("#cartSearch").on("click",function(){
+			loadNotYetSaveLecture();
+		});
+		
+		$("#colleage").on("change",function(){
+			
+			let data = {
+					colCd : this.value
+			};
+			
+			$.ajax({
+				url:"/student/lectureApply/departmentByCollege",
+				type:"get",
+				data:data,
+				contentType : "application/json;utf-8",
+				success:function(result){
+					let str = "";
+					console.log(result);
+					if(!result.length){
+						str += "<option value=''>학과</option>";
+						str += "<option value=''>학과가 없습니다</option>";
+					} else{
+						str += "<option value=''>학과</option>";
+						$.each(result,function(p_inx, p_val){
+							str += `<option value='\${p_val.depNm}'>\${p_val.depNm}</option>`;
+						});
+					}
+					$("#department").html(str);
+				}
+			});
+			
+		});
+		
 
 		$(document).on("click",'.apply', function(e) {
 
@@ -489,7 +559,7 @@
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>신청된 강의가 없습니다.</td>";
+					str += "<td colspan='11'>등록된 강의가 없습니다.</td>";
 					str += "</tr>";
 					$("#notApplyLecture").html(str);
 					return;
@@ -557,7 +627,7 @@
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>등록된 강의가 없습니다.</td>";
+					str += "<td colspan='11'>신청된 강의가 없습니다.</td>";
 					str += "</tr>";
 					$("#completeApplyLecture").html(str);
 					return;
@@ -629,9 +699,9 @@
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>신청된 강의가 없습니다.</td>";
+					str += "<td colspan='11'>등록된 강의가 없습니다.</td>";
 					str += "</tr>";
-					$("#notApplyLecture").html(str);
+					$("#notSaveLecture").html(str);
 					return;
 				}
 				$.each(result,function(p_inx, lecture){
@@ -697,7 +767,7 @@
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>등록된 강의가 없습니다.</td>";
+					str += "<td colspan='11'>담긴 강의가 없습니다.</td>";
 					str += "</tr>";
 					$("#completeSaveLecture").html(str);
 					return;
