@@ -37,10 +37,16 @@
 		<put-attribute name="body" value="/WEB-INF/views/lectureBoard/{1}.jsp" />
 	</definition>
 	<definition name="notice/*" extends="tiles-layout">
-	<put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp" />
 	</definition>
 	<definition name="student/*/*" extends="tiles-layout">
-	<put-attribute name="body" value="/WEB-INF/views/student/{1}/{2}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/student/{1}/{2}.jsp" />
+	</definition>
+	<definition name="mypage/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/{1}.jsp" />
+	</definition>
+	<definition name="record/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/record/{1}.jsp" />
 	</definition>
 	
 

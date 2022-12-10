@@ -29,5 +29,6 @@
 		<typeAlias type="kr.or.ddit.domain.Task" alias="task"/>
 		<typeAlias type="kr.or.ddit.domain.GraduateCredit" alias="graduateCredit"/>
 		<typeAlias type="kr.or.ddit.domain.Credit" alias="credit"/>
+		<typeAlias type="kr.or.ddit.domain.Attach" alias="attach"/>
 	</typeAliases>
 </configuration>

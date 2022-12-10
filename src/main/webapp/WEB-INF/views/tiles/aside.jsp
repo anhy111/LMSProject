@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<% String no = String.valueOf(session.getAttribute("no")); %>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-light-primary elevation-4">
 	<!-- Brand Logo -->
@@ -37,22 +37,50 @@
 				<!-- 수강관리 -->
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
 					<li class="nav-header">학생 어사이드</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
+							<p>
+								마이페이지 <i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="/mypage/mypage?memNo=<%=no%>" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>내 정보 확인</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="/mypage/changeStuPw" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>비밀번호 변경</p>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
 							<p>
 								수강관리 <i class="right fas fa-angle-left"></i>
 							</p>
-					</a>
+						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
 									<p>수강 편람</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
 									<p>수강평가</p>
-							</a></li>
-						</ul></li>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<!-- 학적관리 -->
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-copy"></i>
@@ -130,11 +158,12 @@
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<li class="nav-header">교수 어사이드</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>
-								강의 <i class="right fas fa-angle-left"></i>
-							</p>
+					<li class="nav-item">
+					<a href="#" class="nav-link"> 
+						<i class="nav-icon fas fa-book"></i>
+						<p>
+							강의 <i class="right fas fa-angle-left"></i>
+						</p>
 					</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item"><a href="/lecture/list" class="nav-link"> <i
@@ -143,7 +172,11 @@
 							</a></li>
 							<li class="nav-item"><a href="/professor/lecApply/inquiry" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
-									<p>강의 개설</p>
+									<p>강의계획서 조회</p>
+							</a></li>
+							<li class="nav-item"><a href="/professor/lecApply/request" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>강의계획서 신청</p>
 							</a></li>
 							<li class="nav-item"><a href="/lecture/myLecture" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
@@ -219,10 +252,28 @@
 							class="nav-icon fas fa-book"></i>
 							<p>등록/장학</p>
 					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>학생 관리</p>
-					</a></li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
+							<p>
+								학생관리 <i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>학생 목록 조회</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>학생 학적 관리</p>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
 							<p>교수 관리</p>

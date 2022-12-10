@@ -22,8 +22,12 @@ public class Student {
 	private String stuDepo;
 	private String stuAct;
 	private String stuPic;
+	private String stuBir;
+	private int proNo;
 	//학과명 조회 
 	private String depNm;
+	//단과대학명 조회
+	private String colNm;
 	
 
 

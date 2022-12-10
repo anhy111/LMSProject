@@ -116,20 +116,7 @@
 									cursorshover="true">자세히보기</th>
 							</tr>
 						</thead>
-						<tbody>
-							<c:forEach var="counselList" items="${counselList}" varStatus="stat">
-								<td>${counselList.lecaYr}</td>
-								<td>${counselList.lecaTrg }</td>
-								<td>${counselList.subCd }</td>
-								<td>${counselList.lecaNm }</td>
-								<td>${counselList.lecaCap }</td>
-								<td>${counselList.lecaCate }</td>
-								<td>${counselList.lecaCrd }</td>
-								<td>${counselList.lecaWk }</td>
-								<td>${counselList.lecaGrade }</td>
-								<td>${counselList.lecaBook }</td>
-								<td>${counselList.btn }</td>
-							</c:forEach>
+						<tbody id="proList">
 						</tbody>
 					</table>
 				</div>
@@ -167,7 +154,7 @@
 				$('#depNm').val(data.depNm);
 				$('#empRet').val(data.empRet);
 				$('#empReg').val(data.empReg);
-
+				
 			}
 		});
 
@@ -202,27 +189,53 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success: function (data) {
-				console.log("이건 오냐?");
-				$('#proNo').val(data.proNo);
-				$('#empNm').val(data.empNm);
-				$('#empTel').val(data.empTel);
-				$('#proPos').val(data.proPos);
-				$('#depNm').val(data.depNm);
-				$('#empRet').val(data.empRet);
-				$('#empReg').val(data.empReg);
-
+				console.log("떠라떠라떠랑");
+				console.log("떠라떠라떠랑:",data);
+				let str ="";
+				for(var i=0;i<data.length;i++){
+					str = `
+						<td>\${data[i].lecaYs}</td>
+						<td>\${data[i].lecaTrg }</td>
+						<td>\${data[i].subCd }</td>
+						<td>\${data[i].lecaNm }</td>
+						<td>\${data[i].lecaCap }</td>
+						<td>\${data[i].lecaCate }</td>
+						<td>\${data[i].lecaCrd }</td>
+						<td>\${data[i].lecaTt }</td>
+						<td>\${data[i].lecaGrade }</td>
+						<td>\${data[i].lecaApproval }</td>
+						<td><button id='inquirydetail' ${data[i].proNo}>상세보기</button></td>
+					`
+				}
+				$("#proList").html(str);
+				
+// 				let $lecaApproval = $("#lecaApproval");
+				
+// 				$("#lecaApproval").on("keyup", function() {
+// //			 		alert("오나요??");
+					
+// 					if($lecaApproval.val() == '승인'){
+// 						$("#lecaApproval").text("비밀번호가 일치합니다.").css("color","green");
+// 						$("#changePw").removeAttr("disabled");
+						
+// 					}else{
+// 						$("#alertPw").text("비밀번호가 일치하지 않습니다.").css("color","red");
+// 					}
+					
+// 				});
+				
 				//승인 - 그대로, 승인완료 - 파랑, 반려 - 빨강
-				var dataSet = grid.getData();
-				$.each(dataSet, function (i1, v1) {
-					if (v1.lecaBook == '승인') {
-						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorBlue");
-					} else if (v1.lecaBook == '반려') {
-						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorRed");
-					}
-				});
+// 				var dataSet = data.getData();
+// 				$.each(dataSet, function (i1, v1) {
+// 					if (v1.lecaBook == '승인') {
+// 						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorBlue");
+// 					} else if (v1.lecaBook == '반려') {
+// 						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorRed");
+// 					}
+// 				});
 			}
 		});
-
+		
 		//count 불러오기
 		function getCnt(yrNsem) {
 
@@ -244,5 +257,12 @@
 			});
 		}
 	}
+	
+	//강의계획서 상세페이지 출력
+	$(document).on('click', '#inquirydetail', function() {
+		console.log("상세 왜 안뜨냐고 ㅡㅡ");
+		window.open("/lecApply/inquiryForm", "inquirydetail", "width=1000, height=800, left=100, top=50");
+	});
+	
 </script>
 </html>

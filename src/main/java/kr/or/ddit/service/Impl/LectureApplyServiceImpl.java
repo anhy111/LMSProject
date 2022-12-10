@@ -36,5 +36,10 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	public int getCnt(Map<String, Object> map) {
 		return this.lectureApplyMapper.getCnt(map);
 	}
+	
+	@Override
+	public Professor inquiryFormInfo(int proNo) {
+		return this.lectureApplyMapper.inquiryFormInfo(proNo);
+	}
     
 }

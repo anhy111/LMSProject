@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.service.LectureService;
+import kr.or.ddit.util.FileUploadUtil;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.Task;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,9 @@ public class LectureController {
 	
 	@Autowired
 	LectureService lectureservice;
+	
+	@Autowired
+	FileUploadUtil fileUploadUtil;
 	
 	@GetMapping("/lecture/list")
 	public ModelAndView lectureList(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword) {
@@ -83,6 +89,13 @@ public class LectureController {
 		mav.setViewName("lectureBoard/subjectList");
 		return mav;
 	}
+	
+	@PostMapping("/lectureBoard/upload")
+	public String uploadTest(MultipartFile[] files) {
+		this.fileUploadUtil.fileUploadAction(files);
+		return "/lectureBoard/upload";
+	}
+	
 	
 	
 
