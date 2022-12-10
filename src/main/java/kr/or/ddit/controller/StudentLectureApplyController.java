@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.Credit;
 import kr.or.ddit.domain.Department;
 import kr.or.ddit.domain.GraduateCredit;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
+import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.CreditService;
 import kr.or.ddit.service.DepartmentService;
 import kr.or.ddit.service.GraduateCreditService;
@@ -45,6 +47,8 @@ public class StudentLectureApplyController {
 	GraduateCreditService graduateCreditService; 
 	@Autowired
 	CreditService creditService;
+	@Autowired
+	CollegeService collegeService;
 	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
@@ -55,11 +59,11 @@ public class StudentLectureApplyController {
 		
 		StudentLecture studentLecture = new StudentLecture();
 		studentLecture.setStuNo(stuNo);
-		List<Department> departmentList = this.departmentService.departmentList();
 		GraduateCredit graduateCredit = this.graduateCreditService.studentApplyMaxCredit(stuNo.toString());
+		List<College> collegeList = this.collegeService.CollegeList();
 		Credit studentCurrentCredit = this.creditService.studentCurrentCredit(studentLecture);
 		
-		model.addAttribute("departmentList",departmentList);
+		model.addAttribute("collegeList",collegeList);
 		model.addAttribute("stuNo",stuNo.toString());
 		model.addAttribute("graduateCredit",graduateCredit);
 		model.addAttribute("studentCurrentCredit",studentCurrentCredit);
@@ -113,5 +117,11 @@ public class StudentLectureApplyController {
 	@GetMapping("/notYetSaveLectureList")
 	public List<Lecture> notYetSaveLectureList(StudentLecture studentLecture){
 		return this.lectureService.studentNotYetSaveLectureList(studentLecture);
+	}
+	
+	@ResponseBody
+	@GetMapping("/departmentByCollege")
+	public List<Department> departmentByCollege(int colCd){
+		return this.collegeService.DepartmentByCollegeList(colCd);
 	}
 } 

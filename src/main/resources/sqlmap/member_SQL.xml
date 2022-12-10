@@ -39,9 +39,9 @@
 	</select>
 	
 	<select id="readManager" parameterType="int" resultType="manager">
-		SELECT MGR_NO, MGR_DIV, MGR_POS
-		FROM MANAGER
-		WHERE MGR_NO = #{memNo}
+		SELECT EMP_NO, EMP_DIV, EMP_POS
+		FROM EMPLOYEE
+		WHERE EMP_NO = #{memNo}
 	</select>
 	
 	<select id="readProfessor" parameterType="int" resultType="professor">
