@@ -12,4 +12,7 @@ public interface NoticeBasicService {
     //공지사항 목록
     List<NoticeBasic> noticeBasicList();
 
+    NoticeBasic findOne(Long noticeCd);
+
+    void delete(Long noticeCd);
 }

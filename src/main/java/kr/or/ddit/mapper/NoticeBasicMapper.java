@@ -11,4 +11,8 @@ public interface NoticeBasicMapper {
 
     //공지사항 목록
     List<NoticeBasic> noticeBasicList();
+
+    NoticeBasic noticeBasicFindNotice(Long noticeCd);
+
+    void noticeBasicDelete(Long noticeCd);
 }
