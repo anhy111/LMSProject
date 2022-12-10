@@ -43,23 +43,7 @@
 	
 	<br>
 	
-	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의계획서
-	<p id="tellCnt">
-		[총 <span id="cntSpan"></span>건]
-	</p>
-	
-	<br>
-	
-	<div id="tgradeYellowBox" style="height:47px;">
-		<label>년도/학기
-			<select name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
-				<option value="">전체</option>
-			</select>
-		</label>
-		<span id="tgradeGreenText">&emsp;<i class="mdi mdi-square-medium"></i>&nbsp;임시저장한 강의계획서는 강의계획서 신청에서 조회할 수 있습니다.</span>
-	</div>
-
-	<!-- 계획서 리스트 -->
+	<!-- 임시저장 계획서 리스트 -->
 	<div class="card">
 	<div class="card-body">
 		<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -88,10 +72,6 @@
 									cursorshover="true">과목명</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">제한인원</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
 									cursorshover="true">개설이수구분</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
@@ -101,15 +81,11 @@
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">강의시간/강의실</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending"
 									cursorshover="true">성적평가방식</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">승인여부</th>
+									cursorshover="true">저장일시</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
@@ -128,35 +104,35 @@
 
 </body>
 <script type="text/javascript" defer="defer">
-// 	window.onload = function () {
-// 		console.log("여기까지 오긴하냐?");
+	window.onload = function () {
+		console.log("여기까지 오긴하냐?");
 
-// 		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
-// 		let header = "${_csrf.headerName}";
-// 		let token = "${_csrf.token}";
+		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
 
-// 		console.log("header : " + header + ", token : " + token);
+		console.log("header : " + header + ", token : " + token);
 
-// 		//교수 개인정보 가져오기
-// 		$.ajax({
-// 			url: "/professor/lecApply/proInfo",
-// 			type: "POST",
-// 			dataType: "JSON",
-// 			beforeSend: function (xhr) {
-// 				xhr.setRequestHeader(header, token);
-// 			},
-// 			success: function (data) {
-// 				console.log("이건 오냐?");
-// 				$('#proNo').val(data.proNo);
-// 				$('#empNm').val(data.empNm);
-// 				$('#empTel').val(data.empTel);
-// 				$('#proPos').val(data.proPos);
-// 				$('#depNm').val(data.depNm);
-// 				$('#empRet').val(data.empRet);
-// 				$('#empReg').val(data.empReg);
+		//교수 개인정보 가져오기
+		$.ajax({
+			url: "/professor/lecApply/proInfo",
+			type: "POST",
+			dataType: "JSON",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success: function (data) {
+				console.log("이건 오냐?");
+				$('#proNo').val(data.proNo);
+				$('#empNm').val(data.empNm);
+				$('#empTel').val(data.empTel);
+				$('#proPos').val(data.proPos);
+				$('#depNm').val(data.depNm);
+				$('#empRet').val(data.empRet);
+				$('#empReg').val(data.empReg);
 				
-// 			}
-// 		});
+			}
+		});
 
 </script>
 </html>

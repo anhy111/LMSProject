@@ -22,4 +22,5 @@ public class Employee {
     private String empPic;    //증명사진 URL
     private Date empJoin;    //입사일
     private Date empRet;    //퇴사일
+    private String empBir;
 }
