@@ -22,28 +22,52 @@ public class StudentLectureApplyServiceImpl implements StudentLectureApplyServic
 	@Autowired
 	StudentLectureApplyMapper studentLectureApplyMapper;
 	
-	@Autowired
-	LectureMapper lectureMapper;
+	@Transactional
+	@Override
+	public String apply(StudentLecture studentLecture) {
+		
+		// 쿼리문 실행해서 규칙에 위반되면 0반환 -> 신청 불가
+		if(this.studentLectureApplyMapper.maxCredit(studentLecture) == 0) {
+			return "maxCredit";
+		}
+		
+		if(this.studentLectureApplyMapper.checkHeadcount(studentLecture) == 0) {
+			return "maxHeadcount";
+		}
+		
+		// 입력 도중 에러는 알기 힘듬
+		if(this.studentLectureApplyMapper.apply(studentLecture) == 0) {
+			return "unknown";
+		}
+		if(this.studentLectureApplyMapper.increaseHeadcount(studentLecture) == 0) {
+			return "unknown";
+		}
+		
+		return "success";
+	}
 	
 	@Transactional
 	@Override
-	public int apply(StudentLecture studentLecture) {
-		
-		int headcount = this.studentLectureApplyMapper.checkHeadcount(studentLecture);
-		
-		log.info("headcount : " + headcount);
-		
-		if(headcount == 0) {
-			return 0;
-		}
-		
-		int result = this.studentLectureApplyMapper.apply(studentLecture);
-		
+	public int applyCancel(StudentLecture studentLecture) {
+		int result = this.studentLectureApplyMapper.applyCancel(studentLecture);
 		if(result == 0) {
 			return 0;
 		}
-		result = this.lectureMapper.increaseHeadcount(studentLecture);
-		
-		return result;
+		return this.studentLectureApplyMapper.decreaseHeadcount(studentLecture);
+	}
+	
+	@Override
+	public String save(StudentLecture studentLecture) {
+		if(this.studentLectureApplyMapper.maxCredit(studentLecture) == 0) {
+			return "maxCredit"; 
+		}
+		if(this.studentLectureApplyMapper.save(studentLecture)==0) {
+			return "unknown";
+		}
+		return "success";
+	}
+	@Override
+	public int saveCancel(StudentLecture studentLecture) {
+		return this.studentLectureApplyMapper.saveCancel(studentLecture);
 	}
 }

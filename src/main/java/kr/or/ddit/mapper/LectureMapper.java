@@ -22,4 +22,8 @@ public interface LectureMapper {
 	public int increaseHeadcount(StudentLecture studentLecture);
 		
 		public Lecture searchTask(String lecaCd);
+		
+	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
+	
+	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
 }

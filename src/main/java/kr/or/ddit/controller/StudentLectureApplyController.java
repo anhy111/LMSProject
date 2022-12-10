@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.Credit;
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.GraduateCredit;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
+import kr.or.ddit.service.CreditService;
 import kr.or.ddit.service.DepartmentService;
+import kr.or.ddit.service.GraduateCreditService;
 import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.LectureService;
 import kr.or.ddit.service.StudentLectureApplyService;
@@ -37,6 +41,10 @@ public class StudentLectureApplyController {
 	DepartmentService departmentService;
 	@Autowired
 	StudentLectureApplyService studentLectureApplyService;
+	@Autowired
+	GraduateCreditService graduateCreditService; 
+	@Autowired
+	CreditService creditService;
 	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
@@ -48,9 +56,13 @@ public class StudentLectureApplyController {
 		StudentLecture studentLecture = new StudentLecture();
 		studentLecture.setStuNo(stuNo);
 		List<Department> departmentList = this.departmentService.departmentList();
+		GraduateCredit graduateCredit = this.graduateCreditService.studentApplyMaxCredit(stuNo.toString());
+		Credit studentCurrentCredit = this.creditService.studentCurrentCredit(studentLecture);
 		
 		model.addAttribute("departmentList",departmentList);
 		model.addAttribute("stuNo",stuNo.toString());
+		model.addAttribute("graduateCredit",graduateCredit);
+		model.addAttribute("studentCurrentCredit",studentCurrentCredit);
 		
 		return "student/lectureApply/lectureList";
 	}
@@ -58,30 +70,48 @@ public class StudentLectureApplyController {
 	@ResponseBody
 	@PostMapping("/apply")
 	public String lectureApply(@RequestBody StudentLecture studentLecture) {
-		
-		int result = this.studentLectureApplyService.apply(studentLecture);
-		
-		return result + "";
+		return this.studentLectureApplyService.apply(studentLecture);
+	}
+	
+	@ResponseBody
+	@PostMapping("/save")
+	public String lectureSave(@RequestBody StudentLecture studentLecture) {
+		return this.studentLectureApplyService.save(studentLecture);
+	}
+	
+	@ResponseBody
+	@PostMapping("/applyCancel")
+	public int applyCancel(@RequestBody StudentLecture studentLecture) {
+		return this.studentLectureApplyService.applyCancel(studentLecture);
+	}
+	
+	@ResponseBody
+	@PostMapping("/saveCancel")
+	public int saveCancel(@RequestBody StudentLecture studentLecture) {
+		return this.studentLectureApplyService.saveCancel(studentLecture);
 	}
 	
 	@ResponseBody
 	@GetMapping("/completeApplyLectureList")
 	public List<Lecture> completeApplyLectureList(StudentLecture studentLecture){
-		
-		List<Lecture> list = this.lectureService.studentCompleteApplyLectureList(studentLecture);
-		
-		return list;
-		
+		return this.lectureService.studentCompleteApplyLectureList(studentLecture);
 	}
 	
 	@ResponseBody
 	@GetMapping("/notYetApplyLectureList")
-public List<Lecture> notYetApplyLectureList(StudentLecture studentLecture){
-		
-		List<Lecture> list = this.lectureService.studentNotYetApplyLectureList(studentLecture);
-		
-		return list;
-		
+	public List<Lecture> notYetApplyLectureList(StudentLecture studentLecture){
+		return this.lectureService.studentNotYetApplyLectureList(studentLecture);
 	}
 	
+	@ResponseBody
+	@GetMapping("/completeSaveLectureList")
+	public List<Lecture> completeSaveLectureList(StudentLecture studentLecture){
+		return this.lectureService.studentCompleteSaveLectureList(studentLecture);
+	}
+	
+	@ResponseBody
+	@GetMapping("/notYetSaveLectureList")
+	public List<Lecture> notYetSaveLectureList(StudentLecture studentLecture){
+		return this.lectureService.studentNotYetSaveLectureList(studentLecture);
+	}
 } 

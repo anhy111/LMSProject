@@ -8,6 +8,34 @@
 	<insert id="apply" parameterType="studentLecture"> 
 		INSERT INTO STU_LEC(STU_NO, LECA_CD) VALUES(#{stuNo}, #{lecaCd})
 	</insert>
+	
+	<delete id="applyCancel" parameterType="studentLecture">
+		DELETE FROM STU_LEC
+		WHERE STU_NO = #{stuNo}
+		AND LECA_CD = #{lecaCd}
+	</delete>
+	
+	<insert id="save" parameterType="studentLecture"> 
+		INSERT INTO WISH(STU_NO, LECA_CD) VALUES(#{stuNo}, #{lecaCd})
+	</insert>
+	
+	<delete id="saveCancel" parameterType="studentLecture">
+		DELETE FROM WISH
+		WHERE STU_NO = #{stuNo}
+		AND LECA_CD = #{lecaCd}
+	</delete>
+	
+	<update id="increaseHeadcount" parameterType="studentLecture">
+		UPDATE LECTURE
+		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) + 1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+	
+	<update id="decreaseHeadcount" parameterType="studentLecture"> 
+		UPDATE LECTURE
+		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) - 1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
 
 	<select id="checkHeadcount" parameterType="studentLecture" resultType="int">
 		SELECT COUNT(*)
@@ -18,6 +46,28 @@
 		    FROM LEC_APPLY LA
 		    WHERE LA.LECA_CD = #{lecaCd}
 		)
+	</select>
+	
+	<select id="maxCredit" parameterType="studentLecture" resultType="int">
+		SELECT COUNT(*)
+		FROM DUAL
+		WHERE (
+		        SELECT CEIL(GC.RDC_REQ_CRD / 8)
+		        FROM GRDT_CND GC, DEPARTMENT D, STUDENT S
+		        WHERE GC.DEP_CD = D.DEP_CD
+		        AND S.DEP_CD = D.DEP_CD
+		        AND S.STU_NO = #{stuNo}
+		        ) <![CDATA[>]]> (
+		                SELECT LECA_CRD + (
+		                                    SELECT SUM(LA.LECA_CRD)
+		                                    FROM STU_LEC SL, LECTURE L, LEC_APPLY LA
+		                                    WHERE SL.LECA_CD = L.LECA_CD
+		                                    AND L.LECA_CD = LA.LECA_CD
+		                                    AND SL.STU_NO = #{stuNo}
+		                                )
+		                FROM LEC_APPLY
+		                WHERE LECA_CD = #{lecaCd}
+		             )
 	</select>
 	
 	

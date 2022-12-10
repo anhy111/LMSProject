@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : xml파일은 여러개일 수 있음. 
+이를 구별하기 위한 식별 용도로 사용 -->
+<mapper namespace="kr.or.ddit.mapper.GraduateCreditMapper">
+
+	<select id="studentApplyMaxCredit" parameterType="string" resultType="graduateCredit">
+		SELECT D.DEP_NM
+		     , S.STU_YR
+		     , S.STU_SEM
+		     , CEIL(GC.RDC_REQ_CRD/8) RDC_REQ_CRD
+		FROM GRDT_CND GC, DEPARTMENT D, STUDENT S
+		WHERE GC.DEP_CD = D.DEP_CD
+		AND S.DEP_CD = D.DEP_CD
+		AND GC.RDC_YR LIKE TO_CHAR(SYSDATE,'YYYY')
+		AND S.STU_NO = #{stuNo}
+	</select>
+
+</mapper>
+
