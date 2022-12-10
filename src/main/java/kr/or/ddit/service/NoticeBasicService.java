@@ -6,13 +6,19 @@ import java.util.List;
 
 public interface NoticeBasicService {
 
+
+    //공지사항 목록 조회
+    List<NoticeBasic> noticeBasicList();
+
+    //공지사항 상제 조회
+    NoticeBasic findOne(Long noticeCd);
+
     //공지사항 추가
     void noticeBasicSave(NoticeBasic noticeBasic);
 
-    //공지사항 목록
-    List<NoticeBasic> noticeBasicList();
+    //공지사항 수정
+    void noticeBasicUpdate(NoticeBasic noticeBasic);
 
-    NoticeBasic findOne(Long noticeCd);
-
+    //공지사항 삭제
     void delete(Long noticeCd);
 }

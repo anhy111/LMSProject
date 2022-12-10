@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+
 
 <!-- 게시판상세 -->
 <!-- ================================================= -->
@@ -20,19 +22,21 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-8">
-								<form role="form" method="post" action="" name="modifyForm">
+								<form role="form" method="post" name="form">
+									<sec:csrfInput/>
 									<div class="form-group">
+										<input type="text" name="noticeCd" value="${form.noticeCd}" readonly="readonly"/>
 										<label for="inputText3" class="col-form-label">제목</label> <input
-											id="inputText3" type="text" name="title" class="form-control" value="${form.noticeTtl}">
+											id="inputText3" type="text" name="noticeTtl" class="form-control" value="${form.noticeTtl}">
 									</div>
 									<div class="form-group" style="hegiht: 800px;">
 											<label for="content"></label>
 
-											<textarea class="textarea" name="content" id="content"
+											<textarea class="textarea" name="noticeCon" id="content"
 												rows="20" placeholder="1000자 내외로 작성하세요."
 												style="display: block;"><c:out value="${form.noticeCon}"/></textarea>
-
 									</div>
+									<button type="submit">수정하기 완료</button>
 								</form>
 							</div>
 
