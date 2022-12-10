@@ -20,6 +20,9 @@ public interface LectureApplyMapper {
 	// 강의 개수 불러오기
 	public int getCnt(Map<String, Object> map);
 	
-	// 강의계획서 상세페이지
-	public Professor inquiryFormInfo(int proNo);
+	// 강의계획서 상세페이지 교수정보
+	public Professor inquiryFormProInfo(int proNo);
+	
+	// 강의계획서 상세페이지 기본사항,상세내용
+	public List<LecApply> inquiryFormLecApInfo(int proNo);
 }

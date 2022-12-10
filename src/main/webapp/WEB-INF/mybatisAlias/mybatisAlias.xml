@@ -30,5 +30,7 @@
 		<typeAlias type="kr.or.ddit.domain.GraduateCredit" alias="graduateCredit"/>
 		<typeAlias type="kr.or.ddit.domain.Credit" alias="credit"/>
 		<typeAlias type="kr.or.ddit.domain.Attach" alias="attach"/>
+		<typeAlias type="kr.or.ddit.domain.Weekplan" alias="weekplan"/>
+		<typeAlias type="kr.or.ddit.domain.Subject" alias="subject"/>
 	</typeAliases>
 </configuration>

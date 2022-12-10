@@ -38,8 +38,13 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 	
 	@Override
-	public Professor inquiryFormInfo(int proNo) {
-		return this.lectureApplyMapper.inquiryFormInfo(proNo);
+	public Professor inquiryFormProInfo(int proNo) {
+		return this.lectureApplyMapper.inquiryFormProInfo(proNo);
+	}
+	
+	@Override
+	public List<LecApply> inquiryFormLecApInfo(int proNo) {
+		return this.lectureApplyMapper.inquiryFormLecApInfo(proNo);
 	}
     
 }
