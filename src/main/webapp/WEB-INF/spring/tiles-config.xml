@@ -27,8 +27,11 @@
 	<definition name="college/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/college/{1}.jsp" />
 	</definition>
-	<definition name="professor/*/*" extends="tiles-layout">
-		<put-attribute name="body" value="/WEB-INF/views/professor/{1}/{2}.jsp" />
+	<definition name="professor/lecApply/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/professor/lecApply/{1}.jsp" />
+	</definition>
+	<definition name="professor/management/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/professor/management/{1}.jsp" />
 	</definition>
 	<definition name="lecture/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/lecture/{1}.jsp" />
@@ -58,7 +61,11 @@
 	<definition name="login/*" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/login/{1}.jsp" />
 	</definition>
-	
+
+	<definition name="professor/lecApplyForm/*" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/professor/lecApplyForm/{1}.jsp" />
+	</definition>
+
 </tiles-definitions>
 
 

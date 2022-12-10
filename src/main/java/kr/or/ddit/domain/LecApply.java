@@ -38,5 +38,6 @@ public class LecApply {
     private int subCd;			//과목코드
     private String lecaTt;		//강의시간/강의실
     private String lecaApproval; //승인여부
+    private String subNm;		//과목명
     
 }

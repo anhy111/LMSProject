@@ -126,16 +126,64 @@
 		ORDER BY U.LECA_CD DESC
 	</select>
 	
-	<select id="inquiryFormInfo" parameterType="int" resultType="professor">
+	<select id="inquiryFormProInfo" parameterType="int" resultType="professor">
 		SELECT  E.EMP_NM,
 		        C.COL_NM || ' ' || D.DEP_NM EMP_ADDR1,
-		        D.DEP_TEL EMP_TEL
+		        D.DEP_TEL DEP_TEL,
+		        E.EMP_TEL EMP_TEL
 		FROM    EMPLOYEE E, PROFESSOR P, DEPARTMENT D, COLLEGE C
 		WHERE   E.EMP_NO = P.PRO_NO
 		AND     P.DEP_CD = D.DEP_CD
 		AND     D.COL_CD = C.COL_CD
 		AND     E.EMP_NO = #{proNo}
 	</select>
+	
+	<select id="inquiryFormLecApInfo" parameterType="int" resultType="lecApply">
+		SELECT  U.LECA_CD,
+		        U.PRO_NO,
+		        U.LECA_YR || '년' LECA_YR,
+		        CASE WHEN SUBSTR(U.LECA_SEM ,4,2) BETWEEN 3 AND 6 THEN '1학기'
+		             WHEN SUBSTR(U.LECA_SEM ,4,2) BETWEEN 9 AND 12 THEN '2학기'
+		             END  LECA_SEM,
+		        NVL(U.LECA_TRG, 0) || '학년' LECA_TRG,
+		        U.SUB_CD,
+		        U.LECA_NM,
+		        NVL(U.LECA_CAP, 0) LECA_CAP,
+		        U.LECA_CATE,
+		        NVL(U.LECA_CRD, 0) || '학점' LECA_CRD,
+		        U.LECA_GRADE,
+		        U.LECA_DT,
+		        U.SUB_NM,
+		        U.LECA_CON,
+		        U.LECA_BOOK,
+		        U.LECA_MP,
+		        U.LECA_FP,
+		        U.LECA_TP,
+		        U.LECA_AP
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		            LECA_MP, LECA_FP, LECA_TP, LECA_AP,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		                LECA_MP, LECA_FP, LECA_TP, LECA_AP
+		) U
+		WHERE   U.PRO_NO = #{proNo}
+		AND     U.LECA_IMSI_YN IS NULL
+		ORDER BY U.LECA_CD DESC
+	</select>
+	
+<!-- 	<select id="getTempWeekPlanVO" parameterType="int" resultType="weekplan"> -->
+<!-- 		SELECT  * -->
+<!-- 		FROM    WEEKPLAN -->
+<!-- 		WHERE   LECA_CD = #{lecaCd} -->
+<!-- 		ORDER BY WP_NO -->
+<!-- 	</select> -->
 	
 </mapper>
 

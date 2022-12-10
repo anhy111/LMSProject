@@ -203,41 +203,26 @@
 						<td>\${data[i].lecaCrd }</td>
 						<td>\${data[i].lecaTt }</td>
 						<td>\${data[i].lecaGrade }</td>
-						<td>\${data[i].lecaApproval }</td>
+						<td id='checklecaAp'>\${data[i].lecaApproval }</td>
 						<td><button id='inquirydetail' ${data[i].proNo}>상세보기</button></td>
 					`
 				}
 				$("#proList").html(str);
 				
-// 				let $lecaApproval = $("#lecaApproval");
-				
-// 				$("#lecaApproval").on("keyup", function() {
-// //			 		alert("오나요??");
-					
-// 					if($lecaApproval.val() == '승인'){
-// 						$("#lecaApproval").text("비밀번호가 일치합니다.").css("color","green");
-// 						$("#changePw").removeAttr("disabled");
-						
-// 					}else{
-// 						$("#alertPw").text("비밀번호가 일치하지 않습니다.").css("color","red");
-// 					}
-					
-// 				});
-				
-				//승인 - 그대로, 승인완료 - 파랑, 반려 - 빨강
-// 				var dataSet = data.getData();
-// 				$.each(dataSet, function (i1, v1) {
-// 					if (v1.lecaBook == '승인') {
-// 						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorBlue");
-// 					} else if (v1.lecaBook == '반려') {
-// 						grid.addCellClassName(v1.rowKey, 'lecaBook', "addFontColorRed");
-// 					}
-// 				});
+				//승인, 대기, 반려 글자색 변경
+				if($("#checklecaAp").html() == "승인"){
+					$("#checklecaAp").css("color","blue");
+				}else if($("#checklecaAp").html() == "반려"){
+					$("#checklecaAp").css("color","red");
+				}else if($("#checklecaAp").html() == "승인대기"){
+					$("#checklecaAp").css("color","black");
+				}
 			}
 		});
 		
 		//count 불러오기
 		function getCnt(yrNsem) {
+			console.log("카운트 이론상 와야지");
 
 			yrNsem = $(yrNsem).val();
 
@@ -261,7 +246,7 @@
 	//강의계획서 상세페이지 출력
 	$(document).on('click', '#inquirydetail', function() {
 		console.log("상세 왜 안뜨냐고 ㅡㅡ");
-		window.open("/lecApply/inquiryForm", "inquirydetail", "width=1000, height=800, left=100, top=50");
+		window.open("/professor/lecApplyForm/inquiryForm", "inquirydetail", "width=1000, height=800, left=100, top=50");
 	});
 	
 </script>

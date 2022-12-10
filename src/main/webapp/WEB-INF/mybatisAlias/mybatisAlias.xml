@@ -28,5 +28,7 @@
 		<typeAlias type="kr.or.ddit.domain.StudentLecture" alias="studentLecture"/>
 		<typeAlias type="kr.or.ddit.domain.Task" alias="task"/>
 		<typeAlias type="kr.or.ddit.domain.Attach" alias="attach"/>
+		<typeAlias type="kr.or.ddit.domain.Weekplan" alias="weekplan"/>
+		<typeAlias type="kr.or.ddit.domain.Subject" alias="subject"/>
 	</typeAliases>
 </configuration>
