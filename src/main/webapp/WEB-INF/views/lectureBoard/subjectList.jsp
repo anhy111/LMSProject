@@ -101,8 +101,11 @@ border-radius: 10px;
 			</div>
 		</div>
 	</div>
-
-
+	<form action="/lectureBoard/upload" method="post" enctype="multipart/form-data">
+		<input type="file" multiple name="files">
+		<input type="submit">
+		<sec:csrfInput/>
+	</form>
 
 
 

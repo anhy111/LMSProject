@@ -26,5 +26,9 @@ public interface MemberMapper  {
 	public String searchId(HashMap<String, String> map);
 	
 	public void changePw(Map<String, String> map);
+	
+	public int stuUpdate(Student student);
+	
+	public int updateStuPw(Map<String, String> map);
 
 }
