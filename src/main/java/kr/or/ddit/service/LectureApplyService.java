@@ -15,4 +15,6 @@ public interface LectureApplyService {
 	public List<LecApply> list(Map<String, Object> map);
 
 	public int getCnt(Map<String, Object> map);
+
+	public Professor inquiryFormInfo(int proNo);
 }

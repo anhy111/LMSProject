@@ -172,7 +172,11 @@
 							</a></li>
 							<li class="nav-item"><a href="/professor/lecApply/inquiry" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
-									<p>강의 개설</p>
+									<p>강의계획서 조회</p>
+							</a></li>
+							<li class="nav-item"><a href="/professor/lecApply/request" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>강의계획서 신청</p>
 							</a></li>
 							<li class="nav-item"><a href="/lecture/myLecture" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>

@@ -2,6 +2,8 @@ package kr.or.ddit.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -9,7 +11,7 @@ public class LecApply {
 
     private int lecaCd;         //강의계획신청코드
     private int lecaYr;         //년도
-    private int lecaSem;        //학기
+    private String lecaSem;     //학기
     private String lecaNm;      //강의명
     private String lecaCon;     //교과목개요
     private int lecaTrg;        //개설학년
@@ -31,5 +33,10 @@ public class LecApply {
     private int lecaTp;         //과제비율
     private int lecaAp;         //출결비율
     private int proNo;			//담당교수
+    
+    private String lecaYs;		//년도/학기
+    private int subCd;			//과목코드
+    private String lecaTt;		//강의시간/강의실
+    private String lecaApproval; //승인여부
     
 }

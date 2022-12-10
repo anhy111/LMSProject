@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,10 +37,10 @@ public class LectureApplyController {
 	}
 	
 	//강의계획서 신청 페이지
-	@GetMapping("/write")
+	@GetMapping("/request")
 	public String write() {
 		
-		return "professor/lecApply/write";
+		return "professor/lecApply/request";
 	}
 	
 	// 교수 개인정보
@@ -52,11 +53,10 @@ public class LectureApplyController {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		
-		log.info("proNo : " + proNo);
+		log.info("개인정보proNo : " + proNo);
 
-		// 책 상세보기 데이터 가져온다
 		Professor professor = this.lectureApplyService.proInfo(proNo);
-		log.info("professor : " + professor);
+		log.info("교수개인professor : " + professor);
 
 		return professor;
 	}
@@ -69,7 +69,7 @@ public class LectureApplyController {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		
-		log.info("proNo : " + proNo);
+		log.info("년도/학기proNo : " + proNo);
 		
 		List<LecApply> list = this.lectureApplyService.getYrNSem(proNo);
 		
@@ -84,12 +84,14 @@ public class LectureApplyController {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		
-		log.info("proNo : " + proNo);
+		log.info("리스트proNo : " + proNo);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("proNo", proNo);
 		
 		List<LecApply> list = this.lectureApplyService.list(map);
+		
+		log.info("list : " + list);
 		
 		return list;
 	}
@@ -105,7 +107,7 @@ public class LectureApplyController {
 		int proNo = (int)session.getAttribute("no");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("proNo", proNo);
+		map.put("개수proNo", proNo);
 		map.put("yrNsem", yrNsem.get("yrNsem"));
 		
 		log.info("getCnt map : " + map);
@@ -117,5 +119,21 @@ public class LectureApplyController {
 		return result;
 	}
 	
+	//강의계획서 상세페이지
+	@GetMapping("/inquiryForm")
+	public String inquiryForm(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		
+		log.info("상세proNo : " + proNo);
+		
+		Professor professor = this.lectureApplyService.inquiryFormInfo(proNo);
+		model.addAttribute("professor", professor);
+		
+		log.info("상세professor : " + professor);
+		
+		return "professor/lecApply/inquiryForm";
+	}
 
 }
