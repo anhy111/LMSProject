@@ -15,10 +15,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/notice")
-@RequiredArgsConstructor
+@RequiredArgsConstructor // 어노테이션이 궁금하면 생성자 주입과 관련해서 찾아보시길..!
 public class NoticeBasicController {
 
-    private final NoticeBasicService noticeBasicService;
+    /**
+     *     DI(의존성 주입)을 하는 방법에는 3가지가 있다.
+     *     1) 필드 주입
+     *     2) 수정자(Setter) 주입
+     *     3) 생성자 주입
+     *
+     *     이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
+     *     장/단점이 궁금하면 슬랙으로..ㅎ
+     */
+    private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
 
     //공지사항 리스트
     @GetMapping("/list")
