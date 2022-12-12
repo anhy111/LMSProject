@@ -14,9 +14,7 @@
 	<span id="lecApplyTitle">강의계획서 상세</span>
 	
 	<div id="div4btns">
-		<button type="button" class="btn btn-outline-secondary" onclick="insertData()">자동채우기</button>
-		<button id="temporarySubmitBtn" type="button" class="btn btn-secondary">임시저장</button>
-		<button id="realSubmitBtn" type="button" class="btn btn-secondary">제출</button>
+		<button id="close" onclick="fn_close()" type="button" class="btn btn-secondary">닫기</button>
 	</div>
 	
 	<br><br>
@@ -66,41 +64,41 @@
 	    	<tr>
 	    		<th>년도</th>
 	    		<td>
-	    			<input type="text" name="lecaYr" size=30 value="${lecApply.lecaYr }" disabled>
+	    			<input type="text" name="lecaYr" size=30 value="${lecApplyList[0].lecaYr }년" disabled>
 	    		</td>
 	    		<th>학기</th>
 	    		<td>
-	    			<input type="text" name="lecaSem" size=30 value="${lecApply.lecaSem }" disabled>
+	    			<input type="text" name="lecaSem" size=30 value="${lecApplyList[0].lecaSem }" disabled>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>대상학년</th>
 	    		<td>
-	    			<input type="text" name="lecaTrg" size=30 value="${lecApply.lecaTrg }" disabled>
+	    			<input type="text" name="lecaTrg" size=30 value="${lecApplyList[0].lecaTrg }학년" disabled>
 	    		</td>
 	    		<th>학점</th>
 	    		<td>
-	    			<input type="text" name="lecaCrd" size=30 value="${lecApply.lecaCrd }" disabled>
+	    			<input type="text" name="lecaCrd" size=30 value="${lecApplyList[0].lecaCrd }학점" disabled>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>강의명</th>
 	    		<td>
-	    			<input type="text" name="lecaNm" size=30 value="${lecApply.lecaNm }" disabled>
+	    			<input type="text" name="lecaNm" size=30 value="${lecApplyList[0].lecaNm }" disabled>
 	    		</td>
 	    		<th>이수구분</th>
 	    		<td>
-	    			<input type="text" name="lecaCate" size=30 value="${lecApply.lecaCate }" disabled>
+	    			<input type="text" name="lecaCate" size=30 value="${lecApplyList[0].lecaCate }" disabled>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>과목 카테고리</th>
 	    		<td>
-		    		<input type="text" name="subNm" size=30 value="${lecApply.subNm }" disabled>
+		    		<input type="text" name="subNm" size=30 value="${lecApplyList[0].subNm }" disabled>
 	    		</td>
 	    		<th>학수번호</th>
 	    		<td>
-	    			<input type="text" name="subCd" size=30 value="${lecApply.subCd }" disabled>
+	    			<input type="text" name="subCd" size=30 value="${lecApplyList[0].subCd }" disabled>
 	    		</td>
 	    	</tr>
 	    </table>
@@ -114,23 +112,23 @@
     		<tr>
 	    		<th>수업개요</th>
 	    		<td colspan="5">
-	    			<textarea id="lecaCon" name="lecaCon" rows="3" cols="90">${lecApply.lecaCon }</textarea>
+	    			<textarea id="lecaCon" name="lecaCon" rows="3" cols="90" disabled>${lecApplyList[0].lecaCon }</textarea>
 	    		</td>
 	    	</tr>
     		<tr>
 	    		<th>교재 및 <br>참고문헌</th>
 	    		<td colspan="5">
-	    			<textarea id="lecaBook" name="lecaBook" rows="3" cols="90">${lecApply.lecaBook }</textarea>
+	    			<textarea id="lecaBook" name="lecaBook" rows="3" cols="90" disabled>${lecApplyList[0].lecaBook }</textarea>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>성적평가방식</th>
 	    		<td colspan="2">
-	    			<input type="text" name="lecaGrade" size=30 value="${lecApply.lecaGrade }" disabled>
+	    			<input type="text" name="lecaGrade" size=30 value="${lecApplyList[0].lecaGrade }" disabled>
 	    		</td>
 	    		<th>최대정원</th>
 	    		<td colspan="2">
-	    			<input type="text" id="lecaCap" name="lecaCap" value="${lecApply.lecaCap }" disabled>명
+	    			<input type="text" id="lecaCap" name="lecaCap" value="${lecApplyList[0].lecaCap }" disabled>명
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -141,10 +139,10 @@
 	    		<td style="width:116px; font-weight:bold; text-align:center;">출결</td>
 	    	</tr>
 	    	<tr>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaMp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaFp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaTp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaAp" size=5>&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaMp" name="lecaMp" value="${lecApplyList[0].lecaMp }" size=5 disabled>%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaFp" name="lecaFp" value="${lecApplyList[0].lecaFp }" size=5 disabled>%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaTp" name="lecaTp" value="${lecApplyList[0].lecaTp }" size=5 disabled>%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaAp" name="lecaAp" value="${lecApplyList[0].lecaAp }" size=5 disabled>%</td>
 	    	</tr>
     	</table>
     	
@@ -152,22 +150,22 @@
 	    
 	    <p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의 계획</p>
 	    <table id="lecWeekPlan" class="lecApplyTable" border="1" style="z-index: 9000;">
-	    	<tr><th>1주차</th><td colspan="5"><textarea id="weekPlan1" rows="2" cols="90"></textarea></td></tr>
-	    	<tr><th>2주차</th><td colspan="5"><textarea id="weekPlan2" rows="2" cols="90"></textarea></td></tr>
-	    	<tr><th>3주차</th><td colspan="5"><textarea id="weekPlan3" rows="2" cols="90"></textarea></td></tr>
-	    	<tr><th>4주차</th><td colspan="5"><textarea id="weekPlan4" rows="2" cols="90"></textarea></td></tr>
-	    	<tr><th>5주차</th><td colspan="5"><textarea id="weekPlan5" rows="2" cols="90"></textarea></td></tr>
-	    	<tr><th>6주차</th><td colspan="5"><textarea id="weekPlan6" rows="2" cols="90"></textarea></td></tr>
-	    	<tr><th>7주차</th><td colspan="5"><textarea id="weekPlan7" rows="2" cols="90"></textarea></td></tr>
-	    	<tr><th>8주차</th><td colspan="5"><textarea id="weekPlan8" rows="2" cols="90">중간고사</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>9주차</th><td colspan="5"><textarea id="weekPlan9" rows="2" cols="90"></textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>10주차</th><td colspan="5"><textarea id="weekPlan10" rows="2" cols="90"></textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>11주차</th><td colspan="5"><textarea id="weekPlan11" rows="2" cols="90"></textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>12주차</th><td colspan="5"><textarea id="weekPlan12" rows="2" cols="90"></textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>13주차</th><td colspan="5"><textarea id="weekPlan13" rows="2" cols="90"></textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>14주차</th><td colspan="5"><textarea id="weekPlan14" rows="2" cols="90"></textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>15주차</th><td colspan="5"><textarea id="weekPlan15" rows="2" cols="90"></textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>16주차</th><td colspan="5"><textarea id="weekPlan16" rows="2" cols="90">기말고사</textarea></td></tr>
+	    	<tr><th>1주차</th><td colspan="5"><textarea id="weekPlan1" rows="2" cols="90" disabled>${weekPlanList[0].wpCon }</textarea></td></tr>
+	    	<tr><th>2주차</th><td colspan="5"><textarea id="weekPlan2" rows="2" cols="90" disabled>${weekPlanList[1].wpCon }</textarea></td></tr>
+	    	<tr><th>3주차</th><td colspan="5"><textarea id="weekPlan3" rows="2" cols="90" disabled>${weekPlanList[2].wpCon }</textarea></td></tr>
+	    	<tr><th>4주차</th><td colspan="5"><textarea id="weekPlan4" rows="2" cols="90" disabled>${weekPlanList[3].wpCon }</textarea></td></tr>
+	    	<tr><th>5주차</th><td colspan="5"><textarea id="weekPlan5" rows="2" cols="90" disabled>${weekPlanList[4].wpCon }</textarea></td></tr>
+	    	<tr><th>6주차</th><td colspan="5"><textarea id="weekPlan6" rows="2" cols="90" disabled>${weekPlanList[5].wpCon }</textarea></td></tr>
+	    	<tr><th>7주차</th><td colspan="5"><textarea id="weekPlan7" rows="2" cols="90" disabled>${weekPlanList[6].wpCon }</textarea></td></tr>
+	    	<tr><th>8주차</th><td colspan="5"><textarea id="weekPlan8" rows="2" cols="90" disabled>중간고사</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>9주차</th><td colspan="5"><textarea id="weekPlan9" rows="2" cols="90" disabled>${weekPlanList[7].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>10주차</th><td colspan="5"><textarea id="weekPlan10" rows="2" cols="90" disabled>${weekPlanList[8].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>11주차</th><td colspan="5"><textarea id="weekPlan11" rows="2" cols="90" disabled>${weekPlanList[9].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>12주차</th><td colspan="5"><textarea id="weekPlan12" rows="2" cols="90" disabled>${weekPlanList[10].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>13주차</th><td colspan="5"><textarea id="weekPlan13" rows="2" cols="90" disabled>${weekPlanList[11].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>14주차</th><td colspan="5"><textarea id="weekPlan14" rows="2" cols="90" disabled>${weekPlanList[12].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>15주차</th><td colspan="5"><textarea id="weekPlan15" rows="2" cols="90" disabled>${weekPlanList[13].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>16주차</th><td colspan="5"><textarea id="weekPlan16" rows="2" cols="90" disabled>기말고사</textarea></td></tr>
 	    </table>
 	    <div class="d-grid">
 		    <button type="button" id="showMoreTrs" class="btn btn-secondary" style="width:250px;">더 보기</button>
@@ -213,136 +211,9 @@
 </body>
 <script type="text/javascript">
 
-	function insertData() {
-		$('#lecaYr').val('2022');
-		$('#lecaSem').val('2');
-		$('#lecaTrg').val('3');
-		$('#lecaCrd').val('3');
-		$('#lecaNm').val('고급 JAVA 프로그래밍');
-		$('#subCd').val('26009');
-		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
-		$('#lecaCate').val('L102');
-		$('#lecaBook').val('교재 : 명품 JAVA Programming  / 황기태·김효수 저 / 생능출판');
-		$('#lecaGrade').val('E101');
-		$('#lecaMax').val('20');
-		$('#crtrMp').val('30');
-		$('#crtrFp').val('30');
-		$('#crtrTp').val('10');
-		$('#crtrAp').val('20');
-		$('#crtrQp').val('10');
-		$('#weekPlan1').val('자바에 대한 동기 유발');
-		$('#weekPlan2').val('Java 개발 환경 이해');
-		$('#weekPlan3').val('반복문과 배열 그리고 예외처리');
-		$('#weekPlan4').val('클래스와 객체');
-		$('#weekPlan5').val('상속');
-		$('#weekPlan6').val('모듈과 패키지 개념, 자바 기본 패키지');
-		$('#weekPlan7').val('제네릭과 컬렉션');
-		$('#weekPlan9').val('입출력 스트림과 파일 입출력');
-		$('#weekPlan10').val('GUI 프로그래밍');
-		$('#weekPlan11').val('자바의 이벤트 처리');
-		$('#weekPlan12').val('기본적인 스윙 컴포넌트와 활용');
-		$('#weekPlan13').val('그래픽');
-		$('#weekPlan14').val('프로젝트');
-		$('#weekPlan15').val('프로젝트');
-		$('#weekPlan16').val('기말고사');
-		$('#lecaNote').val('화요일 오전, 목요일 오전은 타 대학 강의가 있습니다.');
-	}
-
 	window.onload = function() {
 		
-		//년도, 학기 입력하기
-		var today = new Date();
-		console.log(today);
-		
-		let year = today.getFullYear();
-		let month = today.getMonth() + 1;
-		var semester;
-		
-		if(3 <= month <= 10) {
-			semester = 2;
-		}else if(11 <= month <= 12) {
-			semester = 1;
-			year += 1;
-		}else {
-			semester = 1;
-		}
-		
-		console.log("year : " + year + ", semester : " + semester);
-		
-		var str = '';
-		
-		for(i = 0; i < 3; i++) {
-			yearNum = year + i;
-			
-			str += '<option value="'+ yearNum + '">' + yearNum + '년</option>'; //3년치 부여
-		}
-		$('#lecaYr').append(str);
-		
 		//검색어 자동완성 이벤트///////////////////////////////////////////////////////////////////////////////////////////
-		
-		var ref; //과목 리스트 (json)
-		
-		//과목 리스트 불러오기
-		$.ajax({
-			url : "/lecApply/getSubList",
-			type : "POST",
-			dataType : "JSON",
-			contentType : "application/json",
-			success : function(res) {
-				ref = res;
-			}
-		});
-		
-		var isCompleted = false; //autoMaker 자식이 선택되었는지의 여부
-		
-		//search_area (input), autoMaker(비슷한 단어 뜨는 div)
-		//과목 카테고리 입력이 끝나면
-		$('#search_area').keyup(function() {
-			
-			var txt = $(this).val();
-			
-			if(txt != '') { //빈줄이 들어오면
-				$('#autoMaker').children().remove();
-			
-				ref.forEach(function(arg) {
-					if(arg.subNm.indexOf(txt) > -1) {
-						$('#autoMaker').append(
-							$('<div class="subBlock">').text(arg.subNm + "(" + arg.subCd + ")").attr({'key':arg.subCd})
-						);
-					}
-				});
-				
-				$('#autoMaker').children().each(function(){
-		            $(this).click(function(){ //클릭해서 선택한 경우
-		                $('#search_area').val($(this).text());
-		                $('#autoMaker').children().remove();	
-		                $('#subCd').val($(this).attr('key'));
-		                isComplete = true;
-		                
-		                $('#autoMaker').css("display", "none"); //autoMaker를 사라지게 함
-		            });
-		        });
-			}else {
-				$('#autoMaker').children().remove();
-			}
-		});
-		
-		//과목 카테고리 입력이 시작되면
-		$('#search_area').keydown(function(event) {
-			$('#autoMaker').css("display", "block"); //autoMaker를 보이게 함
-			
-			if(isComplete) {  //autoMaker 자식이 선택 되었으면 초기화
-		        $('#insert_target').val('')	
-		    }
-		});
-		
-		$('#searchIcon').on('click', function() {
-			if($('#autoMaker').css("display") == "none") {
-				$('#autoMaker').show();
-			}else {
-				$('#autoMaker').hide();
-			}
-		});
 		
 		//더보기 버튼을 누르면
 		$('#showMoreTrs').on('click', function() {
@@ -358,10 +229,6 @@
 	    	$('#showLessTrs').hide();
 	    	$('#showMoreTrs').show();
 		});
-		// 과목 카테고리에서 벗어났을 때
-        $('body').on('click', function(){
-        	$('#autoMaker').css("display", "none");
-        });
 		
 		//시간표 드래그 이벤트/////////////////////////////////////////////////////////////////////////////
 		
@@ -448,11 +315,6 @@
 			}
 		});
 		
-		//td 컬러 변경 시 이벤트 주기
-		//yoil = $(this).parent().find("td").index(this);
-		//gyosi = $(this).closest('tr').prevAll().length;
-		//console.log(yoil + " " + gyosi);
-		
 		$('#timeTableBtn').on('click', function() {
 			
 			$('#textArea4time').empty();
@@ -485,120 +347,10 @@
 			$('#textArea4time').append(str);
 		});
 		
-		//임시저장 버튼 클릭 시
-		$('#temporarySubmitBtn').on('click', function() {
-			let dataObject = {
-				lecaYr : $('#lecaYr').val(),
-				lecaSem : $('#lecaSem').val(),
-				lecaTrg : $('#lecaTrg').val(),
-				lecaCrd : $('#lecaCrd').val(),
-				lecaNm : $('#lecaNm').val(),
-				subCd : $('#subCd').val(),
-				lecaCon : $('#lecaCon').val(),
-				lecaCate : $('#lecaCate').val(),
-				lecaBook : $('#lecaBook').val(),
-				lecaGrade : $('#lecaGrade').val(),
-				lecaMax : $('#lecaMax').val(),
-				crtrMp : $('#crtrMp').val(),
-				crtrFp : $('#crtrFp').val(),
-				crtrTp : $('#crtrTp').val(),
-				crtrAp : $('#crtrAp').val(),
-				crtrQp : $('#crtrQp').val(),
-				weekPlan1 : $('#weekPlan1').val(),
-				weekPlan2 : $('#weekPlan2').val(),
-				weekPlan3 : $('#weekPlan3').val(),
-				weekPlan4 : $('#weekPlan4').val(),
-				weekPlan5 : $('#weekPlan5').val(),
-				weekPlan6 : $('#weekPlan6').val(),
-				weekPlan7 : $('#weekPlan7').val(),
-				weekPlan8 : $('#weekPlan8').val(),
-				weekPlan9 : $('#weekPlan9').val(),
-				weekPlan10 : $('#weekPlan10').val(),
-				weekPlan11 : $('#weekPlan11').val(),
-				weekPlan12 : $('#weekPlan12').val(),
-				weekPlan13 : $('#weekPlan13').val(),
-				weekPlan14 : $('#weekPlan14').val(),
-				weekPlan15 : $('#weekPlan15').val(),
-				weekPlan16 : $('#weekPlan16').val(),
-				lecaTt : $('#textArea4time').val(),
-				lecaNote : $('#lecaNote').val()
-			}
-			
-			$.ajax({
-				url : "/lecApply/temporarySubmit",
-				type : "POST",
-				data : JSON.stringify(dataObject),
-				dataType : "JSON",
-				contentType : "application/json;charset=utf-8",
-				success : function(res) {
-					if(res == 1) {
-						alert("임시저장이 완료되었습니다.");
-					}else {
-						alert("다시 시도해주세요.");
-					}
-					
-					opener.parent.location.reload();
-					window.close();
-				}
-			});
-		});
-		//제출 버튼 클릭 시
-		$('#realSubmitBtn').on('click', function() {
-			let dataObject = {
-					lecaYr : $('#lecaYr').val(),
-					lecaSem : $('#lecaSem').val(),
-					lecaTrg : $('#lecaTrg').val(),
-					lecaCrd : $('#lecaCrd').val(),
-					lecaNm : $('#lecaNm').val(),
-					subCd : $('#subCd').val(),
-					lecaCon : $('#lecaCon').val(),
-					lecaCate : $('#lecaCate').val(),
-					lecaBook : $('#lecaBook').val(),
-					lecaGrade : $('#lecaGrade').val(),
-					lecaMax : $('#lecaMax').val(),
-					crtrMp : $('#crtrMp').val(),
-					crtrFp : $('#crtrFp').val(),
-					crtrTp : $('#crtrTp').val(),
-					crtrAp : $('#crtrAp').val(),
-					crtrQp : $('#crtrQp').val(),
-					weekPlan1 : $('#weekPlan1').val(),
-					weekPlan2 : $('#weekPlan2').val(),
-					weekPlan3 : $('#weekPlan3').val(),
-					weekPlan4 : $('#weekPlan4').val(),
-					weekPlan5 : $('#weekPlan5').val(),
-					weekPlan6 : $('#weekPlan6').val(),
-					weekPlan7 : $('#weekPlan7').val(),
-					weekPlan8 : $('#weekPlan8').val(),
-					weekPlan9 : $('#weekPlan9').val(),
-					weekPlan10 : $('#weekPlan10').val(),
-					weekPlan11 : $('#weekPlan11').val(),
-					weekPlan12 : $('#weekPlan12').val(),
-					weekPlan13 : $('#weekPlan13').val(),
-					weekPlan14 : $('#weekPlan14').val(),
-					weekPlan15 : $('#weekPlan15').val(),
-					weekPlan16 : $('#weekPlan16').val(),
-					lecaTt : $('#textArea4time').val(),
-					lecaNote : $('#lecaNote').val()
-				}
-				
-				$.ajax({
-					url : "/lecApply/lecApplySubmit",
-					type : "POST",
-					data : JSON.stringify(dataObject),
-					dataType : "JSON",
-					contentType : "application/json;charset=utf-8",
-					success : function(res) {
-						if(res == 17) {
-							alert("제출이 완료되었습니다.");
-						}else {
-							alert("다시 시도해주세요.");
-						}
-						
-						opener.parent.location.reload();
-						window.close();
-					}
-				});
-		});
+	}
+	
+	function fn_close() {
+		window.close();
 	}
 </script>
 </html>
