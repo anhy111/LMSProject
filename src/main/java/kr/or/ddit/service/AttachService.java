@@ -4,7 +4,7 @@ import kr.or.ddit.domain.Attach;
 
 public interface AttachService {
 
-	
-	public int insertAttch(Attach attach);
+
+	int insertAttch(Attach attach);
 
 }

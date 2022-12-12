@@ -6,9 +6,9 @@ import java.util.Map;
 import kr.or.ddit.domain.Student;
 
 public interface ManageMapper  {
-	
-	public List<Student> studentList();
-	
-	public Student detailStu(Map<String, String> map);
-	
+
+	List<Student> studentList();
+
+	Student detailStu(Map<String, String> map);
+
 }

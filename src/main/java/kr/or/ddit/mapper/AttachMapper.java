@@ -6,8 +6,8 @@ import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.Attach;
 
 public interface AttachMapper {
-	
-	public int insertAttch(Attach attach);
-		
-	
+
+	int insertAttch(Attach attach);
+
+
 }

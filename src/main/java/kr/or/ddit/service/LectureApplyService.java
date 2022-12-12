@@ -8,15 +8,15 @@ import kr.or.ddit.domain.Professor;
 
 public interface LectureApplyService {
 
-	public Professor proInfo(int proNo);
+	Professor proInfo(int proNo);
 
-	public List<LecApply> getYrNSem(int proNo);
+	List<LecApply> getYrNSem(int proNo);
 
-	public List<LecApply> list(Map<String, Object> map);
+	List<LecApply> list(Map<String, Object> map);
 
-	public int getCnt(Map<String, Object> map);
+	int getCnt(Map<String, Object> map);
 
-	public Professor inquiryFormProInfo(int proNo);
+	Professor inquiryFormProInfo(int proNo);
 
-	public List<LecApply> inquiryFormLecApInfo(int proNo);
+	List<LecApply> inquiryFormLecApInfo(int proNo);
 }

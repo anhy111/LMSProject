@@ -7,6 +7,6 @@ import kr.or.ddit.domain.Approval;
 public interface ApprovalService {
 
 	//결제 요청 목록
-	public List<Approval> ApprovalList();
+    List<Approval> ApprovalList();
 
 }

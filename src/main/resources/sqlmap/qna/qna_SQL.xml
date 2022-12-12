@@ -41,15 +41,15 @@
 		</if>
 	</sql>
 
-	<insert id="insertQ" parameterType="map">
+	<insert id="insertQuestion" parameterType="map">
 		INSERT INTO qna (
-	    qna_cd,
-	    mem_cd,
-	    qna_ttl,
-	    qna_con,
-	    qna_yn,
-	    qna_dt,
-	    qna_hit
+            qna_cd,
+            mem_cd,
+            qna_ttl,
+            qna_con,
+            qna_yn,
+            qna_dt,
+            qna_hit
 		) VALUES (
 		    qna_seq.nextval,
 		    #{memCd},
@@ -60,6 +60,28 @@
 		    0
 		)
 	</insert>
+
+	<insert id="qnaSave" parameterType="qna">
+		INSERT INTO qna (
+              qna_cd
+            , mem_no
+            , qna_ttl
+            , qna_con
+            , qna_yn
+            , qna_dt
+            , qna_hit
+		)
+		VALUES (
+			  NOTICEBASIC_SEQ.NEXTVAL
+			, 1
+			, #{qnaTitle}
+			, #{qnaContent}
+			, #{qnaAccess}
+			, sysdate
+			, 0
+			   )
+	</insert>
+
 
 	<select id="list" parameterType="hashMap" resultMap="qnaMap">
 
@@ -82,6 +104,7 @@
        WHERE U.PRNUM BETWEEN (#{ currentPage } * #{ show }) - (#{ show } - 1) AND (#{ currentPage } * #{ show })
 	</select>
 
+
 	<select id="detail" parameterType="map" resultMap="qnaMap">
 		SELECT
 		    q.qna_cd,
@@ -93,11 +116,11 @@
 		    q.qna_hit,
 		    qr.qnar_con,
 		    qr.qnar_dt
-		    , (select mem_nm from member
+		    , (select mem_nm from member2
 		     where mem_cd = #{memCd}) as mem_nm
 		FROM
 		    qna q left outer join qna_reply qr on qr.qna_cd = q.qna_cd
-		    left outer join member m
+		    left outer join member2 m
 		    on q.mem_cd = m.mem_cd
 		where q.qna_cd = #{qnaCd}
 	</select>

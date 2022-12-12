@@ -7,5 +7,5 @@ import kr.or.ddit.domain.Counsel;
 public interface CounselMapper {
 
 	//상담 목록
-	public List<Counsel> CounselList();
+    List<Counsel> CounselList();
 }

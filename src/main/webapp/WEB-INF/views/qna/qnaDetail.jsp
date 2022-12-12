@@ -4,11 +4,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page import="java.util.Date"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>QnA</title>
 <link rel="stylesheet" href="/resources/css/qnaBoard.css" />
 <link rel="stylesheet" href="/resources/css/qnaDetail.css" />
 <style type="text/css">
@@ -125,21 +124,21 @@ $(function(){
 	$("#listBtn").on('click',function(){
 		location.href="/main/qna";
 	})
-	
+
 	$('#replUpdate').on('click',function(){
-		
+
 		qnaCd = $('#replUpdate').data('qnacd');
 		qnarCon = $('#replUpdate').data('qnarcon');
-		
+
 		console.log(qnaCd,qnarCon);
 		$("#repCon").attr("readonly",false);
 		$("#replUpdate").css("display","none");
 		$("#replUpdateBtn").css("display", "inline-block");
-		
+
 		//댓글 수정
 		$('#replUpdateBtn').on('click',function(){
 			qnaCd = $('#replUpdate').data('qnacd');
-			
+
 			qnarCon = $("#repCon").val();
 			$.ajax({
 				url:"/qna/replyUpdate",
@@ -153,7 +152,7 @@ $(function(){
 					if(res==1){
 						alert("수정이 완료되었습니다.")
 						window.location.reload();
-						
+
 					}
 					else{
 						alert("수정에 실패했습니다.")
@@ -165,15 +164,15 @@ $(function(){
 				$("#replUpdateBtn").css("display", "none");
 		});
 	});
-	
+
 	$('#updateBtn').on('click',function(){
 		var qnaCd = $('#updateBtn').data('qnacd');
 		var qnaCon = $('#updateBtn').data('qnacon');
-		
+
 		$("#modal").css('display','inline-block');
-		
+
 	})
-	
+
 	$('#deleteBtn').on('click',function(){
 		var qnaCd = $("#deleteBtn").data('qnacd');
 		$.ajax({
@@ -192,17 +191,17 @@ $(function(){
 			}
 		})
 	})
-	
+
 	$("#modal-close").on('click',function(){
 		$("#modal").css('display','none');
 	})
-	
+
 	$("#saveBtn").on('click',function(){
 		var qnaCd = $('#saveBtn').data('qnacd');
 		var title = $("#modaltitle input").val();
 		var content = $("#modalcontent textarea").val();
-		
-		
+
+
 		$.ajax({
 			url:"/qna/qnaUpdate",
 			type:"post",
@@ -221,29 +220,29 @@ $(function(){
 					alert("수정에 실패하였습니다.");
 				}
 			}
-		
+
 		})
 	})
-	
+
 	$('#qnaReplInsertBtn').on('click',function(){
 		$('#insertA').html(
 				'네 그렇습니다. 사범대학생의 경우 2009학번부터, 일반 교직과정설치학과의 교직이수자들은 2010년에 교직이수자로 선발된 학생부터 반드시 교육봉사활동을 하여야 합니다.');
-		
+
 	})
-	
+
 });
 function qnarInsert(qnaCd){
-		
+
 		var reply = $("#insertA").val();
 		var qnaCd= qnaCd;
-		
+
 		if(reply == null){
 			alert("답변을 입력해주세요");
 			return;
 		}
-		
+
 		var memCd = $('#memCd').val();
-		
+
 		$.ajax({
 			url:"/qna/qnarWrite",
 			type:"post",
@@ -263,12 +262,12 @@ function qnarInsert(qnaCd){
 				}
 			},
 			error : function(res){
-				
+
 				console.log("에러발생");
 			}
 		})
 }
-	
+
 
 </script>
 </head>

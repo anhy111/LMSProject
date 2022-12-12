@@ -40,19 +40,19 @@
 		</div>
 		<sec:csrfInput/>
 	</div>
-	
+
 	<br>
-	
+
 	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의계획서
 	<p id="tellCnt">
 		[총 <span id="cntSpan"></span>건]
 	</p>
-	
+
 	<br>
-	
+
 	<div id="tgradeYellowBox" style="height:47px;">
 		<label>년도/학기
-			<select name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
+			<select name="cateYrNSem" id="cateYrNSem" onchange="getListAgain(this);getCnt(this);">
 				<option value="">전체</option>
 			</select>
 		</label>
@@ -154,7 +154,7 @@
 				$('#depNm').val(data.depNm);
 				$('#empRet').val(data.empRet);
 				$('#empReg').val(data.empReg);
-				
+
 			}
 		});
 
@@ -208,7 +208,7 @@
 					`
 				}
 				$("#proList").html(str);
-				
+
 				//승인, 대기, 반려 글자색 변경
 				if($("#checklecaAp").html() == "승인"){
 					$("#checklecaAp").css("color","blue");
@@ -219,7 +219,7 @@
 				}
 			}
 		});
-		
+
 		//count 불러오기
 		function getCnt(yrNsem) {
 			console.log("카운트 이론상 와야지");
@@ -242,12 +242,12 @@
 			});
 		}
 	}
-	
+
 	//강의계획서 상세페이지 출력
 	$(document).on('click', '#inquirydetail', function() {
 		console.log("상세 왜 안뜨냐고 ㅡㅡ");
 		window.open("/professor/lecApplyForm/inquiryForm", "inquirydetail", "width=1000, height=800, left=100, top=50");
 	});
-	
+
 </script>
 </html>

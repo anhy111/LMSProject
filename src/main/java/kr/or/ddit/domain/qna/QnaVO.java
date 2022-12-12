@@ -39,6 +39,10 @@ public class QnaVO {
 
     private MemberVO memberVO;
 
+    public QnaVO(String qnaTtl, String qnaCon) {
+        this.qnaTtl = qnaTtl;
+        this.qnaCon = qnaCon;
+    }
 
     public String getqnaConDisplay() {
         String result = null;

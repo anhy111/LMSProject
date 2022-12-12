@@ -52,17 +52,17 @@ color : black !important;
 <script type="text/javascript" defer="defer">
 $(function(){
    var asch = ''; //기본설정은 공통으로
-   
-   
+
+
    var request = $.ajax({
       url : "/aschedule/calendarList", // 값 불러오기
       method : "POST",
       dataType : "json"
       });
-   
+
       request.done(function(data){
-      
-      
+
+
       var calendarEl = document.getElementById('calendar');
       calendar = new FullCalendar.Calendar(calendarEl,{
       height : '800px',
@@ -71,60 +71,60 @@ $(function(){
             text: '공통',
             click: function() {
                asch = 'S104';
-               
-               
+
+
             $(this).attr('style', 'background-color: #ffcdd2 !important');
             $(this).next().css('background-color','');
             $(this).next().next().css('background-color','');
             $(this).next().next().next().css('background-color','');
-            
+
             }
           },
           myCustomButton2: {
-             
+
             text: '학생',
             click: function() {
                asch = 'S101';
-            
-            $(this).attr('style','background-color: #ffe0b2 !important'); 
+
+            $(this).attr('style','background-color: #ffe0b2 !important');
             $(this).prev().css('background-color','');
             $(this).next().css('background-color','');
             $(this).next().next().css('background-color','');
-            
-            //$(this).css('background-color','red') 
+
+            //$(this).css('background-color','red')
             }
           },
           myCustomButton3: {
-              
+
             text: '교수',
             click: function() {
                asch = 'S102';
-            
+
             $(this).prev().prev().css('background-color','');
             $(this).prev().css('background-color','');
             $(this).next().css('background-color','');
-            $(this).attr('style','background-color: #b2dfdb !important'); 
-            //$(this).css('background-color','red') 
+            $(this).attr('style','background-color: #b2dfdb !important');
+            //$(this).css('background-color','red')
             }
           },
           myCustomButton4: {
-              
+
             text: '관리자',
             click: function() {
                asch = 'S103';
-            
+
             //$(this).removeClass('fc-button-primary');
             //$(this).toggleClass('fc-button-primary');
             $(this).prev().prev().prev().css('background-color','');
             $(this).prev().prev().css('background-color','');
             $(this).prev().css('background-color','');
-            $(this).attr('style','background-color: #d1c4e9 !important'); 
-            //$(this).css('background-color','red') 
+            $(this).attr('style','background-color: #d1c4e9 !important');
+            //$(this).css('background-color','red')
             }
           }
-          
+
       },
-      
+
       // 헤더에 표시할 툴바
       headerToolbar :{
       left : 'myCustomButton1 myCustomButton2 myCustomButton3 myCustomButton4',
@@ -140,17 +140,17 @@ $(function(){
       droppable : true, // 드래그 앤 드롭
       events : data,
       //locale : 'ko', // 한국어 설정
-      
+
       //이벤트 생성
         select: function(arg){ // 캘린더에서 드래그로 이벤트를 생성할 수 있다
-             
+
               //var color;
               console.log(asch);
-              
+
 //               var aschCate = $('#cate').val();
               if(asch=='S101'){
                  color = "#ffe0b2";
-                 
+
               }else if(asch=='S102'){
                  color = "#b2dfdb";
               }else if(asch=='S103'){
@@ -158,22 +158,22 @@ $(function(){
               }else{
                  color = "#ffcdd2";
               }
-              
+
               if(asch!=''){
-              
+
               var title = prompt('일정을 입력해주세요.');
-              
+
                if(title){
-            	   
+
 	           	   var max = 0;
-	           	   
+
 	           	   $.ajax({
 	           		   url:"/aschedule/findMax",
 	           			dataType:"json",
 			  			type:"POST",
 			  			success:function(res){
 			  				max = res;
-	
+
 			               calendar.addEvent({
 			            	   id : max,
 				               title : title,
@@ -184,18 +184,18 @@ $(function(){
 			               })
 			  			}
 	           	   })
-            	   
+
                }else{
                   calendar.unselect();
                }
-               
-               var obj = new Object(); // Json을 담기 위해 Object 선언
+
+               var obj = {}; // Json을 담기 위해 Object 선언
                obj.aschCon = title;
                obj.aschSt = moment(arg.start).format('YYYY-MM-DD'); // 시작
                obj.aschEn = moment(arg.end).format('YYYY-MM-DD'); // 끝
                obj.aschCate = asch;
-               
-               
+
+
                $(function saveData(jsonData){
                   $.ajax({
                      url : "/aschedule/update",
@@ -205,20 +205,20 @@ $(function(){
                      contentType : 'application/json',
                      })
                });
-               
+
               }else{
                  alert("카테고리를 먼저 지정해주세요.")
               }
            },
-           
+
            //이벤트 삭제
             eventClick : function(info){
             if(confirm("["+info.event.title+"]일정을 삭제하시겠습니까?")){
-            
+
             info.event.remove();
-            
+
             var aschCd = info.event.id;
-            
+
             $(function deleteData(){
                $.ajax({
                url : "/aschedule/update",
@@ -230,19 +230,19 @@ $(function(){
                  })
                }
             },
-            
-            //이벤트 수정   
+
+            //이벤트 수정
             eventDrop : function(info){
-            
-               
-               var obj = new Object();
-               
+
+
+               var obj = {};
+
                obj.start = moment(info.event.start).format('YYYY-MM-DD');
                obj.end = moment(info.event.end).format('YYYY-MM-DD');
                obj.id = info.event.id;
-               
-               
-               
+
+
+
                $(function modifyData(){
                $.ajax({
                url : "/aschedule/update",
@@ -253,10 +253,10 @@ $(function(){
                })
                })
                },
-               
+
                  eventResize: function(info){
-                  var obj = new Object();
-                 
+                  var obj = {};
+
                  obj.start = moment(info.event.start).format('YYYY-MM-DD');
                  obj.end = moment(info.event.end).format('YYYY-MM-DD');
                  obj.id = info.event.id;
@@ -272,14 +272,14 @@ $(function(){
                })
                }
       })
-      
+
       calendar.render();
       })
 })
 </script>
 <body>
 <div>
-<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 행정 관리 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">학사 일정 관리</span> 
+<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 행정 관리 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">학사 일정 관리</span>
 </div>
 <br><br>
 <p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;학사 일정 캘린더</p>
