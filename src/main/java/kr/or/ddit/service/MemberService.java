@@ -11,23 +11,23 @@ import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Student;
 
 public interface MemberService {
-	
-	public Member read(int memNo);
-	
-	public Student readStudent(int memNo);
-	
-	public Employee	readEmployee(int memNo);
-	
-	public Manager readManager(int memNo);
-	
-	public Professor readProfessor(int memNo);
-	
-	public String searchId(HashMap<String, String> map);
-	
-	public String changePw(Map<String, String> map);
 
-	public int stuUpdate(Student student);
+	Member read(int memNo);
 
-	public int updateStuPw(Map<String, String> map);
-	
+	Student readStudent(int memNo);
+
+	Employee	readEmployee(int memNo);
+
+	Manager readManager(int memNo);
+
+	Professor readProfessor(int memNo);
+
+	String searchId(HashMap<String, String> map);
+
+	String changePw(Map<String, String> map);
+
+	int stuUpdate(Student student);
+
+	int updateStuPw(Map<String, String> map);
+
 }

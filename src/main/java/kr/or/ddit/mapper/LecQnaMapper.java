@@ -7,5 +7,5 @@ import kr.or.ddit.domain.LecQna;
 public interface LecQnaMapper {
 
 	//질문 게시판 목록
-	public List<LecQna> LecQnaList();
+    List<LecQna> LecQnaList();
 }

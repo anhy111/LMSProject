@@ -32,7 +32,7 @@ public class FacilityReservationController {
     @GetMapping("/")
     public String calendar() {
 
-        return "facility/calendar";
+        return "/facility/calendar";
     }
 
     @GetMapping("/full")
@@ -121,8 +121,8 @@ public class FacilityReservationController {
 
         int facCd = Integer.parseInt(param.get("facCd"));
         System.out.println("시설코드" + facCd);
-        String rsvSt = (String) param.get("start");
-        String rsvEn = (String) param.get("end");
+        String rsvSt = param.get("start");
+        String rsvEn = param.get("end");
 
         ReservationVO vo = new ReservationVO();
         vo.setFacCd(facCd);

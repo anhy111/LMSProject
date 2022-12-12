@@ -1,7 +1,7 @@
 package kr.or.ddit.strategy;
 
 interface SearchStrategy {
-    public void search();
+    void search();
 }
 
 class SearchStrategyAll implements SearchStrategy {

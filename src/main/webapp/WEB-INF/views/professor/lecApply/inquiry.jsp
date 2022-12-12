@@ -40,16 +40,16 @@
 		</div>
 		<sec:csrfInput/>
 	</div>
-	
+
 	<br>
-	
+
 	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의계획서
 	<p id="tellCnt">
 		[총 <span id="cntSpan"></span>건]
 	</p>
-	
+
 	<br>
-	
+
 	<div id="tgradeYellowBox" style="height:47px;">
 		<label>년도/학기
 			<select name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
@@ -154,7 +154,7 @@
 				$('#depNm').val(data.depNm);
 				$('#empRet').val(data.empRet);
 				$('#empReg').val(data.empReg);
-				
+
 			}
 		});
 
@@ -209,7 +209,7 @@
 					`
 				}
 				$("#proList").html(str);
-				
+
 				//승인, 대기, 반려 글자색 변경
 				if($("#checklecaAp").html() == "승인"){
 					$("#checklecaAp").css("color","blue");
@@ -220,7 +220,7 @@
 				}
 			}
 		});
-		
+
 		//count 불러오기
 		function getCnt(yrNsem) {
 			console.log("카운트 이론상 와야지");
@@ -243,7 +243,7 @@
 			});
 		}
 	}
-	
+
 </script>
 <script type="text/javascript">
 //강의계획서 상세페이지 출력

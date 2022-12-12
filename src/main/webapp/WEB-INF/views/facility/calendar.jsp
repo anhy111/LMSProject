@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
 
@@ -32,7 +32,7 @@
         }
 
         #test td {
-            background-color: EEEEEE;
+            background-color: #EEEEEE;
         }
 
         .fc-header-toolbar {
@@ -168,7 +168,7 @@
                                 calendar.unselect();
                             }
 
-                            var obj = new Object(); // Json을 담기 위해 Object 선언
+                            var obj = {}; // Json을 담기 위해 Object 선언
 
                             obj.facCd = $('#facility').val();
                             obj.start = moment(arg.start).format('YYYY-MM-DD HH:mm'); // 시작
@@ -213,7 +213,7 @@
                                     info.event.remove();
 
                                     var rsvSt = moment(info.event.start).format('YYYY-MM-DD HH:mm');
-                                    var obj = new Object();
+                                    var obj = {};
                                     obj.memCd = memCd;
                                     obj.rsvSt = rsvSt;
 
@@ -257,7 +257,7 @@
 
                             if (code == memCd) {
 
-                                var obj = new Object();
+                                var obj = {};
 
                                 obj.newSt = moment(info.event.start)
                                     .format('YYYY-MM-DD HH:mm');
@@ -304,7 +304,7 @@
 
                             if (code == memCd) {
 
-                                var obj = new Object();
+                                var obj = {};
 
                                 obj.newSt = moment(info.event.start).format('YYYY-MM-DD HH:mm');
                                 obj.newEn = moment(info.event.end).format('YYYY-MM-DD HH:mm');
@@ -407,7 +407,7 @@
                                         calendar.unselect();
                                     }
 
-                                    var obj = new Object(); // Json을 담기 위해 Object 선언
+                                    var obj = {}; // Json을 담기 위해 Object 선언
 
                                     obj.facCd = $('#facility').val();
                                     obj.start = moment(arg.start).format('YYYY-MM-DD HH:mm'); // 시작
@@ -451,7 +451,7 @@
                                             info.event.remove();
 
                                             var rsvSt = moment(info.event.start).format('YYYY-MM-DD HH:mm');
-                                            var obj = new Object();
+                                            var obj = {};
                                             obj.memCd = memCd;
                                             obj.rsvSt = rsvSt;
 
@@ -496,7 +496,7 @@
 
                                     if (code == memCd) {
 
-                                        var obj = new Object();
+                                        var obj = {};
 
                                         obj.newSt = moment(info.event.start).format('YYYY-MM-DD HH:mm');
                                         obj.newEn = moment(info.event.end).format('YYYY-MM-DD HH:mm');
@@ -541,7 +541,7 @@
 
                                     if (code == memCd) {
 
-                                        var obj = new Object();
+                                        var obj = {};
 
                                         obj.newSt = moment(info.event.start).format('YYYY-MM-DD HH:mm');
                                         obj.newEn = moment(info.event.end).format('YYYY-MM-DD HH:mm');

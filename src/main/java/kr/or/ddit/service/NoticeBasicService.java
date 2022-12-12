@@ -4,7 +4,11 @@ import kr.or.ddit.domain.notice.NoticeBasic;
 
 import java.util.List;
 
+
 public interface NoticeBasicService {
+
+    //공지사항 전체 행의 수 조회
+    int getNoticeBasicTotalRow();
 
 
     //공지사항 목록 조회

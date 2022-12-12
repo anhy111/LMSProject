@@ -1,5 +1,6 @@
 package kr.or.ddit.service.Impl;
 
+import kr.or.ddit.domain.qna.Qna;
 import kr.or.ddit.domain.qna.QnaVO;
 import kr.or.ddit.mapper.QnaMapper;
 import kr.or.ddit.service.QnaService;
@@ -16,14 +17,25 @@ public class QnaServiceImpl implements QnaService {
 
     private final QnaMapper qnaMapper;
 
-    public int insertQ(HashMap<String, Object> map) {
-        return this.qnaMapper.insertQ(map);
+    public int insertQuestion(HashMap<String, Object> map) {
+        return this.qnaMapper.insertQuestion(map);
+    }
+
+    @Override
+    public void qnaSave(Qna qna) {
+        this.qnaMapper.qnaSave(qna);
     }
 
 
     //문의게시판/검색결과 리스트 출력
     public List<QnaVO> list(Map<String, String> map) {
+
         return this.qnaMapper.list(map);
+    }
+
+    @Override
+    public List<Qna> showList() {
+        return this.qnaMapper.showList();
     }
 
     @Override
