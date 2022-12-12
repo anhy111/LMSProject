@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div>
-    	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 강의개설관리 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">강의계획서 조회</span>
+    	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 강의개설관리 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">강의계획서 신청</span>
   	</div>
   	<div class="row" id="keywardBox">
 	  	<div class="col-2">
@@ -40,6 +40,14 @@
 		</div>
 		<sec:csrfInput/>
 	</div>
+	
+	<br>
+	
+	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;임시저장된 강의계획서 조회
+	<button type="button" class="btn btn-primary" id="newLecApplyBtn">신규강의계획서 작성</button>
+	<p id="tellCnt">
+		[총 <span id="cntSpan"></span>건]
+	</p>
 	
 	<br>
 	
@@ -133,6 +141,48 @@
 				
 			}
 		});
+		
+		//임시저장 강의계획서 리스트 가져오기
+// 		$.ajax({
+// 			url : "/lecApply/getTempList",
+// 			type : "POST",
+// 			contentType : "application/json;charset=utf-8",
+// 			dataType : "JSON",
+// 			success : function(res) {
+				
+// 				$.each(res, function(i,v){
+// 					res[i]['btn'] = '<button class="btn btn-outline-secondary btn-sm" style="font-family:Nunito,sans-serif;" onclick="getTempSyllabus(' + v.lecaCd + ')">강의계획서</button>';
+// 				});
+				
+// 				grid = new tui.Grid({
+// 					el : document.getElementById('grid'),
+// 					data : res,
+// 					scrollX : true,
+// 					scrollY : true,
+// 					bodyHeight : 380,
+// 					columns : [
+// 						{header : '년도/학기', name : 'lecaCon', filter : 'select', width : 150, align : 'center'},
+// 						{header : '학년', name : 'lecaTrg', filter : 'select', width : 70, align : 'center'},
+// 						{header : '과목번호', name : 'subCd', filter : 'select', width : 100, align : 'center'},
+// 						{header : '과목명', name : 'lecaNm', filter : 'select'},
+// 						{header : '개설이수구분', name : 'lecaCate', width : 100, align : 'center'},
+// 						{header : '학점', name : 'lecaCrd', width : 50, align : 'center'},
+// 						{header : '성적평가방식', name : 'lecaGrade', width : 100, align : 'center'},
+// 						{header : '저장일시', name : 'lecaRoom', filter : 'select'},
+// 						{header : '자세히 보기', name : 'btn', width : 120, align : 'center'}
+// 					],
+// 					columnOptions: {
+// 				        resizable: true
+// 				    }
+// 				});
+// 			}
+// 		});
+		
+	}
+	//신규강의계획서 작성 버튼 클릭 이벤트
+	$('#newLecApplyBtn').on('click', function() {
+		window.open("/professor/lecApplyForm/requestForm", "lecApplyForm", "width=1000, height=800, left=100, top=50");
+	});
 
 </script>
 </html>

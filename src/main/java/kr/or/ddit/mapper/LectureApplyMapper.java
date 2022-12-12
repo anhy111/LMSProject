@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Weekplan;
 
 public interface LectureApplyMapper {
 
@@ -24,5 +25,11 @@ public interface LectureApplyMapper {
 	public Professor inquiryFormProInfo(int proNo);
 	
 	// 강의계획서 상세페이지 기본사항,상세내용
-	public List<LecApply> inquiryFormLecApInfo(int proNo);
+	public List<LecApply> inquiryFormLecApInfo(int lecaCd);
+	
+	// 강의계획서 상세페이지 주차별계획
+	public List<Weekplan> inquiryWeekPlan(int lecaCd);
+	
+	// 강의계획서 제출하기
+	public int lecApplySubmit(int proNo);
 }

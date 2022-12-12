@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Weekplan;
 
 public interface LectureApplyService {
 
@@ -18,5 +19,9 @@ public interface LectureApplyService {
 
 	public Professor inquiryFormProInfo(int proNo);
 
-	public List<LecApply> inquiryFormLecApInfo(int proNo);
+	public List<LecApply> inquiryFormLecApInfo(int lecaCd);
+
+	public List<Weekplan> inquiryWeekPlan(int lecaCd);
+
+	public int lecApplySubmit(int proNo);
 }
