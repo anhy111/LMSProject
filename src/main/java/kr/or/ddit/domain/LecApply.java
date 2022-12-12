@@ -11,7 +11,9 @@ public class LecApply {
 
     private int lecaCd;         //강의계획신청코드
     private int lecaYr;         //년도
+
     private String lecaSem;     //학기
+
     private String lecaNm;      //강의명
     private String lecaCon;     //교과목개요
     private int lecaTrg;        //개설학년

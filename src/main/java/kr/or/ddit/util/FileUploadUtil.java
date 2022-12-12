@@ -101,15 +101,15 @@ public class FileUploadUtil {
 		int result1 = 0;
 		//2) ATTACH 테이블에 다중 insert
 		//SEQ(자동증가), TID, ATTACH_NAME, ATTACH_SIZE, ATTACH_TYPE, REGIST_DATE(sysdate)
-		for(Attach attach : attachList) {
-			log.info("attachVO : " + attach.toString());
-			log.info("attachVOList : " + attachList.toString());
+//		for(Attach attach : attachList) {
+//			log.info("attachVO : " + attach.toString());
+			log.info("attachVOList================================================= : " + attachList.toString());
 			
-			int result = this.attchService.insertAttch(attach);
+			int result = this.attchService.insertAttch(attachList);
 			if(result >0) {
 				result1 = 1;
 			}
-		}
+//		}
 		
 		//Attach 테이블에 insert 실행
 		

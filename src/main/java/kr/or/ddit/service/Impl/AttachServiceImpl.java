@@ -19,7 +19,7 @@ public class AttachServiceImpl implements AttachService{
 	AttachMapper attachMapper;
 	
 	@Override
-	public int insertAttch(Attach attach) {
+	public int insertAttch(List<Attach> attach) {
 		return this.attachMapper.insertAttch(attach);
 	}
 }
