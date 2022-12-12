@@ -29,6 +29,7 @@ public class Student {
 	private String depNm;
 	//단과대학명 조회
 	private String colNm;
+	private int colCd;
 	
 
 

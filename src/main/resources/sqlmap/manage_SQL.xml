@@ -3,9 +3,28 @@
 <mapper namespace="kr.or.ddit.mapper.ManageMapper">
 	
 	<select id="studentList" parameterType="int" resultType="student"> 
-		SELECT S.STU_NO, S.DEP_CD, S.STU_YR, S.STU_SEM, S.STU_NM, S.STU_NME, S.STU_TEL, S.STU_ZIP, 
-		S.STU_ADDR1, S.STU_ADDR2, S.STU_REG, S.STU_BANK_CD, S.STU_DEPO, S.STU_ACT, S.STU_PIC, S.STU_BIR, S.PRO_NO,
-		D.DEP_CD, D.DEP_NM, C.COL_CD, C.COL_NM, E.EMP_NM
+		SELECT 	S.STU_NO
+				, S.DEP_CD
+				, S.STU_YR
+				, S.STU_SEM
+				, S.STU_NM
+				, S.STU_NME
+				, S.STU_TEL
+				, S.STU_ZIP
+				, S.STU_ADDR1
+				, S.STU_ADDR2
+				, S.STU_REG
+				, S.STU_BANK_CD
+				, S.STU_DEPO
+				, S.STU_ACT
+				, S.STU_PIC
+				, S.STU_BIR
+				, S.PRO_NO
+				, D.DEP_CD
+				, D.DEP_NM
+				, C.COL_CD
+				, C.COL_NM
+				, E.EMP_NM
 		FROM STUDENT S, DEPARTMENT D, COLLEGE C, EMPLOYEE E
 		WHERE S.DEP_CD = D.DEP_CD
 		AND D.COL_CD = C.COL_CD
@@ -13,15 +32,41 @@
 	</select>
 	
 	<select id="detailStu" parameterType="map" resultType="student">
-		SELECT S.STU_NO, S.DEP_CD, S.STU_YR, S.STU_SEM, S.STU_NM, S.STU_NME, S.STU_TEL, S.STU_ZIP, 
-		S.STU_ADDR1, S.STU_ADDR2, S.STU_REG, S.STU_BANK_CD, S.STU_DEPO, S.STU_ACT, S.STU_PIC, S.STU_BIR, S.PRO_NO,
-		D.DEP_CD, D.DEP_NM, C.COL_CD, C.COL_NM, E.EMP_NM
+		SELECT 	S.STU_NO
+				, S.DEP_CD
+				, S.STU_YR
+				, S.STU_SEM
+				, S.STU_NM
+				, S.STU_NME
+				, S.STU_TEL
+				, S.STU_ZIP
+				, S.STU_ADDR1
+				, S.STU_ADDR2
+				, S.STU_REG
+				, S.STU_BANK_CD
+				, S.STU_DEPO
+				, S.STU_ACT
+				, S.STU_PIC
+				, S.STU_BIR
+				, S.PRO_NO
+				, D.DEP_CD
+				, D.DEP_NM
+				, C.COL_CD
+				, C.COL_NM
+				, E.EMP_NM
 		FROM STUDENT S, DEPARTMENT D, COLLEGE C, EMPLOYEE E
 		WHERE S.DEP_CD = D.DEP_CD
 		AND D.COL_CD = C.COL_CD
 		AND S.PRO_NO = E.EMP_NO
 		AND S.STU_NO = #{detailStu} 
 	</select>
+	
+	<delete id="deleteStu" parameterType="map" >
+		DELETE FROM STUDENT
+		WHERE STU_NO = #{stuNo}
+	</delete>
+	
+	
 	
 
 </mapper>

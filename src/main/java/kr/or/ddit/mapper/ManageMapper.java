@@ -11,4 +11,6 @@ public interface ManageMapper  {
 	
 	public Student detailStu(Map<String, String> map);
 	
+	public int deleteStu(Map<String, String> map);
+	
 }

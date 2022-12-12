@@ -1,10 +1,11 @@
 package kr.or.ddit.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
 
-@Getter @Setter
-public class MemberAuth {
+import lombok.Data;
+
+@Data
+public class MemberAuth implements Serializable {
     private int memNo;
     private String auth;
 
