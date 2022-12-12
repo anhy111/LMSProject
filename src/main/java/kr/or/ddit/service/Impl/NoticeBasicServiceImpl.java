@@ -15,9 +15,36 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
 
     private final NoticeBasicMapper noticeBasicMapper;
 
-    //공지사항 목록
+    //공지사항 목록 조회
     @Override
-    public List<NoticeBasic> NoticeBasicList() {
-        return this.noticeBasicMapper.NoticeBasicList();
+    public List<NoticeBasic> noticeBasicList() {
+
+        return this.noticeBasicMapper.noticeBasicList();
+    }
+
+    //공지사항 상세 조회
+    @Override
+    public NoticeBasic findOne(Long noticeCd) {
+        return this.noticeBasicMapper.noticeBasicFindNotice(noticeCd);
+    }
+
+    //공지사항 저장
+    @Override
+    public void noticeBasicSave(NoticeBasic noticeBasic) {
+        this.noticeBasicMapper.noticeBasicSave(noticeBasic);
+    }
+
+    @Override
+    public void noticeBasicUpdate(NoticeBasic noticeBasic) {
+        this.noticeBasicMapper.noticeBasicUpdate(noticeBasic);
+    }
+
+    //공지사항 수정
+
+
+    //공지사항 삭제
+    @Override
+    public void delete(Long noticeCd) {
+        this.noticeBasicMapper.noticeBasicDelete(noticeCd);
     }
 }

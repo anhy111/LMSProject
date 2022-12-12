@@ -1,6 +1,5 @@
 package kr.or.ddit.controller;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -9,80 +8,105 @@ import kr.or.ddit.service.NoticeBasicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import kr.or.ddit.domain.LecNotice;
-import kr.or.ddit.service.LecNoticeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
 @RequestMapping("/notice")
-@RequiredArgsConstructor
+@RequiredArgsConstructor // 어노테이션이 궁금하면 생성자 주입과 관련해서 찾아보시길..!
 public class NoticeBasicController {
 
-    private final NoticeBasicService noticeBasicService;
+    /**
+     *     DI(의존성 주입)을 하는 방법에는 3가지가 있다.
+     *     1) 필드 주입
+     *     2) 수정자(Setter) 주입
+     *     3) 생성자 주입
+     *
+     *     이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
+     *     장/단점이 궁금하면 슬랙으로..ㅎ
+     */
+    private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
 
+    //공지사항 리스트
     @GetMapping("/list")
-    public String LectureNoticeList(Model model) {
+    public String NoticeList(Model model) {
 
-        List<NoticeBasic> noticeBasicList = this.noticeBasicService.NoticeBasicList();
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
 
         //공통 약속
-        model.addAttribute("bodyTitle","공지사항목록");
+        model.addAttribute("bodyTitle", "공지사항목록");
         model.addAttribute("noticeBasicList", noticeBasicList);
 
         //forwarding
         return "notice/list";
     }
 
+    //공지사항 등록 폼
     @GetMapping("/noticeForm")
-    public String getNoticeForm(Model model) {
+    public String createNoticeForm(Model model) {
 
+        // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
 
         return "notice/noticeForm";
     }
 
+    //공지사항 등록(Save)
     @PostMapping("/noticeForm")
-    public String postNoticeForm(NoticeForm form) {
+    public String createNotice(NoticeForm form) {
 
-        NoticeBasic noticeBasic = new NoticeBasic();
+        // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
+        NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
-        noticeBasic.setNoticeTtl(form.getTitle());
-        noticeBasic.setNoticeCon(form.getContent());
-        noticeBasic.setNoticeReg(new Date());
-        noticeBasic.setNoticeUpd(new Date());
+        // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
+        noticeBasicService.noticeBasicSave(noticeBasic);
 
-        System.out.println(noticeBasic);
-
-        //         noticeService.saveNotice(noticeBasic);
-
-        return "redirect:notice/list";
+        return "redirect:list";
     }
 
-    @GetMapping("/add")
-    public String add() {
+    //공지사항 상세페이지
+    @GetMapping("/list/{noticeBasic.noticeCd}/edit")
+    public String detail(@PathVariable("noticeBasic.noticeCd") Long noticeCd, Model model) {
 
-        return "/notice/add";
-    }
+        // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
+        NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
 
-    @GetMapping("/detail")
-    public String detail() {
+        // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
+        model.addAttribute("form", noticeBasic);
 
         return "/notice/detail";
     }
 
-    @GetMapping("/update")
-    public String update() {
+    //공지사항 수정페이지
+    @GetMapping("/update/{form.noticeCd}")
+    public String updateForm(@PathVariable("form.noticeCd") Long noticeCd, Model model) {
 
-        return "/notice/update";
+        NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
+
+        model.addAttribute("form", noticeBasic);
+
+        return "/notice/modifyForm";
     }
 
+    @PostMapping("/update/{form.noticeCd}")
+    public String updateNotice(@ModelAttribute("form") NoticeBasic form) {
+
+
+
+        noticeBasicService.noticeBasicUpdate(form);
+        System.out.println(form.getNoticeTtl() + form.getNoticeCon());
+
+        return "redirect:/notice/list";
+    }
+
+    //공지사항 삭제
+    @GetMapping("/delete/{form.noticeCd}")
+    public String delete(@PathVariable("form.noticeCd") Long noticeCd) {
+
+        noticeBasicService.delete(noticeCd);
+
+        return "redirect:/notice/list";
+    }
 }

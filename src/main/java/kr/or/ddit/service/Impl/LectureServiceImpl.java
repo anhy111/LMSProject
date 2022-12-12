@@ -42,6 +42,7 @@ public class LectureServiceImpl implements LectureService{
 	public Lecture searchTask(String lecaCd){
 		return this.lectureMapper.searchTask(lecaCd);
 	}
+
 	
 	// 강의 과제 등록
 	@Override
@@ -60,4 +61,14 @@ public class LectureServiceImpl implements LectureService{
 		public Task detailTask(String taskCd, String lecaCd) {
 			return this.lectureMapper.detailTask(taskCd, lecaCd);
 		}
+
+	@Override
+	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture) {
+		return this.lectureMapper.studentCompleteSaveLectureList(studentLecture);
+	}
+	@Override
+	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture) {
+		return this.lectureMapper.studentNotYetSaveLectureList(studentLecture);
+	}
+
 }

@@ -23,6 +23,7 @@ public interface LectureMapper {
 	
 	// 학생이 수강신청후 수강인원증가
 	public int increaseHeadcount(StudentLecture studentLecture);
+
 	// 강의 과제 목록 조회	
 	public Lecture searchTask(@Param("lecaCd")String lecaCd);
 	
@@ -34,4 +35,12 @@ public interface LectureMapper {
 	
 	//강의 과제 상세조회
 	public Task detailTask(@Param("taskCd") String taskCd,@Param("lecaCd") String lecaCd);
+
+		
+	public Lecture searchTask(String lecaCd);
+		
+	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
+	
+	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
+
 }
