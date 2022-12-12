@@ -40,7 +40,7 @@
 													value="${graduateCredit.rdcReqCrd}" readonly />
 											</div>
 											<div class="col-2 offset-1">
-												<label>학년</label><input type="text" class="form-control"
+												<label>재학학기</label><input type="text" class="form-control"
 													value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
 													readonly />
 											</div>
@@ -189,8 +189,12 @@
 										</table>
 									</div>
 								</div>
-								<div class="row pl-3">
-									<h3>수강신청된 강의목록</h3>
+								<div class="row pl-3 pr-3">
+									<h3 class="col-3">수강신청된 강의목록</h3>
+									<button type="button"
+											class="col-1 offset-7 btn btn-flat btn-primary"
+											data-toggle="modal" data-target="#applySchedule">시간표
+											보기</button>
 								</div>
 								<div class="row pl-3 pb-3">
 									<div class="card-body table-responsive col-11"
@@ -217,6 +221,99 @@
 										</table>
 									</div>
 								</div>
+								<div class="modal fade" id="applySchedule" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalCenterTitle"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalCenterTitle">강의 시간표</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<table class="table">
+														<thead>
+															<tr>
+																<th></th>
+																<th></th>
+																<th>월</th>
+																<th>화</th>
+																<th>수</th>
+																<th>목</th>
+																<th>금</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td rowspan="2">1교시</td>
+																<td rowspan="2">09:00 ~ 09:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr><tr></tr>
+															<tr>
+																<td rowspan="2">2교시</td>
+																<td rowspan="2">10:00 ~ 10:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr><tr></tr>
+															<tr>
+																<td rowspan="2">3교시</td>
+																<td rowspan="2">11:00 ~ 11:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr><tr></tr>
+															<tr> 
+																<td rowspan="2">4교시</td>
+																<td rowspan="2">12:00 ~ 12:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr><tr></tr>
+															<tr>
+																<td rowspan="2">5교시</td>
+																<td rowspan="2">13:00 ~ 13:50</td>
+															</tr><tr></tr>
+															<tr>
+																<td rowspan="2">6교시</td>
+																<td rowspan="2">14:00 ~ 14:50</td>
+															</tr><tr></tr>
+															<tr>
+																<td rowspan="2">7교시</td>
+																<td rowspan="2">15:00 ~ 15:50</td>
+															</tr><tr></tr>
+															<tr>
+																<td rowspan="2">8교시</td>
+																<td rowspan="2">16:00 ~ 16:50</td>
+															</tr><tr></tr>
+															<tr>
+																<td rowspan="2">9교시</td>
+																<td rowspan="2">17:00 ~ 17:50</td>
+															</tr><tr></tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary btn-flat"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="custom-tabs-four-profile"
@@ -239,7 +336,7 @@
 														readonly />
 												</div>
 												<div class="col-2 offset-1">
-													<label>학년</label><input type="text" class="form-control"
+													<label>재학학기</label><input type="text" class="form-control"
 														value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
 														readonly />
 												</div>
@@ -352,8 +449,12 @@
 											</table>
 										</div>
 									</div>
-									<div class="row pl-3">
-										<h3>장바구니</h3>
+									<div class="row pl-3 pr-3">
+										<h3 class="col-3">장바구니</h3>
+										<button type="button"
+											class="col-1 offset-7 btn btn-flat btn-primary"
+											data-toggle="modal" data-target="#saveSchedule">시간표
+											보기</button>
 									</div>
 									<div class="row pl-3 pb-3">
 										<div class="card-body table-responsive col-11"
@@ -378,6 +479,27 @@
 												<tbody class="completeSaveLecture">
 												</tbody>
 											</table>
+										</div>
+									</div>
+									<div class="modal fade" id="saveSchedule" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalCenterTitle"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalCenterTitle">강의 시간표</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">...</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary btn-flat"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
