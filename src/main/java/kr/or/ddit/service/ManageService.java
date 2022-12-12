@@ -7,8 +7,10 @@ import kr.or.ddit.domain.Student;
 
 public interface ManageService {
 
-	List<Student> studentList();
+	public List<Student> studentList();
 
-	Student detailStu(Map<String, String> map);
+	public Student detailStu(Map<String, String> map);
 
+	public int deleteStu(Map<String, String> map);
+	
 }

@@ -24,7 +24,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Slf4j
 @Controller
 public class FileUploadUtil {
-	private final String uploadFolder = "C:\\Users\\PC-19\\git\\LMSProjectDDIT\\src\\main\\webapp\\resources\\upload";
+	private String uploadFolder = "C:\\Users\\PC-19\\git\\LMSProjectDDIT\\src\\main\\webapp\\resources\\upload";
 
 
 	@Autowired
@@ -39,7 +39,7 @@ public class FileUploadUtil {
 		//1) 파일 업로드 수행(연/월/일, UUID)
 		//1-1) 연/월/일
 		File uploadPath = new File(uploadFolder, getFolder());
-		if(!uploadPath.exists()) {
+		if(uploadPath.exists()==false) {
 			uploadPath.mkdirs();
 		}
 
@@ -58,7 +58,7 @@ public class FileUploadUtil {
 
 			UUID uuid = UUID.randomUUID();
 			//image01.jpg => aoisonsppois_image01.jpg(uploadFileName)
-			uploadFileName = uuid + "_" + uploadFileName;
+			uploadFileName = uuid.toString() + "_" + uploadFileName;
 
 			//C:.....\\upload\\
 			//2022\\10\\31\\aoisonsppois_image01.jpg
@@ -101,15 +101,15 @@ public class FileUploadUtil {
 		int result1 = 0;
 		//2) ATTACH 테이블에 다중 insert
 		//SEQ(자동증가), TID, ATTACH_NAME, ATTACH_SIZE, ATTACH_TYPE, REGIST_DATE(sysdate)
-		for(Attach attach : attachList) {
-			log.info("attachVO : " + attach.toString());
-			log.info("attachVOList : " + attachList);
+//		for(Attach attach : attachList) {
+//			log.info("attachVO : " + attach.toString());
+			log.info("attachVOList================================================= : " + attachList.toString());
 
-			int result = this.attchService.insertAttch(attach);
+			int result = this.attchService.insertAttch(attachList);
 			if(result >0) {
 				result1 = 1;
 			}
-		}
+//		}
 
 		//Attach 테이블에 insert 실행
 

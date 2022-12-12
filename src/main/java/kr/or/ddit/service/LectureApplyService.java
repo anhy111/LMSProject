@@ -5,18 +5,23 @@ import java.util.Map;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Weekplan;
 
 public interface LectureApplyService {
 
-	Professor proInfo(int proNo);
+	public Professor proInfo(int proNo);
 
-	List<LecApply> getYrNSem(int proNo);
+	public List<LecApply> getYrNSem(int proNo);
 
-	List<LecApply> list(Map<String, Object> map);
+	public List<LecApply> list(Map<String, Object> map);
 
-	int getCnt(Map<String, Object> map);
+	public int getCnt(Map<String, Object> map);
 
-	Professor inquiryFormProInfo(int proNo);
+	public Professor inquiryFormProInfo(int proNo);
 
-	List<LecApply> inquiryFormLecApInfo(int proNo);
+	public List<LecApply> inquiryFormLecApInfo(int lecaCd);
+
+	public List<Weekplan> inquiryWeekPlan(int lecaCd);
+
+	public int lecApplySubmit(int proNo);
 }

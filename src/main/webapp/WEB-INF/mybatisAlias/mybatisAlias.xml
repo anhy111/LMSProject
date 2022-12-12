@@ -32,6 +32,8 @@
 		<typeAlias type="kr.or.ddit.domain.Attach" alias="attach"/>
 		<typeAlias type="kr.or.ddit.domain.Weekplan" alias="weekplan"/>
 		<typeAlias type="kr.or.ddit.domain.Subject" alias="subject"/>
+		<typeAlias type="kr.or.ddit.domain.Common" alias="common"/>
+		<typeAlias type="kr.or.ddit.domain.CommonDetail" alias="commonDetail"/>
 
 		<!-- 시설예약 시작 -->
 		<typeAlias type="kr.or.ddit.domain.facility.FacilityVO" alias="facilityVO"/>

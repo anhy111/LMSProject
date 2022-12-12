@@ -1,12 +1,12 @@
 package kr.or.ddit.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
-@Getter @Setter
-public class Member {
+@Data
+public class Member implements Serializable {
 
     private int memNo;
     private String memMl;

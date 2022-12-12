@@ -70,10 +70,7 @@
 	
 	<select id="getYrNSem" parameterType="int" resultType="lecApply">
 		SELECT  DISTINCT L.LECA_YR
-		        , CASE WHEN SUBSTR(L.LECA_SEM, 4, 2) IN ('2', '3', '4', '5', '6', '7', '8') THEN ' 1'
-		               WHEN SUBSTR(L.LECA_SEM, 4, 2) IN ('9') THEN ' 2'
-		               WHEN SUBSTR(L.LECA_SEM, 4, 1) IN ('1', '2') THEN ' 2'
-		               END  LECA_SEM
+		        , L.LECA_SEM
 		FROM    LEC_APPLY L, LECTURE T
 		WHERE   L.PRO_NO = #{empNo}
 		AND		T.LECA_YN = 1
@@ -91,9 +88,7 @@
 	<select id="list" parameterType="hashMap" resultType="lecApply">
 		SELECT  U.LECA_CD,
 		        U.PRO_NO,
-		        CASE WHEN SUBSTR(U.LECA_SEM ,4,2) BETWEEN 3 AND 6 THEN CONCAT(CONCAT(U.LECA_YR,'/'),'1학기')
-		             WHEN SUBSTR(U.LECA_SEM ,4,2) BETWEEN 9 AND 12 THEN CONCAT(CONCAT(U.LECA_YR,'/'),'2학기')
-		             END  LECA_YS,
+		        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
 		        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
 		        NVL(U.LECA_TRG, 0) LECA_TRG,
 		        U.SUB_CD,
@@ -127,7 +122,8 @@
 	</select>
 	
 	<select id="inquiryFormProInfo" parameterType="int" resultType="professor">
-		SELECT  E.EMP_NM,
+		SELECT  P.PRO_NO,
+				E.EMP_NM,
 		        C.COL_NM || ' ' || D.DEP_NM EMP_ADDR1,
 		        D.DEP_TEL DEP_TEL,
 		        E.EMP_TEL EMP_TEL
@@ -141,16 +137,14 @@
 	<select id="inquiryFormLecApInfo" parameterType="int" resultType="lecApply">
 		SELECT  U.LECA_CD,
 		        U.PRO_NO,
-		        U.LECA_YR || '년' LECA_YR,
-		        CASE WHEN SUBSTR(U.LECA_SEM ,4,2) BETWEEN 3 AND 6 THEN '1학기'
-		             WHEN SUBSTR(U.LECA_SEM ,4,2) BETWEEN 9 AND 12 THEN '2학기'
-		             END  LECA_SEM,
-		        NVL(U.LECA_TRG, 0) || '학년' LECA_TRG,
+		        U.LECA_YR LECA_YR,
+		        U.LECA_SEM LECA_SEM,
+		        NVL(U.LECA_TRG, 0) LECA_TRG,
 		        U.SUB_CD,
 		        U.LECA_NM,
 		        NVL(U.LECA_CAP, 0) LECA_CAP,
 		        U.LECA_CATE,
-		        NVL(U.LECA_CRD, 0) || '학점' LECA_CRD,
+		        NVL(U.LECA_CRD, 0) LECA_CRD,
 		        U.LECA_GRADE,
 		        U.LECA_DT,
 		        U.SUB_NM,
@@ -173,17 +167,53 @@
 		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
 		                LECA_MP, LECA_FP, LECA_TP, LECA_AP
 		) U
-		WHERE   U.PRO_NO = #{proNo}
+		WHERE   U.LECA_CD = #{lecaCd}
 		AND     U.LECA_IMSI_YN IS NULL
 		ORDER BY U.LECA_CD DESC
 	</select>
 	
-<!-- 	<select id="getTempWeekPlanVO" parameterType="int" resultType="weekplan"> -->
-<!-- 		SELECT  * -->
-<!-- 		FROM    WEEKPLAN -->
-<!-- 		WHERE   LECA_CD = #{lecaCd} -->
-<!-- 		ORDER BY WP_NO -->
-<!-- 	</select> -->
+	<select id="inquiryWeekPlan" parameterType="int" resultType="weekplan">
+		SELECT  WP_NO
+		        ,LECA_CD
+		        ,WP_CON
+		FROM    WEEKPLAN
+		WHERE   LECA_CD = #{lecaCd}
+		ORDER BY WP_NO
+	</select>
+	
+<!-- 	<insert id="lecApplySubmit" parameterType="int"> -->
+<!-- 		<selectKey order="BEFORE" keyProperty="leca_cd" -->
+<!-- 				resultType="int"> -->
+<!-- 			SELECT MAX(LECA_CD)+1 -->
+<!-- 			FROM LEC_APPLY -->
+<!-- 		</selectKey> -->
+<!-- 		INSERT INTO lec_apply ( -->
+<!-- 		    leca_cd -->
+<!-- 		    , sub_cd -->
+<!-- 		    , pro_cd -->
+<!-- 		    , leca_cate -->
+<!-- 		    , leca_yr -->
+<!-- 		    , leca_sem -->
+<!-- 		    , leca_nm -->
+<!-- 		    , leca_con -->
+<!-- 		    , leca_trg -->
+<!-- 		    , leca_crd -->
+<!-- 		    , leca_per -->
+<!-- 		    , leca_max -->
+<!-- 		    , leca_book -->
+<!-- 		    , leca_note -->
+<!-- 		    , leca_dt -->
+<!-- 		    , leca_grade -->
+<!-- 		    , leca_yn -->
+<!-- 		    , leca_tt -->
+<!-- 		) VALUES ( -->
+<!-- 		    LECAPPLY_SEQ.NEXTVAL, #{subCd}, #{proCd}, #{lecaCate}, -->
+<!-- 		    #{lecaYr}, SYSDATE, #{lecaNm}, #{lecaCon}, #{lecaTrg},  -->
+<!-- 		    #{lecaCrd}, #{lecaCrd}, #{lecaMax}, #{lecaBook}, #{lecaNote}, -->
+<!-- 		    SYSDATE, #{lecaGrade}, 0, #{lecaTt} -->
+<!-- 		) -->
+<!-- 	</insert> -->
+	
 	
 </mapper>
 

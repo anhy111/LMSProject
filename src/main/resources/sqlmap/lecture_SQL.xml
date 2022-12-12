@@ -92,7 +92,7 @@
 		<result property="empNo"  column="EMP_NO"/>
 	</resultMap>
   
-  <!-- DEPARTMENT resultMap======================================================================== -->                                                                                                                                              
+  <!-- task resultMap======================================================================== -->                                                                                                                                              
 	<resultMap type="task" id="taskMap">                                                                                                                                                                                                               
 		<result property="taskCd" column="TASK_CD"/>                                                                                                                                                                                                   
 		<result property="lecaCd" column="LECA_CD"/>                                                                                                                                                                                                   
@@ -100,9 +100,22 @@
 		<result property="taskCon" column="TASK_CON"/>                                                                                                                                                                                                 
 		<result property="taskSdt" column="TASK_SDT"/>                                                                                                                                                                                                 
 		<result property="taskEdt" column="TASK_EDT"/>                                                                                                                                                                                                 
-		<result property="atchFileId" column="ATCH_FILE_ID" />                                                                                                                                                                                         
+		<result property="atchFileId" column="ATCH_FILE_ID" />    
+		<collection property="attach" resultMap="attachMap"></collection>                                                                                                                                                                                     
 	</resultMap>   
-
+	
+<!-- attach resultMap======================================================================== -->
+	<resultMap type="attach" id="attachMap">
+		<result property="atchFileId"     column="ATCH_FILE_ID"/>                                                                                                                                                                                                   
+		<result property="fileSn"          column="FILE_SN"/>                                                                                                                                                                                                   
+		<result property="fileStreCours"  column="FILE_STRE_COURS"/>                                                                                                                                                                                                   
+		<result property="streFileNm"     column="STRE_FILE_NM"/>                                                                                                                                                                                                 
+		<result property="orignlFileNm"   column="ORIGNL_FILE_NM"/>                                                                                                                                                                                                 
+		<result property="fileExtsn"       column="FILE_EXTSN"/>                                                                                                                                                                                                 
+		<result property="fileSize"        column="FILE_SIZE"/>    
+		<result property="createDt"        column="CREATE_DT"/>    
+	</resultMap>
+	
 	<!-- 이번 학기 전체 강의 목록======================================================================== -->
 	<select id="lectureSearch" parameterType="string" resultMap="lectureMap">
 		SELECT 
@@ -114,7 +127,7 @@
 		     , LA.LECA_CAP 
 		     , LA.LECA_CATE 
 		     , LA.LECA_YR
-		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
+		     , LA.LECA_SEM
 		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
 		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
 		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
@@ -128,7 +141,7 @@
 		SELECT L.LECA_CD
 		     , LA.LECA_NM 
 		     , LA.LECA_YR
-		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
+		     , LA.LECA_SEM
 		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
 		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
 		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
@@ -227,7 +240,7 @@
 			select max(ATCH_FILE_ID) FROM ATTACH
 		</selectKey>
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT, ATCH_FILE_ID)
-            values((SELECT MAX(TASK_CD)+1 FROM TASK_CD),#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},#{atchFileId});
+            values((select max(task_cd)+1 from task), #{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},#{atchFileId})
 	</insert>
 	
 	<select id="studentNotYetSaveLectureList" parameterType="studentLecture" resultMap="lectureMap">
@@ -301,8 +314,11 @@
 	</select>
 	
 	<insert id="insertTask2" parameterType="task">
+		<selectKey keyProperty="taskCd" order="BEFORE" resultType="int"> 
+			select max(TASK_CD)+1 FROM TASK
+		</selectKey>
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT)
-            values((SELECT MAX(TASK_CD)+1 FROM TASK_CD),#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt});
+            values(#{taskCd},#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt})
 	</insert>
 
 	<update id="increaseHeadcount" parameterType="studentLecture">
@@ -310,6 +326,29 @@
 		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) + 1
 		WHERE LECA_CD = #{lecaCd}
 	</update>
+	
+	<select id="detailTask" resultType="task" parameterType="String" resultMap="taskMap">
+		SELECT                 
+				T.TASK_CD      
+		      , T.LECA_CD      
+		      , T.TASK_NM      
+		      , T.TASK_CON     
+		      , T.TASK_SDT     
+		      , T.TASK_EDT     
+		      , T.ATCH_FILE_ID
+		      , A.ATCH_FILE_ID
+		      , A.FILE_SN
+		      , A.FILE_STRE_COURS
+		      , A.STRE_FILE_NM
+		      , A.ORIGNL_FILE_NM
+		      , A.FILE_EXTSN
+		      , A.FILE_SIZE
+		      , A.CREATE_DT
+		FROM    TASK T LEFT OUTER JOIN ATTACH A ON(T.ATCH_FILE_ID  =  A.ATCH_FILE_ID)
+		WHERE   
+			    T.TASK_CD = #{taskCd} 
+		AND     T.LECA_CD = #{lecaCd}      
+	</select>
 
 	
 </mapper>

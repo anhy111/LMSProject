@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
+import kr.or.ddit.domain.Task;
 import kr.or.ddit.mapper.LectureMapper;
 import kr.or.ddit.service.LectureService;
 
@@ -41,6 +42,26 @@ public class LectureServiceImpl implements LectureService{
 	public Lecture searchTask(String lecaCd){
 		return this.lectureMapper.searchTask(lecaCd);
 	}
+
+	
+	// 강의 과제 등록
+	@Override
+	public int insertTask2(Task task) {
+		return this.lectureMapper.insertTask2(task);
+	}
+	
+	// 강의 과제 등록(첨부파일 o)
+	@Override
+		public int insertTask(Task task) {
+			return this.lectureMapper.insertTask(task);
+		}
+	
+	//강의 과제 상세조회
+	@Override
+		public Task detailTask(String taskCd, String lecaCd) {
+			return this.lectureMapper.detailTask(taskCd, lecaCd);
+		}
+
 	@Override
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture) {
 		return this.lectureMapper.studentCompleteSaveLectureList(studentLecture);
@@ -49,4 +70,5 @@ public class LectureServiceImpl implements LectureService{
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture) {
 		return this.lectureMapper.studentNotYetSaveLectureList(studentLecture);
 	}
+
 }

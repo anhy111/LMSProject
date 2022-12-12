@@ -7,7 +7,7 @@ import kr.or.ddit.domain.Attach;
 
 public interface AttachMapper {
 
-	int insertAttch(Attach attach);
+	public int insertAttch(List<Attach> attach);
 
 
 }

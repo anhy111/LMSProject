@@ -6,12 +6,34 @@
 <mapper namespace="kr.or.ddit.mapper.AttachMapper">
 
 
-<insert id="insertAttch" parameterType="attach">
-insert into attach(ATCH_FILE_ID, FILE_SN, FILE_STRE_COURS, STRE_FILE_NM, ORIGNL_FILE_NM, FILE_EXTSN, FILE_SIZE, CREATE_DT)
-    values((select decode(nvl(max(atch_file_id)+1,0),0,1)
-from attach),#{fileSn},#{fileStreCours},#{streFileNm},#{orignlFileNm},#{fileExtsn},#{fileSize},SYSDATE)
-</insert >
-
+<update id="insertAttch" parameterType="java.util.List">
+<selectKey keyProperty="atchFileId" order="BEFORE" resultType="int"> 
+	select DECODE(NVL(MAX(ATCH_FILE_ID)+1,0),0,1,MAX(ATCH_FILE_ID)+1) from attach             
+</selectKey>
+	 <foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+	 INTO ATTACH
+	(
+		ATCH_FILE_ID
+	  , FILE_SN
+      , FILE_STRE_COURS
+	  , STRE_FILE_NM
+	  , ORIGNL_FILE_NM
+	  , FILE_EXTSN
+	  , FILE_SIZE
+	  , CREATE_DT
+  	)  VALUES
+		(  
+		 #{atchFileId}
+		,#{item.fileSn}
+		,#{item.fileStreCours}
+		,#{item.streFileNm}
+		,#{item.orignlFileNm}
+		,#{item.fileExtsn}
+		,#{item.fileSize}
+		,SYSDATE
+		)
+	</foreach>
+</update >
 
 </mapper>
 

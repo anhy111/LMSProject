@@ -25,4 +25,9 @@ public class ManageServiceImpl implements ManageService{
 	public Student detailStu(Map<String, String> map) {
 		return this.manageMapper.detailStu(map);
 	}
+	
+	@Override
+	public int deleteStu(Map<String, String> map) {
+		return this.manageMapper.deleteStu(map);
+	}
 }

@@ -52,7 +52,7 @@
 
 	<div id="tgradeYellowBox" style="height:47px;">
 		<label>년도/학기
-			<select name="cateYrNSem" id="cateYrNSem" onchange="getListAgain(this);getCnt(this);">
+			<select name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
 				<option value="">전체</option>
 			</select>
 		</label>
@@ -194,6 +194,7 @@
 				let str ="";
 				for(var i=0;i<data.length;i++){
 					str = `
+						<input type='hidden' value='\${data[i].lecaCd}'id='inquiryLecaCd'/>
 						<td>\${data[i].lecaYs}</td>
 						<td>\${data[i].lecaTrg }</td>
 						<td>\${data[i].subCd }</td>
@@ -243,11 +244,15 @@
 		}
 	}
 
-	//강의계획서 상세페이지 출력
-	$(document).on('click', '#inquirydetail', function() {
-		console.log("상세 왜 안뜨냐고 ㅡㅡ");
-		window.open("/professor/lecApplyForm/inquiryForm", "inquirydetail", "width=1000, height=800, left=100, top=50");
-	});
-
+</script>
+<script type="text/javascript">
+//강의계획서 상세페이지 출력
+let lecaCd;
+$(document).on('click', '#inquirydetail', function() {
+	console.log("상세 왜 안뜨냐고 ㅡㅡ");
+	lecaCd = $("#inquiryLecaCd").val();
+	console.log("강의계획서 코드: " + lecaCd);
+	window.open("/professor/lecApplyForm/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
+});
 </script>
 </html>
