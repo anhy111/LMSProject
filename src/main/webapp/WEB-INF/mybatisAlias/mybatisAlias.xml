@@ -28,7 +28,7 @@
 		<typeAlias type="kr.or.ddit.domain.StudentLecture" alias="studentLecture"/>
 		<typeAlias type="kr.or.ddit.domain.Task" alias="task"/>
 		<typeAlias type="kr.or.ddit.domain.Attach" alias="attach"/>
-		<typeAlias type="kr.or.ddit.domain.AllTimeLectures" alias="AllTimeLectrues"/><!-- 역대강의전체조회 -->
+		<typeAlias type="kr.or.ddit.domain.AllTimeLectures" alias="AllTimeLectures"/><!-- 역대강의전체조회 -->
 		<typeAlias type="kr.or.ddit.domain.Subject" alias="Subject"/><!-- 과목관리 테이블 -->
 		
 	</typeAliases>

@@ -4,18 +4,15 @@
 <!-- namespace : xml파일은 여러개일 수 있음. 
 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="kr.or.ddit.mapper.AllTimeLecturesMapper">
-	<sql id="where">
 	
-	</sql>
-	
-	<resultMap type="AllTimeLectrues" id="AllTimeLectruesMap">
-		<collection property="lectureList" resultMap="lectureMap"></collection>
-		<collection property="lecApplyList" resultMap="lecApplyMap"></collection>
-		<collection property="subjectList" resultMap="subjectMap"></collection>
-		<collection property="departmentList" resultMap="departmentMap"></collection>
-		<collection property="collegeList" resultMap="collegeMap"></collection>
-		<collection property="professorList" resultMap="professorMap"></collection>
-		<collection property="employeeList" resultMap="employeeMap"></collection>
+	<resultMap type="AllTimeLectures" id="AllTimeLectruesMap">
+		<collection property="lecture" resultMap="lectureMap"></collection>
+		<collection property="lecApply" resultMap="lecApplyMap"></collection>
+		<collection property="subject" resultMap="subjectMap"></collection>
+		<collection property="department" resultMap="departmentMap"></collection>
+		<collection property="college" resultMap="collegeMap"></collection>
+		<collection property="professor" resultMap="professorMap"></collection>
+		<collection property="employee" resultMap="employeeMap"></collection>
 	</resultMap>
 	
 	<resultMap type="lecture" id="lectureMap">
@@ -105,13 +102,11 @@
 	</resultMap>
 	
 <!-- 역대전체강의 목록 -->
-<select id="AllTimeLectrueList" resultMap="AllTimeLectruesMap">
+<select id="AllTimeLectrueList"  parameterType="AllTimeLectures"  resultMap="AllTimeLectruesMap">
 SELECT
-		  LA.LECA_YR
-		, CASE WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 3 AND 6 THEN 1
-		          WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 9 AND 12 THEN 2
-		          ELSE NULL 
-		          END AS LECA_SEM
+		  L.LECA_CD 
+		, LA.LECA_YR
+		, LA.LECA_SEM
 		, C.COL_NM
 		, D.DEP_NM
 		, S.SUB_NM
@@ -124,44 +119,40 @@ SELECT
 		, L.LEC_HCNT
 FROM LECTURE L, LEC_APPLY LA, SUBJECT S, DEPARTMENT D, COLLEGE C, PROFESSOR P, EMPLOYEE E
 WHERE
-		 L.LECA_CD = LA.LECA_CD
-		AND S.DEP_CD = L.DEP_CD
+		D.COL_CD = C.COL_CD
+		AND E.EMP_NO = P.PRO_NO
+		AND P.PRO_NO = S.PRO_NO
+		AND S.SUB_CD = L.SUB_CD 
+		AND L.LECA_CD = LA.LECA_CD 
 		AND L.DEP_CD = D.DEP_CD
-		AND D.COL_CD = C.COL_CD 
-		AND S.PRO_NO = P.PRO_NO
-		AND P.PRO_NO = E.EMP_NO
-		<if test="lecYn != null and lecYn != ' ' ">
+		<if test="lecYn != null and lecYn !=''">
 		AND L.LEC_YN = #{lecYn} 	
 		</if>
-		<if test="lecaYr != null and lecaYr != ' ' ">
-		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) = #{lecaYn}
+		<if test="lecaYr != null and lecaYr !=''">
+		AND TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) = #{lecaYn}
 		</if>
-		<if test="lecaSem != null and lecaSem ' ' ">
-		(CASE WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 3 AND 6 THEN 1
-          WHEN SUBSTR(LA.LECA_SEM ,4,2) BETWEEN 9 AND 12 THEN 2
-          ELSE NULL 
-          END) = #{lecaSem}
+		<if test="lecaSem != null and lecaSem !=''">
+		AND LA.LECA_SEM = #{lecaSem}
 		</if>
-		<if test="colNm != null and colNm != ' ' ">
-		C.COL_NM = #{colNm}
+		<if test="colNm != null and colNm !=''">
+		AND C.COL_NM = #{colNm}
 		</if>
-		<if test="depNm != null and depNm != ' ' ">
-		D.DEP_NM = #{depNm}
+		<if test="depNm != null and depNm !=''">
+		AND D.DEP_NM = #{depNm}
 		</if>
-		<if test="subNm != null and subNm != ' ' ">
-		S.SUB_NM = #{subNm}
+		<if test="subNm != null and subNm !=''">
+		AND S.SUB_NM = #{subNm}
 		</if>
-		<if test="lecaCate != null and lecaCate != ' ' ">
-		LA.LECA_CATE = #{lecaCate}
+		<if test="lecaCate != null and lecaCate !=''">
+		AND LA.LECA_CATE = #{lecaCate}
 		</if>
-		<if test="lecaNm != null and lecaNm != ' ' ">
-		LA.LECA_NM LIKE '%' || #{lecaNm} || '%'
+		<if test="lecaNm != null and lecaNm !=''">
+		AND LA.LECA_NM LIKE '%' || #{lecaNm} || '%'
 		</if>
-		<if test="empNm != null and empNm != ' ' ">
-		 E.EMP_NM LIKE '%' || #{empNm} || '%'
+		<if test="empNm != null and empNm !=''">
+		AND E.EMP_NM LIKE '%' || #{empNm} || '%'
 		</if>
 </select>
-
 <!-- 상세 -->
 
 </mapper>
