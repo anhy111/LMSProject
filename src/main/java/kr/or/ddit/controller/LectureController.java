@@ -103,13 +103,13 @@ public class LectureController {
 
 	@PostMapping("/lectureBoard/registTask")
 	public String registTask2(@RequestParam MultipartFile[] files, Task task) {
-
 		if (files[0].getSize() > 0) {
 			this.fileUploadUtil.fileUploadAction(files);
 			this.lectureservice.insertTask(task);
 		} else {
 			this.lectureservice.insertTask2(task);
 		}
+		log.info(task.toString());
 
 		return "redirect:/lectureBoard/taskDetail?lecaCd="+task.getLecaCd()+"&&taskCd="+task.getTaskCd();
 	}

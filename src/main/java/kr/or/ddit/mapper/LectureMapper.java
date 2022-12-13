@@ -37,8 +37,6 @@ public interface LectureMapper {
 	public Task detailTask(@Param("taskCd") String taskCd,@Param("lecaCd") String lecaCd);
 
 		
-	public Lecture searchTask(String lecaCd);
-		
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 	
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
