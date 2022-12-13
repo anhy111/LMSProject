@@ -169,29 +169,27 @@ public class LectureApplyController {
 	//강의계획서 작성 후 제출하기
 	@ResponseBody
 	@PostMapping("/lecApplyForm/lecApplySubmit")
-	public int lecApplySubmit(HttpServletRequest request, Model model) {
+	public int lecApplySubmit(HttpServletRequest request
+			, Model model, @RequestBody LecApply lecApply) {
 		
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		
-		//1. lec_apply 테이블에 값 넣기
-		int lecApplyResult = this.lectureApplyService.lecApplySubmit(proNo);
+		//1. subject 테이블에 값 넣기
+		int subjectResult = this.lectureApplyService.subjectSubmit(proNo);
+		
+		//2. lecture 테이블에 값 넣기
+//		int lectureResult = this.lectureApplyService.lectureSubmit(subCd);
+		
+		//3. lec_apply 테이블에 값 넣기
+//		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecaCd);
 //		int lecaCd = this.lectureApplyService.getMaxLecaCd();
 		
-		//2. weekplan 테이블에 값 넣기 (wp_no, leca_cd, wp_con);
-//		Map<String, Object> weekMap = new HashMap<String, Object>();
-//		weekMap.put("lecaCd", lecaCd);
-//		
-//		for(int i = 1; i <= 15; i++) {
-//			weekMap.put("wpNo", i);
-//			weekMap.put("wpCon", map.get("weekPlan" + i));
-//			
-//			this.lectureApplyService.weekPlanSubmit(weekMap);
-//		}
-//		
-//		int weekPlanResult = this.lectureApplyService.weekPlanCount(lecaCd);
-		//  + criteriaResult + weekPlanResult
-		return lecApplyResult;
+		//4. weekPlan 테이블에 값 넣기
+		
+		
+		//  + lectureResult + lecApplyResult + weekPlanResult
+		return subjectResult;
 	}
 	
 	
