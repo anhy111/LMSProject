@@ -3,6 +3,8 @@ package kr.or.ddit.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,8 +93,8 @@ public class LectureController {
 	}
 
 	@PostMapping("/lectureBoard/upload")
-	public String uploadTest(MultipartFile[] files, @RequestParam String lecaCd) {
-		this.fileUploadUtil.fileUploadAction(files);
+	public String uploadTest(MultipartFile[] files, @RequestParam String lecaCd, HttpServletRequest req) {
+		this.fileUploadUtil.fileUploadAction(files, req);
 		return "redirect:/lectureBoard/subjectList?lecaCd=" + lecaCd;
 	}
 
@@ -102,9 +104,9 @@ public class LectureController {
 	}
 
 	@PostMapping("/lectureBoard/registTask")
-	public String registTask2(@RequestParam MultipartFile[] files, Task task) {
+	public String registTask2(@RequestParam MultipartFile[] files, Task task, HttpServletRequest req) {
 		if (files[0].getSize() > 0) {
-			this.fileUploadUtil.fileUploadAction(files);
+			this.fileUploadUtil.fileUploadAction(files, req);
 			this.lectureservice.insertTask(task);
 		} else {
 			this.lectureservice.insertTask2(task);

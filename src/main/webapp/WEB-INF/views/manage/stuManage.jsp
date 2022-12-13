@@ -7,7 +7,7 @@
 <script type="text/javascript">
 function fn_add(data){
 	
-	$("#stuPic").attr("src", "/resources/upload/img/"+data.stuPic);
+	$("#stuImg").attr("src", "/resources/upload/img/"+data.stuPic);
 	$("#stuNo").attr("value", data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$("#stuNme").attr("value", data.stuNme);
@@ -153,8 +153,24 @@ $(function(){
 	$("#updateStu").on("click",function(){
 		
 		alert("오나요,,")
+		$('input#stuPic')[0].files[0] 
+		
 		
 		let stuNo = $("#stuNo").val();
+		let stuYr = $("#stuYr").val();
+		let stuSem = $("#stuSem").val();
+		let stuNm = $("#stuNm").val();
+		let stuNme = $("#stuNme").val();
+		let stuTel = $("#stuTel").val();
+		let stuZip = $("#stuZip").val();
+		let stuAddr1 = $("#stuAddr1").val();
+		let stuAddr2 = $("#stuAddr2").val();
+		let stuBankCd = $("#stuBankCd").val();
+		let stuDepo = $("#stuDepo").val();
+		let stuAct = $("#stuAct").val();
+		let stuBir = $("#stuBir").val();
+		let depCd = $("#depCd").val();
+		
 		let data = {
 			"stuNo":stuNo,
 			"stuYr":stuYr,
@@ -298,7 +314,8 @@ $(function(){
 						<div class="row">
 							<div class="col-md-4">
 								<img
-									class="img-thumbnail" width="200px;" height="300px;" id="stuPic">
+									class="img-thumbnail" width="200px;" height="300px;" id="stuImg">
+								<input type="file" id="stuPic" name="stuPic" />
 							</div>
 							<div class="col-md-8">
 								<div class="container">
@@ -414,6 +431,7 @@ $(function(){
 								type="text" class="form-control stu" id="stuAddr2" name="stuAddr2" readonly />
 						</div>
 					</div>
+
 					<div id="stuBtn1" align="right" style="display:none" >
 						<button type="button" class="btn btn-outline-warning" id="edit" >수정</button>
 						<button type="button" id="delete" class="btn btn-outline-danger">삭제</button>

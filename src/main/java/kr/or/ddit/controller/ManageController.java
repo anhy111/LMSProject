@@ -3,6 +3,8 @@ package kr.or.ddit.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import kr.or.ddit.domain.Student;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.CommonDetailService;
 import kr.or.ddit.service.ManageService;
+import kr.or.ddit.util.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -31,15 +34,17 @@ public class ManageController {
 	CommonDetailService commonDetailService;
 	@Autowired
 	CollegeService collegeService;
+	@Autowired
+	FileUploadUtil fileUploadUtil; 
 	
 	@GetMapping("/manage/stuManage")
-	public String stuManage(Model model){
+	public String stuManage(Model model, HttpServletRequest req){
 		
 		List<Student> studentList = this.manageService.studentList();
 		List<CommonDetail> commonDetailList = this.commonDetailService.commonDetailList("BANK");
 		log.info("list 잘 들어오나 ?! " + studentList);
 		List<College> collegeList = this.collegeService.CollegeList();
-		
+	
 		model.addAttribute("list", studentList);
 		model.addAttribute("commonDetailList",commonDetailList);
 		model.addAttribute("collegeList",collegeList);
