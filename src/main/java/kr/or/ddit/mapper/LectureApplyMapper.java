@@ -31,5 +31,8 @@ public interface LectureApplyMapper {
 	public List<Weekplan> inquiryWeekPlan(int lecaCd);
 
 	// 강의계획서 제출하기
-	public int lecApplySubmit(int proNo);
+	public int lecApplySubmit(int lecaCd);
+	
+	// 과목테이블 제출
+	public int subjectSubmit(int proNo);
 }

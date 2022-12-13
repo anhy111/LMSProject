@@ -40,7 +40,7 @@
 													value="${graduateCredit.rdcReqCrd}" readonly />
 											</div>
 											<div class="col-2 offset-1">
-												<label>학년</label><input type="text" class="form-control"
+												<label>재학학기</label><input type="text" class="form-control"
 													value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
 													readonly />
 											</div>
@@ -189,8 +189,12 @@
 										</table>
 									</div>
 								</div>
-								<div class="row pl-3">
-									<h3>수강신청된 강의목록</h3>
+								<div class="row pl-3 pr-3">
+									<h3 class="col-3">수강신청된 강의목록</h3>
+									<button type="button" id="timeTableApply"
+											class="col-1 offset-7 btn btn-flat btn-primary"
+											data-toggle="modal" data-target="#applySchedule">시간표
+											보기</button>
 								</div>
 								<div class="row pl-3 pb-3">
 									<div class="card-body table-responsive col-11"
@@ -217,6 +221,124 @@
 										</table>
 									</div>
 								</div>
+								<div class="modal fade" id="applySchedule" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalCenterTitle"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-lg"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalCenterTitle">강의 시간표</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<table class="table m-0 table-bordered text-center">
+														<thead>
+															<tr>
+																<th width="10%">교시</th>
+																<th width="15%">시간</th>
+																<th>월</th>
+																<th>화</th>
+																<th>수</th>
+																<th>목</th>
+																<th>금</th>
+															</tr>
+														</thead>
+														<tbody id="timeTable">
+															<tr height="70">
+																<td class="align-middle">1교시</td>
+																<td class="align-middle">09:00 ~ 09:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">2교시</td>
+																<td class="align-middle">10:00 ~ 10:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">3교시</td>
+																<td class="align-middle">11:00 ~ 11:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70"> 
+																<td class="align-middle">4교시</td>
+																<td class="align-middle">12:00 ~ 12:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">5교시</td>
+																<td class="align-middle">13:00 ~ 13:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">6교시</td>
+																<td class="align-middle">14:00 ~ 14:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">7교시</td>
+																<td class="align-middle">15:00 ~ 15:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">8교시</td>
+																<td class="align-middle">16:00 ~ 16:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+															<tr height="70">
+																<td class="align-middle">9교시</td>
+																<td class="align-middle">17:00 ~ 17:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary btn-flat"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="custom-tabs-four-profile"
@@ -239,7 +361,7 @@
 														readonly />
 												</div>
 												<div class="col-2 offset-1">
-													<label>학년</label><input type="text" class="form-control"
+													<label>재학학기</label><input type="text" class="form-control"
 														value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기"
 														readonly />
 												</div>
@@ -352,8 +474,12 @@
 											</table>
 										</div>
 									</div>
-									<div class="row pl-3">
-										<h3>장바구니</h3>
+									<div class="row pl-3 pr-3">
+										<h3 class="col-3">장바구니</h3>
+										<button type="button"
+											class="col-1 offset-7 btn btn-flat btn-primary"
+											data-toggle="modal" data-target="#saveSchedule">시간표
+											보기</button>
 									</div>
 									<div class="row pl-3 pb-3">
 										<div class="card-body table-responsive col-11"
@@ -378,6 +504,27 @@
 												<tbody class="completeSaveLecture">
 												</tbody>
 											</table>
+										</div>
+									</div>
+									<div class="modal fade" id="saveSchedule" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalCenterTitle"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalCenterTitle">강의 시간표</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">...</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary btn-flat"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -414,6 +561,8 @@
 		$("#cartSearch").on("click",function(){
 			loadNotYetSaveLecture();
 		});
+		
+		$("#timeTableApply").on("click")
 		
 		$("#colleage").on("change",function(){
 			

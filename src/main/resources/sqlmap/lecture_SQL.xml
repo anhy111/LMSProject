@@ -178,24 +178,24 @@
 		                LA.LECA_CAP,
 		                LA.LECA_CATE,
 		                LA.LECA_YR,
-		                DECODE(SUBSTR(LA.LECA_SEM,4,2),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학') "LECA_SEM"
+		                LA.LECA_SEM
 		            FROM
-		                PROFESSOR P
-		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO )
+		                DEPARTMENT D
+		                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
+		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
 		                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
 		                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
 		                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
-		                INNER JOIN DEPARTMENT D ON ( L.DEP_CD = D.DEP_CD )
 		            WHERE
 		                L.LEC_YN = 'Y'
-		            AND DECODE(SUBSTR(LA.LECA_SEM,4,2),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학') = 
-		                DECODE(TO_CHAR(SYSDATE,'MM'),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학')
+		            AND LA.LECA_SEM = 
+		                DECODE(TO_CHAR(SYSDATE,'MM'),'12','1학기','01','1학기','02','1학기','03','1학기','04','1학기','05','1학기','2학기')
 		)
 		SELECT * FROM T
 		WHERE NOT EXISTS(
 		    SELECT SL.LECA_CD
 		    FROM STU_LEC SL
-		    WHERE SL.STU_NO = #{stuNo}
+		    WHERE SL.STU_NO = 21715032
 		    AND SL.LECA_CD = T.LECA_CD
 		)
 		<if test="depNm != null and depNm != ''">
@@ -224,7 +224,7 @@
 		     , LA.LECA_CAP 
 		     , LA.LECA_CATE 
 		     , LA.LECA_YR
-		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
+		     , LA.LECA_SEM
 		     , SL.STU_NO
 		FROM PROFESSOR P INNER JOIN EMPLOYEE E ON(E.EMP_NO = P.PRO_NO)
 		                INNER JOIN SUBJECT S ON(P.PRO_NO = S.PRO_NO)
@@ -264,18 +264,18 @@
 		                LA.LECA_CAP,
 		                LA.LECA_CATE,
 		                LA.LECA_YR,
-		                DECODE(SUBSTR(LA.LECA_SEM,4,2),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학') "LECA_SEM"
+		                LA.LECA_SEM
 		            FROM
-		                PROFESSOR P
-		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO )
+		                DEPARTMENT D
+		                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
+		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
 		                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
 		                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
 		                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
-		                INNER JOIN DEPARTMENT D ON ( L.DEP_CD = D.DEP_CD )
 		            WHERE
 		                L.LEC_YN = 'Y'
-		            AND DECODE(SUBSTR(LA.LECA_SEM,4,2),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학') = 
-		                DECODE(TO_CHAR(SYSDATE,'MM'),'9',2,'10',2,'11',2,'12',2,'03',1,'04',1,'05',1,'06',1,'방학')
+		            AND LA.LECA_SEM = 
+		                DECODE(TO_CHAR(SYSDATE,'MM'),'12','1학기','01','1학기','02','1학기','03','1학기','04','1학기','05','1학기','2학기')
 		)
 		SELECT * FROM T
 		WHERE NOT EXISTS(
@@ -310,13 +310,14 @@
 		     , LA.LECA_CAP 
 		     , LA.LECA_CATE 
 		     , LA.LECA_YR
-		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
+		     , LA.LECA_SEM
 		     , W.STU_NO
-		FROM PROFESSOR P INNER JOIN EMPLOYEE E ON(E.EMP_NO = P.PRO_NO)
-		                INNER JOIN SUBJECT S ON(P.PRO_NO = S.PRO_NO)
-		                INNER JOIN LECTURE L ON(S.SUB_CD = L.SUB_CD)
-		                INNER JOIN LEC_APPLY LA ON(L.LECA_CD = LA.LECA_CD)
-		                INNER JOIN DEPARTMENT D ON(L.DEP_CD = D.DEP_CD)
+		FROM DEPARTMENT D
+		                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
+		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
+		                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
+		                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+		                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
 		                LEFT OUTER JOIN WISH W ON(W.LECA_CD = L.LECA_CD)
 		WHERE W.STU_NO = #{stuNo}
 	</select>
