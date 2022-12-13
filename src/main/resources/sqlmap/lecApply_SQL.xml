@@ -181,38 +181,66 @@
 		ORDER BY WP_NO
 	</select>
 	
-<!-- 	<insert id="lecApplySubmit" parameterType="int"> -->
-<!-- 		<selectKey order="BEFORE" keyProperty="leca_cd" -->
-<!-- 				resultType="int"> -->
-<!-- 			SELECT MAX(LECA_CD)+1 -->
-<!-- 			FROM LEC_APPLY -->
-<!-- 		</selectKey> -->
-<!-- 		INSERT INTO lec_apply ( -->
-<!-- 		    leca_cd -->
-<!-- 		    , sub_cd -->
-<!-- 		    , pro_cd -->
-<!-- 		    , leca_cate -->
-<!-- 		    , leca_yr -->
-<!-- 		    , leca_sem -->
-<!-- 		    , leca_nm -->
-<!-- 		    , leca_con -->
-<!-- 		    , leca_trg -->
-<!-- 		    , leca_crd -->
-<!-- 		    , leca_per -->
-<!-- 		    , leca_max -->
-<!-- 		    , leca_book -->
-<!-- 		    , leca_note -->
-<!-- 		    , leca_dt -->
-<!-- 		    , leca_grade -->
-<!-- 		    , leca_yn -->
-<!-- 		    , leca_tt -->
-<!-- 		) VALUES ( -->
-<!-- 		    LECAPPLY_SEQ.NEXTVAL, #{subCd}, #{proCd}, #{lecaCate}, -->
-<!-- 		    #{lecaYr}, SYSDATE, #{lecaNm}, #{lecaCon}, #{lecaTrg},  -->
-<!-- 		    #{lecaCrd}, #{lecaCrd}, #{lecaMax}, #{lecaBook}, #{lecaNote}, -->
-<!-- 		    SYSDATE, #{lecaGrade}, 0, #{lecaTt} -->
-<!-- 		) -->
-<!-- 	</insert> -->
+	<insert id="subjectSubmit" parameterType="hashMap">
+		INSERT INTO SUBJECT (
+		            , SUB_CD
+		            , PRO_NO
+		            , DEP_CD
+		            , SUB_NM
+		) VALUES (
+		    #{subCd}
+		    , #{proNo}
+		    , #{depCd}
+		    , #{subNm}
+		);
+	</insert>
+	
+	<insert id="lecApplySubmit" parameterType="int">
+		<selectKey order="BEFORE" keyProperty="leca_cd"
+				resultType="int">
+			SELECT MAX(LECA_CD)+1
+			FROM LEC_APPLY
+		</selectKey>
+		INSERT INTO lec_apply (
+		    leca_cd
+		    , sub_cd
+		    , pro_cd
+		    , leca_cate
+		    , leca_yr
+		    , leca_sem
+		    , leca_nm
+		    , leca_con
+		    , leca_trg
+		    , leca_crd
+		    , leca_per
+		    , leca_max
+		    , leca_book
+		    , leca_note
+		    , leca_dt
+		    , leca_grade
+		    , leca_yn
+		    , leca_tt
+		) VALUES (
+		    LECAPPLY_SEQ.NEXTVAL
+		    , #{subCd}
+		    , #{proCd}
+		    , #{lecaCate}
+		    , #{lecaYr}
+		    , #{lecaSem}
+		    , #{lecaNm}
+		    , #{lecaCon}
+		    , #{lecaTrg}
+		    , #{lecaCrd}
+		    , #{lecaCrd}
+		    , #{lecaCap}
+		    , #{lecaBook}
+		    , #{lecaNote}
+		    , SYSDATE
+		    , #{lecaGrade}
+		    , 0
+		    , #{lecaTt}
+		)
+	</insert>
 	
 	
 </mapper>

@@ -54,8 +54,13 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 	
 	@Override
-	public int lecApplySubmit(int proNo) {
-		return this.lectureApplyMapper.lecApplySubmit(proNo);
+	public int lecApplySubmit(int lecaCd) {
+		return this.lectureApplyMapper.lecApplySubmit(lecaCd);
+	}
+	
+	@Override
+	public int subjectSubmit(int proNo) {
+		return this.lectureApplyMapper.subjectSubmit(proNo);
 	}
     
 }
