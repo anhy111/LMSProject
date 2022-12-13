@@ -66,7 +66,7 @@
 	    	<tr>
 	    		<th>년도</th>
 	    		<td>
-	    			<select id="lecaYr" id="lecaYr"></select>
+	    			<input type="text" id="lecaYr" name="lecaYr" size=30 value="" readonly>
 	    		</td>
 	    		<th>학기</th>
 	    		<td>
@@ -121,7 +121,7 @@
 		    		<i id="searchIcon" class="dripicons-search" style="font-size : 1.2em;"></i>
 	    		</td>
 	    		<th>학수번호</th>
-	    		<td><input type="text" id="subCd" name="subCd" size=32 placeholder="카테고리 선택 시 자동으로 입력됩니다." readonly disabled></td>
+	    		<td><input type="text" id="subCd" name="subCd" size=32 placeholder="카테고리 선택 시 자동으로 입력됩니다."></td>
 	    	</tr>
 	    </table>
 	    
@@ -235,6 +235,13 @@
 <script type="text/javascript">
 	
 window.onload = function() {
+	
+	var date = new Date();
+	let year = date.getFullYear();
+	
+	console.log("year : " + year);
+	
+	$("#lecaYr").val(year+"년");
 	
 	//검색어 자동완성 이벤트///////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -353,15 +360,15 @@ window.onload = function() {
 				if(cellObj.hasClass("highlighted")) {
 					
 					if(j == 0) {
-						str += "월요일 " + i + "교시\n";
+						str += "월 " + i + "교시\n";
 					}else if(j == 1) {
-						str += "화요일 " + i + "교시\n";
+						str += "화 " + i + "교시\n";
 					}else if(j == 2) {
-						str += "수요일 " + i + "교시\n";
+						str += "수 " + i + "교시\n";
 					}else if(j == 3) {
-						str += "목요일 " + i + "교시\n";
+						str += "목 " + i + "교시\n";
 					}else if(j == 4) {
-						str += "금요일 " + i + "교시\n";
+						str += "금 " + i + "교시\n";
 					}
 				}
 			}
@@ -370,63 +377,51 @@ window.onload = function() {
 		$('#textArea4time').append(str);
 	});
 	
+	let lecaTm
+	
+	//제출 버튼 클릭 시
+	$('#realSubmitBtn').on('click', function() {
+		let dataObject = {
+				lecaYr : $('#lecaYr').val(),
+				lecaSem : $('#lecaSem').val(),
+				lecaTrg : $('#lecaTrg').val(),
+				lecaCrd : $('#lecaCrd').val(),
+				lecaNm : $('#lecaNm').val(),
+				subCd : $('#subCd').val(),
+				lecaCon : $('#lecaCon').val(),
+				lecaCate : $('#lecaCate').val(),
+				lecaBook : $('#lecaBook').val(),
+				lecaGrade : $('#lecaGrade').val(),
+				lecaCap : $('#lecaCap').val(),
+				lecaTm : $("#textArea4time").val(),
+			    lecaWk : $("#textArea4time").val(),
+				lecaMp : $('#lecaMp').val(),
+				lecaFp : $('#lecaFp').val(),
+				lecaTp : $('#lecaTp').val(),
+				lecaAp : $('#lecaAp').val(),
+				lecaNote : $('#lecaNote').val()
+			}
+			
+			$.ajax({
+				url : "/professor/lecApplyForm/lecApplySubmit",
+				type : "POST",
+				data : JSON.stringify(dataObject),
+				dataType : "JSON",
+				contentType : "application/json;charset=utf-8",
+				success : function(res) {
+					if(res == 3) {
+						alert("제출이 완료되었습니다.");
+					}else {
+						alert("다시 시도해주세요.");
+					}
+					
+					opener.parent.location.reload();
+					window.close();
+				}
+			});
+	});
+	
 }
 
-		//제출 버튼 클릭 시
-		$('#realSubmitBtn').on('click', function() {
-			let dataObject = {
-					lecaYr : $('#lecaYr').val(),
-					lecaSem : $('#lecaSem').val(),
-					lecaTrg : $('#lecaTrg').val(),
-					lecaCrd : $('#lecaCrd').val(),
-					lecaNm : $('#lecaNm').val(),
-					subCd : $('#subCd').val(),
-					lecaCon : $('#lecaCon').val(),
-					lecaCate : $('#lecaCate').val(),
-					lecaBook : $('#lecaBook').val(),
-					lecaGrade : $('#lecaGrade').val(),
-					lecaCap : $('#lecaCap').val(),
-					lecaMp : $('#lecaMp').val(),
-					lecaFp : $('#lecaFp').val(),
-					lecaTp : $('#lecaTp').val(),
-					lecaAp : $('#lecaAp').val(),
-					weekPlan1 : $('#weekPlan1').val(),
-					weekPlan2 : $('#weekPlan2').val(),
-					weekPlan3 : $('#weekPlan3').val(),
-					weekPlan4 : $('#weekPlan4').val(),
-					weekPlan5 : $('#weekPlan5').val(),
-					weekPlan6 : $('#weekPlan6').val(),
-					weekPlan7 : $('#weekPlan7').val(),
-					weekPlan8 : $('#weekPlan8').val(),
-					weekPlan9 : $('#weekPlan9').val(),
-					weekPlan10 : $('#weekPlan10').val(),
-					weekPlan11 : $('#weekPlan11').val(),
-					weekPlan12 : $('#weekPlan12').val(),
-					weekPlan13 : $('#weekPlan13').val(),
-					weekPlan14 : $('#weekPlan14').val(),
-					weekPlan15 : $('#weekPlan15').val(),
-					weekPlan16 : $('#weekPlan16').val(),
-					lecaTt : $('#textArea4time').val(),
-					lecaNote : $('#lecaNote').val()
-				}
-				
-				$.ajax({
-					url : "/professor/lecApplyForm/lecApplySubmit",
-					type : "POST",
-					data : JSON.stringify(dataObject),
-					dataType : "JSON",
-					contentType : "application/json;charset=utf-8",
-					success : function(res) {
-						if(res == 17) {
-							alert("제출이 완료되었습니다.");
-						}else {
-							alert("다시 시도해주세요.");
-						}
-						
-						opener.parent.location.reload();
-						window.close();
-					}
-				});
-		});
 </script>
 </html>

@@ -23,7 +23,11 @@ public interface LectureApplyService {
 
 	public List<Weekplan> inquiryWeekPlan(int lecaCd);
 
-	public int lecApplySubmit(int lecaCd);
+	public int subjectSubmit(LecApply proNo);
 
-	public int subjectSubmit(int proNo);
+	public int lectureSubmit(LecApply subCd);
+
+	public int lecApplySubmit(LecApply lecaCd);
+
+
 }
