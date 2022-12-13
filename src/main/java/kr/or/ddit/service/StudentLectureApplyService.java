@@ -8,6 +8,13 @@ import kr.or.ddit.domain.StudentLecture;
 public interface StudentLectureApplyService {
 
 	//신청
-	public int apply(StudentLecture studentLecture);
+    String apply(StudentLecture studentLecture);
 
+	//수강신청취소
+    int applyCancel(StudentLecture studentLecture);
+
+	// 장바구니 담기
+    String save(StudentLecture studentLecture);
+	// 장바구니 담기 취소
+    int saveCancel(StudentLecture studentLecture);
 }

@@ -15,6 +15,24 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
 
     private final NoticeBasicMapper noticeBasicMapper;
 
+    //공지사항 행의 수 조회
+    @Override
+    public int getNoticeBasicTotalRow() {
+        return this.noticeBasicMapper.getNoticeBasicTotalRow();
+    }
+
+    //공지사항 목록 조회
+    @Override
+    public List<NoticeBasic> noticeBasicList() {
+
+        return this.noticeBasicMapper.noticeBasicList();
+    }
+
+    //공지사항 상세 조회
+    @Override
+    public NoticeBasic findOne(Long noticeCd) {
+        return this.noticeBasicMapper.noticeBasicFindNotice(noticeCd);
+    }
 
     //공지사항 저장
     @Override
@@ -22,9 +40,16 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
         this.noticeBasicMapper.noticeBasicSave(noticeBasic);
     }
 
-    //공지사항 목록
+    //공지사항 수정
     @Override
-    public List<NoticeBasic> noticeBasicList() {
-        return this.noticeBasicMapper.noticeBasicList();
+    public void noticeBasicUpdate(NoticeBasic noticeBasic) {
+
+        this.noticeBasicMapper.noticeBasicUpdate(noticeBasic);
+    }
+
+    //공지사항 삭제
+    @Override
+    public void delete(Long noticeCd) {
+        this.noticeBasicMapper.noticeBasicDelete(noticeCd);
     }
 }

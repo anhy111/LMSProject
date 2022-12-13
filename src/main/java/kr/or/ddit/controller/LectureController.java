@@ -3,6 +3,8 @@ package kr.or.ddit.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,16 +23,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class LectureController {
-	
+
 	@Autowired
 	LectureService lectureservice;
-	
+
 	@Autowired
 	FileUploadUtil fileUploadUtil;
-	
+
 	@GetMapping("/lecture/list")
 	public ModelAndView lectureList(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword) {
-		
+
 		List<Lecture> list = this.lectureservice.lectureSearch(keyword);
 		log.info("====================================================");
 		log.info("====================================================");
@@ -47,13 +49,13 @@ public class LectureController {
 		}
 		mav.setViewName("lecture/list");
 		mav.addObject("lecture", list);
-		
+
 		return mav;
 	}
 
-	
 	@GetMapping("/lecture/myLecture")
-	public ModelAndView myLecture(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword,Principal principal) {
+	public ModelAndView myLecture(ModelAndView mav, @ModelAttribute Lecture lecture, String keyword,
+			Principal principal) {
 		String professorId = principal.getName(); // 로그인한 아이디 (세션) 가져오기
 		List<Lecture> list = this.lectureservice.professorLecture(professorId);
 		log.info("====================================================");
@@ -61,42 +63,69 @@ public class LectureController {
 		for (Lecture lecture2 : list) {
 			log.info(lecture2.toString());
 		}
-		
+
 		mav.addObject("lecture", list);
 		mav.setViewName("lecture/myLecture");
-		
+
 		return mav;
 	}
-	
+
 	@GetMapping("/lectureBoard/lectureBoard")
 	public String test2() {
 		return "lectureBoard/lectureBoard";
 	}
-	
+
 	@GetMapping("/lectureBoard/subjectList")
 	public ModelAndView subjectList(ModelAndView mav, @RequestParam String lecaCd) {
 		Lecture lecture = this.lectureservice.searchTask(lecaCd);
 		log.info(lecture.toString());
 		List<Task> taskList = lecture.getTaskList();
 		for (Task task : taskList) {
-			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+task.toString());
-			
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + task.toString());
+
 			mav.addObject("task", task);
 		}
-			
+
 		mav.addObject("lecture", lecture);
 		mav.addObject("taskList", taskList);
 		mav.setViewName("lectureBoard/subjectList");
 		return mav;
 	}
-	
-	@PostMapping("/lectureBoard/upload")
-	public String uploadTest(MultipartFile[] files) {
-		this.fileUploadUtil.fileUploadAction(files);
-		return "/lectureBoard/upload";
-	}
-	
-	
-	
 
+	@PostMapping("/lectureBoard/upload")
+	public String uploadTest(MultipartFile[] files, @RequestParam String lecaCd, HttpServletRequest req) {
+		this.fileUploadUtil.fileUploadAction(files, req);
+		return "redirect:/lectureBoard/subjectList?lecaCd=" + lecaCd;
+	}
+
+	@GetMapping("/lectureBoard/registTask")
+	public String registTask() {
+		return "lectureBoard/registTask";
+	}
+
+	@PostMapping("/lectureBoard/registTask")
+	public String registTask2(@RequestParam MultipartFile[] files, Task task, HttpServletRequest req) {
+		if (files[0].getSize() > 0) {
+			this.fileUploadUtil.fileUploadAction(files, req);
+			this.lectureservice.insertTask(task);
+		} else {
+			this.lectureservice.insertTask2(task);
+		}
+		log.info(task.toString());
+
+		return "redirect:/lectureBoard/taskDetail?lecaCd="+task.getLecaCd()+"&&taskCd="+task.getTaskCd();
+	}
+
+	@GetMapping("/lectureBoard/taskDetail")
+	public ModelAndView taskDetail(ModelAndView mav, @RequestParam String lecaCd, @RequestParam String taskCd) {
+		log.info(taskCd);
+		log.info(lecaCd);
+		Task task = this.lectureservice.detailTask(taskCd, lecaCd);
+		log.info(task+"==============================================");
+		
+		mav.addObject("task", task);
+		mav.setViewName("lectureBoard/taskDetail");
+		return mav;
+		
+	}
 }

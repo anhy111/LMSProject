@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tiles-definitions PUBLIC 
-"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <!-- tiles 설정 -->
 <tiles-definitions>
@@ -11,6 +11,7 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
+
 	<definition name="lectureBoard" template="/WEB-INF/views/tiles/index.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
 		<put-attribute name="aside" value="/WEB-INF/views/tiles/lectureBoardAside.jsp" />
@@ -18,8 +19,8 @@
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
 	<!--
-	    name의 */*은 body의 value에서 1과 2에 해당
-		controller에서 forwarding 시 return "1/2";
+	    name 의 */*은 body 의 value 에서 1과 2에 해당
+		controller 에서 forwarding 시 return "1/2";
 	 -->
 	<definition name="test/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/test/{1}.jsp" />
@@ -27,8 +28,11 @@
 	<definition name="college/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/college/{1}.jsp" />
 	</definition>
-	<definition name="professor/*/*" extends="tiles-layout">
-		<put-attribute name="body" value="/WEB-INF/views/professor/{1}/{2}.jsp" />
+	<definition name="professor/lecApply/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/professor/lecApply/{1}.jsp" />
+	</definition>
+	<definition name="professor/management/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/professor/management/{1}.jsp" />
 	</definition>
 	<definition name="lecture/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/lecture/{1}.jsp" />
@@ -46,12 +50,25 @@
 		<put-attribute name="body" value="/WEB-INF/views/mypage/{1}.jsp" />
 	</definition>
 	<definition name="record/*" extends="tiles-layout">
-	<put-attribute name="body" value="/WEB-INF/views/record/{1}.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/record/{1}.jsp" />
+	</definition>
+	<definition name="manage/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/manage/{1}.jsp" />
+	</definition>
+
+	<definition name="qna/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/qna/{1}.jsp" />
+	</definition>
+
+	<definition name="fullcalendar/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/fullcalendar/{1}.jsp" />
+	</definition>
+	<definition name="facility/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/facility/{1}.jsp" />
 	</definition>
 	<definition name="atls/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/atls/{1}.jsp" />
 	</definition>
-	
 	
 
 	<!-- 타일즈 미적용 -->
@@ -62,7 +79,11 @@
 	<definition name="login/*" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/login/{1}.jsp" />
 	</definition>
-	
+
+	<definition name="professor/lecApplyForm/*" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/professor/lecApplyForm/{1}.jsp" />
+	</definition>
+
 </tiles-definitions>
 
 

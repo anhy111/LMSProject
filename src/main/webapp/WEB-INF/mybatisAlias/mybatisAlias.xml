@@ -23,13 +23,32 @@
 		<typeAlias type="kr.or.ddit.domain.Approval" alias="Approval"/><!-- 결재 게시판 -->
 		<typeAlias type="kr.or.ddit.domain.College" alias="College"/><!-- 단과대학 테이블 -->
 		<typeAlias type="kr.or.ddit.domain.Counsel" alias="Counsel"/><!-- 상담 테이블 -->
-		<typeAlias type="kr.or.ddit.domain.Record" alias="Record"/><!-- 학생의 학적 테이블 --> 
+		<typeAlias type="kr.or.ddit.domain.Record" alias="Record"/><!-- 학생의 학적 테이블 -->
 		<typeAlias type="kr.or.ddit.domain.Department" alias="department"/>
 		<typeAlias type="kr.or.ddit.domain.StudentLecture" alias="studentLecture"/>
 		<typeAlias type="kr.or.ddit.domain.Task" alias="task"/>
+		<typeAlias type="kr.or.ddit.domain.GraduateCredit" alias="graduateCredit"/>
+		<typeAlias type="kr.or.ddit.domain.Credit" alias="credit"/>
 		<typeAlias type="kr.or.ddit.domain.Attach" alias="attach"/>
 		<typeAlias type="kr.or.ddit.domain.AllTimeLectures" alias="AllTimeLectures"/><!-- 역대강의전체조회 -->
 		<typeAlias type="kr.or.ddit.domain.Subject" alias="Subject"/><!-- 과목관리 테이블 -->
+		<typeAlias type="kr.or.ddit.domain.Weekplan" alias="weekplan"/>
+		<typeAlias type="kr.or.ddit.domain.Subject" alias="subject"/>
+		<typeAlias type="kr.or.ddit.domain.Common" alias="common"/>
+		<typeAlias type="kr.or.ddit.domain.CommonDetail" alias="commonDetail"/>
+
+		<!-- 시설예약 시작 -->
+		<typeAlias type="kr.or.ddit.domain.facility.FacilityVO" alias="facilityVO"/>
+		<typeAlias type="kr.or.ddit.domain.facility.ReservationVO" alias="reservationVO"/>
+		<!-- 시설예약 끝-->
+
+		<!-- QnA 시작 -->
+		<typeAlias type="kr.or.ddit.domain.qna.NotificationVO" alias="notificationVO"/>
+		<typeAlias type="kr.or.ddit.domain.qna.QnaVO" alias="qnaVO"/>
+		<typeAlias type="kr.or.ddit.domain.qna.QnaReplyVO" alias="qnaReplyVO"/>
+		<typeAlias type="kr.or.ddit.domain.facility.MemberVO" alias="memberVO"/>
+		<typeAlias type="kr.or.ddit.domain.qna.Qna" alias="qna"/>
+		<!-- QnA 끝 -->
 		
 	</typeAliases>
 </configuration>

@@ -59,6 +59,10 @@
           <element id="library" level="project" name="Maven: com.oracle.database.ha:simplefan:11.2.0.4" />
           <element id="library" level="project" name="Maven: com.oracle.database.ha:ons:11.2.0.4" />
           <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.4" />
+          <element id="library" level="project" name="Maven: commons-validator:commons-validator:1.7" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.4" />
+          <element id="library" level="project" name="Maven: commons-digester:commons-digester:2.1" />
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.2" />
           <element id="library" level="project" name="Maven: org.imgscalr:imgscalr-lib:4.2" />
           <element id="library" level="project" name="Maven: net.coobird:thumbnailator:0.4.8" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.3" />
@@ -68,8 +72,6 @@
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-extras:3.0.8" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-core:3.0.8" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-api:3.0.8" />
-          <element id="library" level="project" name="Maven: commons-digester:commons-digester:2.0" />
-          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.0" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-servlet-wildcard:1.0.7" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-mustache:1.0.7" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-api:1.0.7" />
@@ -79,7 +81,6 @@
           <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.15" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-velocity:3.0.8" />
           <element id="library" level="project" name="Maven: org.apache.velocity:velocity-tools:2.0" />
-          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2" />
           <element id="library" level="project" name="Maven: oro:oro:2.0.8" />
           <element id="library" level="project" name="Maven: org.apache.velocity:velocity:1.6.2" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.4" />

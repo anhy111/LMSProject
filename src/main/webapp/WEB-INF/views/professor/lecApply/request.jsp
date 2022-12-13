@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div>
-    	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 강의개설관리 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">강의계획서 조회</span>
+    	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 강의개설관리 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">강의계획서 신청</span>
   	</div>
   	<div class="row" id="keywardBox">
 	  	<div class="col-2">
@@ -43,23 +43,15 @@
 	
 	<br>
 	
-	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의계획서
+	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;임시저장된 강의계획서 조회
+	<button type="button" class="btn btn-primary" id="newLecApplyBtn">신규강의계획서 작성</button>
 	<p id="tellCnt">
 		[총 <span id="cntSpan"></span>건]
 	</p>
 	
 	<br>
 	
-	<div id="tgradeYellowBox" style="height:47px;">
-		<label>년도/학기
-			<select name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
-				<option value="">전체</option>
-			</select>
-		</label>
-		<span id="tgradeGreenText">&emsp;<i class="mdi mdi-square-medium"></i>&nbsp;임시저장한 강의계획서는 강의계획서 신청에서 조회할 수 있습니다.</span>
-	</div>
-
-	<!-- 계획서 리스트 -->
+	<!-- 임시저장 계획서 리스트 -->
 	<div class="card">
 	<div class="card-body">
 		<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -88,10 +80,6 @@
 									cursorshover="true">과목명</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">제한인원</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
 									cursorshover="true">개설이수구분</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
@@ -101,15 +89,11 @@
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">강의시간/강의실</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending"
 									cursorshover="true">성적평가방식</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">승인여부</th>
+									cursorshover="true">저장일시</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
@@ -128,35 +112,77 @@
 
 </body>
 <script type="text/javascript" defer="defer">
-// 	window.onload = function () {
-// 		console.log("여기까지 오긴하냐?");
+	window.onload = function () {
+		console.log("여기까지 오긴하냐?");
 
-// 		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
-// 		let header = "${_csrf.headerName}";
-// 		let token = "${_csrf.token}";
+		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
 
-// 		console.log("header : " + header + ", token : " + token);
+		console.log("header : " + header + ", token : " + token);
 
-// 		//교수 개인정보 가져오기
-// 		$.ajax({
-// 			url: "/professor/lecApply/proInfo",
-// 			type: "POST",
-// 			dataType: "JSON",
-// 			beforeSend: function (xhr) {
-// 				xhr.setRequestHeader(header, token);
-// 			},
-// 			success: function (data) {
-// 				console.log("이건 오냐?");
-// 				$('#proNo').val(data.proNo);
-// 				$('#empNm').val(data.empNm);
-// 				$('#empTel').val(data.empTel);
-// 				$('#proPos').val(data.proPos);
-// 				$('#depNm').val(data.depNm);
-// 				$('#empRet').val(data.empRet);
-// 				$('#empReg').val(data.empReg);
+		//교수 개인정보 가져오기
+		$.ajax({
+			url: "/professor/lecApply/proInfo",
+			type: "POST",
+			dataType: "JSON",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success: function (data) {
+				console.log("이건 오냐?");
+				$('#proNo').val(data.proNo);
+				$('#empNm').val(data.empNm);
+				$('#empTel').val(data.empTel);
+				$('#proPos').val(data.proPos);
+				$('#depNm').val(data.depNm);
+				$('#empRet').val(data.empRet);
+				$('#empReg').val(data.empReg);
 				
+			}
+		});
+		
+		//임시저장 강의계획서 리스트 가져오기
+// 		$.ajax({
+// 			url : "/lecApply/getTempList",
+// 			type : "POST",
+// 			contentType : "application/json;charset=utf-8",
+// 			dataType : "JSON",
+// 			success : function(res) {
+				
+// 				$.each(res, function(i,v){
+// 					res[i]['btn'] = '<button class="btn btn-outline-secondary btn-sm" style="font-family:Nunito,sans-serif;" onclick="getTempSyllabus(' + v.lecaCd + ')">강의계획서</button>';
+// 				});
+				
+// 				grid = new tui.Grid({
+// 					el : document.getElementById('grid'),
+// 					data : res,
+// 					scrollX : true,
+// 					scrollY : true,
+// 					bodyHeight : 380,
+// 					columns : [
+// 						{header : '년도/학기', name : 'lecaCon', filter : 'select', width : 150, align : 'center'},
+// 						{header : '학년', name : 'lecaTrg', filter : 'select', width : 70, align : 'center'},
+// 						{header : '과목번호', name : 'subCd', filter : 'select', width : 100, align : 'center'},
+// 						{header : '과목명', name : 'lecaNm', filter : 'select'},
+// 						{header : '개설이수구분', name : 'lecaCate', width : 100, align : 'center'},
+// 						{header : '학점', name : 'lecaCrd', width : 50, align : 'center'},
+// 						{header : '성적평가방식', name : 'lecaGrade', width : 100, align : 'center'},
+// 						{header : '저장일시', name : 'lecaRoom', filter : 'select'},
+// 						{header : '자세히 보기', name : 'btn', width : 120, align : 'center'}
+// 					],
+// 					columnOptions: {
+// 				        resizable: true
+// 				    }
+// 				});
 // 			}
 // 		});
+		
+	}
+	//신규강의계획서 작성 버튼 클릭 이벤트
+	$('#newLecApplyBtn').on('click', function() {
+		window.open("/professor/lecApplyForm/requestForm", "lecApplyForm", "width=1000, height=800, left=100, top=50");
+	});
 
 </script>
 </html>

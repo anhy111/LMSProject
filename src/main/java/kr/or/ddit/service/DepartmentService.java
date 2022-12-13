@@ -8,6 +8,6 @@ import kr.or.ddit.domain.Department;
 public interface DepartmentService {
 
 	//결제 요청 목록
-	public List<Department> departmentList();
+    List<Department> departmentList();
 
 }

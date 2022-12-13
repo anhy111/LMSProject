@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -163,7 +164,7 @@ public class MemberServiceImpl implements MemberService {
 			}
 			br.close();
 
-			System.out.println(response.toString());
+			System.out.println(response);
 
 			return temp;
 		} catch (Exception e) {
@@ -178,23 +179,29 @@ public class MemberServiceImpl implements MemberService {
 		String space = " "; // one space
 		String newLine = "\n"; // new line
 
-		String message = new StringBuilder().append(method).append(space).append(url).append(newLine).append(timestamp)
-				.append(newLine).append(accessKey).toString();
+		String message = method + space + url + newLine + timestamp +
+                newLine + accessKey;
 
 		SecretKeySpec signingKey;
 		String encodeBase64String;
-		try {
 
-			signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-			Mac mac = Mac.getInstance("HmacSHA256");
-			mac.init(signingKey);
-			byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
-			encodeBase64String = Base64.getEncoder().encodeToString(rawHmac);
-		} catch (UnsupportedEncodingException e) {
-			encodeBase64String = e.toString();
-		}
+        signingKey = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(signingKey);
+        byte[] rawHmac = mac.doFinal(message.getBytes(StandardCharsets.UTF_8));
+        encodeBase64String = Base64.getEncoder().encodeToString(rawHmac);
 
-		return encodeBase64String;
+        return encodeBase64String;
+	}
+
+	@Override
+	public int stuUpdate(Student student) {
+		return this.memberMapper.stuUpdate(student);
+	}
+
+	@Override
+	public int updateStuPw(Map<String, String> map) {
+		return this.memberMapper.updateStuPw(map);
 	}
 
 }

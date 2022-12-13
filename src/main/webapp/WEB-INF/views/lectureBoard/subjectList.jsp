@@ -44,7 +44,7 @@ border-radius: 10px;
 				<div class="col-sm-12">
 					<div class="row">
 						<div class="col-sm-11"></div>
-						<button type="button" class="col-sm-1 btn btn-block btn-outline-secondary btn-sm" style="float:right">등록</button>
+						<a href="/lectureBoard/registTask?lecaCd=${param.lecaCd}" class="col-sm-1 btn btn-block btn-outline-secondary btn-sm" style="float:right">등록</a>
 					</div>
 					<table id="example2"
 						class="table table-bordered table-hover dataTable dtr-inline"
@@ -61,9 +61,6 @@ border-radius: 10px;
 									aria-label="Browser: activate to sort column ascending">제목</th>
 								<th class="sorting" tabindex="0" aria-controls="example2"
 									rowspan="1" colspan="1"
-									aria-label="Platform(s): activate to sort column ascending">작성자</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending">제출일</th>
 								<th class="sorting" tabindex="0" aria-controls="example2"
 									rowspan="1" colspan="1"
@@ -77,8 +74,7 @@ border-radius: 10px;
 							<c:forEach var="row" items="${taskList}" varStatus="stat">
 								<tr class="odd">
 									<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
-									<td>${row.taskNm}</td>
-									<td></td>
+									<td><a href="/lectureBoard/taskDetail?lecaCd=${param.lecaCd}&&taskCd=${row.taskCd}">${row.taskNm}</a></td>
 									<td>
 										<fmt:formatDate value="${row.taskSdt}" pattern="yyyy-MM-dd"/> 
 									</td>

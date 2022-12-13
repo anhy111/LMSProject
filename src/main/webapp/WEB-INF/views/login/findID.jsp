@@ -98,9 +98,7 @@ $(function(){
 				}
 			},
 			error:function(request, status, error){
-
 				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
 			}
 		});
 	});
@@ -142,9 +140,9 @@ $(function(){
 				console.log("res : " + JSON.stringify(res));
 				alert(res + "\n(으)로 임시비밀번호를 전송하였습니다.");
 			},
-			error: function(req, text) {
-				 alert(text + ': ' + req.status);
-		 	}
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
 		});
 		
 	});
@@ -223,7 +221,7 @@ $(function(){
 			<button type="button" id="passInfoInsertBtn" class="btn btn-secondary" style="position:absolute; top:500px;right:310px;">자동입력</button>
 			<span id="spanForMargin"></span>
 			<p>
-				<a href="/login/loginForm" id="goBackToLogin" style="text-decoration: none;">
+				<a href="/login/login" id="goBackToLogin" style="text-decoration: none;">
 					<i class="dripicons-reply" id="goBackToLoginIcon" style="color : #001353;"></i>
 					&nbsp;로그인 페이지로 돌아가기
 				</a>

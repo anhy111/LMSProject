@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.mapper.LectureApplyMapper;
 import kr.or.ddit.service.LectureApplyService;
 
@@ -35,6 +36,26 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	@Override
 	public int getCnt(Map<String, Object> map) {
 		return this.lectureApplyMapper.getCnt(map);
+	}
+	
+	@Override
+	public Professor inquiryFormProInfo(int proNo) {
+		return this.lectureApplyMapper.inquiryFormProInfo(proNo);
+	}
+	
+	@Override
+	public List<LecApply> inquiryFormLecApInfo(int lecaCd) {
+		return this.lectureApplyMapper.inquiryFormLecApInfo(lecaCd);
+	}
+	
+	@Override
+	public List<Weekplan> inquiryWeekPlan(int lecaCd) {
+		return this.lectureApplyMapper.inquiryWeekPlan(lecaCd);
+	}
+	
+	@Override
+	public int lecApplySubmit(int proNo) {
+		return this.lectureApplyMapper.lecApplySubmit(proNo);
 	}
     
 }
