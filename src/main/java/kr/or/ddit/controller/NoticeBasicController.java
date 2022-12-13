@@ -1,6 +1,5 @@
 package kr.or.ddit.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
@@ -27,17 +26,21 @@ public class NoticeBasicController {
      *     이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
      *     장/단점이 궁금하면 슬랙으로..ㅎ
      */
+
     private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
 
     //공지사항 리스트
     @GetMapping("/list")
-    public String NoticeList(Model model) {
+    public String noticeList(Model model) {
+
+        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
 
         List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
 
         //공통 약속
         model.addAttribute("bodyTitle", "공지사항목록");
         model.addAttribute("noticeBasicList", noticeBasicList);
+        model.addAttribute("totalRow", totalRow);
 
         //forwarding
         return "notice/list";
@@ -96,7 +99,6 @@ public class NoticeBasicController {
 
 
         noticeBasicService.noticeBasicUpdate(form);
-        System.out.println(form.getNoticeTtl() + form.getNoticeCon());
 
         return "redirect:/notice/list";
     }

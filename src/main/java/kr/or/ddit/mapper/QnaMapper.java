@@ -1,7 +1,9 @@
 package kr.or.ddit.mapper;
 
 
+import kr.or.ddit.domain.qna.Qna;
 import kr.or.ddit.domain.qna.QnaVO;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,30 +12,34 @@ import java.util.Map;
 public interface QnaMapper {
 
     //문의게시판 등록
-    public int insertQ(HashMap<String, Object> map);
+    int insertQuestion(HashMap<String, Object> map);
 
+    void qnaSave(Qna qna);
 
     //문의게시판/검색결과 리스트 출력
-    public List<QnaVO> list(Map<String, String> map);
+    List<QnaVO> list(Map<String, String> map);
 
-    public QnaVO detail(HashMap<String, Object> map);
+    QnaVO detail(HashMap<String, Object> map);
 
     //답변등록
-    public int qnarWrite(HashMap<String, Object> map);
+    int qnarWrite(HashMap<String, Object> map);
 
     //조회수 증가
-    public int increaseHit(HashMap<String, Object> map);
+    int increaseHit(HashMap<String, Object> map);
 
     //답변 수정
-    public int updateRepl(HashMap<String, Object> map);
+    int updateRepl(HashMap<String, Object> map);
 
     //게시글 수정
-    public int updateQ(HashMap<String, Object> map);
+    int updateQ(HashMap<String, Object> map);
 
     //게시글 삭제
-    public int deleteQrepl(int qnaCd);
+    int deleteQrepl(int qnaCd);
 
-    public int deleteQ(int qnaCd);
+    int deleteQ(int qnaCd);
 
-    public int getTotal(Map<String, String> map);
+    int getTotal(Map<String, String> map);
+
+    @Select("SELECT * FROM qna")
+    List<Qna> showList();
 }

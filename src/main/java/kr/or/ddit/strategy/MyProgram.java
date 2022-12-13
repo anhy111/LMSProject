@@ -2,7 +2,7 @@ package kr.or.ddit.strategy;
 
 public class MyProgram {
 
-    private SearchButton searchButton = new SearchButton(this);
+    private final SearchButton searchButton = new SearchButton(this);
 
     public void setModeAll () {
         searchButton.setSearchStrategy(new SearchStrategyAll());

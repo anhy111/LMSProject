@@ -45,7 +45,8 @@
 		<typeAlias type="kr.or.ddit.domain.qna.QnaVO" alias="qnaVO"/>
 		<typeAlias type="kr.or.ddit.domain.qna.QnaReplyVO" alias="qnaReplyVO"/>
 		<typeAlias type="kr.or.ddit.domain.facility.MemberVO" alias="memberVO"/>
-
+		<typeAlias type="kr.or.ddit.domain.qna.Qna" alias="qna"/>
 		<!-- QnA 끝 -->
+		
 	</typeAliases>
 </configuration>

@@ -1,6 +1,7 @@
 package kr.or.ddit.controller;
 
 import kr.or.ddit.domain.facility.MemberVO;
+import kr.or.ddit.domain.qna.Qna;
 import kr.or.ddit.domain.qna.QnaVO;
 import kr.or.ddit.service.NotificationService;
 import kr.or.ddit.service.QnaService;
@@ -24,148 +25,139 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class QnaController {
 
-	@GetMapping("/board")
-	public String qnaBoard() {
+    private final QnaService qnaService;
 
-		return "/qna/qnaBoard";
-	}
-
-
-	@Autowired
-	private final QnaService qnaService;
-	@Autowired
-	private final NotificationService notificationService;
+//	@Autowired
+//	private final NotificationService notificationService;
 
 
-	@GetMapping("/qnaWrite")
-	public String qnaWrite() {
+    //QnA 메인 페이지
+    @GetMapping("/main")
+    public String qnaMain (Model model) {
 
-		return "qna/qnaWrite";
-	}
+       List<Qna> showList = qnaService.showList();
 
-	@ResponseBody
-	@PostMapping("/qnaWriteAction")
-	public int qnaWriteAction(String title, String content, int isShow ,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO memberVO = (MemberVO) session.getAttribute("memSession");
-		int memCd = memberVO.getMemCd();
+       model.addAttribute("showList", showList);
 
-		log.info("isShow : " + isShow);
-		log.info("memCd : " + memCd);
-		log.info("title : " + title);
-		log.info("content : " + content);
+        return "qna/qnaBoard";
+    }
 
-		HashMap<String,Object> map = new HashMap<String,Object>();
+    @GetMapping("/qnaWrite")
+    public String getQnaWriteForm (Model model) {
 
-		map.put("memCd",memCd);
-		map.put("qnaTtl",title);
-		map.put("qnaCon", content);
-		map.put("qnaYn",isShow);
+        model.addAttribute("form", new QnaForm());
 
-		int res = qnaService.insertQ(map);
+        return "qna/qnaWrite";
+    }
 
-		return res;
-	}
+    @PostMapping("/qnaWrite")
+    public String postQnaWriteForm (QnaForm qnaForm) {
 
+        Qna qna = new Qna(qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccess());
 
-	@RequestMapping("/qnaDetail")
-	public String qnaDetail(
-			Model model, QnaVO qnaVO
-			){
-		log.info("qnaCd : " + qnaVO.getQnaCd());
-		log.info("memCd:" + qnaVO.getMemCd());
+        qnaService.qnaSave(qna);
 
-		HashMap<String,Object> map = new HashMap<String,Object>();
+        return "redirect:main";
+    }
 
-		map.put("qnaCd", qnaVO.getQnaCd());
-		map.put("memCd", qnaVO.getMemCd());
+    @ResponseBody
+    @PostMapping("/qnaWriteAction")
+    public int qnaWriteAction (String title, String content, int isShow, HttpServletRequest request) {
 
-		//QnaVO qnaVO_ = new QnaVO();
-		qnaVO = this.qnaService.detail(map);
+        HttpSession session = request.getSession();
+        MemberVO memberVO = (MemberVO) session.getAttribute("memSession");
+        int memCd = memberVO.getMemCd();
 
-		model.addAttribute("qnaVO", qnaVO);
+        HashMap<String, Object> map = new HashMap<String, Object>();
 
-		log.info("qnaVO : " + qnaVO);
+        map.put("memCd", memCd);
+        map.put("qnaTtl", title);
+        map.put("qnaCon", content);
+        map.put("qnaYn", isShow);
 
-		return "qna/qnaDetail";
+        int res = qnaService.insertQuestion(map);
 
-	}
+        return res;
+    }
 
 
+    @RequestMapping("/qnaDetail")
+    public String qnaDetail(
+            Model model, QnaVO qnaVO
+    ) {
 
-	@ResponseBody
-	@PostMapping("/qnarWrite")
-	public int qnarWrite(String reply, int qnaCd, int memCd) {
+        HashMap<String, Object> map = new HashMap<String, Object>();
 
-		log.info("reply : " + reply);
-		log.info("qnaCd : " + qnaCd);
+        map.put("qnaCd", qnaVO.getQnaCd());
+        map.put("memCd", qnaVO.getMemCd());
 
-		HashMap<String, Object> map = new HashMap<String,Object>();
-		map.put("qnaCd", qnaCd);
-		map.put("qnarCon", reply);
+        //QnaVO qnaVO_ = new QnaVO();
+        qnaVO = this.qnaService.detail(map);
 
-		int res = qnaService.qnarWrite(map);
-
-
-
-		List<Integer> memList = new ArrayList<Integer>();
-		memList.add(memCd);
-
-		Map<String, Object> noticeMap = new HashMap<String, Object>();
-		noticeMap.put("ntfCon", " 문의 답변이 도착했습니다.");
-		noticeMap.put("memList", memList);
-		noticeMap.put("ntfUrl", "/qna/qnaDetail?qnaCd=" + qnaCd + "&memCd=" + memCd);
-		log.info("noticeMap : " + noticeMap);
-		this.notificationService.insertNtf(noticeMap);
-
-		return res;
-	}
-
-	@RequestMapping(value="/logout",method=RequestMethod.GET)
-	public String logout(HttpSession session)
-	{
-		session.invalidate();
-		log.info("logout-success");
-		return "redirect:/login/loginForm";
-	}
-
-	@PostMapping("/replyUpdate")
-	@ResponseBody
-	public int replyUpdate(int qnaCd, String qnarCon) {
-
-		HashMap<String, Object> map = new HashMap<String,Object>();
-
-		map.put("qnaCd", qnaCd);
-		map.put("qnarCon", qnarCon);
-
-		log.info("qnaCd : " + qnaCd);
-		log.info("qnarCon : " + qnarCon);
-
-		int res = qnaService.updateRepl(map);
-
-		return res;
-	}
+        model.addAttribute("qnaVO", qnaVO);
 
 
-	@PostMapping("/qnaUpdate")
-	@ResponseBody
-	public int qnaUpdate(int qnaCd,String title, String content) {
+        return "qna/qnaDetail";
 
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		map.put("qnaCd", qnaCd);
-		map.put("qnaTtl",title);
-		map.put("qnaCon", content);
-		int res = qnaService.updateQ(map);
+    }
 
-		return res;
-	}
 
-	@PostMapping("/qnaDelete")
-	@ResponseBody
-	public int qnaDelete(int qnaCd) {
-		int res = qnaService.deleteQ(qnaCd);
-		return res;
-	}
+    @ResponseBody
+    @PostMapping("/qnarWrite")
+    public int qnarWrite(String reply, int qnaCd, int memCd) {
 
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("qnaCd", qnaCd);
+        map.put("qnarCon", reply);
+
+        int res = qnaService.qnarWrite(map);
+
+        List<Integer> memList = new ArrayList<Integer>();
+        memList.add(memCd);
+
+//		Map<String, Object> noticeMap = new HashMap<String, Object>();
+//		noticeMap.put("ntfCon", " 문의 답변이 도착했습니다.");
+//		noticeMap.put("memList", memList);
+//		noticeMap.put("ntfUrl", "/qna/qnaDetail?qnaCd=" + qnaCd + "&memCd=" + memCd);
+//		this.notificationService.insertNtf(noticeMap);
+
+        return res;
+    }
+
+
+    @PostMapping("/replyUpdate")
+    @ResponseBody
+    public int replyUpdate(int qnaCd, String qnarCon) {
+
+        HashMap<String, Object> map = new HashMap<String, Object>();
+
+        map.put("qnaCd", qnaCd);
+        map.put("qnarCon", qnarCon);
+
+        int res = qnaService.updateRepl(map);
+
+        return res;
+    }
+
+
+    @PostMapping("/qnaUpdate")
+    @ResponseBody
+    public int qnaUpdate(int qnaCd, String title, String content) {
+
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("qnaCd", qnaCd);
+        map.put("qnaTtl", title);
+        map.put("qnaCon", content);
+        int res = qnaService.updateQ(map);
+
+        return res;
+    }
+
+    @PostMapping("/qnaDelete")
+    @ResponseBody
+    public int qnaDelete(int qnaCd) {
+        int res = qnaService.deleteQ(qnaCd);
+        return res;
+    }
 
 }

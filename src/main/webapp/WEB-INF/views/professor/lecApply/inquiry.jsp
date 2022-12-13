@@ -40,16 +40,16 @@
 		</div>
 		<sec:csrfInput/>
 	</div>
-	
+
 	<br>
-	
+
 	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의계획서
 	<p id="tellCnt">
 		[총 <span id="cntSpan"></span>건]
 	</p>
-	
+
 	<br>
-	
+
 	<div id="tgradeYellowBox" style="height:47px;">
 		<label>년도/학기
 			<select name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
@@ -154,7 +154,7 @@
 				$('#depNm').val(data.depNm);
 				$('#empRet').val(data.empRet);
 				$('#empReg').val(data.empReg);
-				
+
 			}
 		});
 
@@ -194,6 +194,7 @@
 				let str ="";
 				for(var i=0;i<data.length;i++){
 					str = `
+						<input type='hidden' value='\${data[i].lecaCd}'id='inquiryLecaCd'/>
 						<td>\${data[i].lecaYs}</td>
 						<td>\${data[i].lecaTrg }</td>
 						<td>\${data[i].subCd }</td>
@@ -208,7 +209,7 @@
 					`
 				}
 				$("#proList").html(str);
-				
+
 				//승인, 대기, 반려 글자색 변경
 				if($("#checklecaAp").html() == "승인"){
 					$("#checklecaAp").css("color","blue");
@@ -219,7 +220,7 @@
 				}
 			}
 		});
-		
+
 		//count 불러오기
 		function getCnt(yrNsem) {
 			console.log("카운트 이론상 와야지");
@@ -242,12 +243,16 @@
 			});
 		}
 	}
-	
-	//강의계획서 상세페이지 출력
-	$(document).on('click', '#inquirydetail', function() {
-		console.log("상세 왜 안뜨냐고 ㅡㅡ");
-		window.open("/professor/lecApplyForm/inquiryForm", "inquirydetail", "width=1000, height=800, left=100, top=50");
-	});
-	
+
+</script>
+<script type="text/javascript">
+//강의계획서 상세페이지 출력
+let lecaCd;
+$(document).on('click', '#inquirydetail', function() {
+	console.log("상세 왜 안뜨냐고 ㅡㅡ");
+	lecaCd = $("#inquiryLecaCd").val();
+	console.log("강의계획서 코드: " + lecaCd);
+	window.open("/professor/lecApplyForm/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
+});
 </script>
 </html>

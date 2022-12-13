@@ -211,7 +211,7 @@
                         stTime2 = $('#modalEn').val();
 
 
-                        var obj = new Object();
+                        var obj = {};
                         // Json을 담기 위해 Object 선언
                         obj.schTtl = schTtl;
                         obj.schSt = moment(stTime).format('YYYY-MM-DD HH:mm');  // 시작
@@ -326,7 +326,7 @@
                                 if (confirm("수정하시겠습니까?")) {
                                     color;
                                     console.log("color" + color);
-                                    var obj = new Object();
+                                    var obj = {};
                                     obj.schCd = info.event.id;
                                     obj.schTtl = $('#schTtlUp').val();
                                     obj.schCon = $('#schConUp').val();
@@ -374,7 +374,7 @@
                 //이벤트 수정
                 eventDrop: function (info) {
 
-                    var obj = new Object();
+                    var obj = {};
 
                     obj.start = moment(info.event.start).format('YYYY-MM-DD');
                     obj.end = moment(info.event.end).format('YYYY-MM-DD');
@@ -393,7 +393,7 @@
                 },
 
                 eventResize: function (info) {
-                    var obj = new Object();
+                    var obj = {};
                     obj.start = moment(info.event.start).format('YYYY-MM-DD');
                     obj.end = moment(info.event.end).format('YYYY-MM-DD');
                     obj.id = info.event.id;
@@ -469,13 +469,16 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+
+
     <!-- update Modal -->
     <div id="update-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="compose-header-modalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-primary">
-                    <h4 class="modal-title" id="compose-header-modalLabel">일정등록</h4>
+<%--                    <h4 class="modal-title" id="compose-header-modalLabel">일정등록</h4>--%>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body p-3">
