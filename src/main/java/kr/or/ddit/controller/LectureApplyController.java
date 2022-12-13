@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -167,29 +168,35 @@ public class LectureApplyController {
 	}
 	
 	//강의계획서 작성 후 제출하기
+	@Transactional
 	@ResponseBody
 	@PostMapping("/lecApplyForm/lecApplySubmit")
-	public int lecApplySubmit(HttpServletRequest request
-			, Model model, @RequestBody LecApply lecApply) {
+	public int lecApplySubmit(HttpServletRequest request, @RequestBody LecApply lecApply) {
 		
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
+		lecApply.setProNo(proNo);
 		
 		//1. subject 테이블에 값 넣기
-		int subjectResult = this.lectureApplyService.subjectSubmit(proNo);
-		
+		int subjectResult = this.lectureApplyService.subjectSubmit(lecApply);
+		if (subjectResult < 0) {
+			log.info("subject실패");
+			return 0;
+		}
 		//2. lecture 테이블에 값 넣기
-//		int lectureResult = this.lectureApplyService.lectureSubmit(subCd);
-		
+		int lectureResult = this.lectureApplyService.lectureSubmit(lecApply);
+		if (lectureResult < 0) {
+			log.info("lecture실패");
+			return 0;
+		}
 		//3. lec_apply 테이블에 값 넣기
-//		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecaCd);
-//		int lecaCd = this.lectureApplyService.getMaxLecaCd();
+		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecApply);
+		if (lecApplyResult < 0) {
+			log.info("lecApply실패");
+			return 0;
+		}
 		
-		//4. weekPlan 테이블에 값 넣기
-		
-		
-		//  + lectureResult + lecApplyResult + weekPlanResult
-		return subjectResult;
+		return subjectResult + lectureResult + lecApplyResult;
 	}
 	
 	
