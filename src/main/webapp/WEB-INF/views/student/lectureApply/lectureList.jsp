@@ -191,7 +191,7 @@
 								</div>
 								<div class="row pl-3 pr-3">
 									<h3 class="col-3">수강신청된 강의목록</h3>
-									<button type="button"
+									<button type="button" id="timeTableApply"
 											class="col-1 offset-7 btn btn-flat btn-primary"
 											data-toggle="modal" data-target="#applySchedule">시간표
 											보기</button>
@@ -224,7 +224,7 @@
 								<div class="modal fade" id="applySchedule" tabindex="-1"
 										role="dialog" aria-labelledby="exampleModalCenterTitle"
 										aria-hidden="true">
-										<div class="modal-dialog modal-dialog-centered"
+										<div class="modal-dialog modal-dialog-centered modal-lg"
 											role="document">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -235,11 +235,11 @@
 													</button>
 												</div>
 												<div class="modal-body">
-													<table class="table">
+													<table class="table m-0 table-bordered text-center">
 														<thead>
 															<tr>
-																<th></th>
-																<th></th>
+																<th width="10%">교시</th>
+																<th width="15%">시간</th>
 																<th>월</th>
 																<th>화</th>
 																<th>수</th>
@@ -247,63 +247,88 @@
 																<th>금</th>
 															</tr>
 														</thead>
-														<tbody>
-															<tr>
-																<td rowspan="2">1교시</td>
-																<td rowspan="2">09:00 ~ 09:50</td>
+														<tbody id="timeTable">
+															<tr height="70">
+																<td class="align-middle">1교시</td>
+																<td class="align-middle">09:00 ~ 09:50</td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
-															</tr><tr></tr>
-															<tr>
-																<td rowspan="2">2교시</td>
-																<td rowspan="2">10:00 ~ 10:50</td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">2교시</td>
+																<td class="align-middle">10:00 ~ 10:50</td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
-															</tr><tr></tr>
-															<tr>
-																<td rowspan="2">3교시</td>
-																<td rowspan="2">11:00 ~ 11:50</td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">3교시</td>
+																<td class="align-middle">11:00 ~ 11:50</td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
-															</tr><tr></tr>
-															<tr> 
-																<td rowspan="2">4교시</td>
-																<td rowspan="2">12:00 ~ 12:50</td>
+															</tr> 
+															<tr height="70"> 
+																<td class="align-middle">4교시</td>
+																<td class="align-middle">12:00 ~ 12:50</td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
 																<td></td>
-															</tr><tr></tr>
-															<tr>
-																<td rowspan="2">5교시</td>
-																<td rowspan="2">13:00 ~ 13:50</td>
-															</tr><tr></tr>
-															<tr>
-																<td rowspan="2">6교시</td>
-																<td rowspan="2">14:00 ~ 14:50</td>
-															</tr><tr></tr>
-															<tr>
-																<td rowspan="2">7교시</td>
-																<td rowspan="2">15:00 ~ 15:50</td>
-															</tr><tr></tr>
-															<tr>
-																<td rowspan="2">8교시</td>
-																<td rowspan="2">16:00 ~ 16:50</td>
-															</tr><tr></tr>
-															<tr>
-																<td rowspan="2">9교시</td>
-																<td rowspan="2">17:00 ~ 17:50</td>
-															</tr><tr></tr>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">5교시</td>
+																<td class="align-middle">13:00 ~ 13:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">6교시</td>
+																<td class="align-middle">14:00 ~ 14:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">7교시</td>
+																<td class="align-middle">15:00 ~ 15:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr> 
+															<tr height="70">
+																<td class="align-middle">8교시</td>
+																<td class="align-middle">16:00 ~ 16:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+															<tr height="70">
+																<td class="align-middle">9교시</td>
+																<td class="align-middle">17:00 ~ 17:50</td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
 														</tbody>
 													</table>
 												</div>
@@ -536,6 +561,8 @@
 		$("#cartSearch").on("click",function(){
 			loadNotYetSaveLecture();
 		});
+		
+		$("#timeTableApply").on("click")
 		
 		$("#colleage").on("change",function(){
 			
