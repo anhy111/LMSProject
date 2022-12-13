@@ -30,7 +30,7 @@ public class AllTimeLecturesController {
 	AllTimeLecturesService allTimeLecturesService;
 	
 	@GetMapping("/main")
-	public String Inquiry(Model model) {
+	public String searchMain(Model model) {
 		AllTimeLectures atls = new AllTimeLectures();
 		List<AllTimeLectures> atlsList = this.allTimeLecturesService.AllTimeLectrueList(atls);
 		model.addAttribute("bodyTitle","역대강의조회");
@@ -41,13 +41,35 @@ public class AllTimeLecturesController {
 	
 	@ResponseBody
 	@PostMapping("/search")
-	public List<AllTimeLectures> search(@RequestBody AllTimeLectures atls, Model model) {
-//		String colNmData = colNm.get("colNm");
-//		log.info("파라미터 넘어와서 키로 밸류 꺼낸 값 : " + colNmData); 
-		List<AllTimeLectures> data = this.allTimeLecturesService.AllTimeLectrueList(atls);
-		log.info("data : " + data.toString());
-		return data;
+	public List<AllTimeLectures> search(@RequestBody AllTimeLectures atls) {
 		
+		//검색어 값이 들어오지 않았을 시 null 처리 해줌
+		setSearchDataToNull(atls);
+		
+		log.info("단과대 검색어 : " + atls.getColNm());
+		log.info("학과 검색어 : " + atls.getDepNm());
+		log.info("과목 검색어 : " + atls.getSubNm());
+		log.info("이수구분 : " + atls.getLecaCate());
+		log.info("학기구분 : " + atls.getLecaSem());
+		log.info("개강유무 : " + atls.getLecYn());
+		log.info("교수명 : " + atls.getEmpNm());
+		log.info("강의명 : " + atls.getLecaNm());
+		List<AllTimeLectures> data = this.allTimeLecturesService.AllTimeLectrueList(atls);
+		log.info("서비스 작업 후 데이터 : " + data.toString());
+		log.info("검색된 인덱스수 :  " + data.size());
+		return data;
+	}
 	
+	// 검색어 값이 들어오지 않았을 시 null 처리 해주는 메소드
+	public void setSearchDataToNull(AllTimeLectures atls) {
+		
+				if(atls.getColNm().equals("단과대검색어")) {atls.setColNm("");}
+				if(atls.getDepNm().equals("학과검색어")) {atls.setDepNm("");}
+				if(atls.getSubNm().equals("과목검색어")) {atls.setSubNm("");}
+				if(atls.getLecaCate().equals("이수구분")) {atls.setLecaCate("");}
+				if(atls.getLecaSem().equals("학기구분")) {atls.setLecaSem("");}
+				if(atls.getLecYn().equals("개강유무")) {atls.setLecYn("");}
+				if(atls.getEmpNm().equals("교수/강의명")) {atls.setEmpNm("");}	//교수명
+				if(atls.getLecaNm().equals("교수/강의명")) {atls.setLecaNm("");}//강의명
 	}
 }
