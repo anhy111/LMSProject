@@ -3,11 +3,9 @@ package kr.or.ddit.controller;
 import kr.or.ddit.domain.facility.MemberVO;
 import kr.or.ddit.domain.qna.Qna;
 import kr.or.ddit.domain.qna.QnaVO;
-import kr.or.ddit.service.NotificationService;
 import kr.or.ddit.service.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +24,6 @@ import java.util.Map;
 public class QnaController {
 
     private final QnaService qnaService;
-
-//	@Autowired
-//	private final NotificationService notificationService;
-
 
     //QnA 메인 페이지
     @GetMapping("/main")
@@ -53,7 +47,7 @@ public class QnaController {
     @PostMapping("/qnaWrite")
     public String postQnaWriteForm (QnaForm qnaForm) {
 
-        Qna qna = new Qna(qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccess());
+        Qna qna = new Qna(qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccessNumber());
 
         qnaService.qnaSave(qna);
 
