@@ -27,7 +27,6 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class FileUploadUtil {
 	private String uploadFolder;
 
-
 	@Autowired
 	AttachService attchService;
 

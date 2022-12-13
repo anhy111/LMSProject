@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.CommonDetail;
@@ -67,7 +69,7 @@ public class ManageController {
 	
 	@PostMapping("/manage/deleteStu")
 	@ResponseBody
-	public int delete(@RequestBody Map<String,String> map) {
+	public int deleteStu(@RequestBody Map<String,String> map) {
 		
 		log.info("delete의 stuNo는?? " + map.get("stuNo"));
 		
@@ -76,6 +78,15 @@ public class ManageController {
 		log.info("삭제되었을 거라고 믿어의심치 않는다 . " + deleteStu);
 		
 		return deleteStu;
+	}
+	
+	@PostMapping("/manage/updateStu")
+	@ResponseBody
+	public int updateStu(MultipartFile uploadFile, Student student) {
+		
+		log.info("uploadFile : " + uploadFile + "이렇게도 오나 혹싀 ~ㅎ" + student.getStuNo());
+		
+		return 1;
 	}
 
 }
