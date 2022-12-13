@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,16 +25,18 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Slf4j
 @Controller
 public class FileUploadUtil {
-	private String uploadFolder = "C:\\Users\\PC-19\\git\\LMSProjectDDIT\\src\\main\\webapp\\resources\\upload";
+	private String uploadFolder;
 
 
 	@Autowired
 	AttachService attchService;
 
 	//파일 업로드 실행 + DB처리
-	public int fileUploadAction(MultipartFile[] multipartFiles) {
+	public int fileUploadAction(MultipartFile[] multipartFiles, HttpServletRequest req) {
 		log.info("파일 업로드를 수행합니다.");
 
+		uploadFolder = req.getRealPath("\\") + "\\resources\\upload" + "\\" +getFolder();
+		
 		List<Attach> attachList = new ArrayList<Attach>();
 
 		//1) 파일 업로드 수행(연/월/일, UUID)
