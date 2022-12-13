@@ -1,201 +1,79 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<link rel="stylesheet" href="/resources/css/qnaBoard.css">
-<style>
-    .detailTitle {
-        color: inherit;
-    }
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-    .detailTitle:hover {
-        color: inherit;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .btn-primary {
-        background-color: #2a5388;
-        border: #2a5388;
-        box-shadow: #2a5388;
-    }
-
-    .btn-primary:hover {
-        background-color: #4671af;
-        border: #4671af;
-        box-shadow: #4671af;
-    }
-
-    #qnaMark {
-        width: 30px;
-        margin-left: 10px;
-        margin-bottom: 10px;
-    }
-</style>
-<script>
-    function detail(idx) {
-        $('#frm_' + idx).submit();
-    }
-
-    $(function () {
-
-        $('#ansWait').click(function () {
-            var checked = $('#ansWait').is(':checked');
-            var code = '';
-            if (checked) {
-                $('.flag_true').attr('style', "display:none;");  //숨기기
-            } else {
-                $('.flag_true').attr('style', "display:show;");  //보이기
-            }
-
-        })
-    })
-
-</script>
+<%
+    Date date = new Date();
+    SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy.MM.dd");
+    String simDate = simpleDate.format(date);
+%>
+<c:set var="date" value="<%= simDate %>" />
 
 <div class="card">
-    <div id="qnaBoard" class="card-body">
-        <h3><i class="mdi mdi-comment-question-outline"></i>&nbsp;문의게시판</h3>
-        <br>
-        <form name="frm" id="frm" action="/qna/main" method="get">
-            <div id="boardFilter" class="searchNtc">
-                <select name="cond" aria-controls="dataTable" class="custom-select">
-                    <option value="title" <c:if test="${map.cond=='title'}">selected</c:if>>글제목</option>
-                    <option value="artContent" <c:if test="${map.cond=='content'}">selected</c:if>>글내용</option>
-                </select>
-                <label id="searchKey">
-                    <input type="search" name="keyword"
-                           placeholder="검색어를 입력하세요"
-                           value="${map.keyword}" class="form-control dropdown-toggle"/>
-                </label>
-                <label>
-                    <button id="searchBtn" type="submit" class="btn btn-secondary">검색</button>
-                </label>
-            </div>
-        </form>
-        <br>
-        <%--        <c:if test="${memSession.managerVO.mgrCd ==null }">--%>
-        <br>
-        <button type="button" class="btn btn-primary" id="questionInsert" onClick="location.href='/qna/qnaWrite'">+
-            질문하기
-        </button>
-        <%--        </c:if>--%>
-        <c:if test="${memSession.managerVO.mgrCd !=null }">
-            <div id="ansWaitRound"><input type="checkbox" id="ansWait"/><label>&nbsp;미답변</label></div>
-        </c:if>
-        <br>
-        <table class="table mb-0">
-            <thead class="table-light">
-            <tr style="border-top: 2px solid #112a63">
-                <th>No</th>
-                <th>제목</th>
-                <th>답변여부</th>
-                <th>조회수</th>
-                <th>공개여부</th>
-            </tr>
-            </thead>
-            <tbody>
-            <%--            <c:if test="${memSession.managerVO.mgrCd == null}">--%>
-            <c:forEach var="list" items="${showList}" varStatus="stat">
-                <%--                    <c:set var="qnarCon" value="${vo.qnaReplyVO.qnarCon }"/>--%>
-                <%--                    <form action="/qna/qnaDetail" id="frm_${ stat.index }" method="post">--%>
-                <input type="hidden" name="qnaCd" value="${vo.qnaCd}">
-                <input type="hidden" name="memCd" value="${vo.memCd}">
-                <tr id="${stat.index}" style="background : #fcfdff;">
-                    <td>${vo.rnum}</td>
-                    <td>
-                        <c:set var="qnaYn" value="${list.qnaAccess}"/>
-                        <c:if test="${list.qnaAccess == 0 }">
-                            <c:set var="memCd" value="${sessionScope.memSession.memCd }"/>
-                            <c:if test="${memCd eq vo.memCd}">
-                                <a id="detailBtn" onclick="detail(${ stat.index })"
-                                   class="detailTitle">${list.qnaTitle}</a>
-                            </c:if>
-                            <c:if test="${memCd ne vo.memCd}">
-                                ${list.qnaTitle }
-                            </c:if>
-                        </c:if>
-                        <c:if test="${list.qnaAccess == 1 }">
-                            <a id="detailBtn" onclick="detail(${ stat.index })"
-                               class="detailTitle">${list.qnaTitle}</a>
-                        </c:if>
-                    </td>
-                    <td>
-                        <c:if test="${qnarCon eq null}">
-                            <span style="color:#777">답변대기</span>
-                        </c:if>
-                        <c:if test="${qnarCon ne null}">
-                            <span style="color:#001353; font-weight:bold;">답변완료</span>
-                        </c:if>
-                    </td>
-                    <td>${list.hit}</td>
-                    <td>
-                        <c:set var="qnaYn" value="${list.qnaAccess}"/>
-                        <c:if test="${list.qnaAccess == 0 }">
-                            <img alt="비공개" src="/resources/images/free-icon-lock-4735421.png" id="lockImg">
-                        </c:if>
-                    </td>
-                </tr>
-                </form>
-            </c:forEach>
-            <%--            </c:if>--%>
-            <c:if test="${memSession.managerVO.mgrCd != null}">
-                <c:forEach var="vo" items="${list.content}" varStatus="stat">
-                    <c:set var="qnarCon" value="${vo.qnaReplyVO.qnarCon }"/>
-
-                    <form action="/qna/qnaDetail" id="frm_${ stat.index }" method="post">
-                        <input type="hidden" name="qnaCd" value="${vo.qnaCd}">
-                        <input type="hidden" name="memCd" value="${vo.memCd}">
-                        <tr id="${stat.index}" class="flag_${qnarCon ne null}">
-                            <td>${vo.rnum}</td>
-                            <td style="text-align:left;">
-                                <a id="detailBtn" onclick="detail(${ stat.index })" class="detailTitle">${vo.qnaTtl}</a>
-                            </td>
-                            <td>
-
-                                <c:if test="${qnarCon eq null }">
-                                    <span style="color:#777">답변대기</span>
-                                </c:if>
-                                <c:if test="${qnarCon ne null }">
-                                    <span style="color:#001353; font-weight:bold;">답변완료</span>
-                                </c:if>
-                            </td>
-                            <td>${vo.qnaHit}</td>
-                            <td>
-                                <!-- 관리자는 무조건 공개 -->
-                            </td>
+    <div class="card-body">
+        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="example1"
+                           class="table table-bordered table-striped dataTable dtr-inline"
+                           aria-describedby="example1_info">
+                        <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span style="color: red;"><fmt:formatNumber maxFractionDigits="3" value="${ totalRow }"></fmt:formatNumber></span>건의 게시물이 있습니다.</p>
+                        <thead>
+                        <tr>
+                            <th class="sorting" tabindex="0" aria-controls="example1"
+                                rowspan="1" colspan="1"
+                                aria-label="Rendering engine: activate to sort column ascending"
+                                cursorshover="true">문의코드
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example1"
+                                rowspan="1" colspan="1"
+                                aria-label="Platform(s): activate to sort column ascending"
+                                cursorshover="true">제목
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example1"
+                                rowspan="1" colspan="1"
+                                aria-label="Engine version: activate to sort column ascending"
+                                cursorshover="true">등록일
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example1"
+                                rowspan="1" colspan="1"
+                                aria-label="Engine version: activate to sort column ascending"
+                                cursorshover="true">공개여부
+                            </th>
                         </tr>
-                    </form>
-                </c:forEach>
-            </c:if>
-            </tbody>
-        </table>
-        <div id="pageBarBtn" style="text-align:center;">
-            <button type="button" class="btn btn-light"
-                    <c:if test='${ list.startPage lt 6 }'>disabled</c:if>
-                    onclick="location.href='/main/qna?show=${ map.show }&cond=${ map.cond }&keyword=${ map.keyword }&currentPage=${ list.startPage - 5 }'">
-                <i class="uil-angle-double-left"></i></button>
-            <button type="button" class="btn btn-light"
-                    <c:if test='${ list.startPage == list.currentPage }'>disabled</c:if>
-                    onclick="location.href='/main/qna?show=${ map.show }&cond=${ map.cond }&keyword=${ map.keyword }&currentPage=${ list.currentPage - 1 }'">
-                <i class="uil uil-angle-left"></i></button>
-            <c:forEach var="pNo" begin="${ list.startPage }" end="${ list.endPage }">
-                <c:if test="${ pNo == 0 }"><c:set var="pNo" value="1"></c:set></c:if>
-                <button type="button"
-                        class="btn btn-<c:if test="${ list.currentPage != pNo }">light</c:if><c:if test="${ list.currentPage == pNo }">primary</c:if>"
-                        onclick="location.href='/main/qna?show=${ map.show }&cond=${ map.cond }&keyword=${ map.keyword }&currentPage=${ pNo }'">
-                        ${ pNo }
-                </button>
-            </c:forEach>
-            <button type="button" class="btn btn-light"
-                    <c:if test='${ list.endPage == list.currentPage }'>disabled</c:if>
-                    onclick="location.href='/main/qna?show=${ map.show }&cond=${ map.cond }&keyword=${ map.keyword }&currentPage=${ list.currentPage + 1 }'">
-                <i class="uil uil-angle-right"></i></button>
-            <button type="button" class="btn btn-light"
-                    <c:if test="${ list.endPage ge list.totalPages }">disabled</c:if>
-                    onclick="location.href='show=${ map.show }&cond=${ map.cond }&keyword=${ map.keyword }&currentPage=${ list.startPage + 5 }'">
-                <i class="uil-angle-double-right"></i></button>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="list" items="${showList}" varStatus="stat">
+                        <fmt:formatDate var="qnaRegDate" value="${ list.qnaDt }" pattern="yyyy.MM.dd"/>
+                        <c:if test="${stat.count%2!=0 }">
+                        <tr class="odd"></c:if>
+                            <c:if test="${stat.count%2==0 }">
+                        <tr class="even"></c:if>
+
+                            <td class="dtr-control sorting_1" tabindex="0">${list.qnaCd}</td>
+
+                            <td><a href="/notice/list/${list.qnaCd}/edit">${list.qnaTtl}
+                                <c:if test="${ date <= qnaRegDate }">
+                                <span class="badge badge-outline-warning badge-pill" style="float: right;">NEW</span>
+                                </c:if>
+                            </td>
+
+                            <td><fmt:formatDate value="${list.qnaDt }" pattern="yyyy년 MM월 dd일"/></td>
+                            <td>
+                                <c:if test="${list.qnaYn == 0}">비공개</c:if>
+                                <c:if test="${list.qnaYn == 1}">공개</c:if>
+                            </td>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                    <div style="text-align: right">
+                    <a href="/qna/qnaWrite" class="btn btn-sm btn-primary">글쓰기</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

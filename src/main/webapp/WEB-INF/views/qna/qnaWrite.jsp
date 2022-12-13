@@ -4,7 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <link rel="stylesheet" href="/resources/css/qnaBoard.css"/>
@@ -77,9 +76,10 @@
                 success: function (res) {
                     if (res == 1) {
                         alert("등록되었습니다.");
-                        location.replace("/main/qna");
+                        location.replace("/qna/main");
                     } else {
                         alert("등록에 실패하였습니다.");
+                        location.reload();
                     }
                 }
 
@@ -113,8 +113,8 @@
                     <label>제목</label>
                     <input type="text" class="inputText" name="title" id="title"/>
                 </div>
-                <div class="textArea"><textarea name="content" id="Content"></textarea></div>
-                <div id="showRound"><label>비공개 여부</label><input type="checkbox" name="access" id="access"/></div>
+                <div class="textArea"><textarea name="content" id="content"></textarea></div>
+                <div id="showRound"><label>비공개 여부</label><input type="checkbox" name="accessNumber" id="accessNumber"/></div>
                 <div id="btnRound">
                     <input type="submit" id="insertBtn" class="btn btn-primary" value="등록">
                     <input type="button" id="cancelBtn" class="btn btn-primary" value="취소">

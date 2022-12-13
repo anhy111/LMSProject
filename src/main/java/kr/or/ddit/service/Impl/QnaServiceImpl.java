@@ -17,6 +17,11 @@ public class QnaServiceImpl implements QnaService {
 
     private final QnaMapper qnaMapper;
 
+    @Override
+    public int getQnaTotalRow() {
+        return this.qnaMapper.getQnaTotalRow();
+    }
+
     public int insertQuestion(HashMap<String, Object> map) {
         return this.qnaMapper.insertQuestion(map);
     }

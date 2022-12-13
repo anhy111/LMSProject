@@ -11,6 +11,10 @@ import java.util.Map;
 
 public interface QnaMapper {
 
+
+    @Select("SELECT COUNT(*) FROM qna")
+    int getQnaTotalRow();
+
     //문의게시판 등록
     int insertQuestion(HashMap<String, Object> map);
 

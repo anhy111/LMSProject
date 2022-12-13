@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -29,9 +28,12 @@ public class QnaController {
     @GetMapping("/main")
     public String qnaMain (Model model) {
 
+        int totalRow = this.qnaService.getQnaTotalRow();
+
        List<Qna> showList = qnaService.showList();
 
        model.addAttribute("showList", showList);
+       model.addAttribute("totalRow", totalRow);
 
         return "qna/qnaBoard";
     }
@@ -48,6 +50,8 @@ public class QnaController {
     public String postQnaWriteForm (QnaForm qnaForm) {
 
         Qna qna = new Qna(qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccessNumber());
+
+        log.info(qnaForm.getTitle());
 
         qnaService.qnaSave(qna);
 

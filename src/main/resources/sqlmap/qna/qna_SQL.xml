@@ -67,18 +67,16 @@
             , mem_no
             , qna_ttl
             , qna_con
+			, qna_dt
             , qna_yn
-            , qna_dt
-            , qna_hit
 		)
 		VALUES (
 			  NOTICEBASIC_SEQ.NEXTVAL
 			, 1
-			, #{qnaTitle}
-			, #{qnaContent}
-			, #{qnaAccess}
+			, #{qnaTtl}
+			, #{qnaCon}
 			, sysdate
-			, 0
+		    , #{qnaYn}
 			   )
 	</insert>
 
