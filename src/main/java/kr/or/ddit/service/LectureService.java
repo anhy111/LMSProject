@@ -31,4 +31,7 @@ public interface LectureService {
 
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
+
+	// 장바구니에 담기고 학생이 수강신청하지 않은 강의
+	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.Allocation;
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.Credit;
 import kr.or.ddit.domain.Department;
@@ -23,6 +24,7 @@ import kr.or.ddit.domain.GraduateCredit;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
+import kr.or.ddit.service.AllocationService;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.CreditService;
 import kr.or.ddit.service.DepartmentService;
@@ -49,6 +51,8 @@ public class StudentLectureApplyController {
 	CreditService creditService;
 	@Autowired
 	CollegeService collegeService;
+	@Autowired
+	AllocationService allocationService;
 	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
@@ -102,6 +106,12 @@ public class StudentLectureApplyController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/loadNotApplySaveLecture")
+	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture){
+		return this.lectureService.loadNotApplySaveLecture(studentLecture);
+	}
+	
+	@ResponseBody
 	@GetMapping("/notYetApplyLectureList")
 	public List<Lecture> notYetApplyLectureList(StudentLecture studentLecture){
 		return this.lectureService.studentNotYetApplyLectureList(studentLecture);
@@ -123,5 +133,11 @@ public class StudentLectureApplyController {
 	@GetMapping("/departmentByCollege")
 	public List<Department> departmentByCollege(int colCd){
 		return this.collegeService.DepartmentByCollegeList(colCd);
+	}
+	
+	@ResponseBody
+	@GetMapping("/applyTimeTable")
+	public List<Allocation> studentApplyTimeTable(StudentLecture studentLecture){
+		return this.allocationService.studentApplyTimeTable(studentLecture);
 	}
 } 

@@ -81,12 +81,12 @@
 										<h5>키워드 검색</h5>
 									</div>
 									<div class="form-group col-2">
-										<select id="colleage"
+										<select id="college"
 											class="select2bs4 select2-hidden-accessible"
 											style="width: 100%;" aria-hidden="true">
-											<option value="0">단과대학</option>
+											<option value="">단과대학</option>
 											<c:forEach var="college" items="${collegeList}">
-												<option value="${college.colCd}">${college.colNm}</option>
+												<option value="${college.colNm}">${college.colNm}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -162,7 +162,7 @@
 								<div class="row pl-3">
 									<h3>장바구니 목록</h3>
 								</div>
-
+								<div class="row pl-3"></div>
 								<div class="row pl-3 pb-3">
 									<div class="card-body table-responsive col-11"
 										style="height: 300px;">
@@ -183,7 +183,7 @@
 													<th>신청</th>
 												</tr>
 											</thead>
-											<tbody class="completeSaveLecture">
+											<tbody id="notApplySaveLecture">
 
 											</tbody>
 										</table>
@@ -192,9 +192,9 @@
 								<div class="row pl-3 pr-3">
 									<h3 class="col-3">수강신청된 강의목록</h3>
 									<button type="button" id="timeTableApply"
-											class="col-1 offset-7 btn btn-flat btn-primary"
-											data-toggle="modal" data-target="#applySchedule">시간표
-											보기</button>
+										class="col-1 offset-7 btn btn-flat btn-primary"
+										data-toggle="modal" data-target="#applySchedule">신청된<br>시간표
+										보기</button>
 								</div>
 								<div class="row pl-3 pb-3">
 									<div class="card-body table-responsive col-11"
@@ -222,123 +222,124 @@
 									</div>
 								</div>
 								<div class="modal fade" id="applySchedule" tabindex="-1"
-										role="dialog" aria-labelledby="exampleModalCenterTitle"
-										aria-hidden="true">
-										<div class="modal-dialog modal-dialog-centered modal-lg"
-											role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalCenterTitle">강의 시간표</h5>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">
-													<table class="table m-0 table-bordered text-center">
-														<thead>
-															<tr>
-																<th width="10%">교시</th>
-																<th width="15%">시간</th>
-																<th>월</th>
-																<th>화</th>
-																<th>수</th>
-																<th>목</th>
-																<th>금</th>
-															</tr>
-														</thead>
-														<tbody id="timeTable">
-															<tr height="70">
-																<td class="align-middle">1교시</td>
-																<td class="align-middle">09:00 ~ 09:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr> 
-															<tr height="70">
-																<td class="align-middle">2교시</td>
-																<td class="align-middle">10:00 ~ 10:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr> 
-															<tr height="70">
-																<td class="align-middle">3교시</td>
-																<td class="align-middle">11:00 ~ 11:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr> 
-															<tr height="70"> 
-																<td class="align-middle">4교시</td>
-																<td class="align-middle">12:00 ~ 12:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr> 
-															<tr height="70">
-																<td class="align-middle">5교시</td>
-																<td class="align-middle">13:00 ~ 13:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr> 
-															<tr height="70">
-																<td class="align-middle">6교시</td>
-																<td class="align-middle">14:00 ~ 14:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr> 
-															<tr height="70">
-																<td class="align-middle">7교시</td>
-																<td class="align-middle">15:00 ~ 15:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr> 
-															<tr height="70">
-																<td class="align-middle">8교시</td>
-																<td class="align-middle">16:00 ~ 16:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
-															<tr height="70">
-																<td class="align-middle">9교시</td>
-																<td class="align-middle">17:00 ~ 17:50</td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary btn-flat"
-														data-dismiss="modal">Close</button>
-												</div>
+									role="dialog" aria-labelledby="exampleModalCenterTitle"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered modal-lg"
+										role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalCenterTitle">강의
+													시간표</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<table class="table m-0 table-bordered text-center">
+													<thead>
+														<tr>
+															<th width="10%">교시</th>
+															<th width="15%">시간</th>
+															<th width="15%">월</th>
+															<th width="15%">화</th>
+															<th width="15%">수</th>
+															<th width="15%">목</th>
+															<th width="15%">금</th>
+														</tr>
+													</thead>
+													<tbody id="timeTable">
+														<tr height="70">
+															<td class="align-middle">1교시</td>
+															<td class="align-middle">09:00 ~ 09:50</td>
+															<td id="am1"></td>
+															<td id="at1"></td>
+															<td id="aw1"></td>
+															<td id="ah1"></td>
+															<td id="af1"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">2교시</td>
+															<td class="align-middle">10:00 ~ 10:50</td>
+															<td id="am2"></td>
+															<td id="at2"></td>
+															<td id="aw2"></td>
+															<td id="ah2"></td>
+															<td id="af2"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">3교시</td>
+															<td class="align-middle">11:00 ~ 11:50</td>
+															<td id="am3"></td>
+															<td id="at3"></td>
+															<td id="aw3"></td>
+															<td id="ah3"></td>
+															<td id="af3"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">4교시</td>
+															<td class="align-middle">12:00 ~ 12:50</td>
+															<td id="am4"></td>
+															<td id="at4"></td>
+															<td id="aw4"></td>
+															<td id="ah4"></td>
+															<td id="af4"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">5교시</td>
+															<td class="align-middle">13:00 ~ 13:50</td>
+															<td id="am5"></td>
+															<td id="at5"></td>
+															<td id="aw5"></td>
+															<td id="ah5"></td>
+															<td id="af5"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">6교시</td>
+															<td class="align-middle">14:00 ~ 14:50</td>
+															<td id="am6"></td>
+															<td id="at6"></td>
+															<td id="aw6"></td>
+															<td id="ah6"></td>
+															<td id="af6"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">7교시</td>
+															<td class="align-middle">15:00 ~ 15:50</td>
+															<td id="am7"></td>
+															<td id="at7"></td>
+															<td id="aw7"></td>
+															<td id="ah7"></td>
+															<td id="af7"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">8교시</td>
+															<td class="align-middle">16:00 ~ 16:50</td>
+															<td id="am8"></td>
+															<td id="at8"></td>
+															<td id="aw8"></td>
+															<td id="ah8"></td>
+															<td id="af8"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">9교시</td>
+															<td class="align-middle">17:00 ~ 17:50</td>
+															<td id="am9"></td>
+															<td id="at9"></td>
+															<td id="aw9"></td>
+															<td id="ah9"></td>
+															<td id="af9"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary btn-flat"
+													data-dismiss="modal">Close</button>
 											</div>
 										</div>
 									</div>
+								</div>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="custom-tabs-four-profile"
@@ -402,6 +403,16 @@
 											<h5>키워드 검색</h5>
 										</div>
 										<div class="form-group col-2">
+											<select id="cartCollege"
+												class="select2bs4 select2-hidden-accessible"
+												style="width: 100%;" aria-hidden="true">
+												<option value="">단과대학</option>
+												<c:forEach var="college" items="${collegeList}">
+													<option value="${college.colNm}">${college.colNm}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="form-group col-2">
 											<select id="cartDepartment"
 												class="select2bs4 select2-hidden-accessible"
 												style="width: 100%;" aria-hidden="true">
@@ -462,7 +473,6 @@
 														<th width="20%">과목명</th>
 														<th width="4%">학점</th>
 														<th width="6%">최대인원</th>
-														<th width="10%">현재인원</th>
 														<th>교수명</th>
 														<th>강의계획서</th>
 														<th>신청</th>
@@ -478,7 +488,7 @@
 										<h3 class="col-3">장바구니</h3>
 										<button type="button"
 											class="col-1 offset-7 btn btn-flat btn-primary"
-											data-toggle="modal" data-target="#saveSchedule">시간표
+											data-toggle="modal" data-target="#saveSchedule">담긴 <br>시간표
 											보기</button>
 									</div>
 									<div class="row pl-3 pb-3">
@@ -495,13 +505,12 @@
 														<th width="20%">과목명</th>
 														<th width="4%">학점</th>
 														<th width="6%">최대인원</th>
-														<th width="10%">현재인원</th>
 														<th>교수명</th>
 														<th>강의계획서</th>
 														<th>취소</th>
 													</tr>
 												</thead>
-												<tbody class="completeSaveLecture">
+												<tbody id="completeSaveLecture">
 												</tbody>
 											</table>
 										</div>
@@ -513,7 +522,8 @@
 											role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalCenterTitle">강의 시간표</h5>
+													<h5 class="modal-title" id="exampleModalCenterTitle">강의
+														시간표</h5>
 													<button type="button" class="close" data-dismiss="modal"
 														aria-label="Close">
 														<span aria-hidden="true">&times;</span>
@@ -545,6 +555,9 @@
 <script>
 	var stuNo = "${stuNo}";
 	
+	var header = "${_csrf.headerName}";
+	var token = "${_csrf.token}";
+	
 	$(function() {
 		//Initialize Select2 Elements
 		$('.select2').select2();
@@ -562,7 +575,7 @@
 			loadNotYetSaveLecture();
 		});
 		
-		$("#timeTableApply").on("click")
+		$("#timeTableApply").on("click",loadApplyTimeTalble);
 		
 		$("#colleage").on("change",function(){
 			
@@ -593,6 +606,35 @@
 			
 		});
 		
+		$("#cartColleage").on("change",function(){
+			
+			let data = {
+					colCd : this.value
+			};
+			
+			$.ajax({
+				url:"/student/lectureApply/departmentByCollege",
+				type:"get",
+				data:data,
+				contentType : "application/json;utf-8",
+				success:function(result){
+					let str = "";
+					console.log(result);
+					if(!result.length){
+						str += "<option value=''>학과</option>";
+						str += "<option value=''>학과가 없습니다</option>";
+					} else{
+						str += "<option value=''>학과</option>";
+						$.each(result,function(p_inx, p_val){
+							str += `<option value='\${p_val.depNm}'>\${p_val.depNm}</option>`;
+						});
+					}
+					$("#cartDepartment").html(str);
+				}
+			});
+			
+		});
+		
 
 		$(document).on("click",'.apply', function(e) {
 
@@ -601,9 +643,6 @@
 				stuNo : stuNo
 			};
 
-			let header = "${_csrf.headerName}";
-			let token = "${_csrf.token}";
-			
 			$.ajax({
 				url : "/student/lectureApply/apply",
 				type : "post",
@@ -620,6 +659,7 @@
 					}
 					loadCompleteApplyLecture();
 					loadNotYetApplyLecture();
+					loadNotApplySaveLecture();
 				}
 			});
 		});
@@ -630,9 +670,6 @@
 				lecaCd : e.target.value,
 				stuNo : stuNo
 			};
-			
-			let header = "${_csrf.headerName}";
-			let token = "${_csrf.token}";
 			
 			$.ajax({
 				url : "/student/lectureApply/applyCancel",
@@ -645,6 +682,7 @@
 				success : function(result) {
 					loadCompleteApplyLecture();
 					loadNotYetApplyLecture();
+					loadNotApplySaveLecture();
 				}
 			});
 		});
@@ -654,9 +692,6 @@
 				lecaCd : e.target.value,
 				stuNo : stuNo
 			};
-			
-			let header = "${_csrf.headerName}";
-			let token = "${_csrf.token}";
 			
 			$.ajax({
 				url : "/student/lectureApply/save",
@@ -669,6 +704,7 @@
 				success : function(result) {
 					loadCompleteSaveLecture();
 					loadNotYetSaveLecture();
+					loadNotApplySaveLecture();
 				}
 			});
 		});
@@ -679,9 +715,6 @@
 				lecaCd : e.target.value,
 				stuNo : stuNo
 			};
-			
-			let header = "${_csrf.headerName}";
-			let token = "${_csrf.token}";
 			
 			$.ajax({
 				url : "/student/lectureApply/saveCancel",
@@ -694,6 +727,7 @@
 				success : function(result) {
 					loadCompleteSaveLecture();
 					loadNotYetSaveLecture();
+					loadNotApplySaveLecture();
 				}
 			});
 		});
@@ -702,28 +736,27 @@
 		loadCompleteApplyLecture();
 		loadNotYetSaveLecture(); 
 		loadCompleteSaveLecture();
-		
+		loadNotApplySaveLecture();
 	});
 	
 	function loadNotYetApplyLecture(){
 		
+		let college = $("#college").val();
 		let department = $("#department").val();
 		let yr = $("#yr").val();
 		let category = $("#category").val();
 		let subject = $("#subject").val();
 		
 		
-		
 		let data = {
 			stuNo : stuNo, 
+			colNm : college,
 			depNm :  department,
 			lecaTrg : yr,
 			lecaCate : category,
 			lecaNm : subject
 		};
 
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
 
 		$.ajax({
 			url : "/student/lectureApply/notYetApplyLectureList",
@@ -790,8 +823,6 @@
 				stuNo : stuNo
 			};
 
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
 
 		$.ajax({
 			url : "/student/lectureApply/completeApplyLectureList",
@@ -846,24 +877,20 @@
 	} // end function
 	
 	function loadNotYetSaveLecture(){
-		
+		let college = $("#cartCollege").val();
 		let department = $("#cartDepartment").val();
 		let yr = $("#cartYr").val();
 		let category = $("#cartCategory").val();
 		let subject = $("#cartSubject").val();
 		
-		
-		
 		let data = {
 			stuNo : stuNo, 
+			colNm : college,
 			depNm :  department,
 			lecaTrg : yr,
 			lecaCate : category,
 			lecaNm : subject
 		};
-
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
 
 		$.ajax({
 			url : "/student/lectureApply/notYetSaveLectureList",
@@ -885,13 +912,115 @@
 				}
 				$.each(result,function(p_inx, lecture){
 					
+					str += `<tr class="text-center">
+								<td>\${p_inx+1}</td>
+								<td>\${lecture.lecApply.lecaCate}</td>
+								<td>\${lecture.department.depNm}</td>
+								<td>\${lecture.lecApply.lecaTrg}</td>
+								<td>\${lecture.lecApply.lecaNm}</td>
+								<td>\${lecture.lecApply.lecaCrd}</td>
+								<td>\${lecture.lecApply.lecaCap}</td>
+								<td>\${lecture.employee.empNm}</td>
+								<td><input type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
+									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button
+										class="btn btn-block bg-gradient-primary btn-sm btn-flat save"
+										value="\${lecture.lecaCd}">담기</button></td>
+							</tr>`
+				});
+				$("#notSaveLecture").append(str);
+			}
+		});
+	}
+	
+	function loadCompleteSaveLecture(){
+		
+		let data = {
+				stuNo : stuNo
+			};
+
+		$.ajax({
+			url : "/student/lectureApply/completeSaveLectureList",
+			type : "get",
+			data : data,
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result) {
+				$("#completeSaveLecture").html(function(){
+					return "";
+				});
+				let str = "";
+				if(result.length == 0){
+					str = "<tr class='text-center p-0'>";
+					str += "<td colspan='11'>담긴 강의가 없습니다.</td>";
+					str += "</tr>";
+					$("#completeSaveLecture").html(function(){
+						return str;
+					});
+					return;
+				}
+				$.each(result,function(p_inx, lecture){
+					str += `<tr class="text-center">
+								<td>\${p_inx+1}</td>
+								<td>\${lecture.lecApply.lecaCate}</td>
+								<td>\${lecture.department.depNm}</td>
+								<td>\${lecture.lecApply.lecaTrg}</td>
+								<td>\${lecture.lecApply.lecaNm}</td>
+								<td>\${lecture.lecApply.lecaCrd}</td>
+								<td>\${lecture.lecApply.lecaCap}</td>
+								<td>\${lecture.employee.empNm}</td>
+								<td><input type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
+									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button
+										class="btn btn-block bg-gradient-primary btn-sm btn-flat saveCancel"
+										value="\${lecture.lecaCd}">취소</button></td>
+							</tr>`
+				});
+				$("#completeSaveLecture").append(str);
+			}
+		}); // end ajax
+	} // end function
+	
+	function loadNotApplySaveLecture(){
+		let data = {
+				stuNo : stuNo
+			};
+
+		
+		
+		$.ajax({
+			url : "/student/lectureApply/loadNotApplySaveLecture",
+			type : "get",
+			data : data,
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result) {
+				$("#notApplySaveLecture").html(function(){
+					return "";
+				});
+				let str = "";
+				if(result.length == 0){
+					str = "<tr class='text-center p-0'>";
+					str += "<td colspan='11'>신청 가능한 강의가 없습니다.</td>";
+					str += "</tr>";
+					$("#notApplySaveLecture").html(function(){
+						return str;
+					});
+					return;
+				}
+				$.each(result,function(p_inx, lecture){
 					
 					let percent = (lecture.lecHcnt/lecture.lecApply.lecaCap*100).toFixed(0);
 					let color = "bg-primary";
 					if(percent >= 100){
 						color = "bg-danger";
 					}
-					
 					
 					str += `<tr class="text-center">
 								<td>\${p_inx+1}</td>
@@ -915,26 +1044,23 @@
 									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
 									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
 								<td><button
-										class="btn btn-block bg-gradient-primary btn-sm btn-flat save"
-										value="\${lecture.lecaCd}">담기</button></td>
+										class="btn btn-block bg-gradient-primary btn-sm btn-flat apply"
+										value="\${lecture.lecaCd}">신청</button></td>
 							</tr>`
 				});
-				$("#notSaveLecture").append(str);
+				$("#notApplySaveLecture").append(str);
 			}
-		});
-	}
+		}); // end ajax
+	}// end function 
 	
-	function loadCompleteSaveLecture(){
+	function loadApplyTimeTalble(){
 		
 		let data = {
 				stuNo : stuNo
-			};
-
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
-
+		};
+		
 		$.ajax({
-			url : "/student/lectureApply/completeSaveLectureList",
+			url : "/student/lectureApply/applyTimeTable",
 			type : "get",
 			data : data,
 			contentType : "application/json; charset=utf-8",
@@ -942,50 +1068,52 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(result) {
-				$(".completeSaveLecture").html(function(){
-					return "";
-				});
-				let str = "";
-				if(result.length == 0){
-					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>담긴 강의가 없습니다.</td>";
-					str += "</tr>";
-					$(".completeSaveLecture").html(function(){
-						return str;
-					});
-					return;
-				}
-				$.each(result,function(p_inx, lecture){
-					str += `<tr class="text-center">
-								<td>\${p_inx+1}</td>
-								<td>\${lecture.lecApply.lecaCate}</td>
-								<td>\${lecture.department.depNm}</td>
-								<td>\${lecture.lecApply.lecaTrg}</td>
-								<td>\${lecture.lecApply.lecaNm}</td>
-								<td>\${lecture.lecApply.lecaCrd}</td>
-								<td>\${lecture.lecApply.lecaCap}</td>
-								<td class="pt-2">
-									<div class="progress progress-xs progress-striped active">
-										<div class="progress-bar bg-primary"
-											style="width: ` + `\${lecture.lecHcnt/lecture.lecApply.lecaCap*100}%` + `"></div>
-									</div>
-									<div class="text-center">\${lecture.lecHcnt}/\${lecture.lecApply.lecaCap}
-										&nbsp;&nbsp;<span class="badge bg-primary">\${(lecture.lecHcnt/lecture.lecApply.lecaCap*100).toFixed(0)}%</span>
-									</div>
-								</td>
-								<td>\${lecture.employee.empNm}</td>
-								<td><input type="button"
-									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
-									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
-								<td><button
-										class="btn btn-block bg-gradient-primary btn-sm btn-flat saveCancel"
-										value="\${lecture.lecaCd}">취소</button></td>
-							</tr>`
-				});
-				$(".completeSaveLecture").append(str);
-			}
+				console.log("result : ", result);
+				$.each(result, function(p_inx, lecture){
+					
+					let dayWeek = "";
+					switch (lecture.altDt) {
+					case '월':
+						console.log("월요일~");
+						dayWeek = "m";
+						break;
+					case '화':
+						console.log("화요일~");
+						dayWeek = "t";
+						break;
+					case '수':
+						dayWeek = "w";
+						console.log("수요일~");
+						break;
+					case '목':
+						dayWeek = "h";
+						console.log("목요일~");
+						break;
+					case '금':
+						dayWeek = "f";
+						console.log("금요일~");
+						break;
+					}
+					
+					for(let i=lecture.altSt; i<=lecture.altEn; i++){
+						if( i == lecture.altSt){
+							$("#a"+dayWeek+i).css("backgroundColor","black")
+										.css("color","white")
+										.css("border","none")
+										.html(lecture.lecaNm + "\n" + lecture.bldSnm + lecture.roomNo);
+						} else{
+							$("#a"+dayWeek+i).css("backgroundColor","black")
+										.css("color","white")
+										.css("border","none");
+						}
+						
+					}
+					
+				});//end for
+			}// end success
 		}); // end ajax
-	} // end function
+		
+	}// end function
 	
 	
 </script>
