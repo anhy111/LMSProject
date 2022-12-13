@@ -7,7 +7,7 @@
 <script type="text/javascript">
 function fn_add(data){
 	
-	$("#stuImg").attr("src", "/resources/upload/img/"+data.stuPic);
+	$("#stuImg").attr("src", "/resources/upload"+data.stuPic);
 	$("#stuNo").attr("value", data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$("#stuNme").attr("value", data.stuNme);
@@ -174,11 +174,10 @@ $(function(){
 		let stuAct = $("#stuAct").val();
 		let stuBir = $("#stuBir").val();
 		let depCd = $("#department").val();
-		let stuPic = $("#stuPic").val();
 		
 		console.log("변수 잘 들어오나 ! stuNo : " + stuNo + " stuYr : " + stuYr + " stuSem : " + stuSem + " stuNm : " + stuNm + " stuNme : " + stuNme + 
 				" stuTel : " + stuTel + " stuZip : " + stuZip + " stuAddr1 : " + stuAddr1 + " stuAddr2 : " + stuAddr2 + 
-				" stuBankCd : " + stuBankCd + " stuDepo : " + stuDepo + " stuAct : " + stuAct + " stuBir : " + stuBir + " stuPic : " + stuPic );
+				" stuBankCd : " + stuBankCd + " stuDepo : " + stuDepo + " stuAct : " + stuAct + " stuBir : " + stuBir);
 		
 // 		let data = {
 // 			"stuNo":stuNo,
@@ -226,7 +225,6 @@ $(function(){
 		formData.append("stuAct",stuAct);
 		formData.append("stuBir",stuBir);
 		formData.append("depCd",depCd);
-		formData.append("stuPic",stuPic);
 		
 		
 		$.ajax({
@@ -243,10 +241,7 @@ $(function(){
 				console.log("파일 업로드 성공인가요 ? result : " + result);
 				
 			}
-		})
-		
-		
-		
+		});
 		
 		
 	});
@@ -333,7 +328,7 @@ $(function(){
 									<td class="detailStu">${list.stuNo}</td>
 									<td>
 										<div class="image">
-											<img src="/resources/upload/img/${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;">
+											<img src="/resources/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;">
 											${list.stuNm}
 										</div> 
 									</td>
