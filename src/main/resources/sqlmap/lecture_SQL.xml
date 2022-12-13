@@ -236,11 +236,19 @@
 	</select>
 
 	<insert id="insertTask" parameterType="task">
-		<selectKey keyProperty="atchFileId" order="BEFORE" resultType="int"> 
-			select max(ATCH_FILE_ID) FROM ATTACH
+		<selectKey keyProperty="taskCd" order="BEFORE" resultType="int"> 
+			SELECT MAX(TASK_CD)+1 FROM TASK
 		</selectKey>
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT, ATCH_FILE_ID)
-            values((select max(task_cd)+1 from task), #{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},#{atchFileId})
+            values((select max(task_cd)+1 from task), #{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},(SELECT MAX(ATCH_FILE_ID) FROM ATTACH))
+	</insert>
+	
+	<insert id="insertTask2" parameterType="task">
+		<selectKey keyProperty="taskCd" order="BEFORE" resultType="int"> 
+			select max(TASK_CD)+1 FROM TASK
+		</selectKey>
+		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT)
+            values(#{taskCd},#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt})
 	</insert>
 	
 	<select id="studentNotYetSaveLectureList" parameterType="studentLecture" resultMap="lectureMap">
@@ -313,13 +321,7 @@
 		WHERE W.STU_NO = #{stuNo}
 	</select>
 	
-	<insert id="insertTask2" parameterType="task">
-		<selectKey keyProperty="taskCd" order="BEFORE" resultType="int"> 
-			select max(TASK_CD)+1 FROM TASK
-		</selectKey>
-		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT)
-            values(#{taskCd},#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt})
-	</insert>
+	
 
 	<update id="increaseHeadcount" parameterType="studentLecture">
 		UPDATE LECTURE
@@ -327,6 +329,7 @@
 		WHERE LECA_CD = #{lecaCd}
 	</update>
 	
+	<!-- 과제 상세보기 -->
 	<select id="detailTask" resultType="task" parameterType="String" resultMap="taskMap">
 		SELECT                 
 				T.TASK_CD      
@@ -349,6 +352,13 @@
 			    T.TASK_CD = #{taskCd} 
 		AND     T.LECA_CD = #{lecaCd}      
 	</select>
-
+	<!-- 과제 삭제 -->
+	<delete id="deleteTask" parameterType="String">
+	 	DELETE 
+	 	FROM    TASK
+	 	WHERE 
+	 			LECA_CD = #{lecaCd}
+	 	AND     TASK_CD = #{taskCd}
+	</delete>
 	
 </mapper>
