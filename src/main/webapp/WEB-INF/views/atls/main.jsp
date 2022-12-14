@@ -126,6 +126,10 @@
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
 									cursorshover="true">수강중인인원</th>
+								<th class="sorting" tabindex="0" aria-controls="example1"
+									rowspan="1" colspan="1"
+									aria-label="CSS grade: activate to sort column ascending"
+									cursorshover="true">상세보기</th>
 							</tr>
 						</thead>
 						<tbody id="resultTable">
@@ -149,6 +153,7 @@
 								<td>${atlsList.lecApply.lecaCrd}</td>
 								<td>${atlsList.lecture.lecYn}</td>
 								<td>${atlsList.lecture.lecHcnt}</td>
+								<td><button id="lectureDetail" class="btn btn-sm btn-primary"  value="${atlsList.lecApply.lecaCd }">상세보기</button></td>
 							</c:forEach>
 						</tbody>
 						<tfoot>
@@ -165,6 +170,7 @@
 								<th rowspan="1" colspan="1">배정학점</th>
 								<th rowspan="1" colspan="1">개설여부</th>
 								<th rowspan="1" colspan="1">수강중인인원</th>
+								<th rowspan="1" colspan="1">상세보기</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -179,6 +185,7 @@ let token = "${_csrf.token}";
 let updateInsertData = "";
 let typingKeyword = "";
 let typeKeywordInput = "";
+let lecaCd = "";
 let data = { colNm : "단과대검색어"
 		          , depNm : "학과검색어"
 	              , subNm : "과목검색어"
@@ -188,7 +195,11 @@ let data = { colNm : "단과대검색어"
 	              , empNm : "교수/강의명"
 	              , lecaNm : "교수/강의명"
 	        	  };
-	        	  
+$(document).on('click','#lectureDetail',function(){
+	lecaCd = this.value;
+	console.log(lecaCd);
+	window.open("/atls/detail?lecaCd="+lecaCd,"lectureDetail", "width=1000, height=800, left=100, top=50");
+});        	  
 function resetKeyword(){
 	$("#typingKeyword option:eq(0)").prop("selected",true);
 	$("#colNm option:eq(0)").prop("selected",true);
@@ -234,7 +245,9 @@ function cumulativeSearchData(){
 	                		<td>\${item.lecApply.lecaTrg}</td>
 	                		<td>\${item.lecApply.lecaCrd}</td>
 	                		<td>\${item.lecture.lecYn}</td>
-	                		<td>\${item.lecture.lecHcnt}</td></tr>`
+	                		<td>\${item.lecture.lecHcnt}</td>
+	                		<td>\${item.lecApply.lecaCd}</td>
+	                		`
 	            });
 					$("#resultTable").append(updateInsertData);
 		}

@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.AllTimeLectures;
 import kr.or.ddit.domain.College;
+import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.service.AllTimeLecturesService;
+import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.Impl.AllTimeLecturesServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -28,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AllTimeLecturesController {
 	@Autowired
 	AllTimeLecturesService allTimeLecturesService;
+	LectureApplyService lectureApplyService;
 	
 	@GetMapping("/main")
 	public String searchMain(Model model) {
@@ -35,6 +38,9 @@ public class AllTimeLecturesController {
 		List<AllTimeLectures> atlsList = this.allTimeLecturesService.AllTimeLectrueList(atls);
 		model.addAttribute("bodyTitle","역대강의조회");
 		model.addAttribute("atlsList", atlsList);
+		for (AllTimeLectures allTimeLectures : atlsList) {
+			log.info("강의계획코드 가온나 : " + allTimeLectures.getLecApply().getLecaCd());
+		}
 		//forwarding
 		return "atls/main";
 	}
@@ -58,6 +64,15 @@ public class AllTimeLecturesController {
 		log.info("서비스 작업 후 데이터 : " + data.toString());
 		log.info("검색된 인덱스수 :  " + data.size());
 		return data;
+	}
+	
+	@GetMapping("/detail")
+	public String lectureDetail(Model model, int lecaCd) {
+		log.info("디테일임다");
+		log.info("강의계획코드 : " + lecaCd);
+		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
+		model.addAttribute("lecApplyList",lecApplyList);
+		return "atls/detail";
 	}
 	
 	// 검색어 값이 들어오지 않았을 시 null 처리 해주는 메소드
