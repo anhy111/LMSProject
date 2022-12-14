@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 
 <!-- 게시판상세 -->
 <!-- ================================================= -->
@@ -15,21 +16,26 @@
                 <h2 class="card-header">상세보기</h2>
 
                 <div class="card-body m-3">
+                    <form role="form" method="post" name="form">
+                        <sec:csrfInput/>
                     <div class="row">
                         <table class="table table-bordered">
-                            <caption>New York City Marathon Results 2013</caption>
+
                             <tbody>
                             <tr>
-                                <th style="width:10%">[${form.noticeCd}]제목</th>
-                                <td colspan="5" class="table-title">${form.noticeTtl}</td>
+                                <th style="width:10%">글 번호[ ${form.qnaCd} ]</th>
+                                <input type="text" name="qnaCd" value="${form.qnaCd}" readonly="readonly"/>
+                                <td colspan="5" class="table-title">글 제목<input type="text" name="qnaTtl" value="${form.qnaTtl}"></td>
+
                             </tr>
+
                             <tr>
                                 <th style="width:10%">작성자</th>
                                 <td style="width:20%" class="table-title">작성자 넣기</td>
-                                <th style="width:10%">날짜</th>
-                                <td style="width:20%" class="table-title">${form.noticeReg}</td>
-                                <th style="width:10%">날짜</th>
-                                <td style="width:20%" class="table-title">${form.noticeUpd}</td>
+                                <th style="width:10%">작성날짜</th>
+                                <td style="width:20%" class="table-title">${form.qnaDt}</td>
+                                <th style="width:10%">수정날짜</th>
+                                <td style="width:20%" class="table-title">${form.qnaDt}</td>
                                 <th style="width:10%">조회수</th>
                                 <td style="width:10%" class="table-title">조회수 넣기</td>
                             </tr>
@@ -41,27 +47,28 @@
                             </tr>
                             <tr>
                                 <td colspan="6" class="table-title">
-                                    <p class="m-3">
-                                        ${form.noticeCon}
-                                    </p>
+                                    <label for="content"></label>
+
+                                    <textarea class="textarea" name="qnaCon" id="content"
+                                              rows="20" placeholder="1000자 내외로 작성하세요."
+                                              style="display: block;"><c:out value="${form.qnaCon}"/></textarea>
                                 </td>
                             </tr>
 
                             </tbody>
                         </table>
+                    </form>
                     </div>
 
                     <!-- ================================================= -->
                     <!-- 버튼 시작 -->
                     <!-- ================================================= -->
                     <div class="row justify-content-end mt-3">
-                        <button class="btn btn-outline-primary m-1" type="button"
-                                onclick="location.href='/notice/update/${form.noticeCd}'">수정
-                        </button>
+                        <button class="btn btn-outline-primary" type="button" onclick="modify_go();">수정하기</button>
                         <button class="btn btn-outline-danger m-1" type="button"
-                                onclick="location.href='/notice/delete/${form.noticeCd}'">삭제
+                                onclick="location.href='/qna/delete/${form.qnaCd}'">삭제
                         </button>
-                        <button class="btn btn-primary m-1" type="button" onclick="location.href='/notice/list'">목록
+                        <button class="btn btn-primary m-1" type="button" onclick="location.href='/qna/main'">목록
                         </button>
                     </div>
                     <!-- ================================================= -->
@@ -95,4 +102,8 @@
 
     }
 
+    function modify_go(){
+        var form=$('form[role="form"]');
+        form.submit();
+    }
 </script>

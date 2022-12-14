@@ -62,11 +62,6 @@
 						<!-- ================================================= -->
 						<div class="row justify-content-end mt-3"
 							style="padding-right: 30px; padding-bottom: 50px;">
-
-							<!--                <button class="btn btn-info" type="button" onclick="">수정</button>&nbsp; -->
-							<!--                <button class="btn btn-secondary" type="button" onclick="">삭제</button>&nbsp; -->
-							<!--                <button class="btn btn-primary" type="button" onclick="">목록</button>&nbsp; -->
-							<!--                <br> -->
 							<button class="btn btn-outline-primary" type="button" onclick="modify_go();">수정하기</button>
 							&nbsp;&nbsp;
 							<button class="btn btn-outline-danger" type="button"
@@ -174,6 +169,5 @@ function remove_go(dataNum){
 function modify_go(){
 	var form=$('form[role="form"]');
 	form.submit();
-
 }
 </script>

@@ -26,20 +26,17 @@
 <!--    </select>-->
 
     <!-- 공지사항 등록 -->
-    <select id="noticeBasicSave" resultType="NoticeBasic">
+    <insert id="noticeBasicSave" parameterType="NoticeBasic">
 
-        INSERT INTO NOTICE_BASIC (NOTICE_CD,
-                                  NOTICE_TTL,
-                                  NOTICE_REG,
-                                  NOTICE_UPD,
-                                  NOTICE_CON)
-
-        VALUES (NOTICEBASIC_SEQ.NEXTVAL,
-                #{noticeTtl},
-                SYSDATE,
-                SYSDATE,
-                #{noticeCon})
-    </select>
+        INSERT INTO NOTICE_BASIC
+        VALUES
+            (
+            NOTICEBASIC_SEQ.NEXTVAL,
+            #{noticeTtl},
+            SYSDATE,
+            #{noticeCon}
+            )
+    </insert>
 
     <!-- 공지사항 수정 -->
     <update id="noticeBasicUpdate" parameterType="NoticeBasic">
@@ -47,7 +44,7 @@
         SET
             NOTICE_TTL = #{noticeTtl},
             NOTICE_CON = #{noticeCon},
-            NOTICE_UPD = SYSDATE
+            NOTICE_REG = SYSDATE
         WHERE
             NOTICE_CD = #{noticeCd}
     </update>

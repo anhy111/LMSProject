@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
+@Getter @Setter
 public class Qna {
 
     private Long qnaCd;
@@ -21,5 +21,17 @@ public class Qna {
     public Qna(String qnaTtl, String qnaCon) {
         this.qnaTtl = qnaTtl;
         this.qnaCon = qnaCon;
+    }
+
+    @Override
+    public String toString() {
+        return "Qna{" +
+                "qnaCd=" + qnaCd +
+                ", memNo=" + memNo +
+                ", qnaTtl='" + qnaTtl + '\'' +
+                ", qnaCon='" + qnaCon + '\'' +
+                ", qnaDt=" + qnaDt +
+                ", qnaYn=" + qnaYn +
+                '}';
     }
 }

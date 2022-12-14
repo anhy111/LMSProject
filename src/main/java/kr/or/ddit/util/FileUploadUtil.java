@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class FileUploadUtil {
 	ManageService manageService;
 
 	//파일 업로드 실행 + DB처리
-	public int fileUploadAction(MultipartFile[] multipartFiles) {
+	public int fileUploadAction(MultipartFile[] multipartFiles, HttpServletRequest req) {
 		log.info("파일 업로드를 수행합니다.");
 
 		uploadFolder = "C:\\upload";

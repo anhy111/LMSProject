@@ -1,17 +1,11 @@
-package kr.or.ddit.service.Impl;
-
-import java.util.List;
+package kr.or.ddit.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.StudentLecture;
-import kr.or.ddit.mapper.ApprovalMapper;
-import kr.or.ddit.mapper.LectureMapper;
 import kr.or.ddit.mapper.StudentLectureApplyMapper;
-import kr.or.ddit.service.ApprovalService;
 import kr.or.ddit.service.StudentLectureApplyService;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package kr.or.ddit.service.Impl;
+package kr.or.ddit.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

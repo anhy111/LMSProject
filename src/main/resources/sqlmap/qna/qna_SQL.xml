@@ -23,11 +23,15 @@
 			   )
 	</insert>
 
-	<delete id="deleteQ" parameterType="int">
-		delete from
-		qna
-		where qna_cd = #{qnaCd}
-	</delete>
+	<update id="update" parameterType="qna">
+		UPDATE QNA
+		SET
+			QNA_TTL = #{qnaTtl},
+			QNA_CON = #{qnaCon},
+			QNA_UPDATE = SYSDATE
+		WHERE
+			QNA_CD = #{qnaCd}
+	</update>
 
 
 </mapper>

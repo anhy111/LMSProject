@@ -55,7 +55,7 @@
 
                             <td class="dtr-control sorting_1" tabindex="0">${list.qnaCd}</td>
 
-                            <td><a href="/qna/qnaDetail/${list.qnaCd}/edit">${list.qnaTtl}
+                            <td><a href="/qna/qnaDetail/${list.qnaCd}/detail">${list.qnaTtl}
                                 <c:if test="${ date <= qnaRegDate }">
                                 <span class="badge badge-outline-warning badge-pill" style="float: right;">NEW</span>
                                 </c:if>
