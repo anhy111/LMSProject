@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Subject;
 import kr.or.ddit.domain.Weekplan;
 
 public interface LectureApplyMapper {
@@ -38,5 +39,14 @@ public interface LectureApplyMapper {
 
 	// 강의계획서 강의계획서 테이블
 	public int lecApplySubmit(LecApply lecaCd);
+	
+	// 강의계획서 주차계획 테이블
+	public int weekPlanSubmit(Map<String, Object> map);
+	
+	// 최대 lecaCd 알아내기
+	public int getMaxLecaCd();
+	
+	// 과목리스트 가져오기
+	public List<Subject> subList();
 	
 }

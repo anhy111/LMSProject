@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Subject;
 import kr.or.ddit.domain.Weekplan;
 
 public interface LectureApplyService {
@@ -28,6 +29,14 @@ public interface LectureApplyService {
 	public int lectureSubmit(LecApply subCd);
 
 	public int lecApplySubmit(LecApply lecaCd);
+
+	public int weekPlanSubmit(Map<String, Object> map);
+	
+	public int getMaxLecaCd();
+
+	public List<Subject> subList();
+
+
 
 
 }

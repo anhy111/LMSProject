@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.mapping.MapBasedAttributes2GrantedAuthoritiesMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Subject;
 import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.LectureApplyService;
 import lombok.extern.slf4j.Slf4j;
@@ -102,6 +104,30 @@ public class LectureApplyController {
 		return list;
 	}
 	
+	//강의계획서 리스트 년도/학기별 불러오기
+	@ResponseBody
+	@PostMapping("/lecApply/getListAgain")
+	public List<LecApply> getListAgain(HttpServletRequest request,
+			@RequestBody Map<String, Object> yrNsem) {
+		
+		log.info("어게인리스트 들어와라");
+		
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		
+		log.info("어게인리스트proNo : " + proNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("proNo", proNo);
+		map.put("yrNsem", yrNsem.get("yrNsem"));
+		
+		List<LecApply> list = this.lectureApplyService.list(map);
+		
+		log.info("list : " + list);
+		
+		return list;
+	}
+	
 	//제출한 강의계획서 개수 가져오기
 	@ResponseBody
 	@PostMapping("/lecApply/getCnt")
@@ -113,7 +139,7 @@ public class LectureApplyController {
 		int proNo = (int)session.getAttribute("no");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("개수proNo", proNo);
+		map.put("empNo",""+ proNo);
 		map.put("yrNsem", yrNsem.get("yrNsem"));
 		
 		log.info("getCnt map : " + map);
@@ -171,7 +197,8 @@ public class LectureApplyController {
 	@Transactional
 	@ResponseBody
 	@PostMapping("/lecApplyForm/lecApplySubmit")
-	public int lecApplySubmit(HttpServletRequest request, @RequestBody LecApply lecApply) {
+	public int lecApplySubmit(HttpServletRequest request
+			, @RequestBody LecApply lecApply) {
 		
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
@@ -191,13 +218,41 @@ public class LectureApplyController {
 		}
 		//3. lec_apply 테이블에 값 넣기
 		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecApply);
+		int lecaCd = this.lectureApplyService.getMaxLecaCd();
 		if (lecApplyResult < 0) {
 			log.info("lecApply실패");
 			return 0;
 		}
+		//4. weekplan 테이블에 값 넣기
+//		Map<String, Object> weekMap = new HashMap<String, Object>();
+//		weekMap.put("lecaCd", lecaCd);
+//		
+//		for(int i = 1; i <= 15; i++) {
+//			weekMap.put("wpNo"+i, i);
+//			weekMap.put("wpCon"+i, map.get("weekPlan" + i));
+		
+		
+//			
+//			this.lectureApplyService.weekPlanSubmit(weekMap);
+//		}
+//		
+//		int weekPlanResult = this.lectureApplyService.weekPlanCount(lecaCd);
+//		if (weekPlanResult < 0) {
+//			log.info("weekPlan실패");
+//			return 0;
+//		}
 		
 		return subjectResult + lectureResult + lecApplyResult;
 	}
 	
+	//과목 리스트 불러오기
+	@ResponseBody
+	@PostMapping("/lecApplyForm/getSubList")
+	public List<Subject> getSubList() {
+		
+		List<Subject> list = this.lectureApplyService.subList();
+		
+		return list;
+	}
 	
 }

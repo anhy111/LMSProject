@@ -128,14 +128,107 @@
 
 </body>
 <script type="text/javascript" defer="defer">
+
+	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+	
+	console.log("header : " + header + ", token : " + token);
+	
+	//년도/학기별 리스트 다시 뿌리기
+	function getListAgain(yrNsem) {
+		
+		getCnt(yrNsem);
+		
+		yrNsem = $(yrNsem).val();
+		
+		let dataObject = {
+			yrNsem : yrNsem
+		};
+		
+		//proList 비우고 다시 불러오기
+		$.ajax({
+			url: "/professor/lecApply/getListAgain",
+			type: "POST",
+			data : JSON.stringify(dataObject),
+			contentType: "application/json;charset=utf-8",
+			dataType: "JSON",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success: function (data) {
+				
+				$('#proList').empty();
+				
+				console.log("떠라떠라떠랑");
+				console.log("떠라떠라떠랑:",data);
+				let str ="";
+				for(var i=0;i<data.length;i++){
+					str += `
+						<tr>
+						<td>\${data[i].lecaYs}</td>
+						<td>\${data[i].lecaTrg }</td>
+						<td>\${data[i].subCd }</td>
+						<td>\${data[i].lecaNm }</td>
+						<td>\${data[i].lecaCap }</td>
+						<td>\${data[i].lecaCate }</td>
+						<td>\${data[i].lecaCrd }</td>
+						<td>\${data[i].lecaTc }</td>
+						<td>\${data[i].lecaGrade }</td>
+						<td class='checklecaAp'>\${data[i].lecaApproval }</td>
+						<td><button class='inquirydetail' value='\${data[i].lecaCd}'>상세보기</button></td>
+						</tr>
+					`
+				}
+				$("#proList").html(str);
+
+				//승인, 승인대기, 반려 글자색 변경
+				$(function(){
+					for(var i=0; i<data.length;i++){
+						console.log($(".checklecaAp").eq(i).html());
+						if($(".checklecaAp").eq(i).html() == '반려'){
+							$(".checklecaAp").eq(i).css("color","red");
+						}else if($(".checklecaAp").eq(i).html() == '승인'){
+							$(".checklecaAp").eq(i).css("color","blue");
+						}
+					}
+				});
+			}
+		});
+	}
+	
+	//count 불러오기
+	function getCnt(yrNsem) {
+		console.log("카운트 이론상 와야지");
+
+		yrNsem = $(yrNsem).val();
+		
+		console.log(yrNsem);
+
+		let dataObject = {
+			"yrNsem": yrNsem
+		};
+
+		console.log("dataObject : " + JSON.stringify(dataObject));
+		
+		$.ajax({
+			url: "/professor/lecApply/getCnt",
+			type: "POST",
+			data: JSON.stringify(dataObject),
+			contentType: "application/json;charset=utf-8",
+			dataType: "JSON",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success: function (res) {
+				console.log("개수 : " + res)
+				$("#cntSpan").text(res);
+			}
+		});
+	}
+	
 	window.onload = function () {
 		console.log("여기까지 오긴하냐?");
-
-		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
-		let header = "${_csrf.headerName}";
-		let token = "${_csrf.token}";
-
-		console.log("header : " + header + ", token : " + token);
 
 		//교수 개인정보 가져오기
 		$.ajax({
@@ -171,7 +264,7 @@
 				str = '';
 
 				$.each(res, function (i, v) {
-					str += '<option value="' + v.lecaYr + v.lecaSem + '">' + v.lecaYr + '/' + v.lecaSem + '학기</option>';
+					str += '<option value="' + v.lecaYr + v.lecaSem + '">' + v.lecaYr + '/' + v.lecaSem + '</option>';
 				});
 
 				$('#cateYrNSem').append(str);
@@ -180,7 +273,6 @@
 
 		//강의계획서 리스트 가져오기
 		$.ajax({
-
 			url: "/professor/lecApply/list",
 			type: "POST",
 			contentType: "application/json;charset=utf-8",
@@ -193,8 +285,8 @@
 				console.log("떠라떠라떠랑:",data);
 				let str ="";
 				for(var i=0;i<data.length;i++){
-					str = `
-						<input type='hidden' value='\${data[i].lecaCd}'id='inquiryLecaCd'/>
+					str += `
+						<tr>
 						<td>\${data[i].lecaYs}</td>
 						<td>\${data[i].lecaTrg }</td>
 						<td>\${data[i].subCd }</td>
@@ -202,57 +294,41 @@
 						<td>\${data[i].lecaCap }</td>
 						<td>\${data[i].lecaCate }</td>
 						<td>\${data[i].lecaCrd }</td>
-						<td>\${data[i].lecaTt }</td>
+						<td>\${data[i].lecaTc }</td>
 						<td>\${data[i].lecaGrade }</td>
-						<td id='checklecaAp'>\${data[i].lecaApproval }</td>
-						<td><button id='inquirydetail' ${data[i].proNo}>상세보기</button></td>
+						<td class='checklecaAp'>\${data[i].lecaApproval }</td>
+						<td><button class='inquirydetail' value='\${data[i].lecaCd}'>상세보기</button></td>
+						</tr>
 					`
 				}
 				$("#proList").html(str);
 
-				//승인, 대기, 반려 글자색 변경
-				if($("#checklecaAp").html() == "승인"){
-					$("#checklecaAp").css("color","blue");
-				}else if($("#checklecaAp").html() == "반려"){
-					$("#checklecaAp").css("color","red");
-				}else if($("#checklecaAp").html() == "승인대기"){
-					$("#checklecaAp").css("color","black");
-				}
+				//승인, 승인대기, 반려 글자색 변경
+				$(function(){
+					for(var i=0; i<data.length;i++){
+						console.log($(".checklecaAp").eq(i).html());
+						if($(".checklecaAp").eq(i).html() == '반려'){
+							$(".checklecaAp").eq(i).css("color","red");
+						}else if($(".checklecaAp").eq(i).html() == '승인'){
+							$(".checklecaAp").eq(i).css("color","blue");
+						}
+					}
+				});
 			}
 		});
-
-		//count 불러오기
-		function getCnt(yrNsem) {
-			console.log("카운트 이론상 와야지");
-
-			yrNsem = $(yrNsem).val();
-
-			let dataObject = {
-				yrNsem: yrNsem
-			};
-
-			$.ajax({
-				url: "/professor/lecApply/getCnt",
-				type: "POST",
-				data: JSON.stringify(dataObject),
-				contentType: "application/json;charset=utf-8",
-				dataType: "JSON",
-				success: function (res) {
-					$("#cntSpan").text(res);
-				}
-			});
-		}
+		
 	}
-
+	
 </script>
 <script type="text/javascript">
 //강의계획서 상세페이지 출력
 let lecaCd;
-$(document).on('click', '#inquirydetail', function() {
+$(document).on('click', '.inquirydetail', function() {
 	console.log("상세 왜 안뜨냐고 ㅡㅡ");
-	lecaCd = $("#inquiryLecaCd").val();
+	lecaCd = this.value;
 	console.log("강의계획서 코드: " + lecaCd);
 	window.open("/professor/lecApplyForm/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
 });
+
 </script>
 </html>

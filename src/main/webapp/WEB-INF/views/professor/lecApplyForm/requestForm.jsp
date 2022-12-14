@@ -121,7 +121,7 @@
 		    		<i id="searchIcon" class="dripicons-search" style="font-size : 1.2em;"></i>
 	    		</td>
 	    		<th>학수번호</th>
-	    		<td><input type="text" id="subCd" name="subCd" size=32 placeholder="카테고리 선택 시 자동으로 입력됩니다."></td>
+	    		<td><input type="text" id="subCd" name="subCd" size=32 placeholder="카테고리 선택 시 자동으로 입력됩니다." readonly></td>
 	    	</tr>
 	    </table>
 	    
@@ -233,6 +233,44 @@
     </div>
 </body>
 <script type="text/javascript">
+
+	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+	
+	console.log("header : " + header + ", token : " + token);
+
+	function insertData() {
+		$('#lecaSem').val('2');
+		$('#lecaTrg').val('3');
+		$('#lecaCrd').val('3');
+		$('#lecaNm').val('고급 JAVA 프로그래밍');
+		$('#subCd').val('1');
+		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
+		$('#lecaCate').val('L102');
+		$('#lecaBook').val('교재 : 명품 JAVA Programming  / 황기태·김효수 저 / 생능출판');
+		$('#lecaCap').val('20');
+		$('#lecaMp').val('30');
+		$('#lecaFp').val('30');
+		$('#lecaTp').val('10');
+		$('#lecaAp').val('20');
+// 		$('#weekPlan1').val('자바에 대한 동기 유발');
+// 		$('#weekPlan2').val('Java 개발 환경 이해');
+// 		$('#weekPlan3').val('반복문과 배열 그리고 예외처리');
+// 		$('#weekPlan4').val('클래스와 객체');
+// 		$('#weekPlan5').val('상속');
+// 		$('#weekPlan6').val('모듈과 패키지 개념, 자바 기본 패키지');
+// 		$('#weekPlan7').val('제네릭과 컬렉션');
+// 		$('#weekPlan9').val('입출력 스트림과 파일 입출력');
+// 		$('#weekPlan10').val('GUI 프로그래밍');
+// 		$('#weekPlan11').val('자바의 이벤트 처리');
+// 		$('#weekPlan12').val('기본적인 스윙 컴포넌트와 활용');
+// 		$('#weekPlan13').val('그래픽');
+// 		$('#weekPlan14').val('프로젝트');
+// 		$('#weekPlan15').val('프로젝트');
+// 		$('#weekPlan16').val('기말고사');
+		$('#lecaNote').val('화요일 오전, 목요일 오전은 타 대학 강의가 있습니다.');
+	}
 	
 window.onload = function() {
 	
@@ -241,9 +279,78 @@ window.onload = function() {
 	
 	console.log("year : " + year);
 	
-	$("#lecaYr").val(year+"년");
+	$("#lecaYr").val(year);
 	
 	//검색어 자동완성 이벤트///////////////////////////////////////////////////////////////////////////////////////////
+	
+	var ref; //과목 리스트 (json)
+		
+		//과목 리스트 불러오기
+		$.ajax({
+			url : "/professor/lecApplyForm/getSubList",
+			type : "POST",
+			dataType : "JSON",
+			contentType : "application/json",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(res) {
+				ref = res;
+			}
+		});
+	
+		console.log("ref : " + ref);
+		
+		var isCompleted = false; //autoMaker 자식이 선택되었는지의 여부
+		
+		//search_area (input), autoMaker(비슷한 단어 뜨는 div)
+		//과목 카테고리 입력이 끝나면
+		$('#search_area').keyup(function() {
+			
+			var txt = $(this).val();
+			
+			if(txt != '') { //빈줄이 들어오면
+				$('#autoMaker').children().remove();
+			
+				ref.forEach(function(arg) {
+					if(arg.subNm.indexOf(txt) > -1) {
+						$('#autoMaker').append(
+							$('<div class="subBlock">').text(arg.subNm + "(" + arg.subCd + ")").attr({'key':arg.subCd})
+						);
+					}
+				});
+				
+				$('#autoMaker').children().each(function(){
+		            $(this).click(function(){ //클릭해서 선택한 경우
+		                $('#search_area').val($(this).text());
+		                $('#autoMaker').children().remove();	
+		                $('#subCd').val($(this).attr('key'));
+		                isComplete = true;
+		                
+		                $('#autoMaker').css("display", "none"); //autoMaker를 사라지게 함
+		            });
+		        });
+			}else {
+				$('#autoMaker').children().remove();
+			}
+		});
+		
+		//과목 카테고리 입력이 시작되면
+		$('#search_area').keydown(function(event) {
+			$('#autoMaker').css("display", "block"); //autoMaker를 보이게 함
+			
+			if(isComplete) {  //autoMaker 자식이 선택 되었으면 초기화
+		        $('#insert_target').val('')	
+		    }
+		});
+		
+		$('#searchIcon').on('click', function() {
+			if($('#autoMaker').css("display") == "none") {
+				$('#autoMaker').show();
+			}else {
+				$('#autoMaker').hide();
+			}
+		});
 	
 	//더보기 버튼을 누르면
 	$('#showMoreTrs').on('click', function() {
@@ -345,6 +452,7 @@ window.onload = function() {
 		}
 	});
 	
+	//시간표 작성
 	$('#timeTableBtn').on('click', function() {
 		
 		$('#textArea4time').empty();
@@ -377,7 +485,62 @@ window.onload = function() {
 		$('#textArea4time').append(str);
 	});
 	
-	let lecaTm
+	//임시저장 버튼 클릭 시
+	$('#temporarySubmitBtn').on('click', function() {
+		let dataObject = {
+			lecaYr : $('#lecaYr').val(),
+			lecaSem : $('#lecaSem').val(),
+			lecaTrg : $('#lecaTrg').val(),
+			lecaCrd : $('#lecaCrd').val(),
+			lecaNm : $('#lecaNm').val(),
+			subCd : $('#subCd').val(),
+			lecaCon : $('#lecaCon').val(),
+			lecaCate : $('#lecaCate').val(),
+			lecaBook : $('#lecaBook').val(),
+			lecaGrade : $('#lecaGrade').val(),
+			lecaCap : $('#lecaCap').val(),
+			lecaTt : $('#textArea4time').val(),
+			lecaMp : $('#lecaMp').val(),
+			lecaFp : $('#lecaFp').val(),
+			lecaTp : $('#lecaTp').val(),
+			lecaAp : $('#lecaAp').val(),
+			weekPlan1 : $('#weekPlan1').val(),
+			weekPlan2 : $('#weekPlan2').val(),
+			weekPlan3 : $('#weekPlan3').val(),
+			weekPlan4 : $('#weekPlan4').val(),
+			weekPlan5 : $('#weekPlan5').val(),
+			weekPlan6 : $('#weekPlan6').val(),
+			weekPlan7 : $('#weekPlan7').val(),
+			weekPlan8 : $('#weekPlan8').val(),
+			weekPlan9 : $('#weekPlan9').val(),
+			weekPlan10 : $('#weekPlan10').val(),
+			weekPlan11 : $('#weekPlan11').val(),
+			weekPlan12 : $('#weekPlan12').val(),
+			weekPlan13 : $('#weekPlan13').val(),
+			weekPlan14 : $('#weekPlan14').val(),
+			weekPlan15 : $('#weekPlan15').val(),
+			weekPlan16 : $('#weekPlan16').val(),
+			lecaNote : $('#lecaNote').val()
+		}
+		
+		$.ajax({
+			url : "/lecApply/temporarySubmit",
+			type : "POST",
+			data : JSON.stringify(dataObject),
+			dataType : "JSON",
+			contentType : "application/json;charset=utf-8",
+			success : function(res) {
+				if(res == 1) {
+					alert("임시저장이 완료되었습니다.");
+				}else {
+					alert("다시 시도해주세요.");
+				}
+				
+				opener.parent.location.reload();
+				window.close();
+			}
+		});
+	});
 	
 	//제출 버튼 클릭 시
 	$('#realSubmitBtn').on('click', function() {
@@ -393,12 +556,27 @@ window.onload = function() {
 				lecaBook : $('#lecaBook').val(),
 				lecaGrade : $('#lecaGrade').val(),
 				lecaCap : $('#lecaCap').val(),
-				lecaTm : $("#textArea4time").val(),
-			    lecaWk : $("#textArea4time").val(),
+				lecaTt : $("#textArea4time").val(),
 				lecaMp : $('#lecaMp').val(),
 				lecaFp : $('#lecaFp').val(),
 				lecaTp : $('#lecaTp').val(),
 				lecaAp : $('#lecaAp').val(),
+// 				weekPlan1 : $('#weekPlan1').val(),
+// 				weekPlan2 : $('#weekPlan2').val(),
+// 				weekPlan3 : $('#weekPlan3').val(),
+// 				weekPlan4 : $('#weekPlan4').val(),
+// 				weekPlan5 : $('#weekPlan5').val(),
+// 				weekPlan6 : $('#weekPlan6').val(),
+// 				weekPlan7 : $('#weekPlan7').val(),
+// 				weekPlan8 : $('#weekPlan8').val(),
+// 				weekPlan9 : $('#weekPlan9').val(),
+// 				weekPlan10 : $('#weekPlan10').val(),
+// 				weekPlan11 : $('#weekPlan11').val(),
+// 				weekPlan12 : $('#weekPlan12').val(),
+// 				weekPlan13 : $('#weekPlan13').val(),
+// 				weekPlan14 : $('#weekPlan14').val(),
+// 				weekPlan15 : $('#weekPlan15').val(),
+// 				weekPlan16 : $('#weekPlan16').val(),
 				lecaNote : $('#lecaNote').val()
 			}
 			
@@ -407,6 +585,9 @@ window.onload = function() {
 				type : "POST",
 				data : JSON.stringify(dataObject),
 				dataType : "JSON",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token);
+				},
 				contentType : "application/json;charset=utf-8",
 				success : function(res) {
 					if(res == 3) {
@@ -422,6 +603,5 @@ window.onload = function() {
 	});
 	
 }
-
 </script>
 </html>
