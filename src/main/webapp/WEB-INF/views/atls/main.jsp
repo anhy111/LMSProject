@@ -4,16 +4,16 @@
 
 <div class="card">
 		<div class="row">
-			<div style="float:center;" class="col-12">
+			<div style="float:center;" class="col-12 ml-2">
 					<select id="typingKeyword">
-						<option selected>교수/강의명</option>
+						<option selected value="교수/강의명">교수/강의명</option>
 						<option id="empNm" value="empNm">교수명</option>
 						<option id="lecaNm" value="lecaNm">강의명</option>
 					</select>
 				<input id="typingKeywordInput" type="text" placeholder="검색어를입력하세요"/>
 				<button onclick="searchRun()" class="btn btn-sm btn-info">검색</button>
 			</div>
-			<div>
+			<div class="ml-2">
 				<select  id="lecYn" name="lecYn">
 					<option selected value="개강유무">개강유무</option>
 					<option value="Y">개강</option>
@@ -65,16 +65,16 @@
 					<option value="컴퓨터공학">컴퓨터공학</option>
 				</select>
 			</div>
-			<div>
-				<button class="btn btn-sm btn-danger">키워드초기화</button>
+			<div class="ml-2">
+				<button class="btn btn-sm btn-danger" onclick="resetKeyword()">키워드초기화</button>
 			</div>
 		</div>
 	<div class="card-body">
-		<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+		<div id="example1_wrapper" >
 			<div class="row">
 				<div class="col-sm-12">
 					<table id="example1"
-						class="table table-bordered table-striped dataTable dtr-inline"
+						class="table table-bordered table-striped"
 						aria-describedby="example1_info">
 						<thead>
 							<tr>
@@ -126,6 +126,10 @@
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
 									cursorshover="true">수강중인인원</th>
+								<th class="sorting" tabindex="0" aria-controls="example1"
+									rowspan="1" colspan="1"
+									aria-label="CSS grade: activate to sort column ascending"
+									cursorshover="true">상세보기</th>
 							</tr>
 						</thead>
 						<tbody id="resultTable">
@@ -149,6 +153,7 @@
 								<td>${atlsList.lecApply.lecaCrd}</td>
 								<td>${atlsList.lecture.lecYn}</td>
 								<td>${atlsList.lecture.lecHcnt}</td>
+								<td><button id="lectureDetail" class="btn btn-sm btn-primary"  value="${atlsList.lecApply.lecaCd }">상세보기</button></td>
 							</c:forEach>
 						</tbody>
 						<tfoot>
@@ -165,6 +170,7 @@
 								<th rowspan="1" colspan="1">배정학점</th>
 								<th rowspan="1" colspan="1">개설여부</th>
 								<th rowspan="1" colspan="1">수강중인인원</th>
+								<th rowspan="1" colspan="1">상세보기</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -179,6 +185,7 @@ let token = "${_csrf.token}";
 let updateInsertData = "";
 let typingKeyword = "";
 let typeKeywordInput = "";
+let lecaCd = "";
 let data = { colNm : "단과대검색어"
 		          , depNm : "학과검색어"
 	              , subNm : "과목검색어"
@@ -188,9 +195,19 @@ let data = { colNm : "단과대검색어"
 	              , empNm : "교수/강의명"
 	              , lecaNm : "교수/강의명"
 	        	  };
-//만들어줄예정
+$(document).on('click','#lectureDetail',function(){
+	lecaCd = this.value;
+	console.log(lecaCd);
+	window.open("/atls/detail?lecaCd="+lecaCd,"lectureDetail", "width=1000, height=800, left=100, top=50");
+});        	  
 function resetKeyword(){
-	$("#typingKeyword")
+	$("#typingKeyword option:eq(0)").prop("selected",true);
+	$("#colNm option:eq(0)").prop("selected",true);
+	$("#depNm option:eq(0)").prop("selected",true);
+	$("#subNm option:eq(0)").prop("selected",true);
+	$("#lecaCate option:eq(0)").prop("selected",true);
+	$("#lecaSem option:eq(0)").prop("selected",true);
+	$("#lecYn option:eq(0)").prop("selected",true);
 }
 
 function setSearchData(){
@@ -203,7 +220,6 @@ function setSearchData(){
 }
 
 function cumulativeSearchData(){
-	console.log("제이슨데이터 : " + JSON.stringify(data));
 	$.ajax({
 		url:"/atls/search",
 		type:'POST',
@@ -229,7 +245,9 @@ function cumulativeSearchData(){
 	                		<td>\${item.lecApply.lecaTrg}</td>
 	                		<td>\${item.lecApply.lecaCrd}</td>
 	                		<td>\${item.lecture.lecYn}</td>
-	                		<td>\${item.lecture.lecHcnt}</td></tr>`
+	                		<td>\${item.lecture.lecHcnt}</td>
+	                		<td>\${item.lecApply.lecaCd}</td>
+	                		`
 	            });
 					$("#resultTable").append(updateInsertData);
 		}
