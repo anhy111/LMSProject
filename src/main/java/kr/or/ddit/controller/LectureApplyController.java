@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -167,31 +168,35 @@ public class LectureApplyController {
 	}
 	
 	//강의계획서 작성 후 제출하기
+	@Transactional
 	@ResponseBody
 	@PostMapping("/lecApplyForm/lecApplySubmit")
-	public int lecApplySubmit(HttpServletRequest request, Model model) {
+	public int lecApplySubmit(HttpServletRequest request, @RequestBody LecApply lecApply) {
 		
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
+		lecApply.setProNo(proNo);
 		
-		//1. lec_apply 테이블에 값 넣기
-		int lecApplyResult = this.lectureApplyService.lecApplySubmit(proNo);
-//		int lecaCd = this.lectureApplyService.getMaxLecaCd();
+		//1. subject 테이블에 값 넣기
+		int subjectResult = this.lectureApplyService.subjectSubmit(lecApply);
+		if (subjectResult < 0) {
+			log.info("subject실패");
+			return 0;
+		}
+		//2. lecture 테이블에 값 넣기
+		int lectureResult = this.lectureApplyService.lectureSubmit(lecApply);
+		if (lectureResult < 0) {
+			log.info("lecture실패");
+			return 0;
+		}
+		//3. lec_apply 테이블에 값 넣기
+		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecApply);
+		if (lecApplyResult < 0) {
+			log.info("lecApply실패");
+			return 0;
+		}
 		
-		//2. weekplan 테이블에 값 넣기 (wp_no, leca_cd, wp_con);
-//		Map<String, Object> weekMap = new HashMap<String, Object>();
-//		weekMap.put("lecaCd", lecaCd);
-//		
-//		for(int i = 1; i <= 15; i++) {
-//			weekMap.put("wpNo", i);
-//			weekMap.put("wpCon", map.get("weekPlan" + i));
-//			
-//			this.lectureApplyService.weekPlanSubmit(weekMap);
-//		}
-//		
-//		int weekPlanResult = this.lectureApplyService.weekPlanCount(lecaCd);
-		//  + criteriaResult + weekPlanResult
-		return lecApplyResult;
+		return subjectResult + lectureResult + lecApplyResult;
 	}
 	
 	

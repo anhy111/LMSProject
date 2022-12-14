@@ -3,7 +3,7 @@
 <mapper namespace="kr.or.ddit.mapper.LectureApplyMapper">
 	<sql id="yrNsem">
 		<if test="yrNsem != null and !yrNsem.equals('')">
-			AND     U.LECA_YR || U.LECA_SEM = #{yrNsem}
+			AND     L.LECA_YR || L.LECA_SEM = #{yrNsem}
 		</if>
 	</sql>
 
@@ -181,38 +181,93 @@
 		ORDER BY WP_NO
 	</select>
 	
-<!-- 	<insert id="lecApplySubmit" parameterType="int"> -->
-<!-- 		<selectKey order="BEFORE" keyProperty="leca_cd" -->
-<!-- 				resultType="int"> -->
-<!-- 			SELECT MAX(LECA_CD)+1 -->
-<!-- 			FROM LEC_APPLY -->
-<!-- 		</selectKey> -->
-<!-- 		INSERT INTO lec_apply ( -->
-<!-- 		    leca_cd -->
-<!-- 		    , sub_cd -->
-<!-- 		    , pro_cd -->
-<!-- 		    , leca_cate -->
-<!-- 		    , leca_yr -->
-<!-- 		    , leca_sem -->
-<!-- 		    , leca_nm -->
-<!-- 		    , leca_con -->
-<!-- 		    , leca_trg -->
-<!-- 		    , leca_crd -->
-<!-- 		    , leca_per -->
-<!-- 		    , leca_max -->
-<!-- 		    , leca_book -->
-<!-- 		    , leca_note -->
-<!-- 		    , leca_dt -->
-<!-- 		    , leca_grade -->
-<!-- 		    , leca_yn -->
-<!-- 		    , leca_tt -->
-<!-- 		) VALUES ( -->
-<!-- 		    LECAPPLY_SEQ.NEXTVAL, #{subCd}, #{proCd}, #{lecaCate}, -->
-<!-- 		    #{lecaYr}, SYSDATE, #{lecaNm}, #{lecaCon}, #{lecaTrg},  -->
-<!-- 		    #{lecaCrd}, #{lecaCrd}, #{lecaMax}, #{lecaBook}, #{lecaNote}, -->
-<!-- 		    SYSDATE, #{lecaGrade}, 0, #{lecaTt} -->
-<!-- 		) -->
-<!-- 	</insert> -->
+	<insert id="subjectSubmit" parameterType="int">
+		INSERT INTO SUBJECT (
+		            , SUB_CD
+		            , PRO_NO
+		            , DEP_CD
+		            , SUB_NM
+		) VALUES (
+		    #{subCd}
+		    , #{proNo}
+		    , #{depCd}
+		    , #{subNm}
+		);
+	</insert>
+	
+	<insert id="lectureSubmit" parameterType="int">
+		INSERT INTO LECTURE (
+		            , LECA_CD
+		            , SUB_CD
+		            , LEC_YN
+		            , LEC_HCNT
+		            , LECA_YN
+		            , DEP_CD
+		) VALUES (
+		    #{lecaCd}
+		    , #{subCd}
+		    , #{lecHcnt}
+		    , #{lecaYn}
+		    , #{depCd}
+		);
+	</insert>
+	
+	<insert id="lecApplySubmit" parameterType="int">
+		<selectKey order="BEFORE" keyProperty="leca_cd"
+				resultType="int">
+			SELECT MAX(LECA_CD)+1
+			FROM LEC_APPLY
+		</selectKey>
+		INSERT INTO LEC_APPLY (
+		            , LECA_CD
+		            , LECA_YR
+		            , LECA_SEM
+		            , LECA_NM
+		            , LECA_CON
+		            , LECA_TRG
+		            , LECA_CRD
+		            , LECA_PER
+		            , LECA_CAP
+		            , LECA_TM
+		            , LECA_WK
+		            , LECA_HALL
+		            , LECA_UNIT
+		            , LECA_BOOK
+		            , LECA_NOTE
+		            , LECA_DT
+		            , LECA_GRADE
+		            , LECA_IMSI_YN
+		            , LECA_CATE
+		            , LECA_MP
+		            , LECA_FP
+		            , LECA_TP
+		            , LECA_AP
+		            , PRO_NO
+		) VALUES (
+		    #{lecaCd}
+		    , #{lecaYr}
+		    , #{lecaSem}
+		    , #{lecaNm}
+		    , #{lecaCon}
+		    , #{lecaTrg}
+		    , #{lecaCrd}
+		    , #{lecaPer}
+		    , #{lecaCap}
+		    , #{lecaTm}
+		    , #{lecaWk}
+		    , #{lecaBook}
+		    , #{lecaNote}
+		    , SYSDATE
+		    , #{lecaGrade}
+		    , 0
+		    , #{lecaCate}
+		    , #{lecaMp}
+		    , #{lecaFp}
+		    , #{lecaTp}
+		    , #{lecaAp}
+		    , #{proNo}
+		);
+	</insert>
 	
 	
 </mapper>

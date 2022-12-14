@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Lecture;
@@ -61,6 +62,12 @@ public class LectureServiceImpl implements LectureService{
 		public Task detailTask(String taskCd, String lecaCd) {
 			return this.lectureMapper.detailTask(taskCd, lecaCd);
 		}
+	
+	//강의 과제 삭제
+	@Override
+		public int deleteTask(String lecaCd,String taskCd) {
+		return this.lectureMapper.deleteTask(lecaCd, taskCd);
+	}
 
 	@Override
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture) {

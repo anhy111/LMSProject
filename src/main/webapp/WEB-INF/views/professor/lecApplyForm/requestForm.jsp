@@ -66,7 +66,7 @@
 	    	<tr>
 	    		<th>년도</th>
 	    		<td>
-	    			<select id="lecaYr" id="lecaYr"></select>
+	    			<input type="text" id="lecaYr" name="lecaYr" size=30 value="" readonly>
 	    		</td>
 	    		<th>학기</th>
 	    		<td>
@@ -121,7 +121,7 @@
 		    		<i id="searchIcon" class="dripicons-search" style="font-size : 1.2em;"></i>
 	    		</td>
 	    		<th>학수번호</th>
-	    		<td><input type="text" id="subCd" name="subCd" size=32 placeholder="카테고리 선택 시 자동으로 입력됩니다." readonly disabled></td>
+	    		<td><input type="text" id="subCd" name="subCd" size=32 placeholder="카테고리 선택 시 자동으로 입력됩니다."></td>
 	    	</tr>
 	    </table>
 	    
@@ -152,22 +152,20 @@
 	    			</select>
 	    		</td>
 	    		<th>최대정원</th>
-	    		<td colspan="2"><input type="text" id="lecaMax" name="subNm" size=5>&nbsp;명&emsp;※&nbsp;사이버강의는 0입력</td>
+	    		<td colspan="2"><input type="text" id="lecaCap" name="lecaCap" size=5>&nbsp;명&emsp;※&nbsp;사이버강의는 0입력</td>
 	    	</tr>
 	    	<tr>
 	    		<th rowspan="2">평가방법(%)</th>
 	    		<td style="width:116px; font-weight:bold; text-align:center;">중간고사</td>
 	    		<td style="width:116px; font-weight:bold; text-align:center;">기말고사</td>
 	    		<td style="width:116px; font-weight:bold; text-align:center;">과제</td>
-	    		<td style="width:116px; font-weight:bold; text-align:center;">퀴즈</td>
 	    		<td style="width:116px; font-weight:bold; text-align:center;">출결</td>
 	    	</tr>
 	    	<tr>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="crtrMp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="crtrFp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="crtrTp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="crtrAp" size=5>&nbsp;%</td>
-    			<td style="width:116px; text-align:center;"><input type="text" id="crtrQp" size=5>&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaMp" size=5>&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaFp" size=5>&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaTp" size=5>&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaAp" size=5>&nbsp;%</td>
 	    	</tr>
     	</table>
     	
@@ -235,282 +233,155 @@
     </div>
 </body>
 <script type="text/javascript">
-
-	function insertData() {
-		$('#lecaYr').val('2022');
-		$('#lecaSem').val('2');
-		$('#lecaTrg').val('3');
-		$('#lecaCrd').val('3');
-		$('#lecaNm').val('고급 JAVA 프로그래밍');
-		$('#subCd').val('26009');
-		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
-		$('#lecaCate').val('L102');
-		$('#lecaBook').val('교재 : 명품 JAVA Programming  / 황기태·김효수 저 / 생능출판');
-		$('#lecaGrade').val('E101');
-		$('#lecaMax').val('20');
-		$('#crtrMp').val('30');
-		$('#crtrFp').val('30');
-		$('#crtrTp').val('10');
-		$('#crtrAp').val('20');
-		$('#crtrQp').val('10');
-		$('#weekPlan1').val('자바에 대한 동기 유발');
-		$('#weekPlan2').val('Java 개발 환경 이해');
-		$('#weekPlan3').val('반복문과 배열 그리고 예외처리');
-		$('#weekPlan4').val('클래스와 객체');
-		$('#weekPlan5').val('상속');
-		$('#weekPlan6').val('모듈과 패키지 개념, 자바 기본 패키지');
-		$('#weekPlan7').val('제네릭과 컬렉션');
-		$('#weekPlan9').val('입출력 스트림과 파일 입출력');
-		$('#weekPlan10').val('GUI 프로그래밍');
-		$('#weekPlan11').val('자바의 이벤트 처리');
-		$('#weekPlan12').val('기본적인 스윙 컴포넌트와 활용');
-		$('#weekPlan13').val('그래픽');
-		$('#weekPlan14').val('프로젝트');
-		$('#weekPlan15').val('프로젝트');
-		$('#weekPlan16').val('기말고사');
-		$('#lecaNote').val('화요일 오전, 목요일 오전은 타 대학 강의가 있습니다.');
+	
+window.onload = function() {
+	
+	var date = new Date();
+	let year = date.getFullYear();
+	
+	console.log("year : " + year);
+	
+	$("#lecaYr").val(year+"년");
+	
+	//검색어 자동완성 이벤트///////////////////////////////////////////////////////////////////////////////////////////
+	
+	//더보기 버튼을 누르면
+	$('#showMoreTrs').on('click', function() {
+		$('.switchTr').show();
+		
+    	$('#showMoreTrs').hide();
+    	$('#showLessTrs').show();
+	});
+	//닫기 버튼을 누르면
+	$('#showLessTrs').on('click', function() {
+		$('.switchTr').hide();
+		
+    	$('#showLessTrs').hide();
+    	$('#showMoreTrs').show();
+	});
+	
+	//시간표 드래그 이벤트/////////////////////////////////////////////////////////////////////////////
+	
+	var isMouseDown = false, isHighlighted;
+	
+	$('#timeTableChoice td')
+	.mousedown(function() {
+		isMouseDown = true;
+		$(this).toggleClass("highlighted");
+		
+		isHighlighted = $(this).hasClass("highlighted")
+		
+		return false;
+	})
+	.mouseover(function() {
+		if(isMouseDown) {
+			$(this).toggleClass("highlighted", isHighlighted);
+		}
+	})
+	.bind("selectstart", function() {
+		return false;
+	});
+	
+	$(document)
+	.mouseup(function() {
+		isMouseDown = false;
+	});
+	
+	//블록 클릭 시 div 변경 이벤트////////////////////////////////////////////////////////////////////////////
+	if($('#firstLecApplyLi').hasClass("active")) {
+		$('#blockNum1').show();
+		$('#blockNum2').hide();
+		$('#blockNum3').hide();
+		$('#previousBtn').attr('disabled', true);
+		$('#nextBtn').attr('disabled', false);
+	}else if($('#secondLecApplyLi').hasClass("active")) {
+		$('#blockNum1').hide();
+		$('#blockNum2').show();
+		$('#blockNum3').hide();
+		$('#previousBtn').attr('disabled', false);
+		$('#nextBtn').attr('disabled', false);
+	}else if($('#thirdLecApplyLi').hasClass("active")) {
+		$('#blockNum1').hide();
+		$('#blockNum2').hide();
+		$('#blockNum3').show();
+		$('#previousBtn').attr('disabled', false);
+		$('#nextBtn').attr('disabled', true);
 	}
-
-	window.onload = function() {
-		
-		//년도, 학기 입력하기
-		var today = new Date();
-		console.log(today);
-		
-		let year = today.getFullYear();
-		let month = today.getMonth() + 1;
-		var semester;
-		
-		if(3 <= month <= 10) {
-			semester = 2;
-		}else if(11 <= month <= 12) {
-			semester = 1;
-			year += 1;
-		}else {
-			semester = 1;
-		}
-		
-		console.log("year : " + year + ", semester : " + semester);
-		
-		var str = '';
-		
-		for(i = 0; i < 3; i++) {
-			yearNum = year + i;
-			
-			str += '<option value="'+ yearNum + '">' + yearNum + '년</option>'; //3년치 부여
-		}
-		$('#lecaYr').append(str);
-		
-		//검색어 자동완성 이벤트///////////////////////////////////////////////////////////////////////////////////////////
-		
-		var ref; //과목 리스트 (json)
-		
-		//과목 리스트 불러오기
-		$.ajax({
-			url : "/lecApply/getSubList",
-			type : "POST",
-			dataType : "JSON",
-			contentType : "application/json",
-			success : function(res) {
-				ref = res;
-			}
-		});
-		
-		var isCompleted = false; //autoMaker 자식이 선택되었는지의 여부
-		
-		//search_area (input), autoMaker(비슷한 단어 뜨는 div)
-		//과목 카테고리 입력이 끝나면
-		$('#search_area').keyup(function() {
-			
-			var txt = $(this).val();
-			
-			if(txt != '') { //빈줄이 들어오면
-				$('#autoMaker').children().remove();
-			
-				ref.forEach(function(arg) {
-					if(arg.subNm.indexOf(txt) > -1) {
-						$('#autoMaker').append(
-							$('<div class="subBlock">').text(arg.subNm + "(" + arg.subCd + ")").attr({'key':arg.subCd})
-						);
-					}
-				});
-				
-				$('#autoMaker').children().each(function(){
-		            $(this).click(function(){ //클릭해서 선택한 경우
-		                $('#search_area').val($(this).text());
-		                $('#autoMaker').children().remove();	
-		                $('#subCd').val($(this).attr('key'));
-		                isComplete = true;
-		                
-		                $('#autoMaker').css("display", "none"); //autoMaker를 사라지게 함
-		            });
-		        });
-			}else {
-				$('#autoMaker').children().remove();
-			}
-		});
-		
-		//과목 카테고리 입력이 시작되면
-		$('#search_area').keydown(function(event) {
-			$('#autoMaker').css("display", "block"); //autoMaker를 보이게 함
-			
-			if(isComplete) {  //autoMaker 자식이 선택 되었으면 초기화
-		        $('#insert_target').val('')	
-		    }
-		});
-		
-		$('#searchIcon').on('click', function() {
-			if($('#autoMaker').css("display") == "none") {
-				$('#autoMaker').show();
-			}else {
-				$('#autoMaker').hide();
-			}
-		});
-		
-		//더보기 버튼을 누르면
-		$('#showMoreTrs').on('click', function() {
-			$('.switchTr').show();
-			
-	    	$('#showMoreTrs').hide();
-	    	$('#showLessTrs').show();
-		});
-		//닫기 버튼을 누르면
-		$('#showLessTrs').on('click', function() {
-			$('.switchTr').hide();
-			
-	    	$('#showLessTrs').hide();
-	    	$('#showMoreTrs').show();
-		});
-		// 과목 카테고리에서 벗어났을 때
-        $('body').on('click', function(){
-        	$('#autoMaker').css("display", "none");
-        });
-		
-		//시간표 드래그 이벤트/////////////////////////////////////////////////////////////////////////////
-		
-		var isMouseDown = false, isHighlighted;
-		
-		$('#timeTableChoice td')
-		.mousedown(function() {
-			isMouseDown = true;
-			$(this).toggleClass("highlighted");
-			
-			isHighlighted = $(this).hasClass("highlighted")
-			
-			return false;
-		})
-		.mouseover(function() {
-			if(isMouseDown) {
-				$(this).toggleClass("highlighted", isHighlighted);
-			}
-		})
-		.bind("selectstart", function() {
-			return false;
-		});
-		
-		$(document)
-		.mouseup(function() {
-			isMouseDown = false;
-		});
-		
-		//블록 클릭 시 div 변경 이벤트////////////////////////////////////////////////////////////////////////////
-		if($('#firstLecApplyLi').hasClass("active")) {
-			$('#blockNum1').show();
-			$('#blockNum2').hide();
-			$('#blockNum3').hide();
-			$('#previousBtn').attr('disabled', true);
-			$('#nextBtn').attr('disabled', false);
-		}else if($('#secondLecApplyLi').hasClass("active")) {
-			$('#blockNum1').hide();
-			$('#blockNum2').show();
-			$('#blockNum3').hide();
-			$('#previousBtn').attr('disabled', false);
-			$('#nextBtn').attr('disabled', false);
+	
+	$('#firstLecApplyLi').on('click', function() {
+		$('#blockNum1').show();
+		$('#blockNum2').hide();
+		$('#blockNum3').hide();
+		$('#previousBtn').attr('disabled', true);
+		$('#nextBtn').attr('disabled', false);
+	});
+	$('#secondLecApplyLi').on('click', function() {
+		$('#blockNum1').hide();
+		$('#blockNum2').show();
+		$('#blockNum3').hide();
+		$('#previousBtn').attr('disabled', false);
+		$('#nextBtn').attr('disabled', false);
+	});
+	$('#thirdLecApplyLi').on('click', function() {
+		$('#blockNum1').hide();
+		$('#blockNum2').hide();
+		$('#blockNum3').show();
+		$('#previousBtn').attr('disabled', false);
+		$('#nextBtn').attr('disabled', true);
+	});
+	//////////////////////////////////////////////////////////////////////
+	$('#previousBtn').on('click', function() {
+		if($('#secondLecApplyLi').hasClass("active")) {
+			$('#firstLecApplyLi').trigger('click');
 		}else if($('#thirdLecApplyLi').hasClass("active")) {
-			$('#blockNum1').hide();
-			$('#blockNum2').hide();
-			$('#blockNum3').show();
-			$('#previousBtn').attr('disabled', false);
-			$('#nextBtn').attr('disabled', true);
+			$('#secondLecApplyLi').trigger('click');
 		}
+	});
+	$('#nextBtn').on('click', function() {
+		if($('#firstLecApplyLi').hasClass("active")) {
+			$('#secondLecApplyLi').trigger('click');
+		}else if($('#secondLecApplyLi').hasClass("active")) {
+			$('#thirdLecApplyLi').trigger('click');
+		}
+	});
+	
+	$('#timeTableBtn').on('click', function() {
 		
-		$('#firstLecApplyLi').on('click', function() {
-			$('#blockNum1').show();
-			$('#blockNum2').hide();
-			$('#blockNum3').hide();
-			$('#previousBtn').attr('disabled', true);
-			$('#nextBtn').attr('disabled', false);
-		});
-		$('#secondLecApplyLi').on('click', function() {
-			$('#blockNum1').hide();
-			$('#blockNum2').show();
-			$('#blockNum3').hide();
-			$('#previousBtn').attr('disabled', false);
-			$('#nextBtn').attr('disabled', false);
-		});
-		$('#thirdLecApplyLi').on('click', function() {
-			$('#blockNum1').hide();
-			$('#blockNum2').hide();
-			$('#blockNum3').show();
-			$('#previousBtn').attr('disabled', false);
-			$('#nextBtn').attr('disabled', true);
-		});
-		//////////////////////////////////////////////////////////////////////
-		$('#previousBtn').on('click', function() {
-			if($('#secondLecApplyLi').hasClass("active")) {
-				$('#firstLecApplyLi').trigger('click');
-			}else if($('#thirdLecApplyLi').hasClass("active")) {
-				$('#secondLecApplyLi').trigger('click');
-			}
-		});
-		$('#nextBtn').on('click', function() {
-			if($('#firstLecApplyLi').hasClass("active")) {
-				$('#secondLecApplyLi').trigger('click');
-			}else if($('#secondLecApplyLi').hasClass("active")) {
-				$('#thirdLecApplyLi').trigger('click');
-			}
-		});
+		$('#textArea4time').empty();
 		
-		//td 컬러 변경 시 이벤트 주기
-		//yoil = $(this).parent().find("td").index(this);
-		//gyosi = $(this).closest('tr').prevAll().length;
-		//console.log(yoil + " " + gyosi);
+		timeTable = $('#timeTableChoice');
 		
-		$('#timeTableBtn').on('click', function() {
-			
-			$('#textArea4time').empty();
-			
-			timeTable = $('#timeTableChoice');
-			
-			str = '';
-			
-			for(j = 0; j <= 4; j++) {
-				for(i = 1; i <= 9; i++) {
-					cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
+		str = '';
+		
+		for(j = 0; j <= 4; j++) {
+			for(i = 1; i <= 9; i++) {
+				cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
+				
+				if(cellObj.hasClass("highlighted")) {
 					
-					if(cellObj.hasClass("highlighted")) {
-						
-						if(j == 0) {
-							str += "월요일 " + i + "교시\n";
-						}else if(j == 1) {
-							str += "화요일 " + i + "교시\n";
-						}else if(j == 2) {
-							str += "수요일 " + i + "교시\n";
-						}else if(j == 3) {
-							str += "목요일 " + i + "교시\n";
-						}else if(j == 4) {
-							str += "금요일 " + i + "교시\n";
-						}
+					if(j == 0) {
+						str += "월 " + i + "교시\n";
+					}else if(j == 1) {
+						str += "화 " + i + "교시\n";
+					}else if(j == 2) {
+						str += "수 " + i + "교시\n";
+					}else if(j == 3) {
+						str += "목 " + i + "교시\n";
+					}else if(j == 4) {
+						str += "금 " + i + "교시\n";
 					}
 				}
 			}
-			//alert(str);
-			$('#textArea4time').append(str);
-		});
-		
-		//임시저장 버튼 클릭 시
-		$('#temporarySubmitBtn').on('click', function() {
-			let dataObject = {
+		}
+		//alert(str);
+		$('#textArea4time').append(str);
+	});
+	
+	let lecaTm
+	
+	//제출 버튼 클릭 시
+	$('#realSubmitBtn').on('click', function() {
+		let dataObject = {
 				lecaYr : $('#lecaYr').val(),
 				lecaSem : $('#lecaSem').val(),
 				lecaTrg : $('#lecaTrg').val(),
@@ -521,41 +392,25 @@
 				lecaCate : $('#lecaCate').val(),
 				lecaBook : $('#lecaBook').val(),
 				lecaGrade : $('#lecaGrade').val(),
-				lecaMax : $('#lecaMax').val(),
-				crtrMp : $('#crtrMp').val(),
-				crtrFp : $('#crtrFp').val(),
-				crtrTp : $('#crtrTp').val(),
-				crtrAp : $('#crtrAp').val(),
-				crtrQp : $('#crtrQp').val(),
-				weekPlan1 : $('#weekPlan1').val(),
-				weekPlan2 : $('#weekPlan2').val(),
-				weekPlan3 : $('#weekPlan3').val(),
-				weekPlan4 : $('#weekPlan4').val(),
-				weekPlan5 : $('#weekPlan5').val(),
-				weekPlan6 : $('#weekPlan6').val(),
-				weekPlan7 : $('#weekPlan7').val(),
-				weekPlan8 : $('#weekPlan8').val(),
-				weekPlan9 : $('#weekPlan9').val(),
-				weekPlan10 : $('#weekPlan10').val(),
-				weekPlan11 : $('#weekPlan11').val(),
-				weekPlan12 : $('#weekPlan12').val(),
-				weekPlan13 : $('#weekPlan13').val(),
-				weekPlan14 : $('#weekPlan14').val(),
-				weekPlan15 : $('#weekPlan15').val(),
-				weekPlan16 : $('#weekPlan16').val(),
-				lecaTt : $('#textArea4time').val(),
+				lecaCap : $('#lecaCap').val(),
+				lecaTm : $("#textArea4time").val(),
+			    lecaWk : $("#textArea4time").val(),
+				lecaMp : $('#lecaMp').val(),
+				lecaFp : $('#lecaFp').val(),
+				lecaTp : $('#lecaTp').val(),
+				lecaAp : $('#lecaAp').val(),
 				lecaNote : $('#lecaNote').val()
 			}
 			
 			$.ajax({
-				url : "/lecApply/temporarySubmit",
+				url : "/professor/lecApplyForm/lecApplySubmit",
 				type : "POST",
 				data : JSON.stringify(dataObject),
 				dataType : "JSON",
 				contentType : "application/json;charset=utf-8",
 				success : function(res) {
-					if(res == 1) {
-						alert("임시저장이 완료되었습니다.");
+					if(res == 3) {
+						alert("제출이 완료되었습니다.");
 					}else {
 						alert("다시 시도해주세요.");
 					}
@@ -564,64 +419,9 @@
 					window.close();
 				}
 			});
-		});
-		//제출 버튼 클릭 시
-		$('#realSubmitBtn').on('click', function() {
-			let dataObject = {
-					lecaYr : $('#lecaYr').val(),
-					lecaSem : $('#lecaSem').val(),
-					lecaTrg : $('#lecaTrg').val(),
-					lecaCrd : $('#lecaCrd').val(),
-					lecaNm : $('#lecaNm').val(),
-					subCd : $('#subCd').val(),
-					lecaCon : $('#lecaCon').val(),
-					lecaCate : $('#lecaCate').val(),
-					lecaBook : $('#lecaBook').val(),
-					lecaGrade : $('#lecaGrade').val(),
-					lecaMax : $('#lecaMax').val(),
-					crtrMp : $('#crtrMp').val(),
-					crtrFp : $('#crtrFp').val(),
-					crtrTp : $('#crtrTp').val(),
-					crtrAp : $('#crtrAp').val(),
-					crtrQp : $('#crtrQp').val(),
-					weekPlan1 : $('#weekPlan1').val(),
-					weekPlan2 : $('#weekPlan2').val(),
-					weekPlan3 : $('#weekPlan3').val(),
-					weekPlan4 : $('#weekPlan4').val(),
-					weekPlan5 : $('#weekPlan5').val(),
-					weekPlan6 : $('#weekPlan6').val(),
-					weekPlan7 : $('#weekPlan7').val(),
-					weekPlan8 : $('#weekPlan8').val(),
-					weekPlan9 : $('#weekPlan9').val(),
-					weekPlan10 : $('#weekPlan10').val(),
-					weekPlan11 : $('#weekPlan11').val(),
-					weekPlan12 : $('#weekPlan12').val(),
-					weekPlan13 : $('#weekPlan13').val(),
-					weekPlan14 : $('#weekPlan14').val(),
-					weekPlan15 : $('#weekPlan15').val(),
-					weekPlan16 : $('#weekPlan16').val(),
-					lecaTt : $('#textArea4time').val(),
-					lecaNote : $('#lecaNote').val()
-				}
-				
-				$.ajax({
-					url : "/professor/lecApplyForm/lecApplySubmit",
-					type : "POST",
-					data : JSON.stringify(dataObject),
-					dataType : "JSON",
-					contentType : "application/json;charset=utf-8",
-					success : function(res) {
-						if(res == 17) {
-							alert("제출이 완료되었습니다.");
-						}else {
-							alert("다시 시도해주세요.");
-						}
-						
-						opener.parent.location.reload();
-						window.close();
-					}
-				});
-		});
-	}
+	});
+	
+}
+
 </script>
 </html>

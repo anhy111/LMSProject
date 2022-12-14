@@ -36,7 +36,8 @@ public interface LectureMapper {
 	//강의 과제 상세조회
 	public Task detailTask(@Param("taskCd") String taskCd,@Param("lecaCd") String lecaCd);
 
-		
+	//강의 과제 삭제
+	public int deleteTask(@Param("lecaCd") String lecaCd,@Param("taskCd") String taskCd);
 
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 

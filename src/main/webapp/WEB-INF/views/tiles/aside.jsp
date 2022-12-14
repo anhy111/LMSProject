@@ -275,9 +275,15 @@
 								</a>
 							</li>
 							<li class="nav-item">
+								<a href="/manage/insertStu" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>학생 등록</p>
+								</a>
+							</li>
+							<li class="nav-item">
 								<a href="#" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
-									<p>학생 학적 관리</p>
+									<p>휴복학 관리</p>
 								</a>
 							</li>
 						</ul>

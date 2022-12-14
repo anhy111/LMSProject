@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<% String no = String.valueOf(session.getAttribute("no")); %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+<% String no = String.valueOf(session.getAttribute("no")); %>
 <script type="text/javascript">
 $(function(){
 	

@@ -34,7 +34,7 @@
 												<input type="date" id="taskEdt" name="taskEdt" required>
 											</div>
 												<div class="input-group">
-													<textarea id="taskCon" name="taskCon" class="form-control" required></textarea>
+													<textarea id="taskCon" name="taskCon" class="form-control" cols="15" rows="15" required></textarea>
 												</div>
 											</div>
 											<div class="form-group">
@@ -69,12 +69,12 @@
  	</div>
 </div>
 <script type="text/javascript">
-	CKEDITOR.replace("taskCon",
-			{
-			width:'100%',
-			height:'500px',
-			startupFocus:false
-			});
+// 	CKEDITOR.replace("taskCon",
+// 			{
+// 			width:'100%',
+// 			height:'500px',
+// 			startupFocus:false
+// 			});
 </script>
 
 

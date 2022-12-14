@@ -66,7 +66,26 @@
 		WHERE STU_NO = #{stuNo}
 	</delete>
 	
-	
+	<update id="updateStu" parameterType="student">  
+		UPDATE STUDENT S
+		SET      S.STU_YR = #{stuYr}
+		        , S.STU_SEM= #{stuSem}
+		        , S.STU_NM= #{stuNm}
+		        , S.STU_NME= #{stuNme}
+		        , S.STU_TEL= #{stuTel}
+		        , S.STU_ZIP= #{stuZip}
+		        , S.STU_ADDR1= #{stuAddr1}
+		        , S.STU_ADDR2= #{stuAddr2}
+		        , S.STU_BANK_CD= #{stuBankCd}
+		        , S.STU_DEPO= #{stuDepo}
+		        , S.STU_ACT= #{stuAct}
+		        <if test="stuPic != null">
+		        , S.STU_PIC= #{stuPic}
+		        </if>
+		        , S.STU_BIR= #{stuBir}
+		        , S.DEP_CD = (SELECT DEP_CD FROM DEPARTMENT WHERE DEP_CD=#{depCd})
+		WHERE S.STU_NO = #{stuNo}
+	</update>
 	
 
 </mapper>
