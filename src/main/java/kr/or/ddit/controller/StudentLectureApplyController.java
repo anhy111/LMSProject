@@ -32,6 +32,7 @@ import kr.or.ddit.service.GraduateCreditService;
 import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.LectureService;
 import kr.or.ddit.service.StudentLectureApplyService;
+import kr.or.ddit.util.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/student/lectureApply")
@@ -53,6 +54,8 @@ public class StudentLectureApplyController {
 	CollegeService collegeService;
 	@Autowired
 	AllocationService allocationService;
+	@Autowired
+	FileUploadUtil fileUploadUtil;
 	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")

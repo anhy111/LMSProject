@@ -292,6 +292,28 @@
 							class="nav-icon fas fa-book"></i>
 							<p>교수 관리</p>
 					</a></li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
+							<p>
+								학과 <i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="/manage/stuManage" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>학과 조회</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="/manage/insertStu" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>학과 등록</p>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
 							<p>중점 지표</p>
