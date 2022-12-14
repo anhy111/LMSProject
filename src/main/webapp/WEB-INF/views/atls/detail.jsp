@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강의상세정보</title>
+<title>강의상세페이지</title>
 <link rel="stylesheet" href="/resources/css/inquiry1.css">
 <link rel="stylesheet" href="/resources/css/inquiry2.css">
 </head>
 <body>
 	<div id="realFormBody">
 
-		<span id="lecApplyTitle">강의계획서 상세</span>
+		<span id="lecApplyTitle">강의 상세</span>
 
 		<div id="div4btns">
 			<button id="close" onclick="fn_close()" type="button"

@@ -83,6 +83,10 @@
 	<definition name="professor/lecApplyForm/*" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/professor/lecApplyForm/{1}.jsp" />
 	</definition>
+	
+	<definition name="atls/detail" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/atls/detail.jsp" />
+	</definition>
 
 </tiles-definitions>
 
