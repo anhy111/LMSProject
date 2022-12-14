@@ -55,6 +55,9 @@
 	<definition name="manage/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/manage/{1}.jsp" />
 	</definition>
+	<definition name="department/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/department/{1}.jsp" />
+	</definition>
 
 	<definition name="qna/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/qna/{1}.jsp" />
