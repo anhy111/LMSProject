@@ -5,16 +5,93 @@
 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="kr.or.ddit.mapper.CounselMapper">
 
-
-<!-- 상담 목록 -->
-<select id="CounselList" resultType="Counsel">
-SELECT CNSL_CD, STU_NO, CNSL_CATE, CNSL_TTL, CNSL_CON, CNSL_REG, CNSL_DT, CNSL_RPL
-FROM COUNSEL
+<select id="listOfProfessor" parameterType="int" resultType="Counsel">
+SELECT 
+E.EMP_NM
+FROM PROFESSOR P, EMPLOYEE E, STUDENT S, DEPARTMENT D
+WHERE S.STU_NO = #{stuNo}
+AND D.DEP_CD = P.DEP_CD
+AND P.PRO_NO = S.PRO_NO
+AND P.PRO_NO = E.EMP_NO
 </select>
-
-<!-- 상세 -->
-<!-- 수정 -->
-<!-- 입력 -->
-<!-- 삭제 -->
+<!-- 학생의 상담 신청 목록 -->
+<select id="studentApplyList"  parameterType="int" resultType="Counsel">
+SELECT 
+  C.CNSL_CD
+, C.STU_NO AS 
+, C.CNSL_CATE 
+, C.CNSL_TTL
+, C.CNSL_CON
+, C.CNSL_REG 
+, C.CNSL_DT
+, C.CNSL_RPL
+, C.PRO_NO
+FROM COUNSEL C, EMPLOYEE E, PROFESSOR P, STUDENT S, DEPARTMENT D
+WHERE 
+C.STU_NO = #{stu_no}
+AND C.STU_NO = S.STU_NO
+AND S.PRO_NO = P.PRO_NO
+AND P.PRO_NO = E.EMP_NO
+AND D.DEP_CD = P.DEP_CD
+</select>
+<!-- 학생의 상담 신청 -->
+<insert id="applyInsert"  parameterType="Counsel">
+INSERT INTO COUNSEL (
+  CNSL_CD
+, STU_NO
+, CNSL_CATE
+, CNSL_TTL
+, CNSL_CON
+, CNSL_REG
+, CNSL_DT
+, CNSL_RPL
+, PRO_NO
+)
+VALUES(
+SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
+,#{stuNo}
+,#{cnslCate}
+,#{cnslTtl}
+,#{cnslCon}
+,SYSDATE
+<if test="cnslDt != null and cnslDt !=''">
+, #{cnslDt}
+</if>
+<if test="cnslRpl != null and cnslRpl !=''">
+, #{cnslRpl}
+</if>
+<if test="proNo != null and proNo !=''">
+, #{proNo}
+</if>
+</insert>
+<!-- 교수의 상담 답변 -->
+<update id="applyAnswerUpdate" parameterType="Counsel">
+UPDATE COUNSEL 
+SET 
+ CNSL_DT = SYSDATE
+, CNSL_RPL = #{cnslRpl}
+, PRO_NO = #{proNo}
+WHERE CNSL_CD = #{cnslCd}
+</update>
+<!-- 교수의 상담 리스트 조회 -->
+<select id="professorCounselList" parameterType="int" resultType="Counsel">
+SELECT 
+  C.CNSL_CD
+, C.STU_NO
+, C.CNSL_CATE
+, C.CNSL_TTL
+, C.CNSL_CON
+, C.CNSL_REG
+, C.CNSL_DT
+, C.CNSL_RPL
+, C.PRO_NO
+FROM COUNSEL C, EMPLOYEE E, PROFESSOR P, STUDENT S, DEPARTMENT D
+WHERE 
+C.PRO_NO = #{proNo}
+AND C.STU_NO = S.STU_NO
+AND S.PRO_NO = P.PRO_NO
+AND P.PRO_NO = E.EMP_NO
+AND D.DEP_CD = P.DEP_CD
+</select>
 </mapper>
 
