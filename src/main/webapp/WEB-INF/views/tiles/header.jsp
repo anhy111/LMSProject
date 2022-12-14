@@ -48,7 +48,7 @@
 			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
-						<img src="/resources/upload/img/<%=pic%>"
+						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
@@ -61,7 +61,7 @@
 			<a href="#" class="d-block"> 
 				<div class="user-panel d-flex">
 					<div class="image">
-						<img src="/resources/upload/img/<%=pic%>"
+						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
@@ -74,7 +74,7 @@
 			<a href="#" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
-						<img src="/resources/upload/img/<%=pic%>"
+						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">

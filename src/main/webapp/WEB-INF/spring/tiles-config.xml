@@ -55,6 +55,9 @@
 	<definition name="manage/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/manage/{1}.jsp" />
 	</definition>
+	<definition name="department/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/department/{1}.jsp" />
+	</definition>
 
 	<definition name="qna/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/qna/{1}.jsp" />
@@ -66,6 +69,10 @@
 	<definition name="facility/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/facility/{1}.jsp" />
 	</definition>
+	<definition name="atls/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/atls/{1}.jsp" />
+	</definition>
+	
 
 	<!-- 타일즈 미적용 -->
 	<definition name="no-tiles" template="/WEB-INF/views/tiles/empty.jsp">
@@ -78,6 +85,10 @@
 
 	<definition name="professor/lecApplyForm/*" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/professor/lecApplyForm/{1}.jsp" />
+	</definition>
+	
+	<definition name="atls/detail" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/atls/detail.jsp" />
 	</definition>
 
 </tiles-definitions>

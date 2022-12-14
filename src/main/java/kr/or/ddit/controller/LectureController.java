@@ -3,6 +3,8 @@ package kr.or.ddit.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,8 +93,8 @@ public class LectureController {
 	}
 
 	@PostMapping("/lectureBoard/upload")
-	public String uploadTest(MultipartFile[] files, @RequestParam String lecaCd) {
-		this.fileUploadUtil.fileUploadAction(files);
+	public String uploadTest(MultipartFile[] files, @RequestParam String lecaCd, HttpServletRequest req) {
+		this.fileUploadUtil.fileUploadAction(files, req);
 		return "redirect:/lectureBoard/subjectList?lecaCd=" + lecaCd;
 	}
 
@@ -102,11 +104,14 @@ public class LectureController {
 	}
 
 	@PostMapping("/lectureBoard/registTask")
-	public String registTask2(@RequestParam MultipartFile[] files, Task task) {
+
+	public String registTask2(@RequestParam MultipartFile[] files, Task task, HttpServletRequest req) {
 		if (files[0].getSize() > 0) {
-			this.fileUploadUtil.fileUploadAction(files);
+			this.fileUploadUtil.fileUploadAction(files, req);
+
 			this.lectureservice.insertTask(task);
 		} else {
+			log.info("첨부파일 없어용");
 			this.lectureservice.insertTask2(task);
 		}
 		log.info(task.toString());
@@ -116,8 +121,9 @@ public class LectureController {
 
 	@GetMapping("/lectureBoard/taskDetail")
 	public ModelAndView taskDetail(ModelAndView mav, @RequestParam String lecaCd, @RequestParam String taskCd) {
-		log.info(taskCd);
-		log.info(lecaCd);
+		log.info("과제 상세정보=========================================================");
+		log.info("taskCd : "+taskCd);
+		log.info("lecaCd : "+lecaCd);
 		Task task = this.lectureservice.detailTask(taskCd, lecaCd);
 		log.info(task+"==============================================");
 		
@@ -125,5 +131,12 @@ public class LectureController {
 		mav.setViewName("lectureBoard/taskDetail");
 		return mav;
 		
+	}
+	
+	@GetMapping("/lectureBoard/taskDelete")
+	public String taskDelete(@RequestParam String lecaCd,@RequestParam String taskCd) {
+		log.info(lecaCd);
+		this.lectureservice.deleteTask(lecaCd,taskCd);
+		return "redirect:/lectureBoard/subjectList?lecaCd="+lecaCd; 
 	}
 }

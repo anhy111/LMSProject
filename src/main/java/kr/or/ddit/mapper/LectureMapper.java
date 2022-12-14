@@ -36,10 +36,14 @@ public interface LectureMapper {
 	//강의 과제 상세조회
 	public Task detailTask(@Param("taskCd") String taskCd,@Param("lecaCd") String lecaCd);
 
-		
+	//강의 과제 삭제
+	public int deleteTask(@Param("lecaCd") String lecaCd,@Param("taskCd") String taskCd);
 
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
+	
+	// 학생의 장바구니에 담았지만 수강신청하지 않은 강의
+	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);
 
 }

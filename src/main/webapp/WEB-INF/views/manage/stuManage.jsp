@@ -7,12 +7,12 @@
 <script type="text/javascript">
 function fn_add(data){
 	
-	$("#stuPic").attr("src", "/resources/upload/img/"+data.stuPic);
+	$("#stuImg").attr("src", "/upload"+data.stuPic);
 	$("#stuNo").attr("value", data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$("#stuNme").attr("value", data.stuNme);
 	$('#colCd').val(data.colCd).prop("selected",true).trigger('change');
-	$('#department').val(data.depNm).prop("selected",true);
+	$('#department').val(data.depCd).prop("selected",true);
 	$('#stuYr').val(data.stuYr).prop("selected",true);
 	$('#stuSem').val(data.stuSem).prop("selected",true);
 	$("#stuBir").attr("value", data.stuBir);
@@ -25,11 +25,17 @@ function fn_add(data){
 	$("#stuZip").attr("value", data.stuZip);
 	$("#stuAddr1").attr("value", data.stuAddr1);
 	$("#stuAddr2").attr("value", data.stuAddr2);
+// 	$("#pic").html(data.stuPic)
 	
 	
 }
 
 $(function(){
+	
+	$("input[type='file']").on('change',function(){
+	    $(this).next('.custom-file-label').html(event.target.files[0].name);
+	});
+	
 	let header = "${_csrf.headerName}";
 	let token = "${_csrf.token}";
 	
@@ -152,28 +158,106 @@ $(function(){
 	
 	$("#updateStu").on("click",function(){
 		
-		alert("오나요,,")
+// 		alert("오나요,,")
+// 		$('input#stuPic')[0].files[0] 
 		
 		let stuNo = $("#stuNo").val();
-		let data = {
-			"stuNo":stuNo,
-			"stuYr":stuYr,
-			"stuSem":stuSem,
-			"stuNm":stuNm,
-			"stuNme":stuNme,
-			"stuTel":stuTel,
-			"stuZip":stuZip,
-			"stuAddr1":stuAddr1,
-			"stuAddr2":stuAddr2,
-			"stuBankCd":stuBankCd,
-			"stuDepo":stuDepo,
-			"stuAct":stuAct,
-			"stuBir":stuBir,
-			"depCd":depCd,
-			"stuPic":stuPic
+		let stuYr = $("#stuYr").val();
+		let stuSem = $("#stuSem").val();
+		let stuNm = $("#stuNm").val();
+		let stuNme = $("#stuNme").val();
+		let stuTel = $("#stuTel").val();
+		let stuZip = $("#stuZip").val();
+		let stuAddr1 = $("#stuAddr1").val();
+		let stuAddr2 = $("#stuAddr2").val();
+		let stuBankCd = $("#stuBankCd").val();
+		let stuDepo = $("#stuDepo").val();
+		let stuAct = $("#stuAct").val();
+		let stuBir = $("#stuBir").val();
+		let depCd = $("#department").val();
+		
+		console.log("변수 잘 들어오나 ! stuNo : " + stuNo + " stuYr : " + stuYr + " stuSem : " + stuSem + " stuNm : " + stuNm + " stuNme : " + stuNme + 
+				" stuTel : " + stuTel + " stuZip : " + stuZip + " stuAddr1 : " + stuAddr1 + " stuAddr2 : " + stuAddr2 + 
+				" stuBankCd : " + stuBankCd + " stuDepo : " + stuDepo + " stuAct : " + stuAct + " stuBir : " + stuBir);
+		
+// 		let data = {
+// 			"stuNo":stuNo,
+// 			"stuYr":stuYr,
+// 			"stuSem":stuSem,
+// 			"stuNm":stuNm,
+// 			"stuNme":stuNme,
+// 			"stuTel":stuTel,
+// 			"stuZip":stuZip,
+// 			"stuAddr1":stuAddr1,
+// 			"stuAddr2":stuAddr2,
+// 			"stuBankCd":stuBankCd,
+// 			"stuDepo":stuDepo,
+// 			"stuAct":stuAct,
+// 			"stuBir":stuBir,
+// 			"depCd":depCd,
+// 			"stuPic":stuPic
+// 		}
+		
+// 		console.log("data 들어오나 함 보꽈 ! " + JSON.stringify(data))
+		
+		let formData = new FormData();
+		let inputFile = $("input[name='stuPic']");
+		let files = inputFile[0].files;
+		
+		console.log("files : " + files);
+		
+		//가상폼인 formdata에 각각의 이미지를 넣쟈
+		for(let i=0;i<files.length;i++){
+			//uploadFile[]
+			formData.append("uploadFile",files[i]);
 		}
 		
-		console.log("data 들어오나 함 보꽈 ! " + JSON.stringify(data))
+		formData.append("stuNo",stuNo);
+		formData.append("stuYr",stuYr);
+		formData.append("stuSem",stuSem);
+		formData.append("stuNm",stuNm);
+		formData.append("stuNme",stuNme);
+		formData.append("stuTel",stuTel);
+		formData.append("stuZip",stuZip);
+		formData.append("stuAddr1",stuAddr1);
+		formData.append("stuAddr2",stuAddr2);
+		formData.append("stuBankCd",stuBankCd);
+		formData.append("stuDepo",stuDepo);
+		formData.append("stuAct",stuAct);
+		formData.append("stuBir",stuBir);
+		formData.append("depCd",depCd);
+		
+		
+		$.ajax({
+			url:"/manage/updateStu",
+			processData:false,
+			contentType:false,
+			data:formData,
+			dataType:"json",
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			type:"post",
+			success:function(result){
+				console.log("파일 업로드 성공인가요 ? result : " + result);
+				
+				Swal.fire({
+		            icon: 'success',                         // Alert 타입
+		            title: '수정 성공!',         // Alert 제목
+		            text: '정상적으로 수정되었습니다.',  // Alert 내용
+		        })
+				
+				fn_add(result);
+				
+				$("#stuBtn1").css("display", "block");
+				$("#stuBtn2").css("display", "none");
+				
+				$(".stu").attr("readonly", true);
+				$(".stu").attr("disabled", true);
+				
+			}
+		});
+		
 		
 	});
 	
@@ -198,7 +282,7 @@ $(function(){
 				} else{
 					str += "<option value=''>학과</option>";
 					$.each(result,function(p_inx, p_val){
-						str += `<option value='\${p_val.depNm}'>\${p_val.depNm}</option>`;
+						str += `<option value='\${p_val.depCd}'>\${p_val.depNm}</option>`;
 					});
 				}
 				$("#department").html(str);
@@ -259,7 +343,7 @@ $(function(){
 									<td class="detailStu">${list.stuNo}</td>
 									<td>
 										<div class="image">
-											<img src="/resources/upload/img/${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;">
+											<img src="/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;">
 											${list.stuNm}
 										</div> 
 									</td>
@@ -297,8 +381,7 @@ $(function(){
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-4">
-								<img
-									class="img-thumbnail" width="200px;" height="300px;" id="stuPic">
+								<img class="img-thumbnail" width="200px;" height="300px;" id="stuImg">
 							</div>
 							<div class="col-md-8">
 								<div class="container">
@@ -316,6 +399,17 @@ $(function(){
 										<div class="col-5 offset-1">
 											<label for="stuNme" class="form-label">영문 이름</label>
 											 <input type="text" class="form-control stu" id="stuNme" name="stuNme" readonly />
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-5 offset-1">
+											<label for="stuPic" class="form-label">사진 변경</label> 
+										</div>
+									</div>
+									<div class="row">
+										<div class="custom-file col-9 offset-1">
+											<input type="file" class="custom-file-input stu" id="stuPic" name="stuPic" disabled>
+											<label class="custom-file-label" for="stuPic">Choose file</label>
 										</div>
 									</div>
 								</div>
@@ -414,6 +508,7 @@ $(function(){
 								type="text" class="form-control stu" id="stuAddr2" name="stuAddr2" readonly />
 						</div>
 					</div>
+
 					<div id="stuBtn1" align="right" style="display:none" >
 						<button type="button" class="btn btn-outline-warning" id="edit" >수정</button>
 						<button type="button" id="delete" class="btn btn-outline-danger">삭제</button>

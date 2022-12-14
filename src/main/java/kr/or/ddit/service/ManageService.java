@@ -12,5 +12,9 @@ public interface ManageService {
 	public Student detailStu(Map<String, String> map);
 
 	public int deleteStu(Map<String, String> map);
+
+	public int updateStu(Student student);
+
+	public List<Student> recordManage();
 	
 }

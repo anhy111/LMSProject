@@ -5,18 +5,27 @@
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript" src="/resources/ckeditor/ckeditor.js"></script>
 <!--  LECA_CD, TASK_NM, TASK_CON, TASK_EDT, ATCH_FILE_ID--> 
+<style>
+.modifyDisplay{
+	display: none;
+}
+</style>
 <div class="row">
 	<div class="col-sm-1" ></div>
 	<div class="col-sm-10" >
 			<div class="card card-outline card-primary">
-				<div class="card-header">
+				<div class="card-header" style="padding-bottom:0px">
 						<div class="row form-group">
 							<div class="col-sm-3">
-								<h3>${task.taskNm}</h3>
+								<br>
+								<label class="modifyDisplay">제목</label>
+								<h3 class="taskData">${task.taskNm}</h3>
+								<input type="text" class="modifyDisplay" id="taskNm" name="taskNm">
 							</div>
 							<div class="col-sm-5"></div>
 							<div class="col-sm-4" style="text-align:right;">
-								<b>등록일 : <fmt:formatDate value="${task.taskSdt}" pattern="yyyy-MM-dd"/>&nbsp; |&nbsp; 마감일 : <fmt:formatDate value="${task.taskEdt}" pattern="yyyy-MM-dd hh:mm"/></b>
+								<br>
+								<b class="col taskData">등록일 : <fmt:formatDate value="${task.taskSdt}" pattern="yyyy-MM-dd"/>&nbsp; |&nbsp; 마감일 : <fmt:formatDate value="${task.taskEdt}" pattern="yyyy-MM-dd hh:mm"/></b>
 							</div>
 						</div>
 				</div>
@@ -26,7 +35,14 @@
 							<div class="container-fluid">
 								<div class="card card-danger">
 										<div class="card-body"  >
-											<textarea id=taskCon readonly >${task.taskCon}</textarea>
+											<div class="modifyDisplay">
+												<label>마감일</label>
+												<input type="date" class="modifyDisplay" id="taskEdt"name="taskEdt">
+											</div>
+											<div>
+												<textarea id="taskCon" name="taskCon" class="form-control" cols="15" rows="15" readonly="readonly">${task.taskCon}</textarea>
+											</div>
+											
 											<hr>
 											<c:if test="${task.atchFileId != -1}">
 											<label>첨부파일</label> <br>
@@ -38,30 +54,70 @@
 											</button>
 											</c:forEach>
 											</c:if>
+												<div class="custom-file" class="modifyDisplay" style="display:none">
+													<input type="file" class="modifyDisplay" id="customFile" name="files"  multiple >
+													<label class="custom-file-label" for="customFile">Choose file</label>
+												</div>
 										</div>
 								</div>
 							</div>
 						</section>
 					</div>
 				<div class="row">
-					<div class="col-sm-11">
+					<div class="col-sm-7">
 					</div>
-					<div class="col-sm-1">
+					<div class="taskData col-sm-5" align="right" >
+						<button  class="btn btn-danger" id="DeleteButton">삭제</button>
+						<button  class="btn btn-info" id="ModifyButton">수정</button>
 						<a href="/lectureBoard/subjectList?lecaCd=${task.lecaCd}"  class="btn btn-primary">목록</a>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-sm-10">
+					</div>
+					<div class="col-sm-1" align="right" >
+						<button  class="btn btn-outline-primary modifyDisplay" id="modify">수정</button>
+					</div>
+					<div class="col-sm-1">
+						<button  class="btn btn-outline-warning modifyDisplay" id="cancle">취소</button>
+					</div>
 				</div>
 			</div>
  	</div>
 </div>
+</div>
+<!-- 1. 폼 만들어서 수정 데이터 날리고 수정된 페이지로 이동하자 
+	 2. 취소 누르-->
 <script type="text/javascript">
 	CKEDITOR.replace("taskCon",
 			{
 			width:'100%',
 			height:'500px',
-			startupFocus:false
+			startupFocus:false,
+			toolbar: []
+
 			});
+	
+	$("#DeleteButton").on("click",function(){
+		var result = confirm('게시물을 삭제하시겠습니까?\n삭제된 게시물은 되돌릴 수 없습니다.');
+		
+		if(result){
+			//yes
+			location.replace('/lectureBoard/taskDelete?lecaCd='+ ${task.lecaCd} +'&&taskCd=' + ${task.taskCd} );
+		}else{
+			//no
+		}
+	});
+	
+	$("#ModifyButton").on("click",function(){
+		$(".modifyDisplay").attr("style","display:block");
+		$(".taskData").attr("style","display:none");
+		$("#taskCon").attr('readonly',false);
+		
+	});
+	
+	$("#cancle").on("click",function(){
+		$(".modifyDisplay").attr("style","display:none");
+		$(".taskData").attr("style","display:block");
+	});
 </script>
-
-
-

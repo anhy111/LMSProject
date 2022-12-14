@@ -30,6 +30,13 @@ public interface LectureApplyMapper {
 	// 강의계획서 상세페이지 주차별계획
 	public List<Weekplan> inquiryWeekPlan(int lecaCd);
 
-	// 강의계획서 제출하기
-	public int lecApplySubmit(int proNo);
+	// 강의계획서 과목 테이블
+	public int subjectSubmit(LecApply proNo);
+	
+	// 강의계획서 강의 테이블
+	public int lectureSubmit(LecApply subCd);
+
+	// 강의계획서 강의계획서 테이블
+	public int lecApplySubmit(LecApply lecaCd);
+	
 }

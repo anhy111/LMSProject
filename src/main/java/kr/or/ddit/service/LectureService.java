@@ -28,7 +28,12 @@ public interface LectureService {
 	public int insertTask(Task task);
 	//강의 과제 상세조회
 	public Task detailTask(String taskCd, String lecaCd);
+	//강의 과제 삭제
+	public int deleteTask(String lecaCd,String taskCd); 
 
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
+
+	// 장바구니에 담기고 학생이 수강신청하지 않은 강의
+	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);
 }
