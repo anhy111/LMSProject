@@ -15,4 +15,6 @@ public interface ManageMapper  {
 	
 	public int updateStu(Student student);
 	
+	public List<Student> recordManage();
+	
 }

@@ -46,17 +46,14 @@ public class LoginController {
 		// 시큐리티에서 DB에 없으면 error를 보내고 없으면 null을 보내냐 보댜 ㅇㅁㅇ
 		log.info("error : " + error);
 		log.info("logout : " + logout);
-		
 		//오류 메세지 
 		if(error != null) {
 			model.addAttribute("error", "Login Error!!!");
 		}
-		
 		//로그아웃 메세지 
 		if(logout != null) {
 			model.addAttribute("logout", "Logout!!!");
 		}
-		
 		
 		return "login/loginForm";
 	}

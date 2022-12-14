@@ -2,6 +2,8 @@ package kr.or.ddit.domain;
 
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -25,6 +27,16 @@ public class Student {
 	private String stuBir;
 	private int proNo;
 	private String empNm;
+	//학적 승인여부
+	//학적 구분
+	private String recYr; //신청연도
+	private String recSem; //신청학기
+	private String rgbCd; //학적 구분
+	private String recPer; //기간
+	private String recRsn; //사유
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String recDt; //신청날짜
+	private String recYn; //승인여부
 	//학과명 조회 
 	private String depNm;
 	//단과대학명 조회
