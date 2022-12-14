@@ -7,7 +7,7 @@
 <script type="text/javascript">
 function fn_add(data){
 	
-	$("#stuImg").attr("src", "/resources/upload"+data.stuPic);
+	$("#stuImg").attr("src", "/upload"+data.stuPic);
 	$("#stuNo").attr("value", data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$("#stuNme").attr("value", data.stuNme);
@@ -158,7 +158,7 @@ $(function(){
 	
 	$("#updateStu").on("click",function(){
 		
-		alert("오나요,,")
+// 		alert("오나요,,")
 // 		$('input#stuPic')[0].files[0] 
 		
 		let stuNo = $("#stuNo").val();
@@ -343,7 +343,7 @@ $(function(){
 									<td class="detailStu">${list.stuNo}</td>
 									<td>
 										<div class="image">
-											<img src="/resources/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;">
+											<img src="/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;">
 											${list.stuNm}
 										</div> 
 									</td>

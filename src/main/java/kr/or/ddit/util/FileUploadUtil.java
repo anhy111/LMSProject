@@ -38,7 +38,7 @@ public class FileUploadUtil {
 	public int fileUploadAction(MultipartFile[] multipartFiles) {
 		log.info("파일 업로드를 수행합니다.");
 
-		uploadFolder = "C:\\upload" + "\\" +getFolder();
+		uploadFolder = "C:\\upload";
 		log.info("uploadFolder : " + uploadFolder);
 		
 		List<Attach> attachList = new ArrayList<Attach>();
@@ -162,7 +162,7 @@ public class FileUploadUtil {
 	public int stuFileUpload(MultipartFile multipartFiles, HttpServletRequest req, Student stu) {
 
 		// 업로드 폴더 설정
-		String uploadFolder = req.getRealPath("\\") + "\\resources\\upload" + "\\";
+		uploadFolder = "C:\\upload";
 		
 
 		// 연월일 폴더 생성
