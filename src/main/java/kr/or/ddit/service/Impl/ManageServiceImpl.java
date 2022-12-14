@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.ManageMapper;
 import kr.or.ddit.service.ManageService;
+import kr.or.ddit.util.FileUploadUtil;
 
 @Service
 public class ManageServiceImpl implements ManageService{
 
 	@Autowired
 	ManageMapper manageMapper;
+	
+	@Autowired
+	FileUploadUtil fileUploadUtil;
 	
 	@Override
 	public List<Student> studentList() {
