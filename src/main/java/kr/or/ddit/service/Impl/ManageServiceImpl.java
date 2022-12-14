@@ -39,4 +39,9 @@ public class ManageServiceImpl implements ManageService{
 	public int updateStu(Student student) {
 		return this.manageMapper.updateStu(student);
 	}
+	
+	@Override
+	public List<Student> recordManage(){
+		return this.manageMapper.recordManage();
+	}
 }
