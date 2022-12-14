@@ -6,7 +6,7 @@
 <mapper namespace="kr.or.ddit.mapper.NoticeBasicMapper">
 
 
-    <!-- 공지사항 목록 조회 -->
+<!--    &lt;!&ndash; 공지사항 목록 조회 &ndash;&gt;-->
 <!--    <select id="noticeBasicList" resultType="NoticeBasic">-->
 
 <!--        SELECT NOTICE_CD,-->
@@ -18,7 +18,7 @@
 
 <!--    </select>-->
 
-    <!-- 공지사항 상세페이지 조회 -->
+<!--    &lt;!&ndash; 공지사항 상세페이지 조회 &ndash;&gt;-->
 <!--    <select id="noticeBasicFindNotice" resultType="NoticeBasic">-->
 <!--        SELECT *-->
 <!--        FROM NOTICE_BASIC-->

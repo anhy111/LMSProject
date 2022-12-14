@@ -108,17 +108,17 @@
             </div>
 
             <form method="POST" name="form" id="questionForm">
-                <sec:csrfInput/>
                 <div class="titleRound">
                     <label>제목</label>
                     <input type="text" class="inputText" name="title" id="title"/>
                 </div>
                 <div class="textArea"><textarea name="content" id="content"></textarea></div>
-                <div id="showRound"><label>비공개 여부</label><input type="checkbox" name="accessNumber" id="accessNumber"/></div>
+<%--                <div id="showRound"><label>비공개 여부</label><input type="checkbox" name="accessNumber" id="accessNumber"/></div>--%>
                 <div id="btnRound">
                     <input type="submit" id="insertBtn" class="btn btn-primary" value="등록">
                     <input type="button" id="cancelBtn" class="btn btn-primary" value="취소">
                 </div>
+                <sec:csrfInput/>
             </form>
 
         </div>

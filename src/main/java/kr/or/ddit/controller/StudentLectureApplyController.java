@@ -122,6 +122,7 @@ public class StudentLectureApplyController {
 	@ResponseBody
 	@GetMapping("/departmentByCollege")
 	public List<Department> departmentByCollege(int colCd){
+
 		return this.collegeService.DepartmentByCollegeList(colCd);
 	}
 } 

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter @Setter
+@Getter
 public class Qna {
 
     private Long qnaCd;
@@ -18,9 +18,8 @@ public class Qna {
     public Qna() {
     }
 
-    public Qna(String qnaTtl, String qnaCon, int qnaYn) {
+    public Qna(String qnaTtl, String qnaCon) {
         this.qnaTtl = qnaTtl;
         this.qnaCon = qnaCon;
-        this.qnaYn = qnaYn;
     }
 }

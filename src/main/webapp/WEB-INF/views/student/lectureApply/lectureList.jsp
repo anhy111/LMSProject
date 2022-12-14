@@ -454,7 +454,9 @@
 
 			let header = "${_csrf.headerName}";
 			let token = "${_csrf.token}";
-			
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
 			$.ajax({
 				url : "/student/lectureApply/apply",
 				type : "post",
