@@ -134,10 +134,10 @@
 								</div>
 
 								<div class="row pl-3 pb-3">
-									<div class="card-body table-responsive col-11"
+									<div class="card-body table-responsive col-11 p-0"
 										style="height: 300px;">
 										<table
-											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-sm">
 											<thead>
 												<tr class="text-center">
 													<th width="4%">순번</th>
@@ -172,7 +172,7 @@
 								</div>
 								<div class="row pl-3"></div>
 								<div class="row pl-3 pb-3">
-									<div class="card-body table-responsive col-11"
+									<div class="card-body table-responsive col-11 p-0"
 										style="height: 300px;">
 										<table
 											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
@@ -205,7 +205,7 @@
 										보기</button>
 								</div>
 								<div class="row pl-3 pb-3">
-									<div class="card-body table-responsive col-11"
+									<div class="card-body table-responsive col-11 p-0"
 										style="height: 300px;">
 										<table
 											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
@@ -468,7 +468,7 @@
 									</div>
 
 									<div class="row pl-3 pb-3">
-										<div class="card-body table-responsive col-11"
+										<div class="card-body table-responsive col-11 p-0"
 											style="height: 300px;">
 											<table
 												class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
@@ -500,7 +500,7 @@
 											보기</button>
 									</div>
 									<div class="row pl-3 pb-3">
-										<div class="card-body table-responsive col-11"
+										<div class="card-body table-responsive col-11 p-0"
 											style="height: 300px;">
 											<table
 												class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">

@@ -301,13 +301,13 @@
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="/manage/stuManage" class="nav-link"> 
+								<a href="/department/list" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>학과 조회</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/manage/insertStu" class="nav-link"> 
+								<a href="/department/register" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>학과 등록</p>
 								</a>
