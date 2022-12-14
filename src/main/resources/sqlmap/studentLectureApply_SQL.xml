@@ -59,7 +59,7 @@
 		        AND S.STU_NO = #{stuNo}
 		        ) <![CDATA[>]]> (
 		                SELECT LECA_CRD + (
-		                                    SELECT SUM(LA.LECA_CRD)
+		                                    SELECT NVL(SUM(LA.LECA_CRD),0)
 		                                    FROM STU_LEC SL, LECTURE L, LEC_APPLY LA
 		                                    WHERE SL.LECA_CD = L.LECA_CD
 		                                    AND L.LECA_CD = LA.LECA_CD

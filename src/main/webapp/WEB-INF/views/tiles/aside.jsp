@@ -68,6 +68,12 @@
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
+								<a href="/student/lectureApply/list" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>수강신청</p>
+								</a>
+							</li>
+							<li class="nav-item">
 								<a href="#" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>수강 편람</p>
