@@ -79,7 +79,9 @@
 		        , S.STU_BANK_CD= #{stuBankCd}
 		        , S.STU_DEPO= #{stuDepo}
 		        , S.STU_ACT= #{stuAct}
+		        <if test="stuPic != null">
 		        , S.STU_PIC= #{stuPic}
+		        </if>
 		        , S.STU_BIR= #{stuBir}
 		        , S.DEP_CD = (SELECT DEP_CD FROM DEPARTMENT WHERE DEP_CD=#{depCd})
 		WHERE S.STU_NO = #{stuNo}

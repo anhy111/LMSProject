@@ -25,6 +25,7 @@ function fn_add(data){
 	$("#stuZip").attr("value", data.stuZip);
 	$("#stuAddr1").attr("value", data.stuAddr1);
 	$("#stuAddr2").attr("value", data.stuAddr2);
+// 	$("#pic").html(data.stuPic)
 	
 	
 }
@@ -239,6 +240,20 @@ $(function(){
 			type:"post",
 			success:function(result){
 				console.log("파일 업로드 성공인가요 ? result : " + result);
+				
+				Swal.fire({
+		            icon: 'success',                         // Alert 타입
+		            title: '수정 성공!',         // Alert 제목
+		            text: '정상적으로 수정되었습니다.',  // Alert 내용
+		        })
+				
+				fn_add(result);
+				
+				$("#stuBtn1").css("display", "block");
+				$("#stuBtn2").css("display", "none");
+				
+				$(".stu").attr("readonly", true);
+				$(".stu").attr("disabled", true);
 				
 			}
 		});
