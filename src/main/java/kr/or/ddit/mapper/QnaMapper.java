@@ -20,5 +20,8 @@ public interface QnaMapper {
     @Select("SELECT * FROM qna WHERE qna_cd = #{qnaCd}")
     Qna findOne(Long qnaCd);
 
-    int deleteQ(int qnaCd);
+    @Select("Delete FROM qna WHERE qna_cd = #{qnaCd}")
+    void delete(Long qnaCd);
+
+    void update(Qna qna);
 }

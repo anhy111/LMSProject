@@ -22,4 +22,16 @@ public class Qna {
         this.qnaTtl = qnaTtl;
         this.qnaCon = qnaCon;
     }
+
+    @Override
+    public String toString() {
+        return "Qna{" +
+                "qnaCd=" + qnaCd +
+                ", memNo=" + memNo +
+                ", qnaTtl='" + qnaTtl + '\'' +
+                ", qnaCon='" + qnaCon + '\'' +
+                ", qnaDt=" + qnaDt +
+                ", qnaYn=" + qnaYn +
+                '}';
+    }
 }

@@ -44,7 +44,7 @@
         SET
             NOTICE_TTL = #{noticeTtl},
             NOTICE_CON = #{noticeCon},
-            NOTICE_UPD = SYSDATE
+            NOTICE_REG = SYSDATE
         WHERE
             NOTICE_CD = #{noticeCd}
     </update>

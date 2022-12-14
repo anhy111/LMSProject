@@ -2,8 +2,8 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%--라이브러리 sec--%>
 <head>
@@ -19,6 +19,7 @@
             border: 3px dashed #71748d;
             font-size: 15px;
         }
+
         .drop-zone-dragenter, .drop-zone-dragover {
             background-color: #dbdbe7;
             /*     border: 3px solid pink; */
@@ -54,7 +55,6 @@
                                     <th>중요공지여부</th>
                                     <td class="table-title">
                                         <div style="width:10%">
-
                                             <input type="checkbox" id="input_check" value='imp'
                                                    style=position:relative;left:50px;>
                                         </div>
@@ -75,17 +75,17 @@
                             </div>
                             <div class="col-xl-4">
                                 <div class="drop-zone ">
-                                    <br />
-<%--                                    <div style="text-align: center; font-size: 50px;">--%>
-<%--                                        <i class="fas fa-upload"></i>--%>
-<%--                                    </div>--%>
-<%--                                    <div--%>
-<%--                                        style="text-align: center; font-size: 20px; font-weight: bold;">--%>
-<%--                                        파일 선택 클릭<br />또는 파일을 여기로 드래그하세요.--%>
-<%--                                    </div>--%>
+                                    <br/>
+                                    <%--                                    <div style="text-align: center; font-size: 50px;">--%>
+                                    <%--                                        <i class="fas fa-upload"></i>--%>
+                                    <%--                                    </div>--%>
+                                    <%--                                    <div--%>
+                                    <%--                                        style="text-align: center; font-size: 20px; font-weight: bold;">--%>
+                                    <%--                                        파일 선택 클릭<br />또는 파일을 여기로 드래그하세요.--%>
+                                    <%--                                    </div>--%>
 
                                 </div>
-                                        <input  style="padding-left:210px;" type="file" id="fileUpload" multiple> <br> <br>
+                                <input style="padding-left:210px;" type="file" id="fileUpload" multiple> <br> <br>
                             </div>
                         </div>
                         <button type="submit">등록</button>

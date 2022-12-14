@@ -1,15 +1,11 @@
-package kr.or.ddit.service.Impl;
+package kr.or.ddit.service.impl;
 
 import kr.or.ddit.domain.qna.Qna;
-import kr.or.ddit.domain.qna.QnaVO;
 import kr.or.ddit.mapper.QnaMapper;
 import kr.or.ddit.service.QnaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -34,14 +30,21 @@ public class QnaServiceImpl implements QnaService {
         return this.qnaMapper.showList();
     }
 
+    //게시글 조회
     @Override
     public Qna findOne(Long qnaCd) {
         return this.qnaMapper.findOne(qnaCd);
     }
 
+    //게시글 수정
+    @Override
+    public void update(Qna qna) {
+        this.qnaMapper.update(qna);
+    }
+
     //게시글 삭제
     @Override
-    public int deleteQ(int qnaCd) {
-        return this.qnaMapper.deleteQ(qnaCd);
+    public void delete(Long qnaCd) {
+        this.qnaMapper.delete(qnaCd);
     }
 }

@@ -50,7 +50,7 @@
 
                             <td class="dtr-control sorting_1" tabindex="0">${noticeBasic.noticeCd}</td>
 
-                            <td><a href="/notice/list/${noticeBasic.noticeCd}/edit">${noticeBasic.noticeTtl}
+                            <td><a href="/notice/list/${noticeBasic.noticeCd}/detail">${noticeBasic.noticeTtl}
                                 <c:if test="${ date <= noticeRegDate }">
                                 <span class="badge badge-outline-warning badge-pill" style="float: right;">NEW</span>
                                 </c:if>

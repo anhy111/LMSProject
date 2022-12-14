@@ -53,7 +53,7 @@ public class QnaController {
         return "redirect:main";
     }
 
-    @GetMapping("/qnaDetail/{list.qnaCd}/edit")
+    @GetMapping("/qnaDetail/{list.qnaCd}/detail")
     public String detail(@PathVariable("list.qnaCd") Long qnaCd, Model model) {
 
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
@@ -63,5 +63,35 @@ public class QnaController {
         model.addAttribute("form", qna);
 
         return "qna/qnaDetail";
+    }
+
+    //공지사항 수정페이지
+    @GetMapping("/update/{form.noticeCd}")
+    public String updateForm(@PathVariable("form.noticeCd") Long qnaCd, Model model) {
+
+        Qna qna = qnaService.findOne(qnaCd);
+
+        model.addAttribute("form", qna);
+
+        return "qna/qnaModifyForm";
+    }
+
+    @PostMapping("/update/{form.qnaCd}")
+    public String updateQna(@ModelAttribute("form") Qna form) {
+
+        log.info(form.toString());
+
+        qnaService.update(form);
+
+        return "redirect:/qna/main";
+    }
+
+    //공지사항 삭제
+    @GetMapping("/delete/{form.qnaCd}")
+    public String deleteQna(@PathVariable("form.qnaCd") Long qnaCd) {
+
+        qnaService.delete(qnaCd);
+
+        return "redirect:/qna/main";
     }
 }
