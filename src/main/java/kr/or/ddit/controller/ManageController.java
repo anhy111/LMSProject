@@ -147,5 +147,15 @@ public class ManageController {
 		return "manage/insertStu";
 	}
 	
+	@GetMapping("/manage/recordManage")
+	public String academicStatus(Model model) {
+		
+		List<Student> recordManage = this.manageService.recordManage();
+		
+		model.addAttribute("list", recordManage);
+		
+		return "manage/recordManage";
+	}
+	
 
 }
