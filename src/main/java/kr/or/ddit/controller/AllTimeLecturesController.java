@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AllTimeLecturesController {
 	@Autowired
 	AllTimeLecturesService allTimeLecturesService;
+	@Autowired
 	LectureApplyService lectureApplyService;
 	
 	@GetMapping("/main")
@@ -71,6 +72,7 @@ public class AllTimeLecturesController {
 		log.info("디테일임다");
 		log.info("강의계획코드 : " + lecaCd);
 		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
+		log.info("쿼리다녀온나 : " + lecApplyList);
 		model.addAttribute("lecApplyList",lecApplyList);
 		return "atls/detail";
 	}
