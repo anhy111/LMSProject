@@ -750,6 +750,8 @@
 				stuNo : stuNo
 			};
 
+			let header = "${_csrf.headerName}";
+			let token = "${_csrf.token}";
 			$.ajax({
 				url : "/student/lectureApply/apply",
 				type : "post",
