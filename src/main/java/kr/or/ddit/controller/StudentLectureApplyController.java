@@ -140,4 +140,10 @@ public class StudentLectureApplyController {
 	public List<Allocation> studentApplyTimeTable(StudentLecture studentLecture){
 		return this.allocationService.studentApplyTimeTable(studentLecture);
 	}
+	
+	@ResponseBody
+	@GetMapping("/saveTimeTable")
+	public List<Allocation> studentSaveTimeTable(StudentLecture studentLecture){
+		return this.allocationService.studentSaveTimeTable(studentLecture);
+	}
 } 

@@ -20,4 +20,9 @@ public class AllocationServiceImpl implements AllocationService {
 	public List<Allocation> studentApplyTimeTable(StudentLecture studentLecture) {
 		return this.allocationMapper.studentApplyTimeTable(studentLecture);
 	}
+	
+	@Override
+	public List<Allocation> studentSaveTimeTable(StudentLecture studentLecture) {
+		return this.allocationMapper.studentSaveTimeTable(studentLecture);
+	}
 }

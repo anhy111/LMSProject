@@ -21,5 +21,21 @@
 		AND SL.LECA_CD = L.LECA_CD
 		AND SL.STU_NO = #{stuNo}
 	</select>
+	
+	<select id="studentSaveTimeTable" parameterType="studentLecture" resultType="allocation">
+		SELECT LA.LECA_NM
+		     , B.BLD_SNM
+		     , R.ROOM_NO
+		     , A.ALT_DT
+		     , A.ALT_ST
+		     , A.ALT_EN
+		FROM  ALLOCATION A, LECTURE L, LEC_APPLY LA, ROOM R, BUILDING B, WISH W
+		WHERE A.LECA_CD = L.LECA_CD
+		AND LA.LECA_CD = L.LECA_CD
+		AND R.ROOM_CD = A.ROOM_CD
+		AND R.BLD_CD = B.BLD_CD
+		AND W.LECA_CD = L.LECA_CD
+		AND W.STU_NO = #{stuNo}
+	</select>
 </mapper>
 

@@ -159,8 +159,16 @@
 										</table>
 									</div>
 								</div>
-								<div class="row pl-3">
-									<h3>장바구니 목록</h3>
+								
+								<div class="row pl-3 pr-3">
+									<div class="col-5">
+										<h3 style="display: inline-block;">장바구니 목록</h3>&nbsp;&nbsp;&nbsp;
+										<label>※예비수강신청에서 장바구니에 담은 강의 목록입니다.</label>
+									</div>
+									<button type="button" id="timeTableSave"
+											class="col-1 offset-5 btn btn-flat btn-primary"
+											data-toggle="modal" data-target="#saveSchedule">장바구니 <br>시간표
+											보기</button>
 								</div>
 								<div class="row pl-3"></div>
 								<div class="row pl-3 pb-3">
@@ -486,9 +494,9 @@
 									</div>
 									<div class="row pl-3 pr-3">
 										<h3 class="col-3">장바구니</h3>
-										<button type="button"
+										<button type="button" id="timeTableSave"
 											class="col-1 offset-7 btn btn-flat btn-primary"
-											data-toggle="modal" data-target="#saveSchedule">담긴 <br>시간표
+											data-toggle="modal" data-target="#saveSchedule">장바구니 <br>시간표
 											보기</button>
 									</div>
 									<div class="row pl-3 pb-3">
@@ -516,27 +524,124 @@
 										</div>
 									</div>
 									<div class="modal fade" id="saveSchedule" tabindex="-1"
-										role="dialog" aria-labelledby="exampleModalCenterTitle"
-										aria-hidden="true">
-										<div class="modal-dialog modal-dialog-centered"
-											role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalCenterTitle">강의
-														시간표</h5>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">...</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary btn-flat"
-														data-dismiss="modal">Close</button>
-												</div>
+									role="dialog" aria-labelledby="exampleModalCenterTitle"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered modal-lg"
+										role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalCenterTitle">장바구니 강의
+													시간표</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<table class="table m-0 table-bordered text-center">
+													<thead>
+														<tr>
+															<th width="10%">교시</th>
+															<th width="15%">시간</th>
+															<th width="15%">월</th>
+															<th width="15%">화</th>
+															<th width="15%">수</th>
+															<th width="15%">목</th>
+															<th width="15%">금</th>
+														</tr>
+													</thead>
+													<tbody id="timeTable">
+														<tr height="70">
+															<td class="align-middle">1교시</td>
+															<td class="align-middle">09:00 ~ 09:50</td>
+															<td id="sm1"></td>
+															<td id="st1"></td>
+															<td id="sw1"></td>
+															<td id="sh1"></td>
+															<td id="sf1"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">2교시</td>
+															<td class="align-middle">10:00 ~ 10:50</td>
+															<td id="sm2"></td>
+															<td id="st2"></td>
+															<td id="sw2"></td>
+															<td id="sh2"></td>
+															<td id="sf2"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">3교시</td>
+															<td class="align-middle">11:00 ~ 11:50</td>
+															<td id="sm3"></td>
+															<td id="st3"></td>
+															<td id="sw3"></td>
+															<td id="sh3"></td>
+															<td id="sf3"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">4교시</td>
+															<td class="align-middle">12:00 ~ 12:50</td>
+															<td id="sm4"></td>
+															<td id="st4"></td>
+															<td id="sw4"></td>
+															<td id="sh4"></td>
+															<td id="sf4"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">5교시</td>
+															<td class="align-middle">13:00 ~ 13:50</td>
+															<td id="sm5"></td>
+															<td id="st5"></td>
+															<td id="sw5"></td>
+															<td id="sh5"></td>
+															<td id="sf5"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">6교시</td>
+															<td class="align-middle">14:00 ~ 14:50</td>
+															<td id="sm6"></td>
+															<td id="st6"></td>
+															<td id="sw6"></td>
+															<td id="sh6"></td>
+															<td id="sf6"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">7교시</td>
+															<td class="align-middle">15:00 ~ 15:50</td>
+															<td id="sm7"></td>
+															<td id="st7"></td>
+															<td id="sw7"></td>
+															<td id="sh7"></td>
+															<td id="sf7"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">8교시</td>
+															<td class="align-middle">16:00 ~ 16:50</td>
+															<td id="sm8"></td>
+															<td id="st8"></td>
+															<td id="sw8"></td>
+															<td id="sh8"></td>
+															<td id="sf8"></td>
+														</tr>
+														<tr height="70">
+															<td class="align-middle">9교시</td>
+															<td class="align-middle">17:00 ~ 17:50</td>
+															<td id="sm9"></td>
+															<td id="st9"></td>
+															<td id="sw9"></td>
+															<td id="sh9"></td>
+															<td id="sf9"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary btn-flat"
+													data-dismiss="modal">Close</button>
 											</div>
 										</div>
 									</div>
+								</div>
 								</div>
 							</div>
 						</div>
@@ -576,6 +681,8 @@
 		});
 		
 		$("#timeTableApply").on("click",loadApplyTimeTalble);
+		
+		$("#timeTableSave").on("click",loadSaveTimeTalble);
 		
 		$("#colleage").on("change",function(){
 			
@@ -732,12 +839,19 @@
 			});
 		});
 		
+		$(document).on('click', '.inquirydetail', function() {
+			lecaCd = this.value;
+			console.log("강의계획서 코드: " + lecaCd);
+			window.open("/professor/lecApplyForm/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
+		});
+		
 		loadNotYetApplyLecture(); 
 		loadCompleteApplyLecture();
 		loadNotYetSaveLecture(); 
 		loadCompleteSaveLecture();
 		loadNotApplySaveLecture();
-	});
+		
+	}); // end document
 	
 	function loadNotYetApplyLecture(){
 		
@@ -804,9 +918,9 @@
 									</div>
 								</td>
 								<td>\${lecture.employee.empNm}</td>
-								<td><input type="button"
-									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
-									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm inquirydetail"
+									value="\${lecture.lecApply.lecaCd}" >강의계획서</button></td>
 								<td><button
 										class="btn btn-block bg-gradient-primary btn-sm btn-flat apply"
 										value="\${lecture.lecaCd}">신청</button></td>
@@ -861,9 +975,9 @@
 									</div>
 								</td>
 								<td>\${lecture.employee.empNm}</td>
-								<td><input type="button"
-									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
-									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm inquirydetail"
+									value="\${lecture.lecApply.lecaCd}" >강의계획서</button></td>
 								<td><button
 										class="btn btn-block bg-gradient-primary btn-sm btn-flat applyCancel"
 										value="\${lecture.lecaCd}">취소</button></td>
@@ -921,9 +1035,9 @@
 								<td>\${lecture.lecApply.lecaCrd}</td>
 								<td>\${lecture.lecApply.lecaCap}</td>
 								<td>\${lecture.employee.empNm}</td>
-								<td><input type="button"
-									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
-									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm inquirydetail"
+									value="\${lecture.lecApply.lecaCd}" >강의계획서</button></td>
 								<td><button
 										class="btn btn-block bg-gradient-primary btn-sm btn-flat save"
 										value="\${lecture.lecaCd}">담기</button></td>
@@ -972,9 +1086,9 @@
 								<td>\${lecture.lecApply.lecaCrd}</td>
 								<td>\${lecture.lecApply.lecaCap}</td>
 								<td>\${lecture.employee.empNm}</td>
-								<td><input type="button"
-									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
-									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm inquirydetail"
+									value="\${lecture.lecApply.lecaCd}" >강의계획서</button></td>
 								<td><button
 										class="btn btn-block bg-gradient-primary btn-sm btn-flat saveCancel"
 										value="\${lecture.lecaCd}">취소</button></td>
@@ -1040,9 +1154,9 @@
 									</div>
 								</td>
 								<td>\${lecture.employee.empNm}</td>
-								<td><input type="button"
-									class="btn btn-block btn-outline-secondary btn-flat btn-sm"
-									data-number="\${lecture.lecApply.lecaCd}" value="강의계획서" /></td>
+								<td><button type="button"
+									class="btn btn-block btn-outline-secondary btn-flat btn-sm inquirydetail"
+									value="\${lecture.lecApply.lecaCd}" >강의계획서</button></td>
 								<td><button
 										class="btn btn-block bg-gradient-primary btn-sm btn-flat apply"
 										value="\${lecture.lecaCd}">신청</button></td>
@@ -1069,42 +1183,118 @@
 			},
 			success : function(result) {
 				console.log("result : ", result);
+				
+				let wk = ["m","t","w","h","f"];
+				
+				for(let i=0; i<5; i++){
+					for(let j=1; j<=9; j++){
+						$("#a"+wk[i]+j).css("backgroundColor","white")
+										.css("color","white")
+										.css("border","1px solid #dee2e6")
+										.html("");
+					}
+				}
+				
 				$.each(result, function(p_inx, lecture){
 					
 					let dayWeek = "";
 					switch (lecture.altDt) {
 					case '월':
-						console.log("월요일~");
 						dayWeek = "m";
 						break;
 					case '화':
-						console.log("화요일~");
 						dayWeek = "t";
 						break;
 					case '수':
 						dayWeek = "w";
-						console.log("수요일~");
 						break;
 					case '목':
 						dayWeek = "h";
-						console.log("목요일~");
 						break;
 					case '금':
 						dayWeek = "f";
-						console.log("금요일~");
 						break;
 					}
-					
+					let color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
 					for(let i=lecture.altSt; i<=lecture.altEn; i++){
 						if( i == lecture.altSt){
-							$("#a"+dayWeek+i).css("backgroundColor","black")
+							$("#a"+dayWeek+i).css("backgroundColor",color[p_inx])
 										.css("color","white")
 										.css("border","none")
 										.html(lecture.lecaNm + "\n" + lecture.bldSnm + lecture.roomNo);
 						} else{
-							$("#a"+dayWeek+i).css("backgroundColor","black")
+							$("#a"+dayWeek+i).css("backgroundColor",color[p_inx])
 										.css("color","white")
 										.css("border","none");
+						}
+						
+					}
+					
+				});//end for
+			}// end success
+		}); // end ajax
+		
+	}// end function
+	
+	function loadSaveTimeTalble(){
+		
+		let data = {
+				stuNo : stuNo
+		};
+		
+		$.ajax({
+			url : "/student/lectureApply/saveTimeTable",
+			type : "get",
+			data : data,
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result) {
+				console.log("result : ", result);
+				
+				let wk = ["m","t","w","h","f"];
+				
+				for(let i=0; i<5; i++){
+					for(let j=1; j<=9; j++){
+						$("#s"+wk[i]+j).css("backgroundColor","white")
+										.css("color","white")
+										.css("border","1px solid #dee2e6")
+										.html("");
+					}
+				}
+				
+				$.each(result, function(p_inx, lecture){
+					
+					let dayWeek = "";
+					switch (lecture.altDt) {
+					case '월':
+						dayWeek = "m";
+						break;
+					case '화':
+						dayWeek = "t";
+						break;
+					case '수':
+						dayWeek = "w";
+						break;
+					case '목':
+						dayWeek = "h";
+						break;
+					case '금':
+						dayWeek = "f";
+						break;
+					}
+					let color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
+					for(let i=lecture.altSt; i<=lecture.altEn; i++){
+						if( i == lecture.altSt){
+							$("#s"+dayWeek+i).css("backgroundColor",color[p_inx])
+											.css("color","white")
+											.css("border","none")
+											.html(lecture.lecaNm + "\n" + lecture.bldSnm + lecture.roomNo);
+						} else{
+							$("#s"+dayWeek+i).css("backgroundColor",color[p_inx])
+											.css("color","white")
+											.css("border","none")
 						}
 						
 					}
