@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
+@Getter @Setter
 public class Qna {
 
     private Long qnaCd;

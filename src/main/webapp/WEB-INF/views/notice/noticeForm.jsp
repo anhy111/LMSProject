@@ -7,10 +7,7 @@
 
 <%--라이브러리 sec--%>
 <head>
-
     <style>
-
-
         .drop-zone {
             width: 500px;
             height: 250px;
@@ -22,18 +19,11 @@
             border: 3px dashed #71748d;
             font-size: 15px;
         }
-
-        #fileUpload {
-        }
-
-
         .drop-zone-dragenter, .drop-zone-dragover {
             background-color: #dbdbe7;
             /*     border: 3px solid pink; */
         }
     </style>
-
-
 </head>
 
 <!-- 게시판상세 -->
@@ -51,7 +41,6 @@
 
                 <div class="card-body">
                     <form role="form" action="/notice/noticeForm" method="post" id="form" name="form">
-<%--                        srcf input tag--%>
                         <sec:csrfInput/>
                         <div class="row">
                             <table class="table table-bordered">
@@ -72,19 +61,6 @@
                                         <div id="wrapper" style="margin-top: -1px;"></div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <!-- <th>마감날짜</th>
-                                    <td class="table-title">
-                                        <div
-                                            class="tui-datepicker-input tui-datetime-input tui-has-focus">
-                                            <input type="text" id="datepicker-input-1" name="dueDate"
-                                                aria-label="Date-Time"> <span class="tui-ico-date"></span>
-                                        </div>
-                                        <div id="wrapper-1" style="margin-top: -1px;"></div>
-
-                                    </td> -->
-                                </tr>
-
                                 </tbody>
                             </table>
                         </div>
@@ -97,28 +73,23 @@
                                               style="display: none;"></textarea>
                                 </div>
                             </div>
-                            <!--  <div class="col-xl-4">
+                            <div class="col-xl-4">
                                 <div class="drop-zone ">
                                     <br />
-                                    <div style="text-align: center; font-size: 50px;">
-                                        <i class="fas fa-upload"></i>
-                                    </div>
-                                    <div
-                                        style="text-align: center; font-size: 20px; font-weight: bold;">
-                                        파일 선택 클릭<br />또는 파일을 여기로 드래그하세요.
-                                    </div>
+<%--                                    <div style="text-align: center; font-size: 50px;">--%>
+<%--                                        <i class="fas fa-upload"></i>--%>
+<%--                                    </div>--%>
+<%--                                    <div--%>
+<%--                                        style="text-align: center; font-size: 20px; font-weight: bold;">--%>
+<%--                                        파일 선택 클릭<br />또는 파일을 여기로 드래그하세요.--%>
+<%--                                    </div>--%>
 
                                 </div>
                                         <input  style="padding-left:210px;" type="file" id="fileUpload" multiple> <br> <br>
-                            </div> -->
+                            </div>
                         </div>
                         <button type="submit">등록</button>
                     </form>
-
-
-                    <!-- ================================================= -->
-                    <!-- 버튼 시작 -->
-                    <!-- ================================================= -->
 
                     <div class="row justify-content-end mt-3"
                          style="padding-right: 30px; padding-bottom: 50px;">
@@ -131,18 +102,12 @@
                         <button class="btn btn-outline-danger" type="button"
                                 onclick="f_alert();">취소
                         </button>
-                        &nbsp;&nbsp;
                     </div>
-                    <!-- ================================ ================= -->
-                    <!-- 버튼 끝 -->
-                    <!-- ================================================= -->
+
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- 11111끝 -->
-
 </div>
 
 <script>
@@ -150,7 +115,6 @@
         summernote_go($('#content'), '<%=request.getContextPath()%>');
     }
 </script>
-
 
 <script>
     function f_alert() {
@@ -161,13 +125,10 @@
             history.back();
         }
     }
-
 </script>
-
 
 <script>
     function regist_go() {
-
         Swal.fire({
             title: '등록하시겠습니까?',
             showDenyButton: true,

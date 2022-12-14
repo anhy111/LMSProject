@@ -3,7 +3,7 @@ package kr.or.ddit.controller;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+@Getter @Setter
 public class QnaForm {
 
     private String title;

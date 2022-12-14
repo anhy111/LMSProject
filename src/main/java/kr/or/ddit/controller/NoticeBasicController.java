@@ -63,6 +63,8 @@ public class NoticeBasicController {
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
+        log.info(noticeBasic.toString());
+
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         noticeBasicService.noticeBasicSave(noticeBasic);
 
@@ -96,8 +98,7 @@ public class NoticeBasicController {
     @PostMapping("/update/{form.noticeCd}")
     public String updateNotice(@ModelAttribute("form") NoticeBasic form) {
 
-
-
+        log.info(form.toString());
         noticeBasicService.noticeBasicUpdate(form);
 
         return "redirect:/notice/list";
