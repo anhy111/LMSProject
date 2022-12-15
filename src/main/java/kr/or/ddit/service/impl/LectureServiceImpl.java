@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Task;
+import kr.or.ddit.domain.TaskSubmit;
 import kr.or.ddit.mapper.LectureMapper;
 import kr.or.ddit.service.LectureService;
 
@@ -80,6 +81,23 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture) {
 		return this.lectureMapper.loadNotApplySaveLecture(studentLecture);
+	}
+	//과제 제출 리스트
+	@Override
+	public List<Task> taskSubmitList(String tsubCd) {
+		return this.taskSubmitList(tsubCd);
+	}
+	
+	//학생 과제 제출
+	@Override
+	public int insertTaskSubmit1(TaskSubmit taskSubmit) {
+		return this.insertTaskSubmit1(taskSubmit);
+	}
+
+	//학생 과제 제출
+	@Override
+	public int insertTaskSubmit2(TaskSubmit taskSubmit) {
+		return this.insertTaskSubmit2(taskSubmit);
 	}
 
 }

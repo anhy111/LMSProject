@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Task;
+import kr.or.ddit.domain.TaskSubmit;
 
 
 public interface LectureService {
@@ -30,10 +31,14 @@ public interface LectureService {
 	public Task detailTask(String taskCd, String lecaCd);
 	//강의 과제 삭제
 	public int deleteTask(String lecaCd,String taskCd); 
+	//과제 제출 목록
+	public List<Task> taskSubmitList(String tsubCd);
+	//과제 제출
+	public int insertTaskSubmit1(TaskSubmit taskSubmit);
+	public int insertTaskSubmit2(TaskSubmit taskSubmit);
 
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
 
-	// 장바구니에 담기고 학생이 수강신청하지 않은 강의
-	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);
+	List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);
 }
