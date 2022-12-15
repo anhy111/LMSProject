@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Subject;
 import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.mapper.LectureApplyMapper;
 import kr.or.ddit.service.LectureApplyService;
@@ -68,5 +69,19 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 		return this.lectureApplyMapper.lecApplySubmit(lecaCd);
 	}
 	
+	@Override
+	public int weekPlanSubmit(Map<String, Object> map) {
+		return this.lectureApplyMapper.weekPlanSubmit(map);
+	}
+	
+	@Override
+	public int getMaxLecaCd() {
+		return this.lectureApplyMapper.getMaxLecaCd();
+	}
+	
+	@Override
+	public List<Subject> subList() {
+		return this.lectureApplyMapper.subList();
+	}
     
 }

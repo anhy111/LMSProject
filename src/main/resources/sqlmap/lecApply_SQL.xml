@@ -3,47 +3,10 @@
 <mapper namespace="kr.or.ddit.mapper.LectureApplyMapper">
 	<sql id="yrNsem">
 		<if test="yrNsem != null and !yrNsem.equals('')">
-			AND     L.LECA_YR || L.LECA_SEM = #{yrNsem}
+			AND     U.LECA_YR || U.LECA_SEM = #{yrNsem}
 		</if>
 	</sql>
 
-<!-- 	<resultMap type="professor" id="lecApplyMap"> -->
-<!-- 		<result property="proPos" column="PRO_POS" /> -->
-<!-- 		<result property="proNo" column="PRO_NO" /> -->
-		
-<!-- 		<collection property="employeeList" resultMap="authMap"></collection> -->
-<!-- 	</resultMap> -->
-	
-<!-- 	<resultMap type="employee" id="authMap"> -->
-<!-- 		<result property="empNo" column="EMP_NO" /> -->
-<!-- 		<result property="empNm" column="EMP_NM" /> -->
-<!-- 		<result property="empTel" column="EMP_TEL" /> -->
-<!-- 		<result property="empReg" column="EMP_REG" /> -->
-<!-- 	</resultMap> -->
-
-<!-- 	<select id="detail" parameterType="int" resultMap="lecApplyMap"> -->
-<!-- 		SELECT  P.PRO_NO -->
-<!-- 		        , P.DEP_CD -->
-<!-- 		        , P.PRO_POS -->
-<!-- 		        , E.EMP_NO -->
-<!-- 		        , E.EMP_NM -->
-<!-- 		        , E.EMP_NME -->
-<!-- 		        , E.EMP_TEL -->
-<!-- 		        , E.EMP_TEL2 -->
-<!-- 		        , E.EMP_ZIP -->
-<!-- 		        , E.EMP_ADDR1 -->
-<!-- 		        , E.EMP_ADDR2 -->
-<!-- 		        , E.EMP_REG -->
-<!-- 		        , E.EMP_BANK_CD -->
-<!-- 		        , E.EMP_DEPO -->
-<!-- 		        , E.EMP_ACT -->
-<!-- 		        , E.EMP_PIC -->
-<!-- 		        , E.EMP_JOIN -->
-<!-- 		        , E.EMP_RET -->
-<!-- 		FROM    PROFESSOR P INNER JOIN EMPLOYEE E ON(P.PRO_NO = E.EMP_NO) -->
-<!-- 		WHERE   P.PRO_NO = #{proNo} -->
-<!-- 	</select> -->
-	
 	<select id="proInfo" parameterType="int" resultType="professor">
 		SELECT  P.PRO_NO
 		        , E.EMP_NM
@@ -78,11 +41,11 @@
 	</select>
 	
 	<select id="getCnt" parameterType="hashMap" resultType="int">
-		SELECT  COUNT(L.LECA_CD)
-		FROM    LEC_APPLY L
-		WHERE   L.PRO_NO = #{empNo}
+		SELECT  COUNT(U.LECA_CD)
+		FROM    LEC_APPLY U
+		WHERE   U.PRO_NO = #{empNo}
 		<include refid="yrNsem"></include>
-		AND     L.LECA_IMSI_YN IS NULL
+		AND     U.LECA_IMSI_YN IS NULL
 	</select>
 	
 	<select id="list" parameterType="hashMap" resultType="lecApply">
@@ -97,8 +60,10 @@
 		        U.LECA_CATE,
 		        NVL(U.LECA_CRD, 0) LECA_CRD,
 		        NVL(TRIM(U.MON || ' ' || U.TUE || ' ' || U.WED || ' ' || U.THU || ' ' || U.FRI), ' - ')
-		        || ' (' || NVL(U.BLD_SNM, '아직 배정되지 않았습니다.') || ' ' || U.ROOM_NO || ')' LECA_TT,
-		        U.LECA_GRADE,
+		        || ' (' || NVL(U.BLD_SNM, '아직 배정되지 않았습니다.') || ' ' || U.ROOM_NO || ')' LECA_TC,
+		        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+                WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+        		END LECA_GRADE,
 		        U.LECA_DT,
 		        CASE    WHEN U.LECA_YN = 0 THEN '승인대기'
 		                WHEN U.LECA_YN = 1 THEN '승인'
@@ -145,7 +110,9 @@
 		        NVL(U.LECA_CAP, 0) LECA_CAP,
 		        U.LECA_CATE,
 		        NVL(U.LECA_CRD, 0) LECA_CRD,
-		        U.LECA_GRADE,
+		        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+                WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+        		END LECA_GRADE,
 		        U.LECA_DT,
 		        U.SUB_NM,
 		        U.LECA_CON,
@@ -196,28 +163,19 @@
 	</insert>
 	
 	<insert id="lectureSubmit" parameterType="int">
-		INSERT INTO LECTURE (
-		            , LECA_CD
-		            , SUB_CD
-		            , LEC_YN
-		            , LEC_HCNT
-		            , LECA_YN
-		            , DEP_CD
-		) VALUES (
-		    #{lecaCd}
-		    , #{subCd}
-		    , #{lecHcnt}
-		    , #{lecaYn}
-		    , #{depCd}
-		);
-	</insert>
-	
-	<insert id="lecApplySubmit" parameterType="int">
 		<selectKey order="BEFORE" keyProperty="leca_cd"
 				resultType="int">
 			SELECT MAX(LECA_CD)+1
 			FROM LEC_APPLY
 		</selectKey>
+		INSERT INTO LECTURE (
+		            , LECA_CD
+		) VALUES (
+		    #{lecaCd}
+		);
+	</insert>
+	
+	<insert id="lecApplySubmit" parameterType="int">
 		INSERT INTO LEC_APPLY (
 		            , LECA_CD
 		            , LECA_YR
@@ -269,6 +227,16 @@
 		);
 	</insert>
 	
+	<select id="subList" resultType="subject">
+		SELECT  SUB_CD, SUB_NM
+		FROM    SUBJECT
+		ORDER BY SUB_NM
+	</select>
+	
+	<select id="getMaxLecaCd" resultType="int">
+		SELECT  MAX(LECA_CD)
+		FROM    LEC_APPLY
+	</select>
 	
 </mapper>
 
