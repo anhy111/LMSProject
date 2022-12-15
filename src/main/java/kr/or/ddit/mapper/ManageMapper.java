@@ -17,4 +17,8 @@ public interface ManageMapper  {
 	
 	public List<Student> recordManage();
 	
+	public Student recordManagePost(Map<String, String> map);
+	
+	public int yesOrNo(Map<String, String> map);
+	
 }

@@ -102,6 +102,30 @@
 		WHERE S.DEP_CD = D.DEP_CD
 		AND S.STU_NO = R.STU_NO
 	</select>
+	
+	<select id="recordManagePost" parameterType="map" resultType="student" > 
+		SELECT  S.STU_NO
+		        ,S.STU_NM
+		        ,S.STU_TEL
+		        ,D.DEP_NM
+		        ,R.REC_YR
+		        ,R.REC_SEM
+		        ,(SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
+		        ,R.REC_PER
+		        ,R.REC_RSN
+		        ,R.REC_DT
+		        ,(SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
+		FROM STUDENT S, DEPARTMENT D, RECORD R
+		WHERE S.DEP_CD = D.DEP_CD
+		AND S.STU_NO = R.STU_NO
+		AND S.STU_NO = #{stuNo}
+	</select>
+	
+	<update id="yesOrNo" parameterType="map"> 
+		UPDATE RECORD R
+		SET R.REC_YN = #{Yn}
+		WHERE R.STU_NO = #{stuNo}
+	</update>
 
 </mapper>
 
