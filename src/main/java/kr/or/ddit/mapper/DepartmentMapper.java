@@ -9,4 +9,10 @@ public interface DepartmentMapper {
 
 	//결재 요청 목록
     List<Department> departmentList();
+
+	List<Department> departmentListByCollege(Department department);
+
+	int register(Department department);
+
+	Department departmentDetail(Department department);
 }

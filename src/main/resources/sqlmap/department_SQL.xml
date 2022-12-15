@@ -9,6 +9,46 @@
 		select DEP_CD, COL_CD, PRO_NO, DEP_NM, DEP_DES, DEP_CAP, DEP_TEL, EMP_NO
 		from DEPARTMENT
 	</select>
+	
+	<select id="departmentListByCollege" parameterType="department" resultType="department"> 
+		SELECT D.DEP_CD
+		     , D.COL_CD
+		     , D.PRO_NO
+		     , D.DEP_NM
+		     , D.DEP_DES
+		     , D.DEP_CAP
+		     , D.DEP_TEL
+		     , D.EMP_NO
+		     , C.COL_NM
+		FROM DEPARTMENT D, COLLEGE C 
+		WHERE 1=1
+		AND D.COL_CD = C.COL_CD
+		AND COL_NM LIKE '%' || #{colNm} ||'%'
+	</select>
 
+	<insert id="register" parameterType="department">
+		<selectKey order="BEFORE" keyProperty="depCd" resultType="int">
+			SELECT NVL(MAX(DEP_CD),0)+1 FROM DEPARTMENT
+		</selectKey>
+		INSERT INTO DEPARTMENT(DEP_CD, COL_CD, DEP_NM, DEP_DES, DEP_CAP, DEP_TEL) 
+            VALUES(#{depCd}, #{colCd}, #{depNm},#{depDes},#{depCap},#{depTel})
+	</insert>
+	
+	<select id="departmentDetail" parameterType="department" resultType="department">
+		SELECT
+		    D.DEP_CD,
+		    D.COL_CD,
+		    D.PRO_NO,
+		    (SELECT SE.EMP_NM FROM EMPLOYEE SE WHERE D.PRO_NO = SE.EMP_NO) PRO_NM,
+		    D.DEP_NM,
+		    D.DEP_DES,
+		    D.DEP_CAP,
+		    D.DEP_TEL,
+		    D.EMP_NO,
+		    (SELECT TE.EMP_NM FROM EMPLOYEE TE WHERE TE.EMP_NO = D.EMP_NO) EMP_NM
+		FROM 
+		    DEPARTMENT D
+		WHERE D.DEP_CD = #{depCd}
+	</select>
 </mapper>
 
