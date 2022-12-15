@@ -16,6 +16,7 @@ function fn_add(data){
 	$("#recDt").attr("value", data.recDt);
 	$("#recYr").attr("value", data.recYr + "년 " + data.recSem + "학기");
 	$("#depNm").attr("value", data.depNm);
+	$("#rgbCd").attr("value", data.rgbCd);
 	$("#stuNo").attr("value", data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$("#stuTel").attr("value", data.stuTel);
@@ -32,12 +33,12 @@ function fn_list(){
 			xhr.setRequestHeader(header, token);
 		},
 		success :function(data){
-			console.log("성공이라해주라 ", data);
+// 			console.log("성공이라해주라 ", data);
 			
 			let str = "";
 			
 			$.each(data,function(index,student){
-				console.log("index는?? " + index + " student는?? ", student);
+// 				console.log("index는?? " + index + " student는?? ", student);
 				
 				str += `
 				<tr>
@@ -82,16 +83,12 @@ $(function(){
 	
 	fn_list();
 	
-
-	
 	$(document).on("click", ".btnDetail", function(){
 		
 		let stuNo = $(this).val();
 		let data = {"stuNo":stuNo}
 		let alt = $(this).attr("alt");
-		console.log("상세정보 가져왓 " + stuNo + " data 가져왓 " + JSON.stringify(data));
 		
-		console.log("alt?? " + alt);
 		
 		if(alt == "승인"){
 			$("#stuBtn1").css("display", "none");
@@ -117,7 +114,7 @@ $(function(){
 				xhr.setRequestHeader(header, token);
 			},
 			success :function(data){
-				console.log("성공이라해주라 ", data.stuNo);
+// 				console.log("성공이라해주라 ", data.stuNo);
 				
 				fn_add(data)
 				
@@ -134,36 +131,59 @@ $(function(){
 		
 		let Yn = $(this).val();
 		let stuNo = $("#stuNo").val();
+		let recRej = ""
 		let data = {
 				"Yn":Yn,
-				"stuNo":stuNo		
+				"stuNo":stuNo,
+				"recRej":recRej
 		}
 		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
 		
-		$.ajax({
-			type: 'post',
-			url: '/manage/yesOrNo',
-			contentType:"application/json;charset=utf-8",
-			data:JSON.stringify(data),
-			beforeSend:function(xhr){
-				xhr.setRequestHeader(header, token);
-			},
-			success :function(data){
-				console.log("뇸뇸 ", data);
-				
-				fn_add(data);
-				
-				$("#stuBtn1").css("display", "none");
-				$("#stuBtn2").css("display", "block");
-				
-				fn_list();
-				
-			},
-			error:function(request, status, error){
-				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
+		
+		 Swal.fire({
+	            title: '승인 하시겠습니까?',
+	            icon: 'question',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: '승인',
+	            cancelButtonText: '취소'
+		 }).then(function(dlt) {
+			if(dlt.isConfirmed){
+				$.ajax({
+					type: 'post',
+					url: '/manage/yesOrNo',
+					contentType:"application/json;charset=utf-8",
+					data:JSON.stringify(data),
+					beforeSend:function(xhr){
+						xhr.setRequestHeader(header, token);
+					},
+					success :function(data){
+						console.log("뇸뇸 ", data);
+						
+						 Swal.fire(
+				                    '승인 완료',
+				                    '정상적으로 승인 되었습니다.',
+				                    'success'
+				                )
+						
+						fn_add(data);
+						
+						$("#stuBtn1").css("display", "none");
+						$("#stuBtn2").css("display", "block");
+						
+						fn_list();
+						
+					},
+					error:function(request, status, error){
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+					
+				});
 			
-		});
+			}
+		
+		 });
 		
 	});
 	
@@ -171,9 +191,13 @@ $(function(){
 		
 		let Yn = $(this).val();
 		let stuNo = $("#stuNo").val();
+		let recRej = $(".recRej").val();
+		console.log("반려사유 들어와주라  " + recRej);
+		
 		let data = {
 				"Yn":Yn,
-				"stuNo":stuNo		
+				"stuNo":stuNo,
+				"recRej":recRej
 		}
 		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
 		
@@ -188,12 +212,20 @@ $(function(){
 			success :function(data){
 				console.log("reject뇸뇸 ", data);
 				
+				Swal.fire(
+	                    '반려 완료',
+	                    '정상적으로 반려 되었습니다.',
+	                    'success'
+	                )
+				
 				fn_add(data);
 				
 				$("#stuBtn1").css("display", "none");
 				$("#stuBtn3").css("display", "block");
 				
 				fn_list();
+				$(".recRej").val("");
+				$(".close").click();
 				
 			},
 			error:function(request, status, error){
@@ -208,30 +240,80 @@ $(function(){
 		
 		let Yn = $(this).val();
 		let stuNo = $("#stuNo").val();
+		let recRej = ""
 		let data = {
 				"Yn":Yn,
-				"stuNo":stuNo		
+				"stuNo":stuNo,
+				"recRej":recRej
 		}
 		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
 		
+		 Swal.fire({
+	            title: '취소 하시겠습니까?',
+	            text: "승인 대기 상태로 돌아갑니다.",
+	            icon: 'question',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: '확인',
+	            cancelButtonText: '취소'
+		 }).then(function(dlt) {
+			 if(dlt.isConfirmed){
+				$.ajax({
+					type: 'post',
+					url: '/manage/yesOrNo',
+					contentType:"application/json;charset=utf-8",
+					data:JSON.stringify(data),
+					beforeSend:function(xhr){
+						xhr.setRequestHeader(header, token);
+					},
+					success :function(data){
+						console.log("reject뇸뇸 ", data);
+						
+						 Swal.fire(
+				                    '취소 완료',
+				                    '정상적으로 취소 되었습니다.',
+				                    'success'
+				                )
+						
+						fn_add(data);
+						
+						$("#stuBtn1").css("display", "block");
+						$("#stuBtn3").css("display", "none");
+						$("#stuBtn2").css("display", "none");
+						
+						fn_list();
+						
+					},
+					error:function(request, status, error){
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+					
+				});
+				
+			 }
+		
+		 });
+		
+	});
+	
+	$("#msg").on("click", function(){
+		
+		let stuNo = $("#stuNo").val();
+		let data = {"stuNo":stuNo}
+		console.log("stuNo넘어오냐고 " + stuNo);
+		
 		$.ajax({
 			type: 'post',
-			url: '/manage/yesOrNo',
+			url: '/manage/recordManagePost',
 			contentType:"application/json;charset=utf-8",
 			data:JSON.stringify(data),
 			beforeSend:function(xhr){
 				xhr.setRequestHeader(header, token);
 			},
 			success :function(data){
-				console.log("reject뇸뇸 ", data);
 				
-				fn_add(data);
-				
-				$("#stuBtn1").css("display", "block");
-				$("#stuBtn3").css("display", "none");
-				$("#stuBtn2").css("display", "none");
-				
-				fn_list();
+				$("#message").html(data.recRej);
 				
 			},
 			error:function(request, status, error){
@@ -239,6 +321,7 @@ $(function(){
 			}
 			
 		});
+		
 		
 	});
 	
@@ -311,6 +394,12 @@ $(function(){
 											<label for="recYn" class="form-label">승인여부</label> 
 											<input type="text" class="form-control stu" id="recYn" name="recYn" readonly />
 										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-5">
+											<label for="rgbCd" class="form-label">신청구분</label> 
+											<input type="text" class="form-control" id="rgbCd" name="rgbCd" readonly />
+										</div>
 										<div class="col-5 offset-1">
 											<label for="recPer" class="form-label">신청기간</label> 
 											<input type="text" class="form-control stu" id="recPer" name="recPer" readonly />
@@ -349,7 +438,7 @@ $(function(){
 									<div class="row mb-2">
 										<div class="col-11">
 											<label for="recRsn" class="form-label">신청사유</label> 
-											<textarea id="recRsn" name="recRsn" class="form-control stu" rows="10" readonly></textarea>
+											<textarea id="recRsn" name="recRsn" class="form-control stu" rows="7" readonly></textarea>
 										</div>
 									</div>
 								</div>
@@ -359,12 +448,15 @@ $(function(){
 
 					<div id="stuBtn1" align="right" style="display:none" >
 						<button type="button" id="Approval" value="AP001" class="btn btn-outline-warning" >승인</button>
-						<button type="button" id="reject" value="AP003" class="btn btn-outline-danger">반려</button>
+						<button type="button" class="btn btn-outline-danger"
+						data-toggle="modal" data-target="#modal-default" >반려</button>
 					</div>
 					<div id="stuBtn2" align="right" style="display:none" >
 						<button type="button" value="AP002" class="btn btn-outline-danger cancel">승인 취소</button>
 					</div>
 					<div id="stuBtn3" align="right" style="display:none" >
+						<button type="button" class="btn btn-outline-secondary"
+						data-toggle="modal" data-target="#modal-default2" id="msg">반려 사유</button>
 						<button type="button" value="AP002" class="btn btn-outline-danger cancel">반려 취소</button>
 					</div>
 				</div>
@@ -372,3 +464,48 @@ $(function(){
 		</div>
 	</div>
 </div>
+
+<!-- 모달 -->
+<div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">반려</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="mb-3">
+					<label for="recRej" class="col-form-label">반려 사유를 입력해주세요.</label>
+					<textarea class="form-control recRej" rows="7"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" id="reject" value="AP003" class="btn btn-block btn-danger">반려</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 반려사유 -->
+<div class="modal fade" id="modal-default2" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">반려 사유</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="mb-3">
+					<textarea class="form-control" id="message" rows="7" readonly></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

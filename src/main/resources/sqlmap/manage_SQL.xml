@@ -114,6 +114,7 @@
 		        ,R.REC_PER
 		        ,R.REC_RSN
 		        ,R.REC_DT
+		        ,R.REC_REJ
 		        ,(SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
 		FROM STUDENT S, DEPARTMENT D, RECORD R
 		WHERE S.DEP_CD = D.DEP_CD
@@ -124,6 +125,7 @@
 	<update id="yesOrNo" parameterType="map"> 
 		UPDATE RECORD R
 		SET R.REC_YN = #{Yn}
+			,R.REC_REJ = #{recRej}
 		WHERE R.STU_NO = #{stuNo}
 	</update>
 
