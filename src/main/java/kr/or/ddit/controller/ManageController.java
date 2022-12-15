@@ -148,13 +148,18 @@ public class ManageController {
 	@ResponseBody
 	public Student approval(@RequestBody Map<String, String> map) {
 		
-		log.info("map 잘 넘어오나? " + map.get("stuNo") + map.get("Yn"));
+		log.info("map 잘 넘어오나? " + map.get("stuNo") + map.get("Yn") + map.get("recRej"));
 		int yesOrNo = this.manageService.yesOrNo(map);
 		
 		Student recordManagePost = this.manageService.recordManagePost(map);
 		
 		return recordManagePost;
 	}
+	
+	//교수관리 시작헌다...
+	
+	
+	
 	
 
 }
