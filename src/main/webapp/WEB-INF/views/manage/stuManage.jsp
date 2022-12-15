@@ -27,7 +27,6 @@ function fn_add(data){
 	$("#stuAddr2").attr("value", data.stuAddr2);
 // 	$("#pic").html(data.stuPic)
 	
-	
 }
 
 $(function(){

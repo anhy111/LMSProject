@@ -1,5 +1,251 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script type="text/javascript">
+
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+
+function fn_add(data){
+	
+	$("#recYn").attr("value", data.recYn);
+	$("#recPer").attr("value", data.recPer);
+	$("#recDt").attr("value", data.recDt);
+	$("#recYr").attr("value", data.recYr + "년 " + data.recSem + "학기");
+	$("#depNm").attr("value", data.depNm);
+	$("#stuNo").attr("value", data.stuNo);
+	$("#stuNm").attr("value", data.stuNm);
+	$("#stuTel").attr("value", data.stuTel);
+	$("#recRsn").html(data.recRsn);
+	
+}
+
+function fn_list(){
+	
+	$.ajax({
+		type: 'get',
+		url: '/manage/recordList',
+		beforeSend:function(xhr){
+			xhr.setRequestHeader(header, token);
+		},
+		success :function(data){
+			console.log("성공이라해주라 ", data);
+			
+			let str = "";
+			
+			$.each(data,function(index,student){
+				console.log("index는?? " + index + " student는?? ", student);
+				
+				str += `
+				<tr>
+					<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">\${index+1}</td>
+					<td class="detailStu">\${student.stuNo}</td>
+					<td>\${student.stuNm}</td>
+					<td>
+						<div class="image">
+							\${student.recYr}년 \${student.recSem}학기
+						</div>
+					</td>
+					<td>\${student.rgbCd}</td>
+					<td id="YOrN\${index}">\${student.recYn}</td>
+					<td><button alt="\${student.recYn}"
+							class="btn btn-block btn-outline-info btn-sm btnDetail"
+							value="\${student.stuNo}">상세</button></td>
+				</tr> `;
+				
+			});
+			
+			$("#list").html(str);
+			
+			for(let i=0;i<data.length; i++){
+				if($("#YOrN"+i).html()=="승인"){
+					$("#YOrN"+i).css("color", "blue");
+				}else if($("#YOrN"+i).html()=="반려"){
+					$("#YOrN"+i).css("color", "red");
+				}
+			}
+			
+			
+		},
+		error:function(request, status, error){
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+		
+	});
+	
+}
+
+$(function(){
+	
+	fn_list();
+	
+
+	
+	$(document).on("click", ".btnDetail", function(){
+		
+		let stuNo = $(this).val();
+		let data = {"stuNo":stuNo}
+		let alt = $(this).attr("alt");
+		console.log("상세정보 가져왓 " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		
+		console.log("alt?? " + alt);
+		
+		if(alt == "승인"){
+			$("#stuBtn1").css("display", "none");
+			$("#stuBtn2").css("display", "block");
+			$("#stuBtn3").css("display", "none");
+		}else if(alt == "승인대기"){
+			$("#stuBtn1").css("display", "block");
+			$("#stuBtn2").css("display", "none");
+			$("#stuBtn3").css("display", "none");
+		}else if(alt == "반려"){
+			$("#stuBtn1").css("display", "none");
+			$("#stuBtn2").css("display", "none");
+			$("#stuBtn3").css("display", "block");
+		}
+		
+		
+		$.ajax({
+			type: 'post',
+			url: '/manage/recordManagePost',
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(data),
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(data){
+				console.log("성공이라해주라 ", data.stuNo);
+				
+				fn_add(data)
+				
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+			
+		});
+		
+	});
+	
+	$("#Approval").on("click", function(){
+		
+		let Yn = $(this).val();
+		let stuNo = $("#stuNo").val();
+		let data = {
+				"Yn":Yn,
+				"stuNo":stuNo		
+		}
+		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		
+		$.ajax({
+			type: 'post',
+			url: '/manage/yesOrNo',
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(data),
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(data){
+				console.log("뇸뇸 ", data);
+				
+				fn_add(data);
+				
+				$("#stuBtn1").css("display", "none");
+				$("#stuBtn2").css("display", "block");
+				
+				fn_list();
+				
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+			
+		});
+		
+	});
+	
+	$("#reject").on("click", function(){
+		
+		let Yn = $(this).val();
+		let stuNo = $("#stuNo").val();
+		let data = {
+				"Yn":Yn,
+				"stuNo":stuNo		
+		}
+		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		
+		$.ajax({
+			type: 'post',
+			url: '/manage/yesOrNo',
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(data),
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(data){
+				console.log("reject뇸뇸 ", data);
+				
+				fn_add(data);
+				
+				$("#stuBtn1").css("display", "none");
+				$("#stuBtn3").css("display", "block");
+				
+				fn_list();
+				
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+			
+		});
+		
+	});
+	
+	$(".cancel").on("click", function(){
+		
+		let Yn = $(this).val();
+		let stuNo = $("#stuNo").val();
+		let data = {
+				"Yn":Yn,
+				"stuNo":stuNo		
+		}
+		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		
+		$.ajax({
+			type: 'post',
+			url: '/manage/yesOrNo',
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(data),
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(data){
+				console.log("reject뇸뇸 ", data);
+				
+				fn_add(data);
+				
+				$("#stuBtn1").css("display", "block");
+				$("#stuBtn3").css("display", "none");
+				$("#stuBtn2").css("display", "none");
+				
+				fn_list();
+				
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+			
+		});
+		
+	});
+	
+	
+});
+
+</script>
 <div class="row">
 	<div class="col-sm-7">
 		<div class="card col-sm-11 offset-1">
@@ -28,7 +274,7 @@
 										aria-label="Platform(s): activate to sort column ascending">이름</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending">신청년도/학기</th>
+										aria-label="Engine version: activate to sort column ascending">신청 연도/학기</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										rowspan="1" colspan="1"
 										aria-label="CSS grade: activate to sort column ascending">신청구분</th>
@@ -40,23 +286,8 @@
 										aria-label="CSS grade: activate to sort column ascending">상세</th>
 								</tr>
 							</thead>
-							<tbody>
-								<c:forEach var="list" items="${list}" varStatus="stat">
-									<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">${stat.count}</td>
-									<td class="detailStu">${list.stuNo}</td>
-									<td>${list.stuNm}</td>
-									<td>
-										<div class="image">
-											${list.recYr}년 ${list.recSem}학기
-										</div>
-									</td>
-									<td>${list.rgbCd}</td>
-									<td>${list.recYn}</td>
-									<td><button
-											class="btn btn-block btn-outline-info btn-sm btnDetail"
-											value="${list.stuNo}">상세</button></td>
-									</tr>
-								</c:forEach>
+							<tbody id="list">
+								
 							</tbody>
 						</table>
 					</div>
@@ -77,110 +308,48 @@
 								<div class="container">
 									<div class="row mt-1 mb-2">
 										<div class="col-5">
-											<label for="stuNo" class="form-label">신청일자</label> 
-											<input type="text" class="form-control" id="stuNo" name="stuNo" readonly />
+											<label for="recYn" class="form-label">승인여부</label> 
+											<input type="text" class="form-control stu" id="recYn" name="recYn" readonly />
+										</div>
+										<div class="col-5 offset-1">
+											<label for="recPer" class="form-label">신청기간</label> 
+											<input type="text" class="form-control stu" id="recPer" name="recPer" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5">
-											<label for="stuNm" class="form-label">학번</label> 
-											<input type="text" class="form-control stu" id="stuNm" name="stuNm" readonly />
+											<label for="recDt" class="form-label">신청일자</label> 
+											<input type="text" class="form-control" id="recDt" name="recDt" readonly />
 										</div>
 										<div class="col-5 offset-1">
-											<label for="stuNme" class="form-label">이름</label>
-											 <input type="text" class="form-control stu" id="stuNme" name="stuNme" readonly />
+											<label for="recYr" class="form-label">신청 연도/학기</label>
+											 <input type="text" class="form-control stu" id="recYr" name="recYr" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5">
-											<label>학년</label> 
-											<select class="form-control stu" id="stuYr" name="stuYr" disabled>
-												<option value="1">1학년</option>
-												<option value="2">2학년</option>
-												<option value="3">3학년</option>
-												<option value="4">4학년</option>
-												<option value="5">5학년</option>
-												<option value="6">6학년</option>
-											</select>
+											<label for="depNm" class="form-label">학과</label> 
+											<input type="text" class="form-control stu" id="depNm" name="depNm" readonly />
 										</div>
 										<div class="col-5 offset-1">
-											<label>학기</label> 
-											<select class="form-control stu" id="stuSem" name="stuSem" disabled>
-												<option value="1">1학기</option>
-												<option value="2">2학기</option>
-											</select>
+											<label for="stuNo" class="form-label">학번</label> 
+											<input type="text" class="form-control stu" id="stuNo" name="stuNo" readonly />
 										</div>
-									</div>
-									<div class="row mt-3 mb-2">
-										<div class="form-group col-4 offset-1">
-											<label for="colCd" class="form-label">단과대학</label> 
-											<select id="colCd" class="form-control stu"  disabled>
-												<option value="0">단과대학</option>
-					<%-- 								<c:forEach var="college" items="${collegeList}"> --%>
-					<%-- 									<option value="${college.colCd}">${college.colNm}</option> --%>
-					<%-- 								</c:forEach> --%>
-											</select>
-										</div>
-										<div class="col-4 offset-1">
-											<label for="department" class="form-label">학과</label> 
-											<select id="department" class="form-control stu" disabled>
-												<option value="">학과</option>
-											</select>
-					
-										</div>
-									</div>
-									<div class="row mt-3 mb-2">
-										<div class="col-4 offset-1">
-											<label for="stuBir" class="form-label">생년월일</label> <input
-												type="text" class="form-control stu" id="stuBir" name="stuBir" readonly />
-										</div>
-										<div class="col-4 offset-1">
-											<label for="stuTel" class="form-label">전화번호</label> <input
-												type="text" class="form-control stu" id="stuTel" name="stuTel" readonly />
-										</div>
-									</div>
-									<div class="row mt-4 mb-2">
-										<div class="col-4">
-											<div class="form-group">
-												<label>은행</label> <select class="form-control stu" id="stuBankCd" name="stuBankCd" disabled >
-					<%-- 									<c:forEach var="detail" items="#{commonDetailList}"> --%>
-					<%-- 										<option value="${detail.comdCd}">${detail.comdNm}</option> --%>
-					<%-- 									</c:forEach> --%>
-												</select>
-											</div>
-										</div>
-					
-										<div class="col-3 offset-1">
-											<label for="stuDepo" class="form-label">예금주</label> <input
-												type="text" class="form-control stu" id="stuDepo" name="stuDepo" readonly />
-										</div>
-										<div class="col-3 offset-1">
-											<label for="stuAct" class="form-label">계좌번호</label> <input
-												type="text" class="form-control stu" id="stuAct" name="stuAct" readonly />
-										</div>
-									</div>
-									<div class="row mt-4 mb-2">
-										<div class="col-3">
-											<label for="stuZip" class="form-label">우편번호</label>
-											<div class="input-group">
-												<input type="text" class="form-control stu" id="stuZip" name="stuZip" readonly />
-												<div class="input-group-append">
-													<button type="button" class="btn btn-default" id="btnZipCode">
-														<i class="fa fa-search"></i>
-													</button>
-												</div>
-											</div>
-										</div>
-					
 									</div>
 									<div class="row mb-2">
-										<div class="col-6" style="">
-											<label for="stuAddr1" class="form-label">기본주소</label> <input
-												type="text" class="form-control stu" id="stuAddr1" name="stuAddr1" readonly />
+										<div class="col-5">
+											<label for="stuNm" class="form-label">이름</label>
+											 <input type="text" class="form-control stu" id="stuNm" name="stuNm" readonly />
 										</div>
-										<div class="col-6">
-											<label for="stuAddr2" class="form-label">상세주소</label> <input
-												type="text" class="form-control stu" id="stuAddr2" name="stuAddr2" readonly />
+										<div class="col-5 offset-1">
+											<label for="stuTel" class="form-label">연락처</label>
+											 <input type="text" class="form-control stu" id="stuTel" name="stuTel" readonly />
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-11">
+											<label for="recRsn" class="form-label">신청사유</label> 
+											<textarea id="recRsn" name="recRsn" class="form-control stu" rows="10" readonly></textarea>
 										</div>
 									</div>
 								</div>
@@ -189,12 +358,14 @@
 					</div>
 
 					<div id="stuBtn1" align="right" style="display:none" >
-						<button type="button" class="btn btn-outline-warning" id="edit" >수정</button>
-						<button type="button" id="delete" class="btn btn-outline-danger">삭제</button>
+						<button type="button" id="Approval" value="AP001" class="btn btn-outline-warning" >승인</button>
+						<button type="button" id="reject" value="AP003" class="btn btn-outline-danger">반려</button>
 					</div>
-					<div id="stuBtn2" align="right" style="display: none">
-						<button type="button" id="updateStu" class="btn btn-outline-success">확인</button>
-						<button type="button" id="cancel" class="btn btn-outline-danger">취소</button>
+					<div id="stuBtn2" align="right" style="display:none" >
+						<button type="button" value="AP002" class="btn btn-outline-danger cancel">승인 취소</button>
+					</div>
+					<div id="stuBtn3" align="right" style="display:none" >
+						<button type="button" value="AP002" class="btn btn-outline-danger cancel">반려 취소</button>
 					</div>
 				</div>
 			</div>

@@ -44,4 +44,14 @@ public class ManageServiceImpl implements ManageService{
 	public List<Student> recordManage(){
 		return this.manageMapper.recordManage();
 	}
+	
+	@Override
+	public Student recordManagePost(Map<String, String> map) {
+		return this.manageMapper.recordManagePost(map);
+	}
+	
+	@Override
+	public int yesOrNo(Map<String, String> map) {
+		return this.manageMapper.yesOrNo(map);
+	}
 }

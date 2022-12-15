@@ -16,5 +16,9 @@ public interface ManageService {
 	public int updateStu(Student student);
 
 	public List<Student> recordManage();
+
+	public Student recordManagePost(Map<String, String> map);
+
+	public int yesOrNo(Map<String, String> map);
 	
 }
