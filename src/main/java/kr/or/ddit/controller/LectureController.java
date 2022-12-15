@@ -94,7 +94,7 @@ public class LectureController {
 
 	@PostMapping("/lectureBoard/upload")
 	public String uploadTest(MultipartFile[] files, @RequestParam String lecaCd, HttpServletRequest req) {
-		this.fileUploadUtil.fileUploadAction(files, req);
+		this.fileUploadUtil.fileUploadAction(files);
 		return "redirect:/lectureBoard/subjectList?lecaCd=" + lecaCd;
 	}
 
@@ -107,7 +107,7 @@ public class LectureController {
 
 	public String registTask2(@RequestParam MultipartFile[] files, Task task, HttpServletRequest req) {
 		if (files[0].getSize() > 0) {
-			this.fileUploadUtil.fileUploadAction(files, req);
+			this.fileUploadUtil.fileUploadAction(files);
 
 			this.lectureservice.insertTask(task);
 		} else {
