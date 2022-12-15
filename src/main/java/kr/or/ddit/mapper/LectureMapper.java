@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Task;
+import kr.or.ddit.domain.TaskSubmit;
 
 public interface LectureMapper {
 
@@ -42,6 +43,12 @@ public interface LectureMapper {
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
+	
+	//과제 제출 목록
+	public List<Task> taskSubmitList(String tsubCd);
+	//과제 제출
+	public int insertTaskSubmit1(TaskSubmit taskSubmit);
+	public int insertTaskSubmit2(TaskSubmit taskSubmit);
 	
 	// 학생의 장바구니에 담았지만 수강신청하지 않은 강의
 	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);

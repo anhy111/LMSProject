@@ -18,6 +18,7 @@ import kr.or.ddit.service.LectureService;
 import kr.or.ddit.util.FileUploadUtil;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.Task;
+import kr.or.ddit.domain.TaskSubmit;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -78,6 +79,7 @@ public class LectureController {
 	@GetMapping("/lectureBoard/subjectList")
 	public ModelAndView subjectList(ModelAndView mav, @RequestParam String lecaCd) {
 		Lecture lecture = this.lectureservice.searchTask(lecaCd);
+		if(lecture != null) {
 		log.info(lecture.toString());
 		List<Task> taskList = lecture.getTaskList();
 		for (Task task : taskList) {
@@ -88,14 +90,9 @@ public class LectureController {
 
 		mav.addObject("lecture", lecture);
 		mav.addObject("taskList", taskList);
+		}
 		mav.setViewName("lectureBoard/subjectList");
 		return mav;
-	}
-
-	@PostMapping("/lectureBoard/upload")
-	public String uploadTest(MultipartFile[] files, @RequestParam String lecaCd, HttpServletRequest req) {
-		this.fileUploadUtil.fileUploadAction(files);
-		return "redirect:/lectureBoard/subjectList?lecaCd=" + lecaCd;
 	}
 
 	@GetMapping("/lectureBoard/registTask")
@@ -104,8 +101,7 @@ public class LectureController {
 	}
 
 	@PostMapping("/lectureBoard/registTask")
-
-	public String registTask2(@RequestParam MultipartFile[] files, Task task, HttpServletRequest req) {
+	public String registTask2(@RequestParam MultipartFile[] files, Task task) {
 		if (files[0].getSize() > 0) {
 			this.fileUploadUtil.fileUploadAction(files);
 
@@ -139,4 +135,63 @@ public class LectureController {
 		this.lectureservice.deleteTask(lecaCd,taskCd);
 		return "redirect:/lectureBoard/subjectList?lecaCd="+lecaCd; 
 	}
+	
+	//과제 수정============================================================================================================================
+	@PostMapping("/lectureBoard/taskUpdate")
+	public String taskUpdate(@ModelAttribute Task task) {
+		log.info("업데이트!!@!@!@!@!@!@!@!@!@!@!@\n"+task);
+		int taskCd = task.getTaskCd();
+		int lecaCd = task.getLecaCd();
+		log.info(lecaCd+"        "+taskCd);
+		return  "redirect:/lectureBoard/taskDetail?lecaCd=" + lecaCd + "&&taskCd=" + taskCd;
+	}
+	
+	//과제 제출 목록============================================================================================================================
+	@GetMapping("/lectureBoard/taskSubmitList")
+	public ModelAndView taskSubmitList(ModelAndView mav, @RequestParam String taskCd) {
+		List<Task>list = this.lectureservice.taskSubmitList(taskCd);
+		log.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+list);
+		mav.addObject("list", list);
+		mav.setViewName("lectureBoard/taskSubmitList");
+		return mav;
+	}
+	
+	@GetMapping("/lectureBoard/submitTask")
+	public ModelAndView submitTask(ModelAndView mav,@RequestParam String lecaCd,@RequestParam String taskCd) {
+		
+		Task task = this.lectureservice.detailTask(taskCd, lecaCd);
+		mav.addObject("task", task);
+		mav.setViewName("lectureBoard/submitTask");
+		return mav;
+	}
+	
+	@PostMapping("/lectureBoard/submitTask")
+	public String submitTask2(Principal principal, @RequestParam MultipartFile[] files, TaskSubmit taskSubmit) {
+		int stuNo = Integer.parseInt(principal.getName());
+		taskSubmit.setStuNo(stuNo);
+		int lecaCd = taskSubmit.getLecaCd();
+		int taskCd = taskSubmit.getTaskCd();
+		log.info(taskSubmit.toString());
+		if (files[0].getSize() > 0) {
+			this.fileUploadUtil.fileUploadAction(files);
+//
+			this.lectureservice.insertTaskSubmit1(taskSubmit);
+		} else {
+			log.info("첨부파일 없어용");
+			this.lectureservice.insertTaskSubmit2(taskSubmit);
+		}
+
+		return "redirect:/lectureBoard/taskSubmitList?lecaCd=" + lecaCd + "&&taskCd=" + taskCd;
+	}
+//	@GetMapping("/lectureBoard/taskSubmitDetail")
+//	public ModelAndView taskSubmitDetail(ModelAndView mav, @RequestParam String tsubCd) {
+//		log.info("제출 과제정보=========================================================");
+//		Task task = this.lectureservice.submitDetail(tsubCd);
+//		log.info(task+"==============================================");
+//		
+//		mav.addObject("task", task);
+//		mav.setViewName("lectureBoard/taskSubmitDetail");
+//		return mav;
+//		
+//	}
 }

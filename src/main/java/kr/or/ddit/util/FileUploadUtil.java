@@ -37,6 +37,9 @@ public class FileUploadUtil {
 	public int fileUploadAction(MultipartFile[] multipartFiles) {
 		log.info("파일 업로드를 수행합니다.");
 
+//		uploadFolder = req.getRealPath("\\") + "\\resources\\upload";
+		//uploadFolder = "C:\\Users\\PC-19\\git\\LMSProjectDDIT\\src\\main\\webapp\\resources\\upload";
+		//log.info(uploadFolder);
 		uploadFolder = "C:\\upload";
 		log.info("uploadFolder : " + uploadFolder);
 		
