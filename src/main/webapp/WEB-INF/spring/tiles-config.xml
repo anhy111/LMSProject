@@ -91,6 +91,10 @@
 	<definition name="atls/detail" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/atls/detail.jsp" />
 	</definition>
+	
+	<definition name="counsel/professorside/answer" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/professorside/answer.jsp" />
+	</definition>
 
 </tiles-definitions>
 

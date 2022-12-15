@@ -8,6 +8,7 @@
 <select id="listOfProfessor" parameterType="int" resultType="Counsel">
 SELECT 
 E.EMP_NM
+,D.PRO_NO
 FROM PROFESSOR P, EMPLOYEE E, STUDENT S, DEPARTMENT D
 WHERE S.STU_NO = #{stuNo}
 AND D.DEP_CD = P.DEP_CD
@@ -43,33 +44,25 @@ INSERT INTO COUNSEL (
 , CNSL_TTL
 , CNSL_CON
 , CNSL_REG
-, CNSL_DT
-, CNSL_RPL
 , PRO_NO
 )
 VALUES(
+<if test="cnslCd == null or cnslCd =='' ">
 SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
-,#{stuNo}
-,#{cnslCate}
-,#{cnslTtl}
-,#{cnslCon}
-,SYSDATE
-<if test="cnslDt != null and cnslDt !=''">
-, #{cnslDt}
 </if>
-<if test="cnslRpl != null and cnslRpl !=''">
-, #{cnslRpl}
-</if>
-<if test="proNo != null and proNo !=''">
+, #{stuNo}
+, #{cnslCate}
+, #{cnslTtl}
+, #{cnslCon}
+, SYSDATE
 , #{proNo}
-</if>
+)
 </insert>
 <!-- 교수의 상담 답변 -->
 <update id="applyAnswerUpdate" parameterType="Counsel">
 UPDATE COUNSEL 
 SET 
- CNSL_DT = SYSDATE
-, CNSL_RPL = #{cnslRpl}
+ CNSL_RPL = #{cnslRpl}
 , PRO_NO = #{proNo}
 WHERE CNSL_CD = #{cnslCd}
 </update>
@@ -92,6 +85,13 @@ AND C.STU_NO = S.STU_NO
 AND S.PRO_NO = P.PRO_NO
 AND P.PRO_NO = E.EMP_NO
 AND D.DEP_CD = P.DEP_CD
+</select>
+<select id="answerDetail" parameterType="Long" resultType="Counsel">
+SELECT 
+ CNSL_DT
+,CNSL_RPL
+FROM COUNSEL
+WHERE CNSL_CD = #{cnslCd}
 </select>
 </mapper>
 

@@ -2,59 +2,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<h1>상담신청페이지..?</h1>
-<div class="row">
-<!--------------------- 히든 데이터 --------------------->
-<input type="text" name="stuNo">
-<input type="text" name="proNo">
-<!--------------------- 히든 데이터 --------------------->
-	<form action="/studentside/applyInsert" method="post">
-		<div class="col-sm-6">
-			<label>상담카테고리선택</label>
-			<div class="form-group clearfix">
-				<div class="icheck-primary d-inline">
-					<!---------------- 한개 이상은 체크 되어있어야 하므로 기본 체크 활성화 -------------->
-					<input type="radio" id="radioPrimary1" name="cnslCate" checked="checked">
-					<label for="radioPrimary1" cursorshover="true">시험 </label>
+<div class="container"align="center">
+	<div class="row">
+		<h1>답변</h1>
+		<!-- ----답변 수정 -->
+		<div class="col-12" id="answerTable">
+			<label>답변하기</label> <br>
+			<form action="/counsel/professorside/answer" method="post"
+				onsubmit="closeAnswerTable();">
+				<!-- hidden으로 바꿔줄 예정 -->
+				<label>글번호</label>
+				<input type="text" name="cnslCd" id="cnslCdInput">
+				<br>
+				<div class="col-6">
+				<label>답변내용</label>
+					<textarea rows="5" cols="50" name="cnslRpl" placeholder="답변을작성해주세요"></textarea>
 				</div>
-				<div class="icheck-primary d-inline">
-					<input type="radio" id="radioPrimary2" name="cnslCate"> <label
-						for="radioPrimary2" cursorshover="true">과제 </label>
+				<button type="submit" class="btn btn-sm btn-info">답변등록</button>
+				<sec:csrfInput />
+			</form>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<div class="col-12" id="answerModifyTable">
+			<label>답변수정</label> <br>
+			<form action="/counsel/professorside/answerModify" method="post"
+				onsubmit="closeAnswerTable();">
+				<!-- hidden으로 바꿔줄 예정 -->
+				<label>글번호</label>
+				<input type="text" name="cnslCd" id="cnslCdInputModify"value="${answerDetail.cnslCd}">
+				<div class="col-6">
+				<label>답변내용</label>
+					<textarea id="cnslRplModify" rows="5" cols="50" name="cnslRpl"
+						placeholder="답변을작성해주세요">${answerDetail.cnslRpl }</textarea>
 				</div>
-				<div class="icheck-primary d-inline">
-					<input type="radio" id="radioPrimary3" name="cnslCate"
-						cursorshover="true"> <label for="radioPrimary3">출결
-
-					</label>
-				</div>
-			</div>
+				<button type="submit" class="btn btn-sm btn-info">수정</button>
+				<sec:csrfInput />
+			</form>
 		</div>
-		<!----------------------------- 카테고리 --------------------------->
-		<!----------------------------- 글제목 --------------------------->
-		<div class="col-sm-6">
-			<label>글제목</label> <input type="text" name="cnslTtl" />
-		</div>
-		<!----------------------------- 글제목 --------------------------->
-		<!----------------------------- 글내용 --------------------------->
-		<div class="col-12">
-			<label>글내용</label>
-			<textarea name="cnslCont" rows="10" cols="100"></textarea>
-		</div>
-		<!----------------------------- 글내용 --------------------------->
-		<sec:csrfInput />
-	</form>
+	</div>
 </div>
-<script type="text/javascript">
-	let checkedCategory = "";
-	$(function() {
-		if (document.getElementsByName("checkboxSuccess1")[i].checked == true) {
-			alert(document.getElementsByName("checkboxSuccess1")[i].value);
-		}
-		if (document.getElementsByName("checkboxSuccess2")[i].checked == true) {
-			alert(document.getElementsByName("checkboxSuccess2")[i].value);
-		}
-		if (document.getElementsByName("checkboxSuccess3")[i].checked == true) {
-			alert(document.getElementsByName("checkboxSuccess3")[i].value);
-		}
-	})
-</script>
+<!-- ----답변 수정 -->

@@ -16,6 +16,8 @@ public interface CounselService {
 	public List<Counsel> professorCounselList(int proNo);
 	//학생의 담당 교수 목록
 	public List<Counsel> listOfProfessor(int stuNo);
+	//교수의 답변상세
+	public Counsel answerDetail(Long cnslCd);
 
 
 }

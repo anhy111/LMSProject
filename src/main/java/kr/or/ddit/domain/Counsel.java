@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Counsel {
-	private int cnslCd; //상담코드
+	private Long cnslCd; //상담코드
 	private int stuNo; //학번
 	private String cnslCate; //카테고리
 	private String cnslTtl; //제목
@@ -17,5 +17,5 @@ public class Counsel {
 	private int proNo; //담당교수
 	private String empNm; //담당교수명
 	
-	
+	private String answerState;// 대면/비대면
 }

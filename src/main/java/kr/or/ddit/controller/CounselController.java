@@ -24,6 +24,10 @@ public class CounselController {
 	@Autowired
 	CounselService counselService;
 	
+	/*
+	 *  학생 컨트롤러
+	 */
+	
 	@GetMapping("/studentside/applyList")
 	public String studentCounselApplyList(Model model, HttpServletRequest request) {
 		
@@ -61,12 +65,16 @@ public class CounselController {
 		HttpSession session = request.getSession();
 		int stuNo = (int)session.getAttribute("no");
 		counsel.setStuNo(stuNo);
+		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
 		this.counselService.applyInsert(counsel);
 		
 		//forwarding
-		return "counsel/studentside/applyList";
+		return "redirect:/counsel/studentside/applyList";
 	}
 	
+	/*
+	 *  교수 컨트롤러
+	 */
 	@GetMapping("/professorside/counselList")
 	public String professorCounselList(Model model, HttpServletRequest request) {
 		
@@ -82,10 +90,11 @@ public class CounselController {
 		//forwarding
 		return "counsel/professorside/counselList";
 	}
-	
 	@GetMapping("/professorside/answer")
-	public String professorCounselAnswer(Model model) {
-		//forwarding
+	public String professorCounselAnswer(Long cnslCd, Model model) {
+		log.info("글번호 : " + cnslCd);
+		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
+		model.addAttribute("answerDetail", answerDetail);
 		return "counsel/professorside/answer";
 	}
 	@PostMapping("/professorside/answer")
@@ -93,8 +102,18 @@ public class CounselController {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		counsel.setProNo(proNo);
-
+		log.info("답변 세팅 어케됐누?: " + counsel.toString());
 		this.counselService.applyAnswerUpdate(counsel);
-		return "counsel/professorside/counselList";
+		return "redirect:/counsel/professorside/counselList";
+	}
+	
+	@PostMapping("/professorside/answerModify")
+	public String professorCounselAnswerModifyPost(@ModelAttribute Counsel counsel, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		counsel.setProNo(proNo);
+		log.info("답변 수정 세팅 어케됐누?: " + counsel.toString());
+		this.counselService.applyAnswerUpdate(counsel);
+		return "redirect:/counsel/professorside/counselList";
 	}
 }

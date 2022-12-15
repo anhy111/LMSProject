@@ -39,4 +39,9 @@ public class CounselServiceImpl implements CounselService {
 	public List<Counsel> listOfProfessor(int stuNo){
 		return this.counselMapper.listOfProfessor(stuNo);
 	}
+	//교수의 답변상세
+	@Override
+	public Counsel answerDetail(Long cnslCd) {
+		return this.counselMapper.answerDetail(cnslCd);
+		}
 }
