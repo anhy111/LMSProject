@@ -63,5 +63,7 @@ public interface LectureMapper {
 	
 	// 학생의 장바구니에 담았지만 수강신청하지 않은 강의
 	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);
+	
+	public List<Lecture> searchList(StudentLecture studentLecture);
 
 }
