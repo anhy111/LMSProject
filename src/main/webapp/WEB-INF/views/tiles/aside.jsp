@@ -288,10 +288,34 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>교수 관리</p>
-					</a></li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
+							<p>
+								교수 관리<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>교수 목록 조회</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="/manage/insertEmp" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>교수 등록</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+									<p>교수 평가 조회</p>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<li class="nav-item">
 						<a href="#" class="nav-link"> 
 							<i class="nav-icon fas fa-book"></i>
