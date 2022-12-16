@@ -15,4 +15,8 @@ public interface DepartmentService {
 	int register(Department department);
 
 	Department departmentDetail(Department department);
+
+	int delete(Department department);
+
+	int update(Department department);
 }

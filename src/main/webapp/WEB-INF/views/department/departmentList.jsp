@@ -47,17 +47,14 @@
 										</c:forEach>
 									</select>
 								</div>
-								<div class="col-3 offset-5 text-right">
-									<button class="btn btn-secondary">자동채우기</button>
-								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col">
 									<label>학과명:</label> <input type="hidden" name="depCd">
 									<!-- 학과코드 -->
-									<input type="hidden" name="proCd">
+									<input type="hidden" name="proNo">
 									<!-- 학과장 -->
-									<input type="hidden" name="empCd">
+									<input type="hidden" name="empNo">
 									<!-- 조교 -->
 									<div class="input-group date" id="reservationdate"
 										data-target-input="nearest">
@@ -120,8 +117,9 @@
 								<button type="button" id="delete" class="btn btn-danger col-2">삭제</button>
 							</div>
 							<div class="row text-right" id="spn2">
+								<button id="autoFill" class="btn btn-secondary col-2">자동채우기</button>
 								<button type="button" id="update"
-									class="btn btn-primary col-2 offset-8">확인</button>
+									class="btn btn-primary col-2 offset-6">확인</button>
 								<button type="button" id="cancel" class="btn btn-warning col-2">취소</button>
 							</div>
 							<sec:csrfInput />
@@ -165,7 +163,59 @@
 		// 수정 확인버튼
 		$("#update").on("click",updateDepartment);
 		
+		// 삭제 버튼
+		$("#delete").on("click",function(){
+			
+			Swal.fire({
+				  title: '학과를 삭제하시겠습니까?',
+				  text: "학과를 삭제하면 복구할 수 없습니다.",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: '삭제',
+				  cancelButtonText: '취소'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					let data = { depCd : $("input[name='depCd']").val() };
+						
+					$.ajax({
+						url : "/department/delete",
+						type : "get",
+						data:data,
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(header, token);
+						},
+						success:function(department){
+							Swal.fire(
+								      '삭제완료!',
+								      '학과가 삭제되었습니다.',
+								      'success'
+							).then(function(){
+								location.reload();
+							})
+						}
+					})
+				  }
+				});
+			
+			
+		});
+		
 		$("#college").on("change",loadDepartMentListByCollege);
+		
+		$("#autoFill").on("click",function(){
+			$("#detailCollege").val("1").prop("selected",true);
+			$("#detailCollege").select2({ theme : 'bootstrap4' });
+			$("input[name='depNm']").val("경제학과3");
+			$("input[name='proNo']").val("1");
+			$("input[name='empNo']").val("7");
+			$("input[name='proNm']").val("교수최승훈");
+			$("textarea[name='depDes']").val("경제학과입니다");
+			$("input[name='empNm']").val("문상훈");
+			$("input[name='depCap']").val("200");
+			$("input[name='depTel']").val("042-555-8888");
+		});
 		
 		detailMode();
 		loadDepartMentListByCollege();
@@ -198,15 +248,37 @@
 	
 	function updateDepartment(){
 		let data = {
-			colCd : $("#detailCollege").val(),
 			depCd : $("input[name='depCd']").val(),
+			colCd : $("#detailCollege").val(),
+			proNo : $("input[name='proNo']").val(),
 			depNm : $("input[name='depNm']").val(),
-			depNm : $("input[name='proNm']").val(),
 			depDes : $("textarea[name='depDes']").val(),
-			depNm : $("input[name='empNm']").val(),
 			depCap : $("input[name='depCap']").val(),
-			depTel : $("input[name='depTel']").val()
-		}
+			depTel : $("input[name='depTel']").val(),
+			empNo : $("input[name='empNo']").val()
+		};
+		console.log("data : " + data);
+		
+		$.ajax({
+			url:"/department/update",
+			type:"post",
+			contentType:"application/json; charset=utf-8",
+			data:JSON.stringify(data),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success:function(result){
+				if(result){
+					Swal.fire(
+						      '수정완료!',
+						      '학과가 수정되었습니다.',
+						      'success'
+					).then(function(){
+						location.reload();
+					})
+				}
+			}
+		});
 		
 		console.log("data : ", data);
 	}

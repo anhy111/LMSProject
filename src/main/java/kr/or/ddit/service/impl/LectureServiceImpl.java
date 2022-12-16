@@ -81,5 +81,10 @@ public class LectureServiceImpl implements LectureService{
 	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture) {
 		return this.lectureMapper.loadNotApplySaveLecture(studentLecture);
 	}
+	
+	@Override
+	public List<Lecture> searchList(StudentLecture studentLecture) {
+		return this.lectureMapper.searchList(studentLecture);
+	}
 
 }

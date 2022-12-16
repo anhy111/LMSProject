@@ -74,13 +74,13 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="#" class="nav-link"> 
+								<a href="/student/lecture/list" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>수강 편람</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="#" class="nav-link"> 
+								<a href="/student/evaluation/list" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>수강평가</p>
 								</a>

@@ -34,4 +34,14 @@ public class DepartmentServiceImpl implements DepartmentService{
 	public Department departmentDetail(Department department) {
 		return this.departmentMapper.departmentDetail(department);
 	}
+	
+	@Override
+	public int delete(Department department) {
+		return this.departmentMapper.delete(department);
+	}
+	
+	@Override
+	public int update(Department department) {
+		return this.departmentMapper.update(department);
+	}
 }

@@ -9,6 +9,7 @@ public class StudentLecture {
 	private int slScore;
 	
 	// 키워드검색
+	private int colCd;
 	private String colNm;
 	private String depNm;
 	private String lecaTrg;

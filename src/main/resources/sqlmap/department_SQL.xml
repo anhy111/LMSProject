@@ -50,5 +50,24 @@
 		    DEPARTMENT D
 		WHERE D.DEP_CD = #{depCd}
 	</select>
+	
+	<update id="update" parameterType="department">
+	
+		UPDATE DEPARTMENT
+		    SET COL_CD = #{colCd}
+		        ,PRO_NO = #{proNo}
+		        ,DEP_NM = #{depNm}
+		        ,DEP_DES = #{depDes}
+		        ,DEP_CAP = #{depCap}
+		        ,DEP_TEL = #{depTel}
+		        ,EMP_NO = #{empNo}
+		WHERE 
+		    DEP_CD = #{depCd}
+	</update>
+	
+	<delete id="delete" parameterType="department"> 
+		delete from department
+		where dep_cd = #{depCd}
+	</delete>
 </mapper>
 

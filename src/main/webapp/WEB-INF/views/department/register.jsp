@@ -10,9 +10,10 @@
 			<div class="card mb-0 col-6">
 				<div class="container-fluid">
 					<h5>학과 등록</h5>
-					※학과의 학과장 및 조교는 학과 등록 후 학과 수정페이지에서 설정할 수 있습니다.
+					※ 학과의 학과장 및 조교는 학과 등록 한 후에 수정페이지에서 설정할 수 있습니다. <br>
+					※ 학과장은 학과 소속 교수를 등록한 후 지정할 수 있습니다.
 					<div class="card-body">
-						<form action="/department/register" method="post" onsubmit="return onSubmit();">
+						<form id="frm" action="/department/register" method="post" onsubmit="return onSubmit();">
 							<div class="row">
 								<div class="form-group col-4">
 									<label>단과대학:</label> <select id="college" name="colCd"
@@ -66,7 +67,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<button type="submit" class="btn bg-gradient-primary btn-sm col-1 offset-6">확인</button>
+								<button type="submit" id="regist" class="btn bg-gradient-primary btn-sm col-1 offset-6">확인</button>
 								<a href="/department/list" class="btn bg-gradient-warning btn-sm col-1">목록</a>
 							</div>
 							<sec:csrfInput />
@@ -83,6 +84,7 @@
 <script src="/resources/adminlte/dist/js/adminlte.min.js"></script>
 <script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
+	var flag =false;
 	$(function() {
 		//Initialize Select2 Elements
 		$('.select2').select2();
@@ -91,14 +93,29 @@
 		$('.select2bs4').select2({
 			theme : 'bootstrap4'
 		});
+		
+		
 	});
 	
 	function onSubmit(){
 		let college = $("#college").val();
+		
 		if(!college){
 			alert("단과대학을 선택해주세요");
 			return false;
 		}
-		return true;
+		if(!flag){
+			Swal.fire(
+				      '등록완료!',
+				      '학과가 등록되었습니다.',
+				      'success'
+			).then(function(){
+				flag = true;
+				$("#frm").submit();
+			});
+		}
+		return flag;
 	}
+	
+	
 </script>
