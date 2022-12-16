@@ -65,8 +65,8 @@ public class LectureServiceImpl implements LectureService{
 		}
 	//강의 과제 수정
 	@Override
-	public int taskUpdate(Task task) {
-		return this.lectureMapper.taskUpdate(task);
+	public int taskUpdate(HashMap<String, Object> map) {
+		return this.lectureMapper.taskUpdate(map);
 	}
 	
 	//강의 과제 삭제

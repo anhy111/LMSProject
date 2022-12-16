@@ -31,7 +31,7 @@ public interface LectureService {
 	//강의 과제 상세조회
 	public Task detailTask(String taskCd, String lecaCd);
 	//강의 과제 수정
-	public int taskUpdate(Task task);
+	public int taskUpdate(HashMap<String, Object> map);
 	//강의 과제 삭제
 	public int deleteTask(String lecaCd,String taskCd); 
 	//과제 제출 목록

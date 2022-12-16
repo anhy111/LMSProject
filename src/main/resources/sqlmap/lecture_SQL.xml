@@ -420,15 +420,20 @@
 	</select>
 	
 	<!-- 과제 수정 -->
-	<update id="taskUpdate" parameterType="task">
-		update   task
-		set	     TASK_NM=#{taskNm}
-				,TASK_CON=#{taskCon}
-				,TASK_EDT=#{taskEdt}
-				
-		where	
-				 TASK_CD=#{taskCd}
-			AND  LECA_CD=#{lecaCd}	
+	<update id="taskUpdate" parameterType="hashMap">
+		UPDATE  
+			TASK
+	  <set>
+		    TASK_NM=#{taskNm}
+			,TASK_CON=#{taskCon}
+			,TASK_EDT=#{taskEdt}
+	      <if test='result > "0"'>
+			, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)  	
+		  </if>
+	  </set>
+		WHERE
+			 TASK_CD=#{taskCd}
+			 AND LECA_CD=#{lecaCd}	
 	</update>
 	
 	<select id="loadNotApplySaveLecture" parameterType="studentLecture" resultMap="lectureMap">

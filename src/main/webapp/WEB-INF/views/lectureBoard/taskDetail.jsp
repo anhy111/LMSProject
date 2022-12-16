@@ -48,19 +48,21 @@
 											
 											<hr>
 											<c:if test="${task.atchFileId != -1}">
-											<label>첨부파일</label> <br>
-											<c:forEach var="attach" items="${task.attach}"  >
-											<!-- 파일 업로드 경로 문제 해결 안됐음************************************************************************************************************** -->
-											<a href="/resources/upload${attach.streFileNm}" download class="btn btn-outline-primary">${attach.orignlFileNm}
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-												  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-												  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-													</svg>
-											</a>
-											
-											</c:forEach>
+											<div  class="taskData">
+												<label>첨부파일</label> <br>
+												<c:forEach var="attach" items="${task.attach}"  >
+												<!-- 파일 업로드 경로 문제 해결 안됐음************************************************************************************************************** -->
+												<a href="/resources/upload${attach.streFileNm}" download class="btn btn-outline-primary">${attach.orignlFileNm}
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+													  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+													  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+														</svg>
+												</a>
+												
+												</c:forEach>
+											</div>
 											</c:if>
-												<div class="custom-file" class="modifyDisplay" style="display:none">
+												<div class="custom-file modifyDisplay" style="display:none">
 													<input type="file" id="customFile" name="files"  multiple >
 													<label class="custom-file-label" for="customFile">Choose file</label>
 												</div>

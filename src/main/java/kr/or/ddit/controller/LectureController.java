@@ -140,14 +140,42 @@ public class LectureController {
 	// 과제
 	// 수정============================================================================================================================
 	@PostMapping("/lectureBoard/taskUpdate")
-	public String taskUpdate(@ModelAttribute Task task) {
-		log.info("업데이트!!@!@!@!@!@!@!@!@!@!@!@\n" + task);
-		int taskCd = task.getTaskCd();
-		int lecaCd = task.getLecaCd();
-		log.info(lecaCd + "        " + taskCd);
-		this.lectureservice.taskUpdate(task);
-		return "redirect:/lectureBoard/taskDetail?lecaCd=" + lecaCd + "&&taskCd=" + taskCd;
+	public String taskUpdate(@RequestParam MultipartFile[] files, @ModelAttribute Task task) {
+		int result = 0;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if (files[0].getSize() > 0) {
+			result = this.fileUploadUtil.fileUploadAction(files);
+			if (result > 0) {
+				map.put("result", result);
+				map.put("taskNm", task.getTaskNm());
+				map.put("taskCon", task.getTaskCon());
+				map.put("taskEdt", task.getTaskEdt());
+				map.put("taskCd", task.getTaskCd());
+				map.put("lecaCd", task.getLecaCd());
+				this.lectureservice.taskUpdate(map);
+			}
+
+			return "redirect:/lectureBoard/taskDetail?lecaCd=" + task.getLecaCd()+"&&taskCd="+task.getTaskCd();
+		}
+		map.put("result", result);
+		map.put("taskNm", task.getTaskNm());
+		map.put("taskCon", task.getTaskCon());
+		map.put("taskEdt", task.getTaskEdt());
+		this.lectureservice.taskUpdate(map);
+		
+		return "redirect:/lectureBoard/taskDetail?lecaCd=" + task.getLecaCd()+"&&taskCd="+task.getTaskCd();
+
 	}
+
+//	@ModelAttribute Task task) {
+//		log.info("업데이트!!@!@!@!@!@!@!@!@!@!@!@\n" + task);
+//		int taskCd = task.getTaskCd();
+//		int lecaCd = task.getLecaCd();
+//		log.info(lecaCd + "        " + taskCd);
+//		this.lectureservice.taskUpdate(task);
+//		return "redirect:/lectureBoard/taskDetail?lecaCd=" + lecaCd + "&&taskCd=" + taskCd;
+//	}
 
 	// 과제 제출
 	// 목록============================================================================================================================
@@ -201,8 +229,7 @@ public class LectureController {
 
 	// 제출 과제 수정
 	@PostMapping("/lectureBoard/taskSubmitUpdate")
-	public String taskSubmitUpdate(@RequestParam MultipartFile[] files,
-			String tsubCd, String tsubCon) {
+	public String taskSubmitUpdate(@RequestParam MultipartFile[] files, String tsubCd, String tsubCon) {
 		int result = 0;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
@@ -215,15 +242,14 @@ public class LectureController {
 				this.lectureservice.taskSubmitUpdate(map);
 			}
 
-			return "redirect:/lectureBoard/taskSubmitDetail?tsubCd="+tsubCd;
+			return "redirect:/lectureBoard/taskSubmitDetail?tsubCd=" + tsubCd;
 		}
 		map.put("result", result);
 		map.put("tsubCon", tsubCon);
 		map.put("tsubCd", tsubCd);
 		this.lectureservice.taskSubmitUpdate(map);
-		
 
-		return "redirect:/lectureBoard/taskSubmitDetail?tsubCd="+tsubCd;
+		return "redirect:/lectureBoard/taskSubmitDetail?tsubCd=" + tsubCd;
 	}
 
 }
