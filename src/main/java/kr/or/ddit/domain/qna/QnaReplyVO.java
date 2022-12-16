@@ -17,9 +17,7 @@ public class QnaReplyVO {
     private String qnarCon;
 
     @DateTimeFormat(pattern = "yyyymmdd")
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-
     private Date qnarDt;
 
     @Override
