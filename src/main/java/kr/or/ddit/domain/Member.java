@@ -11,6 +11,7 @@ public class Member implements Serializable {
     private int memNo;
     private String memMl;
     private String memPass;
+    private String depCd;
     //1:N
     private List<MemberAuth> memberAuthList;
 
