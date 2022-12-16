@@ -47,13 +47,18 @@
 										</c:forEach>
 									</select>
 								</div>
+								<div class="col-3 offset-5 text-right">
+									<button class="btn btn-secondary">자동채우기</button>
+								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col">
-									<label>학과명:</label>
-									<input type="hidden" name="depCd">	<!-- 학과코드 -->
-									<input type="hidden" name="proCd">	<!-- 학과장 -->
-									<input type="hidden" name="empCd">	<!-- 조교 -->
+									<label>학과명:</label> <input type="hidden" name="depCd">
+									<!-- 학과코드 -->
+									<input type="hidden" name="proCd">
+									<!-- 학과장 -->
+									<input type="hidden" name="empCd">
+									<!-- 조교 -->
 									<div class="input-group date" id="reservationdate"
 										data-target-input="nearest">
 										<input type="text" name="depNm" class="form-control rounded-0"
@@ -66,8 +71,8 @@
 									<label>학과소개:</label>
 									<div class="input-group date" id="reservationdatetime"
 										data-target-input="nearest">
-										<textarea name="depDes" class="form-control rounded-0" rows="8"
-											readonly></textarea>
+										<textarea name="depDes" class="form-control rounded-0"
+											rows="8" readonly></textarea>
 									</div>
 								</div>
 							</div>
@@ -75,8 +80,8 @@
 								<div class="form-group col">
 									<label>학과장:</label>
 									<div class="input-group date" id="reservationdatetime">
-										<input type="text" name="proNm"
-											class="form-control rounded-0" value="" readonly />
+										<input type="text" name="proNm" class="form-control rounded-0"
+											value="" readonly />
 									</div>
 								</div>
 							</div>
@@ -104,22 +109,20 @@
 									<label>조교:</label>
 									<div class="input-group date" id="reservationdatetime"
 										data-target-input="nearest">
-										<input type="text" name="empNm"
-											class="form-control rounded-0" value="" readonly />
+										<input type="text" name="empNm" class="form-control rounded-0"
+											value="" readonly />
 									</div>
 								</div>
 							</div>
 							<div class="row text-right" id="spn1">
 								<button type=button id="edit"
 									class="btn btn-primary col-2 offset-8">수정</button>
-								<button type="button" id="delete"
-									class="btn btn-danger col-2">삭제</button>
+								<button type="button" id="delete" class="btn btn-danger col-2">삭제</button>
 							</div>
 							<div class="row text-right" id="spn2">
 								<button type="button" id="update"
 									class="btn btn-primary col-2 offset-8">확인</button>
-								<button type="button" id="cancel"
-									class="btn btn-warning col-2">취소</button>
+								<button type="button" id="cancel" class="btn btn-warning col-2">취소</button>
 							</div>
 							<sec:csrfInput />
 						</div>
