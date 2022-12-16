@@ -20,18 +20,15 @@
                             <caption>New York City Marathon Results 2013</caption>
                             <tbody>
                             <tr>
-                                <th style="width:10%">[${form.noticeCd}]제목</th>
+                                <input type="hidden" name="noticeCd" value="${form.noticeCd}" />
+                                <th style="width:10%">제목</th>
                                 <td colspan="5" class="table-title">${form.noticeTtl}</td>
                             </tr>
                             <tr>
                                 <th style="width:10%">작성자</th>
                                 <td style="width:20%" class="table-title">작성자 넣기</td>
-                                <th style="width:10%">날짜</th>
+                                <th style="width:10%">작성날짜</th>
                                 <td style="width:20%" class="table-title">${form.noticeReg}</td>
-                                <th style="width:10%">날짜</th>
-                                <td style="width:20%" class="table-title">${form.noticeUpd}</td>
-                                <th style="width:10%">조회수</th>
-                                <td style="width:10%" class="table-title">조회수 넣기</td>
                             </tr>
                             <tr>
                                 <th style="width:10%">첨부파일</th>

@@ -1,5 +1,6 @@
 package kr.or.ddit.service.impl;
 
+import kr.or.ddit.domain.facility.Facility;
 import kr.or.ddit.domain.facility.FacilityScheduleVO;
 import kr.or.ddit.mapper.FacilityMemberMapper;
 import kr.or.ddit.service.FacilityMemberService;
@@ -15,7 +16,13 @@ import java.util.List;
 public class FacilityMemberServiceImpl implements FacilityMemberService {
 	
 	private final FacilityMemberMapper facilityMemberMapper;
-	
+
+	@Override
+	public List<Facility> facility() {
+		return this.facilityMemberMapper.facility();
+	}
+
+
 	@Override
 	public void insertSch(FacilityScheduleVO facilityScheduleVO) {
 		this.facilityMemberMapper.insertSch(facilityScheduleVO);
@@ -29,8 +36,8 @@ public class FacilityMemberServiceImpl implements FacilityMemberService {
 
 	//일정 리스트
 	@Override
-	public List<FacilityScheduleVO> listSch(){
+	public List<FacilityScheduleVO> listSch(int facCd){
 
-		return this.facilityMemberMapper.listSch();
+		return this.facilityMemberMapper.listSch(facCd);
 	}
 }

@@ -19,7 +19,7 @@
 			, #{qnaTtl}
 			, #{qnaCon}
 			, sysdate
-		    , 1
+		    , #{qnaYn}
 			   )
 	</insert>
 
