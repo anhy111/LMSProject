@@ -1,5 +1,6 @@
 package kr.or.ddit.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Task;
+import kr.or.ddit.domain.TaskSubmit;
 import kr.or.ddit.mapper.LectureMapper;
 import kr.or.ddit.service.LectureService;
 
@@ -61,6 +63,11 @@ public class LectureServiceImpl implements LectureService{
 		public Task detailTask(String taskCd, String lecaCd) {
 			return this.lectureMapper.detailTask(taskCd, lecaCd);
 		}
+	//강의 과제 수정
+	@Override
+	public int taskUpdate(HashMap<String, Object> map) {
+		return this.lectureMapper.taskUpdate(map);
+	}
 	
 	//강의 과제 삭제
 	@Override
@@ -85,6 +92,36 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public List<Lecture> searchList(StudentLecture studentLecture) {
 		return this.lectureMapper.searchList(studentLecture);
+	//과제 제출 리스트
+	@Override
+	public List<Task> taskSubmitList(String tsubCd) {
+		return this.lectureMapper.taskSubmitList(tsubCd);
+	}
+	
+	//학생 과제 제출
+	@Override
+	public int insertTaskSubmit1(TaskSubmit taskSubmit) {
+		return this.lectureMapper.insertTaskSubmit1(taskSubmit);
 	}
 
+	//학생 과제 제출
+	@Override
+	public int insertTaskSubmit2(TaskSubmit taskSubmit) {
+		return this.lectureMapper.insertTaskSubmit2(taskSubmit);
+	}
+	//제출 과제 디테일
+	@Override
+	public Task submitDetail(String tsubCd) {
+		return this.lectureMapper.submitDetail(tsubCd);
+		}
+	//제출 과제 수정
+	@Override
+	public int taskSubmitUpdate(HashMap<String, Object> map) {
+		return this.lectureMapper.taskSubmitUpdate(map);
+	}
+	//과제 점수 입력
+	@Override
+	public int scoreUpdate(int tsubScore, int tsubCd) {
+		return this.lectureMapper.scoreUpdate(tsubScore, tsubCd);
+	}
 }

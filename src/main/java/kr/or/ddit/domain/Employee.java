@@ -2,6 +2,8 @@ package kr.or.ddit.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -20,7 +22,15 @@ public class Employee {
     private String empDepo;    //예금주
     private String empAct;    //급여지급 계좌
     private String empPic;    //증명사진 URL
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date empJoin;    //입사일
     private Date empRet;    //퇴사일
     private String empBir; //생년월일
+    private String empDiv; //부서
+	private String empPos; //직책
+	
+	private String empPass; //비밀번호
+	private String proPos; // 보직
+	private String depCd; //학과번호
+	
 }

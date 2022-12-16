@@ -20,5 +20,6 @@ public class Task {
 	private Date taskEdt;
 	private int atchFileId;
 	private List<Attach> attach;
+	private List<TaskSubmit> taskSubmitList;
 
 }

@@ -25,9 +25,7 @@ public class QnaVO {
     private int qnaYn;
 
     @DateTimeFormat(pattern = "yyyymmdd")
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-
     private Date qnaDt;
 
     private int qnaHit;
@@ -35,8 +33,6 @@ public class QnaVO {
     private int rnum;
 
     private QnaReplyVO qnaReplyVO;
-
-//    private FacilityMemberVO memberVO;
 
     public QnaVO(String qnaTtl, String qnaCon) {
         this.qnaTtl = qnaTtl;

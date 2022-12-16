@@ -101,20 +101,55 @@
 		<result property="taskSdt" column="TASK_SDT"/>                                                                                                                                                                                                 
 		<result property="taskEdt" column="TASK_EDT"/>                                                                                                                                                                                                 
 		<result property="atchFileId" column="ATCH_FILE_ID" />    
-		<collection property="attach" resultMap="attachMap"></collection>                                                                                                                                                                                     
+		<collection property="attach" resultMap="attachMap"></collection>
+		<collection property="taskSubmitList" resultMap="taskSubmitMap"></collection>
 	</resultMap>   
 	
 <!-- attach resultMap======================================================================== -->
 	<resultMap type="attach" id="attachMap">
-		<result property="atchFileId"     column="ATCH_FILE_ID"/>                                                                                                                                                                                                   
+		<result property="atchFileId"      column="ATCH_FILE_ID"/>                                                                                                                                                                                                   
 		<result property="fileSn"          column="FILE_SN"/>                                                                                                                                                                                                   
-		<result property="fileStreCours"  column="FILE_STRE_COURS"/>                                                                                                                                                                                                   
-		<result property="streFileNm"     column="STRE_FILE_NM"/>                                                                                                                                                                                                 
-		<result property="orignlFileNm"   column="ORIGNL_FILE_NM"/>                                                                                                                                                                                                 
+		<result property="fileStreCours"   column="FILE_STRE_COURS"/>                                                                                                                                                                                                   
+		<result property="streFileNm"      column="STRE_FILE_NM"/>                                                                                                                                                                                                 
+		<result property="orignlFileNm"    column="ORIGNL_FILE_NM"/>                                                                                                                                                                                                 
 		<result property="fileExtsn"       column="FILE_EXTSN"/>                                                                                                                                                                                                 
 		<result property="fileSize"        column="FILE_SIZE"/>    
 		<result property="createDt"        column="CREATE_DT"/>    
 	</resultMap>
+<!-- taskSubmit resultMap======================================================================== -->
+	<resultMap type="taskSubmit" id="taskSubmitMap">
+		<result property="tsubCd"       column="TSUB_CD"     />                                                                                                                                                                                           
+		<result property="lecaCd"       column="LECA_CD"     />                                                                                                                                                                                      
+		<result property="taskCd"       column="TASK_CD"     />                                                                                                                                                                                              
+		<result property="stuNo"        column="STU_NO"      />                                                                                                                                                                                        
+		<result property="tsubDt"       column="TSUB_DT"     />                                                                                                                                                                                           
+		<result property="tsubScore"    column="TSUB_SCORE"  />                                                                                                                                                                                          
+		<result property="atchFileId"   column="ATCH_FILE_ID"/>
+		<result property="tsubCon"      column="TSUB_CON"    /> 
+		<collection property="student" resultMap="studentMap"></collection>                                                                                                                                                                                     
+		<collection property="attach" resultMap="attachMap"></collection>                                                                                                                                                                                     
+	</resultMap>
+<!-- student resultMap======================================================================== -->
+	<resultMap type="student" id="studentMap">
+		<result property="stuNo"           column="STU_NO"     />                                                                                                                                                                                           
+		<result property="depCd"           column="DEP_CD"     />                                                                                                                                                                                      
+		<result property="stuYr"           column="STU_YR"     />                                                                                                                                                                                              
+		<result property="stuSem"          column="STU_SEM"     />                                                                                                                                                                                              
+		<result property="stuNm"           column="STU_NM"    />                                                                                                                                                                                              
+		<result property="stuNme"          column="STU_NME"     />                                                                                                                                                                                              
+		<result property="stuTel"          column="STU_TEL"     />                                                                                                                                                                                              
+		<result property="stuZip"          column="STU_ZIP"     />                                                                                                                                                                                              
+		<result property="stuAddr1"        column="STU_ADDR1"     />                                                                                                                                                                                              
+		<result property="stuAddr2"        column="STU_ADDR2"     />                                                                                                                                                                                              
+		<result property="stuReg"          column="STU_REG"     />                                                                                                                                                                                              
+		<result property="stuBankCd"       column="STU_BANK_CD"     />                                                                                                                                                                                              
+		<result property="stuDepo"         column="STU_DEPO"     />                                                                                                                                                                                              
+		<result property="stuAct"          column="STU_ACT"     />                                                                                                                                                                                              
+		<result property="stuPic"          column="STU_PIC"     />                                                                                                                                                                                              
+		<result property="stuBir"          column="STU_BIR"     />                                                                                                                                                                                              
+		<result property="proNo"           column="PRO_NO"     />                                                                                                                                                                                              
+	</resultMap>
+	
 	
 	<!-- 이번 학기 전체 강의 목록======================================================================== -->
 	<select id="lectureSearch" parameterType="string" resultMap="lectureMap">
@@ -130,7 +165,7 @@
 		     , LA.LECA_SEM
 		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
 		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
-		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
+		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND P.DEP_CD = D.DEP_CD
 		<if test="keyword != null and keyword !=''">
 				<include refid="where"></include>
 		</if>
@@ -142,28 +177,52 @@
 		     , LA.LECA_NM 
 		     , LA.LECA_YR
 		     , LA.LECA_SEM
-		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
+		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA
 		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
-		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
+		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD
 		AND S.PRO_NO = #{professorId}
 <!-- 		<if test="keyword != null and keyword !=''"> -->
 <!-- 				<include refid="where2"></include> -->
 <!-- 		</if> -->
 	</select>
-  
-  <select id="searchTask" resultMap="lectureMap" parameterType="String">                                                                                                                                                                                                    
-	select LA.LECA_NM,
-	       LA.LECA_CD,
-	       T.TASK_CD,
-	       T.TASK_NM,
-	       T.TASK_CON,
-	       T.TASK_SDT,
-	       T.TASK_EDT
-	from LECTURE L, TASK T, LEC_APPLY LA
-	WHERE L.LECA_CD = T.LECA_CD
-	AND LA.LECA_CD = L.LECA_CD
-	and LA.LECA_CD = #{lecaCd}                                                                                                                                                                                                                      
-	</select>       
+  <!-- 과제 낸사람 o -->
+    <select id="searchTask" resultMap="lectureMap" parameterType="String">                                                                                                                                                                                                    
+			select 
+                   LA.LECA_NM,
+			       LA.LECA_CD,
+			       T.TASK_CD,
+			       T.TASK_NM,
+			       T.TASK_CON,
+			       T.TASK_SDT,
+			       T.TASK_EDT,
+			       TS.TSUB_CD,
+			       TS.TSUB_SCORE
+		from 
+             LECTURE L,
+             TASK T,
+             LEC_APPLY LA,
+             TASK_SUBMIT TS
+		WHERE 
+              L.LECA_CD = T.LECA_CD(+)
+          and LA.LECA_CD = L.LECA_CD(+)
+          and T.TASK_CD = TS.TASK_CD(+)
+          and LA.LECA_CD = ${lecaCd}                                                                                                                                                                                                                  
+	</select>     
+	
+  <!-- 과제 낸사람 x --> 
+<!--     <select id="searchTask2" resultMap="lectureMap" parameterType="String">                                                                                                                                                                                                     -->
+<!-- 	select     LA.LECA_NM, -->
+<!-- 		       LA.LECA_CD, -->
+<!-- 		       T.TASK_CD, -->
+<!-- 		       T.TASK_NM, -->
+<!-- 		       T.TASK_CON, -->
+<!-- 		       T.TASK_SDT, -->
+<!-- 		       T.TASK_EDT -->
+<!-- 		from LECTURE L, TASK T, LEC_APPLY LA -->
+<!-- 		WHERE L.LECA_CD = T.LECA_CD -->
+<!-- 		AND LA.LECA_CD = L.LECA_CD -->
+<!-- 		AND LA.LECA_CD = ${lecaCd}    -->
+<!-- 	</select>      -->
 	
 	<select id="studentNotYetApplyLectureList" parameterType="studentLecture" resultMap="lectureMap">
 		WITH T AS (
@@ -242,15 +301,15 @@
 
 	<insert id="insertTask" parameterType="task">
 		<selectKey keyProperty="taskCd" order="BEFORE" resultType="int"> 
-			SELECT MAX(TASK_CD)+1 FROM TASK
+			SELECT NVL(MAX(TASK_CD),0)+1 FROM TASK
 		</selectKey>
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT, ATCH_FILE_ID)
-            values((select max(task_cd)+1 from task), #{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},(SELECT MAX(ATCH_FILE_ID) FROM ATTACH))
+            values(#{taskCd}, #{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},(SELECT MAX(ATCH_FILE_ID) FROM ATTACH))
 	</insert>
 	
 	<insert id="insertTask2" parameterType="task">
 		<selectKey keyProperty="taskCd" order="BEFORE" resultType="int"> 
-			select max(TASK_CD)+1 FROM TASK
+			SELECT NVL(MAX(TASK_CD),0)+1 FROM TASK
 		</selectKey>
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT, TASK_EDT)
             values(#{taskCd},#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt})
@@ -364,6 +423,23 @@
 		AND     T.LECA_CD = #{lecaCd}      
 	</select>
 	
+	<!-- 과제 수정 -->
+	<update id="taskUpdate" parameterType="hashMap">
+		UPDATE  
+			TASK
+	  <set>
+		    TASK_NM=#{taskNm}
+			,TASK_CON=#{taskCon}
+			,TASK_EDT=#{taskEdt}
+	      <if test='result > "0"'>
+			, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)  	
+		  </if>
+	  </set>
+		WHERE
+			 TASK_CD=#{taskCd}
+			 AND LECA_CD=#{lecaCd}	
+	</update>
+	
 	<select id="loadNotApplySaveLecture" parameterType="studentLecture" resultMap="lectureMap">
 		SELECT 
 		       L.LECA_CD 
@@ -435,5 +511,138 @@
 			AND LECA_NM LIKE '%' || #{lecaNm} || '%'
 		</if>
 	</select>
+	
+	<!-- 학생들이 제출한 과제 목록 -->
+	<select id="taskSubmitList"  resultMap="taskMap" parameterType="String"> 
+		SELECT 
+		         TS.TSUB_CD
+		        ,TS.LECA_CD
+		        ,TS.TASK_CD
+		        ,TS.STU_NO
+		        ,TS.TSUB_DT
+		        ,TS.TSUB_SCORE
+		        ,TS.ATCH_FILE_ID
+		        ,TS.TSUB_CON
+		        ,S.STU_NM
+		        ,T.TASK_NM
+		        ,T.TASK_EDT
+		FROM 
+				  TASK T
+				, TASK_SUBMIT TS
+				, STUDENT S
+		WHERE 
+				S.STU_NO = TS.STU_NO
+		AND		T.TASK_CD = TS.TASK_CD
+		AND 	T.TASK_CD = #{taskCd}
+	</select>
+	
+	<!-- 과제 제출  insert 시작=========================================================================================== -->
+	
+	<insert id="insertTaskSubmit1" parameterType="taskSubmit">
+		<selectKey keyProperty="tsubCd" order="BEFORE" resultType="int"> 
+			SELECT NVL(MAX(TSUB_CD),0)+1 FROM TASK_SUBMIT
+		</selectKey>
+		insert into 
+			TASK_SUBMIT (
+					 TSUB_CD 
+			        ,LECA_CD 
+			        ,TASK_CD 
+			        ,STU_NO   
+			        ,ATCH_FILE_ID 
+			        ,TSUB_CON 
+			)
+            values(
+		              #{tsubCd}
+		            , #{lecaCd}
+		            , #{taskCd}
+		            , #{stuNo}
+		            , (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+		            , #{tsubCon}
+		    )
+	</insert>
+	
+	<insert id="insertTaskSubmit2" parameterType="taskSubmit">
+		<selectKey keyProperty="tsubCd" order="BEFORE" resultType="int"> 
+			SELECT NVL(MAX(TSUB_CD),0)+1 FROM TASK_SUBMIT
+		</selectKey>
+		insert into 
+			TASK_SUBMIT (
+					 TSUB_CD  
+			        ,LECA_CD  
+			        ,TASK_CD  
+			        ,STU_NO   
+			        ,TSUB_CON 
+			)
+            values(
+		              #{tsubCd}
+		            , #{lecaCd}
+		            , #{taskCd}
+		            , #{stuNo}
+		            , #{tsubCon}
+		    )
+	</insert>
+	<!-- 과제 제출  insert 끝=========================================================================================== -->
+	
+	<!-- 과제 상세보기 시작=========================================================================================== -->
+	<select id="submitDetail" resultType="task" parameterType="String" resultMap="taskMap">
+		SELECT 
+		         TS.TSUB_CD
+		        ,TS.LECA_CD
+		        ,TS.TASK_CD
+		        ,TS.STU_NO
+		        ,TS.TSUB_DT
+		        ,TS.TSUB_SCORE
+		        ,TS.ATCH_FILE_ID
+		        ,TS.TSUB_CON
+		        ,S.STU_NM
+		        ,T.TASK_NM
+		        ,T.TASK_EDT
+		        , A.ATCH_FILE_ID
+		        , A.FILE_SN
+		        , A.FILE_STRE_COURS
+		        , A.STRE_FILE_NM
+		        , A.ORIGNL_FILE_NM
+		        , A.FILE_EXTSN
+		        , A.FILE_SIZE
+		        , A.CREATE_DT
+		FROM 
+				  TASK T
+				, TASK_SUBMIT TS
+				, STUDENT S
+				, ATTACH A
+		WHERE 
+				S.STU_NO = TS.STU_NO
+		AND		T.TASK_CD = TS.TASK_CD
+		AND 	TS.ATCH_FILE_ID = A.ATCH_FILE_ID
+        AND     TS.TSUB_CD = #{tsubCd}   
+	</select>
+	<!-- 과제 상세보기 끝=========================================================================================== -->
+	
+	<!-- 과제 수정 시작 =========================================================================================== -->
+	<update id="taskSubmitUpdate" parameterType="hashMap">
+		UPDATE  
+			TASK_SUBMIT
+	  <set>
+				  TSUB_CON     = #{tsubCon}
+	      <if test='result > "0"'>
+				, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)  	
+		  </if>
+	  </set>
+		WHERE
+			TSUB_CD = #{tsubCd}
+	</update>
+	<!-- 과제 수정 끝=========================================================================================== -->
+	
+	
+	<update id="scoreUpdate" parameterType="Int">
+	UPDATE 
+		TASK_SUBMIT
+	SET 
+		TSUB_SCORE = #{tsubScore}
+	WHERE 
+		TSUB_CD = #{tsubCd}
+	
+	</update>
+	
 	
 </mapper>

@@ -36,96 +36,157 @@
                with font-awesome or any other icon font library -->
 				<!-- 수강관리 -->
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
-					<li class="nav-header">학생 어사이드</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
+							<li class="nav-header">강의 게시판</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-book"></i>
 							<p>
-								수강관리 <i class="right fas fa-angle-left"></i>
+								강의 계획서</i>
 							</p>
-					</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>수강 편람</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>수강평가</p>
-							</a></li>
-						</ul></li>
+						</a>
+					</li>
 					<!-- 학적관리 -->
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-copy"></i>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
 							<p>
-								학적관리 <i class="right fas fa-angle-left"></i>
+								공지사항 </i>
 							</p>
-					</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>휴학 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>복학 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>자퇴 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>졸업</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>학적 변동 현황</p>
-							</a></li>
-						</ul></li>
+						</a>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-chart-pie"></i>
-							<p>
-								성적 <i class="right fas fa-angle-left"></i>
-							</p>
-					</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>전체 성적 조회</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>전체 학기 성적 조회</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>성적 이의 신청</p>
-							</a></li>
-						</ul></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-edit"></i>
-							<p>
-								등록/장학 <i class="right fas fa-angle-left"></i>
-							</p>
-					</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>등록금 납부 내역</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>등록금 고지서</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>장학 내역 조회</p>
-							</a></li>
-						</ul></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon far fa-envelope"></i>
-							<p>상담</p>
+							<p>강의 자료실</p>
 					</a></li>
+					<li class="nav-item"><a href="/lectureBoard/subjectList?lecaCd=${param.lecaCd}" class="nav-link"> <i
+							class="nav-icon fas fa-edit"></i>
+							<p>과제 및 평가</p>
+					</a></li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
+							<p>
+								퀴즈 </i>
+							</p>
+						</a>
+					</li><li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
+							<p>
+								성적 </i>
+							</p>
+						</a>
+					</li><li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
+							<p>
+								출결 </i>
+							</p>
+						</a>
+					</li><li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
+							<p>
+								질문게시판 </i>
+							</p>
+						</a>
+					</li><li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
+							<p>
+								수강생 목록</i>
+							</p>
+						</a>
+					</li>
+<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 							class="nav-icon fas fa-book"></i> -->
+<!-- 							<p> -->
+<!-- 								수강관리 <i class="right fas fa-angle-left"></i> -->
+<!-- 							</p> -->
+<!-- 					</a> -->
+<!-- 						<ul class="nav nav-treeview"> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>수강 편람</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>수강평가</p> -->
+<!-- 							</a></li> -->
+<!-- 						</ul></li> -->
+<!-- 					학적관리 -->
+<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 							class="nav-icon fas fa-copy"></i> -->
+<!-- 							<p> -->
+<!-- 								학적관리 <i class="right fas fa-angle-left"></i> -->
+<!-- 							</p> -->
+<!-- 					</a> -->
+<!-- 						<ul class="nav nav-treeview"> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>휴학 신청</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>복학 신청</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>자퇴 신청</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>졸업</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>학적 변동 현황</p> -->
+<!-- 							</a></li> -->
+<!-- 						</ul></li> -->
+<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 							class="nav-icon fas fa-chart-pie"></i> -->
+<!-- 							<p> -->
+<!-- 								성적 <i class="right fas fa-angle-left"></i> -->
+<!-- 							</p> -->
+<!-- 					</a> -->
+<!-- 						<ul class="nav nav-treeview"> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>전체 성적 조회</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>전체 학기 성적 조회</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>성적 이의 신청</p> -->
+<!-- 							</a></li> -->
+<!-- 						</ul></li> -->
+<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 							class="nav-icon fas fa-edit"></i> -->
+<!-- 							<p> -->
+<!-- 								등록/장학 <i class="right fas fa-angle-left"></i> -->
+<!-- 							</p> -->
+<!-- 					</a> -->
+<!-- 						<ul class="nav nav-treeview"> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>등록금 납부 내역</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>등록금 고지서</p> -->
+<!-- 							</a></li> -->
+<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 									class="far fa-circle nav-icon"></i> -->
+<!-- 									<p>장학 내역 조회</p> -->
+<!-- 							</a></li> -->
+<!-- 						</ul></li> -->
+<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
+<!-- 							class="nav-icon far fa-envelope"></i> -->
+<!-- 							<p>상담</p> -->
+<!-- 					</a></li> -->
 				</sec:authorize>
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">

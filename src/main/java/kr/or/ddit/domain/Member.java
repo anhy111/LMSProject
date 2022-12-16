@@ -11,11 +11,13 @@ public class Member implements Serializable {
     private int memNo;
     private String memMl;
     private String memPass;
+    private String depCd;
     //1:N
     private List<MemberAuth> memberAuthList;
 
-    public Member() {
-    }
+    private Manager managerVO;
+
+    private Professor professorVO;
 
     @Override
     public String toString() {
