@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강의계획서 폼 작성</title>
+<title>강의계획서 상세페이지</title>
 <link rel="stylesheet" href="/resources/css/inquiry1.css">
 <link rel="stylesheet" href="/resources/css/inquiry2.css">
 </head>
@@ -13,9 +13,9 @@
 	
 	<span id="lecApplyTitle">강의계획서 상세</span>
 	
-	<div id="div4btns">
-		<button id="close" onclick="fn_close()" type="button" class="btn btn-secondary">닫기</button>
-	</div>
+<!-- 	<div id="div4btns"> -->
+<!-- 		<button id="close" onclick="fn_close()" type="button" class="btn btn-secondary">닫기</button> -->
+<!-- 	</div> -->
 	
 	<br><br>
 	
@@ -158,13 +158,13 @@
 	    	<tr><th>6주차</th><td colspan="5"><textarea id="weekPlan6" rows="2" cols="90" disabled>${weekPlanList[5].wpCon }</textarea></td></tr>
 	    	<tr><th>7주차</th><td colspan="5"><textarea id="weekPlan7" rows="2" cols="90" disabled>${weekPlanList[6].wpCon }</textarea></td></tr>
 	    	<tr><th>8주차</th><td colspan="5"><textarea id="weekPlan8" rows="2" cols="90" disabled>중간고사</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>9주차</th><td colspan="5"><textarea id="weekPlan9" rows="2" cols="90" disabled>${weekPlanList[7].wpCon }</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>10주차</th><td colspan="5"><textarea id="weekPlan10" rows="2" cols="90" disabled>${weekPlanList[8].wpCon }</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>11주차</th><td colspan="5"><textarea id="weekPlan11" rows="2" cols="90" disabled>${weekPlanList[9].wpCon }</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>12주차</th><td colspan="5"><textarea id="weekPlan12" rows="2" cols="90" disabled>${weekPlanList[10].wpCon }</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>13주차</th><td colspan="5"><textarea id="weekPlan13" rows="2" cols="90" disabled>${weekPlanList[11].wpCon }</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>14주차</th><td colspan="5"><textarea id="weekPlan14" rows="2" cols="90" disabled>${weekPlanList[12].wpCon }</textarea></td></tr>
-	    	<tr class="switchTr" style="display:none;"><th>15주차</th><td colspan="5"><textarea id="weekPlan15" rows="2" cols="90" disabled>${weekPlanList[13].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>9주차</th><td colspan="5"><textarea id="weekPlan9" rows="2" cols="90" disabled>${weekPlanList[8].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>10주차</th><td colspan="5"><textarea id="weekPlan10" rows="2" cols="90" disabled>${weekPlanList[9].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>11주차</th><td colspan="5"><textarea id="weekPlan11" rows="2" cols="90" disabled>${weekPlanList[10].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>12주차</th><td colspan="5"><textarea id="weekPlan12" rows="2" cols="90" disabled>${weekPlanList[11].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>13주차</th><td colspan="5"><textarea id="weekPlan13" rows="2" cols="90" disabled>${weekPlanList[12].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>14주차</th><td colspan="5"><textarea id="weekPlan14" rows="2" cols="90" disabled>${weekPlanList[13].wpCon }</textarea></td></tr>
+	    	<tr class="switchTr" style="display:none;"><th>15주차</th><td colspan="5"><textarea id="weekPlan15" rows="2" cols="90" disabled>${weekPlanList[14].wpCon }</textarea></td></tr>
 	    	<tr class="switchTr" style="display:none;"><th>16주차</th><td colspan="5"><textarea id="weekPlan16" rows="2" cols="90" disabled>기말고사</textarea></td></tr>
 	    </table>
 	    <div class="d-grid">
@@ -212,8 +212,6 @@
 <script type="text/javascript">
 
 	window.onload = function() {
-		
-		//검색어 자동완성 이벤트///////////////////////////////////////////////////////////////////////////////////////////
 		
 		//더보기 버튼을 누르면
 		$('#showMoreTrs').on('click', function() {

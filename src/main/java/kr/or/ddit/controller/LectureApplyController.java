@@ -1,16 +1,18 @@
 package kr.or.ddit.controller;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.mapping.MapBasedAttributes2GrantedAuthoritiesMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -194,8 +196,8 @@ public class LectureApplyController {
 	}
 	
 	//강의계획서 작성 후 제출하기
-	@Transactional
 	@ResponseBody
+	@Transactional
 	@PostMapping("/lecApplyForm/lecApplySubmit")
 	public int lecApplySubmit(HttpServletRequest request
 			, @RequestBody LecApply lecApply) {
@@ -204,55 +206,148 @@ public class LectureApplyController {
 		int proNo = (int)session.getAttribute("no");
 		lecApply.setProNo(proNo);
 		
-		//1. subject 테이블에 값 넣기
-		int subjectResult = this.lectureApplyService.subjectSubmit(lecApply);
-		if (subjectResult < 0) {
-			log.info("subject실패");
-			return 0;
-		}
-		//2. lecture 테이블에 값 넣기
+		log.info("제출 proNo : " + proNo);
+		log.info("담긴값들은? : " + lecApply);
+		
+		//1. lecture 테이블에 값 넣기
 		int lectureResult = this.lectureApplyService.lectureSubmit(lecApply);
+		
 		if (lectureResult < 0) {
 			log.info("lecture실패");
 			return 0;
 		}
-		//3. lec_apply 테이블에 값 넣기
+		//2. lec_apply 테이블에 값 넣기
 		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecApply);
-		int lecaCd = this.lectureApplyService.getMaxLecaCd();
+
 		if (lecApplyResult < 0) {
 			log.info("lecApply실패");
 			return 0;
 		}
-		//4. weekplan 테이블에 값 넣기
-//		Map<String, Object> weekMap = new HashMap<String, Object>();
-//		weekMap.put("lecaCd", lecaCd);
+		//3. weekplan 테이블에 값 넣기
+		List<String> weekPlanList = Arrays.asList(lecApply.getWeekPlanList());
+		int weekPlanResult = this.lectureApplyService.weekPlanSubmit(weekPlanList);
+		
+		if (weekPlanResult < 0) {
+			log.info("weekPlan실패");
+			return 0;
+		}
+		return lectureResult + lecApplyResult + weekPlanResult;
+	}
+	
+	//임시저장 리스트
+	@ResponseBody
+	@PostMapping("/lecApply/getTempList")
+	public List<LecApply> getTempList(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		
+		log.info("임시저장리스트proNo : " + proNo);
+		
+		List<LecApply> list = this.lectureApplyService.tempList(proNo);
+		
+		log.info("임시저장 리스트 : " + list);
+		
+		return list;
+	}
+	
+	//임시저장 강의계획서 상세페이지 통합
+	@GetMapping("/lecApplyForm/tempForm")
+	public String tempForm(HttpServletRequest request, Model model, int lecaCd) {
+		
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		
+		log.info("상세proNo : " + proNo);
+		log.info("상세 계획서 코드 : " + lecaCd);
+		
+		Professor professor = this.lectureApplyService.inquiryFormProInfo(proNo);
+		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
+		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		
+		model.addAttribute("professor", professor);
+		model.addAttribute("lecApplyList", lecApplyList);
+		model.addAttribute("weekPlanList", weekPlanList);
+		
+		log.info("상세professor : " + professor);
+		log.info("상세lecApplyList : " + lecApplyList);
+		log.info("상세weekPlanList : " + weekPlanList);
+		
+		return "professor/lecApplyForm/tempForm";
+	}
+	
+	//강의계획서 작성 도중 임시저장
+//	@ResponseBody
+//	@PostMapping("/lecApplyForm/temporarySubmit")
+//	public int temporarySubmit(HttpServletRequest request
+//			, @RequestBody LecApply lecApply) {
 //		
-//		for(int i = 1; i <= 15; i++) {
-//			weekMap.put("wpNo"+i, i);
-//			weekMap.put("wpCon"+i, map.get("weekPlan" + i));
-		
-		
-//			
-//			this.lectureApplyService.weekPlanSubmit(weekMap);
+//		HttpSession session = request.getSession();
+//		int proNo = (int)session.getAttribute("no");
+//		lecApply.setProNo(proNo);
+//		
+//		log.info("제출 proNo : " + proNo);
+//		log.info("담긴값들은? : " + lecApply);
+//		
+//		//1. lecture 테이블에 값 넣기
+//		int lectureResult = this.lectureApplyService.lectureTempSubmit(lecApply);
+//		
+//		if (lectureResult < 0) {
+//			log.info("lecture실패");
+//			return 0;
 //		}
+//		//2. lec_apply 테이블에 값 넣기
+//		int lecApplyResult = this.lectureApplyService.lecApplyTempSubmit(lecApply);
+//
+//		if (lecApplyResult < 0) {
+//			log.info("lecApply실패");
+//			return 0;
+//		}
+//		//3. weekplan 테이블에 값 넣기
+//		List<String> weekPlanList = Arrays.asList(lecApply.getWeekPlanList());
+//		int weekPlanResult = this.lectureApplyService.weekPlanTempSubmit(weekPlanList);
 //		
-//		int weekPlanResult = this.lectureApplyService.weekPlanCount(lecaCd);
 //		if (weekPlanResult < 0) {
 //			log.info("weekPlan실패");
 //			return 0;
 //		}
-		
-		return subjectResult + lectureResult + lecApplyResult;
-	}
+//		return lectureResult + lecApplyResult + weekPlanResult;
+//	}
 	
-	//과목 리스트 불러오기
+	//과목명 리스트 불러오기
 	@ResponseBody
 	@PostMapping("/lecApplyForm/getSubList")
-	public List<Subject> getSubList() {
+	public List<Subject> getSubList(HttpServletRequest request) {
 		
-		List<Subject> list = this.lectureApplyService.subList();
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		
+		log.info("과목 proNo : " + proNo);
+		
+		List<Subject> list = this.lectureApplyService.subList(proNo);
+		
+		log.info("과목list : " + list);
 		
 		return list;
+	}
+	
+	//과목번호 리스트 불러오기
+	@ResponseBody
+	@PostMapping("/lecApplyForm/getSubCdList")
+	public int getSubCdList(HttpServletRequest request
+			, @RequestBody String subNm) {
+		
+		subNm = subNm.replaceAll("\"", "");
+		
+		log.info("subNm2 : 	" + subNm);
+		
+		log.info("type : " + subNm.getClass().getName());
+		
+		int subCd = this.lectureApplyService.getSubCdList(subNm);
+		
+		log.info("과목번호 subCd : " + subCd);
+		
+		return subCd;
 	}
 	
 }

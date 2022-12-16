@@ -85,7 +85,7 @@
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">과목명</th>
+									cursorshover="true">강의명</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending"

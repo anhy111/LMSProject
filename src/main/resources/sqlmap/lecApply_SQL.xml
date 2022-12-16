@@ -148,36 +148,24 @@
 		ORDER BY WP_NO
 	</select>
 	
-	<insert id="subjectSubmit" parameterType="int">
-		INSERT INTO SUBJECT (
-		            , SUB_CD
-		            , PRO_NO
-		            , DEP_CD
-		            , SUB_NM
-		) VALUES (
-		    #{subCd}
-		    , #{proNo}
-		    , #{depCd}
-		    , #{subNm}
-		);
-	</insert>
-	
-	<insert id="lectureSubmit" parameterType="int">
-		<selectKey order="BEFORE" keyProperty="leca_cd"
+	<insert id="lectureSubmit" parameterType="lecApply">
+		<selectKey order="BEFORE" keyProperty="lecaCd"
 				resultType="int">
-			SELECT MAX(LECA_CD)+1
-			FROM LEC_APPLY
+			SELECT NVL(MAX(LECA_CD),0)+1
+			FROM LECTURE
 		</selectKey>
 		INSERT INTO LECTURE (
-		            , LECA_CD
+		             LECA_CD
+		            , SUB_CD
 		) VALUES (
 		    #{lecaCd}
-		);
+		    , #{subCd}
+		)
 	</insert>
 	
-	<insert id="lecApplySubmit" parameterType="int">
+	<insert id="lecApplySubmit" parameterType="lecApply">
 		INSERT INTO LEC_APPLY (
-		            , LECA_CD
+		             LECA_CD
 		            , LECA_YR
 		            , LECA_SEM
 		            , LECA_NM
@@ -186,15 +174,11 @@
 		            , LECA_CRD
 		            , LECA_PER
 		            , LECA_CAP
-		            , LECA_TM
-		            , LECA_WK
-		            , LECA_HALL
-		            , LECA_UNIT
+		            , LECA_TT
 		            , LECA_BOOK
 		            , LECA_NOTE
 		            , LECA_DT
 		            , LECA_GRADE
-		            , LECA_IMSI_YN
 		            , LECA_CATE
 		            , LECA_MP
 		            , LECA_FP
@@ -202,40 +186,83 @@
 		            , LECA_AP
 		            , PRO_NO
 		) VALUES (
-		    #{lecaCd}
+		    (select max(LECA_CD) from lecture)
 		    , #{lecaYr}
 		    , #{lecaSem}
 		    , #{lecaNm}
 		    , #{lecaCon}
 		    , #{lecaTrg}
 		    , #{lecaCrd}
-		    , #{lecaPer}
+		    , #{lecaCrd}
 		    , #{lecaCap}
-		    , #{lecaTm}
-		    , #{lecaWk}
+		    , #{lecaTt}
 		    , #{lecaBook}
 		    , #{lecaNote}
 		    , SYSDATE
 		    , #{lecaGrade}
-		    , 0
 		    , #{lecaCate}
 		    , #{lecaMp}
 		    , #{lecaFp}
 		    , #{lecaTp}
 		    , #{lecaAp}
 		    , #{proNo}
-		);
+		)
 	</insert>
 	
-	<select id="subList" resultType="subject">
-		SELECT  SUB_CD, SUB_NM
+	<update id="weekPlanSubmit" parameterType="java.util.List">
+		<foreach collection="list" item="weekPlan"
+			open="INSERT ALL " index="index" close="SELECT * FROM DUAL" separator=" ">
+			INTO WEEKPLAN(
+			WP_NO, LECA_CD, WP_CON
+			)VALUES(
+			    #{index}+1, (select max(LECA_CD) from lec_apply), #{weekPlan}
+			)
+		</foreach>
+	</update>
+	
+	<select id="subList" parameterType="int" resultType="subject">
+		SELECT  SUB_CD
+		        , SUB_NM
+		        , PRO_NO
+		        , DEP_CD
 		FROM    SUBJECT
+		WHERE   PRO_NO = #{proNo}
 		ORDER BY SUB_NM
 	</select>
+
+	<select id="getSubCdList" parameterType="String" resultType="int">
+		SELECT  SUB_CD
+		FROM    SUBJECT
+		WHERE   SUB_NM = #{subNm}
+	</select>
 	
-	<select id="getMaxLecaCd" resultType="int">
-		SELECT  MAX(LECA_CD)
-		FROM    LEC_APPLY
+	<select id="tempList" parameterType="int" resultType="lecApply">
+		SELECT  U.LECA_CD,
+	        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
+	        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
+	        NVL(U.LECA_TRG, 0) LECA_TRG,
+	        U.SUB_CD,
+	        U.LECA_NM,
+	        U.LECA_CATE,
+	        NVL(U.LECA_CRD, 0) LECA_CRD,
+	        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+	        WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+	        END LECA_GRADE,
+	        U.LECA_DT
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM
+		) U
+		WHERE   U.PRO_NO = #{proNo}
+		AND     U.LECA_IMSI_YN = 1
+		ORDER BY U.LECA_CD DESC
 	</select>
 	
 </mapper>
