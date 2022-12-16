@@ -23,7 +23,11 @@ border-radius: 10px;
 		<div class="card card-outline card-primary">
 			<div class="card-header">
 				<h1 class="card-title">
-					<strong id="lectureListYear">${lecture.lecApply.lecaNm} 과제</strong>
+					<strong id="lectureListYear">
+					<c:if test="${lecture != null}">
+						${lecture.lecApply.lecaNm} 
+					</c:if>
+					과제</strong>
 				</h1>
 				<div class="card-tools">
 					<button type="button" class="btn btn-tool"
@@ -42,10 +46,12 @@ border-radius: 10px;
 				</div>
 				<br>
 				<div class="col-sm-12">
+				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<div class="row">
 						<div class="col-sm-11"></div>
 						<a href="/lectureBoard/registTask?lecaCd=${param.lecaCd}" class="col-sm-1 btn btn-block btn-outline-secondary btn-sm" style="float:right">등록</a>
 					</div>
+				</sec:authorize>
 					<table id="example2"
 						class="table table-bordered table-hover dataTable dtr-inline"
 						aria-describedby="example2_info">
@@ -61,16 +67,17 @@ border-radius: 10px;
 									aria-label="Browser: activate to sort column ascending">제목</th>
 								<th class="sorting" tabindex="0" aria-controls="example2"
 									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending">제출일</th>
+									aria-label="Engine version: activate to sort column ascending">과제 시작일</th>
 								<th class="sorting" tabindex="0" aria-controls="example2"
 									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending">마감일</th>
+									aria-label="Engine version: activate to sort column ascending">과제 마감일</th>
 								<th class="sorting" tabindex="0" aria-controls="example2"
 									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">제출현황</th>
+									aria-label="CSS grade: activate to sort column ascending">제출목록</th>
 							</tr>
 						</thead>
 						<tbody>
+						<c:if test="${task.taskNm !=null}">
 							<c:forEach var="row" items="${taskList}" varStatus="stat">
 								<tr class="odd">
 									<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
@@ -82,10 +89,11 @@ border-radius: 10px;
 										<fmt:formatDate value="${row.taskEdt}" pattern="yyyy-MM-dd HH:mm"/>
 									</td>
 										 
-									<td><button type="button" class="btn btn-block btn-outline-secondary btn-sm">보기</button></td>
+									<td><a href="/lectureBoard/taskSubmitList?taskCd=${row.taskCd}&&lecaCd=${row.lecaCd}" class="btn btn-block btn-outline-secondary btn-sm">보기</a></td>
 									
 								</tr>
 							</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 
@@ -97,14 +105,5 @@ border-radius: 10px;
 			</div>
 		</div>
 	</div>
-	<form action="/lectureBoard/upload" method="post" enctype="multipart/form-data">
-		<input type="file" multiple name="files">
-		<input type="submit">
-		<sec:csrfInput/>
-	</form>
-
-
-
-
 </body>
 </html>

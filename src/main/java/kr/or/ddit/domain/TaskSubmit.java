@@ -1,6 +1,7 @@
 package kr.or.ddit.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 @Data
@@ -15,4 +16,6 @@ public class TaskSubmit {
 	private String   tsubCon    ;
 	//=============================
 	private Student  student    ;
+	private List<Attach> attach;
+	
 }

@@ -1,6 +1,7 @@
 package kr.or.ddit.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,17 +80,17 @@ public class LectureController {
 	@GetMapping("/lectureBoard/subjectList")
 	public ModelAndView subjectList(ModelAndView mav, @RequestParam String lecaCd) {
 		Lecture lecture = this.lectureservice.searchTask(lecaCd);
-		if(lecture != null) {
-		log.info(lecture.toString());
-		List<Task> taskList = lecture.getTaskList();
-		for (Task task : taskList) {
-			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + task.toString());
+		if (lecture != null) {
+			log.info(lecture.toString());
+			List<Task> taskList = lecture.getTaskList();
+			for (Task task : taskList) {
+				log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + task.toString());
 
-			mav.addObject("task", task);
-		}
+				mav.addObject("task", task);
+			}
 
-		mav.addObject("lecture", lecture);
-		mav.addObject("taskList", taskList);
+			mav.addObject("lecture", lecture);
+			mav.addObject("taskList", taskList);
 		}
 		mav.setViewName("lectureBoard/subjectList");
 		return mav;
@@ -112,59 +113,62 @@ public class LectureController {
 		}
 		log.info(task.toString());
 
-		return "redirect:/lectureBoard/taskDetail?lecaCd="+task.getLecaCd()+"&&taskCd="+task.getTaskCd();
+		return "redirect:/lectureBoard/taskDetail?lecaCd=" + task.getLecaCd() + "&&taskCd=" + task.getTaskCd();
 	}
 
 	@GetMapping("/lectureBoard/taskDetail")
 	public ModelAndView taskDetail(ModelAndView mav, @RequestParam String lecaCd, @RequestParam String taskCd) {
 		log.info("과제 상세정보=========================================================");
-		log.info("taskCd : "+taskCd);
-		log.info("lecaCd : "+lecaCd);
+		log.info("taskCd : " + taskCd);
+		log.info("lecaCd : " + lecaCd);
 		Task task = this.lectureservice.detailTask(taskCd, lecaCd);
-		log.info(task+"==============================================");
-		
+		log.info(task + "==============================================");
+
 		mav.addObject("task", task);
 		mav.setViewName("lectureBoard/taskDetail");
 		return mav;
-		
+
 	}
-	
+
 	@GetMapping("/lectureBoard/taskDelete")
-	public String taskDelete(@RequestParam String lecaCd,@RequestParam String taskCd) {
+	public String taskDelete(@RequestParam String lecaCd, @RequestParam String taskCd) {
 		log.info(lecaCd);
-		this.lectureservice.deleteTask(lecaCd,taskCd);
-		return "redirect:/lectureBoard/subjectList?lecaCd="+lecaCd; 
+		this.lectureservice.deleteTask(lecaCd, taskCd);
+		return "redirect:/lectureBoard/subjectList?lecaCd=" + lecaCd;
 	}
-	
-	//과제 수정============================================================================================================================
+
+	// 과제
+	// 수정============================================================================================================================
 	@PostMapping("/lectureBoard/taskUpdate")
 	public String taskUpdate(@ModelAttribute Task task) {
-		log.info("업데이트!!@!@!@!@!@!@!@!@!@!@!@\n"+task);
+		log.info("업데이트!!@!@!@!@!@!@!@!@!@!@!@\n" + task);
 		int taskCd = task.getTaskCd();
 		int lecaCd = task.getLecaCd();
-		log.info(lecaCd+"        "+taskCd);
-		return  "redirect:/lectureBoard/taskDetail?lecaCd=" + lecaCd + "&&taskCd=" + taskCd;
+		log.info(lecaCd + "        " + taskCd);
+		this.lectureservice.taskUpdate(task);
+		return "redirect:/lectureBoard/taskDetail?lecaCd=" + lecaCd + "&&taskCd=" + taskCd;
 	}
-	
-	//과제 제출 목록============================================================================================================================
+
+	// 과제 제출
+	// 목록============================================================================================================================
 	@GetMapping("/lectureBoard/taskSubmitList")
 	public ModelAndView taskSubmitList(ModelAndView mav, @RequestParam String taskCd) {
-		List<Task>list = this.lectureservice.taskSubmitList(taskCd);
-		log.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+list);
+		List<Task> list = this.lectureservice.taskSubmitList(taskCd);
+		log.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + list);
 		mav.addObject("list", list);
 		mav.setViewName("lectureBoard/taskSubmitList");
 		return mav;
 	}
-	
+
 	@GetMapping("/lectureBoard/submitTask")
-	public ModelAndView submitTask(ModelAndView mav,@RequestParam String lecaCd,@RequestParam String taskCd) {
-		
+	public ModelAndView submitTask(ModelAndView mav, @RequestParam String lecaCd, @RequestParam String taskCd) {
+
 		Task task = this.lectureservice.detailTask(taskCd, lecaCd);
 		mav.addObject("task", task);
 		mav.setViewName("lectureBoard/submitTask");
 		return mav;
 	}
-	
+
 	@PostMapping("/lectureBoard/submitTask")
 	public String submitTask2(Principal principal, @RequestParam MultipartFile[] files, TaskSubmit taskSubmit) {
 		int stuNo = Integer.parseInt(principal.getName());
@@ -183,15 +187,43 @@ public class LectureController {
 
 		return "redirect:/lectureBoard/taskSubmitList?lecaCd=" + lecaCd + "&&taskCd=" + taskCd;
 	}
-//	@GetMapping("/lectureBoard/taskSubmitDetail")
-//	public ModelAndView taskSubmitDetail(ModelAndView mav, @RequestParam String tsubCd) {
-//		log.info("제출 과제정보=========================================================");
-//		Task task = this.lectureservice.submitDetail(tsubCd);
-//		log.info(task+"==============================================");
-//		
-//		mav.addObject("task", task);
-//		mav.setViewName("lectureBoard/taskSubmitDetail");
-//		return mav;
-//		
-//	}
+
+	@GetMapping("/lectureBoard/taskSubmitDetail")
+	public ModelAndView taskSubmitDetail(ModelAndView mav, @RequestParam String tsubCd) {
+		log.info("제출 과제정보=========================================================");
+		Task task = this.lectureservice.submitDetail(tsubCd);
+		log.info(task + "==============================================");
+
+		mav.addObject("task", task);
+		mav.setViewName("lectureBoard/taskSubmitDetail");
+		return mav;
+	}
+
+	// 제출 과제 수정
+	@PostMapping("/lectureBoard/taskSubmitUpdate")
+	public String taskSubmitUpdate(@RequestParam MultipartFile[] files,
+			String tsubCd, String tsubCon) {
+		int result = 0;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if (files[0].getSize() > 0) {
+			result = this.fileUploadUtil.fileUploadAction(files);
+			if (result > 0) {
+				map.put("result", result);
+				map.put("tsubCon", tsubCon);
+				map.put("tsubCd", tsubCd);
+				this.lectureservice.taskSubmitUpdate(map);
+			}
+
+			return "redirect:/lectureBoard/taskSubmitDetail?tsubCd="+tsubCd;
+		}
+		map.put("result", result);
+		map.put("tsubCon", tsubCon);
+		map.put("tsubCd", tsubCd);
+		this.lectureservice.taskSubmitUpdate(map);
+		
+
+		return "redirect:/lectureBoard/taskSubmitDetail?tsubCd="+tsubCd;
+	}
+
 }

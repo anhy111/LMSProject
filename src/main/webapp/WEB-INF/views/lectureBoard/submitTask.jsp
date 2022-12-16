@@ -8,12 +8,12 @@
 <div class="row">
 	<div class="col-sm-1" ></div>
 	<div class="col-sm-10" >
-		<form action="/lectureBoard/registTask" id="frm" method="post" enctype="multipart/form-data" >
+		<form action="/lectureBoard/submitTask" id="frm" method="post" enctype="multipart/form-data" >
 			<div class="card card-outline card-primary">
 				<div class="card-header">
 					<div class="form-group">
 						<h1 class="card-title">
-							<input type="text" id="taskNm" name="taskNm" class="form-control change" required>
+							${task.taskNm}
 						</h1>
 					</div>
 				</div>
@@ -25,20 +25,18 @@
 										<div class="card-body">
 											<div class="form-group">
 												<div class="input-group">
+												<!-- ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆ -->
 													<input type="hidden" name="lecaCd" value="${param.lecaCd}">											
+													<input type="hidden" name="taskCd" value="${param.taskCd}">											
 												</div>
-											<div class="form-group">
-												<div>
-													<label>마감일 </label>
-												</div>
-												<input type="date" id="taskEdt" name="taskEdt" required>
-											</div>
 												<div class="input-group">
-													<textarea id="taskCon" name="taskCon" class="form-control" cols="15" rows="15" required></textarea>
+												<!-- ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆ -->
+													<textarea id="tsubCon" name="tsubCon" class="form-control" cols="15" rows="15" required></textarea>
 												</div>
 											</div>
 											<div class="form-group">
 												<div class="custom-file">
+												<!-- ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆ -->
 													<input type="file" class="custom-file-input" id="customFile" name="files" multiple>
 													<label class="custom-file-label" for="customFile">Choose file</label>
 												</div>
@@ -52,6 +50,7 @@
 															<button type="submit" class="btn btn-block btn-info" >등록</button>
 														</div>
 														<div class="col-sm-2">
+												<!-- ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆ -->
 															<a href="/lectureBoard/subjectList?lecaCd=${param.lecaCd}" class="btn btn-block btn-danger">취소</a>
 														</div>					
 												</div>
@@ -63,16 +62,22 @@
 						</section>
 					</div>
 				</div>
-			</div>
 			<sec:csrfInput/>
+			</div>
 		</form>
  	</div>
 </div>
 <script type="text/javascript">
-// 	CKEDITOR.replace("taskCon",
-// 			{
-// 			width:'100%',
-// 			height:'500px',
-// 			startupFocus:false
-// 			});
+$(function(){
+	
+	CKEDITOR.replace("#tsubCon",
+			{
+			width:'100%',
+			height:'500px',
+			startupFocus:false
+			});
+});
 </script>
+
+
+
