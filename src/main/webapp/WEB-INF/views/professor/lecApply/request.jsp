@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>강의계획서 신청</title>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 </head>
 <body>
@@ -77,7 +78,7 @@
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">과목명</th>
+									cursorshover="true">강의명</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
 									aria-label="CSS grade: activate to sort column ascending"
@@ -100,7 +101,7 @@
 									cursorshover="true">자세히보기</th>
 							</tr>
 						</thead>
-						<tbody id="proList">
+						<tbody id="tempList">
 						</tbody>
 					</table>
 				</div>
@@ -143,46 +144,54 @@
 		});
 		
 		//임시저장 강의계획서 리스트 가져오기
-// 		$.ajax({
-// 			url : "/lecApply/getTempList",
-// 			type : "POST",
-// 			contentType : "application/json;charset=utf-8",
-// 			dataType : "JSON",
-// 			success : function(res) {
-				
-// 				$.each(res, function(i,v){
-// 					res[i]['btn'] = '<button class="btn btn-outline-secondary btn-sm" style="font-family:Nunito,sans-serif;" onclick="getTempSyllabus(' + v.lecaCd + ')">강의계획서</button>';
-// 				});
-				
-// 				grid = new tui.Grid({
-// 					el : document.getElementById('grid'),
-// 					data : res,
-// 					scrollX : true,
-// 					scrollY : true,
-// 					bodyHeight : 380,
-// 					columns : [
-// 						{header : '년도/학기', name : 'lecaCon', filter : 'select', width : 150, align : 'center'},
-// 						{header : '학년', name : 'lecaTrg', filter : 'select', width : 70, align : 'center'},
-// 						{header : '과목번호', name : 'subCd', filter : 'select', width : 100, align : 'center'},
-// 						{header : '과목명', name : 'lecaNm', filter : 'select'},
-// 						{header : '개설이수구분', name : 'lecaCate', width : 100, align : 'center'},
-// 						{header : '학점', name : 'lecaCrd', width : 50, align : 'center'},
-// 						{header : '성적평가방식', name : 'lecaGrade', width : 100, align : 'center'},
-// 						{header : '저장일시', name : 'lecaRoom', filter : 'select'},
-// 						{header : '자세히 보기', name : 'btn', width : 120, align : 'center'}
-// 					],
-// 					columnOptions: {
-// 				        resizable: true
-// 				    }
-// 				});
-// 			}
-// 		});
+		$.ajax({
+			url : "/professor/lecApply/getTempList",
+			type : "POST",
+			contentType : "application/json;charset=utf-8",
+			dataType : "JSON",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success: function (data) {
+				console.log("떠라떠라떠랑");
+				console.log("떠라떠라떠랑:",data);
+				let str ="";
+				for(var i=0;i<data.length;i++){
+					let day = moment(data[i].lecaDt).format("yyyy-MM-DD");
+					
+					str += `
+						<tr>
+						<td>\${data[i].lecaYs}</td>
+						<td>\${data[i].lecaTrg }</td>
+						<td>\${data[i].subCd }</td>
+						<td>\${data[i].lecaNm }</td>
+						<td>\${data[i].lecaCate }</td>
+						<td>\${data[i].lecaCrd }</td>
+						<td>\${data[i].lecaGrade }</td>
+						<td>\${day}</td>
+						<td><button class='tempdetail' value='\${data[i].lecaCd}'>상세보기</button></td>
+						</tr>
+					`
+				}
+				$("#tempList").html(str);
+			}
+		});
 		
 	}
 	//신규강의계획서 작성 버튼 클릭 이벤트
 	$('#newLecApplyBtn').on('click', function() {
 		window.open("/professor/lecApplyForm/requestForm", "lecApplyForm", "width=1000, height=800, left=100, top=50");
 	});
+</script>
+<script type="text/javascript">
+//임시저장 강의계획서 상세페이지 출력
+let lecaCd;
+$(document).on('click', '.tempdetail', function() {
+	console.log("상세 왜 안뜨냐고 ㅡㅡ");
+	lecaCd = this.value;
+	console.log("강의계획서 코드: " + lecaCd);
+	window.open("/professor/lecApplyForm/tempForm?lecaCd="+lecaCd, "tempdetail", "width=1000, height=800, left=100, top=50");
+});
 
 </script>
 </html>
