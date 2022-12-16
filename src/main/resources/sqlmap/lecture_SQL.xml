@@ -195,7 +195,8 @@
 			       T.TASK_CON,
 			       T.TASK_SDT,
 			       T.TASK_EDT,
-			       TS.TSUB_CD
+			       TS.TSUB_CD,
+			       TS.TSUB_SCORE
 		from 
              LECTURE L,
              TASK T,
@@ -587,14 +588,48 @@
 				, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)  	
 		  </if>
 	  </set>
-	  
 		WHERE
 			TSUB_CD = #{tsubCd}
+	</update>
+	<!-- 과제 수정 끝=========================================================================================== -->
 	
+	
+	<update id="scoreUpdate" parameterType="Int">
+	UPDATE 
+		TASK_SUBMIT
+	SET 
+		TSUB_SCORE = #{tsubScore}
+	WHERE 
+		TSUB_CD = #{tsubCd}
 	
 	</update>
 	
 	
-	<!-- 과제 수정 끝=========================================================================================== -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

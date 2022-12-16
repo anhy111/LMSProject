@@ -8,6 +8,20 @@
 <style>
 .modifyDisplay{
 	display: none;
+	
+}
+#subInfo{
+background-color: ivory;
+border: 1px solid black;
+border-radius: 10px;
+}
+.callout {
+    border-radius: 0.25rem;
+    box-shadow: 1px -1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+    background-color: #fff;
+    border-left: 5px solid #e9ecef;
+    margin-bottom: 1rem;
+    padding: 1rem;
 }
 </style>
 <form action="/lectureBoard/taskSubmitUpdate" method="post" enctype="multipart/form-data">
@@ -21,8 +35,8 @@
 								<br>
 								<h3 >${task.taskNm}</h3>
 								<input type="hidden" id="taskCd" name="taskCd" value="${task.taskCd}">
-								<input type="hidden" id="lecaCd" name="lecaCd"value="${task.lecaCd}">
-								<input type="hidden" id="tsubCd" name="tsubCd"value="${task.taskSubmitList[0].tsubCd}">
+								<input type="hidden" id="lecaCd" name="lecaCd" value="${task.lecaCd}">
+								<input type="hidden" id="tsubCd" name="tsubCd" value="${task.taskSubmitList[0].tsubCd}">
 							</div>
 <!-- 							taskSubmitList=[TaskSubmit(tsubCd=2, lecaCd=2, taskCd=1, stuNo=21715032, tsubDt=Fri Dec 16 10:07:08 KST 2022, tsubScore=0, atchFileId=3, tsubCon=이게 뭡니까 이게, student=Student(stuNo=21715032, depCd=0, stuYr=0, stuSem=0, stuNm=학생이승연 -->
 							<div class="col-sm-6" style="text-align:right;">
@@ -56,6 +70,23 @@
 												</c:forEach>
 											</div>
 											</c:if>
+											<br>
+											<div class="callout callout-danger">
+												<h5><b>과제 점수</b></h5>
+												<p>1. 점수를 부여하고 기한 내에 점수를 수정할 수 있습니다.</p>
+												<p>2. 마감일 이후에는 점수를 수정할 수 없으므로 기한을 잘 확인하여 주시길 바랍니다.</p>
+												<hr>
+												<div class="col-2" style="display:inline-block;">
+													<input type="number" class="form-control" placeholder="0" max="10" min="0" id="tsubScore" name="tsubScore">
+												</div>
+												<div class="col-2" style="display:inline-block;">
+													<p>/ 10</p>
+												</div>
+												<div class="col-2" style="display:inline-block;">
+													<button type="button" class="btn btn-outline-success" id="jumsu">점수 등록</button>
+												</div>
+											</div>
+											
 												<div class="custom-file modifyDisplay">
 													<input type="file" id="customFile" name="files"  multiple >
 													<label class="custom-file-label" for="customFile">Choose file</label>
@@ -69,8 +100,10 @@
 					<div class="col-sm-7">
 					</div>
 					<div class="taskData col-sm-5" align="right" >
+					<sec:authorize access="hasRole('ROLE_STUDENT')">
 						<button  type="button" class="btn btn-danger" id="DeleteButton">삭제</button>
 						<button  type="button" class="btn btn-info" id="ModifyButton">수정</button>
+					</sec:authorize>
 						<a href="/lectureBoard/taskSubmitList?taskCd=${task.taskCd}&&lecaCd=${task.lecaCd}"  class="btn btn-primary">목록</a>
 					</div>
 				</div>
@@ -104,7 +137,7 @@
 		
 		if(result){
 			//yes
-			location.replace('/lectureBoard/taskDelete?lecaCd='+ ${task.lecaCd} +'&&taskCd=' + ${task.taskCd} );
+			location.replace('/lectureBoard/taskDelete?lecaCd='+ ${task.lecaCd} +'&&taskCd=' + ${task.taskCd});
 		}else{
 			//no
 		}
@@ -115,7 +148,6 @@
 		$(".taskData").attr("style","display:none");
 		editor.setReadOnly(false);
 		
-		
 	});
 	
 	$("#cancle").on("click",function(){
@@ -124,4 +156,35 @@
 		editor.setReadOnly(true);
 		
 	});
+	
+	
+	
+let tsubCd = $("#tsubCd").val();
+	let tsubScore = $("#tsubScore").val();
+		
+	
+</script>
+<script type="text/javascript">
+  
+$("#jumsu").on("click",function(){
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+	let data = {  
+		 tsubScore: tsubScore,
+		 tsubCd: tsubCd
+	  };
+	$.ajax({
+	    url: "/lectureBoard/tsubScoreUpdate", // 클라이언트가 요청을 보낼 서버의 URL 주소
+	    contentType:"application/json",
+	    data: data,               
+	    beforeSend : function(xhr){
+			xhr.setRequestHeader(header, token);
+		},
+	    type: "post",                             // HTTP 요청 방식(GET, POST)
+	    dataType: "json",                         // 서버에서 보내줄 데이터의 타입(받는 타입)
+	    success : function(result){
+		       alert("점수가 등록되었습니다.");
+	                }
+	});
+});
 </script>

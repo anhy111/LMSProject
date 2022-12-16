@@ -115,5 +115,9 @@ public class LectureServiceImpl implements LectureService{
 	public int taskSubmitUpdate(HashMap<String, Object> map) {
 		return this.lectureMapper.taskSubmitUpdate(map);
 	}
-
+	//과제 점수 입력
+	@Override
+	public int scoreUpdate(int tsubScore, int tsubCd) {
+		return this.lectureMapper.scoreUpdate(tsubScore, tsubCd);
+	}
 }

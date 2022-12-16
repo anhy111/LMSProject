@@ -101,7 +101,7 @@ border-radius: 10px;
 									<td>
 										<fmt:formatDate value="${row.taskEdt}" pattern="yyyy-MM-dd HH:mm"/>
 									</td>
-									<td>0/10</td>
+									<td>${list.tsubScore}/10</td>
 									
 								</tr>
 								</c:forEach>

@@ -58,6 +58,8 @@ public interface LectureMapper {
 	
 	//제출 과제 수정
 	public int taskSubmitUpdate(HashMap<String, Object> map);
+	//과제 점수 입력
+	public int scoreUpdate(int tsubScore, int tsubCd);
 	
 	// 학생의 장바구니에 담았지만 수강신청하지 않은 강의
 	public List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);

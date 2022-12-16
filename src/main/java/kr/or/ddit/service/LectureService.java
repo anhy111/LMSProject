@@ -44,6 +44,8 @@ public interface LectureService {
 	public Task submitDetail(String tsubCd);
 	//제출 과제 수정
 	public int taskSubmitUpdate(HashMap<String, Object> map);
+	//과제 점수 입력
+	public int scoreUpdate(int tsubScore, int tsubCd);
 
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);
