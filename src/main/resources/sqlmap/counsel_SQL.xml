@@ -19,7 +19,7 @@ AND P.PRO_NO = E.EMP_NO
 <select id="studentApplyList"  parameterType="int" resultType="Counsel">
 SELECT 
   C.CNSL_CD
-, C.STU_NO AS 
+, C.STU_NO 
 , C.CNSL_CATE 
 , C.CNSL_TTL
 , C.CNSL_CON
@@ -27,6 +27,9 @@ SELECT
 , C.CNSL_DT
 , C.CNSL_RPL
 , C.PRO_NO
+, E.EMP_NM
+, S.STU_NM
+, C.CNSL_TYPE
 FROM COUNSEL C, EMPLOYEE E, PROFESSOR P, STUDENT S, DEPARTMENT D
 WHERE 
 C.STU_NO = #{stu_no}
@@ -41,10 +44,13 @@ INSERT INTO COUNSEL (
   CNSL_CD
 , STU_NO
 , CNSL_CATE
+, PRO_NO
+, CNSL_TYPE
+, CNSL_REG
 , CNSL_TTL
 , CNSL_CON
-, CNSL_REG
-, PRO_NO
+, CNSL_DT
+
 )
 VALUES(
 <if test="cnslCd == null or cnslCd =='' ">
@@ -52,17 +58,24 @@ SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
 </if>
 , #{stuNo}
 , #{cnslCate}
-, #{cnslTtl}
-, #{cnslCon}
-, SYSDATE
 , #{proNo}
+, #{cnslType}
+, SYSDATE
+<if test="cnslTtl != null or cnslTtl !='' ">
+, #{cnslTtl}
+</if>
+<if test="cnslCon != null or cnslCon !='' ">
+, #{cnslCon}
+</if>
+, #{cnslDt,jdbcType=DATE}
 )
 </insert>
 <!-- 교수의 상담 답변 -->
 <update id="applyAnswerUpdate" parameterType="Counsel">
 UPDATE COUNSEL 
-SET 
- CNSL_RPL = #{cnslRpl}
+SET
+  CNSL_DT = SYSDATE 
+, CNSL_RPL = #{cnslRpl}
 , PRO_NO = #{proNo}
 WHERE CNSL_CD = #{cnslCd}
 </update>
@@ -78,6 +91,8 @@ SELECT
 , C.CNSL_DT
 , C.CNSL_RPL
 , C.PRO_NO
+, S.STU_NM
+, C.CNSL_TYPE
 FROM COUNSEL C, EMPLOYEE E, PROFESSOR P, STUDENT S, DEPARTMENT D
 WHERE 
 C.PRO_NO = #{proNo}
@@ -88,10 +103,17 @@ AND D.DEP_CD = P.DEP_CD
 </select>
 <select id="answerDetail" parameterType="Long" resultType="Counsel">
 SELECT 
- CNSL_DT
+ CNSL_CD
 ,CNSL_RPL
 FROM COUNSEL
 WHERE CNSL_CD = #{cnslCd}
+</select>
+<select id="studentNameByCounsels" parameterType="Long" resultType="String">
+SELECT 
+S.STU_NM
+FROM COUNSEL C, STUDENT S
+WHERE C.CNSL_CD = #{cnslCd}
+AND C.STU_NO = S.STU_NO
 </select>
 </mapper>
 

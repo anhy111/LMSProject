@@ -44,4 +44,9 @@ public class CounselServiceImpl implements CounselService {
 	public Counsel answerDetail(Long cnslCd) {
 		return this.counselMapper.answerDetail(cnslCd);
 		}
+	//해당글의 학생명
+	@Override
+	public String studentNameByCounsels(Long cnslCd) {
+		return this.counselMapper.studentNameByCounsels(cnslCd);
+	}
 }

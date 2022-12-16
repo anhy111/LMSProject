@@ -1,5 +1,9 @@
 package kr.or.ddit.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,13 +39,19 @@ public class CounselController {
 		HttpSession session = request.getSession();
 		
 		int stuNo = (int)session.getAttribute("no");
-		List<Counsel> counselList = this.counselService.studentApplyList(stuNo);
-		
-		//공통 약속
-		model.addAttribute("bodyTitle","상담");
-		model.addAttribute("counselList", counselList);
-		
-		
+		List<Counsel> allList = this.counselService.studentApplyList(stuNo);
+		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
+		List<Counsel> counselList = new ArrayList<Counsel>();
+		for (Counsel counsel : allList) {
+			log.info("리스트보자 : " + counsel.toString());
+			if(counsel.getCnslType().equals("비대면")) {
+				nonFaceCounselList.add(counsel);
+				model.addAttribute("nonFaceCounselList", nonFaceCounselList);
+			} else if(counsel.getCnslType().equals("대면")) {
+				counselList.add(counsel);
+				model.addAttribute("counselList", counselList);
+			}
+		}
 		//forwarding
 		return "counsel/studentside/applyList";
 	}
@@ -61,10 +72,16 @@ public class CounselController {
 	}
 	
 	@PostMapping("/studentside/applyInsert")
-	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel, HttpServletRequest request) {
+	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel, HttpServletRequest request) throws ParseException {
 		HttpSession session = request.getSession();
 		int stuNo = (int)session.getAttribute("no");
 		counsel.setStuNo(stuNo);
+		
+		String[] proNoEmpNm = counsel.getEmpNm().split("_");
+		int proNo = Integer.parseInt(proNoEmpNm[0]);
+		String empNm = proNoEmpNm[1];
+		counsel.setProNo(proNo);
+		counsel.setEmpNm(empNm);
 		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
 		this.counselService.applyInsert(counsel);
 		
@@ -77,16 +94,25 @@ public class CounselController {
 	 */
 	@GetMapping("/professorside/counselList")
 	public String professorCounselList(Model model, HttpServletRequest request) {
-		
+		String stuNm = "";
 		HttpSession session = request.getSession();
 		
 		int proNo = (int)session.getAttribute("no");
-		List<Counsel> counselList = this.counselService.professorCounselList(proNo);
-		
-		//공통 약속
-		model.addAttribute("bodyTitle","상담");
-		model.addAttribute("counselList", counselList);
-		
+		List<Counsel> allList = this.counselService.professorCounselList(proNo);
+		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
+		List<Counsel> counselList = new ArrayList<Counsel>();
+		for (Counsel counsel : allList) {
+			stuNm = this.counselService.studentNameByCounsels(counsel.getCnslCd());
+			counsel.setStuNm(stuNm);
+			if(counsel.getCnslType().equals("비대면")) {
+				nonFaceCounselList.add(counsel);
+			   log.info("비대면 리스트 확인" + nonFaceCounselList);
+				model.addAttribute("nonFaceCounselList", nonFaceCounselList);
+			} else if(counsel.getCnslType().equals("대면")) {
+				counselList.add(counsel);
+				model.addAttribute("counselList", counselList);
+			}
+		}
 		//forwarding
 		return "counsel/professorside/counselList";
 	}
@@ -94,26 +120,29 @@ public class CounselController {
 	public String professorCounselAnswer(Long cnslCd, Model model) {
 		log.info("글번호 : " + cnslCd);
 		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
+		log.info("함보자 : ", answerDetail.getCnslRpl());
 		model.addAttribute("answerDetail", answerDetail);
 		return "counsel/professorside/answer";
 	}
+	
+	@GetMapping("/professorside/answerModify")
+	public String professorCounselAnswerModify(Long cnslCd, Model model) {
+		log.info("글번호 : " + cnslCd);
+		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
+		log.info("함보자 : ", answerDetail.getCnslRpl());
+		model.addAttribute("answerDetail", answerDetail);
+		return "counsel/professorside/answerModify";
+		
+	}
+	
 	@PostMapping("/professorside/answer")
-	public String professorCounselAnswerPost(@ModelAttribute Counsel counsel, HttpServletRequest request) {
+	public String professorCounselAnswerPost(@RequestBody Counsel counsel, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		counsel.setProNo(proNo);
 		log.info("답변 세팅 어케됐누?: " + counsel.toString());
 		this.counselService.applyAnswerUpdate(counsel);
-		return "redirect:/counsel/professorside/counselList";
-	}
-	
-	@PostMapping("/professorside/answerModify")
-	public String professorCounselAnswerModifyPost(@ModelAttribute Counsel counsel, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int proNo = (int)session.getAttribute("no");
-		counsel.setProNo(proNo);
-		log.info("답변 수정 세팅 어케됐누?: " + counsel.toString());
-		this.counselService.applyAnswerUpdate(counsel);
-		return "redirect:/counsel/professorside/counselList";
+		
+		return "success";
 	}
 }

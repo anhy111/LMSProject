@@ -2,22 +2,56 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<div class="container">
-<h1>상담신청페이지</h1>
-	<div class="row">
-		<form action="/counsel/studentside/applyInsert" method="post">
+<style>
+div {
+	border: 1px solid orange;
+}
+}
+</style>
+<div class="container" align="center">
+	<form action="/counsel/studentside/applyInsert" method="post">
+		<div class="row">
+			<div class="col-12">
+				<h1>
+					<label>상담 등록</label>
+				</h1>
+				<br> <br>
+			</div>
+			<div class="col-12">
 			<div class="col-sm-6">
-				<label>상담카테고리선택</label> <br>
+				<div class="col-sm-4">
+					<label>대면/비대면</label>
+				</div>
+				<div class="form-group clearfix">
+					<div class="icheck-success d-inline">
+						<input type="radio" checked="checked" id="counselTypeFace"
+							name="cnslType" value="대면"> <label
+							for="counselTypeFace" cursorshover="true">대면 </label>
+					</div>
+					<div class="icheck-success d-inline">
+						<input type="radio" id="counselTypeNonFace" name="cnslType"
+							value="비대면"> <label for="counselTypeNonFace"
+							cursorshover="true">비대면 </label>
+					</div>
+				</div>
+			</div>
+			</div>
+			<br> <br>
+			<div class="col-12">
+			<div class="col-sm-6">
+				<div class="col-sm-4">
+					<label>상담 유형</label>
+				</div>
 				<div class="form-group clearfix">
 					<div class="icheck-primary d-inline">
-						<!---------------- 한개 이상은 체크 되어있어야 하므로 기본 체크 활성화 -------------->
+						<!----------------상담카테고리 -------------->
 						<input type="radio" id="radioPrimary1" name="cnslCate" value="시험"
 							checked="checked"> <label for="radioPrimary1"
 							cursorshover="true">시험 </label>
 					</div>
 					<div class="icheck-primary d-inline">
-						<input type="radio" id="radioPrimary2" name="cnslCate" value="과제"> <label
-							for="radioPrimary2" cursorshover="true">과제 </label>
+						<input type="radio" id="radioPrimary2" name="cnslCate" value="과제">
+						<label for="radioPrimary2" cursorshover="true">과제 </label>
 					</div>
 					<div class="icheck-primary d-inline">
 						<input type="radio" id="radioPrimary3" name="cnslCate" value="출결"
@@ -26,42 +60,78 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
-				<label>담당 교수 선택</label> <br> <select name="proNo">
+			</div>
+			<br> <br>
+			<div class="col-12">
+			<div class="col-sm-4">
+				<label>담당 교수</label>
+			</div>
+			<div class="col-6">
+				<select name="empNm">
 					<c:forEach var="professorList" items="${professorList }">
-						<option value="${professorList.proNo }">${professorList.empNm }</option>
+						<option value="${professorList.proNo }_${professorList.empNm }">${professorList.empNm }</option>
 					</c:forEach>
 				</select>
 			</div>
-			<!----------------------------- 카테고리 --------------------------->
-			<!----------------------------- 글제목 --------------------------->
-			<div class="col-sm-6">
-				<label>글제목</label> <br> <input type="text" name="cnslTtl" />
 			</div>
+		</div>
+		<br><br>
+		<div class="row">
+			<br> <br>
 			<!----------------------------- 글제목 --------------------------->
-			<!----------------------------- 글내용 --------------------------->
-			<div class="col-12">
-				<label>글내용</label> <br>
+			<div class="col-12"id="cnslTitleTextBox">
+			<div class="col-sm-2">
+				<label>제목</label>
+			</div>
+			<div class="col-8">
+				<input type="text" name="cnslTtl" />
+			</div>
+			</div>
+			<div class="col-12"id="cnslReservationDt" style="display:none;">
+			<div class="col-sm-2">
+				<label>상담예약</label>
+			</div>
+			<div class="col-8">
+				<input type="date" name="cnslDt" />
+			</div>
+			</div>
+			<br> <br>
+			<div class="col-12" id="cnslConTextArea">
+				<div>
+					<div class="col-sm-4">
+						<label>상담 할 내용</label>
+					</div>
+				</div>
 				<textarea name="cnslCon" rows="10" cols="100"></textarea>
 			</div>
-			<!----------------------------- 글내용 --------------------------->
-			<button type="submit" class="btn btn-sm btn-primary">등록</button>
-			<a href="#" class="btn btn-sm btn-danger">목록으로</a>
+		</div>
+		<div class="col-12">
+			<div class="col-4">
+				<button type="submit" class="btn btn-sm btn-outline-primary">등록</button>
+				<a href="#" class="btn btn-sm btn-outline-danger">목록으로</a>
+			</div>
+		</div>
 			<sec:csrfInput />
 		</form>
-	</div>
 </div>
 <script type="text/javascript">
-	let checkedCategory = "";
-	$(function() {
-		if (document.getElementsByName("checkboxSuccess1")[i].checked == true) {
-			alert(document.getElementsByName("checkboxSuccess1")[i].value);
+window.onload=function(){
+	$("#cnslConTextArea").css("display", "none");
+	$("#cnslTitleTextBox").css("display", "none");
+	$("#cnslReservationDt").css("display", "block");
+}
+	$("input:radio[name='cnslType']").change(function() {
+		if ($("#counselTypeFace").is(":checked")) {
+			// 				console.log("대면값 : " + $("#counselTypeFace").val())
+			$("#cnslConTextArea").css("display", "none");
+			$("#cnslTitleTextBox").css("display", "none");
+			$("#cnslReservationDt").css("display", "block");
+		} else if ($("#counselTypeNonFace").is(":checked")) {
+			alert($("input:radio[name='cnslType']:checked").val());
+			$("#cnslConTextArea").css("display", "block");
+			$("#cnslTitleTextBox").css("display", "block	");
+			$("#cnslReservationDt").css("display", "none");
+			// 				console.log("비대면값 : " + $("#counselTypeNonFace").val())
 		}
-		if (document.getElementsByName("checkboxSuccess2")[i].checked == true) {
-			alert(document.getElementsByName("checkboxSuccess2")[i].value);
-		}
-		if (document.getElementsByName("checkboxSuccess3")[i].checked == true) {
-			alert(document.getElementsByName("checkboxSuccess3")[i].value);
-		}
-	})
+	});
 </script>

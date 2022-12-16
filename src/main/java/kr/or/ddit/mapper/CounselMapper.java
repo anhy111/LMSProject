@@ -18,6 +18,7 @@ public interface CounselMapper {
 	public int applyAnswerUpdate(Counsel counsel);
 	//교수의 답변상세
 	public Counsel answerDetail(Long cnslCd);
-	
+	//해당글의 학생명
+	public String studentNameByCounsels(Long cnslCd);
 	
 }

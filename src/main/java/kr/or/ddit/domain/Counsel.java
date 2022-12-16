@@ -2,6 +2,8 @@ package kr.or.ddit.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -12,10 +14,12 @@ public class Counsel {
 	private String cnslTtl; //제목
 	private String cnslCon; //내용
 	private Date cnslReg; //신청일
-	private Date cnslDt; //상담일
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date cnslDt; //상담답변일/대면상담신청일
 	private String cnslRpl; //답변
 	private int proNo; //담당교수
+	// + 
 	private String empNm; //담당교수명
-	
-	private String answerState;// 대면/비대면
+	private String cnslType;// 대면/비대면 선택 카테고리
+	private String stuNm; //학생명
 }

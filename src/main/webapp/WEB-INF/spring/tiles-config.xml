@@ -95,6 +95,10 @@
 	<definition name="counsel/professorside/answer" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/counsel/professorside/answer.jsp" />
 	</definition>
+	
+	<definition name="counsel/professorside/answerModify" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/professorside/answerModify.jsp" />
+	</definition>
 
 </tiles-definitions>
 

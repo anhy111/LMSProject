@@ -2,49 +2,51 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<div class="container"align="center">
+<script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
+<div class="container" align="center">
 	<div class="row">
-		<h1>답변</h1>
-		<!-- ----답변 수정 -->
 		<div class="col-12" id="answerTable">
-			<label>답변하기</label> <br>
-			<form action="/counsel/professorside/answer" method="post"
-				onsubmit="closeAnswerTable();">
-				<!-- hidden으로 바꿔줄 예정 -->
-				<label>글번호</label>
-				<input type="text" name="cnslCd" id="cnslCdInput">
+			<label>답변</label> <br>
+				<label>글번호</label> <input type="text"  id="cnslCd"  value="${answerDetail.cnslCd }"  readonly>
 				<br>
 				<div class="col-6">
-				<label>답변내용</label>
-					<textarea rows="5" cols="50" name="cnslRpl" placeholder="답변을작성해주세요"></textarea>
+					<label>답변내용</label> <br>
+					<textarea rows="5" cols="50"  id="cnslRpl" placeholder="답변을작성해주세요"></textarea>
 				</div>
-				<button type="submit" class="btn btn-sm btn-info">답변등록</button>
-				<sec:csrfInput />
-			</form>
-		</div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<div class="col-12" id="answerModifyTable">
-			<label>답변수정</label> <br>
-			<form action="/counsel/professorside/answerModify" method="post"
-				onsubmit="closeAnswerTable();">
-				<!-- hidden으로 바꿔줄 예정 -->
-				<label>글번호</label>
-				<input type="text" name="cnslCd" id="cnslCdInputModify"value="${answerDetail.cnslCd}">
-				<div class="col-6">
-				<label>답변내용</label>
-					<textarea id="cnslRplModify" rows="5" cols="50" name="cnslRpl"
-						placeholder="답변을작성해주세요">${answerDetail.cnslRpl }</textarea>
-				</div>
-				<button type="submit" class="btn btn-sm btn-info">수정</button>
-				<sec:csrfInput />
-			</form>
+				<button id="submitButton" onclick="insertRpl()"type="button" class="btn btn-sm btn-info">답변등록</button>
 		</div>
 	</div>
 </div>
-<!-- ----답변 수정 -->
+<script type="text/javascript">
+let cnslRpl = "";
+let cnslCd = "";
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+let data = {
+		cnslRpl : "",
+		cnslCd : ""
+};
+$(function(){
+	data.cnslRpl = $("#cnslRpl").val();
+	data.cnslCd = $("#cnslCd").val();
+});
+function insertRpl(){
+	alert("ㅎㅇ");
+	alert(JSON.stringify(data));
+	$.ajax({
+		url:"/counsel/professorside/answer",
+		type:'POST',
+		data: JSON.stringify(data),
+		datatype:'JSON',
+		contentType:'application/json;charset=utf-8',
+		beforeSend: function (xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success:function(result){
+			console.log(result);
+			opener.parent.location.reload();
+			window.close();
+		}
+	});
+}
+</script>
