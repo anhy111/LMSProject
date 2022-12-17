@@ -156,7 +156,7 @@
 									<p>장학 내역 조회</p>
 							</a></li>
 						</ul></li>
-					<li class="nav-item"><a href="/counsel/studentside/applyList" class="nav-link"> <i
+					<li class="nav-item"><a href="/counsel/studentside/applyList?stuNo=<%= no %>" class="nav-link"> <i
 							class="nav-icon far fa-envelope"></i>
 							<p>상담</p>
 					</a></li>
