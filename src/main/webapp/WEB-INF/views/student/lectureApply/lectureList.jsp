@@ -167,13 +167,6 @@
 											목록입니다.<br> ※ 강의가 신청되면 목록에서 사라집니다.
 										</label>
 									</div>
-									<div class="form-group col-2 offset-6">
-										<button type="button" id="timeTableSave"
-											class="btn btn-flat btn-primary" data-toggle="modal"
-											data-target="#saveSchedule">
-											장바구니 <br>시간표 보기
-										</button>
-									</div>
 								</div>
 								<div class="row pl-3"></div>
 								<div class="row pl-3 pb-3">
