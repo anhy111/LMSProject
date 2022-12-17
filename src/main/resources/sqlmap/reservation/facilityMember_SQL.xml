@@ -41,6 +41,7 @@
     <select id="listSch" resultType="FacilityScheduleVO">
         SELECT *
         FROM RESERVATION
+        WHERE FAC_CD = #{facCd}
     </select>
     <!-- 풀캘린더 끝======================================================================= -->
 

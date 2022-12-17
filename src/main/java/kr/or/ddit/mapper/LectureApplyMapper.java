@@ -31,9 +31,6 @@ public interface LectureApplyMapper {
 	// 강의계획서 상세페이지 주차별계획
 	public List<Weekplan> inquiryWeekPlan(int lecaCd);
 
-	// 강의계획서 과목 테이블
-	public int subjectSubmit(LecApply proNo);
-	
 	// 강의계획서 강의 테이블
 	public int lectureSubmit(LecApply subCd);
 
@@ -41,12 +38,15 @@ public interface LectureApplyMapper {
 	public int lecApplySubmit(LecApply lecaCd);
 	
 	// 강의계획서 주차계획 테이블
-	public int weekPlanSubmit(Map<String, Object> map);
+	public int weekPlanSubmit(List<String> weekPlanList);
 	
-	// 최대 lecaCd 알아내기
-	public int getMaxLecaCd();
+	// 임시저장 리스트
+	public List<LecApply> tempList(int proNo);
 	
-	// 과목리스트 가져오기
-	public List<Subject> subList();
+	// 과목명 리스트 가져오기
+	public List<Subject> subList(int proNo);
+
+	// 과목번호 리스트 가져오기
+	public int getSubCdList(String subNm);
 	
 }

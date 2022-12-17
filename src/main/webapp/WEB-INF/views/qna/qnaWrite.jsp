@@ -35,20 +35,38 @@
         margin-bottom: 10px;
     }
 </style>
+
 <script type="text/javascript" defer="defer">
+
+
+    if ($("#accessType").is(":checked") == true) {
+        console.log('비공개');
+        isShow = 0;
+    }
+
+    if ($("#accessType").is(":checked") == false) {
+        console.log('공개');
+        isShow = 1;
+    }
+
     $(function () {
+
+        let header = "${_csrf.headerName}";
+        let token = "${_csrf.token}";
+
+
 
         $("#insertBtn").on('click', function () {
 
-            if ($("#access").is(":checked") == true) {
-                console.log('비공개');
-                isShow = 0;
-            }
-
-            if ($("#access").is(":checked") == false) {
-                console.log('공개');
-                isShow = 1;
-            }
+            // if ($("#accessType").is(":checked") == true) {
+            //     console.log('비공개');
+            //     isShow = 0;
+            // }
+            //
+            // if ($("#accessType").is(":checked") == false) {
+            //     console.log('공개');
+            //     isShow = 1;
+            // }
 
             if ($("#title").val().trim() == '') {
                 alert("제목을 입력하세요");
@@ -70,7 +88,10 @@
                 data: {
                     title: title,
                     content: content,
-                    isShow: isShow
+                    accessType: isShow
+                },
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
                 },
                 type: "post",
                 success: function (res) {
@@ -113,7 +134,13 @@
                     <input type="text" class="inputText" name="title" id="title"/>
                 </div>
                 <div class="textArea"><textarea name="content" id="content"></textarea></div>
-<%--                <div id="showRound"><label>비공개 여부</label><input type="checkbox" name="accessNumber" id="accessNumber"/></div>--%>
+
+
+                    <input id="N101" name="accessType" type="radio" value="1" checked />
+                    <label for="N101">공개</label>&emsp;
+                    <input id="N102" name="accessType" type="radio" value="2" />
+                    <label for="N102">비공개</label>&emsp;
+
                 <div id="btnRound">
                     <input type="submit" id="insertBtn" class="btn btn-primary" value="등록">
                     <input type="button" id="cancelBtn" class="btn btn-primary" value="취소">
@@ -124,4 +151,3 @@
         </div>
     </div>
 </div>
-

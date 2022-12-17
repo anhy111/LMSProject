@@ -18,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.CommonDetail;
+import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.CommonDetailService;
@@ -158,7 +161,54 @@ public class ManageController {
 	
 	//교수관리 시작헌다...
 	
+	@GetMapping("/manage/insertEmp")
+	public String insertEmp(Model model) {
+		
+		List<CommonDetail> bank = this.commonDetailService.commonDetailList("BANK");
+		List<CommonDetail> division =this.commonDetailService.commonDetailList("DIVISION");
+		List<CommonDetail> ePosition =this.commonDetailService.commonDetailList("E_POSITION");
+		List<CommonDetail> pPosition =this.commonDetailService.commonDetailList("P_POSITION");
+		List<College> collegeList = this.collegeService.CollegeList();
+		Member createEmpId = this.manageService.createEmpId();
+		
+		log.info("memId 만들어졌나 ?!" + createEmpId.getMemNo());
+		
+		model.addAttribute("bank", bank);
+		model.addAttribute("division", division);
+		model.addAttribute("ePosition", ePosition);
+		model.addAttribute("pPosition", pPosition);
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("empId", createEmpId);
+		
+		
+		return"manage/insertEmp";
+	}
 	
+	@PostMapping("/manage/insertEmpPost")
+	public String insertEmpPost(MultipartFile file, HttpServletRequest req, @ModelAttribute Employee employee) {
+		
+		log.info("employee 들어오낫 ? " + employee.toString());
+		log.info("이게 아닌가효 ? "+ employee.getEmpPos());
+		log.info("multipartFiles 넘어와라" + file);
+		
+		this.manageService.createMember(employee);
+		this.fileUploadUtil.empFileUpload(file, req, employee);
+		
+		if(employee.getEmpPos().equals("E_POS007") || employee.getEmpPos().equals("E_POS008")) {
+			log.info("실행되는고냐");
+			this.manageService.createProfessor(employee);
+		}
+		
+		return "redirect:/manage/insertEmp";
+	}
+	
+	@GetMapping("/manage/empManage")
+	public String empManage() {
+		
+		
+		
+		return "manage/empManage";
+	}
 	
 	
 

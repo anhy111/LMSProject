@@ -7,7 +7,16 @@ import kr.or.ddit.domain.Department;
 
 public interface DepartmentService {
 
-	//결제 요청 목록
+	//학과 목록
     List<Department> departmentList();
 
+	List<Department> departmentListByCollege(Department department);
+
+	int register(Department department);
+
+	Department departmentDetail(Department department);
+
+	int delete(Department department);
+
+	int update(Department department);
 }

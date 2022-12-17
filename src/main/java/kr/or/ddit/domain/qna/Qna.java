@@ -13,14 +13,18 @@ public class Qna {
     private String qnaTtl;
     private String qnaCon;
     private Date qnaDt;
-    private int qnaYn;
+    private String qnaYn;
+
+    private QnaReplyVO qnaReplyVO;
+
 
     public Qna() {
     }
 
-    public Qna(String qnaTtl, String qnaCon) {
+    public Qna(String qnaTtl, String qnaCon, String qnaYn) {
         this.qnaTtl = qnaTtl;
         this.qnaCon = qnaCon;
+        this.qnaYn = qnaYn;
     }
 
     @Override
@@ -32,6 +36,7 @@ public class Qna {
                 ", qnaCon='" + qnaCon + '\'' +
                 ", qnaDt=" + qnaDt +
                 ", qnaYn=" + qnaYn +
+                ", qnaReplyVO=" + qnaReplyVO +
                 '}';
     }
 }
