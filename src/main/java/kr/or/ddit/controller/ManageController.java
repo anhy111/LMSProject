@@ -202,6 +202,14 @@ public class ManageController {
 		return "redirect:/manage/insertEmp";
 	}
 	
+	@GetMapping("/manage/empManage")
+	public String empManage() {
+		
+		
+		
+		return "manage/empManage";
+	}
+	
 	
 
 }
