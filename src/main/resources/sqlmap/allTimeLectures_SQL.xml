@@ -34,8 +34,7 @@
 		<result property="lecaCrd" column="LECA_CRD" />
 		<result property="lecaPer" column="LECA_PER" />
 		<result property="lecaCap" column="LECA_CAP" />
-		<result property="lecaTm"  column="LECA_TM" />
-		<result property="lecaWk"  column="LECA_WK" />
+		<result property="lecaTt"  column="LECA_TT" />
 		<result property="lecaHall" column="LECA_HALL" />
 		<result property="lecaUnit" column="LECA_UNIT" />
 		<result property="lecaBook" column="LECA_BOOK" />
