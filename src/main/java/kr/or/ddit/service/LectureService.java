@@ -55,5 +55,4 @@ public interface LectureService {
 
 	// 수강편람 강의 조회
 	public List<Lecture> searchList(StudentLecture studentLecture);
-	List<Lecture> loadNotApplySaveLecture(StudentLecture studentLecture);
 }
