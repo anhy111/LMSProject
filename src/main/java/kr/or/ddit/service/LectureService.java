@@ -41,11 +41,13 @@ public interface LectureService {
 	public int insertTaskSubmit2(TaskSubmit taskSubmit);
 	
 	//제출 과제 디테일
-	public Task submitDetail(String tsubCd);
+	public Task submitDetail(HashMap<String, Object> map);
 	//제출 과제 수정
 	public int taskSubmitUpdate(HashMap<String, Object> map);
+	//제출 과제 삭제
+	public int submitDelete(int tsubCd);
 	//과제 점수 입력
-	public int scoreUpdate(int tsubScore, int tsubCd);
+	public int scoreUpdate(TaskSubmit tasksubmit);
 
 	public List<Lecture> studentNotYetSaveLectureList(StudentLecture studentLecture);
 	public List<Lecture> studentCompleteSaveLectureList(StudentLecture studentLecture);

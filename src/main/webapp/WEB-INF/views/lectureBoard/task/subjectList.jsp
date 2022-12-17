@@ -49,7 +49,7 @@ border-radius: 10px;
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<div class="row">
 						<div class="col-sm-11"></div>
-						<a href="/lectureBoard/registTask?lecaCd=${param.lecaCd}" class="col-sm-1 btn btn-block btn-outline-secondary btn-sm" style="float:right">등록</a>
+						<a href="/lectureBoard/task/registTask?lecaCd=${param.lecaCd}" class="col-sm-1 btn btn-block btn-outline-secondary btn-sm" style="float:right">등록</a>
 					</div>
 				</sec:authorize>
 					<table id="example2"
@@ -81,7 +81,7 @@ border-radius: 10px;
 							<c:forEach var="row" items="${taskList}" varStatus="stat">
 								<tr class="odd">
 									<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
-									<td><a href="/lectureBoard/taskDetail?lecaCd=${param.lecaCd}&&taskCd=${row.taskCd}">${row.taskNm}</a></td>
+									<td><a href="/lectureBoard/task/taskDetail?lecaCd=${param.lecaCd}&&taskCd=${row.taskCd}">${row.taskNm}</a></td>
 									<td>
 										<fmt:formatDate value="${row.taskSdt}" pattern="yyyy-MM-dd"/> 
 									</td>
@@ -89,7 +89,7 @@ border-radius: 10px;
 										<fmt:formatDate value="${row.taskEdt}" pattern="yyyy-MM-dd HH:mm"/>
 									</td>
 										 
-									<td><a href="/lectureBoard/taskSubmitList?taskCd=${row.taskCd}&&lecaCd=${row.lecaCd}" class="btn btn-block btn-outline-secondary btn-sm">보기</a></td>
+									<td><a href="/lectureBoard/task/taskSubmitList?taskCd=${row.taskCd}&&lecaCd=${row.lecaCd}" class="btn btn-block btn-outline-secondary btn-sm">보기</a></td>
 									
 								</tr>
 							</c:forEach>

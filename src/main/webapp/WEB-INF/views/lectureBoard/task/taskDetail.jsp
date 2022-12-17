@@ -10,7 +10,7 @@
 	display: none;
 }
 </style>
-<form action="/lectureBoard/taskUpdate" method="post" enctype="multipart/form-data">
+<form action="/lectureBoard/task/taskUpdate" method="post" enctype="multipart/form-data">
 <div class="row">
 	<div class="col-sm-1" ></div>
 	<div class="col-sm-10" >
@@ -79,7 +79,7 @@
 							<button  type="button" class="btn btn-danger" id="DeleteButton">삭제</button>
 							<button  type="button" class="btn btn-info" id="ModifyButton">수정</button>
 						</sec:authorize>
-						<a href="/lectureBoard/subjectList?lecaCd=${task.lecaCd}"  class="btn btn-primary">목록</a>
+						<a href="/lectureBoard/task/subjectList?lecaCd=${task.lecaCd}"  class="btn btn-primary">목록</a>
 					</div>
 				</div>
 				<div class="row">
@@ -112,7 +112,7 @@
 		
 		if(result){
 			//yes
-			location.replace('/lectureBoard/taskDelete?lecaCd='+ ${task.lecaCd} +'&&taskCd=' + ${task.taskCd} );
+			location.replace('/lectureBoard/task/taskDelete?lecaCd='+ ${task.lecaCd} +'&&taskCd=' + ${task.taskCd} );
 		}else{
 			//no
 		}
