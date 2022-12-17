@@ -7,24 +7,26 @@
 <script type="text/javascript">
 function fn_add(data){
 	
-	$("#stuImg").attr("src", "/upload"+data.stuPic);
-	$("#stuNo").attr("value", data.stuNo);
-	$("#stuNm").attr("value", data.stuNm);
-	$("#stuNme").attr("value", data.stuNme);
-	$('#colCd').val(data.colCd).prop("selected",true).trigger('change');
-	$('#department').val(data.depCd).prop("selected",true);
-	$('#stuYr').val(data.stuYr).prop("selected",true);
-	$('#stuSem').val(data.stuSem).prop("selected",true);
-	$("#stuBir").attr("value", data.stuBir);
-	$("#stuTel").attr("value", data.stuTel);
+	$("#empImg").attr("src", "/upload"+data.empPic);
+	$("#empNo").attr("value", data.empNo);
+	$("#empNm").attr("value", data.empNm);
+	$("#empNme").attr("value", data.empNme);
+	$("#empBir").attr("value", data.empBir);
+	$("#empTel").attr("value", data.empTel);
+	$("#empTel2").attr("value", data.empTel2);
+	$("#empJoin").attr("value", data.empJoin);
 	//id로 select 선택하고 value가 'test2'인 option 선택
-	$('#stuBankCd').val(data.stuBankCd).prop("selected",true);
-	$("#stuTel").attr("value", data.stuTel);
-	$("#stuDepo").attr("value", data.stuDepo);
-	$("#stuAct").attr("value", data.stuAct);
-	$("#stuZip").attr("value", data.stuZip);
-	$("#stuAddr1").attr("value", data.stuAddr1);
-	$("#stuAddr2").attr("value", data.stuAddr2);
+	$('#empDiv').val(data.empDiv).prop("selected",true);
+	$('#empPos').val(data.empPos).prop("selected",true);
+	$('#proPos').val(data.proPos).prop("selected",true);
+	$('#colCd').val(data.colCd).prop("selected",true).trigger('change');
+	$('#depCd').val(data.depCd).prop("selected",true);
+	$('#empBankCd').val(data.empBankCd).prop("selected",true);
+	$("#empDepo").attr("value", data.empDepo);
+	$("#empAct").attr("value", data.empAct);
+	$("#empZip").attr("value", data.empZip);
+	$("#empAddr1").attr("value", data.empAddr1);
+	$("#empAddr2").attr("value", data.empAddr2);
 // 	$("#pic").html(data.stuPic)
 	
 }
@@ -39,23 +41,22 @@ $(function(){
 	let token = "${_csrf.token}";
 	
 	$(".btnDetail").on("click", function(){
-// 		alert("오나요?");
 		
-		let detailStu = $(this).val();
-		let data = {"detailStu":detailStu}
-		console.log("상세정보 가져왓 " + detailStu + " data 가져왓 " + JSON.stringify(data));
+		let empNo = $(this).val();
+		let data = {"empNo":empNo}
+		console.log("상세정보 가져왓 " + empNo + " data 가져왓 " + JSON.stringify(data));
 		
 		
 		$.ajax({
 			type: 'post',
-			url: '/manage/detailStu',
+			url: '/manage/detailEmp',
 			contentType:"application/json;charset=utf-8",
 			data:JSON.stringify(data),
 			beforeSend:function(xhr){
 				xhr.setRequestHeader(header, token);
 			},
 			success :function(data){
-				console.log("성공이라해주라 ", data.stuPic);
+				console.log("성공이라해주라 ", data.empNo + "  depCd는 ? ", data.depCd);
 				
 				$("#stuBtn1").css("display", "block");
 				
@@ -148,9 +149,9 @@ $(function(){
 		alert("하이루");
 		new daum.Postcode({
 			oncomplete:function(data){
-				$("input[name='stuZip']").val(data.zonecode); // 우편번호 5자리
-				$("input[name='stuAddr1']").val(data.address); // 주소
-				$("input[name='stuAddr2']").val(data.buildingName); // 상세 주소
+				$("input[name='empZip']").val(data.zonecode); // 우편번호 5자리
+				$("input[name='empAddr1']").val(data.address); // 주소
+				$("input[name='empAddr2']").val(data.buildingName); // 상세 주소
 			}
 		}).open();
 	});
@@ -264,7 +265,7 @@ $(function(){
 						str += `<option value='\${p_val.depCd}'>\${p_val.depNm}</option>`;
 					});
 				}
-				$("#department").html(str);
+				$("#depCd").html(str);
 			}
 		});
 		
@@ -276,10 +277,10 @@ $(function(){
 
 </script>
 <div class="row" style="margin-right:0px;">
-	<div class="col-sm-7">
+	<div class="col-sm-6">
 		<div class="card col-sm-11 offset-1">
 			<div class="card-header">
-				<h3 class="card-title">학생 목록 조회</h3>
+				<h3 class="card-title">교직원 목록 조회</h3>
 			</div>
 		
 			<div class="card-body">
@@ -298,97 +299,82 @@ $(function(){
 										aria-label="Rendering engine: activate to sort column descending">번호</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										rowspan="1" colspan="1"
-										aria-label="Browser: activate to sort column ascending">학번</th>
+										aria-label="Browser: activate to sort column ascending">교번</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										rowspan="1" colspan="1"
 										aria-label="Platform(s): activate to sort column ascending">이름</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending">단과대학</th>
+										aria-label="Engine version: activate to sort column ascending">부서</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending">학과</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending">담당교수</th>
+										aria-label="Engine version: activate to sort column ascending">직책</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										rowspan="1" colspan="1"
 										aria-label="CSS grade: activate to sort column ascending">상세</th>
 								</tr>
 							</thead>
 							<tbody>
-<%-- 								<c:forEach var="list" items="${list}" varStatus="stat"> --%>
-<%-- 									<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">${stat.count}</td> --%>
-<%-- 									<td class="detailStu">${list.stuNo}</td> --%>
-<!-- 									<td> -->
-<!-- 										<div class="image"> -->
-<%-- 											<img src="/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;"> --%>
-<%-- 											${list.stuNm} --%>
-<!-- 										</div>  -->
-<!-- 									</td> -->
-<%-- 									<td>${list.colNm}</td> --%>
-<%-- 									<td>${list.depNm}</td> --%>
-<%-- 									<td>${list.empNm}</td> --%>
-<%-- 									<td><button class="btn btn-block btn-outline-info btn-sm btnDetail" value="${list.stuNo}">상세</button></td> --%>
-<!-- 									</tr> -->
-<%-- 								</c:forEach> --%>
+								<c:forEach var="employeeList" items="${employeeList}" varStatus="stat">
+									<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">${stat.count}</td>
+									<td class="detailStu">${employeeList.empNo}</td>
+									<td>
+										<div class="image">
+<%-- 											<img src="/upload${employeeList.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;"> --%>
+											${employeeList.empNm}
+										</div> 
+									</td>
+									<td>${employeeList.empDiv}</td>
+									<td>${employeeList.empPos}</td>
+									<td><button class="btn btn-block btn-outline-info btn-sm btnDetail" value="${employeeList.empNo}">상세</button></td>
+									</tr>
+								</c:forEach>
 							</tbody>
-							<tfoot>
-								<tr>
-									<th rowspan="1" colspan="1">번호</th>
-									<th rowspan="1" colspan="1">학번</th>
-									<th rowspan="1" colspan="1">이름</th>
-									<th rowspan="1" colspan="1">단과대학</th>
-									<th rowspan="1" colspan="1">학과</th>
-									<th rowspan="1" colspan="1">담당교수</th>
-									<th rowspan="1" colspan="1">상세</th>
-								</tr>
-							</tfoot>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-5">
-		<div class="col-md-11">
+	<div class="col-sm-6">
+		<div class="col-sm-11">
 			<div class="card card-outline card-primary">
 				<div class="card-header">
-					<h3 class="card-title">학생 상세 정보</h3>
+					<h3 class="card-title">교직원 상세</h3>
 				</div>
 				<div class="card-body">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-md-4">
-								<img class="img-thumbnail" width="200px;" height="300px;" id="stuImg">
+							<div class="col-md-3 offset-1">
+								<img class="img-thumbnail" width="180px;" height="260px;" id="empImg">
 							</div>
 							<div class="col-md-8">
 								<div class="container">
 									<div class="row mt-1 mb-2">
 										<div class="col-5 offset-1">
-											<label for="stuNo" class="form-label">학번</label> 
-											<input type="text" class="form-control" id="stuNo" name="stuNo" readonly />
+											<label for="empNo" class="form-label">교번</label> 
+											<input type="text" class="form-control" id="empNo" name="empNo" readonly/>
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5 offset-1">
-											<label for="stuNm" class="form-label">이름</label> 
-											<input type="text" class="form-control stu" id="stuNm" name="stuNm" readonly />
+											<label for="empNm" class="form-label">이름</label> 
+											<input type="text" class="form-control stu" id="empNm" name="empNm" readonly  />
 										</div>
 										<div class="col-5 offset-1">
-											<label for="stuNme" class="form-label">영문 이름</label>
-											 <input type="text" class="form-control stu" id="stuNme" name="stuNme" readonly />
+											<label for="empNme" class="form-label">영문 이름</label>
+											 <input type="text" class="form-control stu" id="empNme" name="empNme" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5 offset-1">
-											<label for="stuPic" class="form-label">사진 변경</label> 
+											<label for="empPic" class="form-label">사진 등록</label> 
 										</div>
 									</div>
 									<div class="row">
 										<div class="custom-file col-9 offset-1">
-											<input type="file" class="custom-file-input stu" id="stuPic" name="stuPic" disabled>
-											<label class="custom-file-label" for="stuPic">Choose file</label>
+											<input type="file" class="custom-file-input stu" id="empPic" name="file" readonly >
+											<label class="custom-file-label" for="empPic">Choose file</label>
 										</div>
 									</div>
 								</div>
@@ -396,78 +382,88 @@ $(function(){
 						</div>
 					</div>
 					<div class="row mt-3 mb-2">
-						<div class="col-4 offset-1">
-							<label>학년</label> 
-							<select class="form-control stu" id="stuYr" name="stuYr" disabled>
-								<option value="1">1학년</option>
-								<option value="2">2학년</option>
-								<option value="3">3학년</option>
-								<option value="4">4학년</option>
-								<option value="5">5학년</option>
-								<option value="6">6학년</option>
+						<div class="col-3 offset-1">
+							<label for="empBir" class="form-label">생년월일</label> <input
+								type="text" class="form-control stu" id="empBir" name="empBir" readonly />
+						</div>
+						<div class="col-3 offset-1">
+							<label for="empTel" class="form-label">연락처</label> <input
+								type="text" class="form-control stu" id="empTel" name="empTel" readonly />
+						</div>
+						<div class="col-3 offset-1">
+							<label for="empTel2" class="form-label">비상 연락처</label> <input
+								type="text" class="form-control stu" id="empTel2" name="empTel2" readonly />
+						</div>
+					</div>
+					<div class="row mt-3 mb-2">
+						<div class="col-3 offset-1">
+							<label for="empJoin" class="form-label">입사일</label> <input
+								type="date" class="form-control stu" id="empJoin" name="empJoin" readonly />
+						</div>
+						<div class="col-3 offset-1">
+							<label>부서</label> 
+							<select class="form-control stu" id="empDiv" name="empDiv" disabled>
+								<c:forEach var="division" items="#{division}">
+									<option value="${division.comdCd}">${division.comdNm}</option>
+								</c:forEach>
 							</select>
 						</div>
-						<div class="col-4 offset-1">
-							<label>학기</label> 
-							<select class="form-control stu" id="stuSem" name="stuSem" disabled>
-								<option value="1">1학기</option>
-								<option value="2">2학기</option>
+						<div class="col-3 offset-1">
+							<label>직책</label> 
+							<select class="form-control stu" id="empPos" name="empPos" disabled>
+								<c:forEach var="ePosition" items="#{ePosition}">
+									<option value="${ePosition.comdCd}">${ePosition.comdNm}</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
 					<div class="row mt-3 mb-2">
-						<div class="form-group col-4 offset-1">
-							<label for="colCd" class="form-label">단과대학</label> 
-							<select id="colCd" class="form-control stu"  disabled>
-								<option value="0">단과대학</option>
-<%-- 								<c:forEach var="college" items="${collegeList}"> --%>
-<%-- 									<option value="${college.colCd}">${college.colNm}</option> --%>
-<%-- 								</c:forEach> --%>
+						<div class="col-3 offset-1">
+							<label>보직</label> 
+							<select class="form-control stu" id="proPos" name="proPos" disabled>
+								<c:forEach var="pPosition" items="#{pPosition}">
+									<option value="${pPosition.comdCd}">${pPosition.comdNm}</option>
+								</c:forEach>
 							</select>
 						</div>
-						<div class="col-4 offset-1">
-							<label for="department" class="form-label">학과</label> 
-							<select id="department" class="form-control stu" disabled>
+						<div class="col-3 offset-1">
+							<label for="colCd" class="form-label">단과대학</label> 
+							<select class="form-control stu" id="colCd" name="colCd" disabled>
+								<c:forEach var="college" items="#{collegeList}">
+									<option value="${college.colCd}">${college.colNm}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="col-3 offset-1">
+							<label for="depCd" class="form-label">학과</label> 
+							<select id="depCd" name="depCd" class="form-control stu" disabled>
 								<option value="">학과</option>
 							</select>
-
 						</div>
 					</div>
 					<div class="row mt-3 mb-2">
-						<div class="col-4 offset-1">
-							<label for="stuBir" class="form-label">생년월일</label> <input
-								type="text" class="form-control stu" id="stuBir" name="stuBir" readonly />
-						</div>
-						<div class="col-4 offset-1">
-							<label for="stuTel" class="form-label">전화번호</label> <input
-								type="text" class="form-control stu" id="stuTel" name="stuTel" readonly />
-						</div>
-					</div>
-					<div class="row mt-4 mb-2">
-						<div class="col-4">
-							<div class="form-group">
-								<label>은행</label> <select class="form-control stu" id="stuBankCd" name="stuBankCd" disabled >
-<%-- 									<c:forEach var="detail" items="#{commonDetailList}"> --%>
-<%-- 										<option value="${detail.comdCd}">${detail.comdNm}</option> --%>
-<%-- 									</c:forEach> --%>
-								</select>
-							</div>
-						</div>
-
 						<div class="col-3 offset-1">
-							<label for="stuDepo" class="form-label">예금주</label> <input
-								type="text" class="form-control stu" id="stuDepo" name="stuDepo" readonly />
+							<label>은행</label> 
+							<select class="form-control stu" id="empBankCd" name="empBankCd" disabled>
+								<c:forEach var="bank" items="#{bank}">
+									<option value="${bank.comdCd}">${bank.comdNm}</option>
+								</c:forEach>
+							</select>
 						</div>
 						<div class="col-3 offset-1">
-							<label for="stuAct" class="form-label">계좌번호</label> <input
-								type="text" class="form-control stu" id="stuAct" name="stuAct" readonly />
+							<label for="empDepo" class="form-label">예금주</label> <input
+								type="text" class="form-control stu" id="empDepo" name="empDepo" readonly/>
+						</div>
+						<div class="col-3 offset-1">
+							<label for="empAct" class="form-label">계좌번호</label> <input
+								type="text" class="form-control stu" id="empAct" name="empAct" readonly />
 						</div>
 					</div>
-					<div class="row mt-4 mb-2">
-						<div class="col-3">
-							<label for="stuZip" class="form-label">우편번호</label>
+					<div class="row mt-3">
+						<div class="col-4 offset-1">
+							<label for="empZip" class="form-label">우편번호</label>
 							<div class="input-group">
-								<input type="text" class="form-control stu" id="stuZip" name="stuZip" readonly />
+								<input type="text" class="form-control stu" id="empZip" name="empZip" readonly />
 								<div class="input-group-append">
 									<button type="button" class="btn btn-default" id="btnZipCode">
 										<i class="fa fa-search"></i>
@@ -475,21 +471,19 @@ $(function(){
 								</div>
 							</div>
 						</div>
-
 					</div>
-					<div class="row mb-2">
-						<div class="col-6" style="">
-							<label for="stuAddr1" class="form-label">기본주소</label> <input
-								type="text" class="form-control stu" id="stuAddr1" name="stuAddr1" readonly />
+					<div class="row mt-2 mb-5">
+						<div class="col-4 offset-1" >
+							<label for="empAddr1" class="form-label">기본주소</label> <input
+								type="text" class="form-control stu" id="empAddr1" name="empAddr1" readonly />
 						</div>
-						<div class="col-6">
-							<label for="stuAddr2" class="form-label">상세주소</label> <input
-								type="text" class="form-control stu" id="stuAddr2" name="stuAddr2" readonly />
+						<div class="col-5 offset-1">
+							<label for="empAddr2" class="form-label">상세주소</label> <input
+								type="text" class="form-control stu" id="empAddr2" name="empAddr2" readonly />
 						</div>
 					</div>
-
-					<div id="stuBtn1" align="right" style="display:none" >
-						<button type="button" class="btn btn-outline-warning" id="edit" >수정</button>
+					<div id="stuBtn1" align="right" style="display: none">
+						<button type="button" class="btn btn-outline-warning" id="edit">수정</button>
 						<button type="button" id="delete" class="btn btn-outline-danger">삭제</button>
 					</div>
 					<div id="stuBtn2" align="right" style="display: none">
@@ -499,8 +493,6 @@ $(function(){
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </div>
 

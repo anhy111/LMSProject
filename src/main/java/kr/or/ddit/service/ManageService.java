@@ -30,5 +30,9 @@ public interface ManageService {
 	public int createEmployee(Employee employee);
 
 	public int createProfessor(Employee employee);
+
+	public List<Employee> employeeList();
+
+	public Employee detailEmp(Map<String, String> map);
 	
 }
