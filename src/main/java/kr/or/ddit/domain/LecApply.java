@@ -27,7 +27,7 @@ public class LecApply {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lecaDt;        //신청일자
     private String lecaGrade;   //평가구분
-    private String lecaImsiYn;  //임시저장
+    private int lecaImsiYn;  //임시저장
     private String lecaCate;    //이수구분
     private int lecaMp;         //중간고사비율
     private int lecaFp;         //기말고사비율

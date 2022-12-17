@@ -120,19 +120,21 @@
 		        U.LECA_MP,
 		        U.LECA_FP,
 		        U.LECA_TP,
-		        U.LECA_AP
+		        U.LECA_AP,
+		        U.LECA_TT,
+		        U.LECA_NOTE
 		FROM
 		(
 		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
 		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
 		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
-		            LECA_MP, LECA_FP, LECA_TP, LECA_AP,
+		            LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE,
 		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
 		    FROM    VW_APPLY
 		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
 		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
 		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
-		                LECA_MP, LECA_FP, LECA_TP, LECA_AP
+		                LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE
 		) U
 		WHERE   U.LECA_CD = #{lecaCd}
 		AND     U.LECA_IMSI_YN IS NULL
@@ -220,6 +222,54 @@
 		</foreach>
 	</update>
 	
+	<insert id="lecApplyTempSubmit" parameterType="lecApply">
+		INSERT INTO LEC_APPLY (
+		             LECA_CD
+		            , LECA_YR
+		            , LECA_SEM
+		            , LECA_NM
+		            , LECA_CON
+		            , LECA_TRG
+		            , LECA_CRD
+		            , LECA_PER
+		            , LECA_CAP
+		            , LECA_TT
+		            , LECA_BOOK
+		            , LECA_NOTE
+		            , LECA_DT
+		            , LECA_GRADE
+		            , LECA_IMSI_YN
+		            , LECA_CATE
+		            , LECA_MP
+		            , LECA_FP
+		            , LECA_TP
+		            , LECA_AP
+		            , PRO_NO
+		) VALUES (
+		    (select max(LECA_CD) from lecture)
+		    , #{lecaYr}
+		    , #{lecaSem}
+		    , #{lecaNm}
+		    , #{lecaCon}
+		    , #{lecaTrg}
+		    , #{lecaCrd}
+		    , #{lecaCrd}
+		    , #{lecaCap}
+		    , #{lecaTt}
+		    , #{lecaBook}
+		    , #{lecaNote}
+		    , SYSDATE
+		    , #{lecaGrade}
+		    , 1
+		    , #{lecaCate}
+		    , #{lecaMp}
+		    , #{lecaFp}
+		    , #{lecaTp}
+		    , #{lecaAp}
+		    , #{proNo}
+		)
+	</insert>
+	
 	<select id="subList" parameterType="int" resultType="subject">
 		SELECT  SUB_CD
 		        , SUB_NM
@@ -261,6 +311,48 @@
 		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM
 		) U
 		WHERE   U.PRO_NO = #{proNo}
+		AND     U.LECA_IMSI_YN = 1
+		ORDER BY U.LECA_CD DESC
+	</select>
+	
+	<select id="tempFormLecApInfo" parameterType="int" resultType="lecApply">
+		SELECT  U.LECA_CD,
+		        U.PRO_NO,
+		        U.LECA_YR LECA_YR,
+		        U.LECA_SEM LECA_SEM,
+		        NVL(U.LECA_TRG, 0) LECA_TRG,
+		        U.SUB_CD,
+		        U.LECA_NM,
+		        NVL(U.LECA_CAP, 0) LECA_CAP,
+		        U.LECA_CATE,
+		        NVL(U.LECA_CRD, 0) LECA_CRD,
+		        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+                WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+        		END LECA_GRADE,
+		        U.LECA_DT,
+		        U.SUB_NM,
+		        U.LECA_CON,
+		        U.LECA_BOOK,
+		        U.LECA_MP,
+		        U.LECA_FP,
+		        U.LECA_TP,
+		        U.LECA_AP,
+		        U.LECA_TT,
+		        U.LECA_NOTE
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		            LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		                LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE
+		) U
+		WHERE   U.LECA_CD = #{lecaCd}
 		AND     U.LECA_IMSI_YN = 1
 		ORDER BY U.LECA_CD DESC
 	</select>

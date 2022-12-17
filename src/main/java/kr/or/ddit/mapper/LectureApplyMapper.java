@@ -40,9 +40,17 @@ public interface LectureApplyMapper {
 	// 강의계획서 주차계획 테이블
 	public int weekPlanSubmit(List<String> weekPlanList);
 	
+	// 강의계획서 임시저장 테이블
+	public int lecApplyTempSubmit(LecApply lecaCd);
+	
 	// 임시저장 리스트
 	public List<LecApply> tempList(int proNo);
 	
+	
+	
+	// 임시저장 강의계획서 상세페이지 기본사항,상세내용
+	public List<LecApply> tempFormLecApInfo(int lecaCd);
+
 	// 과목명 리스트 가져오기
 	public List<Subject> subList(int proNo);
 
