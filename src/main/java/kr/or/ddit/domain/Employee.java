@@ -33,4 +33,8 @@ public class Employee {
 	private String proPos; // 보직
 	private String depCd; //학과번호
 	
+	private String depNm; //학과이름
+	private String colCd; //단과대 코드
+	private String colNm; //단과대 이름
+	
 }

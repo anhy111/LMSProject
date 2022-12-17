@@ -105,17 +105,17 @@
 	
 	<select id="recordManagePost" parameterType="map" resultType="student" > 
 		SELECT  S.STU_NO
-		        ,S.STU_NM
-		        ,S.STU_TEL
-		        ,D.DEP_NM
-		        ,R.REC_YR
-		        ,R.REC_SEM
-		        ,(SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
-		        ,R.REC_PER
-		        ,R.REC_RSN
-		        ,R.REC_DT
-		        ,R.REC_REJ
-		        ,(SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
+		        , S.STU_NM
+		        , S.STU_TEL
+		        , D.DEP_NM
+		        , R.REC_YR
+		        , R.REC_SEM
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
+		        , R.REC_PER
+		        , R.REC_RSN
+		        , R.REC_DT
+		        , R.REC_REJ
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
 		FROM STUDENT S, DEPARTMENT D, RECORD R
 		WHERE S.DEP_CD = D.DEP_CD
 		AND S.STU_NO = R.STU_NO
@@ -181,6 +181,61 @@
 		INSERT INTO PROFESSOR(PRO_NO, DEP_CD, PRO_POS)
 		VALUES (#{empNo}, #{depCd}, #{proPos})
 	</insert>
+	
+	<select id="employeeList" resultType="employee"> 
+		SELECT  E.EMP_NO
+		        , E.EMP_NM
+		        , E.EMP_NME
+		        , E.EMP_TEL
+		        , E.EMP_TEL2
+		        , E.EMP_ZIP
+		        , E.EMP_ADDR1
+		        , E.EMP_ADDR2
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_BANK_CD) AS EMP_BANK_CD
+		        , E.EMP_DEPO
+		        , E.EMP_ACT
+		        , E.EMP_PIC
+		        , E.EMP_JOIN
+		        , E.EMP_RET
+		        , E.EMP_BIR
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_DIV) AS EMP_DIV
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_POS) AS EMP_POS
+		FROM EMPLOYEE E
+	</select>
+	
+	<select id="detailEmp" parameterType="map" resultType="employee">
+		SELECT  E.EMP_NO
+		        , E.EMP_NM
+		        , E.EMP_NME
+		        , E.EMP_TEL
+		        , E.EMP_TEL2
+		        , E.EMP_ZIP
+		        , E.EMP_ADDR1
+		        , E.EMP_ADDR2
+		        , E.EMP_BANK_CD
+		        , E.EMP_DEPO
+		        , E.EMP_ACT
+		        , E.EMP_PIC
+		        , E.EMP_JOIN
+		        , E.EMP_RET
+		        , E.EMP_BIR
+		        , E.EMP_DIV
+		        , E.EMP_POS
+		        , P.PRO_POS
+		        , D.DEP_CD
+		        , D.DEP_NM
+		        , C.COL_CD
+		        , C.COL_NM
+		FROM DEPARTMENT D, COLLEGE C, PROFESSOR P, EMPLOYEE E
+		WHERE D.Col_Cd = C.COL_CD(+)
+		AND P.Dep_Cd = D.DEP_CD(+)
+		AND E.EMP_NO = P.PRO_NO(+)
+		AND E.EMP_NO = #{empNo}
+	</select>
+	
+	
+	
+	
 
 </mapper>
 

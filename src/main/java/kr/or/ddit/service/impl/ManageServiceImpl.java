@@ -77,4 +77,13 @@ public class ManageServiceImpl implements ManageService{
 		return this.manageMapper.createProfessor(employee);
 	}
 	
+	@Override
+	public List<Employee> employeeList(){
+		return this.manageMapper.employeeList();
+	}
+	
+	@Override
+	public Employee detailEmp(Map<String, String> map) {
+		return this.manageMapper.detailEmp(map);
+	}
 }

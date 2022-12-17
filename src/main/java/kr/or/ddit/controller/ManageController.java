@@ -27,11 +27,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.CommonDetail;
+import kr.or.ddit.domain.Department;
 import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.CommonDetailService;
+import kr.or.ddit.service.DepartmentService;
 import kr.or.ddit.service.ManageService;
 import kr.or.ddit.util.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +52,8 @@ public class ManageController {
 	CollegeService collegeService;
 	@Autowired
 	FileUploadUtil fileUploadUtil;
+	@Autowired
+	DepartmentService departmentService;
 
 	@GetMapping("/manage/stuManage")
 	public String stuManage(Model model) {
@@ -203,11 +207,34 @@ public class ManageController {
 	}
 	
 	@GetMapping("/manage/empManage")
-	public String empManage() {
+	public String empManage(Model model) {
 		
+		List<Employee> employeeList = this.manageService.employeeList();
+		List<CommonDetail> bank = this.commonDetailService.commonDetailList("BANK");
+		List<CommonDetail> division =this.commonDetailService.commonDetailList("DIVISION");
+		List<CommonDetail> ePosition =this.commonDetailService.commonDetailList("E_POSITION");
+		List<CommonDetail> pPosition =this.commonDetailService.commonDetailList("P_POSITION");
+		List<College> collegeList = this.collegeService.CollegeList();
 		
+		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("bank", bank);
+		model.addAttribute("division", division);
+		model.addAttribute("ePosition", ePosition);
+		model.addAttribute("pPosition", pPosition);
+		model.addAttribute("collegeList", collegeList);
 		
 		return "manage/empManage";
+	}
+	
+	@PostMapping("/manage/detailEmp")
+	@ResponseBody
+	public Employee detailEmp(@RequestBody Map<String, String> map) {
+		
+		log.info("empNo 넘어올까 " +  map.get("empNo"));
+		
+		Employee detailEmp = this.manageService.detailEmp(map);
+		
+		return detailEmp;
 	}
 	
 	
