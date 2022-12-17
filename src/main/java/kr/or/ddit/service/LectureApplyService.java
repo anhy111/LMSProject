@@ -30,11 +30,17 @@ public interface LectureApplyService {
 
 	public int weekPlanSubmit(List<String> weekPlanList);
 	
+	public int lecApplyTempSubmit(LecApply lecaCd);
+
 	public List<LecApply> tempList(int proNo);
+
+	public List<LecApply> tempFormLecApInfo(int lecaCd);
 
 	public List<Subject> subList(int proNo);
 
 	public int getSubCdList(String subNm);
+
+
 
 
 }

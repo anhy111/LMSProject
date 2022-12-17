@@ -234,6 +234,44 @@ public class LectureApplyController {
 		return lectureResult + lecApplyResult + weekPlanResult;
 	}
 	
+	//강의계획서 작성 도중 임시저장
+	@ResponseBody
+	@PostMapping("/lecApplyForm/temporarySubmit")
+	public int temporarySubmit(HttpServletRequest request
+			, @RequestBody LecApply lecApply) {
+		
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		lecApply.setProNo(proNo);
+		
+		log.info("제출 proNo : " + proNo);
+		log.info("담긴값들은? : " + lecApply);
+		
+		//1. lecture 테이블에 값 넣기
+		int lectureResult = this.lectureApplyService.lectureSubmit(lecApply);
+		
+		if (lectureResult < 0) {
+			log.info("lecture실패");
+			return 0;
+		}
+		//2. lec_apply 테이블에 값 넣기
+		int lecApplyResult = this.lectureApplyService.lecApplyTempSubmit(lecApply);
+
+		if (lecApplyResult < 0) {
+			log.info("lecApply실패");
+			return 0;
+		}
+		//3. weekplan 테이블에 값 넣기
+		List<String> weekPlanList = Arrays.asList(lecApply.getWeekPlanList());
+		int weekPlanResult = this.lectureApplyService.weekPlanSubmit(weekPlanList);
+		
+		if (weekPlanResult < 0) {
+			log.info("weekPlan실패");
+			return 0;
+		}
+		return lectureResult + lecApplyResult + weekPlanResult;
+	}
+	
 	//임시저장 리스트
 	@ResponseBody
 	@PostMapping("/lecApply/getTempList")
@@ -258,61 +296,25 @@ public class LectureApplyController {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		
-		log.info("상세proNo : " + proNo);
-		log.info("상세 계획서 코드 : " + lecaCd);
+		log.info("임시저장 상세proNo : " + proNo);
+		log.info("임시저장 상세 계획서 코드 : " + lecaCd);
 		
 		Professor professor = this.lectureApplyService.inquiryFormProInfo(proNo);
-		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
+		List<LecApply> lecApplyList = this.lectureApplyService.tempFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
 		
-		log.info("상세professor : " + professor);
-		log.info("상세lecApplyList : " + lecApplyList);
-		log.info("상세weekPlanList : " + weekPlanList);
+		log.info("임시저장 상세professor : " + professor);
+		log.info("임시저장 상세lecApplyList : " + lecApplyList);
+		log.info("임시저장 상세weekPlanList : " + weekPlanList);
 		
 		return "professor/lecApplyForm/tempForm";
 	}
 	
-	//강의계획서 작성 도중 임시저장
-//	@ResponseBody
-//	@PostMapping("/lecApplyForm/temporarySubmit")
-//	public int temporarySubmit(HttpServletRequest request
-//			, @RequestBody LecApply lecApply) {
-//		
-//		HttpSession session = request.getSession();
-//		int proNo = (int)session.getAttribute("no");
-//		lecApply.setProNo(proNo);
-//		
-//		log.info("제출 proNo : " + proNo);
-//		log.info("담긴값들은? : " + lecApply);
-//		
-//		//1. lecture 테이블에 값 넣기
-//		int lectureResult = this.lectureApplyService.lectureTempSubmit(lecApply);
-//		
-//		if (lectureResult < 0) {
-//			log.info("lecture실패");
-//			return 0;
-//		}
-//		//2. lec_apply 테이블에 값 넣기
-//		int lecApplyResult = this.lectureApplyService.lecApplyTempSubmit(lecApply);
-//
-//		if (lecApplyResult < 0) {
-//			log.info("lecApply실패");
-//			return 0;
-//		}
-//		//3. weekplan 테이블에 값 넣기
-//		List<String> weekPlanList = Arrays.asList(lecApply.getWeekPlanList());
-//		int weekPlanResult = this.lectureApplyService.weekPlanTempSubmit(weekPlanList);
-//		
-//		if (weekPlanResult < 0) {
-//			log.info("weekPlan실패");
-//			return 0;
-//		}
-//		return lectureResult + lecApplyResult + weekPlanResult;
-//	}
+	
 	
 	//과목명 리스트 불러오기
 	@ResponseBody

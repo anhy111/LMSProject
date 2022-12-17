@@ -193,12 +193,12 @@
     	</div>
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;희망 시간</p>
-    		<textarea id="textArea4time" rows="5" cols="45" disabled>시간 선택하기 버튼을 누르면 자동으로 채워집니다.</textarea>
+    		<textarea id="textArea4time" rows="5" cols="45" disabled>${lecApplyList[0].lecaTt}</textarea>
     		
     		<br><br>
     		
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;비고</p>
-    		<textarea id="lecaNote" rows="9" cols="45"></textarea>
+    		<textarea id="lecaNote" rows="9" cols="45">${lecApplyList[0].lecaNote}</textarea>
     	</div>
     </div>
     
@@ -328,15 +328,15 @@
 					if(cellObj.hasClass("highlighted")) {
 						
 						if(j == 0) {
-							str += "월요일 " + i + "교시\n";
+							str += "월 " + i + "교시\n";
 						}else if(j == 1) {
-							str += "화요일 " + i + "교시\n";
+							str += "화 " + i + "교시\n";
 						}else if(j == 2) {
-							str += "수요일 " + i + "교시\n";
+							str += "수 " + i + "교시\n";
 						}else if(j == 3) {
-							str += "목요일 " + i + "교시\n";
+							str += "목 " + i + "교시\n";
 						}else if(j == 4) {
-							str += "금요일 " + i + "교시\n";
+							str += "금 " + i + "교시\n";
 						}
 					}
 				}

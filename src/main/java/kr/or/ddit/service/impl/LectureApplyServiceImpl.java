@@ -72,8 +72,18 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 
 	@Override
+	public int lecApplyTempSubmit(LecApply lecaCd) {
+		return this.lectureApplyMapper.lecApplyTempSubmit(lecaCd);
+	}
+
+	@Override
 	public List<LecApply> tempList(int proNo) {
 		return this.lectureApplyMapper.tempList(proNo);
+	}
+
+	@Override
+	public List<LecApply> tempFormLecApInfo(int lecaCd) {
+		return this.lectureApplyMapper.tempFormLecApInfo(lecaCd);
 	}
 	
 	@Override
