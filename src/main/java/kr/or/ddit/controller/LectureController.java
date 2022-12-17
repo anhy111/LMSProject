@@ -140,7 +140,7 @@ public class LectureController {
 
 	// 과제
 	// 수정============================================================================================================================
-	@PostMapping("/lectureBoard/taskUpdate")
+	@PostMapping("/lectureBoard/task/taskUpdate")
 	public String taskUpdate(@RequestParam MultipartFile[] files, @ModelAttribute Task task) {
 		int result = 0;
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -163,6 +163,8 @@ public class LectureController {
 		map.put("taskNm", task.getTaskNm());
 		map.put("taskCon", task.getTaskCon());
 		map.put("taskEdt", task.getTaskEdt());
+		map.put("taskCd", task.getTaskCd());
+		map.put("lecaCd", task.getLecaCd());
 		this.lectureservice.taskUpdate(map);
 
 		return "redirect:/lectureBoard/task/taskDetail?lecaCd=" + task.getLecaCd() + "&&taskCd=" + task.getTaskCd();
