@@ -12,6 +12,8 @@ public interface CounselMapper {
 	public int applyInsert(Counsel counsel);
 	//학생의 담당교수 목록
 	public List<Counsel> listOfProfessor(int stuNo);
+	//학생의 상담 내용 수정
+	public int applyModify(Counsel counsel);
 	//교수의 상담목록 조회
 	public List<Counsel> professorCounselList(int proNo);
 	//교수의 상담답변
@@ -20,5 +22,4 @@ public interface CounselMapper {
 	public Counsel answerDetail(Long cnslCd);
 	//해당글의 학생명
 	public String studentNameByCounsels(Long cnslCd);
-	
 }

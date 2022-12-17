@@ -22,7 +22,7 @@
 	<div class="row" id="nonFaceCounselListTable">
 		<div class="card">
 		<div class="card-header">
-			<h3 class="card-title">비대면상담리스트</h3>
+			<h3 class="card-title">비대면상담요청리스트</h3>
 			</div>
 			<div class="card-body">
 				<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -34,7 +34,7 @@
 										<th class="sorting" tabindex="0" aria-controls="example1"
 											rowspan="1" colspan="1"
 											aria-label="Rendering engine: activate to sort column ascending"
-											cursorshover="true">상담코드</th>
+											cursorshover="true">상담번호</th>
 										<th class="sorting sorting_desc" tabindex="0"
 											aria-controls="example1" rowspan="1" colspan="1"
 											aria-label="Browser: activate to sort column ascending"
@@ -47,10 +47,6 @@
 											rowspan="1" colspan="1"
 											aria-label="Engine version: activate to sort column ascending"
 											cursorshover="true">제목</th>
-										<th class="sorting" tabindex="0" aria-controls="example1"
-											rowspan="1" colspan="1"
-											aria-label="Engine version: activate to sort column ascending"
-											cursorshover="true">내용</th>
 										<th class="sorting" tabindex="0" aria-controls="example1"
 											rowspan="1" colspan="1"
 											aria-label="CSS grade: activate to sort column ascending"
@@ -79,7 +75,6 @@
 										<td>${nonFaceCounselList.stuNm}</td>
 										<td>${nonFaceCounselList.cnslCate }</td>
 										<td>${nonFaceCounselList.cnslTtl }</td>
-										<td>${nonFaceCounselList.cnslCon }</td>
 										<td><fmt:formatDate
 												value="${nonFaceCounselList.cnslReg }" pattern="yyyy/MM/dd" /></td>
 										<td><fmt:formatDate value="${nonFaceCounselList.cnslDt }"
@@ -98,11 +93,10 @@
 								</tbody>
 								<tfoot>
 									<tr>
-										<th rowspan="1" colspan="1">상담코드</th>
+										<th rowspan="1" colspan="1">상담번호</th>
 										<th rowspan="1" colspan="1">학생명</th>
 										<th rowspan="1" colspan="1">카테고리</th>
 										<th rowspan="1" colspan="1">제목</th>
-										<th rowspan="1" colspan="1">내용</th>
 										<th rowspan="1" colspan="1">신청일</th>
 										<th rowspan="1" colspan="1">답변</th>
 										<th rowspan="1" colspan="1">답변일</th>
@@ -122,7 +116,7 @@
 	<div class="row" id="counselListTable">
 		<div class="card">
 		<div class="card-header">
-			<h3 class="card-title">대면상담리스트</h3>
+			<h3 class="card-title">대면상담요청리스트</h3>
 			</div>
 			<div class="card-body">
 				<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -134,7 +128,7 @@
 										<th class="sorting" tabindex="0" aria-controls="example1"
 											rowspan="1" colspan="1"
 											aria-label="Rendering engine: activate to sort column ascending"
-											cursorshover="true">상담코드</th>
+											cursorshover="true">상담번호</th>
 										<th class="sorting sorting_desc" tabindex="0"
 											aria-controls="example1" rowspan="1" colspan="1"
 											aria-label="Browser: activate to sort column ascending"
@@ -143,14 +137,6 @@
 											rowspan="1" colspan="1"
 											aria-label="Platform(s): activate to sort column ascending"
 											cursorshover="true">카테고리</th>
-										<th class="sorting" tabindex="0" aria-controls="example1"
-											rowspan="1" colspan="1"
-											aria-label="Engine version: activate to sort column ascending"
-											cursorshover="true">제목</th>
-										<th class="sorting" tabindex="0" aria-controls="example1"
-											rowspan="1" colspan="1"
-											aria-label="Engine version: activate to sort column ascending"
-											cursorshover="true">내용</th>
 										<th class="sorting" tabindex="0" aria-controls="example1"
 											rowspan="1" colspan="1"
 											aria-label="CSS grade: activate to sort column ascending"
@@ -174,8 +160,6 @@
 										<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
 										<td>${counselList.stuNm}</td>
 										<td>${counselList.cnslCate }</td>
-										<td>${counselList.cnslTtl }</td>
-										<td>${counselList.cnslCon }</td>
 										<td><fmt:formatDate value="${counselList.cnslReg }"
 												pattern="yyyy/MM/dd" /></td>
 										<td><fmt:formatDate value="${counselList.cnslDt }"
@@ -184,11 +168,9 @@
 								</tbody>
 								<tfoot>
 									<tr>
-										<th rowspan="1" colspan="1">상담코드</th>
+										<th rowspan="1" colspan="1">상담번호</th>
 										<th rowspan="1" colspan="1">학생명</th>
 										<th rowspan="1" colspan="1">카테고리</th>
-										<th rowspan="1" colspan="1">제목</th>
-										<th rowspan="1" colspan="1">내용</th>
 										<th rowspan="1" colspan="1">신청일</th>
 										<th rowspan="1" colspan="1">상담예약일</th>
 									</tr>

@@ -99,6 +99,14 @@
 	<definition name="counsel/professorside/answerModify" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/counsel/professorside/answerModify.jsp" />
 	</definition>
+	
+	<definition name="counsel/studentside/applyModify" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/applyModify.jsp" />
+	</definition>
+	
+	<definition name="counsel/studentside/checkAnswer" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkAnswer.jsp" />
+	</definition>
 
 </tiles-definitions>
 

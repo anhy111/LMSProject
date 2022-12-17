@@ -20,6 +20,8 @@ public interface CounselService {
 	public Counsel answerDetail(Long cnslCd);
 	//해당글의 학생명
 	public String studentNameByCounsels(Long cnslCd);
+	//학생의 상담 내용 수정
+	public int applyModify(Counsel counsel);
 
 
 }

@@ -102,11 +102,15 @@ AND P.PRO_NO = E.EMP_NO
 AND D.DEP_CD = P.DEP_CD
 </select>
 <select id="answerDetail" parameterType="Long" resultType="Counsel">
-SELECT 
- CNSL_CD
-,CNSL_RPL
-FROM COUNSEL
-WHERE CNSL_CD = #{cnslCd}
+SELECT
+ C.CNSL_CD
+,S.STU_NM
+,C.CNSL_TTL
+,C.CNSL_CON
+,C.CNSL_RPL    
+FROM COUNSEL C, STUDENT S 
+WHERE C.CNSL_CD = #{cnslCd}
+AND C.STU_NO = S.STU_NO
 </select>
 <select id="studentNameByCounsels" parameterType="Long" resultType="String">
 SELECT 
@@ -115,5 +119,11 @@ FROM COUNSEL C, STUDENT S
 WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
 </select>
+<update id="applyModify" parameterType="Counsel">
+UPDATE COUNSEL 
+SET 
+CNSL_CON = #{cnslCon} 
+WHERE CNSL_CD = #{cnslCd}
+</update>
 </mapper>
 
