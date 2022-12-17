@@ -23,9 +23,11 @@ public class LecApply {
     private int lecaUnit;       //강의호
     private String lecaBook;    //교재 및 참고서
     private String lecaNote;    //비고
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lecaDt;        //신청일자
-    private String lecaGrade;      //평가구분
-    private String lecaImsiYn;  //임시저장
+    private String lecaGrade;   //평가구분
+    private int lecaImsiYn;  //임시저장
     private String lecaCate;    //이수구분
     private int lecaMp;         //중간고사비율
     private int lecaFp;         //기말고사비율
@@ -38,5 +40,10 @@ public class LecApply {
     private String lecaTc;		//강의시간/강의실
     private String lecaApproval; //승인여부
     private String subNm;		//과목명
-    
+    private int depCd;			//학과명
+
+    private String[] weekPlanList;	//주차계획
+    private int wpNo;
+	private String wpCon;
+
 }

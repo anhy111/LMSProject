@@ -8,14 +8,14 @@ public class QnaForm {
 
     private String title;
     private String content;
-    private int accessNumber;
+    private String accessType;
 
     public QnaForm() {
     }
 
-    public QnaForm(String title, String content, int accessNumber) {
+    public QnaForm(String title, String content, String accessType) {
         this.title = title;
         this.content = content;
-        this.accessNumber = accessNumber;
+        this.accessType = accessType;
     }
 }

@@ -19,4 +19,29 @@ public class DepartmentServiceImpl implements DepartmentService{
 	public List<Department> departmentList() {
 		return this.departmentMapper.departmentList();
 	}
+	
+	@Override
+	public List<Department> departmentListByCollege(Department department) {
+		return this.departmentMapper.departmentListByCollege(department);
+	}
+	
+	@Override
+	public int register(Department department) {
+		return this.departmentMapper.register(department);
+	}
+	
+	@Override
+	public Department departmentDetail(Department department) {
+		return this.departmentMapper.departmentDetail(department);
+	}
+	
+	@Override
+	public int delete(Department department) {
+		return this.departmentMapper.delete(department);
+	}
+	
+	@Override
+	public int update(Department department) {
+		return this.departmentMapper.update(department);
+	}
 }

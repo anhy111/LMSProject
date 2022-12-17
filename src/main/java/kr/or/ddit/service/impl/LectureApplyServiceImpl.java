@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
@@ -14,6 +15,7 @@ import kr.or.ddit.mapper.LectureApplyMapper;
 import kr.or.ddit.service.LectureApplyService;
 
 @Service
+@Transactional
 public class LectureApplyServiceImpl implements LectureApplyService {
 
     @Autowired
@@ -55,11 +57,6 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 	
 	@Override
-	public int subjectSubmit(LecApply proNo) {
-		return this.lectureApplyMapper.subjectSubmit(proNo);
-	}
-	
-	@Override
 	public int lectureSubmit(LecApply subCd) {
 		return this.lectureApplyMapper.lectureSubmit(subCd);
 	}
@@ -70,18 +67,33 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 	
 	@Override
-	public int weekPlanSubmit(Map<String, Object> map) {
-		return this.lectureApplyMapper.weekPlanSubmit(map);
+	public int weekPlanSubmit(List<String> weekPlanList) {
+		return this.lectureApplyMapper.weekPlanSubmit(weekPlanList);
+	}
+
+	@Override
+	public int lecApplyTempSubmit(LecApply lecaCd) {
+		return this.lectureApplyMapper.lecApplyTempSubmit(lecaCd);
+	}
+
+	@Override
+	public List<LecApply> tempList(int proNo) {
+		return this.lectureApplyMapper.tempList(proNo);
+	}
+
+	@Override
+	public List<LecApply> tempFormLecApInfo(int lecaCd) {
+		return this.lectureApplyMapper.tempFormLecApInfo(lecaCd);
 	}
 	
 	@Override
-	public int getMaxLecaCd() {
-		return this.lectureApplyMapper.getMaxLecaCd();
+	public List<Subject> subList(int proNo) {
+		return this.lectureApplyMapper.subList(proNo);
 	}
 	
 	@Override
-	public List<Subject> subList() {
-		return this.lectureApplyMapper.subList();
+	public int getSubCdList(String subNm) {
+		return this.lectureApplyMapper.getSubCdList(subNm);
 	}
     
 }

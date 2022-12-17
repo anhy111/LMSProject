@@ -63,8 +63,8 @@
 
                             <td><fmt:formatDate value="${list.qnaDt }" pattern="yyyy년 MM월 dd일"/></td>
                             <td>
-                                <c:if test="${list.qnaYn == 0}">비공개</c:if>
-                                <c:if test="${list.qnaYn == 1}">공개</c:if>
+                                <c:if test="${list.qnaYn == '2'}">비공개</c:if>
+                                <c:if test="${list.qnaYn == '1'}">공개</c:if>
                             </td>
                             </c:forEach>
                         </tbody>

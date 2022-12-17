@@ -37,6 +37,7 @@ public class Student {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String recDt; //신청날짜
 	private String recYn; //승인여부
+	private String recRej; //반려사유
 	//학과명 조회 
 	private String depNm;
 	//단과대학명 조회

@@ -37,8 +37,8 @@
 	<definition name="lecture/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/lecture/{1}.jsp" />
 	</definition>
-	<definition name="lectureBoard/*" extends="lectureBoard">
-		<put-attribute name="body" value="/WEB-INF/views/lectureBoard/{1}.jsp" />
+	<definition name="lectureBoard/*/*" extends="lectureBoard">
+		<put-attribute name="body" value="/WEB-INF/views/lectureBoard/{1}/{2}.jsp" />
 	</definition>
 	<definition name="notice/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp" />

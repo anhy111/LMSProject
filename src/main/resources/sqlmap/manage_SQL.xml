@@ -105,16 +105,17 @@
 	
 	<select id="recordManagePost" parameterType="map" resultType="student" > 
 		SELECT  S.STU_NO
-		        ,S.STU_NM
-		        ,S.STU_TEL
-		        ,D.DEP_NM
-		        ,R.REC_YR
-		        ,R.REC_SEM
-		        ,(SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
-		        ,R.REC_PER
-		        ,R.REC_RSN
-		        ,R.REC_DT
-		        ,(SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
+		        , S.STU_NM
+		        , S.STU_TEL
+		        , D.DEP_NM
+		        , R.REC_YR
+		        , R.REC_SEM
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
+		        , R.REC_PER
+		        , R.REC_RSN
+		        , R.REC_DT
+		        , R.REC_REJ
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
 		FROM STUDENT S, DEPARTMENT D, RECORD R
 		WHERE S.DEP_CD = D.DEP_CD
 		AND S.STU_NO = R.STU_NO
@@ -124,8 +125,117 @@
 	<update id="yesOrNo" parameterType="map"> 
 		UPDATE RECORD R
 		SET R.REC_YN = #{Yn}
+			,R.REC_REJ = #{recRej}
 		WHERE R.STU_NO = #{stuNo}
 	</update>
+	
+	<select id="createEmpId" resultType="member"> 
+		SELECT TO_CHAR (SYSDATE,'YYYY') || '01' || (SELECT TRIM(TO_CHAR(NVL(MAX(SUBSTR(EMP_NO,7)),0) + 1,'000')) FROM EMPLOYEE ) AS MEM_NO
+		FROM DUAL
+	</select>
+	
+	<insert id="createMember" parameterType="employee"> 
+		INSERT INTO MEMBER(MEM_NO, Mem_Tel, MEM_PASS)
+		VALUES (#{empNo}, #{empTel}, #{empPass})
+	</insert>
+	
+	<insert id="createEmployee" parameterType="employee">
+		INSERT INTO EMPLOYEE 
+            (EMP_NO
+            , EMP_NM
+            , EMP_NME
+            , EMP_TEL
+            , EMP_TEL2
+            , EMP_ZIP
+            , EMP_ADDR1
+            , EMP_ADDR2
+            , EMP_REG
+            , EMP_BANK_CD
+            , EMP_DEPO
+            , EMP_ACT
+            , EMP_PIC
+            , EMP_JOIN
+            , EMP_BIR
+            , EMP_DIV
+            , EMP_POS)
+		VALUES (#{empNo}
+				, #{empNm}
+				, #{empNme}
+				, #{empTel}
+				, #{empTel2}
+				, #{empZip}
+				, #{empAddr1}
+				, #{empAddr2}
+				, #{empReg}
+				, #{empBankCd}
+				, #{empDepo}
+				, #{empAct}
+				, #{empPic}
+				, #{empJoin}
+				, #{empBir}
+				, #{empDiv}
+				, #{empPos})
+	</insert>
+	
+	<insert id="createProfessor" parameterType="employee"> 
+		INSERT INTO PROFESSOR(PRO_NO, DEP_CD, PRO_POS)
+		VALUES (#{empNo}, #{depCd}, #{proPos})
+	</insert>
+	
+	<select id="employeeList" resultType="employee"> 
+		SELECT  E.EMP_NO
+		        , E.EMP_NM
+		        , E.EMP_NME
+		        , E.EMP_TEL
+		        , E.EMP_TEL2
+		        , E.EMP_ZIP
+		        , E.EMP_ADDR1
+		        , E.EMP_ADDR2
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_BANK_CD) AS EMP_BANK_CD
+		        , E.EMP_DEPO
+		        , E.EMP_ACT
+		        , E.EMP_PIC
+		        , E.EMP_JOIN
+		        , E.EMP_RET
+		        , E.EMP_BIR
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_DIV) AS EMP_DIV
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_POS) AS EMP_POS
+		FROM EMPLOYEE E
+	</select>
+	
+	<select id="detailEmp" parameterType="map" resultType="employee">
+		SELECT  E.EMP_NO
+		        , E.EMP_NM
+		        , E.EMP_NME
+		        , E.EMP_TEL
+		        , E.EMP_TEL2
+		        , E.EMP_ZIP
+		        , E.EMP_ADDR1
+		        , E.EMP_ADDR2
+		        , E.EMP_BANK_CD
+		        , E.EMP_DEPO
+		        , E.EMP_ACT
+		        , E.EMP_PIC
+		        , E.EMP_JOIN
+		        , E.EMP_RET
+		        , E.EMP_BIR
+		        , E.EMP_DIV
+		        , E.EMP_POS
+		        , P.PRO_POS
+		        , D.DEP_CD
+		        , D.DEP_NM
+		        , C.COL_CD
+		        , C.COL_NM
+		FROM DEPARTMENT D, COLLEGE C, PROFESSOR P, EMPLOYEE E
+		WHERE D.Col_Cd = C.COL_CD(+)
+		AND P.Dep_Cd = D.DEP_CD(+)
+		AND E.EMP_NO = P.PRO_NO(+)
+		AND E.EMP_NO = #{empNo}
+	</select>
+	
+	
+	
+	
 
 </mapper>
 

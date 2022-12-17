@@ -6,11 +6,6 @@
     String sessionId = (String) (session.getAttribute("memNo"));
 %>
 
-<%--if (sessionId == null || sessionId.equals("null")) {--%>
-<%--out.println("<script>alert('로그인 해주세요');location.href='/board/login';</script>");--%>
-<%--response.sendRedirect("login.jsp");--%>
-<%--}--%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -50,6 +45,7 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
+                initialView: 'timeGridWeek',
                 locale: 'ko',
                 slotMinTime: '09:00',
                 slotMaxTime: '19:00',
@@ -80,9 +76,8 @@
                 editable: true,
                 dayMaxEvents: true, // allow "more" link when too many events
                 events: loadEvent()
-
-
             });
+
             calendar.render();
         });
 
@@ -92,20 +87,21 @@
             let header = "${_csrf.headerName}";
             let token = "${_csrf.token}";
 
+
             let arr = [];
             $.ajax({
                 type: "post",
                 url: "/facility/full",
                 data: "{}",
                 dataType: "JSON",
-                beforeSend : function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
                 async: false,
                 success: function (list) {
-                    console.log("formatNumber")
                     for (var i = 0; i < list.length; i++) {
                         arr.push({
+                            title: list[i]['memNo'],
                             rsvCd: list[i]['rsvCd'],
                             facCd: list[i]['facCd'],
                             memNo: list[i]['memNo'],
@@ -169,7 +165,7 @@
                         </div>
                         <div class="form-group">
                             <label for="rsvEn">종료시간:</label> <select class="form-control"
-                                                                   id="rsvEn">
+                                                                     id="rsvEn">
                             <option value="09:30">09:30</option>
                             <option value="10:00">10:00</option>
                             <option value="10:30">10:30</option>
@@ -205,7 +201,8 @@
                                             class="fas fa-square"></em></a>
                                     <a class="text-danger" href="#" onclick="fn_backgroundColor(this)"
                                        value="#e74a3b"><em class="fas fa-square"></em></a>
-                                    <a class="text-muted" href="#" onclick="fn_backgroundColor(this)" value="#858796"><em
+                                    <a class="text-muted" href="#" onclick="fn_backgroundColor(this)"
+                                       value="#858796"><em
                                             class="fas fa-square"></em></a>
                                 </ul>
                                 <input type="hidden" id="backgroundColor" name="backgroundColor">
@@ -214,214 +211,223 @@
                         </div>
                     </div>
 
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-dark  float-right deleteBtn"
-                                    onclick="deleteSch('insertModal', g_arg)">삭제
-                            </button>
-                            <button type="button"
-                                    class="btn btn-warning float-right insertBtn"
-                                    onclick="insertSch('insertModal', g_arg)">등록
-                            </button>
-                        </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark  float-right deleteBtn"
+                                onclick="deleteSch('insertModal', g_arg)">삭제
+                        </button>
+                        <button type="button"
+                                class="btn btn-warning float-right insertBtn"
+                                onclick="insertSch('insertModal', g_arg)">등록
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-2"></div>
     </div>
+    <div class="col-md-2"></div>
+</div>
 
-    <script type="text/javascript">
-        function fn_backgroundColor(event) {
-            $("#backgroundColor").val($(event).attr('value'));
-        }
+<script type="text/javascript">
+    function fn_backgroundColor(event) {
+        $("#backgroundColor").val($(event).attr('value'));
+    }
 
-        //시작일자 변경 시 종료일자 +30분 설정---------------------------------------------------------------------------
-        function startChange() {
-            var start = $('#rsvSt').val();
-            var end = $('#rsvEn').val();
-            if (start.substring(3, 5) == '00')
-                end = start.substring(0, 2) + ':30';
-            else
-                end = (parseInt(start.substring(0, 2)) + 1) + ':00';
+    //시작일자 변경 시 종료일자 +30분 설정---------------------------------------------------------------------------
+    function startChange() {
+        var start = $('#rsvSt').val();
+        var end = $('#rsvEn').val();
+        if (start.substring(3, 5) == '00')
+            end = start.substring(0, 2) + ':30';
+        else
+            end = (parseInt(start.substring(0, 2)) + 1) + ':00';
 
-            $('#rsvEn').val(end);
-        }
+        $('#rsvEn').val(end);
+    }
 
-        //모달초기화-------------------------------------------------------------------------------------------------
-        function initModal(modal, arg) {
-            $('.' + modal + ' #rsvCd').val('');
-            $('.' + modal + ' #rsvSt').val('09:00');
-            $('.' + modal + ' #rsvEn').val('09:30');
-            $('.' + modal).modal('hide');
-            g_arg = null;
-        }
+    //모달초기화-------------------------------------------------------------------------------------------------
+    function initModal(modal, arg) {
+        $('.' + modal + ' #rsvCd').val('');
+        $('.' + modal + ' #rsvSt').val('09:00');
+        $('.' + modal + ' #rsvEn').val('09:30');
+        $('.' + modal).modal('hide');
+        g_arg = null;
+    }
 
-        //일정등록창 모달-------------------------------------------------------------------------------------------------
-        function insertModalOpen(arg) {
+    //일정등록창 모달-------------------------------------------------------------------------------------------------
+    function insertModalOpen(arg) {
 
-            g_arg = arg;
-            //값이 있는경우 세팅
-            if (g_arg.event != undefined) {
+        g_arg = arg;
+        //값이 있는경우 세팅
+        if (g_arg.event != undefined) {
 
-                $('.insertModal #rsvCd').val(g_arg.event.extendedProps.rsvCd);
-                $(".insertModal .deleteBtn").css('display', 'inline');
-                $('.insertModal #rsvSt').val(stringFormat(g_arg.event.start.getHours()) + ':' + stringFormat(g_arg.event.start.getMinutes()));
-                $('.insertModal #rsvEn').val(stringFormat(g_arg.event.end.getHours()) + ':' + stringFormat(g_arg.event.end.getMinutes()));
+            $('.insertModal #rsvCd').val(g_arg.event.extendedProps.rsvCd);
+            $(".insertModal .deleteBtn").css('display', 'inline');
+            $('.insertModal #rsvSt').val(stringFormat(g_arg.event.start.getHours()) + ':' + stringFormat(g_arg.event.start.getMinutes()));
+            $('.insertModal #rsvEn').val(stringFormat(g_arg.event.end.getHours()) + ':' + stringFormat(g_arg.event.end.getMinutes()));
 
-                //해당 이벤트가 로그인계정이 등록한 이벤트면
-                if ('<%=sessionId%>' == g_arg.event.extendedProps.memNo) {
-                    $('.insertModal .deleteBtn').css('display', 'inline');
-                    $('.insertModal .insertBtn').css('display', 'inline');
-                    //남의 이벤트면
-                } else {
-                    $('.insertModal .deleteBtn').css('display', 'none');
-                    $('.insertModal .insertBtn').css('display', 'none');
-                }
-
-                //신규 이벤트
-            } else {
-                //month 외 week, day는 시간 값까지 받아와서 값 바인딩 ex)09:00
-                if (g_arg.startStr.length > 10) {
-                    $('.insertModal #rsvSt').val(g_arg.startStr.substr(11, 5));
-                    $('.insertModal #rsvEn').val(g_arg.endStr.substr(11, 5));
-                }
-                //등록버튼 외 숨김
+            //해당 이벤트가 로그인계정이 등록한 이벤트면
+            if ('<%=sessionId%>' == g_arg.event.extendedProps.memNo) {
+                $('.insertModal .deleteBtn').css('display', 'inline');
                 $('.insertModal .insertBtn').css('display', 'inline');
+                //남의 이벤트면
+            } else {
                 $('.insertModal .deleteBtn').css('display', 'none');
+                $('.insertModal .insertBtn').css('display', 'none');
             }
-            //모달창 show
-            $('.insertModal').modal({backdrop: 'static'});
-            console.log(arg);
-        }
 
-        //일정삭제-------------------------------------------------------------------------------------------------
-        function deleteSch(modal, arg) {
-            if (confirm('일정을 삭제하시겠습니까?')) {
-                var data = {
-                    memNo: '<%=sessionId%>',
-                    rsvCd: $('.' + modal + ' #rsvCd').val() //seq 컬럼 추가해서 기본키 seq로 바꾸고 title은 중복 가능하게 변경하기★★★★
-                }
-
-                let header = "${_csrf.headerName}";
-                let token = "${_csrf.token}";
-
-                //DB 삭제
-                $.ajax({
-                    url: "/facility/deleteSch",
-                    type: "POST",
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify(data),
-                    dataType: "JSON",
-                    beforeSend : function(xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
-                    traditional: true,
-                    success: function (data, status, xhr) {
-                        //alert(xhr.status);
-                        arg.event.remove();
-                        initModal(modal, arg);
-                    },
-                    error: function (xhr, status, error) {
-                        //alert(xhr.responseText);
-                        alert('일정 삭제 실패<br>새로고침 후 재시도 해주세요');
-                    }
-                });
-                //
+            //신규 이벤트
+        } else {
+            //month 외 week, day는 시간 값까지 받아와서 값 바인딩 ex)09:00
+            if (g_arg.startStr.length > 10) {
+                $('.insertModal #rsvSt').val(g_arg.startStr.substr(11, 5));
+                $('.insertModal #rsvEn').val(g_arg.endStr.substr(11, 5));
             }
+            //등록버튼 외 숨김
+            $('.insertModal .insertBtn').css('display', 'inline');
+            $('.insertModal .deleteBtn').css('display', 'none');
         }
+        //모달창 show
+        $('.insertModal').modal({backdrop: 'static'});
+        console.log(arg);
+    }
 
-        //일정등록-------------------------------------------------------------------------------------------------
-        function insertSch(modal, arg) {
+    //일정삭제-------------------------------------------------------------------------------------------------
+    function deleteSch(modal, arg) {
+        if (confirm('일정을 삭제하시겠습니까?')) {
+            var data = {
+                memNo: '<%=sessionId%>',
+                rsvCd: $('.' + modal + ' #rsvCd').val() //seq 컬럼 추가해서 기본키 seq로 바꾸고 title은 중복 가능하게 변경하기★★★★
+            }
 
-            // 등록
-            if (arg.event === undefined) {
-                if (arg.startStr.substring(0, 10) != arg.endStr.substring(0, 10)) {
-                } else {
-                    if ($('.insertModal #rsvEn').val() <= $('.insertModal #rsvSt').val()) {
-                        alert('종료시간을 시작시간보다 크게 선택해주세요');
-                        $('.insertModal #rsvEn').focus();
-                        return;
-                    }
+            let header = "${_csrf.headerName}";
+            let token = "${_csrf.token}";
+
+            //DB 삭제
+            $.ajax({
+                url: "/facility/deleteSch",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                dataType: "JSON",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                traditional: true,
+                success: function (data, status, xhr) {
+                    //alert(xhr.status);
+                    arg.event.remove();
+                    initModal(modal, arg);
+                },
+                error: function (xhr, status, error) {
+                    //alert(xhr.responseText);
+                    alert('일정 삭제 실패<br>새로고침 후 재시도 해주세요');
                 }
+            });
+            //
+        }
+    }
 
-                var data;
-                //구간이벤트면(종일이벤트 X)
-                var m_start = new Date(arg.startStr.substr(0, 4), arg.startStr.substr(5, 2) - 1, arg.startStr.substr(8, 2));
-                var m_end = new Date(arg.endStr.substr(0, 4), arg.endStr.substr(5, 2) - 1, arg.endStr.substr(8, 2));
-                var m_month = m_end.getMonth() + 1;
-                //week나 day에서 추가할때(시간 존재)
-                if (arg.endStr.length > 10) {
-                    m_end.setDate(m_end.getDate());
-                    //month에선 2021.09.30 클릭 시 endstr이 2021.10.01로 잡히기 떄문에 일-1
-                } else {
-                    m_end.setDate(m_end.getDate() - 1);
-                }
+    //일정등록-------------------------------------------------------------------------------------------------
+    function insertSch(modal, arg) {
 
-                //말일에 대한 로직
-                var m_end_com = new Date(arg.endStr.substr(0, 4), arg.endStr.substr(5, 2) - 1, arg.endStr.substr(8, 2));
-                var m_first = new Date(m_end.getFullYear(), m_end.getMonth() + 1, 1);
-                if (m_end_com.getFullYear() + '' + stringFormat(m_end_com.getMonth()) + '' + stringFormat(m_end_com.getDate())
-                    === m_first.getFullYear() + '' + stringFormat(m_first.getMonth()) + '' + stringFormat(m_first.getDate())) {
-                    m_month = m_end.getMonth() + 1;
-                }
-
-                var m_date = m_end.getDate();
-                arg.endStr = m_end.getFullYear() + '-' + stringFormat(m_month) + '-' + stringFormat(m_date);
-
-                if (arg.startStr.length > 10) {
-                    //일자만 추출
-                    arg.startStr = arg.startStr.substr(0, 10);
-                }
-
-                data = {
-                    memNo: '<%=sessionId%>',
-                    rsvSt: arg.startStr + 'T' + $('.' +modal+ ' #rsvSt').val(),
-                    rsvEn: arg.endStr + 'T' + $('.' +modal+ ' #rsvEn').val(),
-                    backgroundColor:$("#backgroundColor").val()
-                }
-
-                if (data.rsvSt >= data.rsvEn) {
-                    console.log(data.rsvSt + "  s");
-                    console.log(data.rsvEn + "  e");
-                    console.log(data);
+        // 등록
+        if (arg.event === undefined) {
+            if (arg.startStr.substring(0, 10) != arg.endStr.substring(0, 10)) {
+            } else {
+                if ($('.insertModal #rsvEn').val() <= $('.insertModal #rsvSt').val()) {
                     alert('종료시간을 시작시간보다 크게 선택해주세요');
+                    $('.insertModal #rsvEn').focus();
                     return;
                 }
-
-                let header = "${_csrf.headerName}";
-                let token = "${_csrf.token}";
-
-                //DB 삽입
-                $.ajax({
-                    url: "/facility/insertSch",
-                    type: "POST",
-                    data: JSON.stringify(data),
-                    dataType: "JSON",
-                    contentType: 'application/json',
-                    beforeSend : function(xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
-                    traditional: true,
-                    success: function (data, status, xhr) {
-
-                        calendar.addEvent({
-                            rsvCd: $('#rsvCd').val(),
-                            start: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
-                            end: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
-                            backgroundColor: $("#backgroundColor").val(),
-                            borderColor: $("#backgroundColor").val(),
-                            memNo: '<%=sessionId%>'
-                        });
-
-                        initModal(modal, arg);
-                    },
-                    error: function (xhr, status, error) {
-                        alert('일정 등록 실패\n새로고침 후 재시도 해주세요');
-                    }
-                });
             }
+
+            var data;
+            //구간이벤트면(종일이벤트 X)
+            var m_start = new Date(arg.startStr.substr(0, 4), arg.startStr.substr(5, 2) - 1, arg.startStr.substr(8, 2));
+            var m_end = new Date(arg.endStr.substr(0, 4), arg.endStr.substr(5, 2) - 1, arg.endStr.substr(8, 2));
+            var m_month = m_end.getMonth() + 1;
+            //week나 day에서 추가할때(시간 존재)
+            if (arg.endStr.length > 10) {
+                m_end.setDate(m_end.getDate());
+                //month에선 2021.09.30 클릭 시 endstr이 2021.10.01로 잡히기 떄문에 일-1
+            } else {
+                m_end.setDate(m_end.getDate() - 1);
+            }
+
+            //말일에 대한 로직
+            var m_end_com = new Date(arg.endStr.substr(0, 4), arg.endStr.substr(5, 2) - 1, arg.endStr.substr(8, 2));
+            var m_first = new Date(m_end.getFullYear(), m_end.getMonth() + 1, 1);
+            if (m_end_com.getFullYear() + '' + stringFormat(m_end_com.getMonth()) + '' + stringFormat(m_end_com.getDate())
+                === m_first.getFullYear() + '' + stringFormat(m_first.getMonth()) + '' + stringFormat(m_first.getDate())) {
+                m_month = m_end.getMonth() + 1;
+            }
+
+            var m_date = m_end.getDate();
+            arg.endStr = m_end.getFullYear() + '-' + stringFormat(m_month) + '-' + stringFormat(m_date);
+
+            if (arg.startStr.length > 10) {
+                //일자만 추출
+                arg.startStr = arg.startStr.substr(0, 10);
+            }
+
+            data = {
+                memNo: '<%=sessionId%>',
+                rsvSt: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
+                rsvEn: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
+                backgroundColor: $("#backgroundColor").val()
+            }
+
+            if (data.rsvSt >= data.rsvEn) {
+                console.log(data.rsvSt + "  s");
+                console.log(data.rsvEn + "  e");
+                console.log(data);
+                alert('종료시간을 시작시간보다 크게 선택해주세요');
+                return;
+            }
+
+            let header = "${_csrf.headerName}";
+            let token = "${_csrf.token}";
+
+            //DB 삽입
+            $.ajax({
+                url: "/facility/insertSch",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: "JSON",
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                traditional: true,
+                success: function (data, status, xhr) {
+
+                    calendar.addEvent({
+                        rsvCd: $('#rsvCd').val(),
+                        start: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
+                        end: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
+                        backgroundColor: $("#backgroundColor").val(),
+                        borderColor: $("#backgroundColor").val(),
+                        memNo: '<%=sessionId%>'
+                    });
+
+                    initModal(modal, arg);
+                },
+                error: function (xhr, status, error) {
+                    alert('일정 등록 실패\n새로고침 후 재시도 해주세요');
+                }
+            });
         }
-    </script>
+    }
+</script>
+
+<div id="d1" data-code="${memberNumber}" >
+    <select class="custom-select ntcCateLeft" id="facility">
+        <c:forEach var="item" items="${facility }">
+            <option value="${item.facCd}">${item.facNm}</option>
+        </c:forEach>
+    </select>
+</div>
+
 </body>
 </html>

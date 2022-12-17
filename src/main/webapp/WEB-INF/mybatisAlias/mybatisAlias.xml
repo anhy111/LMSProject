@@ -36,6 +36,7 @@
 		<typeAlias type="kr.or.ddit.domain.Subject" alias="subject"/>
 		<typeAlias type="kr.or.ddit.domain.Common" alias="common"/>
 		<typeAlias type="kr.or.ddit.domain.CommonDetail" alias="commonDetail"/>
+		<typeAlias type="kr.or.ddit.domain.TaskSubmit" alias="tasksubmit"/>
 		<typeAlias type="kr.or.ddit.domain.Allocation" alias="allocation"/>
 
 		<!-- 시설예약 시작 -->

@@ -24,17 +24,21 @@ public interface LectureApplyService {
 
 	public List<Weekplan> inquiryWeekPlan(int lecaCd);
 
-	public int subjectSubmit(LecApply proNo);
-
 	public int lectureSubmit(LecApply subCd);
 
 	public int lecApplySubmit(LecApply lecaCd);
 
-	public int weekPlanSubmit(Map<String, Object> map);
+	public int weekPlanSubmit(List<String> weekPlanList);
 	
-	public int getMaxLecaCd();
+	public int lecApplyTempSubmit(LecApply lecaCd);
 
-	public List<Subject> subList();
+	public List<LecApply> tempList(int proNo);
+
+	public List<LecApply> tempFormLecApInfo(int lecaCd);
+
+	public List<Subject> subList(int proNo);
+
+	public int getSubCdList(String subNm);
 
 
 

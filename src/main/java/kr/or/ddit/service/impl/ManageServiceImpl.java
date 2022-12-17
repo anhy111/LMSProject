@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.ManageMapper;
 import kr.or.ddit.service.ManageService;
@@ -53,5 +55,35 @@ public class ManageServiceImpl implements ManageService{
 	@Override
 	public int yesOrNo(Map<String, String> map) {
 		return this.manageMapper.yesOrNo(map);
+	}
+	
+	@Override
+	public Member createEmpId() {
+		return this.manageMapper.createEmpId();
+	}
+	
+	@Override
+	public int createMember(Employee employee) {
+		return this.manageMapper.createMember(employee);
+	}
+	
+	@Override
+	public int createEmployee(Employee employee) {
+		return this.manageMapper.createEmployee(employee);
+	}
+	
+	@Override
+	public int createProfessor (Employee employee) {
+		return this.manageMapper.createProfessor(employee);
+	}
+	
+	@Override
+	public List<Employee> employeeList(){
+		return this.manageMapper.employeeList();
+	}
+	
+	@Override
+	public Employee detailEmp(Map<String, String> map) {
+		return this.manageMapper.detailEmp(map);
 	}
 }

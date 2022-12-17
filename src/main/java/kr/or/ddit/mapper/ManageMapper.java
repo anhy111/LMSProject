@@ -3,6 +3,8 @@ package kr.or.ddit.mapper;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Student;
 
 public interface ManageMapper  {
@@ -21,4 +23,15 @@ public interface ManageMapper  {
 	
 	public int yesOrNo(Map<String, String> map);
 	
+	public Member createEmpId();
+	
+	public int createMember(Employee employee);
+	
+	public int createEmployee(Employee employee);
+	
+	public int createProfessor(Employee employee);
+	
+	public List<Employee> employeeList();
+	
+	public Employee detailEmp(Map<String, String> map);
 }

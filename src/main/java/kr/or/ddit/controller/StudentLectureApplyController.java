@@ -58,7 +58,7 @@ public class StudentLectureApplyController {
 	FileUploadUtil fileUploadUtil;
 	
 	
-	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_MANAGER')")
 	@GetMapping("/list")
 	public String lectureList(Model model, HttpServletRequest req) {
 		
@@ -78,6 +78,7 @@ public class StudentLectureApplyController {
 		return "student/lectureApply/lectureList";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_STUDENT')")
 	@ResponseBody
 	@PostMapping("/apply")
 	public String lectureApply(@RequestBody StudentLecture studentLecture) {
