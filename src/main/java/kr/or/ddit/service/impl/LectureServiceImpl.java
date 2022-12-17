@@ -112,17 +112,22 @@ public class LectureServiceImpl implements LectureService{
 	}
 	//제출 과제 디테일
 	@Override
-	public Task submitDetail(String tsubCd) {
-		return this.lectureMapper.submitDetail(tsubCd);
+	public Task submitDetail(HashMap<String, Object> map) {
+		return this.lectureMapper.submitDetail(map);
 		}
 	//제출 과제 수정
 	@Override
 	public int taskSubmitUpdate(HashMap<String, Object> map) {
 		return this.lectureMapper.taskSubmitUpdate(map);
 	}
+	//제출 과제 삭제
+	@Override
+	public int submitDelete(int tsubCd) {
+		return this.lectureMapper.submitDelete(tsubCd);
+	}
 	//과제 점수 입력
 	@Override
-	public int scoreUpdate(int tsubScore, int tsubCd) {
-		return this.lectureMapper.scoreUpdate(tsubScore, tsubCd);
+	public int scoreUpdate(TaskSubmit tasksubmit) {
+		return this.lectureMapper.scoreUpdate(tasksubmit);
 	}
 }

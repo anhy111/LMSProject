@@ -54,12 +54,12 @@ border-radius: 10px;
 				<br>
 				<div class="col-sm-12">
 							<!-- ************************************************************************ -->
-<%-- 					<sec:authorize access="hasRole('ROLE_STUDENT')"> --%>
+					<sec:authorize access="hasRole('ROLE_STUDENT')">
 						<div class="row">
 							<div class="col-sm-11"></div>
-							<a href="/lectureBoard/submitTask?lecaCd=${param.lecaCd}&&taskCd=${param.taskCd}" class="col-sm-1 btn btn-block btn-outline-secondary btn-sm" style="float:right">제출</a>
+							<a href="/lectureBoard/task/submitTask?lecaCd=${param.lecaCd}&&taskCd=${param.taskCd}" class="col-sm-1 btn btn-block btn-outline-secondary btn-sm" style="float:right">제출</a>
 						</div>
-<%-- 					</sec:authorize> --%>
+					</sec:authorize>
 					<table id="example2"
 						class="table table-bordered table-hover dataTable dtr-inline"
 						aria-describedby="example2_info">
@@ -95,7 +95,7 @@ border-radius: 10px;
 								<c:forEach var="list" items="${row.taskSubmitList}" varStatus="stata">
 								<tr class="odd">
 									<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
-									<td><a href="/lectureBoard/taskSubmitDetail?tsubCd=${list.tsubCd}">${row.taskNm}</a></td>
+									<td><a href="/lectureBoard/task/taskSubmitDetail?tsubCd=${list.tsubCd}">${row.taskNm}</a></td>
 									<td>${list.student.stuNm}</td>
 									<td><fmt:formatDate value="${list.tsubDt}" pattern="yyyy-MM-dd HH:mm"/></td>
 									<td>
