@@ -35,11 +35,8 @@ public class CounselController {
 	 */
 	
 	@GetMapping("/studentside/applyList")
-	public String studentCounselApplyList(Model model, HttpServletRequest request) {
+	public String studentCounselApplyList(Model model, int stuNo) {
 		
-		HttpSession session = request.getSession();
-		
-		int stuNo = (int)session.getAttribute("no");
 		List<Counsel> allList = this.counselService.studentApplyList(stuNo);
 		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
 		List<Counsel> counselList = new ArrayList<Counsel>();
@@ -58,7 +55,7 @@ public class CounselController {
 	}
 	
 	@GetMapping("/studentside/applyInsert")
-	public String studentCounselApplyInsert(Model model, HttpServletRequest request, int stuNo) {
+	public String studentCounselApplyInsert(Model model,  int stuNo) {
 //		HttpSession session = request.getSession();
 //		int stuNo = (int)session.getAttribute("no");
 		List<Counsel> professorList = this.counselService.listOfProfessor(stuNo);

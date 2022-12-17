@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%
+int stuNo = (int)session.getAttribute("no");
+%>
 <style>
 div {
 	border: 1px solid orange;
@@ -108,7 +111,7 @@ div {
 		<div class="col-12">
 			<div class="col-4">
 				<button type="submit" class="btn btn-sm btn-outline-primary">등록</button>
-				<a href="#" class="btn btn-sm btn-outline-danger">목록으로</a>
+				<a href="/counsel/studentside/applyInsert?stuNo=<%=stuNo %>" class="btn btn-sm btn-outline-danger">목록으로</a>
 			</div>
 		</div>
 			<sec:csrfInput />
