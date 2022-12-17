@@ -53,7 +53,7 @@ top: 0px;
 							style="width: 250px; display: inline-block;" >
 							<div class="inner">
 								<h4>${row.lecApply.lecaNm}</h4>
-								<p>${row.lecApply.lecaYr}년도${row.lecApply.lecaSem}학기</p>
+								<p>${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}</p>
 							</div>
 							<div class="icon" id="book">
 								<i class="ion-ios-book"></i>
