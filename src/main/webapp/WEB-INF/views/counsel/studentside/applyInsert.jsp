@@ -111,7 +111,7 @@ div {
 		<div class="col-12">
 			<div class="col-4">
 				<button type="submit" class="btn btn-sm btn-outline-primary">등록</button>
-				<a href="/counsel/studentside/applyInsert?stuNo=<%=stuNo %>" class="btn btn-sm btn-outline-danger">목록으로</a>
+				<a href="/counsel/studentside/applyList?stuNo=<%=stuNo %>" class="btn btn-sm btn-outline-danger">목록으로</a>
 			</div>
 		</div>
 			<sec:csrfInput />
