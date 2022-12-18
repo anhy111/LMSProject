@@ -69,8 +69,9 @@
                                 <div class="form-group">
                                     <label for="content"></label>
                                     <textarea class="textarea" name="content" id="content"
-                                              rows="20" placeholder="1000자 내외로 작성하세요."
-                                              style="display: none;"></textarea>
+                                              rows="40" placeholder="1000자 내외로 작성하세요."
+                                              style="display: none;">
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="col-xl-4">
@@ -111,20 +112,21 @@
 </div>
 
 <script>
-    window.onload = function () {
+    window.onload = () => {
         summernote_go($('#content'), '<%=request.getContextPath()%>');
     }
+
 </script>
 
 <script>
-    function f_alert() {
+    const f_alert = () => {
         if (!confirm("작성중인 글이 있습니다. 이전화면으로 돌아가겠습니까?")) {
             alert("취소되었습니다.");
         } else {
             alert("이전화면으로 돌아갑니다.")
             history.back();
         }
-    }
+    };
 </script>
 
 <script>

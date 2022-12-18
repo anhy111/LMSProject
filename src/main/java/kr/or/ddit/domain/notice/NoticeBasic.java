@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Getter @Setter
 public class NoticeBasic {
 
     private Long noticeCd; //공지사항 코드
