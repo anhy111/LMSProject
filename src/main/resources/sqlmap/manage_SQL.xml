@@ -61,6 +61,11 @@
 		AND S.STU_NO = #{detailStu} 
 	</select>
 	
+	<delete id="deleteMemStu" parameterType="map">
+		DELETE FROM MEMBER
+		WHERE MEM_NO = #{stuNo}
+	</delete>
+	
 	<delete id="deleteStu" parameterType="map" >
 		DELETE FROM STUDENT
 		WHERE STU_NO = #{stuNo}
@@ -233,8 +238,48 @@
 		AND E.EMP_NO = #{empNo}
 	</select>
 	
+	<delete id="deleteMemEmp" parameterType="map">
+		DELETE FROM MEMBER
+		WHERE MEM_NO = #{empNo}
+	</delete>
 	
+	<delete id="deleteEmp" parameterType="map"> 
+		DELETE FROM EMPLOYEE
+		WHERE EMP_NO = #{empNo}
+	</delete>
 	
+	<delete id="deletePro" parameterType="map">  
+		DELETE FROM PROFESSOR
+		WHERE PRO_NO = #{empNo}
+	</delete>
+	
+	<update id="updateEmp" parameterType="employee"> 
+		UPDATE  EMPLOYEE
+		SET      EMP_NM = #{empNm}
+		        , EMP_NME = #{empNme}
+		        , EMP_TEL = #{empTel}
+		        , EMP_TEL2 = #{empTel2}
+		        , EMP_ZIP = #{empZip}
+		        , EMP_ADDR1 = #{empAddr1}
+		        , EMP_ADDR2 = #{empAddr2}
+		        <if test="empReg != null">
+		        , EMP_REG = #{empReg}
+		        </if>
+		        , EMP_BANK_CD = #{empBankCd}
+		        , EMP_DEPO = #{empDepo}
+		        , EMP_ACT = #{empAct}
+		        <if test="empPic != null">
+		        , EMP_PIC = #{empPic}
+		        </if>
+		        , EMP_JOIN = #{empJoin}
+		        <if test="empRet != null">
+		        , EMP_RET = #{empRet}
+		        </if>
+		        , EMP_BIR = #{empBir}
+		        , EMP_DIV = #{empDiv}
+		        , EMP_POS = #{empPos}
+		WHERE EMP_NO = #{empNo}
+	</update>
 	
 
 </mapper>

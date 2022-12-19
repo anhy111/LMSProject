@@ -15,6 +15,8 @@ public interface ManageMapper  {
 	
 	public int deleteStu(Map<String, String> map);
 	
+	public int deleteMemStu(Map<String, String> map);
+	
 	public int updateStu(Student student);
 	
 	public List<Student> recordManage();
@@ -34,4 +36,12 @@ public interface ManageMapper  {
 	public List<Employee> employeeList();
 	
 	public Employee detailEmp(Map<String, String> map);
+	
+	public int deleteMemEmp(Map<String, String> map);
+	
+	public int deleteEmp(Map<String, String> map);
+	
+	public int deletePro(Map<String, String> map);
+	
+	public int updateEmp(Employee employee);
 }
