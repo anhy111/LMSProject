@@ -5,9 +5,38 @@
 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="kr.or.ddit.mapper.EvaluationMapper">
 
-	<select id="evaluationList" resultType="evaluation">
-		select EVLQ_CD, EVLQ_CON from EVALUATION_Q
+	<select id="evaluationQList" resultType="evaluation"> 
+		SELECT EVLQ_CD, EVLQ_CON FROM EVALUATION_Q
 	</select>
+	
+	<select id="evaluationList" parameterType="evaluation" resultType="evaluation">
+		SELECT LA.LECA_NM
+			 , L.LECA_CD
+		     , E.EMP_NM
+		     , SL.STU_NO
+		     , CASE 
+		        WHEN NVL(EVLQ_CD,0) > 0 THEN '완료'
+		        ELSE '미완료'
+		        END
+		      EVLQ_YN
+		FROM STU_LEC SL, LECTURE L, LEC_APPLY LA, PROFESSOR P, EMPLOYEE E, EVALUATION EV
+		WHERE SL.LECA_CD = L.LECA_CD
+		AND L.LECA_CD = LA.LECA_CD
+		AND LA.PRO_NO = P.PRO_NO
+		AND P.PRO_NO = E.EMP_NO
+		AND SL.STU_NO = EV.STU_NO(+)
+		AND SL.LECA_CD = EV.LECA_CD(+)
+		AND SL.STU_NO = #{stuNo}
+	</select>
+	
+	<insert id="register" parameterType="evaluation">
+	
+		<selectKey order="BEFORE" keyProperty="evlqCd" resultType="int">
+			SELECT MAX(NVL(EVLQ_CD,0))+1 FROM EVALUATION
+		</selectKey>
+		INSERT INTO EVALUATION(EVLQ_CD, STU_NO, LECA_CD, EVL_SCORE, EVL_ETC)
+           	VALUES(#{evlqCd}, #{stuNo}, #{lecaCd}, #{evlScore}, #{evlEtc})
+	</insert>
 	
 </mapper>
 
