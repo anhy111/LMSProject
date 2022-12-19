@@ -13,6 +13,7 @@ div {
 </style>
 <div class="container" align="center">
 	<form action="/counsel/studentside/applyInsert" method="post">
+<input type="text" name="stuNo" value="<%=stuNo %>"> 
 		<div class="row">
 			<div class="col-12">
 				<h1>
@@ -120,19 +121,19 @@ div {
 <script type="text/javascript">
 window.onload=function(){
 	$("#cnslConTextArea").css("display", "none");
-	$("#cnslTitleTextBox").css("display", "none");
+// 	$("#cnslTitleTextBox").css("display", "none");
 	$("#cnslReservationDt").css("display", "block");
 }
 	$("input:radio[name='cnslType']").change(function() {
 		if ($("#counselTypeFace").is(":checked")) {
 			// 				console.log("대면값 : " + $("#counselTypeFace").val())
 			$("#cnslConTextArea").css("display", "none");
-			$("#cnslTitleTextBox").css("display", "none");
+// 			$("#cnslTitleTextBox").css("display", "none");
 			$("#cnslReservationDt").css("display", "block");
 		} else if ($("#counselTypeNonFace").is(":checked")) {
 			alert($("input:radio[name='cnslType']:checked").val());
 			$("#cnslConTextArea").css("display", "block");
-			$("#cnslTitleTextBox").css("display", "block	");
+// 			$("#cnslTitleTextBox").css("display", "block	");
 			$("#cnslReservationDt").css("display", "none");
 			// 				console.log("비대면값 : " + $("#counselTypeNonFace").val())
 		}

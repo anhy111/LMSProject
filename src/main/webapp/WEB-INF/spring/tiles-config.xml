@@ -110,6 +110,10 @@
 	<definition name="counsel/studentside/checkAnswer" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkAnswer.jsp" />
 	</definition>
+	
+	<definition name="counsel/studentside/answerNote" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/answerNote.jsp" />
+	</definition>
 
 </tiles-definitions>
 

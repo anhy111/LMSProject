@@ -70,21 +70,16 @@ public class CounselController {
 	}
 	
 	@PostMapping("/studentside/applyInsert")
-	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel, HttpServletRequest request) throws ParseException {
-		HttpSession session = request.getSession();
-		int stuNo = (int)session.getAttribute("no");
-		counsel.setStuNo(stuNo);
-		
+	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel, HttpServletRequest request) {
+		log.info("학번 : " + counsel.getStuNo());
 		String[] proNoEmpNm = counsel.getEmpNm().split("_");
 		int proNo = Integer.parseInt(proNoEmpNm[0]);
-		String empNm = proNoEmpNm[1];
 		counsel.setProNo(proNo);
-		counsel.setEmpNm(empNm);
 //		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
 		this.counselService.applyInsert(counsel);
 		
 		//forwarding
-		return "redirect:/counsel/studentside/applyList";
+		return "redirect:/counsel/studentside/applyList?stuNo="+counsel.getStuNo();
 	}
 	
 	@GetMapping("/studentside/applyModify")
@@ -122,6 +117,13 @@ public class CounselController {
 		
 	}
 	
+	@GetMapping("/studentside/answerNote")
+	public String studentCheckAnswerNote(Long cnslCd, Model model) {
+		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
+		log.info("답변내용 : " + answerDetail.toString());
+		model.addAttribute("answerDetail",answerDetail);
+		return "counsel/studentside/answerNote";
+	}
 	
 	/*
 	 *  교수 컨트롤러
@@ -178,5 +180,13 @@ public class CounselController {
 		this.counselService.applyAnswerUpdate(counsel);
 //		log.info("업뎃성공했나여?");
 		return "success";
+	}
+	
+	@GetMapping("/professorside/answerNote")
+	public String prefessorCounselAnswerNote(Model model, Long cnslCd) {
+		Counsel answerNoteDetail = this.counselService.answerNoteDetail(cnslCd);
+		log.info("교수의 대면 상담 상세 : " + answerNoteDetail.toString());
+		model.addAttribute("answerNoteDetail", answerNoteDetail);
+		return "counsel/professorside/answerNote";
 	}
 }

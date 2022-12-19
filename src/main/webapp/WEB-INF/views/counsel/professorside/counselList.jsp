@@ -71,7 +71,6 @@
 											<tr class="even">
 										</c:if>
 										<td class="dtr-control sorting_1" tabindex="0">${nonFaceCounselList.cnslCd}</td>
-										<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
 										<td>${nonFaceCounselList.stuNm}</td>
 										<td>${nonFaceCounselList.cnslCate }</td>
 										<td>${nonFaceCounselList.cnslTtl }</td>
@@ -139,12 +138,20 @@
 											cursorshover="true">카테고리</th>
 										<th class="sorting" tabindex="0" aria-controls="example1"
 											rowspan="1" colspan="1"
+											aria-label="Platform(s): activate to sort column ascending"
+											cursorshover="true">제목</th>
+										<th class="sorting" tabindex="0" aria-controls="example1"
+											rowspan="1" colspan="1"
 											aria-label="CSS grade: activate to sort column ascending"
 											cursorshover="true">신청일</th>
 										<th class="sorting" tabindex="0" aria-controls="example1"
 											rowspan="1" colspan="1"
 											aria-label="CSS grade: activate to sort column ascending"
 											cursorshover="true">상담예약일</th>
+										<th class="sorting" tabindex="0" aria-controls="example1"
+											rowspan="1" colspan="1"
+											aria-label="CSS grade: activate to sort column ascending"
+											cursorshover="true">상담기록확인</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -159,11 +166,18 @@
 										<td class="dtr-control sorting_1" tabindex="0">${counselList.cnslCd}</td>
 										<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
 										<td>${counselList.stuNm}</td>
-										<td>${counselList.cnslCate }</td>
+										<td>${counselList.cnslCate }</td>	
+										<td>${counselList.cnslTtl }</td>	
 										<td><fmt:formatDate value="${counselList.cnslReg }"
 												pattern="yyyy/MM/dd" /></td>
 										<td><fmt:formatDate value="${counselList.cnslDt }"
 												pattern="yyyy/MM/dd" /></td>
+										<c:if test="${counselList.cnslRpl != null }">
+										<td><button id="answerNoteModify" value="${counselList.cnslCd }" class="btn btn-sm btn-success">상담 완료</button></td>
+										</c:if>
+										<c:if test="${counselList.cnslRpl == null }">
+										<td><button id="answerNoteWrite" value="${counselList.cnslCd }" class="btn btn-sm btn-info">상담 전</button></td>
+										</c:if>
 									</c:forEach>
 								</tbody>
 								<tfoot>
@@ -171,8 +185,10 @@
 										<th rowspan="1" colspan="1">상담번호</th>
 										<th rowspan="1" colspan="1">학생명</th>
 										<th rowspan="1" colspan="1">카테고리</th>
+										<th rowspan="1" colspan="1">제목</th>
 										<th rowspan="1" colspan="1">신청일</th>
 										<th rowspan="1" colspan="1">상담예약일</th>
+										<th rowspan="1" colspan="1">상담기록확인</th>
 									</tr>
 								</tfoot>
 							</table>
@@ -194,10 +210,18 @@
 		$("#nonFaceCounselListTable").css("display", 'block');
 		$("#counselListTable").css("display", "block");
 	}
+	/*비대면 상담*/
 	$(document).on('click','#answerInsert',function() {
 				window.open("/counsel/professorside/answer?cnslCd="+ this.value, "answerInsert","width=1000, height=800, left=100, top=50");
 			});
 	$(document).on('click','#answerModify',function() {
 				window.open("/counsel/professorside/answerModify?cnslCd="+ this.value, "answerModify","width=1000, height=800, left=100, top=50");
+			});
+	/*대면 상담*/
+	$(document).on('click','#answerNoteWrite',function() {
+				window.open("/counsel/professorside/answerNote?cnslCd="+ this.value, "answerNoteWrite","width=1000, height=800, left=100, top=50");
+			});
+	$(document).on('click','#answerNoteModify',function() {
+				window.open("/counsel/professorside/answerNote?cnslCd="+ this.value, "answerNoteModify","width=1000, height=800, left=100, top=50");
 			});
 </script>

@@ -112,6 +112,23 @@ FROM COUNSEL C, STUDENT S
 WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
 </select>
+<select id="answerNoteDetail" parameterType="Long" resultType="Counsel">
+SELECT
+ C.CNSL_CD
+,C.CNSL_CATE
+,S.STU_NM
+,C.CNSL_DT
+,C.CNSL_TTL
+,C.CNSL_CON
+,C.CNSL_RPL
+,E.EMP_NM
+FROM COUNSEL C, STUDENT S, EMPLOYEE E, PROFESSOR P 
+WHERE C.CNSL_CD = #{cnslCd}
+AND C.STU_NO = S.STU_NO
+AND S.PRO_NO = P.PRO_NO
+AND C.PRO_NO = P.PRO_NO
+AND E.EMP_NO = P.PRO_NO
+</select>
 <select id="studentNameByCounsels" parameterType="Long" resultType="String">
 SELECT 
 S.STU_NM
