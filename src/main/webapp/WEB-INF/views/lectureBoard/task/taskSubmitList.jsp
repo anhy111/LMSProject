@@ -95,7 +95,7 @@ border-radius: 10px;
 								<c:forEach var="list" items="${row.taskSubmitList}" varStatus="stata">
 								<tr class="odd">
 									<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
-									<td><a href="/lectureBoard/task/taskSubmitDetail?tsubCd=${list.tsubCd}">${row.taskNm}</a></td>
+									<td><a href="/lectureBoard/task/taskSubmitDetail?tsubCd=${list.tsubCd}&&lecaCd=${param.lecaCd}">${row.taskNm}</a></td>
 									<td>${list.student.stuNm}</td>
 									<td><fmt:formatDate value="${list.tsubDt}" pattern="yyyy-MM-dd HH:mm"/></td>
 									<td>
