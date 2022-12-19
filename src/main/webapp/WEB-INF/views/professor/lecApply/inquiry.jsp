@@ -267,7 +267,7 @@
 					str += '<option value="' + v.lecaYr + v.lecaSem + '">' + v.lecaYr + '/' + v.lecaSem + '</option>';
 				});
 
-				$('#cateYrNSem').append(str);
+				$('#cateYrNSem').append(str).trigger('change');
 			}
 		});
 

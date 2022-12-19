@@ -13,22 +13,22 @@ import kr.or.ddit.domain.Student;
 public interface MemberMapper  {
 
 	//회원 로그인 확인
-    Member read(int memNo);
+    public Member read(int memNo);
 
-	Student readStudent(int memNo);
+    public Student readStudent(int memNo);
 
-	Employee	readEmployee(int memNo);
+    public Employee readEmployee(int memNo);
 
-	Manager readManager(int memNo);
+    public Manager readManager(int memNo);
 
-	Professor readProfessor(int memNo);
+    public Professor readProfessor(int memNo);
 
-	String searchId(HashMap<String, String> map);
+    public String searchId(HashMap<String, String> map);
 
-	void changePw(Map<String, String> map);
+    public void changePw(Map<String, String> map);
 
-	int stuUpdate(Student student);
+    public int stuUpdate(Student student);
 
-	int updateStuPw(Map<String, String> map);
+    public int updateStuPw(Map<String, String> map);
 
 }

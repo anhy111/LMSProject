@@ -3,6 +3,7 @@ package kr.or.ddit.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class StudentLectureController {
 	@Autowired
 	CollegeService collegeService;
 
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_MANAGER')")
 	@GetMapping("/list")
 	public String list(Model model) {
 		List<College> collegeList = this.collegeService.CollegeList();

@@ -38,6 +38,11 @@ public class ManageServiceImpl implements ManageService{
 	}
 	
 	@Override
+	public int deleteMemStu(Map<String, String> map) {
+		return this.manageMapper.deleteMemStu(map);
+	}
+	
+	@Override
 	public int updateStu(Student student) {
 		return this.manageMapper.updateStu(student);
 	}
@@ -85,5 +90,25 @@ public class ManageServiceImpl implements ManageService{
 	@Override
 	public Employee detailEmp(Map<String, String> map) {
 		return this.manageMapper.detailEmp(map);
+	}
+	
+	@Override
+	public int deleteMemEmp(Map<String, String> map) {
+		return this.manageMapper.deleteMemEmp(map);
+	}
+	
+	@Override
+	public int deleteEmp(Map<String, String> map) {
+		return this.manageMapper.deleteEmp(map);
+	}
+	
+	@Override
+	public int deletePro(Map<String, String> map) {
+		return this.manageMapper.deletePro(map);
+	}
+	
+	@Override
+	public int updateEmp(Employee employee) {
+		return this.manageMapper.updateEmp(employee);
 	}
 }

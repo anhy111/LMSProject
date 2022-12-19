@@ -14,6 +14,8 @@ public interface ManageService {
 	public Student detailStu(Map<String, String> map);
 
 	public int deleteStu(Map<String, String> map);
+	
+	public int deleteMemStu(Map<String, String> map);
 
 	public int updateStu(Student student);
 
@@ -34,5 +36,15 @@ public interface ManageService {
 	public List<Employee> employeeList();
 
 	public Employee detailEmp(Map<String, String> map);
+
+	public int deleteMemEmp(Map<String, String> map);
+
+	public int deleteEmp(Map<String, String> map);
+
+	public int deletePro(Map<String, String> map);
+
+	public int updateEmp(Employee employee);
+
+	
 	
 }

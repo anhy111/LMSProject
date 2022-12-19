@@ -1,7 +1,5 @@
 package kr.or.ddit.controller;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.mapping.MapBasedAttributes2GrantedAuthoritiesMapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -197,7 +191,6 @@ public class LectureApplyController {
 	
 	//강의계획서 작성 후 제출하기
 	@ResponseBody
-	@Transactional
 	@PostMapping("/lecApplyForm/lecApplySubmit")
 	public int lecApplySubmit(HttpServletRequest request
 			, @RequestBody LecApply lecApply) {
@@ -224,14 +217,16 @@ public class LectureApplyController {
 			return 0;
 		}
 		//3. weekplan 테이블에 값 넣기
-		List<String> weekPlanList = Arrays.asList(lecApply.getWeekPlanList());
+		List<Weekplan> weekPlanList = lecApply.getWeekPlanList();
+		log.info("임시저장 weekPlan : " + weekPlanList);
+		
 		int weekPlanResult = this.lectureApplyService.weekPlanSubmit(weekPlanList);
 		
 		if (weekPlanResult < 0) {
 			log.info("weekPlan실패");
 			return 0;
 		}
-		return lectureResult + lecApplyResult + weekPlanResult;
+		return lectureResult + lecApplyResult ; //weekPlanResult;
 	}
 	
 	//강의계획서 작성 도중 임시저장
@@ -262,14 +257,16 @@ public class LectureApplyController {
 			return 0;
 		}
 		//3. weekplan 테이블에 값 넣기
-		List<String> weekPlanList = Arrays.asList(lecApply.getWeekPlanList());
+		List<Weekplan> weekPlanList = lecApply.getWeekPlanList();
+		log.info("임시저장 weekPlan : " + weekPlanList);
+		
 		int weekPlanResult = this.lectureApplyService.weekPlanSubmit(weekPlanList);
 		
 		if (weekPlanResult < 0) {
 			log.info("weekPlan실패");
 			return 0;
 		}
-		return lectureResult + lecApplyResult + weekPlanResult;
+		return lecApplyResult;
 	}
 	
 	//임시저장 리스트
@@ -314,7 +311,84 @@ public class LectureApplyController {
 		return "professor/lecApplyForm/tempForm";
 	}
 	
+	//임시저장된 강의계획서 수정하기
+	@ResponseBody
+	@PostMapping("/lecApplyForm/temporaryUpdate")
+	public int temporaryUpdate(@RequestBody LecApply lecApply) {
+		
+		log.info("수정된 담긴값들은? : " + lecApply);
+		
+		//1. lecture 테이블에 값 넣기
+		int lectureResult = this.lectureApplyService.lectureUpdate(lecApply);
+		
+		if (lectureResult < 0) {
+			log.info("lecture실패");
+			return 0;
+		}
+		//2. lec_apply 테이블에 값 넣기
+		int lecApplyResult = this.lectureApplyService.lecApplyUpdate(lecApply);
+
+		if (lecApplyResult < 0) {
+			log.info("lecApply실패");
+			return 0;
+		}
+		//3. weekplan 테이블에 값 넣기
+		List<Weekplan> weekPlanList = lecApply.getWeekPlanList();
+		log.info("임시저장 weekPlan : " + weekPlanList);
+		
+		int weekPlanResult = this.lectureApplyService.weekPlanUpdate(weekPlanList);
+		
+		if (weekPlanResult != -1) {
+			log.info("weekPlanResult : " + weekPlanResult);
+			log.info("weekPlan실패");
+			return 0;
+		}
+		return lectureResult + lecApplyResult + weekPlanResult;
+	}
 	
+	//임시저장된 강의계획서 삭제하기
+	@ResponseBody
+	@PostMapping("/lecApplyForm/temporaryDelete")
+	public int temporaryDelete(int lecaCd) {
+		
+		log.info("삭제코드 오나욘? : " + lecaCd);
+		
+		return this.lectureApplyService.deleteLecApply(lecaCd);
+	}
+	
+	//임시저장된 강의계획서 제출하기
+	@ResponseBody
+	@PostMapping("/lecApplyForm/tempLecApplySubmit")
+	public int tempLecApplySubmit(@RequestBody LecApply lecApply) {
+		
+		log.info("수정된 담긴값들은? : " + lecApply);
+		
+		//1. lecture 테이블에 값 넣기
+		int lectureResult = this.lectureApplyService.lectureUpdate(lecApply);
+		
+		if (lectureResult < 0) {
+			log.info("lecture실패");
+			return 0;
+		}
+		//2. lec_apply 테이블에 값 넣기
+		int lecApplyResult = this.lectureApplyService.temporarySubmit(lecApply);
+
+		if (lecApplyResult < 0) {
+			log.info("lecApply실패");
+			return 0;
+		}
+		//3. weekplan 테이블에 값 넣기
+		List<Weekplan> weekPlanList = lecApply.getWeekPlanList();
+		log.info("임시저장 weekPlan : " + weekPlanList);
+		
+		int weekPlanResult = this.lectureApplyService.weekPlanUpdate(weekPlanList);
+		
+		if (weekPlanResult < 0) {
+			log.info("weekPlan실패");
+			return 0;
+		}
+		return lecApplyResult;
+	}
 	
 	//과목명 리스트 불러오기
 	@ResponseBody

@@ -90,6 +90,7 @@ public class ManageController {
 		log.info("delete의 stuNo는?? " + map.get("stuNo"));
 
 		int deleteStu = this.manageService.deleteStu(map);
+		this.manageService.deleteMemStu(map);
 
 		log.info("삭제되었을 거라고 믿어의심치 않는다 . " + deleteStu);
 
@@ -203,7 +204,7 @@ public class ManageController {
 			this.manageService.createProfessor(employee);
 		}
 		
-		return "redirect:/manage/insertEmp";
+		return "redirect:/manage/empManage";
 	}
 	
 	@GetMapping("/manage/empManage")
@@ -237,6 +238,33 @@ public class ManageController {
 		return detailEmp;
 	}
 	
+	@PostMapping("/manage/deleteEmp")
+	@ResponseBody
+	public int deleteEmp(@RequestBody Map<String, String> map) {
+		
+		log.info("교번 넘어오냐? " + map.get("empNo"));
+		
+		this.manageService.deletePro(map);
+		int deleteEmp = this.manageService.deleteEmp(map);
+		this.manageService.deleteMemEmp(map);
+		
+		return deleteEmp;
+	}
+	
+	@PostMapping("/manage/updateEmp")
+	@ResponseBody
+	public Employee updateEmp(MultipartFile uploadFile, Employee emp, HttpServletRequest req, Map<String, String> map) {
+
+		log.info("uploadFile : " + uploadFile + " 이렇게도 오나 혹싀 ~ㅎ " + emp.getEmpNo());
+		log.info("emp : " + emp + "req : " + req + "map : " + map);
+		this.fileUploadUtil.empFileUpdate(uploadFile, req, emp);
+		
+		map.put("empNo", emp.getEmpNo()+"");
+		
+		Employee detailEmp = this.manageService.detailEmp(map);
+
+		return detailEmp;
+	}
 	
 
 }

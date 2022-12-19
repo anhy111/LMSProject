@@ -28,7 +28,7 @@ public interface LectureApplyService {
 
 	public int lecApplySubmit(LecApply lecaCd);
 
-	public int weekPlanSubmit(List<String> weekPlanList);
+	public int weekPlanSubmit(List<Weekplan> weekPlanList);
 	
 	public int lecApplyTempSubmit(LecApply lecaCd);
 
@@ -36,9 +36,22 @@ public interface LectureApplyService {
 
 	public List<LecApply> tempFormLecApInfo(int lecaCd);
 
+	public int lectureUpdate(LecApply subCd);
+	
+	public int lecApplyUpdate(LecApply lecaCd);
+	
+	public int weekPlanUpdate(List<Weekplan> weekPlanList);
+
+	public int temporarySubmit(LecApply lecaCd);
+
+	public int deleteLecApply(int lecaCd);
+
 	public List<Subject> subList(int proNo);
 
 	public int getSubCdList(String subNm);
+
+
+
 
 
 

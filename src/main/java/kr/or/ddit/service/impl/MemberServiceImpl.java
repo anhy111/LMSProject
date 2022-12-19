@@ -68,6 +68,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	// 임시비밀번호로 수정
+	@Override
 	public String changePw(Map<String, String> map) {
 
 		// 전달된 휴대폰 번호로 문자 전송(content : 임시비밀번호)

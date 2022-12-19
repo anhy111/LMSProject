@@ -16,7 +16,7 @@ public interface MemberService {
 
 	Student readStudent(int memNo);
 
-	Employee	readEmployee(int memNo);
+	Employee readEmployee(int memNo);
 
 	Manager readManager(int memNo);
 
