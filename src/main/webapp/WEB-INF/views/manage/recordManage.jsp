@@ -54,7 +54,7 @@ function fn_list(){
 					<td id="YOrN\${index}">\${student.recYn}</td>
 					<td><button alt="\${student.recYn}"
 							class="btn btn-block btn-outline-info btn-sm btnDetail"
-							value="\${student.stuNo}">상세</button></td>
+							value="\${student.stuNo}" data-toggle="modal" data-target="#modal-lg" >상세</button></td>
 				</tr> `;
 				
 			});
@@ -330,8 +330,8 @@ $(function(){
 
 </script>
 <div class="row">
-	<div class="col-sm-7">
-		<div class="card col-sm-11 offset-1">
+	<div class="col-sm-10 offset-1">
+		<div class="card">
 			<div class="card-header">
 				<h3 class="card-title">휴복학 신청 관리</h3>
 			</div>
@@ -378,66 +378,84 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-5">
-		<div class="col-md-11">
-			<div class="card card-outline card-primary">
-				<div class="card-header">
-					<h3 class="card-title">상세 정보</h3>
-				</div>
-				<div class="card-body">
+</div>
+
+<!-- 모달 -->
+<!-- 상세정보확인 -->
+<div class="modal fade" id="modal-lg" style="display:none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">상세 정보</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-11">
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-11 offset-1">
 								<div class="container">
 									<div class="row mt-1 mb-2">
 										<div class="col-5">
-											<label for="recYn" class="form-label">승인여부</label> 
-											<input type="text" class="form-control stu" id="recYn" name="recYn" readonly />
+											<label for="recYn" class="form-label">승인여부</label> <input
+												type="text" class="form-control stu" id="recYn"
+												name="recYn" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5">
-											<label for="rgbCd" class="form-label">신청구분</label> 
-											<input type="text" class="form-control" id="rgbCd" name="rgbCd" readonly />
+											<label for="rgbCd" class="form-label">신청구분</label> <input
+												type="text" class="form-control" id="rgbCd" name="rgbCd"
+												readonly />
 										</div>
 										<div class="col-5 offset-1">
-											<label for="recPer" class="form-label">신청기간</label> 
-											<input type="text" class="form-control stu" id="recPer" name="recPer" readonly />
+											<label for="recPer" class="form-label">신청기간</label> <input
+												type="text" class="form-control stu" id="recPer"
+												name="recPer" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5">
-											<label for="recDt" class="form-label">신청일자</label> 
-											<input type="text" class="form-control" id="recDt" name="recDt" readonly />
+											<label for="recDt" class="form-label">신청일자</label> <input
+												type="text" class="form-control" id="recDt" name="recDt"
+												readonly />
 										</div>
 										<div class="col-5 offset-1">
-											<label for="recYr" class="form-label">신청 연도/학기</label>
-											 <input type="text" class="form-control stu" id="recYr" name="recYr" readonly />
+											<label for="recYr" class="form-label">신청 연도/학기</label> <input
+												type="text" class="form-control stu" id="recYr"
+												name="recYr" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5">
-											<label for="depNm" class="form-label">학과</label> 
-											<input type="text" class="form-control stu" id="depNm" name="depNm" readonly />
+											<label for="depNm" class="form-label">학과</label> <input
+												type="text" class="form-control stu" id="depNm"
+												name="depNm" readonly />
 										</div>
 										<div class="col-5 offset-1">
-											<label for="stuNo" class="form-label">학번</label> 
-											<input type="text" class="form-control stu" id="stuNo" name="stuNo" readonly />
+											<label for="stuNo" class="form-label">학번</label> <input
+												type="text" class="form-control stu" id="stuNo"
+												name="stuNo" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-5">
-											<label for="stuNm" class="form-label">이름</label>
-											 <input type="text" class="form-control stu" id="stuNm" name="stuNm" readonly />
+											<label for="stuNm" class="form-label">이름</label> <input
+												type="text" class="form-control stu" id="stuNm"
+												name="stuNm" readonly />
 										</div>
 										<div class="col-5 offset-1">
-											<label for="stuTel" class="form-label">연락처</label>
-											 <input type="text" class="form-control stu" id="stuTel" name="stuTel" readonly />
+											<label for="stuTel" class="form-label">연락처</label> <input
+												type="text" class="form-control stu" id="stuTel"
+												name="stuTel" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-11">
-											<label for="recRsn" class="form-label">신청사유</label> 
+											<label for="recRsn" class="form-label">신청사유</label>
 											<textarea id="recRsn" name="recRsn" class="form-control stu" rows="7" readonly></textarea>
 										</div>
 									</div>
@@ -445,67 +463,67 @@ $(function(){
 							</div>
 						</div>
 					</div>
-
-					<div id="stuBtn1" align="right" style="display:none" >
-						<button type="button" id="Approval" value="AP001" class="btn btn-outline-warning" >승인</button>
+				</div>
+			</div>
+			<div class="modal-footer justify-content-align">
+					<div id="stuBtn1" align="right" style="display: none">
+						<button type="button" id="Approval" value="AP001"
+							class="btn btn-outline-warning">승인</button>
 						<button type="button" class="btn btn-outline-danger"
-						data-toggle="modal" data-target="#modal-default" >반려</button>
+							data-toggle="modal" data-target="#modal-default">반려</button>
 					</div>
-					<div id="stuBtn2" align="right" style="display:none" >
-						<button type="button" value="AP002" class="btn btn-outline-danger cancel">승인 취소</button>
+					<div id="stuBtn2" align="right" style="display: none">
+						<button type="button" value="AP002"
+							class="btn btn-outline-danger cancel">승인 취소</button>
 					</div>
-					<div id="stuBtn3" align="right" style="display:none" >
-						<button type="button" class="btn btn-outline-secondary"
-						data-toggle="modal" data-target="#modal-default2" id="msg">반려 사유</button>
+					<div id="stuBtn3" align="right" style="display: none">
+						<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-default2" id="msg">반려 사유</button>
 						<button type="button" value="AP002" class="btn btn-outline-danger cancel">반려 취소</button>
 					</div>
+			</div>
+		</div>
+	</div>
+	<!-- 반려사유 입력 -->
+	<div class="modal fade" id="modal-default" style="display:none; z-index:1041" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">반려</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="recRej" class="col-form-label">반려 사유를 입력해주세요.</label>
+						<textarea class="form-control recRej" rows="7"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" id="reject" value="AP003" class="btn btn-block btn-danger">반려</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 반려사유확인 -->
+	<div class="modal fade" id="modal-default2" style="display:none;z-index:1041" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">반려 사유</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<textarea class="form-control" id="message" rows="7" readonly></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-<!-- 모달 -->
-<div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">반려</h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="mb-3">
-					<label for="recRej" class="col-form-label">반려 사유를 입력해주세요.</label>
-					<textarea class="form-control recRej" rows="7"></textarea>
-				</div>
-			</div>
-			<div class="modal-footer justify-content-between">
-				<button type="button" id="reject" value="AP003" class="btn btn-block btn-danger">반려</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- 반려사유 -->
-<div class="modal fade" id="modal-default2" style="display: none;" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">반려 사유</h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="mb-3">
-					<textarea class="form-control" id="message" rows="7" readonly></textarea>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
