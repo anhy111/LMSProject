@@ -67,7 +67,7 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	}
 	
 	@Override
-	public int weekPlanSubmit(List<String> weekPlanList) {
+	public int weekPlanSubmit(List<Weekplan> weekPlanList) {
 		return this.lectureApplyMapper.weekPlanSubmit(weekPlanList);
 	}
 
@@ -84,6 +84,39 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	@Override
 	public List<LecApply> tempFormLecApInfo(int lecaCd) {
 		return this.lectureApplyMapper.tempFormLecApInfo(lecaCd);
+	}
+	
+	@Override
+	//임시저장한 강의 수정하기
+	public int lectureUpdate(LecApply subCd) {
+		return this.lectureApplyMapper.lectureUpdate(subCd);
+	}
+	
+	@Override
+	//임시저장한 강의계획서 수정하기
+	public int lecApplyUpdate(LecApply lecaCd) {
+		return this.lectureApplyMapper.lecApplyUpdate(lecaCd);
+	}
+	
+	@Override
+	//임시저장한 주차계획 수정하기
+	public int weekPlanUpdate(List<Weekplan> weekPlanList) {
+		return this.lectureApplyMapper.weekPlanUpdate(weekPlanList);
+	}
+
+	@Override
+	public int temporarySubmit(LecApply lecaCd) {
+		return this.lectureApplyMapper.temporarySubmit(lecaCd);
+	}
+
+	@Override
+	public int deleteLecApply(int lecaCd) {
+		int result = 0;
+		result += this.lectureApplyMapper.weekPlanDelete(lecaCd);
+		result += this.lectureApplyMapper.lecApplyDelete(lecaCd);
+		result += this.lectureApplyMapper.lectureDelete(lecaCd);
+		
+		return result;
 	}
 	
 	@Override

@@ -119,7 +119,9 @@
 	    		<td>
 		    		<select id="subNm">
 	    				<option value="">선택</option>
+	    				<c:forEach var="lecApply" items="lecApplyList">
 	    				<option value="${lecApplyList[0].subNm}" <c:if test="${lecApplyList[0].subNm != ''}">selected</c:if>>${lecApplyList[0].subNm}</option>
+	    				</c:forEach>
 	    			</select>
 	    		</td>
 	    		<th>학수번호</th>
@@ -221,7 +223,6 @@
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;희망 시간
     		</p>
-<%--     		<textarea id="textArea4time" rows="5" cols="45" disabled>${lecApplyList[0].lecaTt}</textarea> --%>
     		<textarea id="textArea4time" rows="5" cols="45" disabled>${lecApplyList[0].lecaTt}</textarea>
     		
     		<br><br>
@@ -267,13 +268,15 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(res) {
+				let sub = $('#subNm').val();
+				$('#subNm').html("");
 				str = '';
-				
+				str += '<option value="">선택</option>'
 					$.each(res, function (i, v) {
 						str += '<option value=' + v.subNm + '>' + v.subNm + '</option>';
 					});
-
 				$('#subNm').append(str);
+				$('#subNm').val(sub).prop("selected",true).trigger('change');
 				
 			}
 		});
@@ -439,20 +442,18 @@
 		
 		//수정하기 버튼 클릭 시
 		$('#tempUpdateBtn').on('click', function() {
+			let u_lecaCd = '${lecApplyList[0].lecaCd}';
+			var weekPlan = [];
 			
-			var weekPlan = [
-				$('#weekPlan1').val(), $('#weekPlan2').val(), $('#weekPlan3').val()
-				, $('#weekPlan4').val(), $('#weekPlan5').val(), $('#weekPlan6').val()
-				, $('#weekPlan7').val(), $('#weekPlan8').val(), $('#weekPlan9').val()
-				, $('#weekPlan10').val(), $('#weekPlan11').val(), $('#weekPlan12').val()
-				, $('#weekPlan13').val(), $('#weekPlan14').val(), $('#weekPlan15').val()
-				, $('#weekPlan16').val()
-			];
+			for(let i=1; i<=16; i++){
+				weekPlan.push({wpNo : i,lecaCd : u_lecaCd, wpCon : $('#weekPlan'+i).val()})
+			}
 			
-			if(!confirm("해당 강의계획서를 임시저장하시겠습니까?")) {
+			if(!confirm("해당 강의계획서를 수정하시겠습니까?")) {
 				alert("취소되었습니다.");
 			}else {
 				let dataObject = {
+						lecaCd : '${lecApplyList[0].lecaCd}',
 						lecaYr : $('#lecaYr').val(),
 						lecaSem : $('#lecaSem').val(),
 						lecaNm : $('#lecaNm').val(),
@@ -475,13 +476,19 @@
 				}
 				
 				$.ajax({
-					url : "/lecApply/temporaryUpdate",
+					url : "/professor/lecApplyForm/temporaryUpdate",
 					type : "POST",
 					data : JSON.stringify(dataObject),
 					dataType : "JSON",
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
 					contentType : "application/json;charset=utf-8",
 					success : function(res) {
-						if(res == 17) {
+						
+// 						alert(res);
+						
+						if(res > 0) {
 							alert("수정이 완료되었습니다.");
 						}else {
 							alert("다시 시도해주세요.");
@@ -501,17 +508,21 @@
 			}else {
 				
 				let delObject = {
-						lecaCd : $('lecture.lecaCd')
+						lecaCd : '${lecApplyList[0].lecaCd}'
 				};
 				
+				console.log("데이타 코드 제발 와랑툐~ : " + JSON.stringify(delObject));
+				
 				$.ajax({
-					url : "/lecApply/temporaryDelete",
+					url : "/professor/lecApplyForm/temporaryDelete",
 					type : "POST",
-					data : JSON.stringify(delObject),
+					data : delObject,
 					dataType : "JSON",
-					contentType : "application/json;charset=utf-8",
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
 					success : function(res) {
-						if(res == 17) {
+						if(res > 0) {
 							alert("삭제가 완료되었습니다.");
 						}else {
 							alert("다시 시도해주세요.");
@@ -526,19 +537,18 @@
 		//제출하기 버튼 클릭 시
 		$('#realSubmitBtn').on('click', function() {
 			
-			var weekPlan = [
-				$('#weekPlan1').val(), $('#weekPlan2').val(), $('#weekPlan3').val()
-				, $('#weekPlan4').val(), $('#weekPlan5').val(), $('#weekPlan6').val()
-				, $('#weekPlan7').val(), $('#weekPlan8').val(), $('#weekPlan9').val()
-				, $('#weekPlan10').val(), $('#weekPlan11').val(), $('#weekPlan12').val()
-				, $('#weekPlan13').val(), $('#weekPlan14').val(), $('#weekPlan15').val()
-				, $('#weekPlan16').val()
-			];
+			let u_lecaCd = '${lecApplyList[0].lecaCd}';
+			var weekPlan = [];
+			
+			for(let i=1; i<=16; i++){
+				weekPlan.push({wpNo : i,lecaCd : u_lecaCd, wpCon : $('#weekPlan'+i).val()})
+			}
 			
 			if(!confirm("해당 강의계획서를 제출하시겠습니까?")) {
 				alert("취소되었습니다.");
 			}else {
 				let dataObject = {
+						lecaCd : '${lecApplyList[0].lecaCd}',
 						lecaYr : $('#lecaYr').val(),
 						lecaSem : $('#lecaSem').val(),
 						lecaNm : $('#lecaNm').val(),
@@ -561,14 +571,18 @@
 					}
 					
 					$.ajax({
-						url : "/lecApply/tempLecApplySubmit",
+						url : "/professor/lecApplyForm/tempLecApplySubmit",
 						type : "POST",
 						data : JSON.stringify(dataObject),
 						dataType : "JSON",
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader(header, token);
+						},
 						contentType : "application/json;charset=utf-8",
 						success : function(res) {
-							if(res == 17) {
-								alert("수정이 완료되었습니다.");
+							
+							if(res > -5) {
+								alert("제출이 완료되었습니다.");
 							}else {
 								alert("다시 시도해주세요.");
 							}

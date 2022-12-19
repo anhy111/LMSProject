@@ -1,6 +1,7 @@
 package kr.or.ddit.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,8 +43,6 @@ public class LecApply {
     private String subNm;		//과목명
     private int depCd;			//학과명
 
-    private String[] weekPlanList;	//주차계획
-    private int wpNo;
-	private String wpCon;
+    private List<Weekplan> weekPlanList;	//주차계획
 
 }
