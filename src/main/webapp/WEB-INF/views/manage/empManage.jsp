@@ -56,7 +56,7 @@ $(function(){
 				xhr.setRequestHeader(header, token);
 			},
 			success :function(data){
-				console.log("성공이라해주라 ", data.empNo + "  depCd는 ? ", data.depCd);
+				console.log("성공이라해주라 ", data.empNo + "  입사일은 ? ", data.empJoin);
 				
 				$("#stuBtn1").css("display", "block");
 				
@@ -94,9 +94,9 @@ $(function(){
 	$().ready(function () {
 		$("#delete").on("click", function(){
 			
-			let stuNo = $("#stuNo").val();
-			let data = {"stuNo":stuNo}
-			console.log("학번 오나? " + stuNo + " data 오나?? " + JSON.stringify(data));
+			let empNo = $("#empNo").val();
+			let data = {"empNo":empNo}
+			console.log("학번 오나? " + empNo + " data 오나?? " + JSON.stringify(data));
 			
 		 Swal.fire({
 	            title: '정말로 삭제 하시겠습니까?',
@@ -111,7 +111,7 @@ $(function(){
 			if(dlt.isConfirmed){
 				$.ajax({
 					type: 'post',
-					url: '/manage/deleteStu',
+					url: '/manage/deleteEmp',
 					contentType:"application/json;charset=utf-8",
 					data:JSON.stringify(data),
 					beforeSend:function(xhr){
@@ -156,32 +156,37 @@ $(function(){
 		}).open();
 	});
 	
-	$("#updateStu").on("click",function(){
+	$("#updateEmp").on("click",function(){
 		
 // 		alert("오나요,,")
 // 		$('input#stuPic')[0].files[0] 
 		
-		let stuNo = $("#stuNo").val();
-		let stuYr = $("#stuYr").val();
-		let stuSem = $("#stuSem").val();
-		let stuNm = $("#stuNm").val();
-		let stuNme = $("#stuNme").val();
-		let stuTel = $("#stuTel").val();
-		let stuZip = $("#stuZip").val();
-		let stuAddr1 = $("#stuAddr1").val();
-		let stuAddr2 = $("#stuAddr2").val();
-		let stuBankCd = $("#stuBankCd").val();
-		let stuDepo = $("#stuDepo").val();
-		let stuAct = $("#stuAct").val();
-		let stuBir = $("#stuBir").val();
-		let depCd = $("#department").val();
+		let empNo = $("#empNo").val();
+		let empNm = $("#empNm").val();
+		let empNme = $("#empNme").val();
+		let empBir = $("#empBir").val();
+		let empTel = $("#empTel").val();
+		let empTel2 = $("#empTel2").val();
+		let empJoin = $("#empJoin").val();
+		let empDiv = $("#empDiv").val();
+		let empPos = $("#empPos").val();
+		let proPos = $("#proPos").val();
+		let colCd = $("#colCd").val();
+		let depCd = $("#depCd").val();
+		let empBankCd = $("#empBankCd").val();
+		let empDepo = $("#empDepo").val();
+		let empAct = $("#empAct").val();
+		let empZip = $("#empZip").val();
+		let empAddr1 = $("#empAddr1").val();
+		let empAddr2 = $("#empAddr2").val();
 		
-		console.log("변수 잘 들어오나 ! stuNo : " + stuNo + " stuYr : " + stuYr + " stuSem : " + stuSem + " stuNm : " + stuNm + " stuNme : " + stuNme + 
-				" stuTel : " + stuTel + " stuZip : " + stuZip + " stuAddr1 : " + stuAddr1 + " stuAddr2 : " + stuAddr2 + 
-				" stuBankCd : " + stuBankCd + " stuDepo : " + stuDepo + " stuAct : " + stuAct + " stuBir : " + stuBir);
+		console.log("변수 잘 들어오나 ! empNo : " + empNo + " empNm : " + empNm + " empNme : " + empNme + " empBir : " + empBir + " empTel : " + empTel + 
+				" empTel2 : " + empTel2 + " empJoin : " + empJoin + " empDiv : " + empDiv + " empPos : " + empPos + 
+				" proPos : " + proPos + " colCd : " + colCd + " depCd : " + depCd + " empBankCd : " + empBankCd + " empDepo : " + empDepo + " empAct : " + empAct
+				+ " empZip : " + empZip + " empAddr1 : " + empAddr1 + " empAddr2 : " + empAddr2);
 		
 		let formData = new FormData();
-		let inputFile = $("input[name='stuPic']");
+		let inputFile = $("input[name='empPic']");
 		let files = inputFile[0].files;
 		
 		console.log("files : " + files);
@@ -192,24 +197,28 @@ $(function(){
 			formData.append("uploadFile",files[i]);
 		}
 		
-		formData.append("stuNo",stuNo);
-		formData.append("stuYr",stuYr);
-		formData.append("stuSem",stuSem);
-		formData.append("stuNm",stuNm);
-		formData.append("stuNme",stuNme);
-		formData.append("stuTel",stuTel);
-		formData.append("stuZip",stuZip);
-		formData.append("stuAddr1",stuAddr1);
-		formData.append("stuAddr2",stuAddr2);
-		formData.append("stuBankCd",stuBankCd);
-		formData.append("stuDepo",stuDepo);
-		formData.append("stuAct",stuAct);
-		formData.append("stuBir",stuBir);
+		formData.append("empNo",empNo);
+		formData.append("empNm",empNm);
+		formData.append("empNme",empNme);
+		formData.append("empBir",empBir);
+		formData.append("empTel",empTel);
+		formData.append("empTel2",empTel2);
+		formData.append("empJoin",empJoin);
+		formData.append("empDiv",empDiv);
+		formData.append("empPos",empPos);
+		formData.append("proPos",proPos);
+		formData.append("colCd",colCd);
 		formData.append("depCd",depCd);
+		formData.append("empBankCd",empBankCd);
+		formData.append("empDepo",empDepo);
+		formData.append("empAct",empAct);
+		formData.append("empZip",empZip);
+		formData.append("empAddr1",empAddr1);
+		formData.append("empAddr2",empAddr2);
 		
 		
 		$.ajax({
-			url:"/manage/updateStu",
+			url:"/manage/updateEmp",
 			processData:false,
 			contentType:false,
 			data:formData,
@@ -218,8 +227,8 @@ $(function(){
 				xhr.setRequestHeader(header, token);
 			},
 			type:"post",
-			success:function(result){
-				console.log("파일 업로드 성공인가요 ? result : " + result);
+			success:function(data){
+				console.log("파일 업로드 성공인가요 ? data : " + data);
 				
 				Swal.fire({
 		            icon: 'success',                         // Alert 타입
@@ -227,7 +236,7 @@ $(function(){
 		            text: '정상적으로 수정되었습니다.',  // Alert 내용
 		        })
 				
-				fn_add(result);
+				fn_add(data);
 				
 				$("#stuBtn1").css("display", "block");
 				$("#stuBtn2").css("display", "none");
@@ -373,8 +382,8 @@ $(function(){
 									</div>
 									<div class="row">
 										<div class="custom-file col-9 offset-1">
-											<input type="file" class="custom-file-input stu" id="empPic" name="file" readonly >
-											<label class="custom-file-label" for="empPic">Choose file</label>
+											<input type="file" class="custom-file-input stu" id="empPic" name="empPic" disabled />
+											<label class="custom-file-label" for="empPic" >Choose file</label>
 										</div>
 									</div>
 								</div>
@@ -487,7 +496,7 @@ $(function(){
 						<button type="button" id="delete" class="btn btn-outline-danger">삭제</button>
 					</div>
 					<div id="stuBtn2" align="right" style="display: none">
-						<button type="button" id="updateStu" class="btn btn-outline-success">확인</button>
+						<button type="button" id="updateEmp" class="btn btn-outline-success">확인</button>
 						<button type="button" id="cancel" class="btn btn-outline-danger">취소</button>
 					</div>
 				</div>

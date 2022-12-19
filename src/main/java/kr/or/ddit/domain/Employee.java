@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -23,6 +25,7 @@ public class Employee {
     private String empAct;    //급여지급 계좌
     private String empPic;    //증명사진 URL
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private Date empJoin;    //입사일
     private Date empRet;    //퇴사일
     private String empBir; //생년월일
