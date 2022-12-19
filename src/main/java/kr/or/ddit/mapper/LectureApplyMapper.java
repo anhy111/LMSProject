@@ -38,7 +38,7 @@ public interface LectureApplyMapper {
 	public int lecApplySubmit(LecApply lecaCd);
 	
 	// 강의계획서 주차계획 테이블
-	public int weekPlanSubmit(List<String> weekPlanList);
+	public int weekPlanSubmit(List<Weekplan> weekPlanList);
 	
 	// 강의계획서 임시저장 테이블
 	public int lecApplyTempSubmit(LecApply lecaCd);
@@ -46,11 +46,22 @@ public interface LectureApplyMapper {
 	// 임시저장 리스트
 	public List<LecApply> tempList(int proNo);
 	
-	
-	
 	// 임시저장 강의계획서 상세페이지 기본사항,상세내용
 	public List<LecApply> tempFormLecApInfo(int lecaCd);
+	
+	// 임시저장한 강의계획서 수정하기
+	public int lectureUpdate(LecApply subCd);
+	public int lecApplyUpdate(LecApply lecaCd);
+	public int weekPlanUpdate(List<Weekplan> weekPlanList);
 
+	// 임시저장한 강의계획서 수정하기
+	public int temporarySubmit(LecApply lecaCd);
+	
+	// 임시저장 강의계획서 삭제
+	public int weekPlanDelete(int lecaCd);
+	public int lecApplyDelete(int lecaCd);
+	public int lectureDelete(int lecaCd);
+	
 	// 과목명 리스트 가져오기
 	public List<Subject> subList(int proNo);
 

@@ -46,10 +46,7 @@
 	
 	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;임시저장된 강의계획서 조회
 	<button type="button" class="btn btn-primary" id="newLecApplyBtn">신규강의계획서 작성</button>
-	<p id="tellCnt">
-		[총 <span id="cntSpan"></span>건]
-	</p>
-	
+
 	<br>
 	
 	<!-- 임시저장 계획서 리스트 -->
