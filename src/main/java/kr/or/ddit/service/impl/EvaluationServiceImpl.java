@@ -18,8 +18,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 	EvaluationMapper evaluationMapper;
 	
 	@Override
-	public List<Evaluation> evaluationList(Evaluation evaluation) {
-		return this.evaluationMapper.evaluationList(evaluation);
+	public List<Evaluation> studentEvaluationList(Evaluation evaluation) {
+		return this.evaluationMapper.studentEvaluationList(evaluation);
 	}
 	
 	@Override

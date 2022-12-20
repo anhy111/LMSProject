@@ -195,7 +195,7 @@
 				return;
 			}
 			
-			score = score/ (evSize * 10 / 2) * 100;
+			score = (score/ (evSize * 10 / 2) * 4.5).toFixed(1);
 			
 			let data = {
 					lecaCd : $("#lecaCd").val(),
@@ -214,10 +214,10 @@
 				},
 				success : function(result){
 					if(result > 0){
-						alert("성공");
+						alert("평가가 완료되었습니다.");
 						location.reload();
 					} else{
-						alert("실패");
+						alert("다시 시도해주세요.");
 					}
 				}
 			})

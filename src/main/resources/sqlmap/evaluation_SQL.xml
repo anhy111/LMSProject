@@ -9,7 +9,7 @@
 		SELECT EVLQ_CD, EVLQ_CON FROM EVALUATION_Q
 	</select>
 	
-	<select id="evaluationList" parameterType="evaluation" resultType="evaluation">
+	<select id="studentEvaluationList" parameterType="evaluation" resultType="evaluation"> 
 		SELECT LA.LECA_NM
 			 , L.LECA_CD
 		     , E.EMP_NM

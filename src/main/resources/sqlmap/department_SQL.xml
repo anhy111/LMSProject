@@ -10,7 +10,7 @@
 		from DEPARTMENT
 	</select>
 	
-	<select id="departmentListByCollege" parameterType="department" resultType="department"> 
+	<select id="departmentListByCollege" parameterType="int" resultType="department"> 
 		SELECT D.DEP_CD
 		     , D.COL_CD
 		     , D.PRO_NO
@@ -21,9 +21,10 @@
 		     , D.EMP_NO
 		     , C.COL_NM
 		FROM DEPARTMENT D, COLLEGE C 
-		WHERE 1=1
-		AND D.COL_CD = C.COL_CD
-		AND COL_NM LIKE '%' || #{colNm} ||'%'
+		WHERE D.COL_CD = C.COL_CD
+		<if test="colCd != 0">
+		AND C.COL_CD = ${colCd}
+		</if>
 	</select>
 
 	<insert id="register" parameterType="department">
