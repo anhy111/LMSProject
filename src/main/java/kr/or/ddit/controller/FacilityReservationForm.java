@@ -11,6 +11,7 @@ import java.util.Date;
 public class FacilityReservationForm {
 
     private int memNo; // 유저번호
+    private int facCd; // 시설코드
     private Date startdt; //예약 시작 일자
     private Date enddt; //예약 종료 일자
     private String backgroundColor;
@@ -19,6 +20,7 @@ public class FacilityReservationForm {
     public String toString() {
         return "FacilityReservationForm{" +
                 "memNo=" + memNo +
+                ", facCd=" + facCd +
                 ", startdt=" + startdt +
                 ", enddt=" + enddt +
                 ", backgroundColor='" + backgroundColor + '\'' +
