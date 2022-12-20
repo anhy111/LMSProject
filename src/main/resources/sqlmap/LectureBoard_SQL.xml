@@ -133,7 +133,7 @@
 		WHERE LDT_CD = #{ldtCd}
 	</delete>
 	
-	<insert id="dataInsert1" parameterType="lecData">
+	<insert id="dataInsert1" parameterType="hashMap">
 		<selectKey keyProperty="ldtCd" order="BEFORE"
 			resultType="int">
 			SELECT NVL(MAX(LDT_CD),0)+1 FROM LEC_DATA
@@ -158,7 +158,7 @@
 						
 	</insert>
 
-	<insert id="dataInsert2" parameterType="lecData">
+	<insert id="dataInsert2" parameterType="hashMap">
 		<selectKey keyProperty="ldtCd" order="BEFORE"
 			resultType="int">
 			SELECT NVL(MAX(LDT_CD),0)+1 FROM LEC_DATA
