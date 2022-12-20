@@ -7,7 +7,7 @@ public class Evaluation {
 	private int evlqCd;	//평가항목코드
 	private int stuNo;	//학번
 	private int lecaCd;	//강의코드
-	private int evlScore;//평가점수
+	private double evlScore;//평가점수
 	private String evlEtc;//기타의견내용
 	
 	// Evaluation_q 컬럼
@@ -16,4 +16,7 @@ public class Evaluation {
 	private String evlqYn; //평가여부
 	private String empNm; //교수명
 	private String lecaNm; // 과목명
+	
+	// 교수의 강의평가조회를 위한 교수번호
+	private int proNo;	// 교수번호
 }
