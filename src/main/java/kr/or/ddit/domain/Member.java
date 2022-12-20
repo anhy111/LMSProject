@@ -19,6 +19,8 @@ public class Member implements Serializable {
 
     private Professor professorVO;
 
+    private Student studentVO;
+
     @Override
     public String toString() {
         return "MemberVO [memNo=" + memNo + ", memMl=" + memMl + ", memPass=" + memPass + ", memberAuthList="

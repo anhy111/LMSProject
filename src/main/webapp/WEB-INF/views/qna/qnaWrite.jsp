@@ -4,6 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%
+    request.setCharacterEncoding("utf-8");
+    Long sessionId = (Long) session.getAttribute("memNo");
+%>
+
+
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <link rel="stylesheet" href="/resources/css/qnaBoard.css"/>
@@ -38,35 +44,12 @@
 
 <script type="text/javascript" defer="defer">
 
-
-    if ($("#accessType").is(":checked") == true) {
-        console.log('비공개');
-        isShow = 0;
-    }
-
-    if ($("#accessType").is(":checked") == false) {
-        console.log('공개');
-        isShow = 1;
-    }
-
     $(function () {
 
         let header = "${_csrf.headerName}";
         let token = "${_csrf.token}";
 
-
-
         $("#insertBtn").on('click', function () {
-
-            // if ($("#accessType").is(":checked") == true) {
-            //     console.log('비공개');
-            //     isShow = 0;
-            // }
-            //
-            // if ($("#accessType").is(":checked") == false) {
-            //     console.log('공개');
-            //     isShow = 1;
-            // }
 
             if ($("#title").val().trim() == '') {
                 alert("제목을 입력하세요");
@@ -79,21 +62,26 @@
                 return;
             }
 
-            title = $("#title").val();
-            content = $("#content").val();
+            let memberNumber = $('#memberNumber').val();
+            let title = $('#title').val();
+            let content = $('#content').val();
+            let accessType = $('#accessType').val();
 
             $.ajax({
-                url: "/qna/qnaWriteAction",
+                url: "/qna/qnaWrite",
+                type: "POST",
                 dataType: "json",
                 data: {
+                    memberNumber: <%=sessionId%>,
                     title: title,
                     content: content,
-                    accessType: isShow
+                    accessType: accessType
                 },
+
                 beforeSend : function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
-                type: "post",
+
                 success: function (res) {
                     if (res == 1) {
                         alert("등록되었습니다.");
@@ -128,13 +116,14 @@
                 </p>
             </div>
 
+
             <form method="POST" name="form" id="questionForm">
                 <div class="titleRound">
                     <label>제목</label>
                     <input type="text" class="inputText" name="title" id="title"/>
                 </div>
                 <div class="textArea"><textarea name="content" id="content"></textarea></div>
-
+                <input type="hidden" name="memberNumber" value="<%=sessionId%>" id="memberNumber"/>
 
                     <input id="N101" name="accessType" type="radio" value="1" checked />
                     <label for="N101">공개</label>&emsp;
@@ -147,6 +136,9 @@
                 </div>
                 <sec:csrfInput/>
             </form>
+
+
+
 
         </div>
     </div>
