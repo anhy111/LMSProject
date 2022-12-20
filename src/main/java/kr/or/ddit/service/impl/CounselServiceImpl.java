@@ -34,6 +34,11 @@ public class CounselServiceImpl implements CounselService {
 	public int applyModify(Counsel counsel) {
 		return this.counselMapper.applyModify(counsel);
 	}
+	//학생의 상담 삭제
+	@Override
+	public int applyDelete(Long cnslCd) {
+		return this.counselMapper.applyDelete(cnslCd);
+		}
 	//교수의 상담목록 조회
 	@Override
 		public List<Counsel> professorCounselList(int proNo){
@@ -59,5 +64,10 @@ public class CounselServiceImpl implements CounselService {
 	@Override
 	public Counsel answerNoteDetail(Long cnslCd) {
 		return this.counselMapper.answerNoteDetail(cnslCd);
+		}
+	//교수의 대면 상담 작성 및 업데이트
+	@Override
+	public int answerNoteWriteUpdate(Counsel counsel) {
+		return this.counselMapper.answerNoteWriteUpdate(counsel);
 		}
 }

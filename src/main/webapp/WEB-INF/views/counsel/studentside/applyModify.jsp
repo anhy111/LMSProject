@@ -3,9 +3,11 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
-<style>div{border:1px solid black;}</style>
 <div class="container" align="center">
-	<div class="row">
+	<div class="row"style="
+    border: 50px inset aliceblue;
+    padding: 20px;
+">
 		<div class="col-12" >
 			<h3><label>상담글 확인</label></h3> <br>
 				<input type="hidden"  id="cnslCd"  value="${answerDetail.cnslCd }" readonly>
@@ -21,6 +23,7 @@
 				<br>
 				<button onclick="modifyCont()" type="button" class="btn btn-sm btn-outline-primary">수정하기</button>
 				<button onclick="closeApply()" type="button" class="btn btn-sm btn-outline-warning">취소</button>
+				<button onclick="deleteApply()" type="button" class="btn btn-sm btn-outline-danger">삭제</button>
 		</div>
 	</div>
 </div>
@@ -34,6 +37,23 @@ function modifyCont(){
 	data.cnslCon = $("#cnslCon").val();
 	$.ajax({
 		url:"/counsel/studentside/applyModify",
+		type:'POST',
+		data: JSON.stringify(data),
+		datatype:'JSON',
+		contentType: 'application/json; charset=utf-8',
+		beforeSend: function (xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success:function(result){
+			opener.parent.location.reload();
+			window.close();
+		}
+	});
+}
+function deleteApply(){
+	data.cnslCd = $("#cnslCd").val();
+	$.ajax({
+		url:"/counsel/studentside/deleteApply",
 		type:'POST',
 		data: JSON.stringify(data),
 		datatype:'JSON',

@@ -9,7 +9,7 @@
     padding: 20px;
 ">
 		<div class="col-12" id="answerTable">
-			<h3><label>답변확인</label></h3> <br>
+			<h3><label>반려사유확인</label></h3> <br>
 				<input type="hidden" value="${answerDetail.cnslCd }" readonly>
 				<div class="col-6">
 				<h5><label>상담제목</label></h5><br>
@@ -22,7 +22,7 @@
 				</div>
 				<br>
 				<div class="col-6">
-					<h5><label>답변내용</label></h5> <br>
+					<h5><label>반려사유</label></h5> <br>
 					<textarea rows="5" cols="50"  readonly>${answerDetail.cnslRpl }</textarea>
 				</div>
 				<br>

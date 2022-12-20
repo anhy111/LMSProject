@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	<style>
-	div{
-	border : 1px solid black;}
-	</style>
 <div class="container" >
 	<div class="col-12">
 		<h1>
@@ -73,34 +70,26 @@
 										<td class="dtr-control sorting_1" tabindex="0">${nonFaceCounselList.cnslCd}</td>
 										<td>${nonFaceCounselList.stuNm}</td>
 										<td>${nonFaceCounselList.cnslCate }</td>
-										<td>${nonFaceCounselList.cnslTtl }</td>
+										<td>${fn:substring(nonFaceCounselList.cnslTtl,0,5) }</td>
 										<td><fmt:formatDate
 												value="${nonFaceCounselList.cnslReg }" pattern="yyyy/MM/dd" /></td>
 										<td><fmt:formatDate value="${nonFaceCounselList.cnslDt }"
 												pattern="yyyy/MM/dd" /></td>
 										<td>
-										<c:if test="${nonFaceCounselList.cnslRpl == null}">
-										<button name="answerInsert" id="answerInsert" class="btn btn-sm btn-info"
+										<c:if test="${nonFaceCounselList.cnslDt == null and nonFaceCounselList.cnslType == '비대면'}">
+										<button name="answerInsert" id="answerInsert" class="btn btn-sm btn-secondary"
 												value="${nonFaceCounselList.cnslCd}">답변작성</button>
 										</c:if>
-										<c:if test="${nonFaceCounselList.cnslRpl != null}">
+										<c:if test="${nonFaceCounselList.cnslDt != null and nonFaceCounselList.cnslType == '반려'}">
+										<span style="color:red">반려처리</span>
+										</c:if>
+										<c:if test="${nonFaceCounselList.cnslDt != null and nonFaceCounselList.cnslType == '비대면'}">
 											<button name="answerModify" id="answerModify" class="btn btn-sm btn-success"
 												value="${nonFaceCounselList.cnslCd}">답변수정</button>
 										</c:if>
 										</td>
 									</c:forEach>
 								</tbody>
-								<tfoot>
-									<tr>
-										<th rowspan="1" colspan="1">상담번호</th>
-										<th rowspan="1" colspan="1">학생명</th>
-										<th rowspan="1" colspan="1">카테고리</th>
-										<th rowspan="1" colspan="1">제목</th>
-										<th rowspan="1" colspan="1">신청일</th>
-										<th rowspan="1" colspan="1">답변</th>
-										<th rowspan="1" colspan="1">답변일</th>
-									</tr>
-								</tfoot>
 							</table>
 						</div>
 				</div>
@@ -167,7 +156,7 @@
 										<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
 										<td>${counselList.stuNm}</td>
 										<td>${counselList.cnslCate }</td>	
-										<td>${counselList.cnslTtl }</td>	
+										<td>${fn:substring(counselList.cnslTtl,0,5) }</td>	
 										<td><fmt:formatDate value="${counselList.cnslReg }"
 												pattern="yyyy/MM/dd" /></td>
 										<td><fmt:formatDate value="${counselList.cnslDt }"
@@ -180,17 +169,6 @@
 										</c:if>
 									</c:forEach>
 								</tbody>
-								<tfoot>
-									<tr>
-										<th rowspan="1" colspan="1">상담번호</th>
-										<th rowspan="1" colspan="1">학생명</th>
-										<th rowspan="1" colspan="1">카테고리</th>
-										<th rowspan="1" colspan="1">제목</th>
-										<th rowspan="1" colspan="1">신청일</th>
-										<th rowspan="1" colspan="1">상담예약일</th>
-										<th rowspan="1" colspan="1">상담기록확인</th>
-									</tr>
-								</tfoot>
 							</table>
 						</div>
 					</div>
@@ -219,9 +197,9 @@
 			});
 	/*대면 상담*/
 	$(document).on('click','#answerNoteWrite',function() {
-				window.open("/counsel/professorside/answerNote?cnslCd="+ this.value, "answerNoteWrite","width=1000, height=800, left=100, top=50");
+				window.open("/counsel/professorside/answerNoteWriteUpdate?cnslCd="+ this.value, "answerNoteWrite","width=1000, height=800, left=100, top=50");
 			});
 	$(document).on('click','#answerNoteModify',function() {
-				window.open("/counsel/professorside/answerNote?cnslCd="+ this.value, "answerNoteModify","width=1000, height=800, left=100, top=50");
+				window.open("/counsel/professorside/answerNoteWriteUpdate?cnslCd="+ this.value, "answerNoteModify","width=1000, height=800, left=100, top=50");
 			});
 </script>

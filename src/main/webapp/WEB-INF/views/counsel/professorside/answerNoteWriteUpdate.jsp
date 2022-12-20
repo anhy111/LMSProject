@@ -1,18 +1,24 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+	integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/resources/ckeditor/ckeditor.js"></script>
 <!DOCTYPE html>
 <html>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <head>
 <title>보고서</title>
 <meta http_quiv="content-type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/resources/css/answerNote_style.css">
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/answerNote_style.css">
 </head>
 <body>
-	<div class="hpa" style="width: 210mm; height: 297mm;">
+<input id="cnslCd" type="hidden" value="${answerNoteDetail.cnslCd }"/>
+	<div class="hpa" style="width: 210mm; height: 297mm;" style="padding: 20px;border: 20px inset aliceblue;">
 		<div class="hcD" style="left: 26.99mm; top: 26.99mm;">
 			<div class="hcI">
 				<div class="hls ps11"
@@ -91,7 +97,8 @@
 					<div class="hcI" style="top: 3.69mm;">
 						<div class="hls ps13"
 							style="line-height: 2.79mm; white-space: nowrap; left: 0mm; top: -0.18mm; height: 3.53mm; width: 24.41mm;">
-							<span id="stuNm" class="hrt cs4" data-value="${answerDetail.stuNm }">&nbsp;${answerDetail.stuNm }</span>
+							<span id="stuNm" class="hrt cs4"
+								data-value="${answerNoteDetail.stuNm }">&nbsp;${answerNoteDetail.stuNm }</span>
 						</div>
 					</div>
 				</div>
@@ -122,7 +129,8 @@
 					<div class="hcI" style="top: 3.69mm;">
 						<div class="hls ps13"
 							style="line-height: 2.79mm; white-space: nowrap; left: 0mm; top: -0.18mm; height: 3.53mm; width: 26.74mm;">
-							<span class="hrt cs6"><fmt:formatDate value="${answerDetail.cnslDt}" pattern="yyyy-MM-dd" /></span>
+							<span class="hrt cs6"><fmt:formatDate
+									value="${answerNoteDetail.cnslDt}" pattern="yyyy-MM-dd" /></span>
 						</div>
 					</div>
 				</div>
@@ -144,7 +152,7 @@
 					<div class="hcI" style="top: 3.69mm;">
 						<div class="hls ps13"
 							style="line-height: 2.79mm; white-space: nowrap; left: 0mm; top: -0.18mm; height: 3.53mm; width: 65.88mm;">
-							<span class="hrt cs4">${answerDetail.cnslTtl }</span>
+							<span class="hrt cs4">${answerNoteDetail.cnslTtl }</span>
 						</div>
 					</div>
 				</div>
@@ -166,7 +174,7 @@
 					<div class="hcI" style="top: 3.69mm;">
 						<div class="hls ps13"
 							style="line-height: 2.79mm; white-space: nowrap; left: 0mm; top: -0.18mm; height: 3.53mm; width: 26.74mm;">
-							<span class="hrt cs4">${answerDetail.cnslCate }</span>
+							<span class="hrt cs4">${answerNoteDetail.cnslCate }</span>
 						</div>
 					</div>
 				</div>
@@ -184,14 +192,8 @@
 			</div>
 			<div class="hce"
 				style="left: 24.09mm; top: 23.83mm; width: 129.04mm; height: 34.63mm;">
-				<div class="hcD" style="left: 1.80mm; top: 0.50mm;">
-					<div class="hcI" style="top: 15.05mm;">
-						<div class="hls ps14"
-							style="line-height: 2.79mm; white-space: nowrap; left: 0mm; top: -0.18mm; height: 3.53mm; width: 125.43mm;">
-							<span class="hrt cs4">${answerDetail.cnslCon }</span>
-						</div>
-					</div>
-				</div>
+				<textarea id="cnslCon" class="hrt cs4" rows="9" cols="67">${answerNoteDetail.cnslCon }</textarea>
+				<%-- 							<span class="hrt cs4">${answerNoteDetail.cnslCon }</span> --%>
 			</div>
 			<div class="hce"
 				style="left: 0mm; top: 58.46mm; width: 24.09mm; height: 52.19mm;">
@@ -206,14 +208,8 @@
 			</div>
 			<div class="hce"
 				style="left: 24.09mm; top: 58.46mm; width: 129.04mm; height: 52.19mm;">
-				<div class="hcD" style="left: 1.80mm; top: 0.50mm;">
-					<div class="hcI" style="top: 23.83mm;">
-						<div class="hls ps14"
-							style="line-height: 2.79mm; white-space: nowrap; left: 0mm; top: -0.18mm; height: 3.53mm; width: 125.43mm;">
-							<span class="hrt cs4">${answerDetail.cnslRpl }</span>
-						</div>
-					</div>
-				</div>
+				<textarea id="cnslRpl" class="hrt cs4" rows="13" cols="67">${answerNoteDetail.cnslRpl }</textarea>
+				<%-- 							<span class="hrt cs4">${answerNoteDetail.cnslRpl }</span> --%>
 			</div>
 		</div>
 		<div class="hsR"
@@ -281,49 +277,99 @@
 					<div class="hcI" style="top: 0.67mm;">
 						<div class="hls ps12"
 							style="line-height: 2.79mm; white-space: nowrap; left: 0mm; top: -0.18mm; height: 3.53mm; width: 13.24mm;">
-							<span class="hrt cs6">&nbsp;${answerDetail.empNm }</span>
+							<span class="hrt cs6">&nbsp;${answerNoteDetail.empNm }</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-8">
-		<a id="pdfDown"  class="btn btn-sm btn-outline-primary">PDF다운</a>
-		<a id="close"  class="btn btn-sm btn-outline-warning">닫기</a>
-		</div>
+		<c:if test="${answerNoteDetail.cnslRpl == null || answerNoteDetail.cnslRpl == ' ' }">
+			<div class="col-sm-8">
+				<a id="pdfWrite" class="btn btn-sm btn-outline-primary">제출</a>
+				<a id="writePageClose" class="btn btn-sm btn-outline-primary">닫기</a>
+			</div>
+		</c:if>
+		<c:if test="${answerNoteDetail.cnslRpl != null }">
+			<div class="col-sm-8">
+				<a id="pdfUpdate" class="btn btn-sm btn-outline-warning">확인및수정</a>
+				<a id="updatePageClose" class="btn btn-sm btn-outline-primary">닫기</a>
+			</div>
+		</c:if>
 	</div>
-	
-<script type="text/javascript">
 
-let elements = "";
-let stuNm = "";
-$(function(){
-	elements = document.querySelector('body');
-	stuNm = document.querySelector("#stuNm");
-$("#close").on("click",function(){
-	window.close();
-})
-
-$("#pdfDown").on("click",function(){
-	
-    // Get the element.
-    $("#pdfDown").hide();
-    $("#close").hide();
-    // Generate the PDF.
-    html2pdf().from(elements).set({
-      margin: 0,
-      filename: stuNm.dataset.value+' 상담기록확인서_.pdf',
-      html2canvas: { scale:0.79},
-      jsPDF: {orientation: 'portrait', unit: 'mm', format: 'a4', compressPDF: true}
-    }).save();
-    setTimeout(function(){
-    	$("#pdfDown").show();
-    	$("#close").show();
-    },500);
-  
-
-	})
-})
-</script>
+	<script type="text/javascript">
+		let cnslRplValue,cnslConValue,cnslCdValue = "";
+		//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+		let data = {
+				cnslRpl : "",
+				cnslCon : "",
+				cnslCd  : ""
+			};
+		
+		
+		$(document).ready(function() {
+			
+			$("#writePageClose").on("click",function(){window.close();})
+			$("#updatePageClose").on("click",function(){window.close();})
+			
+			$("#pdfWrite").on('click', function() {
+				cnslRplValue = $("#cnslRpl").val();
+				cnslConValue = $("#cnslCon").val();
+				cnslCdValue= $("#cnslCd").val();
+				data.cnslRpl = cnslRplValue;
+				data.cnslCon = cnslConValue;
+				data.cnslCd = cnslCdValue;
+				alert(JSON.stringify(data));
+				//상담 기록서 작성
+				$.ajax({
+					url : "/counsel/professorside/answerNoteWriteUpdate",
+					type : "POST",
+					contentType : "application/json;charset=utf-8",
+					data : JSON.stringify(data),
+					dataType : "JSON",
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success : function(result) {
+						if (result > 0) {
+							opener.parent.location.reload();
+							window.close();
+						} else if (result <= 0) {
+							window.close();
+						}
+					}
+				});
+			})
+			$("#pdfUpdate").on("click", function() {
+				cnslRplValue = $("#cnslRpl").val();
+				cnslConValue = $("#cnslCon").val();
+				cnslCdValue= $("#cnslCd").val();
+				data.cnslRpl = cnslRplValue;
+				data.cnslCon = cnslConValue;
+				data.cnslCd = cnslCdValue;
+				console.log(JSON.stringify(data));
+				$.ajax({
+					url : "/counsel/professorside/answerNoteWriteUpdate",
+					type : "POST",
+					contentType : "application/json;charset=utf-8",
+					data : JSON.stringify(data),
+					dataType : "JSON",
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success : function(result) {
+						if (result > 0) {
+							opener.parent.location.reload();
+							window.close();
+						} else if (result <= 0) {
+							window.close();
+						}
+					}
+				});
+			})
+		})
+	</script>
 </body>
 </html>

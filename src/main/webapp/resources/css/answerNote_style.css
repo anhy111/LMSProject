@@ -48,7 +48,7 @@
 .hfE {margin:0;padding:0;position:absolute;}
 .hpl {margin:0;padding:0;position:absolute;}
 .hs {margin:0;padding:0;position:absolute;overflow:visible;}
-.hpa {position:relative;padding:0;overflow:hidden;margin-left:2mm;margin-right:0mm;margin-bottom:2mm;margin-top:0mm;border:1px black solid;box-shadow:1mm 1mm 0 #AAAAAA;}
+.hpa {position:relative;padding:20px ;overflow:hidden;margin-left:2mm;margin-right:0mm;margin-bottom:2mm;margin-top:0mm;border:20px inset aliceblue;box-shadow:1mm 1mm 0 #AAAAAA;}
 .hpa::after {content:'';position:absolute;margin:0;padding:0;left:0;right:0;top:0;bottom:0;background-color:white;z-index:-2;}
 .hrt {display:inline-block;margin:0;padding:0;position:relative;white-space:inherit;vertical-align:middle;line-height:1.1;}
 .hco {display:inline-block;margin:0;padding:0;position:relative;white-space:inherit;}
@@ -79,7 +79,7 @@
 .ps13 {text-align:center;}
 .ps14 {text-align:left;}
 @media print {
-.hpa {margin:0;border:0 black none;box-shadow:none;}
+.hpa {margin:0;box-shadow:none;}
 body {padding:0;}
 
 }
