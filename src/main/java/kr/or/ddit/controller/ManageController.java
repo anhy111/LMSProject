@@ -204,7 +204,7 @@ public class ManageController {
 			this.manageService.createProfessor(employee);
 		}
 		
-		return "redirect:/manage/insertEmp";
+		return "redirect:/manage/empManage";
 	}
 	
 	@GetMapping("/manage/empManage")

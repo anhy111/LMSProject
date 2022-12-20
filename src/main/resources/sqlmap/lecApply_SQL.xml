@@ -21,7 +21,7 @@
 		        END EMP_REG
 		        , E.EMP_TEL
 		        , C.COL_NM || ' ' || D.DEP_NM DEP_NM
-		        , P.PRO_POS PRO_POS
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = P.PRO_POS) PRO_POS
 		        , CASE WHEN E.EMP_RET IS NULL THEN '재직' ELSE '퇴직' END EMP_RET
 		        , E.EMP_PIC
 		FROM    PROFESSOR P, EMPLOYEE E, DEPARTMENT D, COLLEGE C
@@ -217,7 +217,7 @@
 			INTO WEEKPLAN(
 			WP_NO, LECA_CD, WP_CON
 			)VALUES(
-			    #{index}+1, (select max(LECA_CD) from lec_apply), #{weekPlan}
+			    #{index}+1, (select max(LECA_CD) from lec_apply), #{weekPlan.wpCon}
 			)
 		</foreach>
 	</update>
@@ -356,6 +356,84 @@
 		AND     U.LECA_IMSI_YN = 1
 		ORDER BY U.LECA_CD DESC
 	</select>
+
+	<update id="lectureUpdate" parameterType="lecApply">
+		UPDATE  LECTURE
+		SET     SUB_CD = #{subCd}
+		WHERE   LECA_CD = #{lecaCd}
+	</update>
+	
+	<update id="lecApplyUpdate" parameterType="lecApply">
+		UPDATE LEC_APPLY
+		SET
+            LECA_YR = #{lecaYr}
+            , LECA_SEM = #{lecaSem}
+            , LECA_NM = #{lecaNm}
+            , LECA_CON = #{lecaCon}
+            , LECA_TRG = #{lecaTrg}
+            , LECA_CRD = #{lecaCrd}
+            , LECA_PER = #{lecaCrd}
+            , LECA_CAP = #{lecaCap}
+            , LECA_TT =  #{lecaTt}
+            , LECA_BOOK = #{lecaBook}
+            , LECA_NOTE = #{lecaNote}
+            , LECA_DT = SYSDATE
+            , LECA_GRADE = #{lecaGrade}
+            , LECA_CATE = #{lecaCate}
+            , LECA_MP = #{lecaMp}
+            , LECA_FP = #{lecaFp}
+            , LECA_TP = #{lecaTp}
+            , LECA_AP = #{lecaAp}
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+	
+	<update id="weekPlanUpdate" parameterType="java.util.List" >
+		<foreach collection="list" item="weekPlan" 
+			 index="index" open="DECLARE BEGIN" separator=";" close="; END;">
+			 
+			UPDATE WEEKPLAN
+			SET     WP_CON = #{weekPlan.wpCon}
+			WHERE   LECA_CD = #{weekPlan.lecaCd}
+			AND     WP_NO = #{weekPlan.wpNo}
+		</foreach>
+	</update>
+	
+	<update id="temporarySubmit" parameterType="lecApply">
+		UPDATE LEC_APPLY
+		SET
+            LECA_YR = #{lecaYr}
+            , LECA_SEM = #{lecaSem}
+            , LECA_NM = #{lecaNm}
+            , LECA_CON = #{lecaCon}
+            , LECA_TRG = #{lecaTrg}
+            , LECA_CRD = #{lecaCrd}
+            , LECA_PER = #{lecaCrd}
+            , LECA_CAP = #{lecaCap}
+            , LECA_TT =  #{lecaTt}
+            , LECA_BOOK = #{lecaBook}
+            , LECA_NOTE = #{lecaNote}
+            , LECA_DT = SYSDATE
+            , LECA_GRADE = #{lecaGrade}
+            , LECA_IMSI_YN = null
+            , LECA_CATE = #{lecaCate}
+            , LECA_MP = #{lecaMp}
+            , LECA_FP = #{lecaFp}
+            , LECA_TP = #{lecaTp}
+            , LECA_AP = #{lecaAp}
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+	
+	<delete id="lectureDelete" parameterType="int">
+		DELETE LECTURE WHERE LECA_CD = #{lecaCd}
+	</delete>
+	
+	<delete id="lecApplyDelete" parameterType="int">
+		DELETE LEC_APPLY WHERE LECA_CD = #{lecaCd}
+	</delete>
+	
+	<delete id="weekPlanDelete" parameterType="int">
+		DELETE WEEKPLAN WHERE LECA_CD = #{lecaCd}
+	</delete>
 	
 </mapper>
 

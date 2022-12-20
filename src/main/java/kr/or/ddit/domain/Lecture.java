@@ -24,5 +24,6 @@ public class Lecture {
     private Professor professor;
     private Room room;
     private Subject subject;
+    private List<LecData> lecDataList;
 	
 }

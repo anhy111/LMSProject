@@ -477,14 +477,12 @@ window.onload = function() {
 	//임시저장 버튼 클릭 시
 	$('#temporarySubmitBtn').on('click', function() {
 		
-		var weekPlan = [
-			$('#weekPlan1').val(), $('#weekPlan2').val(), $('#weekPlan3').val()
-			, $('#weekPlan4').val(), $('#weekPlan5').val(), $('#weekPlan6').val()
-			, $('#weekPlan7').val(), $('#weekPlan8').val(), $('#weekPlan9').val()
-			, $('#weekPlan10').val(), $('#weekPlan11').val(), $('#weekPlan12').val()
-			, $('#weekPlan13').val(), $('#weekPlan14').val(), $('#weekPlan15').val()
-			, $('#weekPlan16').val()
-		];
+		let u_lecaCd = '${lecApplyList[0].lecaCd}';
+		var weekPlan = [];
+		
+		for(let i=1; i<=16; i++){
+			weekPlan.push({wpNo : i,lecaCd : u_lecaCd, wpCon : $('#weekPlan'+i).val()})
+		}
 		
 		let dataObject = {
 				lecaYr : $('#lecaYr').val(),
@@ -509,10 +507,13 @@ window.onload = function() {
 		}
 		
 		$.ajax({
-			url : "/lecApply/temporarySubmit",
+			url : "/professor/lecApplyForm/temporarySubmit",
 			type : "POST",
 			data : JSON.stringify(dataObject),
 			dataType : "JSON",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
 			contentType : "application/json;charset=utf-8",
 			success : function(res) {
 				if(res == 1) {
@@ -530,14 +531,12 @@ window.onload = function() {
 	//제출 버튼 클릭 시
 	$('#realSubmitBtn').on('click', function() {
 		
-		var weekPlan = [
-			$('#weekPlan1').val(), $('#weekPlan2').val(), $('#weekPlan3').val()
-			, $('#weekPlan4').val(), $('#weekPlan5').val(), $('#weekPlan6').val()
-			, $('#weekPlan7').val(), $('#weekPlan8').val(), $('#weekPlan9').val()
-			, $('#weekPlan10').val(), $('#weekPlan11').val(), $('#weekPlan12').val()
-			, $('#weekPlan13').val(), $('#weekPlan14').val(), $('#weekPlan15').val()
-			, $('#weekPlan16').val()
-		];
+		let u_lecaCd = '${lecApplyList[0].lecaCd}';
+		var weekPlan = [];
+		
+		for(let i=1; i<=16; i++){
+			weekPlan.push({wpNo : i,lecaCd : u_lecaCd, wpCon : $('#weekPlan'+i).val()})
+		}
 		
 		let dataObject = {
 				lecaYr : $('#lecaYr').val(),
@@ -575,7 +574,7 @@ window.onload = function() {
 				success : function(res) {
 					console.log("제출값 담기 : " + res);
 					
-					if(res == 18) {
+					if(res > 0) {
 						alert("제출이 완료되었습니다.");
 					}else {
 						alert("다시 시도해주세요.");
