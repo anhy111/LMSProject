@@ -10,9 +10,9 @@ public interface DepartmentService {
 	//학과 목록
     List<Department> departmentList();
 
-	List<Department> departmentListByCollege(Department department);
-
 	int register(Department department);
+	
+	List<Department> departmentByCollegeList(int colCd);
 
 	Department departmentDetail(Department department);
 

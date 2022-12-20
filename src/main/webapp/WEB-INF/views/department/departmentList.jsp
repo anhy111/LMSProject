@@ -17,9 +17,9 @@
 							<label>단과대학</label> <select id="college"
 								class="select2bs4 select2-hidden-accessible"
 								style="width: 100%;">
-								<option value="">모든단과대학</option>
+								<option value="0">모든단과대학</option>
 								<c:forEach var="college" items="${collegeList}">
-									<option value="${college.colNm}">${college.colNm}</option>
+									<option value="${college.colCd}">${college.colNm}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -41,7 +41,7 @@
 									<label>단과대학:</label> <select id="detailCollege" name="colCd"
 										class="select2bs4 select2-hidden-accessible"
 										style="width: 100%;">
-										<option value="">모든단과대학</option>
+										<option value="0">모든단과대학</option>
 										<c:forEach var="college" items="${collegeList}">
 											<option value="${college.colCd}">${college.colNm}</option>
 										</c:forEach>
@@ -317,11 +317,12 @@
 		let college = $("#college").val();
 		
 		let data = {
-				colNm : college
+				colCd : college
 		};
 		
+		console.log(data);
 		$.ajax({
-			url:"/department/departmentListbyCollege",
+			url:"/department/departmentByCollege",
 			type:"get",
 			data:data,
 			contentType : "application/json;utf-8",
