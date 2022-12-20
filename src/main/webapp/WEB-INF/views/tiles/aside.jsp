@@ -256,10 +256,6 @@
 							class="nav-icon fas fa-edit"></i>
 							<p>강의</p>
 					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>등록/장학</p>
-					</a></li>
 					<li class="nav-item">
 						<a href="#" class="nav-link"> 
 							<i class="nav-icon fas fa-book"></i>
@@ -309,7 +305,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="#" class="nav-link"> 
+								<a href="/manage/proEvaluation" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>교수 평가 조회</p>
 								</a>
