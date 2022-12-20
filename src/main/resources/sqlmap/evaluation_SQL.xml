@@ -32,7 +32,7 @@
 	<insert id="register" parameterType="evaluation">
 	
 		<selectKey order="BEFORE" keyProperty="evlqCd" resultType="int">
-			SELECT MAX(NVL(EVLQ_CD,0))+1 FROM EVALUATION
+			SELECT NVL(MAX(EVLQ_CD),0)+1 FROM EVALUATION
 		</selectKey>
 		INSERT INTO EVALUATION(EVLQ_CD, STU_NO, LECA_CD, EVL_SCORE, EVL_ETC)
            	VALUES(#{evlqCd}, #{stuNo}, #{lecaCd}, #{evlScore}, #{evlEtc})
