@@ -180,13 +180,18 @@
 				score += value/1;
 			}
 			
-			if(cont == ""){
+			if(content == ""){
 				alert("의견을 입력해주세요.");
 				return;
 			}
 			
 			if(lecaCd == 0){
 				alert("강의를 선택해주세요");
+				return;
+			}
+			
+			if(!enabled){
+				alert("평가할 강의를 선택해주세요.");
 				return;
 			}
 			
@@ -231,6 +236,7 @@
 	
 	function highlightRow(obj, p_lecaCd){
 		
+		$("#lecaCd").val(p_lecaCd);
 		var tbody = document.getElementById("tbodyId");
 		var trs = tbody.getElementsByTagName("tr");
 		console.log(trs);
@@ -246,7 +252,6 @@
 		enabled = true;
 		
 		obj.style.backgroundColor = "#FCE6E0";
-		$("#lecaCd").val(p_lecaCd);
 
 	}
 </script>
