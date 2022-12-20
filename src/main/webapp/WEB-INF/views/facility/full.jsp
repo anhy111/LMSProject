@@ -9,25 +9,29 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
     <!-- fullcalender -->
     <link href="/resources/fullcalendar-5.11.3/lib/main.css" rel="stylesheet"/>
     <script src="/resources/fullcalendar-5.11.3/lib/main.js"></script>
     <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+
+    <div id="d1" data-code="${memberNumber}">
+        <label for="facility"></label>
+        <select class="custom-select ntcCateLeft" id="facility">
+            <c:forEach var="item" items="${facility }">
+                <option value="${item.facCd}">${item.facNm}</option>
+            </c:forEach>
+        </select>
+    </div>
+
     <script>
-
-        var regColor = '#343a40';	//일반직원등록 흑색
-        var approvalColor = '#28a745'; //승인 녹색
-        var rejectColor = '#dc3545'; //반려 적색
-        var textWhite = '#fff'; //글씨흰색
-        var textBlack = '#000'; //글씨검은색
-
         var today = new Date();
         var month = today.getMonth() + 1;	//getMonth()는 9월이 8으로 나옴
         var date = today.getDate();
         var g_arg;	//이벤트 글로벌 변수(모달창에서 호출하는 함수에서 참조하기 위함)
         var calendar;	//달력 변수
         var todayStr = today.getFullYear() + '-' + stringFormat(month) + '-' + stringFormat(date);
-        var sch;
 
         function stringFormat(p_val) {
             if (p_val < 10)
@@ -36,10 +40,11 @@
                 return p_val;
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            var calendarEl = document.querySelector("#calendar");
+        document.addEventListener("DOMContentLoaded", () => {
+            let calendarEl = document.querySelector("#calendar");
 
             calendar = new FullCalendar.Calendar(calendarEl, {
+                height: 680,
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -81,18 +86,18 @@
             calendar.render();
         });
 
-
         function loadEvent() {
 
             let header = "${_csrf.headerName}";
             let token = "${_csrf.token}";
 
-
             let arr = [];
             $.ajax({
                 type: "post",
                 url: "/facility/full",
-                data: "{}",
+                data: {
+                    facCd: 1
+                },
                 dataType: "JSON",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
@@ -115,6 +120,103 @@
             return arr;
         }
     </script>
+
+
+
+    <!-- 시설선택 후 출력  -->
+    <script>
+        $('#facility').on('change', () => {
+            let facilityCode = $('#facility').val();
+
+            alert(facilityCode);
+
+            let header = "${_csrf.headerName}";
+            let token = "${_csrf.token}";
+
+            var arr = [];
+
+            let request = $.ajax({
+                type: "POST",
+                url: "/facility/full",
+                data: {
+                    facCd: facilityCode
+                },
+                dataType: "JSON",
+                beforeSend: (xhr) => {
+                    xhr.setRequestHeader(header, token);
+                },
+                async: false,
+                success: (list) => {
+                        for (let i = 0; i < list.length; i++) {
+                            arr.push({
+                                title: list[i]['memNo'],
+                                rsvCd: list[i]['rsvCd'],
+                                facCd: list[i]['facCd'],
+                                memNo: list[i]['memNo'],
+                                start: list[i]['rsvSt'],
+                                end: list[i]['rsvEn'],
+                                backgroundColor: list[i]['backgroundColor']
+                            })
+                        }
+                        return arr;
+                }
+            });
+
+            request.done(function (data) {
+
+                alert("여기?");
+                console.log(JSON.stringify(arr) + ' ar');
+
+                let facilityCode = $('#facility').val();
+
+
+                    let calendarEl = document.querySelector("#calendar");
+
+                    calendar = new FullCalendar.Calendar(calendarEl, {
+                        height: 700,
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        },
+                        initialView: 'timeGridWeek',
+                        locale: 'ko',
+                        slotMinTime: '09:00',
+                        slotMaxTime: '19:00',
+                        initialDate: todayStr,
+                        navLinks: true, // can click day/week names to navigate views
+                        selectable: true,
+                        selectMirror: true,
+
+                        select: function (arg) {
+                            insertModalOpen(arg);	//일자 클릭 시 모달 호출
+                        },
+                        eventClick: function (arg) {
+                            insertModalOpen(arg);	//이벤트 클릭 시 모달 호출
+                        },
+                        eventChange: function (arg) {
+                            //allDay true로 바꾸면 end가 없어서 만듬
+                            if (arg.event.end == null) {
+                                var end = new Date();
+                                end.setDate(arg.event.start.getDate() + 1);
+                                arg.event.setEnd(end);
+                            }
+                        },
+                        eventDrop: function (arg) {
+                            insertModalOpen(arg);		//이벤트 드래그드랍 시 모달 호출
+                        },
+                        eventResize: function (arg) {
+                            insertModalOpen(arg);		//이벤트 사이즈 변경시(일정변경) 모달 호출
+                        },
+                        editable: true,
+                        dayMaxEvents: true, // allow "more" link when too many events
+                        events: arr
+                    });
+                    calendar.render();
+            });
+        })
+
+    </script>
     <title>시설 예약</title>
 </head>
 <body>
@@ -122,6 +224,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <div id="calendar"></div>
+        <div id="calendar1"></div>
 
         <!-- insertModal -->
         <div class="modal fade insertModal" id="myModal">
@@ -207,6 +310,7 @@
                                 </ul>
                                 <input type="hidden" id="backgroundColor" name="backgroundColor">
                                 <input type="hidden" name="rsvCd" id="rsvCd"/>
+                                <input type="hidden" name="facCd" id="facCd"/>
                             </div>
                         </div>
                     </div>
@@ -248,6 +352,7 @@
     //모달초기화-------------------------------------------------------------------------------------------------
     function initModal(modal, arg) {
         $('.' + modal + ' #rsvCd').val('');
+        $('.' + modal + ' #facCd').val('');
         $('.' + modal + ' #rsvSt').val('09:00');
         $('.' + modal + ' #rsvEn').val('09:30');
         $('.' + modal).modal('hide');
@@ -262,6 +367,7 @@
         if (g_arg.event != undefined) {
 
             $('.insertModal #rsvCd').val(g_arg.event.extendedProps.rsvCd);
+            $('.insertModal #facCd').val(g_arg.event.extendedProps.facCd);
             $(".insertModal .deleteBtn").css('display', 'inline');
             $('.insertModal #rsvSt').val(stringFormat(g_arg.event.start.getHours()) + ':' + stringFormat(g_arg.event.start.getMinutes()));
             $('.insertModal #rsvEn').val(stringFormat(g_arg.event.end.getHours()) + ':' + stringFormat(g_arg.event.end.getMinutes()));
@@ -297,7 +403,8 @@
         if (confirm('일정을 삭제하시겠습니까?')) {
             var data = {
                 memNo: '<%=sessionId%>',
-                rsvCd: $('.' + modal + ' #rsvCd').val() //seq 컬럼 추가해서 기본키 seq로 바꾸고 title은 중복 가능하게 변경하기★★★★
+                rsvCd: $('.' + modal + ' #rsvCd').val(), //seq 컬럼 추가해서 기본키 seq로 바꾸고 title은 중복 가능하게 변경하기★★★★
+                facCd: $('.' + modal + ' #facCd').val()
             }
 
             let header = "${_csrf.headerName}";
@@ -373,6 +480,7 @@
 
             data = {
                 memNo: '<%=sessionId%>',
+                facCd: $('#facility').val(),
                 rsvSt: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
                 rsvEn: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
                 backgroundColor: $("#backgroundColor").val()
@@ -404,6 +512,7 @@
 
                     calendar.addEvent({
                         rsvCd: $('#rsvCd').val(),
+                        facCd: $('#facCd').val(),
                         start: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
                         end: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
                         backgroundColor: $("#backgroundColor").val(),
@@ -419,15 +528,8 @@
             });
         }
     }
-</script>
 
-<div id="d1" data-code="${memberNumber}" >
-    <select class="custom-select ntcCateLeft" id="facility">
-        <c:forEach var="item" items="${facility }">
-            <option value="${item.facCd}">${item.facNm}</option>
-        </c:forEach>
-    </select>
-</div>
+</script>
 
 </body>
 </html>

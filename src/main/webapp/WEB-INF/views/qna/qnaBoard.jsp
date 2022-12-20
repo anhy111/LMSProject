@@ -70,6 +70,7 @@
                         </tbody>
                     </table>
                     <div style="text-align: right">
+
                     <a href="/qna/qnaWrite" class="btn btn-sm btn-primary">글쓰기</a>
                     </div>
                 </div>

@@ -5,11 +5,14 @@ import java.util.List;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
 import lombok.RequiredArgsConstructor;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -111,4 +114,29 @@ public class NoticeBasicController {
 
         return "redirect:/notice/list";
     }
+
+    @GetMapping("/upload")
+    public String uploadView() {
+
+        return "json/fileInput";
+    }
+
+    @PostMapping("/upload")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                   RedirectAttributes redirectAttributes) {
+
+        // 파일을 저장하거나 처리합니다.
+
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+        return "redirect:/notice/list";
+    }
+
+    @GetMapping("/json/index")
+    public String jsonIndex() {
+
+        return "json/index";
+    }
+
 }

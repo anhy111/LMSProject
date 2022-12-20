@@ -281,7 +281,87 @@
 		WHERE EMP_NO = #{empNo}
 	</update>
 	
-
+	<select id="evaluationList" parameterType="map" resultType="evaluation"> 
+		SELECT   L.LECA_CD
+		        , L.LEC_HCNT 
+		        , A.LECA_NM 
+		        , A.PRO_NO 
+		        , E.EMP_NM 
+		        , TO_CHAR(AVG(V.EVL_SCORE),'0.0') AS EVL_SCORE
+		        , A.LECA_CATE 
+		        , D.DEP_NM 
+		        , C.COL_NM 
+		        , A.LECA_YR 
+		        , A.LECA_SEM 
+		FROM  COLLEGE C, DEPARTMENT D, PROFESSOR P, EMPLOYEE E, SUBJECT U, LECTURE L, LEC_APPLY A, STU_LEC S, EVALUATION V  
+		WHERE D.COL_CD = C.COL_CD
+		AND D.DEP_CD = P.DEP_CD
+		AND P.PRO_NO = E.EMP_NO
+		AND U.PRO_NO = P.PRO_NO
+		AND L.SUB_CD = U.SUB_CD
+		AND L.LECA_CD = A.LECA_CD
+		AND L.LECA_CD = S.LECA_CD
+		AND S.LECA_CD = V.LECA_CD
+		AND V.STU_NO = S.STU_NO
+		GROUP BY  L.LECA_CD 
+		        , L.LEC_HCNT 
+		        , A.LECA_NM 
+		        , A.PRO_NO 
+		        , E.EMP_NM 
+		        , A.LECA_CATE 
+		        , D.DEP_NM 
+		        , C.COL_NM 
+		        , A.LECA_YR 
+		        , A.LECA_SEM
+	</select>
+	
+	<select id="evaluationCon" parameterType="map" resultMap="evlMap"> 
+		SELECT   L.LECA_CD 
+		        , L.LEC_HCNT 
+		        , A.LECA_NM 
+		        , A.PRO_NO 
+		        , E.EMP_NM 
+		        , TO_CHAR((SELECT AVG(EVL_SCORE) FROM EVALUATION WHERE LECA_CD = #{lecaCd}),'0.0') AS EVL_SCORE
+		        , A.LECA_CATE 
+		        , D.DEP_NM 
+		        , C.COL_NM 
+		        , A.LECA_YR 
+		        , A.LECA_SEM 
+		        , (SELECT COUNT(*) FROM EVALUATION WHERE LECA_CD = #{lecaCd}) AS COUNT
+		        , V.EVL_ETC
+		FROM  COLLEGE C, DEPARTMENT D, PROFESSOR P, EMPLOYEE E, SUBJECT U, LECTURE L, LEC_APPLY A, STU_LEC S, EVALUATION V  
+		WHERE D.COL_CD = C.COL_CD
+		AND D.DEP_CD = P.DEP_CD
+		AND P.PRO_NO = E.EMP_NO
+		AND U.PRO_NO = P.PRO_NO
+		AND L.SUB_CD = U.SUB_CD
+		AND L.LECA_CD = A.LECA_CD
+		AND L.LECA_CD = S.LECA_CD
+		AND S.LECA_CD = V.LECA_CD
+		AND V.STU_NO = S.STU_NO
+		AND L.LECA_CD = #{lecaCd}
+	</select>
+	
+	<resultMap type="evaluation" id="evlMap">
+		<result property="lecaCd" column="LECA_CD" />
+		<result property="lecHcnt" column="LEC_HCNT" />
+		<result property="lecaNm" column="LECA_NM" />
+		<result property="proNo" column="PRO_NO" />
+		<result property="empNm" column="EMP_NM" />
+		<result property="evlScore" column="EVL_SCORE" />
+		<result property="lecaCate" column="LECA_CATE" />
+		<result property="depNm" column="DEP_NM" />
+		<result property="colNm" column="COL_NM" />
+		<result property="lecaYr" column="LECA_YR" />
+		<result property="lecaSem" column="LECA_SEM" />
+		<result property="count" column="COUNT" />
+		<collection property="evlEtcList" resultMap="etcMap" />
+	</resultMap>
+	
+	<resultMap type="String" id="etcMap">
+		<result column="EVL_ETC"/>
+	</resultMap>
+	
 </mapper>
 
 

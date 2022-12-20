@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,34 +26,34 @@ public class QnaController {
 
     //QnA 메인 페이지
     @GetMapping("/main")
-    public String qnaMain (Model model) {
+    public String qnaMain(Model model) {
 
         int totalRow = this.qnaService.getQnaTotalRow();
 
-       List<Qna> showList = qnaService.showList();
+        List<Qna> showList = qnaService.showList();
 
-       model.addAttribute("showList", showList);
-       model.addAttribute("totalRow", totalRow);
+        model.addAttribute("showList", showList);
+        model.addAttribute("totalRow", totalRow);
 
         return "qna/qnaBoard";
     }
 
     @GetMapping("/qnaWrite")
-    public String getQnaWriteForm (Model model) {
+    public String getQnaWriteForm(Model model) {
+
 
         model.addAttribute("form", new QnaForm());
 
         return "qna/qnaWrite";
     }
 
+    @ResponseBody
     @PostMapping("/qnaWrite")
-    public String postQnaWriteForm (QnaForm qnaForm,
-                                    HttpServletRequest request) {
+    public String postQnaWriteForm(QnaForm qnaForm) {
 
-        log.info(qnaForm.toString());
-        log.info(qnaForm.getAccessType());
+        log.info(String.valueOf(qnaForm.getMemberNumber()));
 
-        Qna qna = new Qna(qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccessType());
+        Qna qna = new Qna(qnaForm.getMemberNumber(), qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccessType());
 
         qnaService.qnaSave(qna);
 
@@ -100,11 +101,11 @@ public class QnaController {
         return "redirect:/qna/main";
     }
 
-//    @PostMapping("/addReply")
-//    public String addReply(@RequestParam("parentId") Long parentId,
-//                           @RequestParam("replyContent") String content) {
-//
-//        return "";
-//    }
+    @PostMapping("/addReply")
+    public String addReply(@RequestParam("parentId") Long parentId,
+                           @RequestParam("replyContent") String content) {
+
+        return "";
+    }
 
 }

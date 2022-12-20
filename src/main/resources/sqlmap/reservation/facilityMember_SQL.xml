@@ -16,16 +16,20 @@
         INSERT INTO reservation (
          MEM_NO
         ,RSV_CD
+        ,FAC_CD
         ,RSV_ST
         ,RSV_EN
         ,BACKGROUND_COLOR
+        ,REG_DT
         )
         VALUES (
          #{memNo}
         ,#{rsvCd}
+        ,#{facCd}
         ,#{rsvSt}
         ,#{rsvEn}
         ,#{backgroundColor}
+        ,SYSDATE
         )
     </insert>
 

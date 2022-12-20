@@ -37,11 +37,18 @@ public class LectureBoardController {
 	@GetMapping("/data/lectureData")
 	public ModelAndView dataList(ModelAndView mav, String keyWord, String category, String lecaCd) {
 		Lecture lecture = this.lectureBoardService.dataList(keyWord, category, lecaCd);
-		List<LecData> lecData = lecture.getLecDataList();
+		
+		try {
+			List<LecData> lecData = lecture.getLecDataList();
+			mav.addObject("lecData", lecData);
+			mav.addObject("lecture", lecture);
+			mav.setViewName("lectureBoard/data/lectureData");
+			
+		}catch (Exception e) {
+			mav.setViewName("lectureBoard/data/lectureData");
+			return mav;
+		}
 
-		mav.addObject("lecData", lecData);
-		mav.addObject("lecture", lecture);
-		mav.setViewName("lectureBoard/data/lectureData");
 
 		return mav;
 	}
@@ -96,25 +103,24 @@ public class LectureBoardController {
 		return "lectureBoard/data/dataInsert";
 	}
 	@PostMapping("data/dataInsert")
-	public String insertData2(@RequestParam MultipartFile[] files,@ModelAttribute LecData lecData, Principal principal, String lecaCd) {
+	public String insertData2(@RequestParam MultipartFile[] files,LecData lecData, Principal principal, String lecaCd) {
 		String empNo = principal.getName();
 		lecData.setLecaCd(Integer.parseInt(lecaCd));
-		log.info(lecData.toString());
 		
 		Map<String, Object> map =  new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("ldtTtl", lecData.getLdtTtl());
 		map.put("ldtCon", lecData.getLdtCon());
 		map.put("lecaCd", lecData.getLecaCd());
-		log.info(lecData.toString());
+		
 		if (files[0].getSize() > 0) {
 			this.lectureBoardService.dataInsert1(map);
 			this.fileUploadUtil.fileUploadAction(files);
 		} else {
-			log.info("첨부파일 없어용");
 			this.lectureBoardService.dataInsert2(map);
 		}
-		// 경로 문제 ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
-		return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&&ldtCd=" +lecData.getLdtCd();
+		Integer ldtCd = (Integer) map.get("ldtCd");
+
+		return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&&ldtCd=" +ldtCd;
 	}
 }

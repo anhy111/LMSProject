@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Evaluation;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.ManageMapper;
@@ -110,5 +111,20 @@ public class ManageServiceImpl implements ManageService{
 	@Override
 	public int updateEmp(Employee employee) {
 		return this.manageMapper.updateEmp(employee);
+	}
+	
+	@Override
+	public List<Evaluation> evaluationList(){
+		return this.manageMapper.evaluationList();
+	}
+	
+	@Override
+	public Evaluation evaluationCon(Map<String, String> map) {
+		return this.manageMapper.evaluationCon(map);
+	}
+	
+	@Override
+	public List<Evaluation> contentsList(Map<String, String> map){
+		return this.manageMapper.contentsList(map);
 	}
 }
