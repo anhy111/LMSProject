@@ -530,25 +530,25 @@
 	<select id="taskSubmitList" resultMap="taskMap"
 		parameterType="String">
 		SELECT
-		TS.TSUB_CD
-		,TS.LECA_CD
-		,TS.TASK_CD
-		,TS.STU_NO
-		,TS.TSUB_DT
-		,TS.TSUB_SCORE
-		,TS.ATCH_FILE_ID
-		,TS.TSUB_CON
-		,S.STU_NM
-		,T.TASK_NM
-		,T.TASK_EDT
+			TS.TSUB_CD
+			,TS.LECA_CD
+			,TS.TASK_CD
+			,TS.STU_NO
+			,TS.TSUB_DT
+			,TS.TSUB_SCORE
+			,TS.ATCH_FILE_ID
+			,TS.TSUB_CON
+			,S.STU_NM
+			,T.TASK_NM
+			,T.TASK_EDT
 		FROM
 		TASK T
-		, TASK_SUBMIT TS
-		, STUDENT S
+			, TASK_SUBMIT TS
+			, STUDENT S
 		WHERE
-		S.STU_NO = TS.STU_NO
-		AND T.TASK_CD = TS.TASK_CD
-		AND T.TASK_CD = #{taskCd}
+			S.STU_NO = TS.STU_NO
+			AND T.TASK_CD = TS.TASK_CD
+			AND T.TASK_CD = #{taskCd}
 	</select>
 
 	<!-- 과제 제출 insert 시작=========================================================================================== -->
@@ -560,20 +560,20 @@
 		</selectKey>
 		insert into
 		TASK_SUBMIT (
-		TSUB_CD
-		,LECA_CD
-		,TASK_CD
-		,STU_NO
-		,ATCH_FILE_ID
-		,TSUB_CON
+					TSUB_CD
+					,LECA_CD
+					,TASK_CD
+					,STU_NO
+					,ATCH_FILE_ID
+					,TSUB_CON
 		)
 		values(
-		#{tsubCd}
-		, #{lecaCd}
-		, #{taskCd}
-		, #{stuNo}
-		, (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
-		, #{tsubCon}
+					#{tsubCd}
+					, #{lecaCd}
+					, #{taskCd}
+					, #{stuNo}
+					, (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+					, #{tsubCon}
 		)
 	</insert>
 
@@ -584,18 +584,18 @@
 		</selectKey>
 		insert into
 		TASK_SUBMIT (
-		TSUB_CD
-		,LECA_CD
-		,TASK_CD
-		,STU_NO
-		,TSUB_CON
+				TSUB_CD
+				,LECA_CD
+				,TASK_CD
+				,STU_NO
+				,TSUB_CON
 		)
 		values(
-		#{tsubCd}
-		, #{lecaCd}
-		, #{taskCd}
-		, #{stuNo}
-		, #{tsubCon}
+				#{tsubCd}
+				, #{lecaCd}
+				, #{taskCd}
+				, #{stuNo}
+				, #{tsubCon}
 		)
 	</insert>
 	<!-- 과제 제출 insert 끝=========================================================================================== -->
@@ -604,37 +604,37 @@
 	<select id="submitDetail" resultType="task"
 		parameterType="hashMap" resultMap="taskMap">
 		SELECT
-		TS.TSUB_CD
-		,TS.LECA_CD
-		,TS.TASK_CD
-		,TS.STU_NO
-		,TS.TSUB_DT
-		,TS.TSUB_SCORE
-		,TS.ATCH_FILE_ID
-		,TS.TSUB_CON
-		,S.STU_NM
-		,T.TASK_NM
-		,T.TASK_EDT
+				TS.TSUB_CD
+				,TS.LECA_CD
+				,TS.TASK_CD
+				,TS.STU_NO
+				,TS.TSUB_DT
+				,TS.TSUB_SCORE
+				,TS.ATCH_FILE_ID
+				,TS.TSUB_CON
+				,S.STU_NM
+				,T.TASK_NM
+				,T.TASK_EDT
 		<if test='result > "0"'>
-			, A.ATCH_FILE_ID
-			, A.FILE_SN
-			, A.FILE_STRE_COURS
-			, A.STRE_FILE_NM
-			, A.ORIGNL_FILE_NM
-			, A.FILE_EXTSN
-			, A.FILE_SIZE
-			, A.CREATE_DT
+				, A.ATCH_FILE_ID
+				, A.FILE_SN
+				, A.FILE_STRE_COURS
+				, A.STRE_FILE_NM
+				, A.ORIGNL_FILE_NM
+				, A.FILE_EXTSN
+				, A.FILE_SIZE
+				, A.CREATE_DT
 		</if>
 		FROM
-		TASK T
-		, TASK_SUBMIT TS
-		, STUDENT S
+				TASK T
+				, TASK_SUBMIT TS
+				, STUDENT S
 		<if test='result > "0"'>
-			, ATTACH A
+				, ATTACH A
 		</if>
 		WHERE
-		S.STU_NO = TS.STU_NO
-		AND T.TASK_CD = TS.TASK_CD
+				S.STU_NO = TS.STU_NO
+				AND T.TASK_CD = TS.TASK_CD
 		<if test='result > "0"'>
 			AND TS.ATCH_FILE_ID = A.ATCH_FILE_ID
 		</if>
