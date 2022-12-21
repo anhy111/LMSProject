@@ -276,9 +276,8 @@
 				)
 	</insert>
 
-<update id="testQInsert" parameterType="java.util.List">
-	<foreach collection="list" item="item" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
-		INTO TEST_Q(
+<insert id="testQInsert" parameterType="testQ">
+		INSERT INTO TEST_Q(
 					 TEQ_CD
 					,TEST_CD
 					,TEQ_SEQ
@@ -291,17 +290,42 @@
 		) 
 		VALUES (
 					 (SELECT NVL(MAX(TEQ_CD),0)+1 FROM TEST_Q)		
-		            ,#{testCd    }
+		            ,#{testCd}
 		            ,(SELECT NVL(MAX(TEQ_SEQ),0)+1 FROM TEST_Q WHERE TEST_CD = #{testCd})
 		            ,#{teqOption1}
 		            ,#{teqOption2}
 		            ,#{teqOption3}
 		            ,#{teqOption4}
-				    ,#{teqAnswer }
-				    ,#{teqCon	 }
+				    ,#{teqAnswer}
+				    ,#{teqCon}
 		)
-	</foreach>
-</update>
+</insert>
+<!-- <update id="testQInsert" parameterType="java.util.List"> -->
+<!-- 	<foreach collection="testQList" item="item" separator="" open="insert" close=""> -->
+<!-- 		 INTO TEST_Q( -->
+<!-- 					 TEQ_CD -->
+<!-- 					,TEST_CD -->
+<!-- 					,TEQ_SEQ -->
+<!-- 					,TEQ_OPTION1 -->
+<!-- 					,TEQ_OPTION2 -->
+<!-- 					,TEQ_OPTION3 -->
+<!-- 					,TEQ_OPTION4 -->
+<!-- 					,TEQ_ANSWER -->
+<!-- 					,TEQ_CON -->
+<!-- 		)  -->
+<!-- 		VALUES ( -->
+<!-- 					 (SELECT NVL(MAX(TEQ_CD),0)+1 FROM TEST_Q)		 -->
+<!-- 		            ,#{item.testCd    } -->
+<!-- 		            ,(SELECT NVL(MAX(TEQ_SEQ),0)+1 FROM TEST_Q WHERE TEST_CD = #{item.testCd}) -->
+<!-- 		            ,#{item.teqOption1} -->
+<!-- 		            ,#{item.teqOption2} -->
+<!-- 		            ,#{item.teqOption3} -->
+<!-- 		            ,#{item.teqOption4} -->
+<!-- 				    ,#{item.teqAnswer } -->
+<!-- 				    ,#{item.teqCon	  } -->
+<!-- 		) -->
+<!-- 	</foreach> -->
+<!-- </update> -->
 	
 	
 	

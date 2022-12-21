@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -77,18 +78,21 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	@Override
 	public int testInsert(Test test) {
 		int result = 0;
-		List<TestQ> testQ = new ArrayList<TestQ>();
+		List<TestQ> testQList = new ArrayList<TestQ>();
 		//시험 등록
 		 this.lectureBoardMapper.testInsert(test);
-		
+		log.info(test.toString()+"111");
 		 List<TestQ> list = test.getTestQList();
 		 for (TestQ testQ1 : list) {
 			 testQ1.setTestCd(test.getTestCd());
-			 testQ.add(testQ1);
+			 testQList.add(testQ1);
 		 }
-		 log.info("testCd"+testQ);
+		 log.info("testCd"+testQList);
 		 //시험 문제 추가
-		result = this.lectureBoardMapper.testQInsert(testQ);
+		 for (TestQ testQ : testQList) {
+			 log.info("testq:+++++++++++++ "+testQ.toString());
+			 result = this.lectureBoardMapper.testQInsert(testQ);
+		}
 		
 		 return result;
 	}

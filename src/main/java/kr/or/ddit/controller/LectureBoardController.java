@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.velocity.runtime.directive.Parse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -148,12 +149,12 @@ public class LectureBoardController {
 
 	//시험 추가, 시험 문제 추가
 	@PostMapping("test/testRegist")
-	public String registTest(Model model, @ModelAttribute Test test) {
+	public String registTest(Model model, @ModelAttribute @Param("test") Test test) {
 		
 		this.lectureBoardService.testInsert(test);
 		log.info(test.toString());
 		
-		return "lectureBoard/test/testRegistPage";
+		return "redirect:/lectureBoard/test/test?lecaCd="+test.getLecaCd();
 	}
 
 

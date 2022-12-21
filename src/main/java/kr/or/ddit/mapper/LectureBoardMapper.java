@@ -42,7 +42,7 @@ public interface LectureBoardMapper {
 	public int testInsert(Test test);
 	
 	//문제 추가
-	public int testQInsert(List<TestQ> testQList);
+	public int testQInsert(TestQ testQ);
 		
 	
 }
