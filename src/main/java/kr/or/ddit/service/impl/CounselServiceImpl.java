@@ -24,22 +24,32 @@ public class CounselServiceImpl implements CounselService {
 		public int applyInsert(Counsel counsel) {
 			return this.counselMapper.applyInsert(counsel);
 		}
-	//교수의 상담답변
+	//학생의 담당 교수 목록
 	@Override
-		public int applyAnswerUpdate(Counsel counsel) {
-			return this.counselMapper.applyAnswerUpdate(counsel);
+	public List<Counsel> listOfProfessor(int stuNo){
+		return this.counselMapper.listOfProfessor(stuNo);
+	}
+	//학생의 상담 내용 수정
+	@Override
+	public int applyModify(Counsel counsel) {
+		return this.counselMapper.applyModify(counsel);
+	}
+	//학생의 상담 삭제
+	@Override
+	public int applyDelete(Long cnslCd) {
+		return this.counselMapper.applyDelete(cnslCd);
 		}
 	//교수의 상담목록 조회
 	@Override
 		public List<Counsel> professorCounselList(int proNo){
 			return this.counselMapper.professorCounselList(proNo);
 		}
-	//학생의 담당 교수 목록
+	//교수의 비대면 상담답변
 	@Override
-	public List<Counsel> listOfProfessor(int stuNo){
-		return this.counselMapper.listOfProfessor(stuNo);
+	public int applyAnswerUpdate(Counsel counsel) {
+		return this.counselMapper.applyAnswerUpdate(counsel);
 	}
-	//교수의 답변상세
+	//교수의 비대면 답변상세
 	@Override
 	public Counsel answerDetail(Long cnslCd) {
 		return this.counselMapper.answerDetail(cnslCd);
@@ -49,9 +59,15 @@ public class CounselServiceImpl implements CounselService {
 	public String studentNameByCounsels(Long cnslCd) {
 		return this.counselMapper.studentNameByCounsels(cnslCd);
 	}
-	//학생의 상담 내용 수정
+	
+	//교수의 대면 상담 상세
 	@Override
-	public int applyModify(Counsel counsel) {
-		return this.counselMapper.applyModify(counsel);
-	}
+	public Counsel answerNoteDetail(Long cnslCd) {
+		return this.counselMapper.answerNoteDetail(cnslCd);
+		}
+	//교수의 대면 상담 작성 및 업데이트
+	@Override
+	public int answerNoteWriteUpdate(Counsel counsel) {
+		return this.counselMapper.answerNoteWriteUpdate(counsel);
+		}
 }
