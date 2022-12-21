@@ -1,4 +1,4 @@
-package kr.or.ddit.domain.qna;
+package kr.or.ddit.domain.qna.qnareply;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

@@ -24,6 +24,8 @@ public class QnaController {
 
     private final QnaService qnaService;
 
+    private static final String MAIN = "redirect:/qna/main";
+
     //QnA 메인 페이지
     @GetMapping("/main")
     public String qnaMain(Model model) {
@@ -39,25 +41,23 @@ public class QnaController {
     }
 
     @GetMapping("/qnaWrite")
-    public String getQnaWriteForm(Model model) {
+    public String getQnaWriteForm(Principal principal, HttpServletRequest request, Model model) {
 
+        Long id = Long.valueOf(principal.getName());
 
         model.addAttribute("form", new QnaForm());
+        model.addAttribute("memberNumber", id);
 
         return "qna/qnaWrite";
     }
 
-    @ResponseBody
     @PostMapping("/qnaWrite")
     public String postQnaWriteForm(QnaForm qnaForm) {
-
-        log.info(String.valueOf(qnaForm.getMemberNumber()));
-
         Qna qna = new Qna(qnaForm.getMemberNumber(), qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccessType());
 
         qnaService.qnaSave(qna);
 
-        return "redirect:main";
+        return MAIN;
     }
 
     @GetMapping("/qnaDetail/{list.qnaCd}/detail")
@@ -88,7 +88,7 @@ public class QnaController {
 
         qnaService.update(form);
 
-        return "redirect:/qna/main";
+        return MAIN;
     }
 
     //공지사항 삭제
