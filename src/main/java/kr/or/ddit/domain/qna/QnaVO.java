@@ -1,6 +1,7 @@
 package kr.or.ddit.domain.qna;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import kr.or.ddit.domain.qna.qnareply.QnaReplyVO;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.builder.ToStringBuilder;

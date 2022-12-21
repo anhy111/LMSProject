@@ -22,6 +22,12 @@
 	</properties>
 	<dependencies>
 
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.722</version>
+		</dependency>
+
 		<!-- JPA, 하이버네이트 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

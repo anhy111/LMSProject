@@ -29,7 +29,7 @@
                             <th class="sorting" tabindex="0" aria-controls="example1"
                                 rowspan="1" colspan="1"
                                 aria-label="Rendering engine: activate to sort column ascending"
-                                cursorshover="true">공지사항코드
+                                cursorshover="true">공지코드
                             </th>
                             <th class="sorting" tabindex="0" aria-controls="example1"
                                 rowspan="1" colspan="1"
@@ -41,6 +41,11 @@
                                 aria-label="Engine version: activate to sort column ascending"
                                 cursorshover="true">등록일
                             </th>
+                            <th class="sorting" tabindex="0" aria-controls="example1"
+                                rowspan="1" colspan="1"
+                                aria-label="Engine version: activate to sort column ascending"
+                                cursorshover="true">조회수
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -51,16 +56,13 @@
                             <c:if test="${stat.count%2==0 }">
                         <tr class="even"></c:if>
                             <td class="dtr-control sorting_1" tabindex="0">${noticeBasic.noticeCd}</td>
-
                             <td><a href="/notice/list/${noticeBasic.noticeCd}/detail">${noticeBasic.noticeTtl}
                                 <c:if test="${ date <= noticeRegDate }">
                                 <span class="badge badge-outline-warning badge-pill" style="float: right;">NEW</span>
                                 </c:if>
                             </td>
-
-
                             <td><fmt:formatDate value="${noticeBasic.noticeReg }" pattern="yyyy년 MM월 dd일"/></td>
-
+                            <td class="dtr-control sorting_1" tabindex="0">${noticeBasic.noticeCd}</td>
                             </c:forEach>
                         </tbody>
                     </table>
