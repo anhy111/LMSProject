@@ -5,6 +5,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript" src="/resources/ckeditor/ckeditor.js"></script>
+<% int stuNo = (int)session.getAttribute("no"); %>
 <script type="text/javascript">
 
 		var date = new Date();
@@ -109,9 +110,9 @@
 				</div>
 			</div>
 						
-			<div class="form-group col-4" data-select2-id="191">
+			<div class="form-group col-4" >
 				<label>학적구분</label>
-				<select  id="recordCategory" name="rgbCd" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+				<select  id="recordCategory" name="rgbCd"  >
 					<option selected="selected" >카테고리선택</option>
 					<option id="leave"  value="휴학">휴학</option>
 					<option id="return"  value="복학">복학</option>
@@ -120,9 +121,9 @@
 				</select>
 			</div>
 				<!-- 휴학선택시 보이는 옵션 -->
-			<div id="selectLeave" class="form-group col-4" data-select2-id="191">	
+			<div id="selectLeave" class="form-group col-4" >	
 				<label>휴학구분</label>
-				<select  id="leaveCategory" name="rgbCd" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+				<select  id="leaveCategory" name="rgbCd" >
 					<option selected="selected" >카테고리선택</option>
 					<option class="leaveChild general" value="일반휴학">일반휴학</option>
 					<option class="leaveChild army" value="입대휴학">입대휴학</option>
@@ -131,11 +132,11 @@
 				</select>
 			</div>
 
-			<div id="periodOfTerm" class="form-group" data-select2-id="191">
+			<div id="periodOfTerm" class="form-group" >
 				<label cursorshover="true">기간:</label>
 				<div class="input-group date" id="reservationdatetime"
 					data-target-input="nearest">
-				<select  id="selectTerm" name="recPer" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+				<select  id="selectTerm" name="recPer" >
 						<!-- 휴학유형에 따라 선택 할 수 있는 옵션값이 달라짐 -->
 						<option selected>기간선택</option>
 						<option value="6">한학기</option>
@@ -150,7 +151,7 @@
 				<label cursorshover="true">신청사유:</label>
 				<div class="input-group date" id="reservationdatetime"
 					data-target-input="nearest">
-					<textarea id="content" name="recRsn"  rows="5" cols="500"></textarea>
+					<textarea id="content" name="recRsn"  rows="5" cols="500" required></textarea>
 				</div>
 			</div>
 

@@ -1,10 +1,7 @@
 package kr.or.ddit.controller;
 
-import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,11 +24,7 @@ public class RecordController {
 	RecordService recordService;
 	
 	@GetMapping("/main")
-	public String RecordList(Model model, Principal principal, HttpServletRequest request) {
-		//로그인 된 학생 아이디 가져오기 1)
-		int stuNo = Integer.parseInt(principal.getName());
-		//로그인 된 학생 아이디 가져오기 2)
-		HttpSession session = request.getSession();
+	public String RecordList(Model model, int stuNo) {
 		
 		List<Record> recordsList = this.recordService.RecordList(stuNo);
 		
@@ -44,10 +37,13 @@ public class RecordController {
 	}
 	
 	@GetMapping("/apply")
-	public String RecordApply(Principal principal, Model model) {
+	public String RecordApply(int stuNo, Model model) {
+		
+		
+		
+		
 		model.addAttribute("bodyTitle", "신청");
 		//로그인된 학생 아이디 가져오기 
-		int stuNo = Integer.parseInt(principal.getName());
 		model.addAttribute("stuNo", stuNo);
 		log.info("학번들어왔니 : " + stuNo);
 		
