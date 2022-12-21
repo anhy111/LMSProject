@@ -32,6 +32,8 @@ public class NoticeBasicController {
 
     private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
 
+    private static final String HOME = "redirect:/notice/list";
+
     //공지사항 리스트
     @GetMapping("/list")
     public String noticeList(Model model) {
@@ -46,7 +48,7 @@ public class NoticeBasicController {
         model.addAttribute("totalRow", totalRow);
 
         //forwarding
-        return "notice/list";
+        return HOME;
     }
 
     //공지사항 등록 폼
@@ -71,7 +73,7 @@ public class NoticeBasicController {
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         noticeBasicService.noticeBasicSave(noticeBasic);
 
-        return "redirect:list";
+        return HOME;
     }
 
     //공지사항 상세페이지
@@ -103,7 +105,7 @@ public class NoticeBasicController {
 
         noticeBasicService.noticeBasicUpdate(form);
 
-        return "redirect:/notice/list";
+        return HOME;
     }
 
     //공지사항 삭제
@@ -112,7 +114,7 @@ public class NoticeBasicController {
 
         noticeBasicService.delete(noticeCd);
 
-        return "redirect:/notice/list";
+        return HOME;
     }
 
     @GetMapping("/upload")
@@ -130,7 +132,7 @@ public class NoticeBasicController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/notice/list";
+        return HOME;
     }
 
     @GetMapping("/json/index")
