@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.PaymentMapper">
+
+	<!-- 등록금 리스트 -->
+	<select id="collegeFeeList" resultType="department">
+		SELECT
+			DEP_NM
+			, COL_NM
+			, COL_FEE
+		FROM DEPARTMENT D
+			, COLLEGE C
+		WHERE C.COL_CD = D.COL_CD
+		AND COL_FEE IS NOT NULL
+		ORDER BY DEP_CD
+	</select>
+	
+	<!-- 관리자의 등록금 고지 조회 -->
+	<select id="adminBillList" resultType="payment">
+		SELECT
+		    C.COL_NM
+		    , D.DEP_NM
+		    , P.STU_NO
+		    , S.STU_YR
+		    , P.PAY_SEM
+		    , S.STU_NM
+		    , CASE WHEN P.PAY_YN = 0 THEN '미납'
+		    END PAY_YN
+		FROM    COLLEGE C, DEPARTMENT D, PAYMENT P, STUDENT S
+		WHERE   S.STU_NO = P.STU_NO
+		AND     D.DEP_CD = S.DEP_CD
+		AND     C.COL_CD = D.COL_CD
+		AND     PAY_YN = 0
+	</select>
+	
+	<select id="adminBillCount" resultType="int">
+		SELECT COUNT(PAY_YN)
+		FROM PAYMENT
+		WHERE PAY_YN = 0
+	</select>
+	
+	<!-- 관리자의 등록금 납부 조회 -->
+	<select id="adminPaymentList" resultType="payment">
+		SELECT
+		    C.COL_NM
+		    , D.DEP_NM
+		    , P.STU_NO
+		    , S.STU_YR
+		    , P.PAY_SEM
+		    , S.STU_NM
+		    , CASE WHEN P.PAY_YN = 0 THEN '미납'
+		    END PAY_YN
+		FROM    COLLEGE C, DEPARTMENT D, PAYMENT P, STUDENT S
+		WHERE   S.STU_NO = P.STU_NO
+		AND     D.DEP_CD = S.DEP_CD
+		AND     C.COL_CD = D.COL_CD
+		AND     PAY_YN = 0
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
