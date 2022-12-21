@@ -49,6 +49,6 @@ public interface ManageMapper  {
 	public List<Evaluation> evaluationList();
 	
 	public Evaluation evaluationCon(Map<String, String> map);
-	
-	public List<Evaluation> contentsList(Map<String, String> map);
+	//교수의 수강 평가 리스트
+	public List<Evaluation> mineEvlList(String no);
 }

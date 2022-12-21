@@ -362,6 +362,41 @@
 		<result column="EVL_ETC"/>
 	</resultMap>
 	
+	<select id="mineEvlList" parameterType="String" resultType="evaluation"> 
+		SELECT   L.LECA_CD
+		        , L.LEC_HCNT 
+		        , A.LECA_NM 
+		        , A.PRO_NO 
+		        , E.EMP_NM 
+		        , TO_CHAR(AVG(V.EVL_SCORE),'0.0') AS EVL_SCORE
+		        , A.LECA_CATE 
+		        , D.DEP_NM 
+		        , C.COL_NM 
+		        , A.LECA_YR 
+		        , A.LECA_SEM 
+		FROM  COLLEGE C, DEPARTMENT D, PROFESSOR P, EMPLOYEE E, SUBJECT U, LECTURE L, LEC_APPLY A, STU_LEC S, EVALUATION V  
+		WHERE D.COL_CD = C.COL_CD
+		AND D.DEP_CD = P.DEP_CD
+		AND P.PRO_NO = E.EMP_NO
+		AND U.PRO_NO = P.PRO_NO
+		AND L.SUB_CD = U.SUB_CD
+		AND L.LECA_CD = A.LECA_CD
+		AND L.LECA_CD = S.LECA_CD
+		AND S.LECA_CD = V.LECA_CD
+		AND V.STU_NO = S.STU_NO
+		AND A.PRO_NO = 1
+		GROUP BY  L.LECA_CD 
+		        , L.LEC_HCNT 
+		        , A.LECA_NM 
+		        , A.PRO_NO 
+		        , E.EMP_NM 
+		        , A.LECA_CATE 
+		        , D.DEP_NM 
+		        , C.COL_NM 
+		        , A.LECA_YR 
+		        , A.LECA_SEM
+	</select>
+	
 </mapper>
 
 
