@@ -17,7 +17,6 @@ public class Evaluation {
 	
 	private String evlqYn; //평가여부
 	private String empNm; //교수명
-	private String lecaNm; // 과목명
 	
 	// 교수의 강의평가조회를 위한 교수번호
 	private int proNo;	// 교수번호
