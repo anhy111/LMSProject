@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.Professor;
 import kr.or.ddit.mapper.DepartmentMapper;
 import kr.or.ddit.service.DepartmentService;
 
@@ -43,5 +44,15 @@ public class DepartmentServiceImpl implements DepartmentService{
 	@Override
 	public int update(Department department) {
 		return this.departmentMapper.update(department);
+	}
+	
+	@Override
+	public int validationDepartmentName(String depNm) {
+		return this.departmentMapper.validationDepartmentName(depNm);
+	}
+	
+	@Override
+	public Professor searchProfessor(Department department) {
+		return this.departmentMapper.searchProfessor(department);
 	}
 }

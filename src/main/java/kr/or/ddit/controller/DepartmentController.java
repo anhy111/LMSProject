@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.Professor;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.DepartmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,24 @@ public class DepartmentController {
 		model.addAttribute("departmentList",departments);
 		
 		return "department/departmentList";
+	}
+	
+	@GetMapping("/professorList")
+	public String professorList(Model model) {
+		List<College> collegeList = this.collegeService.CollegeList();
+		List<Department> departments = this.departmentService.departmentByCollegeList(0);
+		model.addAttribute("collegeList",collegeList);
+		model.addAttribute("departmentList",departments);
+		return "department/notile/professorList";
+	}
+	
+	@GetMapping("/employeeList")
+	public String employeeList(Model model) {
+		List<College> collegeList = this.collegeService.CollegeList();
+		List<Department> departments = this.departmentService.departmentByCollegeList(0);
+		model.addAttribute("collegeList",collegeList);
+		model.addAttribute("departmentList",departments);
+		return "department/notile/employeeList";
 	}
 	
 	@GetMapping("/register")
@@ -80,5 +99,18 @@ public class DepartmentController {
 	public String update(@RequestBody Department department) {
 		log.info("department : " + department);
 		return "" + this.departmentService.update(department);
+	}
+	
+	@ResponseBody
+	@GetMapping("/nameValidation")
+	public String nameValidation(String depNm) {
+		return ""+this.departmentService.validationDepartmentName(depNm);
+	}
+	
+	@ResponseBody
+	@GetMapping("/searchProfessor")
+	public Professor searchProfessor(Department department) {
+		log.info("department : " + department);
+		return this.departmentService.searchProfessor(department);
 	}
 }

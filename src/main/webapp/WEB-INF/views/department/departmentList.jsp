@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div class="content">
 	<div class="container-fluid">
 		<div class="row pl-3">
@@ -14,9 +13,7 @@
 					<br>
 					<div class="row">
 						<div class="form-group col-2">
-							<label>단과대학</label> <select id="college"
-								class="select2bs4 select2-hidden-accessible"
-								style="width: 100%;">
+							<label>단과대학</label> <select id="college" class="select2bs4 select2-hidden-accessible" style="width: 100%;">
 								<option value="0">모든단과대학</option>
 								<c:forEach var="college" items="${collegeList}">
 									<option value="${college.colCd}">${college.colNm}</option>
@@ -38,9 +35,7 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="form-group col-4">
-									<label>단과대학:</label> <select id="detailCollege" name="colCd"
-										class="select2bs4 select2-hidden-accessible"
-										style="width: 100%;">
+									<label>단과대학:</label> <select id="detailCollege" name="colCd" class="select2bs4 select2-hidden-accessible" style="width: 100%;">
 										<option value="0">모든단과대학</option>
 										<c:forEach var="college" items="${collegeList}">
 											<option value="${college.colCd}">${college.colNm}</option>
@@ -56,29 +51,29 @@
 									<!-- 학과장 -->
 									<input type="hidden" name="empNo">
 									<!-- 조교 -->
-									<div class="input-group date" id="reservationdate"
-										data-target-input="nearest">
-										<input type="text" name="depNm" class="form-control rounded-0"
-											value="" readonly />
+									<div class="input-group date" id="reservationdate" data-target-input="nearest">
+										<input type="text" name="depNm" class="form-control rounded-0" value="" readonly />
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col">
 									<label>학과소개:</label>
-									<div class="input-group date" id="reservationdatetime"
-										data-target-input="nearest">
-										<textarea name="depDes" class="form-control rounded-0"
-											rows="8" readonly></textarea>
+									<div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+										<textarea name="depDes" class="form-control rounded-0" rows="8" readonly></textarea>
 									</div>
 								</div>
 							</div>
 							<div class="row">
-								<div class="form-group col">
-									<label>학과장:</label>
-									<div class="input-group date" id="reservationdatetime">
-										<input type="text" name="proNm" class="form-control rounded-0"
-											value="" readonly />
+								<div class="form-group col container-fluid p-0">
+									<label class="p-1">학과장:</label>
+									<div class="input-group col-6">
+										<input type="text" class="form-control" id="proNm" name="proNm" readonly />
+										<div class="input-group-append">
+											<button type="button" class="btn btn-default" id="btnPro">
+												<i class="fa fa-search"></i>
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -86,41 +81,45 @@
 								<div class="form-group col">
 									<label>최대정원:</label>
 									<div class="input-group date" id="reservationdatetime">
-										<input type="number" name="depCap"
-											class="form-control rounded-0" value="" readonly />
+										<input type="number" name="depCap" class="form-control rounded-0" value="" readonly />
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col">
 									<label>연락처:</label>
-									<div class="input-group date" id="reservationdatetime"
-										data-target-input="nearest">
-										<input type="text" name="depTel"
-											class="form-control rounded-0" value="" readonly />
+									<div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+										<input type="text" name="depTel" class="form-control rounded-0" value="" readonly />
 									</div>
 								</div>
 							</div>
 							<div class="row">
-								<div class="form-group col">
-									<label>조교:</label>
-									<div class="input-group date" id="reservationdatetime"
-										data-target-input="nearest">
-										<input type="text" name="empNm" class="form-control rounded-0"
-											value="" readonly />
+								<div class="form-group col container-fluid p-0">
+									<label class="p-1">조교:</label>
+									<div class="input-group col-6">
+										<input type="text" class="form-control" id="empNm" name="empNm" readonly />
+										<div class="input-group-append">
+											<button type="button" class="btn btn-default" id="btnEmp">
+												<i class="fa fa-search"></i>
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="row text-right" id="spn1">
-								<button type=button id="edit"
-									class="btn btn-primary col-2 offset-8">수정</button>
-								<button type="button" id="delete" class="btn btn-danger col-2">삭제</button>
+							<div class="row text-right container-fluid p-0" id="spn1">
+								<div class="col text-right">
+									<button type=button id="edit" class="btn btn-primary">수정</button>
+									<button type="button" id="delete" class="btn btn-danger">삭제</button>
+								</div>
 							</div>
-							<div class="row text-right" id="spn2">
-								<button id="autoFill" class="btn btn-secondary col-2">자동채우기</button>
-								<button type="button" id="update"
-									class="btn btn-primary col-2 offset-6">확인</button>
-								<button type="button" id="cancel" class="btn btn-warning col-2">취소</button>
+							<div class="row text-right container-fluid p-0" id="spn2">
+								<div class="col text-left">
+									<button id="autoFill" class="btn btn-secondary">자동채우기</button>
+								</div>
+								<div class="col text-right">
+									<button type="button" id="update" class="btn btn-primary">확인</button>
+									<button type="button" id="cancel" class="btn btn-warning">취소</button>
+								</div>
 							</div>
 							<sec:csrfInput />
 						</div>
@@ -130,8 +129,7 @@
 		</div>
 	</div>
 </div>
-<script
-	src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
 <script src="/resources/adminlte/dist/js/adminlte.min.js"></script>
 <script src="/resources/adminlte/dist/js/demo.js"></script>
@@ -202,6 +200,17 @@
 			
 		});
 		
+		// 학과장 검색
+		$("#btnPro").on("click",function(){
+			let depCd = $("input[name='depCd']").val();
+			
+			var win = window.open("/department/professorList?depCd="+depCd, "학과장검색", "width=700,height=700");
+		});
+		// 조교 검색
+		$("#btnEmp").on("click",function(){
+			var win = window.open("/department/employeeList", "조교검색", "width=700,height=700");
+		});
+		
 		$("#college").on("change",loadDepartMentListByCollege);
 		
 		$("#autoFill").on("click",function(){
@@ -232,6 +241,8 @@
 		$("input[name='empNm']").prop("readonly",true);
 		$("input[name='depCap']").prop("readonly",true);
 		$("input[name='depTel']").prop("readonly",true);
+		$("#btnPro").prop("disabled",true);
+		$("#btnEmp").prop("disabled",true);
 	}
 	
 	function editMode(){
@@ -244,6 +255,8 @@
 		$("input[name='empNm']").prop("readonly",false);
 		$("input[name='depCap']").prop("readonly",false);
 		$("input[name='depTel']").prop("readonly",false);
+		$("#btnPro").prop("disabled",false);
+		$("#btnEmp").prop("disabled",false);
 	}
 	
 	function updateDepartment(){

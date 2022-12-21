@@ -34,6 +34,8 @@
 										<input type="text" name="depNm" 
 											class="form-control rounded-0" value="" required/>
 									</div>
+									<p id="validation"></p>
+									
 								</div>
 							</div>
 							<div class="row">
@@ -85,6 +87,7 @@
 <script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
 	var flag =false;
+	var valid_flag = false;
 	$(function() {
 		//Initialize Select2 Elements
 		$('.select2').select2();
@@ -94,6 +97,28 @@
 			theme : 'bootstrap4'
 		});
 		
+		$("input[name='depNm']").on("keyup",function(){
+			
+			data = {
+					depNm : this.value
+			} 
+			$.ajax({
+				url : "/department/nameValidation",	
+				type : "get",
+				data : data,
+				success : function(result){
+					if(result > 0){
+						$("#validation").html("학과명이 존재합니다.")
+										.css("color","red");
+						valid_flag = false;
+					}else{
+						$("#validation").html("일치하는 학과명이 없습니다.")
+										.css("color","blue");
+						valid_flag = true;
+					}
+				}
+			});
+		});
 		
 	});
 	
@@ -102,6 +127,10 @@
 		
 		if(!college){
 			alert("단과대학을 선택해주세요");
+			return false;
+		}
+		if(!valid_flag){
+			alert("학과명이 중복됩니다.");
 			return false;
 		}
 		if(!flag){
