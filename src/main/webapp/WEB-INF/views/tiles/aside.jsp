@@ -190,18 +190,22 @@
 							</a></li>
 						</ul></li>
 					<!-- 학적관리 -->
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-copy"></i>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
 							<p>
 								평가 <i class="right fas fa-angle-left"></i>
 							</p>
-					</a>
+						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
+							<li class="nav-item">
+								<a href="/professor/mineEvaluation" class="nav-link"> 
+								<i class="far fa-circle nav-icon"></i>
 									<p>수업 평가 조회</p>
-							</a></li>
-						</ul></li>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-chart-pie"></i>
 							<p>공지사항</p>

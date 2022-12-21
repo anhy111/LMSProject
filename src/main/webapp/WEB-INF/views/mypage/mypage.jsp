@@ -34,7 +34,7 @@ $(function(){
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-md-3">
-									<img src="/resources/upload${student.stuPic}"
+									<img src="/upload${student.stuPic}"
 										class="img-thumbnail" alt="User Image">
 								</div>
 								<div class="col-md-9">

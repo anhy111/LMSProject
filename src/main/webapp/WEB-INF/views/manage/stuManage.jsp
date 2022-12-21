@@ -310,37 +310,31 @@ $(function(){
 				<div class="row">
 					<div class="col-sm-12">
 						<table id="example1"
-							class="table table-bordered table-striped dataTable dtr-inline"
+							class="table table-bordered table-striped dataTable dtr-inline table-sm text-center"
 							aria-describedby="example1_info">
 							<thead>
 								<tr>
 									<th class="sorting sorting_asc" tabindex="0"
-										aria-controls="example1" rowspan="1" colspan="1"
+										aria-controls="example1"
 										aria-sort="ascending"
 										aria-label="Rendering engine: activate to sort column descending">번호</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
+									<th class="sorting" tabindex="0" aria-controls="example1" 
 										aria-label="Browser: activate to sort column ascending">학번</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
 										aria-label="Platform(s): activate to sort column ascending">이름</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
 										aria-label="Engine version: activate to sort column ascending">단과대학</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
 										aria-label="Engine version: activate to sort column ascending">학과</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
 										aria-label="CSS grade: activate to sort column ascending">담당교수</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
 										aria-label="CSS grade: activate to sort column ascending">상세</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="list" items="${list}" varStatus="stat">
-									<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">${stat.count}</td>
+									<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
 									<td class="detailStu">${list.stuNo}</td>
 									<td>
 										<div class="image">

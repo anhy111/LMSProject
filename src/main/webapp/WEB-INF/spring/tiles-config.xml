@@ -34,6 +34,9 @@
 	<definition name="professor/management/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/professor/management/{1}.jsp" />
 	</definition>
+	<definition name="professor/mineEvaluation" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/professor/mineEvaluation.jsp" />
+	</definition>
 	<definition name="lecture/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/lecture/{1}.jsp" />
 	</definition>

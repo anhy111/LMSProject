@@ -50,8 +50,6 @@ public interface ManageService {
 
 	public Evaluation evaluationCon(Map<String, String> map);
 
-	public List<Evaluation> contentsList(Map<String, String> map);
+	public List<Evaluation> mineEvlList(String no);
 
-	
-	
 }
