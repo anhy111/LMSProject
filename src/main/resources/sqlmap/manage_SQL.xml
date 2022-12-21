@@ -224,8 +224,8 @@
 		        , E.EMP_JOIN
 		        , E.EMP_RET
 		        , E.EMP_BIR
-		        , E.EMP_DIV
-		        , E.EMP_POS
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_DIV) AS EMP_DIV
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_POS) AS EMP_POS
 		        , P.PRO_POS
 		        , D.DEP_CD
 		        , D.DEP_NM

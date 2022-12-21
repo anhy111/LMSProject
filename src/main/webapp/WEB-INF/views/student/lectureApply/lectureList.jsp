@@ -6,7 +6,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <div class="content">
-	<div class="container-fluid">
+	<div class="container-fluid"> 
 		<div class="row">
 			<div class="card mb-0 col-10 offset-1">
 				<div class="card-header tab-regular">

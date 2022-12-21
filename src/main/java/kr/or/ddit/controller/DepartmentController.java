@@ -33,7 +33,7 @@ public class DepartmentController {
 	public String list(Model model) {
 		
 		List<College> collegeList = this.collegeService.CollegeList();
-		List<Department> departments = this.departmentService.departmentListByCollege(new Department());
+		List<Department> departments = this.departmentService.departmentByCollegeList(0);
 		model.addAttribute("collegeList",collegeList);
 		model.addAttribute("departmentList",departments);
 		
@@ -57,9 +57,10 @@ public class DepartmentController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/departmentListbyCollege")
-	public List<Department> departmentListbyCollege(Department department){
-		return this.departmentService.departmentListByCollege(department);
+	@GetMapping("/departmentByCollege")
+	public List<Department> departmentByCollege(int colCd){
+		log.info("colCd : " + colCd);
+		return this.departmentService.departmentByCollegeList(colCd);
 	}
 	
 	@ResponseBody

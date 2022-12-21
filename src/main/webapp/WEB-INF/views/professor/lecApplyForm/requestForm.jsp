@@ -109,10 +109,10 @@
 	    		<td>
 	    			<select id="lecaCate">
 	    				<option value="">선택</option>
-	    				<option value="전필">전공필수(전필)</option>
-	    				<option value="전선">전공선택(전선)</option>
-	    				<option value="교필">교양필수(교필)</option>
-	    				<option value="교선">교양선택(교선)</option>
+	    				<option value="전공필수">전공필수(전필)</option>
+	    				<option value="전공선택">전공선택(전선)</option>
+	    				<option value="교양필수">교양필수(교필)</option>
+	    				<option value="교양선택">교양선택(교선)</option>
 	    			</select>
 	    		</td>
 	    	</tr>
@@ -256,7 +256,7 @@
 		$('#subCd').val('1');
 		$('#lecaCap').val('20');
 		$('#lecaBook').val('교재 : 명품 JAVA Programming  / 황기태·김효수 저 / 생능출판');
-		$('#lecaCate').val('전필');
+		$('#lecaCate').val('전공필수');
 		$('#lecaGrade').val('1');
 		$('#lecaMp').val('30');
 		$('#lecaFp').val('30');

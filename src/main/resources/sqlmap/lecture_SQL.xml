@@ -236,7 +236,8 @@
 			LA.LECA_CATE,
 			LA.LECA_YR,
 			LA.LECA_SEM,
-			C.COL_NM
+			C.COL_NM,
+            C.COL_CD
 		FROM
 			DEPARTMENT D
 			INNER JOIN COLLEGE C ON(D.COL_CD = C.COL_CD)
@@ -334,7 +335,8 @@
 		LA.LECA_CATE,
 		LA.LECA_YR,
 		LA.LECA_SEM,
-		C.COL_NM
+		C.COL_NM,
+        C.COL_CD
 		FROM
 		DEPARTMENT D
 		INNER JOIN COLLEGE C ON(D.COL_CD = C.COL_CD)
@@ -502,6 +504,7 @@
 		     , LA.LECA_CATE 
 		     , LA.LECA_YR
 		     , LA.LECA_SEM
+		     , D.COL_CD
 		FROM DEPARTMENT D
 		                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
 		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)

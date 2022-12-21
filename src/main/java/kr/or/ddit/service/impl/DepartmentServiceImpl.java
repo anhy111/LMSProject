@@ -21,13 +21,13 @@ public class DepartmentServiceImpl implements DepartmentService{
 	}
 	
 	@Override
-	public List<Department> departmentListByCollege(Department department) {
-		return this.departmentMapper.departmentListByCollege(department);
+	public int register(Department department) {
+		return this.departmentMapper.register(department);
 	}
 	
 	@Override
-	public int register(Department department) {
-		return this.departmentMapper.register(department);
+	public List<Department> departmentByCollegeList(int colCd) {
+		return this.departmentMapper.departmentListByCollege(colCd);
 	}
 	
 	@Override

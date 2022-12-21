@@ -40,7 +40,7 @@ public class StudentEvaluationController {
 		int stuNo = (int)req.getSession().getAttribute("no");
 		evaluation.setStuNo(stuNo);
 		
-		List<Evaluation> evaluationList = this.evaluationService.evaluationList(evaluation);
+		List<Evaluation> evaluationList = this.evaluationService.studentEvaluationList(evaluation);
 		Student student = this.memberService.readStudent(stuNo);
 		model.addAttribute("evaluationQList", evaluationQList);
 		model.addAttribute("evaluationList",evaluationList);
