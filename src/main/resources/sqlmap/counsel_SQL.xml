@@ -73,10 +73,14 @@ SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
 <!-- 교수의 상담 답변 -->
 <update id="applyAnswerUpdate" parameterType="Counsel">
 UPDATE COUNSEL 
-SET
+<set>
   CNSL_DT = SYSDATE 
 , CNSL_RPL = #{cnslRpl}
+<if test="cnslType != null and cnslType !='' ">
+, CNSL_TYPE = #{cnslType}
+</if>
 , PRO_NO = #{proNo}
+</set>
 WHERE CNSL_CD = #{cnslCd}
 </update>
 <!-- 교수의 상담 리스트 조회 -->
@@ -107,11 +111,40 @@ SELECT
 ,S.STU_NM
 ,C.CNSL_TTL
 ,C.CNSL_CON
-,C.CNSL_RPL    
+,C.CNSL_RPL 
+,C.CNSL_CATE
+,C.CNSL_TYPE   
 FROM COUNSEL C, STUDENT S 
 WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
 </select>
+<select id="answerNoteDetail" parameterType="Long" resultType="Counsel">
+SELECT
+ C.CNSL_CD
+,C.CNSL_CATE
+,S.STU_NM
+,C.CNSL_DT
+,C.CNSL_TTL
+,C.CNSL_CON
+,C.CNSL_RPL
+,E.EMP_NM
+FROM COUNSEL C, STUDENT S, EMPLOYEE E, PROFESSOR P 
+WHERE C.CNSL_CD = #{cnslCd}
+AND C.STU_NO = S.STU_NO
+AND S.PRO_NO = P.PRO_NO
+AND C.PRO_NO = P.PRO_NO
+AND E.EMP_NO = P.PRO_NO
+</select>
+<!-- 교수의 상담 기록서 작성 및 업데이트 -->
+<update id="answerNoteWriteUpdate" parameterType="Counsel">
+UPDATE COUNSEL
+SET 
+CNSL_RPL = #{cnslRpl}
+<if test="cnslCon != null and cnslCon !='' ">
+ ,CNSL_CON = #{cnslCon}
+ </if>
+WHERE CNSL_CD =  #{cnslCd}
+</update>
 <select id="studentNameByCounsels" parameterType="Long" resultType="String">
 SELECT 
 S.STU_NM
@@ -125,5 +158,10 @@ SET
 CNSL_CON = #{cnslCon} 
 WHERE CNSL_CD = #{cnslCd}
 </update>
+<delete id="applyDelete" parameterType="Long">
+DELETE 
+FROM COUNSEL
+WHERE CNSL_CD = #{cnslCd}
+</delete>
 </mapper>
 

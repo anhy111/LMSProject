@@ -121,6 +121,18 @@
 	<definition name="counsel/studentside/checkAnswer" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkAnswer.jsp" />
 	</definition>
+	
+	<definition name="counsel/studentside/answerNote" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/answerNote.jsp" />
+	</definition>
+	
+	<definition name="counsel/professorside/answerNoteWriteUpdate" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/professorside/answerNoteWriteUpdate.jsp" />
+	</definition>
+	
+	<definition name="counsel/studentside/checkReject" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkReject.jsp" />
+	</definition>
 
 </tiles-definitions>
 
