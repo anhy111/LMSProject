@@ -257,6 +257,80 @@
 							<p>강의</p>
 					</a></li>
 					<li class="nav-item">
+						<a href="#" class="nav-link">
+							<i class="nav-icon far fa-plus-square"></i>
+							<p>
+								등록/장학 <i class="fas fa-angle-left right"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview" style="display: none;">
+							<li class="nav-item">
+								<a href="#" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>
+										등록 <i class="fas fa-angle-left right"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item">
+										<a href="/payment/collegeFeeList" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>등록금 목록 조회</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="/payment/adminBill" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>등록금 고지 관리</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="/payment/adminPayment" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>등록금 납부 관리</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="pages/examples/recover-password.html" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Recover Password v1</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item"><a href="#" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>
+										장학 <i class="fas fa-angle-left right"></i>
+									</p>
+							</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item"><a
+										href="pages/examples/login-v2.html" class="nav-link"> <i
+											class="far fa-circle nav-icon"></i>
+											<p>Login v2</p>
+									</a></li>
+									<li class="nav-item"><a
+										href="pages/examples/register-v2.html" class="nav-link"> <i
+											class="far fa-circle nav-icon"></i>
+											<p>Register v2</p>
+									</a></li>
+									<li class="nav-item"><a
+										href="pages/examples/forgot-password-v2.html" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Forgot Password v2</p>
+									</a></li>
+									<li class="nav-item">
+										<a href="#" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Recover Password v2</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
 						<a href="#" class="nav-link"> 
 							<i class="nav-icon fas fa-book"></i>
 							<p>
