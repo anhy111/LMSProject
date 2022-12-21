@@ -77,6 +77,34 @@
 		<collection property="attachList"   resultMap="attachMap"></collection>
 	</resultMap>
 	
+	<resultMap type="test" id="testMap">
+		<result property="testCd"      column="TEST_CD"/>
+		<result property="lecaCd"      column="LECA_CD"/>
+		<result property="testNm"      column="TEST_NM" />
+		<result property="testCon"     column="TEST_CON"/>
+		<result property="testReg"     column="TEST_REG" />
+		<result property="testSdt"     column="TEST_SDT" />
+		<result property="testEdt"     column="TEST_EDT" />
+		<collection property="testQList"   resultMap="testQMap"></collection>
+	</resultMap>	
+	
+	
+	<resultMap type="testQ" id="testQMap">               
+		<result property="teqCd "     column="TEQ_CD" />      
+		<result property="testCd"     column="TEST_CD" />      
+		<result property="teqSeq"     column="TEQ_SEQ" />     
+		<result property="teqOption1" column="TEQ_OPTION1" />      
+		<result property="teqOption2" column="TEQ_OPTION2" />     
+		<result property="teqOption3" column="TEQ_OPTION3" />     
+		<result property="teqOption4" column="TEQ_OPTION4" />     
+		<result property="teqAnswer"  column="TEQ_ANSWER" /> 
+		<result property="teqCon"  column="TEQ_CON" /> 
+	</resultMap>	                                           
+	
+	
+	
+	
+	
 	<select id="dataList" parameterType="string" resultMap="lectureMap">
 		SELECT
              la.leca_nm
@@ -179,8 +207,101 @@
 					,(select emp_nm from EMPLOYEE where emp_no = #{empNo}))
 	</insert>
 	
+	<!-- 시험 리스트 -->
+	<select id="testList" parameterType="String" resultType="test">
+	SELECT 
+	     TEST_CD
+	    ,LECA_CD
+	    ,TEST_NM
+	    ,TEST_CON
+	    ,TEST_REG
+	    ,TEST_SDT
+	    ,TEST_EDT
+	FROM 
+		 TEST
+	WHERE 
+		 LECA_CD = #{lecaCd}
+	</select>
 	
+	<!-- 강의 계획서 조회 -->
+	<select id="lecApplySearch" parameterType="String" resultType="lecApply">
+	select
+		 LECA_CD
+		,LECA_YR
+		,LECA_SEM
+		,LECA_NM
+		,LECA_CON
+		,LECA_TRG
+		,LECA_CRD
+		,LECA_PER
+		,LECA_CAP
+		,LECA_TT
+		,LECA_HALL
+		,LECA_UNIT
+		,LECA_BOOK
+		,LECA_NOTE
+		,LECA_DT
+		,LECA_GRADE
+		,LECA_IMSI_YN
+		,LECA_CATE
+		,LECA_MP
+		,LECA_FP
+		,LECA_TP
+		,LECA_AP
+		,PRO_NO
+	FROM LEC_APPLY
+	WHERE LECA_CD = #{lecaCd}
+	</select>
 	
+	<!-- 시험 틀 추가 -->
+	<insert id="testInsert" parameterType="test">
+		<selectKey order="BEFORE" keyProperty="testCd" resultType="int" >
+			SELECT NVL(MAX(TEST_CD),0)+1 FROM TEST					
+		</selectKey>
+		INSERT INTO TEST(
+						  TEST_CD
+						 ,LECA_CD
+						 ,TEST_NM 
+		                 ,TEST_CON
+		                 ,TEST_SDT
+		                 ,TEST_EDT
+		                 )
+				VALUES(
+						  #{testCd}
+						 ,#{lecaCd}
+						 ,#{testNm}
+						 ,#{testCon}
+						 ,#{testSdt}
+						 ,#{testEdt}
+				)
+	</insert>
+
+<update id="testQInsert" parameterType="java.util.List">
+	<foreach collection="list" item="item" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+		INTO TEST_Q(
+					 TEQ_CD
+					,TEST_CD
+					,TEQ_SEQ
+					,TEQ_OPTION1
+					,TEQ_OPTION2
+					,TEQ_OPTION3
+					,TEQ_OPTION4
+					,TEQ_ANSWER
+					,TEQ_CON
+		) 
+		VALUES (
+					 (SELECT NVL(MAX(TEQ_CD),0)+1 FROM TEST_Q)		
+		            ,#{testCd    }
+		            ,(SELECT NVL(MAX(TEQ_SEQ),0)+1 FROM TEST_Q WHERE TEST_CD = #{testCd})
+		            ,#{teqOption1}
+		            ,#{teqOption2}
+		            ,#{teqOption3}
+		            ,#{teqOption4}
+				    ,#{teqAnswer }
+				    ,#{teqCon	 }
+		)
+	</foreach>
+</update>
 	
 	
 	
