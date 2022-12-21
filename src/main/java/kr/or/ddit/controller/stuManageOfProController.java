@@ -7,4 +7,7 @@ import org.springframework.stereotype.Controller;
 @PreAuthorize("hasRole('ROLE_PROFESSOR')")
 public class stuManageOfProController {
 
+	
+	
+	
 }
