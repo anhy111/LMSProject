@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Evaluation;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Student;
 
@@ -44,4 +45,10 @@ public interface ManageMapper  {
 	public int deletePro(Map<String, String> map);
 	
 	public int updateEmp(Employee employee);
+	
+	public List<Evaluation> evaluationList();
+	
+	public Evaluation evaluationCon(Map<String, String> map);
+	
+	public List<Evaluation> contentsList(Map<String, String> map);
 }

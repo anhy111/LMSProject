@@ -10,7 +10,7 @@ public interface DepartmentMapper {
 	//결재 요청 목록
     List<Department> departmentList();
 
-	List<Department> departmentListByCollege(Department department);
+	List<Department> departmentListByCollege(int colCd);
 
 	int register(Department department);
 

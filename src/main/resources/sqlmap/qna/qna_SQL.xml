@@ -15,7 +15,7 @@
 		)
 		VALUES (
 			  QNA_SEQ.NEXTVAL
-			, 7
+			, #{memNo}
 			, #{qnaTtl}
 			, #{qnaCon}
 			, sysdate

@@ -86,7 +86,7 @@
 	<select id="readProfessor" parameterType="int" resultType="professor">
 		SELECT 	PRO_NO
 				, DEP_CD
-				, PRO_POS
+				, (SELECT  C.COMD_NM FROM COMMON_DETAIL C, PROFESSOR P WHERE C.COMD_CD = P.PRO_POS AND P.PRO_NO = #{memNo}) AS PRO_POS
 		FROM PROFESSOR
 		WHERE PRO_NO = #{memNo}
 	</select>

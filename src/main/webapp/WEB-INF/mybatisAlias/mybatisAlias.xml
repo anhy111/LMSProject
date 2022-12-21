@@ -38,8 +38,12 @@
 		<typeAlias type="kr.or.ddit.domain.CommonDetail" alias="commonDetail"/>
 		<typeAlias type="kr.or.ddit.domain.TaskSubmit" alias="tasksubmit"/>
 		<typeAlias type="kr.or.ddit.domain.Allocation" alias="allocation"/>
+
+		<typeAlias type="kr.or.ddit.domain.LecData" alias="lecData"/>
+
 		<typeAlias type="kr.or.ddit.domain.Evaluation" alias="evaluation"/>
 		<typeAlias type="kr.or.ddit.domain.Payment" alias="payment"/>
+
 
 		<!-- 시설예약 시작 -->
         <typeAlias type="kr.or.ddit.domain.facility.FacilityScheduleVO" alias="facilityScheduleVO"/>

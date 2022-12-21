@@ -29,6 +29,7 @@ import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.CommonDetail;
 import kr.or.ddit.domain.Department;
 import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Evaluation;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.service.CollegeService;
@@ -266,5 +267,24 @@ public class ManageController {
 		return detailEmp;
 	}
 	
+	@GetMapping("/manage/proEvaluation")
+	public String proEvaluation(Model model) {
+		
+		List<Evaluation> evaluationList = this.manageService.evaluationList();
+		
+		model.addAttribute("evaluationList", evaluationList);
+		
+		return "manage/proEvaluation";
+	}
+	
+	@PostMapping("/manage/evaluationCon")
+	@ResponseBody
+	public Evaluation evaluationCon(@RequestBody Map<String, String> map) {
+		
+		Evaluation evaluationCon = this.manageService.evaluationCon(map);
+		log.info("잘들어오나 ㅠ " + evaluationCon.getEvlEtcList());
+		
+		return evaluationCon;
+	}
 
 }

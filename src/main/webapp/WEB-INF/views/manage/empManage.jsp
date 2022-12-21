@@ -532,7 +532,5 @@ $(function(){
 				</div>
 			</div>
 		</div>
-
 	</div>
-
 </div>

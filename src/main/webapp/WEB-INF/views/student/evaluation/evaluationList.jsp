@@ -180,7 +180,7 @@
 				score += value/1;
 			}
 			
-			if(cont == ""){
+			if(content == ""){
 				alert("의견을 입력해주세요.");
 				return;
 			}
@@ -190,7 +190,12 @@
 				return;
 			}
 			
-			score = score/ (evSize * 10 / 2) * 100;
+			if(!enabled){
+				alert("평가할 강의를 선택해주세요.");
+				return;
+			}
+			
+			score = (score/ (evSize * 10 / 2) * 4.5).toFixed(1);
 			
 			let data = {
 					lecaCd : $("#lecaCd").val(),
@@ -209,10 +214,10 @@
 				},
 				success : function(result){
 					if(result > 0){
-						alert("성공");
+						alert("평가가 완료되었습니다.");
 						location.reload();
 					} else{
-						alert("실패");
+						alert("다시 시도해주세요.");
 					}
 				}
 			})
@@ -231,6 +236,7 @@
 	
 	function highlightRow(obj, p_lecaCd){
 		
+		$("#lecaCd").val(p_lecaCd);
 		var tbody = document.getElementById("tbodyId");
 		var trs = tbody.getElementsByTagName("tr");
 		console.log(trs);
@@ -246,7 +252,6 @@
 		enabled = true;
 		
 		obj.style.backgroundColor = "#FCE6E0";
-		$("#lecaCd").val(p_lecaCd);
 
 	}
 </script>

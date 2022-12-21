@@ -1,5 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.LectureBoardMapper">
+<sql id="where">
+		<!-- 자료 검색(전체) -->
+		and(
+		 LDT_TTL    LIKE '%'||#{keyWord}||'%'
+        OR    LDT_WRITER LIKE '%'||#{keyWord}||'%')
+	
+	</sql>
+	<sql id="where2">
+		<!-- 강의 검색 -->
+		 and LDT_TTL    LIKE '%'||#{keyWord}||'%'
+	</sql>
+	<sql id="where3">
+		<!-- 강의 검색 -->
+		and	LDT_WRITER LIKE '%'||#{keyWord}||'%'
+	</sql>
+	
+	<resultMap type="attach" id="attachMap">
+		<result property="atchFileId"     column="ATCH_FILE_ID" />
+		<result property="fileSn"         column="FILE_SN" />
+		<result property="fileStreCours"  column="FILE_STRE_COURS" />
+		<result property="streFileNm"     column="STRE_FILE_NM" />
+		<result property="orignlFileNm"   column="ORIGNL_FILE_NM" />
+		<result property="fileExtsn"      column="FILE_EXTSN" />
+		<result property="fileSize"       column="FILE_SIZE" />
+		<result property="createDt"       column="CREATE_DT" />
+	</resultMap>
+	
+	<!-- lecture resultMap======================================================================== -->
+	<resultMap type="lecture" id="lectureMap">
+		<result property="lecaCd"         column="LECA_CD" />
+		<result property="subCd"          column="SUB_CD" />
+		<result property="lecYn"          column="LEC_YN" />
+		<result property="lecHcnt"        column="LEC_HCNT" />
+		<result property="lecaYn"         column="LECA_YN" />
+		<result property="depCd"          column="DEP_CD" />
+		<collection property="lecApply"   resultMap="lecApplyMap"></collection>
+		<collection property="lecDataList"   resultMap="lecDataMap"></collection>
+	</resultMap>
+	
+	<resultMap type="lecApply" id="lecApplyMap">
+		<result property="lecaCd"     column="LECA_CD" />
+		<result property="lecaYr"     column="LECA_YR" />
+		<result property="lecaSem"    column="LECA_SEM" />
+		<result property="lecaNm"     column="LECA_NM" />
+		<result property="lecaCon"    column="LECA_CON" />
+		<result property="lecaTrg"    column="LECA_TRG" />
+		<result property="lecaCrd"    column="LECA_CRD" />
+		<result property="lecaPer"    column="LECA_PER" />
+		<result property="lecaCap"    column="LECA_CAP" />
+		<result property="lecaTt"     column="LECA_TT" />
+		<result property="lecaHall"   column="LECA_HALL" />
+		<result property="lecaUnit"   column="LECA_UNIT" />
+		<result property="lecaBook"   column="LECA_BOOK" />
+		<result property="lecaNote"   column="LECA_NOTE" />
+		<result property="lecaDt"     column="LECA_DT" />
+		<result property="lecaGrade"  column="LECA_GRADE" />
+		<result property="lecaImsiYn" column="LECA_IMSI_YN" />
+		<result property="lecaCate"   column="LECA_CATE" />
+		<result property="lecaMp"     column="LECA_MP" />
+		<result property="lecaFp"     column="LECA_FP" />
+		<result property="lecaTp"     column="LECA_TP" />
+		<result property="lecaAp"     column="LECA_AP" />
+	</resultMap>	
+	
+	<resultMap type="lecData" id="lecDataMap">
+		<result property="ldtCd"      column="LDT_CD" />
+		<result property="lecaCd"     column="LECA_CD" />
+		<result property="ldtTtl"     column="LDT_TTL" />
+		<result property="ldtCon"     column="LDT_CON" />
+		<result property="ldtReg"     column="LDT_REG" />
+		<result property="ldtWriter"  column="LDT_WRITER" />
+		<result property="atchFileId" column="ATCH_FILE_ID" />
+		<result property="ldtCount"   column="LDT_COUNT" />
+		<collection property="attachList"   resultMap="attachMap"></collection>
+	</resultMap>
+	
+	<select id="dataList" parameterType="string" resultMap="lectureMap">
+		SELECT
+             la.leca_nm
+			,ld.LDT_CD
+			,ld.LECA_CD
+			,ld.LDT_TTL
+			,ld.LDT_CON
+			,ld.LDT_REG
+			,ld.LDT_WRITER
+			,ld.ATCH_FILE_ID
+			,ld.LDT_COUNT
+		FROM LEC_DATA ld,lecture l, lec_Apply la
+        where la.leca_Cd = l.leca_cd
+        and l.leca_cd = ld.leca_cd
+        and l.leca_Cd = #{lecaCd}
+		<if test="category == 1 and keyWord != null and keyWord !=''">
+			<include refid="where"></include>
+		</if>
+		<if test="category == 2 and keyWord != null and keyWord !=''">
+			<include refid="where2"></include>
+		</if>
+		<if test="category == 3 and keyWord != null and keyWord !=''">
+			<include refid="where3"></include>
+		</if>
+	</select>
+	
+	<select id="dataDetail" parameterType="String" resultMap="lecDataMap">
+		SELECT *
+		FROM LEC_DATA ld, ATTACH A
+		WHERE LD.ATCH_FILE_ID = A.ATCH_FILE_ID (+)
+		AND LDT_CD = #{ldtCd}
+	
+	</select>
+	
+	<!-- 과제 수정 -->
+	<update id="dataUpdate" parameterType="hashMap">
+		UPDATE
+		LEC_DATA
+		<set>
+			LDT_TTL=#{ldtTtl}
+			,LDT_CON=#{ldtCon}
+			,LDT_WRITER=#{ldtWriter}
+			<if test='result > "0"'>
+				, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+			</if>
+		</set>
+		WHERE
+		LDT_CD=#{ldtCd}
+	</update>
+	
+	<delete id="dataDelete" parameterType="String">
+		DELETE 
+		FROM LEC_DATA
+		WHERE LDT_CD = #{ldtCd}
+	</delete>
+	
+	<insert id="dataInsert1" parameterType="hashMap">
+		<selectKey keyProperty="ldtCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(LDT_CD),0)+1 FROM LEC_DATA
+		</selectKey>
+		insert into LEC_DATA (
+					LDT_CD
+					,LECA_CD
+					,LDT_TTL
+					,LDT_CON
+					,LDT_REG
+					,ATCH_FILE_ID
+					,LDT_WRITER)
+		values(		
+					#{ldtCd}
+					,#{lecaCd}
+					,#{ldtTtl}
+					,#{ldtCon}
+					,SYSDATE
+					,(SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+					,(select emp_nm from EMPLOYEE where emp_no = #{empNo}))
+						
+						
+	</insert>
 
+	<insert id="dataInsert2" parameterType="hashMap">
+		<selectKey keyProperty="ldtCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(LDT_CD),0)+1 FROM LEC_DATA
+		</selectKey>
+		insert into LEC_DATA (
+					 LDT_CD
+					,LECA_CD
+					,LDT_TTL
+					,LDT_CON
+					,LDT_REG
+					,LDT_WRITER)
+		values(
+					 #{ldtCd}
+					,#{lecaCd}
+					,#{ldtTtl}
+					,#{ldtCon}
+					,SYSDATE
+					,(select emp_nm from EMPLOYEE where emp_no = #{empNo}))
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
