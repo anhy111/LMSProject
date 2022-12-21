@@ -6,7 +6,7 @@
 <%
 	int stuNo = (int) session.getAttribute("no");
 %>
-<div class="container" style=" background-color: lightgray;">
+<div class="container" style="border: dotted;padding: 30px;">
 	<form id="form" action="/counsel/studentside/applyInsert" method="post" onsubmit="return checkInsertData()">
 		<input type="hidden" name="stuNo" value="<%=stuNo%>"> <br>
 		<div class="col-12" >
@@ -19,7 +19,7 @@
 		</div>
 		<br>
 		<div class="row"
-			style="padding-top: 10px;padding-bottom: 10px;padding-left: 30px;padding-right: 110px;border: ;border: 50px inset lightblue;background-color:white;">
+			style="padding: 20px;border: 10px double gray;">
 			<br>
 			<div class="col-8">
 				<div class="col-sm-6">
@@ -123,13 +123,16 @@
 			 editor = CKEDITOR.instances.cnslCon;
 			 value = editor.getData();
 			console.log("값 : " + value);
-			if(value == null || value == ""){
-				alert("내용을 적어주세요");
-				return false;
-			} else {
-				alert("모두 작성 완료!");
-				return true;
-			}
+			 if ($("#counselTypeNonFace").is(":checked")) {
+					if(value == null || value == ""){
+						alert("내용을 적어주세요");
+						return false;
+					} else {
+						return true;
+					}
+			 }else if($("#counselTypeFace").is(":checked")) {
+				 return true;
+			 }
 		}
 	window.onload = function() {
 		CKEDITOR.replace("cnslCon");

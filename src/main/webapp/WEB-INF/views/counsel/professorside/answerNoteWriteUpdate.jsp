@@ -192,8 +192,7 @@
 			</div>
 			<div class="hce"
 				style="left: 24.09mm; top: 23.83mm; width: 129.04mm; height: 34.63mm;">
-				<textarea id="cnslCon" class="hrt cs4" rows="9" cols="67">${answerNoteDetail.cnslCon }</textarea>
-				<%-- 							<span class="hrt cs4">${answerNoteDetail.cnslCon }</span> --%>
+				<textarea id="cnslCon" class="hrt cs4" rows="9" cols="67" style="text-align: center;line-height: 10;">${answerNoteDetail.cnslCon }</textarea>
 			</div>
 			<div class="hce"
 				style="left: 0mm; top: 58.46mm; width: 24.09mm; height: 52.19mm;">
@@ -208,8 +207,7 @@
 			</div>
 			<div class="hce"
 				style="left: 24.09mm; top: 58.46mm; width: 129.04mm; height: 52.19mm;">
-				<textarea id="cnslRpl" class="hrt cs4" rows="13" cols="67">${answerNoteDetail.cnslRpl }</textarea>
-				<%-- 							<span class="hrt cs4">${answerNoteDetail.cnslRpl }</span> --%>
+				<textarea id="cnslRpl" class="hrt cs4" rows="13" cols="67"style="text-align: center;line-height: 10;">${answerNoteDetail.cnslRpl }</textarea>
 			</div>
 		</div>
 		<div class="hsR"

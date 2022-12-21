@@ -13,7 +13,7 @@
 				<input type="hidden"  id="cnslCd"  value="${answerDetail.cnslCd }" readonly>
 				<div class="col-6">
 				<h5><label>상담제목</label></h5><br>
-				<input type="text" readonly value="${answerDetail.cnslTtl }" />
+				<input type="text"  value="${answerDetail.cnslTtl }" />
 				</div>
 				<br>
 				<div class="col-6">
