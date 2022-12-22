@@ -128,8 +128,6 @@
         $('#facility').on('change', () => {
             let facilityCode = $('#facility').val();
 
-            alert(facilityCode);
-
             let header = "${_csrf.headerName}";
             let token = "${_csrf.token}";
 
@@ -164,11 +162,7 @@
 
             request.done(function (data) {
 
-                alert("여기?");
-                console.log(JSON.stringify(arr) + ' ar');
-
                 let facilityCode = $('#facility').val();
-
 
                     let calendarEl = document.querySelector("#calendar");
 
@@ -395,7 +389,6 @@
         }
         //모달창 show
         $('.insertModal').modal({backdrop: 'static'});
-        console.log(arg);
     }
 
     //일정삭제-------------------------------------------------------------------------------------------------
@@ -422,12 +415,10 @@
                 },
                 traditional: true,
                 success: function (data, status, xhr) {
-                    //alert(xhr.status);
                     arg.event.remove();
                     initModal(modal, arg);
                 },
                 error: function (xhr, status, error) {
-                    //alert(xhr.responseText);
                     alert('일정 삭제 실패<br>새로고침 후 재시도 해주세요');
                 }
             });
@@ -487,9 +478,6 @@
             }
 
             if (data.rsvSt >= data.rsvEn) {
-                console.log(data.rsvSt + "  s");
-                console.log(data.rsvEn + "  e");
-                console.log(data);
                 alert('종료시간을 시작시간보다 크게 선택해주세요');
                 return;
             }

@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -277,6 +278,7 @@ public class ManageController {
 		return "manage/proEvaluation";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR', 'ROLE_MANAGER')")
 	@PostMapping("/manage/evaluationCon")
 	@ResponseBody
 	public Evaluation evaluationCon(@RequestBody Map<String, String> map) {
@@ -286,5 +288,19 @@ public class ManageController {
 		
 		return evaluationCon;
 	}
-
+	
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@GetMapping("/professor/mineEvaluation")
+	public String mineEvaluation(HttpSession session, Model model) {
+		
+		String no = String.valueOf(session.getAttribute("no"));
+		log.info("memNo는 ?? " + no);
+		
+		List<Evaluation> mineEvlList = this.manageService.mineEvlList(no);
+		
+		model.addAttribute("mineEvlList", mineEvlList);
+		
+		return "professor/mineEvaluation";
+	}
+	
 }

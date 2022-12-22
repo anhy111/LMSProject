@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.velocity.runtime.directive.Parse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Test;
+import kr.or.ddit.domain.TestQ;
 import kr.or.ddit.service.LectureBoardService;
 import kr.or.ddit.util.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -104,6 +109,7 @@ public class LectureBoardController {
 	}
 	@PostMapping("data/dataInsert")
 	public String insertData2(@RequestParam MultipartFile[] files,LecData lecData, Principal principal, String lecaCd) {
+
 		String empNo = principal.getName();
 		lecData.setLecaCd(Integer.parseInt(lecaCd));
 		
@@ -123,4 +129,35 @@ public class LectureBoardController {
 
 		return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&&ldtCd=" +ldtCd;
 	}
+	
+	//시험 홈
+	@GetMapping("/test/test")
+	public String testHome(Model model,String lecaCd) {
+		List<Test> test = this.lectureBoardService.testList(lecaCd);
+		LecApply lecApply = this.lectureBoardService.lecApplySearch(lecaCd);
+		model.addAttribute("data", lecApply);
+		model.addAttribute("list", test);
+		
+		return "lectureBoard/test/test";
+	}
+	
+	//시험 추가 페이지
+	@PostMapping("/test/testRegistPage")
+	public String testRegistPage() {
+		return "lectureBoard/test/testRegistPage";
+	}
+
+	//시험 추가, 시험 문제 추가
+	@PostMapping("test/testRegist")
+	public String registTest(Model model, @ModelAttribute @Param("test") Test test) {
+		
+		this.lectureBoardService.testInsert(test);
+		log.info(test.toString());
+		
+		return "redirect:/lectureBoard/test/test?lecaCd="+test.getLecaCd();
+	}
+
+
+
+
 }

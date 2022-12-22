@@ -107,10 +107,10 @@
 	    		<td>
 	    			<select id="lecaCate">
 	    				<option value="">선택</option>
-	    				<option value="전필" <c:if test="${lecApplyList[0].lecaCate == '전필'}">selected</c:if>>전공필수(전필)</option>
-	    				<option value="전선" <c:if test="${lecApplyList[0].lecaCate == '전선'}">selected</c:if>>전공선택(전선)</option>
-	    				<option value="교필" <c:if test="${lecApplyList[0].lecaCate == '교필'}">selected</c:if>>교양필수(교필)</option>
-	    				<option value="교선" <c:if test="${lecApplyList[0].lecaCate == '교선'}">selected</c:if>>교양선택(교선)</option>
+	    				<option value="전공필수" <c:if test="${lecApplyList[0].lecaCate == '전공필수'}">selected</c:if>>전공필수(전필)</option>
+	    				<option value="전공선택" <c:if test="${lecApplyList[0].lecaCate == '전공선택'}">selected</c:if>>전공선택(전선)</option>
+	    				<option value="교양필수" <c:if test="${lecApplyList[0].lecaCate == '교양필수'}">selected</c:if>>교양필수(교필)</option>
+	    				<option value="교양선택" <c:if test="${lecApplyList[0].lecaCate == '교양선택'}">selected</c:if>>교양선택(교선)</option>
 	    			</select>
 	    		</td>
 	    	</tr>

@@ -2,10 +2,14 @@ package kr.or.ddit.service;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Test;
+import kr.or.ddit.domain.TestQ;
 
 public interface LectureBoardService {
 
@@ -24,4 +28,14 @@ public interface LectureBoardService {
 	//자료 등록
 	public int dataInsert1(Map<String, Object> map);
 	public int dataInsert2(Map<String, Object> map);
+
+	//시험 리스트
+	public List<Test> testList(String lecaCd);
+	
+	//강의 계획서 조회
+	public LecApply lecApplySearch(String lecaCd);
+	
+	//시험 틀 추가
+	public int testInsert(Test test);
+	
 }

@@ -124,7 +124,7 @@ public class ManageServiceImpl implements ManageService{
 	}
 	
 	@Override
-	public List<Evaluation> contentsList(Map<String, String> map){
-		return this.manageMapper.contentsList(map);
+	public List<Evaluation> mineEvlList(String no){
+		return this.manageMapper.mineEvlList(no);
 	}
 }

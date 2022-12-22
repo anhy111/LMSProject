@@ -20,4 +20,6 @@ public class Department {
 	private String proNm;
 	private String empNm;
 	
+	private int colFee;		//단과대 등록금
+	
 }

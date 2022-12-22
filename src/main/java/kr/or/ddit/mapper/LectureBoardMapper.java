@@ -2,12 +2,16 @@ package kr.or.ddit.mapper;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Test;
+import kr.or.ddit.domain.TestQ;
 
 public interface LectureBoardMapper {
 
@@ -23,8 +27,22 @@ public interface LectureBoardMapper {
 	//자료 삭제
 	public int dataDelete(String ldtCd);
 	
-	//자료 등록
+	//자료 등록========================================
 	public int dataInsert1(Map<String, Object> map);
-	//자료 등록
 	public int dataInsert2(Map<String, Object> map);
+	//==============================================
+	
+	//시험 리스트
+	public List<Test> testList(String lecaCd);
+	
+	//강의 계획서 조회
+	public LecApply lecApplySearch(String lecaCd);
+	
+	//시험 틀 추가
+	public int testInsert(Test test);
+	
+	//문제 추가
+	public int testQInsert(TestQ testQ);
+		
+	
 }
