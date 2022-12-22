@@ -412,7 +412,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
+					<li class="nav-item"><a href="/ketIndicators/chart" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
 							<p>중점 지표</p>
 					</a></li>

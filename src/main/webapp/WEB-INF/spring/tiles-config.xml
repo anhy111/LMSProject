@@ -122,6 +122,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkAnswer.jsp" />
 	</definition>
 	
+	<definition name="department/notile/*" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/department/notile/{1}.jsp" />
+	</definition>
+	
 	<definition name="counsel/studentside/answerNote" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/answerNote.jsp" />
 	</definition>
