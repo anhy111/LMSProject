@@ -73,7 +73,7 @@ $(function(){
 	<div class="col-sm-10 offset-1">
 		<div class="card">
 			<div class="card-header">
-				<h3 class="card-title">교수 평가 조회</h3>
+				<h3 class="card-title">강의 평가 조회</h3>
 			</div>
 		
 			<div class="card-body">
