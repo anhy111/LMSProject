@@ -17,7 +17,7 @@ let tid;
 let cnt = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
 
 function counter_init(){
-	tid =setInterval("counter_run()", 1000);
+	tid =setInterval("counter_run()", 990);
 }
 
 function counter_run(){
@@ -30,7 +30,7 @@ function counter_run(){
 	
 	if(cnt < 0){
 		clearInterval(tid);
-		$("#frm").submit();
+		$("#logoutFrm").submit();
 	}
 }
 
@@ -80,7 +80,7 @@ $(function(){
 			<div class="nav-link">
 				<span id="counter"></span>
 			</div>
-			<form style="display: none;" id="frm" action="/logout" method="post">
+			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 			<sec:csrfInput/>
 			</form>
 			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block">

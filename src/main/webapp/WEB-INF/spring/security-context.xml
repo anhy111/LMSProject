@@ -40,6 +40,8 @@
 		<security:logout logout-url="/logout" logout-success-url="/login/login" invalidate-session="true"
 			delete-cookies="remember-me,JSESSION_ID" />
 			
+		<security:intercept-url pattern="/j_spring_security_logout" access="permitAll"/>
+			
 	</security:http>
 	
 	
