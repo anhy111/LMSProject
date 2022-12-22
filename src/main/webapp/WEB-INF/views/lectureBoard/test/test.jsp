@@ -20,13 +20,13 @@
 		min-width: 1090px;
 		margin: 0 auto;
 	}
-	
+
 	.card-body {
 		width: 100%;
 	}
-	
+
 	/* 기본 틀 잡기 끝 */
-	
+
 	.quizNotice {
 		background: #eee;
 		width: 100%;
@@ -34,16 +34,16 @@
 		padding: 5%;
 		margin-bottom: 10px;
 	}
-	
+
 	.emphasisR {
 		color: red;
 	}
-	
+
 	.table-responsive-sm {
 		margin-bottom: 40px;
 		min-height: 500px;
 	}
-	
+
 	.table {
 		border-bottom: 1px solid #eef2f7;
 	}
@@ -107,14 +107,14 @@
 								</thead>
 								<tbody>
 								<c:if test="${empty list}">
-								
+
 								<tr style="border-bottom: 1px solid #112a63">
 									<td colspan="5" style="text-align: center;color: #888;">예정된 시험이 없습니다.</td>
 								</tr>
-							
+
 								</c:if>
 								<c:if test="${not empty list}">
-								
+	
 									<c:forEach var="list" items="${list }" varStatus="status" end="${list.size()}">
 									<fmt:formatDate var="testReg" value="${list.testReg }" pattern="yyyy.MM.dd"/>
 										<tr>
@@ -146,12 +146,12 @@
 				<div id="pageBarBtn" style="text-align:center;">
 				    <button type="button" class="btn btn-light" disabled="" onclick="#"><i class="uil-angle-double-left"></i></button>
 				    <button type="button" class="btn btn-light" disabled="" onclick="#"><i class="uil uil-angle-left"></i></button>
-				         	
-				         		
+
+
 					    <button type="button" class="btn btn-primary" onclick="#">
 					    	1
 				    	</button>
-					
+
 				    <button type="button" class="btn btn-light" onclick="#"><i class="uil uil-angle-right"></i></button>
 				    <button type="button" class="btn btn-light" disabled="" onclick="#"><i class="uil-angle-double-right"></i></button>
 				</div>
@@ -164,7 +164,7 @@
 
 function a(){
 	function bv(){
-		
+
 	}
 }
 

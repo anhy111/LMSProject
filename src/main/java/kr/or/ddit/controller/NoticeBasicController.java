@@ -2,6 +2,8 @@ package kr.or.ddit.controller;
 
 import java.util.List;
 
+import kr.or.ddit.domain.LecApply;
+import kr.or.ddit.domain.Test;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +23,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class NoticeBasicController {
 
     /**
-     *     DI(의존성 주입)을 하는 방법에는 3가지가 있다.
-     *     1) 필드 주입
-     *     2) 수정자(Setter) 주입
-     *     3) 생성자 주입
-     *
-     *     이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
-     *     장/단점이 궁금하면 슬랙으로..ㅎ
+     * DI(의존성 주입)을 하는 방법에는 3가지가 있다.
+     * 1) 필드 주입
+     * 2) 수정자(Setter) 주입
+     * 3) 생성자 주입
+     * <p>
+     * 이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
+     * 장/단점이 궁금하면 슬랙으로..ㅎ
      */
 
     private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
@@ -42,18 +44,15 @@ public class NoticeBasicController {
 
         List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
 
-        //공통 약속
-        model.addAttribute("bodyTitle", "공지사항목록");
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
 
-        //forwarding
-        return HOME;
+        return "notice/list";
     }
 
     //공지사항 등록 폼
     @GetMapping("/noticeForm")
-    public String createNoticeForm(Model model) {
+    public String createNoticeForm (NoticeForm form, Model model) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
@@ -63,12 +62,10 @@ public class NoticeBasicController {
 
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
-    public String createNotice(NoticeForm form) {
+    public String createNotice (NoticeForm form) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
-
-        log.info(noticeBasic.toString());
 
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         noticeBasicService.noticeBasicSave(noticeBasic);
@@ -135,10 +132,17 @@ public class NoticeBasicController {
         return HOME;
     }
 
-    @GetMapping("/json/index")
-    public String jsonIndex() {
+    @GetMapping("/test")
+    public String testHome(Model model) {
 
-        return "json/index";
+        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
+
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
+
+        model.addAttribute("noticeBasicList", noticeBasicList);
+        model.addAttribute("totalRow", totalRow);
+
+        return "notice/test";
     }
 
 }
