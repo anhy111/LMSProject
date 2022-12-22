@@ -160,6 +160,10 @@
 							class="nav-icon far fa-envelope"></i>
 							<p>상담</p>
 					</a></li>
+					<li class="nav-item"><a href="/" class="nav-link"> <i
+							class="nav-icon far fa-envelope"></i>
+							<p>내가 듣는 강의 (임시. 지우지 마시오)</p>
+					</a></li>
 				</sec:authorize>
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
