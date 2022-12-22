@@ -55,12 +55,7 @@ public class FacilityReservationController {
     @PostMapping("/insertSch")
     public int insertSch (@RequestBody FacilityScheduleVO facilityScheduleVO) {
 
-        log.info(String.valueOf(facilityScheduleVO));
-
-
         facilityMemberService.insertSch(facilityScheduleVO);
-
-        log.info(String.valueOf(facilityScheduleVO));
 
         return SUCCESS;
     }
