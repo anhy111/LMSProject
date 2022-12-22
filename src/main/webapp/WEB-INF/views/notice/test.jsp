@@ -117,7 +117,7 @@
                                             </c:if>
                                             <a href="/notice/list/${noticeBasic.noticeCd}/detail"
                                                style="color:#6c757d;">
-                                                    ${noticeBasic.noticeTtl }
+                                                    <c:out value="${noticeBasic.noticeTtl }"/>
                                             </a>
                                         </td>
                                         <td style="text-align: center;">${noticeBasic.noticeCd}</td>

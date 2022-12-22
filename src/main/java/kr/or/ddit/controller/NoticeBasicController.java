@@ -44,18 +44,15 @@ public class NoticeBasicController {
 
         List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
 
-        //공통 약속
-        model.addAttribute("bodyTitle", "공지사항목록");
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
 
-        //forwarding
         return "notice/list";
     }
 
     //공지사항 등록 폼
     @GetMapping("/noticeForm")
-    public String createNoticeForm(Model model) {
+    public String createNoticeForm (NoticeForm form, Model model) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
@@ -65,12 +62,10 @@ public class NoticeBasicController {
 
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
-    public String createNotice(NoticeForm form) {
+    public String createNotice (NoticeForm form) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
-
-        log.info(noticeBasic.toString());
 
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         noticeBasicService.noticeBasicSave(noticeBasic);

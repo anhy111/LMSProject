@@ -102,10 +102,7 @@
                                                     <span class="badge badge-outline-warning badge-pill"
                                                           style="float:end;">NEW</span>
                                             </c:if>
-                                            <a href="/qna/qnaDetail/${list.qnaCd}/detail"
-                                               style="color:#6c757d;">
-                                                    ${qnaList.qnaTtl }
-                                            </a>
+                                            <a href="/qna/qnaDetail/${list.qnaCd}/detail" style="color:#6c757d;"><c:out value="${qnaList.qnaTtl }" /></a>
                                         </td>
                                         <td style="text-align: center;">${qnaList.qnaCd}</td>
                                         <td style="text-align: center;">${qnaList.qnaYn}</td>

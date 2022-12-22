@@ -65,7 +65,7 @@ public class QnaController {
     }
 
     @PostMapping("/qnaWrite")
-    public String postQnaWriteForm(QnaForm qnaForm) {
+    public String postQnaWriteForm(@ModelAttribute("qnaForm") QnaForm qnaForm) {
         Qna qna = new Qna(qnaForm.getMemberNumber(), qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccessType());
 
         qnaService.qnaSave(qna);
