@@ -89,6 +89,9 @@
 			selectLeaveOptionDisabed();
 			setPeriodDisabled();
 	}
+	function dataReset(){
+		form.reset();
+	}
 </script>
 
 <div class="col-md-6">
@@ -109,11 +112,11 @@
 					data-target-input="nearest">
 				</div>
 			</div>
-						
+				
 			<div class="form-group col-4" >
 				<label>학적구분</label>
 				<select  id="recordCategory" name="rgbCd"  >
-					<option selected="selected" >카테고리선택</option>
+					<option selected="selected"  value="">카테고리선택</option>
 					<option id="leave"  value="휴학">휴학</option>
 					<option id="return"  value="복학">복학</option>
 					<option id="quit" value="자퇴">자퇴</option>
@@ -138,7 +141,7 @@
 					data-target-input="nearest">
 				<select  id="selectTerm" name="recPer" >
 						<!-- 휴학유형에 따라 선택 할 수 있는 옵션값이 달라짐 -->
-						<option selected>기간선택</option>
+						<option selected value="0">기간선택</option>
 						<option value="6">한학기</option>
 						<option value="12">1년</option>
 						<option value="24">2년</option>
@@ -154,18 +157,16 @@
 					<textarea id="content" name="recRsn"  rows="5" cols="500" required></textarea>
 				</div>
 			</div>
-
-		
+			
 			<div id="spn1" class="card-footer">
 			<div style="text-align:right">
 				<!-- 확인시 신청 내역으로 -->
 				<button type="submit" class="btn bg-gradient-primary btn-sm">확인</button> 
 				<!-- 작성내용 초기화 -->
-				<a href="#" class="btn bg-gradient-danger btn-sm">취소</a>
-				<a href="/college/main" class="btn bg-gradient-warning btn-sm">메인</a>
+				<a onclick="dataReset()" class="btn bg-gradient-danger btn-sm">취소</a>
+				<a href="/record/main?stuNo=<%=stuNo %>" class="btn bg-gradient-warning btn-sm">메인</a>
 			</div>
 			</div>
-		
 		</div>
 	</div>
 	<sec:csrfInput/>

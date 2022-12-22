@@ -50,11 +50,12 @@ INSERT INTO COUNSEL (
 , CNSL_TTL
 , CNSL_CON
 , CNSL_DT
+, REC_CD
 
 )
 VALUES(
 <if test="cnslCd == null or cnslCd =='' ">
-SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
+SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||COUNSEL_SEQ.NEXTVAL
 </if>
 , #{stuNo}
 , #{cnslCate}
@@ -68,6 +69,9 @@ SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
 , #{cnslCon}
 </if>
 , #{cnslDt,jdbcType=DATE}
+<if test="recCd != null or recCd !='' ">
+, #{recCd}
+</if>
 )
 </insert>
 <!-- 교수의 상담 답변 -->

@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Counsel;
+import kr.or.ddit.domain.Record;
 import kr.or.ddit.service.CounselService;
+import kr.or.ddit.service.RecordService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CounselController {
 	@Autowired
 	CounselService counselService;
+	@Autowired
+	RecordService recordService;
 	
 	/*
 	 *  학생 컨트롤러
@@ -37,7 +41,6 @@ public class CounselController {
 	
 	@GetMapping("/studentside/applyList")
 	public String studentCounselApplyList(Model model, int stuNo) {
-		
 		List<Counsel> allList = this.counselService.studentApplyList(stuNo);
 		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
 		List<Counsel> counselList = new ArrayList<Counsel>();
@@ -51,6 +54,7 @@ public class CounselController {
 				model.addAttribute("counselList", counselList);
 			}
 		}
+	
 //		log.info(nonFaceCounselList.toString())	;
 		//forwarding
 		return "counsel/studentside/applyList";
@@ -58,26 +62,23 @@ public class CounselController {
 	
 	@GetMapping("/studentside/applyInsert")
 	public String studentCounselApplyInsert(Model model,  int stuNo) {
-//		HttpSession session = request.getSession();
-//		int stuNo = (int)session.getAttribute("no");
+		List<Record> recordList = this.recordService.RecordList(stuNo);
 		List<Counsel> professorList = this.counselService.listOfProfessor(stuNo);
-		for(int i = 0; i < professorList.size(); i++) {
-			for (Counsel counsel : professorList) {
-//				log.info("교수목록 가온나: " + counsel.getEmpNm());
-			}
-		}
+
+		log.info("학적 신청 리스트 : " + recordList);
+		
+		;model.addAttribute("recordList", recordList);
 		model.addAttribute("professorList", professorList);
 		//forwarding
 		return "counsel/studentside/applyInsert";
 	}
 	
 	@PostMapping("/studentside/applyInsert")
-	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel, HttpServletRequest request) {
-		log.info("학번 : " + counsel.getStuNo());
+	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel) {
 		String[] proNoEmpNm = counsel.getEmpNm().split("_");
 		int proNo = Integer.parseInt(proNoEmpNm[0]);
 		counsel.setProNo(proNo);
-//		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
+		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
 		this.counselService.applyInsert(counsel);
 		
 		//forwarding
@@ -139,6 +140,15 @@ public class CounselController {
 		int result = this.counselService.applyDelete(counsel.getCnslCd());
 		return result;
 	}
+	
+//	@ResponseBody
+//	@PostMapping("/studentside/selectRecord")
+//	public List<Record> searchRecordList(@RequestBody int stuNo){
+//		log.info("왓니");
+//		List<Record> recordsList = this.recordService.RecordList(stuNo);
+//		
+//		return recordsList;
+//	}
 	/*
 	 *  교수 컨트롤러
 	 */

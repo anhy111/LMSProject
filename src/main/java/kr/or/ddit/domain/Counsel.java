@@ -22,4 +22,6 @@ public class Counsel {
 	private String empNm; //담당교수명
 	private String cnslType;// 대면/비대면 선택 카테고리
 	private String stuNm; //학생명
+	private int recCd; //학적코드 (상담 기록 확인용)
+	
 }

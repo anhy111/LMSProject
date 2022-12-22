@@ -15,28 +15,26 @@ INSERT INTO RECORD (
 		, REC_YR
 		, REC_SEM
 		, REC_DT
+		, REC_YN
 		, REC_PER
 		, REC_RSN
-		, REC_YN
-		, REC_REJ
 		)
 VALUES(
 		RECORD_SEQ.NEXTVAL
 		, #{stuNo}
 		, #{rgbCd}
-		, TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		<if test="recYr == null or recYr =='' ">, TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))</if>
 		, #{recSem}
-		, SYSDATE
-		<if test="recPer != null and recPer != '' ">, #{recPer}</if>
-		<if test="recRsn != null and recRsn != '' ">, #{recRsn}</if>
-		<if test="recYn != null and recYn != '' ">, #{recYn}</if>
-		<if test="recRej != null and recRej != '' ">, #{recRej}</if>
+		<if test="recDt == null or recDt =='' ">, SYSDATE</if>
+		, #{recYn}
+		<if test="recPer != null or recPer != '' ">, #{recPer}</if>
+		<if test="recRsn != null or recRsn != '' ">, #{recRsn}</if>
 		)
 </insert>
 <!-- 학적 변동 현황 조회(신청 목록 조회) -->
 <select id="RecordList" parameterType="int" resultType="Record">
 SELECT 
-  REC_CD
+REC_CD
 , R.STU_NO
 , R.RGB_CD
 , R.REC_YR
@@ -44,10 +42,13 @@ SELECT
 , R.REC_PER
 , R.REC_RSN
 , R.REC_DT
-, R.REC_YN
-FROM RECORD R, STUDENT S
-WHERE R.STU_NO = #{stuNo}
-AND R.STU_NO = S.STU_NO
+, CD.COMD_NM AS REC_YN
+, R.REC_REJ
+FROM RECORD R, STUDENT S, COMMON_DETAIL CD, COMMON C
+WHERE R.STU_NO = S.STU_NO
+AND CD.COM_CD = C.COM_CD
+AND CD.COMD_CD = R.REC_YN
+AND R.STU_NO = #{stuNo}
 </select>
 </mapper> 
 
