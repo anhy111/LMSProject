@@ -44,6 +44,8 @@ public class CustomLoginSuccessHandler extends
 		// 로그인 아이디
 		log.info("username : " + customUser.getUsername());
 		Member member = customUser.getMemberVO();
+		
+		
 		Member read = memberMapper.read(member.getMemNo());
 		Employee readEmployee = memberMapper.readEmployee(member.getMemNo());
 		Student readStudent = memberMapper.readStudent(member.getMemNo());
@@ -53,6 +55,7 @@ public class CustomLoginSuccessHandler extends
 
 		log.info("이렇게하면 들어올까욤? " + readEmployee);
 		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(1800); // 세션 만료시간
 		
 		session.setAttribute("no", read.getMemNo());
 		String no = String.valueOf(session.getAttribute("no"));
@@ -63,6 +66,7 @@ public class CustomLoginSuccessHandler extends
 			session.setAttribute("pic", readEmployee.getEmpPic());
 			if (readProfessor != null) {
 				session.setAttribute("position", readProfessor.getProPos());
+				session.setAttribute("department", readProfessor.getDepCd());
 
 			} else {
 				session.setAttribute("position", readManager.getEmpPos());

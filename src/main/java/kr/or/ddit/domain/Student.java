@@ -1,7 +1,5 @@
 package kr.or.ddit.domain;
 
-import java.util.List;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;

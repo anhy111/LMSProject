@@ -15,11 +15,6 @@ public class Member implements Serializable {
     //1:N
     private List<MemberAuth> memberAuthList;
 
-    private Manager managerVO;
-
-    private Professor professorVO;
-
-    private Student studentVO;
 
     @Override
     public String toString() {
