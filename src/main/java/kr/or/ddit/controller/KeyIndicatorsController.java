@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.KeyIndicators;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.DepartmentService;
+import kr.or.ddit.service.KeyIndicatorsService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,7 +27,8 @@ public class KeyIndicatorsController {
 	CollegeService collegeService;
 	@Autowired
 	DepartmentService departmentService;
-	
+	@Autowired
+	KeyIndicatorsService keyIndicatorsService;
 	
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@GetMapping("/chart")
@@ -42,5 +45,11 @@ public class KeyIndicatorsController {
 	@GetMapping("/departmentByCollege")
 	public List<Department> departmentByCollege(int colCd){
 		return this.departmentService.departmentByCollegeList(colCd);
+	}
+	
+	@ResponseBody
+	@GetMapping("/recruitmentRateChart")
+	public List<KeyIndicators> recruitmentRateChart(KeyIndicators keyIndicators){
+		return this.keyIndicatorsService.recruitmentRateList(keyIndicators);
 	}
 }
