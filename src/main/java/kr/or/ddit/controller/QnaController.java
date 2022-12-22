@@ -40,6 +40,19 @@ public class QnaController {
         return "qna/qnaBoard";
     }
 
+    @GetMapping("/test")
+    public String qna(Model model) {
+
+        int totalRow = this.qnaService.getQnaTotalRow();
+
+        List<Qna> showList = qnaService.showList();
+
+        model.addAttribute("qnaList", showList);
+        model.addAttribute("totalRow", totalRow);
+
+        return "qna/test";
+    }
+
     @GetMapping("/qnaWrite")
     public String getQnaWriteForm(Principal principal, HttpServletRequest request, Model model) {
 

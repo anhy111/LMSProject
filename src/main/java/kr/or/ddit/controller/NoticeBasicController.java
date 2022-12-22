@@ -2,6 +2,8 @@ package kr.or.ddit.controller;
 
 import java.util.List;
 
+import kr.or.ddit.domain.LecApply;
+import kr.or.ddit.domain.Test;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +23,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class NoticeBasicController {
 
     /**
-     *     DI(의존성 주입)을 하는 방법에는 3가지가 있다.
-     *     1) 필드 주입
-     *     2) 수정자(Setter) 주입
-     *     3) 생성자 주입
-     *
-     *     이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
-     *     장/단점이 궁금하면 슬랙으로..ㅎ
+     * DI(의존성 주입)을 하는 방법에는 3가지가 있다.
+     * 1) 필드 주입
+     * 2) 수정자(Setter) 주입
+     * 3) 생성자 주입
+     * <p>
+     * 이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
+     * 장/단점이 궁금하면 슬랙으로..ㅎ
      */
 
     private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
@@ -48,7 +50,7 @@ public class NoticeBasicController {
         model.addAttribute("totalRow", totalRow);
 
         //forwarding
-        return HOME;
+        return "notice/list";
     }
 
     //공지사항 등록 폼
@@ -135,10 +137,17 @@ public class NoticeBasicController {
         return HOME;
     }
 
-    @GetMapping("/json/index")
-    public String jsonIndex() {
+    @GetMapping("/test")
+    public String testHome(Model model) {
 
-        return "json/index";
+        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
+
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
+
+        model.addAttribute("noticeBasicList", noticeBasicList);
+        model.addAttribute("totalRow", totalRow);
+
+        return "notice/test";
     }
 
 }
