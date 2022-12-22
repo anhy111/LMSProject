@@ -94,5 +94,15 @@
 		AND EMP_NM LIKE '%' || #{proNm} || '%'
 		</if>
 	</select>
+	
+	<select id="searchEmployee" parameterType="department" resultType="employee"> 
+		SELECT EMP_NO
+		     , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = EMP_DIV) EMP_DIV
+		     , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = EMP_POS) EMP_POS
+		     , EMP_NM
+		FROM EMPLOYEE
+		WHERE EMP_DIV = 'DIV002'
+		AND EMP_NM LIKE '%' || #{empNm} || '%'
+	</select>
 </mapper>
 

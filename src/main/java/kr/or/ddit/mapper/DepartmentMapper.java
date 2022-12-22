@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Professor;
 
 public interface DepartmentMapper {
@@ -24,5 +25,8 @@ public interface DepartmentMapper {
 	public int validationDepartmentName(String depNm);
 	
 	// 학과장 선택시 교수 검색
-	public Professor searchProfessor(Department department);
+	public List<Professor> searchProfessor(Department department);
+	
+	// 조교 선택시 직원검색
+	public List<Employee> searchEmployee(Department department);
 }

@@ -47,9 +47,9 @@
 								<div class="form-group col">
 									<label>학과명:</label> <input type="hidden" name="depCd">
 									<!-- 학과코드 -->
-									<input type="hidden" name="proNo">
+									<input type="hidden" id="proNo" name="proNo">
 									<!-- 학과장 -->
-									<input type="hidden" name="empNo">
+									<input type="hidden" id="empNo" name="empNo">
 									<!-- 조교 -->
 									<div class="input-group date" id="reservationdate" data-target-input="nearest">
 										<input type="text" name="depNm" class="form-control rounded-0" value="" readonly />

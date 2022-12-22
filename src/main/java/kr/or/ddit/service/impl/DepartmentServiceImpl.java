@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.mapper.DepartmentMapper;
 import kr.or.ddit.service.DepartmentService;
@@ -52,7 +53,12 @@ public class DepartmentServiceImpl implements DepartmentService{
 	}
 	
 	@Override
-	public Professor searchProfessor(Department department) {
+	public List<Professor> searchProfessor(Department department) {
 		return this.departmentMapper.searchProfessor(department);
+	}
+	
+	@Override
+	public List<Employee> searchEmployee(Department department) {
+		return this.departmentMapper.searchEmployee(department);
 	}
 }

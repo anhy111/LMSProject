@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.DepartmentService;
@@ -42,20 +43,12 @@ public class DepartmentController {
 	}
 	
 	@GetMapping("/professorList")
-	public String professorList(Model model) {
-		List<College> collegeList = this.collegeService.CollegeList();
-		List<Department> departments = this.departmentService.departmentByCollegeList(0);
-		model.addAttribute("collegeList",collegeList);
-		model.addAttribute("departmentList",departments);
+	public String professorList() {
 		return "department/notile/professorList";
 	}
 	
 	@GetMapping("/employeeList")
-	public String employeeList(Model model) {
-		List<College> collegeList = this.collegeService.CollegeList();
-		List<Department> departments = this.departmentService.departmentByCollegeList(0);
-		model.addAttribute("collegeList",collegeList);
-		model.addAttribute("departmentList",departments);
+	public String employeeList() {
 		return "department/notile/employeeList";
 	}
 	
@@ -109,8 +102,14 @@ public class DepartmentController {
 	
 	@ResponseBody
 	@GetMapping("/searchProfessor")
-	public Professor searchProfessor(Department department) {
-		log.info("department : " + department);
+	public List<Professor> searchProfessor(Department department) {
 		return this.departmentService.searchProfessor(department);
 	}
+	
+	@ResponseBody
+	@GetMapping("/searchEmployee")
+	public List<Employee> searchEmployee(Department department) {
+		return this.departmentService.searchEmployee(department);
+	}
+	
 }

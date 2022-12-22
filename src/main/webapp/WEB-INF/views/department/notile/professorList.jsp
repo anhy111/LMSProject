@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div class="container-fluid p-3">
 	<div class="row">
-		<div class="input-group col-6">
+		<div class="input-group col-8 offset-2">
 			<input type="text" class="form-control" id="proNm" name="proNm" />
 			<div class="input-group-append">
 				<button type="button" class="btn btn-default" id="btnPro">
@@ -15,19 +15,20 @@
 		</div>
 	</div>
 	<br>
-	<div class="card-body table-responsive col-11 p-0" style="height: 300px;">
+	<div class="card-body table-responsive col-12 p-1" style="height: 300px;">
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-sm">
 			<thead>
 				<tr class="text-center">
 					<th width="7%" class="text-left">순번</th>
+					<th>교번</th>
 					<th>단과대학</th>
 					<th>소속학과</th>
 					<th>직책명</th>
 					<th>이름</th>
-					<th>선택</th>
+					<th >선택</th>
 				</tr>
 			</thead>
-			<tbody id="notApplyLecture">
+			<tbody id="proList">
 
 			</tbody>
 		</table>
@@ -60,6 +61,42 @@
 			proNm : $("#proNm").val()
 		}
 		
-		console.log(data);
+		$.ajax({
+			url : "/department/searchProfessor",
+			type:"get",
+			data : data,
+			success : function(result){
+				$("#proList").html("");
+				let str = "";
+				
+				if(result == null || result.length == 0){
+					str += `<tr class="text-center">
+								<td colspan='7'>검색결과가 없습니다.</td>
+							</tr>`;
+					$("#proList").append(str);
+					return;
+				}
+				
+				$.each(result, function(p_inx, professor){
+					str += `<tr class="text-center">
+								<td>\${p_inx+1}</td>
+								<td>\${professor.proNo}</td>
+								<td class='text-left'>\${professor.colNm}</td>
+								<td class='text-left'>\${professor.depNm}</td>
+								<td>\${professor.proPos}</td>
+								<td>\${professor.empNm}</td>
+								<td><button type='button' class='btn btn-primary btn-flat btn-sm' onclick='selectProfessor("\${professor.proNo}","\${professor.empNm}")'>선택</button></td>
+							</tr>`;
+				});
+				$("#proList").append(str);
+			}
+		});
+	}
+	
+	function selectProfessor(p_no, p_name){
+		console.log(p_no + " : " + p_name);
+		opener.document.getElementById("proNo").value = p_no;
+		opener.document.getElementById("proNm").value = p_name;
+		window.close();
 	}
 </script>
