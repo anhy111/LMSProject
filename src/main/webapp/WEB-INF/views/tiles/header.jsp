@@ -12,23 +12,55 @@
 	String no = String.valueOf(session.getAttribute("no"));
 	String pic = String.valueOf(session.getAttribute("pic"));
 %>
+<script type="text/javascript">
+let tid;
+let cnt = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
+
+function counter_init(){
+	tid =setInterval("counter_run()", 1000);
+}
+
+function counter_run(){
+	document.all.counter.innerText = time_format(cnt);
+	cnt--;
+	
+	if(cnt < 5){
+		$("#session").css("display", "block");
+	}
+	
+	if(cnt < 0){
+		clearInterval(tid);
+		$("#frm").submit();
+	}
+}
+
+function time_format(s) {
+	var nHour=0;
+	var nMin=0;
+	var nSec=0;
+	if(s>0) {
+		nMin = parseInt(s/60);
+		nSec = s%60;
+
+		if(nMin>60) {
+			nHour = parseInt(nMin/60);
+			nMin = nMin%60;
+		}
+	} 
+	if(nSec<10) nSec = "0"+nSec;
+	if(nMin<10) nMin = "0"+nMin;
+
+	return nMin+":"+nSec;
+}
+
+$(function(){
+
+	counter_init();
+
+});
+</script>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-	<!-- Left navbar links -->
-	<ul class="navbar-nav">
-<!-- 		<li class="nav-item"> -->
-<!-- 			<a class="nav-link" data-widget="pushmenu" href="#" role="button"> -->
-<!-- 				<i class="fas fa-bars"></i> -->
-<!-- 			</a> -->
-<!-- 		</li> -->
-<!-- 		<li class="nav-item d-none d-sm-inline-block"> -->
-<!-- 			<a href="index3.html" class="nav-link">Home</a> -->
-<!-- 		</li> -->
-<!-- 		<li class="nav-item d-none d-sm-inline-block"> -->
-<!-- 			<a href="#" class="nav-link">Contact</a> -->
-<!-- 		</li> -->
-	</ul>
-
 	<!-- Right navbar links -->
 	<ul class="navbar-nav ml-auto">
 		<!-- 로그인 하지 않은 경우 -->
@@ -45,6 +77,12 @@
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
+			<div class="nav-link">
+				<span id="counter"></span>
+			</div>
+			<form style="display: none;" id="frm" action="/logout" method="post">
+			<sec:csrfInput/>
+			</form>
 			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
@@ -52,12 +90,15 @@
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
-						<%=name %> 님 ദ്ദി ᵔ∇ᵔ )  |   <%=department %> 
+						<%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=department %> 
 					</div>
 				</div>
 			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
+			<div class="nav-link">
+				<span id="counter"></span>
+			</div>
 			<a href="#" class="d-block"> 
 				<div class="user-panel d-flex">
 					<div class="image">
@@ -65,12 +106,15 @@
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
-						<%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=position %> 
+						<%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=position %> 
 					</div>
 				</div>
 			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
+			<div class="nav-link">
+				<span id="counter"></span>
+			</div>
 			<a href="#" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
@@ -78,97 +122,12 @@
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
-						 <%=name %>님 ദ്ദി ᵔ∇ᵔ )  |   <%=division %>   |   <%=position %>  
+						 <%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=division %>&nbsp;&nbsp; | &nbsp;&nbsp;<%=position %>  
 					</div>
 				</div>
 			</a>
 		</sec:authorize>
 
-		<!-- Navbar Search -->
-<!-- 		<li class="nav-item"><a class="nav-link" -->
-<!-- 			data-widget="navbar-search" href="#" role="button"> <i -->
-<!-- 				class="fas fa-search"></i> -->
-<!-- 		</a> -->
-<!-- 			<div class="navbar-search-block"> -->
-<!-- 				<form class="form-inline"> -->
-<!-- 					<div class="input-group input-group-sm"> -->
-<!-- 						<input class="form-control form-control-navbar" type="search" -->
-<!-- 							placeholder="Search" aria-label="Search"> -->
-<!-- 						<div class="input-group-append"> -->
-<!-- 							<button class="btn btn-navbar" type="submit"> -->
-<!-- 								<i class="fas fa-search"></i> -->
-<!-- 							</button> -->
-<!-- 							<button class="btn btn-navbar" type="button" -->
-<!-- 								data-widget="navbar-search"> -->
-<!-- 								<i class="fas fa-times"></i> -->
-<!-- 							</button> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</form> -->
-<!-- 			</div> -->
-<!-- 		</li> -->
-
-		<!-- Messages Dropdown Menu -->
-<!-- 		<li class="nav-item dropdown"><a class="nav-link" -->
-<!-- 			data-toggle="dropdown" href="#"> <i class="far fa-comments"></i> -->
-<!-- 				<span class="badge badge-danger navbar-badge">3</span> -->
-<!-- 		</a> -->
-<!-- 			<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"> -->
-<!-- 				<a href="#" class="dropdown-item"> Message Start -->
-<!-- 					<div class="media"> -->
-<!-- 						<img src="/resources/adminlte/dist/img/user1-128x128.jpg" -->
-<!-- 							alt="User Avatar" class="img-size-50 mr-3 img-circle"> -->
-<!-- 						<div class="media-body"> -->
-<!-- 							<h3 class="dropdown-item-title"> -->
-<!-- 								Brad Diesel <span class="float-right text-sm text-danger"><i -->
-<!-- 									class="fas fa-star"></i></span> -->
-<!-- 							</h3> -->
-<!-- 							<p class="text-sm">Call me whenever you can...</p> -->
-<!-- 							<p class="text-sm text-muted"> -->
-<!-- 								<i class="far fa-clock mr-1"></i> 4 Hours Ago -->
-<!-- 							</p> -->
-<!-- 						</div> -->
-<!-- 					</div> Message End -->
-<!-- 				</a> -->
-<!-- 				<div class="dropdown-divider"></div> -->
-<!-- 				<a href="#" class="dropdown-item"> Message Start -->
-<!-- 					<div class="media"> -->
-<!-- 						<img src="/resources/adminlte/dist/img/user8-128x128.jpg" -->
-<!-- 							alt="User Avatar" class="img-size-50 img-circle mr-3"> -->
-<!-- 						<div class="media-body"> -->
-<!-- 							<h3 class="dropdown-item-title"> -->
-<!-- 								John Pierce <span class="float-right text-sm text-muted"><i -->
-<!-- 									class="fas fa-star"></i></span> -->
-<!-- 							</h3> -->
-<!-- 							<p class="text-sm">I got your message bro</p> -->
-<!-- 							<p class="text-sm text-muted"> -->
-<!-- 								<i class="far fa-clock mr-1"></i> 4 Hours Ago -->
-<!-- 							</p> -->
-<!-- 						</div> -->
-<!-- 					</div> Message End -->
-<!-- 				</a> -->
-<!-- 				<div class="dropdown-divider"></div> -->
-<!-- 				<a href="#" class="dropdown-item"> Message Start -->
-<!-- 					<div class="media"> -->
-<!-- 						<img src="/resources/adminlte/dist/img/user3-128x128.jpg" -->
-<!-- 							alt="User Avatar" class="img-size-50 img-circle mr-3"> -->
-<!-- 						<div class="media-body"> -->
-<!-- 							<h3 class="dropdown-item-title"> -->
-<!-- 								Nora Silvester <span class="float-right text-sm text-warning"><i -->
-<!-- 									class="fas fa-star"></i></span> -->
-<!-- 							</h3> -->
-<!-- 							<p class="text-sm">The subject goes here</p> -->
-<!-- 							<p class="text-sm text-muted"> -->
-<!-- 								<i class="far fa-clock mr-1"></i> 4 Hours Ago -->
-<!-- 							</p> -->
-<!-- 						</div> -->
-<!-- 					</div> Message End -->
-<!-- 				</a> -->
-<!-- 				<div class="dropdown-divider"></div> -->
-<!-- 				<a href="#" class="dropdown-item dropdown-footer">See All -->
-<!-- 					Messages</a> -->
-<!-- 			</div> -->
-<!-- 		</li> -->
 		<!-- Notifications Dropdown Menu -->
 		<li class="nav-item dropdown"><a class="nav-link"
 			data-toggle="dropdown" href="#"> <i class="far fa-bell"></i> <span
@@ -216,4 +175,27 @@
 </nav>
 <!-- /.navbar -->
 
+<!-- 세션 타임아웃 모달 -->
+<div class="modal fade" id="session" style="display: none;"
+	aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">로그인 시간 연장</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>One fine body…</p>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
 
+	</div>
+
+</div>

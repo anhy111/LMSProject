@@ -160,6 +160,10 @@
 							class="nav-icon far fa-envelope"></i>
 							<p>상담</p>
 					</a></li>
+					<li class="nav-item"><a href="/" class="nav-link"> <i
+							class="nav-icon far fa-envelope"></i>
+							<p>내가 듣는 강의 (임시. 지우지 마시오)</p>
+					</a></li>
 				</sec:authorize>
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
@@ -222,7 +226,7 @@
 					</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="#" class="nav-link"> 
+								<a href="/professor/stuManageOfPro" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 										<p>학생 목록</p>
 								</a>
@@ -412,7 +416,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
+					<li class="nav-item"><a href="/ketIndicators/chart" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
 							<p>중점 지표</p>
 					</a></li>

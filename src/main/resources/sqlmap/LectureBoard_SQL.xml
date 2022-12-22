@@ -85,7 +85,9 @@
 		<result property="testReg"     column="TEST_REG" />
 		<result property="testSdt"     column="TEST_SDT" />
 		<result property="testEdt"     column="TEST_EDT" />
+		<collection property="stuTest" resultMap="stuTestMap"></collection>
 		<collection property="testQList"   resultMap="testQMap"></collection>
+		<collection property="stdList" resultMap="stdMap"></collection>
 	</resultMap>	
 	
 	
@@ -101,6 +103,19 @@
 		<result property="teqCon"  column="TEQ_CON" /> 
 	</resultMap>	                                           
 	
+	<resultMap type="stuTest" id="stuTestMap">
+		<result property="stuNo"  column="STU_NO" />
+		<result property="lecaCd"   column="LECA_CD" />
+		<result property="testCd"   column="TEST_CD" />
+		<result property="stScore" column="ST_SCORE" />
+		<result property="stYn"    column="ST_YN" />
+	</resultMap>
+	<resultMap type="std"  id="stdMap">
+		<result property="teqCd"     column="TEQ_CD"/>
+		<result property="stuNo"    column="STU_NO"/>
+		<result property="lecaCd"     column="LECA_CD"/>
+		<result property="stdAnswer" column="STD_ANSWER"/>
+	</resultMap>
 	
 	
 	
@@ -221,6 +236,8 @@
 		 TEST
 	WHERE 
 		 LECA_CD = #{lecaCd}
+	ORDER BY 	
+		 TEST_CD DESC	 
 	</select>
 	
 	<!-- 강의 계획서 조회 -->
@@ -276,58 +293,100 @@
 				)
 	</insert>
 
-<insert id="testQInsert" parameterType="testQ">
-		INSERT INTO TEST_Q(
-					 TEQ_CD
-					,TEST_CD
-					,TEQ_SEQ
-					,TEQ_OPTION1
-					,TEQ_OPTION2
-					,TEQ_OPTION3
-					,TEQ_OPTION4
-					,TEQ_ANSWER
-					,TEQ_CON
-		) 
-		VALUES (
-					 (SELECT NVL(MAX(TEQ_CD),0)+1 FROM TEST_Q)		
-		            ,#{testCd}
-		            ,(SELECT NVL(MAX(TEQ_SEQ),0)+1 FROM TEST_Q WHERE TEST_CD = #{testCd})
-		            ,#{teqOption1}
-		            ,#{teqOption2}
-		            ,#{teqOption3}
-		            ,#{teqOption4}
-				    ,#{teqAnswer}
-				    ,#{teqCon}
-		)
-</insert>
-<!-- <update id="testQInsert" parameterType="java.util.List"> -->
-<!-- 	<foreach collection="testQList" item="item" separator="" open="insert" close=""> -->
-<!-- 		 INTO TEST_Q( -->
-<!-- 					 TEQ_CD -->
-<!-- 					,TEST_CD -->
-<!-- 					,TEQ_SEQ -->
-<!-- 					,TEQ_OPTION1 -->
-<!-- 					,TEQ_OPTION2 -->
-<!-- 					,TEQ_OPTION3 -->
-<!-- 					,TEQ_OPTION4 -->
-<!-- 					,TEQ_ANSWER -->
-<!-- 					,TEQ_CON -->
-<!-- 		)  -->
-<!-- 		VALUES ( -->
-<!-- 					 (SELECT NVL(MAX(TEQ_CD),0)+1 FROM TEST_Q)		 -->
-<!-- 		            ,#{item.testCd    } -->
-<!-- 		            ,(SELECT NVL(MAX(TEQ_SEQ),0)+1 FROM TEST_Q WHERE TEST_CD = #{item.testCd}) -->
-<!-- 		            ,#{item.teqOption1} -->
-<!-- 		            ,#{item.teqOption2} -->
-<!-- 		            ,#{item.teqOption3} -->
-<!-- 		            ,#{item.teqOption4} -->
-<!-- 				    ,#{item.teqAnswer } -->
-<!-- 				    ,#{item.teqCon	  } -->
-<!-- 		) -->
-<!-- 	</foreach> -->
-<!-- </update> -->
+	<insert id="testQInsert" parameterType="testQ">
+			INSERT INTO TEST_Q(
+						 TEQ_CD
+						,TEST_CD
+						,TEQ_SEQ
+						,TEQ_OPTION1
+						,TEQ_OPTION2
+						,TEQ_OPTION3
+						,TEQ_OPTION4
+						,TEQ_ANSWER
+						,TEQ_CON
+			) 
+			VALUES (
+						 (SELECT NVL(MAX(TEQ_CD),0)+1 FROM TEST_Q)		
+			            ,#{testCd}
+			            ,(SELECT NVL(MAX(TEQ_SEQ),0)+1 FROM TEST_Q WHERE TEST_CD = #{testCd})
+			            ,#{teqOption1}
+			            ,#{teqOption2}
+			            ,#{teqOption3}
+			            ,#{teqOption4}
+					    ,#{teqAnswer}
+					    ,#{teqCon}
+			)
+	</insert>
 	
+	<select id="testDetail" parameterType="String" resultMap="testMap">
+		SELECT 
+			 T.TEST_CD
+			,T.LECA_CD
+			,T.TEST_NM
+			,T.TEST_CON
+			,T.TEST_REG
+			,T.TEST_SDT
+			,T.TEST_EDT
+			
+			,TQ.TEST_CD
+			,TQ.TEQ_SEQ
+			,TQ.TEQ_OPTION1
+			,TQ.TEQ_OPTION2
+			,TQ.TEQ_OPTION3
+			,TQ.TEQ_OPTION4
+			,TQ.TEQ_ANSWER
+			,TQ.TEQ_CON
+		FROM 
+			TEST T, TEST_Q TQ
+		WHERE 
+			T.TEST_CD = TQ.TEST_CD
+			AND T.TEST_CD = #{testCd}
+		ORDER BY TQ.TEQ_SEQ ASC		
+	</select>
 	
+	<delete id="testDelete" parameterType="String">
+		DELETE FROM TEST
+		WHERE TEST_CD = #{testCd}
+	</delete>
+	<delete id="testQDelete" parameterType="String">
+		DELETE FROM TEST_Q
+		WHERE TEST_CD = #{testCd}
+	</delete>
+		
+	<!-- 시험 제출 여부 확인 -->
+	<select id="checkTestSubmit" resultMap="testMap" parameterType="String">
+							SELECT  
+		                         TT.TEST_CD AS TTTESTCD
+		                        ,TT.LECA_CD AS TTLECACD
+		                        ,TT.TEST_NM
+		                        ,TT.TEST_CON
+		                        ,TT.TEST_REG
+		                        ,TT.TEST_SDT
+		                        ,TT.TEST_EDT
+		                        ,ST.LECA_CD AS STLECACD
+		                        ,ST.TEST_CD AS STTESTCD
+		                        ,ST.STU_NO
+		                        ,ST.ST_SCORE
+		                        ,ST.ST_YN 
+		                    FROM STU_TEST ST, TEST TT
+		                    WHERE ST.TEST_CD = TT.TEST_CD
+		                    AND ST.STU_NO = #{stuNo}
+	</select>	
+
+	<insert id="stuTestInsert" parameterType="stuTest">
+		INSERT INTO STU_TEST (   STU_NO
+								,LECA_CD
+								,TEST_CD
+								,ST_SCORE
+								)
+					  VALUES ( 
+						  		 #{stuNo}
+								,#{lecaCd}
+								,#{testCd}
+								,ROUND((#{stScore}/(5* (SELECT COUNT(TEQ_CD) TEQ_CD FROM TEST_Q WHERE TEST_CD = #{testCd})))*100)
+							 )
+		
+	</insert>
 	
 	
 	

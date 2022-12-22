@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.Test;
 import kr.or.ddit.domain.TestQ;
 import kr.or.ddit.service.LectureBoardService;
@@ -140,6 +141,30 @@ public class LectureBoardController {
 		
 		return "lectureBoard/test/test";
 	}
+	// 학생 퀴즈 리스트
+	@GetMapping("/test/studentTest")
+	public String studentTest(@RequestParam("lecaCd") String lecaCd, Model model, Principal cipal) {
+		
+		LecApply lec = this.lectureBoardService.lecApplySearch(lecaCd);
+		List<Test> testList = this.lectureBoardService.testList(lecaCd);
+		
+		// 세션 불러 오고 나서
+
+		String memCd = cipal.getName();
+		log.info(memCd);
+		
+		
+		List<Test> checkSubmit = this.lectureBoardService.checkTestSubmit(memCd);
+		
+//		log.info("checkSubmit : " + checkSubmit.toString() );
+		
+		
+		model.addAttribute("list", testList);
+		model.addAttribute("data", lec);
+		model.addAttribute("check", checkSubmit);
+		
+		return "lectureBoard/test/studentTest";
+	}
 	
 	//시험 추가 페이지
 	@PostMapping("/test/testRegistPage")
@@ -156,8 +181,69 @@ public class LectureBoardController {
 		
 		return "redirect:/lectureBoard/test/test?lecaCd="+test.getLecaCd();
 	}
+	
+	//시험 디테일(교수)
+	@GetMapping("test/testDetail")
+	public String DetailTest(Model model,String testCd, String lecaCd) {
+		
+		Test data = this.lectureBoardService.testDetail(testCd);
+		log.info(data.toString());
+		model.addAttribute("data", data);
+		
+		return "lectureBoard/test/testDetail";
+	}
+	//시험 디테일(학생)
+	@GetMapping("test/studentTestDetail")
+	public String DetailTest1(Model model,String testCd, String lecaCd,Principal cipal) {
+	
+		Test data = this.lectureBoardService.testDetail(testCd);
+		data.getStuTest().setStuNo(Integer.parseInt(cipal.getName()));
+		
+		log.info(data.toString());
+		
+		model.addAttribute("data", data);
+		
+		return "lectureBoard/test/studentTestDetail";
+	}
+	
+	//시험 삭제
+	@PostMapping("test/testDelete")
+	public String deleteTest(String testCd,String lecaCd) {
+		this.lectureBoardService.testDelete(testCd);
+		return "redirect:/lectureBoard/test/test?lecaCd="+lecaCd;
+	}
 
-
+	// 학생 퀴즈 제출
+	@PostMapping("test/testPost")
+	public String stuTestInsertPost(int stuNo, StudentTest stuTest) {
+		log.info("stuQuizInsertPost 도착");
+		log.info("stuNo 받아 지나요? : " + stuNo);
+		log.info("stuTest >> " + stuTest.toString());
+		
+		int stuTestRst = this.lectureBoardService.stuTestInsert(stuTest);
+		
+		if(stuTestRst > 0 ) {
+			log.info("하하하ㅏ하하하하하하ㅏ하하하하하하하하하하하하하하하하ㅏ핳하ㅏㅏㅏㅎ");
+		}
+//		
+//		int lecCd = stuTest.getLecCd();
+//		
+//		//map 생성
+//		Map<String, Object> testDetailVOMap = new HashMap<String, Object>();
+//		
+//		// 부모 키 자식에 insert 및 자식 list insert
+//		testDetailVOMap.put("stCd", stCd);
+//		testDetailVOMap.put("list", stuTest.getTestDetailVOList());
+//		
+//		
+//		int testDetailRst = this.studentLectureService.testDetailInsert(testDetailVOMap);
+//		
+//		log.info("stuTest insert 됐나요? : " + stuTestRst);
+//		log.info("testDetail insert 됐나요? : " + testDetailRst);
+		
+		
+		return "redirect:/studentLecture/quizDetailComplete?testCd=" + stuTest.getTestCd() + "&&lecCd=" + stuTest.getLecaCd();
+	}
 
 
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.Employee;
+import kr.or.ddit.domain.Professor;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.DepartmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,16 @@ public class DepartmentController {
 		model.addAttribute("departmentList",departments);
 		
 		return "department/departmentList";
+	}
+	
+	@GetMapping("/professorList")
+	public String professorList() {
+		return "department/notile/professorList";
+	}
+	
+	@GetMapping("/employeeList")
+	public String employeeList() {
+		return "department/notile/employeeList";
 	}
 	
 	@GetMapping("/register")
@@ -81,4 +93,23 @@ public class DepartmentController {
 		log.info("department : " + department);
 		return "" + this.departmentService.update(department);
 	}
+	
+	@ResponseBody
+	@GetMapping("/nameValidation")
+	public String nameValidation(String depNm) {
+		return ""+this.departmentService.validationDepartmentName(depNm);
+	}
+	
+	@ResponseBody
+	@GetMapping("/searchProfessor")
+	public List<Professor> searchProfessor(Department department) {
+		return this.departmentService.searchProfessor(department);
+	}
+	
+	@ResponseBody
+	@GetMapping("/searchEmployee")
+	public List<Employee> searchEmployee(Department department) {
+		return this.departmentService.searchEmployee(department);
+	}
+	
 }
