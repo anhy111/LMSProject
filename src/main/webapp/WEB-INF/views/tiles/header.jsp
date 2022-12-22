@@ -96,6 +96,9 @@ $(function(){
 			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
+			<div class="nav-link">
+				<span id="counter"></span>
+			</div>
 			<a href="#" class="d-block"> 
 				<div class="user-panel d-flex">
 					<div class="image">
@@ -109,6 +112,9 @@ $(function(){
 			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
+			<div class="nav-link">
+				<span id="counter"></span>
+			</div>
 			<a href="#" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
