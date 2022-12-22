@@ -208,7 +208,6 @@
 						keyIndicator.colNm, keyIndicator.recruitmentRate, keyIndicator.capacity-keyIndicator.recruitmentRate == 0 ? 1 : keyIndicator.capacity-keyIndicator.recruitmentRate
 					]);
 				});
-				rateData.removeRow(1);
 				rateData = google.visualization.arrayToDataTable(arr);
 
 		        var options_fullStacked = {
@@ -220,7 +219,7 @@
 		                  ticks: [0, .25, .5, .75, 1]
 		                }
 		              };
-		        var view = new google.visualization.DataView(data);
+		        var view = new google.visualization.DataView(rateData);
 		        view.setColumns([0, 1,
 		                         { calc: "stringify",
 		                           sourceColumn: 1,
@@ -230,7 +229,7 @@
 				var chart = new google.visualization.BarChart(document
 						.getElementById('recruitmentRate'));
 				
-				chart.draw(data, options_fullStacked);
+				chart.draw(rateData, options_fullStacked);
 			}
 		})
 	
