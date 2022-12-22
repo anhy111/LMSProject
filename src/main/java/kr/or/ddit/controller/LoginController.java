@@ -42,7 +42,7 @@ public class LoginController {
 	//기본 로그인 페이지가 아닌 사용자가 직접 정의한 로그인 페이지를 사용함
 	//요청 URI : /security/login
 	@RequestMapping("/login/login")
-	public String loginForm(String error, String logout, Model model) {
+	public String loginForm(String error, String logout, Model model, Authentication auth) {
 		// 시큐리티에서 DB에 없으면 error를 보내고 없으면 null을 보내냐 보댜 ㅇㅁㅇ
 		log.info("error : " + error);
 		log.info("logout : " + logout);
@@ -53,6 +53,10 @@ public class LoginController {
 		//로그아웃 메세지 
 		if(logout != null) {
 			model.addAttribute("logout", "Logout!!!");
+		}
+		
+		if(auth != null) {
+			return "test/home";
 		}
 		
 		return "login/loginForm";
