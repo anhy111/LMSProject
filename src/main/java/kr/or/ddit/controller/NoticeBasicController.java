@@ -6,6 +6,7 @@ import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Test;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
+import kr.or.ddit.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,8 @@ public class NoticeBasicController {
      */
 
     private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
+
+    private final FileUploadUtil fileUploadUtil;
 
     private static final String HOME = "redirect:/notice/list";
 
@@ -62,13 +65,18 @@ public class NoticeBasicController {
 
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
-    public String createNotice (NoticeForm form) {
+    public String createNotice (@RequestParam MultipartFile[] files,
+                                NoticeForm form) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         noticeBasicService.noticeBasicSave(noticeBasic);
+
+        if (files[0].getSize() > 0) {
+            this.fileUploadUtil.fileUploadAction(files);
+        }
 
         return HOME;
     }
@@ -114,20 +122,29 @@ public class NoticeBasicController {
         return HOME;
     }
 
-    @GetMapping("/upload")
-    public String uploadView() {
+    //공지사항 등록 폼
+    @GetMapping("/noticeForm2")
+    public String createNoticeForm2 (NoticeForm form, Model model) {
 
-        return "json/fileInput";
+        // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
+        model.addAttribute("form", new NoticeForm());
+
+        return "notice/noticeForm2";
     }
 
-    @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    @PostMapping("/noticeForm2")
+    public String handleFileUpload(@RequestParam MultipartFile[] files,
+                                   NoticeForm form) {
 
-        // 파일을 저장하거나 처리합니다.
+        // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
+        NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+        // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
+        noticeBasicService.noticeBasicSave(noticeBasic);
+
+        if (files[0].getSize() > 0) {
+            this.fileUploadUtil.fileUploadAction(files);
+        }
 
         return HOME;
     }

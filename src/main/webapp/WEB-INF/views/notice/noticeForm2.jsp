@@ -86,7 +86,7 @@
                                     <%--                                    </div>--%>
 
                                 </div>
-                                <input style="padding-left:210px;" name="files" type="file" id="fileUpload" multiple> <br> <br>
+                                <input style="padding-left:210px;" type="file" id="fileUpload" multiple> <br> <br>
                             </div>
                         </div>
                         <button type="submit">등록</button>
