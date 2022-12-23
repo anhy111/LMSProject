@@ -19,4 +19,9 @@ public class KeyIndicatorsServiceImpl implements KeyIndicatorsService {
 	public List<KeyIndicators> recruitmentRateList(KeyIndicators keyIndicators) {
 		return this.keyIndicatorsMapper.recruitmentRateList(keyIndicators);
 	}
+	
+	@Override
+	public List<KeyIndicators> studentState(KeyIndicators keyIndicators) {
+		return this.keyIndicatorsMapper.studentState(keyIndicators);
+	}
 }	

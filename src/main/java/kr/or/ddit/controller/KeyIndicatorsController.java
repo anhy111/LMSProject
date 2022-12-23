@@ -52,4 +52,18 @@ public class KeyIndicatorsController {
 	public List<KeyIndicators> recruitmentRateChart(KeyIndicators keyIndicators){
 		return this.keyIndicatorsService.recruitmentRateList(keyIndicators);
 	}
+	
+	@ResponseBody
+	@GetMapping("/recordStateChart")
+	public List<KeyIndicators> recordStateChart(KeyIndicators keyIndicators){
+		log.info("keyIndicators : " + keyIndicators);
+		return this.keyIndicatorsService.studentState(keyIndicators);
+	}
+	
+	@ResponseBody
+	@GetMapping("/evaluationChart")
+	public List<KeyIndicators> evaluationChart(KeyIndicators keyIndicators){
+		log.info("keyIndicators : " + keyIndicators);
+		return null;
+	}
 }

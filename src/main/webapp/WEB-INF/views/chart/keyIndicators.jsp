@@ -64,7 +64,7 @@
 					</div>
 					<div class="row">
 						<div class="col-7">
-							<div id="columnchart_material" class="p-0 m-0" style="width: 800px; height: 500px;"></div>
+							<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 500px;"></div>
 						</div>
 					</div>
 					<div class="row pl-3 pr-3">
@@ -111,8 +111,6 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 
-	var rateData;
-
 
 	$(function() {
 
@@ -123,23 +121,30 @@
 		});
 
 		$("#yr").on("change",function(){
-			google.charts.load('current', {
-				'packages' : [ 'corechart' ]
-			});
-			google.charts.setOnLoadCallback(recruitmentRateChart);
-		})
+			recruitmentRateChart();
+		});
+		
+		$("#yrSt").on("change",function(){
+			recordStateChart();
+		});
+		
+		$("#yrAv").on("change",function(){
+			evaluationChart();
+		});
+		
+		$("#departmentAv").on("change",function(){
+			evaluationChart();
+		});
 		
 		$("#college").on("change", function() {
-			google.charts.load('current', {
-				'packages' : [ 'corechart' ]
-			});
-			google.charts.setOnLoadCallback(recruitmentRateChart);
+			recruitmentRateChart();
 		});
 		$("#collegeSt").on("change", function() {
-
+			recordStateChart();
 		});
 		$("#collegeAv").on("change", function() {
 			departmentByCollege.call(this, "departmentAv");
+			evaluationChart();
 		})
 	});
 
@@ -148,30 +153,26 @@
 			colCd : this.value
 		};
 
-		$
-				.ajax({
-					url : "/ketIndicators/departmentByCollege",
-					type : "get",
-					data : data,
-					contentType : "application/json;utf-8",
-					success : function(result) {
-						let str = "";
-						console.log(result);
-						if (!result.length) {
-							str += "<option value='0'>학과</option>";
-							str += "<option value='0'>학과가 없습니다</option>";
-						} else {
-							str += "<option value='0'>학과</option>";
-							$
-									.each(
-											result,
-											function(p_inx, p_val) {
-												str += `<option value='\${p_val.depCd}'>\${p_val.depNm}</option>`;
-											});
-						}
-						$("#" + p_id).html(str);
-					}
-				});
+		$.ajax({
+			url : "/ketIndicators/departmentByCollege",
+			type : "get",
+			data : data,
+			contentType : "application/json;utf-8",
+			success : function(result) {
+				let str = "";
+				console.log(result);
+				if (!result.length) {
+					str += "<option value='0'>학과</option>";
+					str += "<option value='0'>학과가 없습니다</option>";
+				} else {
+					str += "<option value='0'>학과</option>";
+					$.each(result,function(p_inx, p_val) {
+						str += `<option value='\${p_val.depCd}'>\${p_val.depNm}</option>`;
+					});
+				}
+				$("#" + p_id).html(str);
+			}
+		});
 	}
 
 	google.charts.load('current', {
@@ -181,83 +182,156 @@
 	google.charts.load('current', {
 		'packages' : [ 'bar' ]
 	});
-	google.charts.setOnLoadCallback(drawChart2);
+	google.charts.setOnLoadCallback(recordStateChart);
 	google.charts.load("current", {
 		packages : [ "corechart" ]
 	});
-	google.charts.setOnLoadCallback(drawChart3);
+	google.charts.setOnLoadCallback(evaluationChart);
 
 	function recruitmentRateChart() {
 		
 		// 2차원배열 [[차트이름, 범례1, 범례2]
 		//		,[행명, 데이터1, 데이터2]
 		//		,[행명, 데이터1, 데이터2]]
+		
+		let colCd = $("#college").val();
 		let ajaxData = {
 				yr : $("#yr").val(),
-				colCd : $("#college").val()
+				colCd : colCd
 		}
-		let arr = [["신입생 충원율","입학생","미달"]];
+		
 		$.ajax({
 			url : "/ketIndicators/recruitmentRateChart",
 			type : "get",
+			data : ajaxData,
 			success : function(result){
-				console.log(result);
-				
+				let data = new google.visualization.DataTable();
+				data.addColumn("string","신입생 충원율");
+				data.addColumn("number","입학생");
+				data.addColumn("number","미달");
+				let arr = [];
 				$.each(result, function(p_inx, keyIndicator){
+					if(colCd == 0){
+						arr.push([
+							  keyIndicator.colNm
+							, keyIndicator.recruitmentRate
+							, keyIndicator.capacity-keyIndicator.recruitmentRate == 0 ? 1 : keyIndicator.capacity-keyIndicator.recruitmentRate
+						]);
+						return;
+					}
 					arr.push([
-						keyIndicator.colNm, keyIndicator.recruitmentRate, keyIndicator.capacity-keyIndicator.recruitmentRate == 0 ? 1 : keyIndicator.capacity-keyIndicator.recruitmentRate
+						keyIndicator.depNm, keyIndicator.recruitmentRate, keyIndicator.capacity-keyIndicator.recruitmentRate == 0 ? 1 : keyIndicator.capacity-keyIndicator.recruitmentRate
 					]);
+					
 				});
-				rateData.removeRow(1);
-				rateData = google.visualization.arrayToDataTable(arr);
-
-		        var options_fullStacked = {
+				data.addRows(arr);
+				
+				var options_fullStacked = {
 		                isStacked: 'percent',
 		                height: 600,
 		                legend: {position: 'top', maxLines: 4},
 		                hAxis: {
 		                  minValue: 0,
 		                  ticks: [0, .25, .5, .75, 1]
+		                },
+		                animation:{
+		                    duration: 1500,
+		                    easing: 'out',
+		                    startup : "true"
 		                }
-		              };
-		        var view = new google.visualization.DataView(data);
+		        };
+				var view = new google.visualization.DataView(data);
 		        view.setColumns([0, 1,
 		                         { calc: "stringify",
 		                           sourceColumn: 1,
 		                           type: "string",
 		                           role: "annotation" },
 		                         2]);
-				var chart = new google.visualization.BarChart(document
+				recruitChart = new google.visualization.BarChart(document
 						.getElementById('recruitmentRate'));
-				
-				chart.draw(data, options_fullStacked);
+				recruitChart.draw(data, options_fullStacked);
 			}
 		})
+	}
 	
+
+
+	function recordStateChart() {
 		
+		let colCd = $("#collegeSt").val()
+		let ajaxData = {
+				yr : $("#yrSt").val(),
+				colCd : colCd
+		}
+		
+		$.ajax({
+			url : "/ketIndicators/recordStateChart",
+			type : "get",
+			data : ajaxData,
+			success : function(result){
+				console.log(result);
+				let data = new google.visualization.DataTable();
+				data.addColumn("string","학생 학적현황");
+				data.addColumn("number","총학생");
+				data.addColumn("number","재학");
+				data.addColumn("number","휴학");
+				data.addColumn("number","제적");
+				data.addColumn("number","졸업");
+				let arr = [];
+				let maxData = 1;	// 차트 렌더링시 max에 맞춰서 랜더링
+				
+				for(let i=0; i<result.length; i++){
+					if(maxData < result[i].allStu){
+						maxData = result[i].allStu;
+					}
+				}
+				
+				$.each(result, function(p_inx, keyIndicator){
+					if(colCd == 0){
+						arr.push([
+							  keyIndicator.colNm
+						  	, keyIndicator.allStu == 0 ? maxData * 0.02 : keyIndicator.allStu
+							, keyIndicator.inSchool == 0 ? maxData * 0.02 : keyIndicator.inSchool
+							, keyIndicator.leaveOfAbsence == 0 ? maxData * 0.02 : keyIndicator.leaveOfAbsence
+							, keyIndicator.expelled == 0 ? maxData * 0.02 : keyIndicator.expelled
+							, keyIndicator.graduate == 0 ? maxData * 0.02 : keyIndicator.graduate
+						]);
+						return;
+					}
+					arr.push([
+							  keyIndicator.depNm
+							, keyIndicator.allStu == 0 ? maxData * 0.02 : keyIndicator.allStu
+							, keyIndicator.inSchool == 0 ? maxData * 0.02 : keyIndicator.inSchool
+							, keyIndicator.leaveOfAbsence == 0 ? maxData * 0.02 : keyIndicator.leaveOfAbsence
+							, keyIndicator.expelled == 0 ? maxData * 0.02 : keyIndicator.expelled
+							, keyIndicator.graduate == 0 ? maxData * 0.02 : keyIndicator.graduate
+					]);
+					
+				});
+				console.log(arr);
+				data.addRows(arr);
+				var options = {
+					vAxis: {
+						viewWindow:{
+							max : maxData * 1.2,
+							min : 0
+						}
+					},
+		            animation:{
+		                duration: 1500,
+		                easing: 'out',
+		                startup : "true"
+		            }
+				};
 
-	}
-
-	function drawChart2() {
-		var data = google.visualization.arrayToDataTable([
-
-		[ 'Year', 'Sales', 'Expenses', 'Profit' ], [ '2014', 1000, 400, 200 ],
-				[ '2015', 1170, 460, 250 ], [ '2016', 660, 1120, 300 ],
-				[ '2017', 1030, 540, 350 ] ]);
-
-		var options = {
-			chart : {
-				title : 'Company Performance'
+				var chart = new google.charts.Bar(document
+						.getElementById('recordState'));
+				chart.draw(data, google.charts.Bar.convertOptions(options));
 			}
-		};
-
-		var chart = new google.charts.Bar(document
-				.getElementById('columnchart_material'));
-
-		chart.draw(data, google.charts.Bar.convertOptions(options));
+		});
 	}
 
-	function drawChart3() {
+	function evaluationChart() {
 		var data = google.visualization.arrayToDataTable([
 				[ "Element", "Density", {
 					role : "style"
@@ -283,6 +357,10 @@
 			legend : {
 				position : "none"
 			},
+			animation:{
+		        duration: 1000,
+		        easing: 'out',
+	      	}
 		};
 		var chart = new google.visualization.BarChart(document
 				.getElementById("barchart_values"));
