@@ -41,7 +41,7 @@
 
 
                 <div class="card-body">
-                    <form role="form" action="/notice/noticeForm" method="post" id="form" name="form">
+                    <form role="form" action="/notice/noticeForm" method="post" enctype="multipart/form-data" id="form" name="form">
                         <sec:csrfInput/>
                         <div class="row">
                             <table class="table table-bordered">
