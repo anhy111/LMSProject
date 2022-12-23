@@ -95,21 +95,9 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
+							<li class="nav-item"><a href="/record/main?stuNo=<%= no %>" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
-									<p>휴학 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>복학 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>자퇴 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>졸업</p>
+									<p>학적 변동 신청</p>
 							</a></li>
 							<li class="nav-item"><a href="#" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>

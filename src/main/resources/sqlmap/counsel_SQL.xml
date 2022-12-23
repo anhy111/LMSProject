@@ -4,7 +4,7 @@
 <!-- namespace : xml파일은 여러개일 수 있음. 
 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="kr.or.ddit.mapper.CounselMapper">
-
+<!-- 상담 등록시 로그인한 학생의 담당교수 목록 -->
 <select id="listOfProfessor" parameterType="int" resultType="Counsel">
 SELECT 
 E.EMP_NM
@@ -50,11 +50,13 @@ INSERT INTO COUNSEL (
 , CNSL_TTL
 , CNSL_CON
 , CNSL_DT
+, REC_CD
+
 
 )
 VALUES(
 <if test="cnslCd == null or cnslCd =='' ">
-SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
+SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||COUNSEL_SEQ.NEXTVAL
 </if>
 , #{stuNo}
 , #{cnslCate}
@@ -68,8 +70,25 @@ SUBSTR(TO_NUMBER(TO_CHAR(SYSDATE,'YYYYMMDD')),1,6)||'000'||COUNSEL_SEQ.NEXTVAL
 , #{cnslCon}
 </if>
 , #{cnslDt,jdbcType=DATE}
+<if test="recCd != null or recCd !='' ">
+, #{recCd}
+</if>
+
 )
 </insert>
+<!-- 상담 수정 -->
+<update id="applyModify" parameterType="Counsel">
+UPDATE COUNSEL 
+SET 
+CNSL_CON = #{cnslCon} 
+WHERE CNSL_CD = #{cnslCd}
+</update>
+<!--  상담 삭제 -->
+<delete id="applyDelete" parameterType="Long">
+DELETE 
+FROM COUNSEL
+WHERE CNSL_CD = #{cnslCd}
+</delete>
 <!-- 교수의 상담 답변 -->
 <update id="applyAnswerUpdate" parameterType="Counsel">
 UPDATE COUNSEL 
@@ -105,6 +124,7 @@ AND S.PRO_NO = P.PRO_NO
 AND P.PRO_NO = E.EMP_NO
 AND D.DEP_CD = P.DEP_CD
 </select>
+<!-- 교수의 상담내용 상세보기 -->
 <select id="answerDetail" parameterType="Long" resultType="Counsel">
 SELECT
  C.CNSL_CD
@@ -118,6 +138,7 @@ FROM COUNSEL C, STUDENT S
 WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
 </select>
+<!-- 교수의 상담 기록서 상세보기 -->
 <select id="answerNoteDetail" parameterType="Long" resultType="Counsel">
 SELECT
  C.CNSL_CD
@@ -145,6 +166,7 @@ CNSL_RPL = #{cnslRpl}
  </if>
 WHERE CNSL_CD =  #{cnslCd}
 </update>
+<!-- 상담번호에 따른 학생의 이름 -->
 <select id="studentNameByCounsels" parameterType="Long" resultType="String">
 SELECT 
 S.STU_NM
@@ -152,16 +174,6 @@ FROM COUNSEL C, STUDENT S
 WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
 </select>
-<update id="applyModify" parameterType="Counsel">
-UPDATE COUNSEL 
-SET 
-CNSL_CON = #{cnslCon} 
-WHERE CNSL_CD = #{cnslCd}
-</update>
-<delete id="applyDelete" parameterType="Long">
-DELETE 
-FROM COUNSEL
-WHERE CNSL_CD = #{cnslCd}
-</delete>
+
 </mapper>
 

@@ -19,4 +19,9 @@ public class CommonDetailServiceImpl implements CommonDetailService{
 	public List<CommonDetail> commonDetailList(String comCd) {
 		return this.commonDetailMapper.commonDetailList(comCd);
 	}
+	//상세공통코드에 따른 공통코드상세명
+	@Override
+	public CommonDetail comdNmConvert(String comdCd) {
+		return this.commonDetailMapper.comdNmConvert(comdCd);
+	}
 }
