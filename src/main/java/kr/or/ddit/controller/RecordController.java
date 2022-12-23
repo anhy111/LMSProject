@@ -43,13 +43,8 @@ public class RecordController {
 	@GetMapping("/apply")
 	public String RecordApply(int stuNo, Model model) {
 		
-		//공통코드유형 가져오기
-//		List<CommonDetail> commondetailList = this.commonDetailService.commonDetailList("APPROVAL");
-//		model.addAttribute("applyType", commondetailList);
 		model.addAttribute("bodyTitle", "신청");
-		//로그인된 학생 아이디 가져오기 
 		model.addAttribute("stuNo", stuNo);
-		log.info("학번들어왔니 : " + stuNo);
 		
 		//forwarding
 		return "record/apply";

@@ -25,7 +25,7 @@ tr.recordTr:hover {
 <div class="container" >	
 	<form id="form" action="/counsel/studentside/applyInsert" method="post" onsubmit="return checkInsertData()">
 		<input type="hidden" name="stuNo" value="<%=stuNo%>"> <br>
-		<input type="text"  id="recCd" name="recCd"  value="0"/>	
+		<input type="hidden"  id="recCd" name="recCd"  value="0"/>	
 		<div class="col-12" >
 			<div class="col-3">
 				<h1>
@@ -107,9 +107,10 @@ tr.recordTr:hover {
 					<label>담당 교수</label>
 				</div>
 				<div class="col-6">
-					<select name="empNm">
+					<select name="proNo">
 						<c:forEach var="professorList" items="${professorList }">
-							<option value="${professorList.proNo }_${professorList.empNm }">${professorList.empNm }</option>
+							<option value="${professorList.proNo }">${professorList.empNm }</option>
+<%-- 							<option value="${professorList.proNo }_${professorList.empNm }">${professorList.empNm }</option> --%>
 						</c:forEach>
 					</select>
 				</div>

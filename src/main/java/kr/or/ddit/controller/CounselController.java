@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,12 +64,10 @@ public class CounselController {
 	
 	@GetMapping("/studentside/applyInsert")
 	public String studentCounselApplyInsert(Model model,  int stuNo) {
-		List<Record> recordList = this.recordService.RecordList(stuNo);
 		List<Counsel> professorList = this.counselService.listOfProfessor(stuNo);
-
-		log.info("학적 신청 리스트 : " + recordList);
+		List<Record> recordList = this.recordService.counselFilteredRecordList(stuNo);
 		
-		;model.addAttribute("recordList", recordList);
+		model.addAttribute("recordList", recordList);
 		model.addAttribute("professorList", professorList);
 		//forwarding
 		return "counsel/studentside/applyInsert";
@@ -75,9 +75,6 @@ public class CounselController {
 	
 	@PostMapping("/studentside/applyInsert")
 	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel) {
-		String[] proNoEmpNm = counsel.getEmpNm().split("_");
-		int proNo = Integer.parseInt(proNoEmpNm[0]);
-		counsel.setProNo(proNo);
 		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
 		this.counselService.applyInsert(counsel);
 		
