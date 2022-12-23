@@ -14,5 +14,6 @@ public class Record {
 	private int recPer; //기간
 	private String recRsn; //사유
 	private Date recDt; //신청날짜
-	private int recYn; //승인여부
+	private String recYn; //승인여부
+	private String recRej;//반려사유
 }

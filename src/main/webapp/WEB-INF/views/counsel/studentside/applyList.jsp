@@ -2,24 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
 <%
 	int stuNo = (int) session.getAttribute("no");
 %>
 <style>
-.card {
-	width: 1600px;
-	padding: 20px;
-	border: 10px outset lightblue;
-	align-items: center;
-}
+.contHoverTd {position: relative;}
 
-.contHoverTd {
-	position: relative;
-}
-
-.contHover {
-	display: none;
-}
+.contHover {display: none;}
 
 .contHoverTd:hover .contHover {
 	position: absolute;
@@ -34,14 +24,13 @@
 	opacity: 0.8;
 }
 </style>
-<div class="container"
-	style="border: 20px outset lightgrey; padding: 20px; text-align: center;float: left;">
-	<div class="col-12"style="display:flex;">
+<div class="container">
+	<div class="col-12">
 		<h1>
 			<label>상담신청리스트</label>
 		</h1>
 	</div>
-	<div class="col-6" style="display:flex; padding-top: 10px;">
+	<div class="col-6">
 		<button onclick="counselListUp()"
 			class="btn btn-md btn-outline-primary">대면상담</button>
 		<button onclick="nonFaceCounselListUp()"
@@ -81,14 +70,14 @@
 								<td style="text-align: center;">${counselList.cnslCate }</td>
 
 								<c:if test="${counselList.cnslRpl == null }">
-									<td class="contHoverTd" style="text-align: center;">${fn:substring(counselList.cnslTtl,0,5) }<a
+									<td class="contHoverTd">${fn:substring(counselList.cnslTtl,0,5) }<a
 										class="contHover"
 										style="color: white; background-color: green;"
 										data-value="${counselList.cnslCd}">내용수정</a>
 									</td>
 								</c:if>
 								<c:if test="${counselList.cnslRpl != null }">
-									<td style="text-align: center;">${fn:substring(counselList.cnslTtl,0,5) }
+									<td>${fn:substring(counselList.cnslTtl,0,5) }
 									</td>
 								</c:if>
 								<td><fmt:formatDate value="${counselList.cnslReg }"

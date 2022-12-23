@@ -1,92 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+	int stuNo = (int) session.getAttribute("no");
+%>
+<link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
 
-<div class="card">
-	<div class="card-body">
-		<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			<div class="row">
-				<div class="col-sm-12">
-					<table id="example1"
-						class="table table-bordered table-striped dataTable dtr-inline"
-						aria-describedby="example1_info">
+<div class="container">
+<div class="col-6">
+<a class="btn btn-md btn-primary" href="/record/apply?stuNo=<%= stuNo%>">신청하기</a>
+</div>
+	<div class="row">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">
+					<b>학적 변동 리스트</b>
+				</h3>
+			</div>
+			<div class="card-body table-responsive col-11 p-0"
+				style="height: 300px;width:1600px;">
+				<table
+					class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 						<thead>
+						<tr class="text-center">
+							<th width="4%">순번</th>
+							<th width="12%">카테고리</th>
+							<th width="4%">신청연도</th>
+							<th width="12%">신청학기</th>
+							<th width="12%">기간</th>
+							<th width="12%">신청날짜</th>
+							<th width="4%">승인여부</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="recordsList" items="${recordsList}">
 							<tr>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="Rendering engine: activate to sort column ascending"
-									cursorshover="true">학적 코드</th>
-								<th class="sorting sorting_desc" tabindex="0"
-									aria-controls="example1" rowspan="1" colspan="1"
-									aria-label="Browser: activate to sort column ascending"
-									cursorshover="true" aria-sort="descending">학번</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="Platform(s): activate to sort column ascending"
-									cursorshover="true">학적구분코드</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">신청연도</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending"
-									cursorshover="true">신청학기</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">기간</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">사유</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">신청날짜</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending"
-									cursorshover="true">승인여부</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="recordsList" items="${recordsList}"
-								varStatus="stat">
-								<c:if test="${stat.count%2!=0 }">
-									<tr class="odd">
-								</c:if>
-								<c:if test="${stat.count%2==0 }">
-									<tr class="even">
-								</c:if>
-								<td class="dtr-control sorting_1" tabindex="0">${recordsList.recCd}</td>
-								<td>${recordsList.stuNo}</td>
+								<td>${recordsList.recCd}</td>
 								<td>${recordsList.rgbCd}</td>
 								<td>${recordsList.recYr}</td>
 								<td>${recordsList.recSem}</td>
-								<td>${recordsList.recPer}</td>
-								<td>${fn:substring(recordsList.recRsn,0,8) }...</td>
+								<td>${recordsList.recPer}개월</td>
 								<td><fmt:formatDate value="${recordsList.recDt }" pattern="yyyy년 MM월 dd일" /></td>
-								<td>${recordsList.recYn }</td>
-										
-							</c:forEach>
-						</tbody>
-						<tfoot>
-							<tr>
-								<th rowspan="1" colspan="1">학적 코드</th>
-								<th rowspan="1" colspan="1">학번</th>
-								<th rowspan="1" colspan="1">학적 구분 코드</th>
-								<th rowspan="1" colspan="1">신청 연도</th>
-								<th rowspan="1" colspan="1">신청 학기</th>
-								<th rowspan="1" colspan="1">기간</th>
-								<th rowspan="1" colspan="1">사유</th>
-								<th rowspan="1" colspan="1">신청 날짜</th>
-								<th rowspan="1" colspan="1">승인 여부</th>
+								<td>
+								<c:if test="${recordsList.recYn eq '반려'}">
+								<span style="color:red;">${recordsList.recYn }</span>
+								</c:if>
+								<c:if test="${recordsList.recYn eq '승인대기'}">
+								<span style="color:black;">${recordsList.recYn }</span>
+								</c:if>
+								<c:if test="${recordsList.recYn eq '승인'}">
+								<span style="color:blue;">${recordsList.recYn }</span>
+								</c:if>
+								</td>
 							</tr>
-						</tfoot>
-					</table>
-				</div>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
