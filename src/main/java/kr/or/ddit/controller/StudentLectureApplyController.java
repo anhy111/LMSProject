@@ -3,6 +3,7 @@ package kr.or.ddit.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,9 @@ import kr.or.ddit.domain.Department;
 import kr.or.ddit.domain.GraduateCredit;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.StudentLecture;
+import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.AllocationService;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.CreditService;
@@ -56,6 +59,8 @@ public class StudentLectureApplyController {
 	AllocationService allocationService;
 	@Autowired
 	FileUploadUtil fileUploadUtil;
+	@Autowired
+	LectureApplyService lectureApplyService;
 	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_MANAGER')")
@@ -76,6 +81,28 @@ public class StudentLectureApplyController {
 		model.addAttribute("studentCurrentCredit",studentCurrentCredit);
 		
 		return "student/lectureApply/lectureList";
+	}
+	
+	
+	//강의계획서 상세페이지 통합
+	@GetMapping("/inquiryForm")
+	public String inquiryFormStudent(Model model, int lecaCd) {
+		
+		log.info("상세 계획서 코드 : " + lecaCd);
+		
+		Professor professor = this.lectureApplyService.inquiryFormPriInfoStudentApply(lecaCd);
+		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
+		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		
+		model.addAttribute("professor", professor);
+		model.addAttribute("lecApplyList", lecApplyList);
+		model.addAttribute("weekPlanList", weekPlanList);
+		
+		log.info("상세professor : " + professor);
+		log.info("상세lecApplyList : " + lecApplyList);
+		log.info("상세weekPlanList : " + weekPlanList);
+		
+		return "professor/lecApplyForm/inquiryForm";
 	}
 	
 	@PreAuthorize("hasRole('ROLE_STUDENT')")

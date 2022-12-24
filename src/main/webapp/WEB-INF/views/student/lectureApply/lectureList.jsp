@@ -845,7 +845,7 @@
 		
 		$(document).on('click', '.inquirydetail', function() {
 			lecaCd = this.value;
-			window.open("/professor/lecApplyForm/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
+			window.open("/student/lectureApply/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
 		});
 		
 		loadNotYetApplyLecture(); 
