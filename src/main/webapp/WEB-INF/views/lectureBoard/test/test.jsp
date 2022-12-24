@@ -134,7 +134,7 @@
 												<fmt:formatDate value="${list.testEdt }" pattern="MM.dd HH:mm" />
 											</td>
 											<td style="text-align: center;">${testReg }</td>
-											<td style="text-align: center;"><button class="btn-sm btn-outline-secondary">목록</button> </td>
+											<td style="text-align: center;"><button class="btn btn-block btn-outline-secondary btn-sm">목록</button> </td>
 										</tr>
 									</c:forEach>
 									</c:if>

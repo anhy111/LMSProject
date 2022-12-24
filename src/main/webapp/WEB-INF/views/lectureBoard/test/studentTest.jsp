@@ -41,7 +41,7 @@
 </style>
 <%
       Date date = new Date();
-   	  date.setDate(date.getDate()-6);
+   	  date.setDate(date.getDate()-1);
       SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy.MM.dd");
       String simDate = simpleDate.format(date);
 %>
@@ -62,8 +62,9 @@
 							<br><br>
 							(1) 시험은 한 문항당 5점씩 채점되며, 제출을 완료하면 자동 채점됩니다. 총점은 백분율로 계산하여 보여집니다.<br>
 							(2) 한 시험당 문항은 최대 10개로 제한되어 있습니다.<br>
-							(2) 풀지 않은 문항이 있을 경우 시험 제출 할 수 없습니다.  응시자는 이를 확인하여 모든 답을 체크할 수 있도록 해야합니다.<br>
-							(4) 응시 한 후 제출한 시험의 답을 확인할 수 있습니다.<br>
+							(3) 풀지 않은 문항이 있을 경우 시험 제출 할 수 없습니다.  응시자는 이를 확인하여 모든 답을 체크할 수 있도록 해야합니다.<br>
+							(4) 시험을 제출 한 후 수정이 불가 하오니 신중히 제출하시기 바랍니다.<br>
+							(5) 응시 한 후 제출한 시험의 답을 확인할 수 있습니다.<br>
 							<br><br>
 							<i class="emphasisR">&#8251;&#8251; 제출 마감시간이 되면 문제 풀이 유무와 상관 없이 제출되며, 풀지 않은 문항은 자동으로 0점 처리됩니다.</i>
 						</p>
@@ -81,8 +82,6 @@
 										<th style="width: 40%;text-align: center;">제목</th>
 										<th style="width: 15%;text-align: center;">시험 시작</th>
 										<th style="width: 15%;text-align: center;">시험 종료</th>
-										<th style="width: 10%;text-align: center;">점수</th>
-<!-- 										<th style="width: 15%;text-align: center;">제출일</th> -->
 									</tr>
 									</thead>
 									<tbody>
@@ -94,33 +93,18 @@
 								
 									</c:if>
 									<c:if test="${not empty list}">
-									
-										<c:forEach var="list" items="${list }" varStatus="i">
+										<c:forEach var="list" items="${list }" varStatus="i" end="${list.size() }">
 										<fmt:formatDate var="testReg" value="${list.testReg }" pattern="yyyy.MM.dd"/>
 											<tr>
-												<td style="text-align: center;"></td>
+												<td style="text-align: center;">${i.end - i.index}</td>
 												<td>
 													<c:if test="${ date <= testReg }">
-						                              <span class="badge badge-outline-warning badge-pill" style="float:right;">NEW</span>
+						                              <span class="badge badge-outline-warning badge-pill" style="float:left;">NEW</span>
 						                            </c:if>
-								                            
-													<c:forEach var="chk" items="${check }">
-														<c:if test="${chk.stuTest.stYn}">
-															<c:set var="flag" value="1" />
-															
-																<a href="/studentLecture/quizDetailComplete?testCd=${list.testCd }&&lecCd=${data.lecaCd}" id="QuizGo" style="color:#6c757d;">	
-																${list.testNm }
-																</a>
-								                        </c:if>
-									                </c:forEach>
-									                
-									                <c:if test="${flag != 1}">
 							                            <!-- 기본 주소 -->
-														<a href="/lectureBoard/test/studentTestDetail?testCd=${list.testCd }" style="color:#6c757d;">	
+														<a href="/lectureBoard/test/submitCheck?testCd=${list.testCd}&&lecaCd=${list.lecaCd}" style="color:#6c757d;">	
 														${list.testNm }
 														</a>
-							                            <!-- 기본 주소 끝 -->
-								                    </c:if>
 								                    
 												</td>
 												<td style="text-align: center;color: #888;"> 
@@ -129,30 +113,7 @@
 												<td style="text-align: center;color: #888;">
 														<fmt:formatDate value="${list.testEdt }" pattern="MM.dd HH:mm" />
 												</td>
-												<td style="text-align: center;">
-												<c:forEach var="chk" items="${check }">
-														<c:if test="${list.testCd == chk.stuTestVO.testCd}">
-															<strong>
-																${chk.stuTestVO.stScore }
-															</strong>
-														</c:if>
-												</c:forEach>
-												<c:if test="${flag != 1}" >
-													<span>미제출</span>
-												</c:if>
-												</td>
-<!-- 												<td style="text-align: center;color: #888;"> -->
-<%-- 													<c:forEach var="chk" items="${check }"> --%>
-<%-- 														<c:if test="${list.testCd == chk.stuTestVO.testCd}"> --%>
-<%-- 																<fmt:formatDate value="${chk.stuTestVO.stDt }" pattern="MM/dd HH:mm" /> --%>
-<%-- 														</c:if> --%>
-<%-- 													</c:forEach> --%>
-<%-- 													<c:if test="${flag != 1}" > --%>
-<!-- 														<span>미제출</span> -->
-<%-- 													</c:if> --%>
-<!-- 												</td> -->
 											</tr>
-											<c:set var="flag" value="0" />
 										</c:forEach>
 										</c:if>
 									</tbody>
@@ -176,19 +137,3 @@
 			</div>
 		</div>
 </div>
-<script type="text/javascript" defer="defer">
-	$(function() {
-		
-		var complete = $('#checkComplete').html();
-// 		$('#QuizGo').on('click', function() {
-// 			if(complete !== null) {
-// 				alert("이미 제출 완료한 시험입니다.");
-// 				return false;
-// 			}
-// 		})
-
-		
-
-
-	})
-</script>
