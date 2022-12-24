@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @Controller
 @RequestMapping("/notice")
@@ -62,8 +64,11 @@ public class NoticeBasicController {
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
     public String createNotice (NoticeForm form,
-                                @RequestParam MultipartFile[] files2
-                                ) {
+                                @RequestParam MultipartFile[] files2,
+                                HttpServletRequest request) {
+
+        String clientIp = request.getRemoteAddr();
+        log.info(clientIp);
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
