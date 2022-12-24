@@ -111,8 +111,6 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 
-	var rateData;
-
 
 	$(function() {
 
@@ -178,18 +176,12 @@
 	}
 
 	google.charts.load('current', {
-		'packages' : [ 'corechart' ]
+		'packages' : [ 'corechart' , 'bar']
 	});
 	google.charts.setOnLoadCallback(recruitmentRateChart);
-	google.charts.load('current', {
-		'packages' : [ 'bar' ]
-	});
 	google.charts.setOnLoadCallback(recordStateChart);
-	google.charts.load("current", {
-		packages : [ "corechart" ]
-	});
 	google.charts.setOnLoadCallback(evaluationChart);
-
+	
 	function recruitmentRateChart() {
 		
 		// 2차원배열 [[차트이름, 범례1, 범례2]
@@ -226,16 +218,11 @@
 					]);
 					
 				});
-<<<<<<< HEAD
 				data.addRows(arr);
 				
 				var options_fullStacked = {
-=======
-				rateData = google.visualization.arrayToDataTable(arr);
-
-		        var options_fullStacked = {
->>>>>>> branch 'feature/151' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 		                isStacked: 'percent',
+		                colors : ["#FF8200","#dcdcdc"],
 		                height: 600,
 		                legend: {position: 'top', maxLines: 4},
 		                hAxis: {
@@ -245,15 +232,10 @@
 		                animation:{
 		                    duration: 1500,
 		                    easing: 'out',
-		                    startup : "true"
+		                    startup : true
 		                }
-<<<<<<< HEAD
 		        };
 				var view = new google.visualization.DataView(data);
-=======
-		              };
-		        var view = new google.visualization.DataView(rateData);
->>>>>>> branch 'feature/151' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 		        view.setColumns([0, 1,
 		                         { calc: "stringify",
 		                           sourceColumn: 1,
@@ -262,30 +244,25 @@
 		                         2]);
 				recruitChart = new google.visualization.BarChart(document
 						.getElementById('recruitmentRate'));
-<<<<<<< HEAD
 				recruitChart.draw(data, options_fullStacked);
-=======
-				
-				chart.draw(rateData, options_fullStacked);
->>>>>>> branch 'feature/151' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
-			}
-		})
-	}
+			}// end success
+		})// end ajax
+	}// end function 
 	
 
 
 	function recordStateChart() {
 		
-		let colCd = $("#collegeSt").val()
-		let ajaxData = {
+		let colCdSt = $("#collegeSt").val()
+		let ajaxDataSt = {
 				yr : $("#yrSt").val(),
-				colCd : colCd
+				colCd : colCdSt
 		}
 		
 		$.ajax({
 			url : "/ketIndicators/recordStateChart",
 			type : "get",
-			data : ajaxData,
+			data : ajaxDataSt,
 			success : function(result){
 				console.log(result);
 				let data = new google.visualization.DataTable();
@@ -305,7 +282,7 @@
 				}
 				
 				$.each(result, function(p_inx, keyIndicator){
-					if(colCd == 0){
+					if(colCdSt == 0){
 						arr.push([
 							  keyIndicator.colNm
 						  	, keyIndicator.allStu == 0 ? maxData * 0.02 : keyIndicator.allStu
@@ -326,32 +303,33 @@
 					]);
 					
 				});
-				console.log(arr);
 				data.addRows(arr);
 				var options = {
+					height : 500,
+					colors : ["#34314c","#47b8e0","#ffc952","#ff7473","#a5d296"],
 					vAxis: {
 						viewWindow:{
 							max : maxData * 1.2,
 							min : 0
 						}
 					},
-		            animation:{
-		                duration: 1500,
-		                easing: 'out',
-		                startup : "true"
-		            }
+					animation:{
+	                    duration: 2000,
+	                    easing: 'out',
+	                    startup : "true"
+	                },
 				};
 
-				var chart = new google.charts.Bar(document
+				var chart = new google.visualization.ColumnChart(document
 						.getElementById('recordState'));
-				chart.draw(data, google.charts.Bar.convertOptions(options));
-			}
-		});
-	}
+				chart.draw(data,options);
+			}// end success
+		}); // end ajax
+	}// end function
 
 	function evaluationChart() {
 		var data = google.visualization.arrayToDataTable([
-				[ "Element", "Density", {
+				[ "Element", "Density","gg", {
 					role : "style"
 				} ], [ "Copper", 8.94, "#b87333" ],
 				[ "Silver", 10.49, "silver" ], [ "Gold", 19.30, "gold" ],
@@ -376,7 +354,7 @@
 				position : "none"
 			},
 			animation:{
-		        duration: 1000,
+		        duration: 1500,
 		        easing: 'out',
 	      	}
 		};

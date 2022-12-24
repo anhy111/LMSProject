@@ -134,6 +134,7 @@
 				    		</if>			     	
 	    			) GRADUATE
 			FROM DEPARTMENT D
+			WHERE D.COL_CD = #{colCd}
 		</if>
 	</select>
 
