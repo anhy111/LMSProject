@@ -101,7 +101,7 @@
                                     <th style="width: 50%;text-align: center;">제목</th>
                                     <th style="width: 15%;text-align: center;">등록일</th>
                                     <th style="width: 15%;text-align: center;">조회수</th>
-                                    <th style="width: 15%;text-align: center;">조회 기간</th>
+                                    <th style="width: 15%;text-align: center;">등록일</th>
                                 </tr>
                                 </thead>
                                 <tbody>
