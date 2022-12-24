@@ -41,11 +41,7 @@ public class RecordController {
 	}
 	
 	@GetMapping("/apply")
-	public String RecordApply(int stuNo, Model model) {
-		
-		model.addAttribute("bodyTitle", "신청");
-		model.addAttribute("stuNo", stuNo);
-		
+	public String RecordApply(Model model) {
 		//forwarding
 		return "record/apply";
 	}
