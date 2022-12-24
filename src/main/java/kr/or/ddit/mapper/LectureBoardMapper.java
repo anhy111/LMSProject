@@ -1,6 +1,7 @@
 package kr.or.ddit.mapper;
 
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentTest;
+import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
 import kr.or.ddit.domain.TestQ;
 
@@ -52,9 +54,17 @@ public interface LectureBoardMapper {
 	public int testDelete(String testCd);
 	public int testQDelete(String testCd);
 		
-	//시험 제출여부 
-	public List<Test> checkTestSubmit(String stuCd);
-	
 	//시험 응시 추가
 	public int stuTestInsert(StudentTest stuTest);
+	
+	//시험 응시 상세추가
+	public int insertStdList(List<StudentTestDetail> list);
+	
+	//학생 시험본거 상세
+	public Test stuTestDetail(String teqCd);
+	
+	//시험 제출여부 
+	public Test submitCheck(@Param("stuNo")String stuNo,@Param("lecaCd")String lecaCd,@Param("testCd")String testCd);
+		
+	
 }

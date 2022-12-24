@@ -1,5 +1,7 @@
 package kr.or.ddit.domain;
 
+import java.util.List;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -42,6 +44,7 @@ public class Student {
 	private String colNm;
 	private int colCd;
 	
+	private List<SclHistory> stuSclList; //장학금 내역 조회
 
 
 }

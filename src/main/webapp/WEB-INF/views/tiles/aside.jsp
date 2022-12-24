@@ -16,17 +16,17 @@
         <!-- Sidebar user panel (optional) -->
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search"
-                       placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+<!--         <div class="form-inline"> -->
+<!--             <div class="input-group" data-widget="sidebar-search"> -->
+<!--                 <input class="form-control form-control-sidebar" type="search" -->
+<!--                        placeholder="Search" aria-label="Search"> -->
+<!--                 <div class="input-group-append"> -->
+<!--                     <button class="btn btn-sidebar"> -->
+<!--                         <i class="fas fa-search fa-fw"></i> -->
+<!--                     </button> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -148,7 +148,7 @@
 							class="nav-icon far fa-envelope"></i>
 							<p>상담</p>
 					</a></li>
-					<li class="nav-item"><a href="/" class="nav-link"> <i
+					<li class="nav-item"><a href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link"> <i
 							class="nav-icon far fa-envelope"></i>
 							<p>내가 듣는 강의 (임시. 지우지 마시오)</p>
 					</a></li>

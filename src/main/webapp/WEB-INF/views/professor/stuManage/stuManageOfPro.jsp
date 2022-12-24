@@ -21,7 +21,6 @@ function fn_add(data){
 	$("#stuZip").attr("value", data.stuZip);
 	$("#stuAddr1").attr("value", data.stuAddr1);
 	$("#stuAddr2").attr("value", data.stuAddr2);
-// 	$("#pic").html(data.stuPic)
 	
 }
 
@@ -43,16 +42,42 @@ $(function(){
 		
 		$.ajax({
 			type: 'post',
-			url: '/manage/detailStu',
+			url: '/professor/detailStu',
 			contentType:"application/json;charset=utf-8",
 			data:JSON.stringify(data),
 			beforeSend:function(xhr){
 				xhr.setRequestHeader(header, token);
 			},
 			success :function(data){
-				console.log("성공이라해주라 ", data.stuPic);
-				
+// 				console.log("성공이라해주라 ", data.stuSclList[0].sclhRcmd);
 				fn_add(data);
+				
+				let str = "";
+				if(data.stuSclList != null && data.stuSclList.length != 0){
+					for(let i=0; i < data.stuSclList.length; i++){
+						console.log("오라고 제발 ㅠ  " + data.stuSclList[i].sclhRcmd );
+						
+						str += `
+						<tr>
+							<td>\${i+1}</td>
+							<td>\${data.stuSclList[i].sclNm}</td>
+							<td>\${data.stuSclList[i].sclhYr}년 \${data.stuSclList[i].sclhSem}학기</td>
+							<td>\${data.stuSclList[i].sclhAmt}</td>
+							<td>\${data.stuSclList[i].empNm}교수</td>
+						</tr>
+						
+						`
+					}
+				}else{
+					
+					str = `
+					<tr>
+						<td colspan='5'>받은 장학금 내역이 없습니다.</td>
+					</tr>
+					`
+				}
+				
+				$("#sclList").html(str);
 				
 			},
 			error:function(request, status, error){
@@ -166,54 +191,161 @@ $(function(){
 							</div>
 						</div>
 					</div>
-					<div class="row mt-3 mb-2">
-						<div class="col-6">
-							<label>학년</label> 
-							<input type="text" class="form-control stu" id="stuYr" name="stuYr" readonly />
+					
+					<div class="card card-outline card-primary collapsed-card mt-4 mb-4 ">
+						<div class="card-header">
+							<h3 class="card-title">상세 정보</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
 						</div>
-						<div class="col-6">
-							<label>학기</label> 
-							<input type="text" class="form-control stu" id="stuSem" name="stuSem" readonly />
+
+						<div class="card-body" style="display: none;">
+							<div class="row mt-3 mb-2">
+								<div class="col-6">
+									<label>학년</label> <input type="text" class="form-control stu"
+										id="stuYr" name="stuYr" readonly />
+								</div>
+								<div class="col-6">
+									<label>학기</label> <input type="text" class="form-control stu"
+										id="stuSem" name="stuSem" readonly />
+								</div>
+							</div>
+							<div class="row mt-3 mb-2">
+								<div class="form-group col-6">
+									<label for="colCd" class="form-label">단과대학</label> <input
+										type="text" class="form-control stu" id="colCd" name="colCd"
+										readonly />
+								</div>
+								<div class="col-6">
+									<label for="department" class="form-label">학과</label> <input
+										type="text" class="form-control stu" id="department"
+										name="depCd" readonly />
+								</div>
+							</div>
+							<div class="row mt-3 mb-2">
+								<div class="col-6">
+									<label for="stuBir" class="form-label">생년월일</label> <input
+										type="text" class="form-control stu" id="stuBir" name="stuBir"
+										readonly />
+								</div>
+								<div class="col-6">
+									<label for="stuTel" class="form-label">전화번호</label> <input
+										type="text" class="form-control stu" id="stuTel" name="stuTel"
+										readonly />
+								</div>
+							</div>
+							<div class="row mt-4 mb-2">
+								<div class="col-5">
+									<label for="stuZip" class="form-label">우편번호</label> <input
+										type="text" class="form-control stu" id="stuZip" name="stuZip"
+										readonly />
+								</div>
+							</div>
+							<div class="row mb-2">
+								<div class="col-6">
+									<label for="stuAddr1" class="form-label">기본주소</label> <input
+										type="text" class="form-control stu" id="stuAddr1"
+										name="stuAddr1" readonly />
+								</div>
+								<div class="col-6">
+									<label for="stuAddr2" class="form-label">상세주소</label> <input
+										type="text" class="form-control stu" id="stuAddr2"
+										name="stuAddr2" readonly />
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="row mt-3 mb-2">
-						<div class="form-group col-6">
-							<label for="colCd" class="form-label">단과대학</label>
-							<input type="text" class="form-control stu" id="colCd" name="colCd" readonly />
+					
+					<div class="card card-outline card-primary collapsed-card mt-4 mb-4 ">
+						<div class="card-header">
+							<h3 class="card-title">학사 정보</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
 						</div>
-						<div class="col-6">
-							<label for="department" class="form-label">학과</label> 
-							<input type="text" class="form-control stu" id="department" name="depCd" readonly />
-						</div>
-					</div>
-					<div class="row mt-3 mb-2">
-						<div class="col-6">
-							<label for="stuBir" class="form-label">생년월일</label> 
-							<input type="text" class="form-control stu" id="stuBir" name="stuBir" readonly />
-						</div>
-						<div class="col-6">
-							<label for="stuTel" class="form-label">전화번호</label> 
-							<input type="text" class="form-control stu" id="stuTel" name="stuTel" readonly />
+
+						<div class="card-body" style="display: none;">
+						
+						
 						</div>
 					</div>
-					<div class="row mt-4 mb-2">
-						<div class="col-5">
-							<label for="stuZip" class="form-label">우편번호</label>
-							<input type="text" class="form-control stu" id="stuZip" name="stuZip" readonly />
+					
+					<div class="card card-outline card-primary collapsed-card mt-4 mb-4 ">
+						<div class="card-header">
+							<h3 class="card-title">장학 내역</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
 						</div>
+
+						<div class="card-body table-responsive p-0"
+							style="height: 300px;">
+							<table class="table table-head-fixed text-nowrap">
+								<thead>
+									<tr>
+										<th>no</th>
+										<th>장학금 명</th>
+										<th>수혜학기</th>
+										<th>지급액</th>
+										<th>추천인</th>
+									</tr>
+								</thead>
+								<tbody id="sclList">
+									<tr>
+										<td>183</td>
+										<td>John Doe</td>
+										<td>11-7-2014</td>
+										<td><span class="tag tag-success">Approved</span></td>
+										<td>하이</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
 					</div>
-					<div class="row mb-2">
-						<div class="col-6">
-							<label for="stuAddr1" class="form-label">기본주소</label> 
-							<input type="text" class="form-control stu" id="stuAddr1" name="stuAddr1" readonly />
-						</div>
-						<div class="col-6">
-							<label for="stuAddr2" class="form-label">상세주소</label> 
-							<input type="text" class="form-control stu" id="stuAddr2" name="stuAddr2" readonly />
-						</div>
+					
+					<div id="stuBtn" align="right">
+						<button type="button" id="recommendationStu" class="btn btn-outline-success" 
+							data-toggle="modal" data-target="#modal-default">장학생 추천</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- 추천사유-->
+	<div class="modal fade" id="modal-default"
+		style="display: none; z-index: 1041" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">장학생 추천</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="sclhRcmd" class="col-form-label">장학생 추천 사유를 입력해주세요.</label>
+						<textarea class="form-control sclhRcmd" rows="7"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" id="recommendation"
+						class="btn btn-block btn-success">추천</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
