@@ -27,5 +27,26 @@
 		AND P.DEP_CD = #{depCd}
 	</select>
 	
+	<select id="stuSclList" parameterType="map" resultType="sclHistory"> 
+		SELECT   SH.SCLH_CD 
+		        , SH.SCL_CD 
+		        , SH.STU_NO 
+		        , SH.SCLH_YR 
+		        , SH.SCLH_SEM 
+		        , SH.SCLH_DT 
+		        , SH.SCLH_YN 
+		        , SH.SCLH_PAY_YN 
+		        , SH.PRO_NO 
+		        , SH.SCLH_AMT 
+		        , SH.SCLH_RCMD 
+		        , (SELECT S.SCL_NM FROM SCHOLARSHIP S WHERE S.SCL_CD = SH.SCL_CD) SCL_NM
+		        , E.EMP_NM 
+		FROM    EMPLOYEE E, PROFESSOR P, SCL_HISTORY SH
+		WHERE E.EMP_NO = P.PRO_NO
+		AND P.PRO_NO = SH.PRO_NO
+		AND SH.SCLH_YN = 'AP001'
+		AND SH.STU_NO = #{detailStu}
+	</select>
+	
 </mapper>
 

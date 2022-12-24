@@ -186,19 +186,21 @@ $(function(){
 			<label>전화번호</label>
 			<input type="text" id="memTel" placeholder="전화번호를 입력하세요."/>
 			<button type="button" class="btn btn-outline-dark" id="searchId">확인</button>
-			<button type="button" id="idInfoInsertBtn" class="btn btn-secondary" style="position:absolute; top:490px;right:310px;">자동입력</button>
-			<div id="alertId"></div>
-			<a href="/login/login" id="goBackToLogin" style="text-decoration: none;">
-				<i class="dripicons-reply" id="goBackToLoginIcon" style="color : #001353;"></i>
-				&nbsp;로그인 페이지로 돌아가기
-			</a>
+			<button type="button" id="idInfoInsertBtn" class="btn btn-secondary" style="position:absolute; top:500px;right:310px;">자동입력</button>
+			<span id="alertId"></span>
+			<p>
+				<a href="/login/login" id="goBackToLogin" style="text-decoration: none;">
+					<i class="dripicons-reply" id="goBackToLoginIcon" style="color : #001353;"></i>
+					&nbsp;로그인 페이지로 돌아가기
+				</a>
+			</p>
 			<sec:csrfInput/>
 		</form>
 		
 		
 		<div id="passForm" style="display:none;">
-			<label>아이디</label>
-			<input type="text" id="memNo" placeholder="ID를 입력하세요."/>
+			<label>ID</label><input type="text" id="memNo" placeholder="ID를 입력하세요."/>
+			
 			<br>
 			
 			<label>전화번호</label>
@@ -216,7 +218,7 @@ $(function(){
 			<br>
 			
 			<button type="button" class="btn btn-outline-dark" id="searchPass">임시 비밀번호 전송</button>
-			<button type="button" id="passInfoInsertBtn" class="btn btn-secondary" style="position:absolute; top:450px;right:310px;">자동입력</button>
+			<button type="button" id="passInfoInsertBtn" class="btn btn-secondary" style="position:absolute; top:500px;right:310px;">자동입력</button>
 			<span id="spanForMargin"></span>
 			<p>
 				<a href="/login/login" id="goBackToLogin" style="text-decoration: none;">
