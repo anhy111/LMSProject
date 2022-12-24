@@ -67,7 +67,7 @@
       String simDate = simpleDate.format(Today);
 %>
 <c:set var="Today" value="<%= simDate %>" />
-<fmt:formatDate var="testEdt" value="${data.testEdt }" pattern="yyyy-MM-dd HH:mm"/>
+<fmt:formatDate var="testEdt" value="${data.testEdt}" pattern="yyyy-MM-dd HH:mm"/>
 
 <div class="col-lg-12">
 	<div class="card">
@@ -77,25 +77,16 @@
 				
 				<div>
 					<div class="mb-3" style="width:40%;float:left;">
-						<label for="example-disable" class="form-label">퀴즈 제목</label> <input
-							type="text" class="form-control" id="example-disable" disabled
-							value="${data.testNm }">
+						<label for="example-disable" class="form-label">퀴즈 제목</label> 
+						<input type="text" class="form-control" id="example-disable" disabled value="${data.testNm }">
 					</div>
-					
-			<!-- 		<div class="clear"></div> -->
-				
 					<div class="mb-3" style="width:20%;float:left;margin:0 10%;'">
-						<label for="example-disable" class="form-label">퀴즈 시작일</label> <input
-							type="text" class="form-control" id="example-disable" disabled
-							value="<fmt:formatDate value="${data.testSdt }" pattern="yyyy-MM-dd HH:mm" />">
+						<label for="example-disable" class="form-label">퀴즈 시작일</label> 
+						<input type="text" class="form-control" id="example-disable" disabled value="<fmt:formatDate value="${data.testSdt }" pattern="yyyy-MM-dd HH:mm" />">
 					</div>
-			
-			<!-- 		<div class="clear"></div> -->
-				
 					<div class="mb-3" style="width:20%;float:left;">
-						<label for="example-disable" class="form-label">퀴즈 종료일</label> <input
-							type="text" class="form-control" id="example-disable" disabled
-							value="<fmt:formatDate value="${data.testEdt }" pattern="yyyy-MM-dd HH:mm" />">
+						<label for="example-disable" class="form-label">퀴즈 종료일</label> 
+						<input type="text" class="form-control" id="example-disable" disabled value="<fmt:formatDate value="${data.testEdt }" pattern="yyyy-MM-dd HH:mm" />">
 					</div>
 					
 					<div class="clear"></div>
@@ -107,90 +98,87 @@
 				</div>
 					<div class="clear"></div>
 				
-				<form method="post" id="frm" action="/lectureBoard/test/testPost" >
-				
-				<div class="tab-content">
-			         <div class="tab-pane show active" id="basic-example-preview">
-			            <div class="table-responsive-sm">
-			             
-			             <!-- insert 용 -->
-			             <input type="hidden" name="stScore" id="studentQuizScore"/>
-			             
-			            <!-- testList =>  TestQ-->
-			             	<c:forEach var="TestQ" items="${data.testQList}" varStatus="stat">
-			             	<br><br>
-			             	<!-- 보기 시작 -->
-			                 <table class="table table-centered mb-0">
-			                     <thead>
-			                         <tr>
-			                             <th>
-			                             	<label id="QNo">${stat.count}</label>
-											<span>.&emsp;${TestQ.teqCon }&emsp;&emsp;<input id="${stat.count}" name="testDetailList[${stat.index}].tdAnswer" class="checking" type="text" readOnly /></span>
-											<input type="hidden" class="quizAnswer_${stat.count}" value="${TestQ.teqAnswer }"/>
-											<!-- 점수 -->
-											<input type="hidden" class="quizScore_${stat.count }" />
-											<!-- teqCd -->
-											<input type="hidden" name="testDetailList[${stat.index}].teqCd" value="${TestQ.teqCd }">
-											<!-- no session 학생 코드 -->
-											<input type="hidden" name="stuNo" value="${data.stuTest.stuNo}" />
-											<!-- 강의 코드 -->
-											<input type="hidden" name="lecaCd" value="${data.lecaCd }" />
-											<!-- testCd -->
-											<input type="hidden" name="testCd" value="${data.testCd }" />
-			                             </th>
-			                         </tr>
-			                     </thead>
-			                     <tbody>
-			                         <tr>
-			                             <td>
-			                             	<div class="mt-3">
-						          				<div class="custom-control custom-radio">
-													<input type="radio" id="teqOp1_${stat.count}" name="${stat.count}" value="1" class="custom-control-input">&emsp;
-													<label class="custom-control-label" for="teqOp1_${stat.count}">${TestQ.teqOption1 }</label>
+				<form id="lectfrm" action="/lectureBoard/test/testPost" method="post">
+					<div class="tab-content">
+				         <div class="tab-pane show active" id="basic-example-preview">
+				            <div class="table-responsive-sm">
+					             <!-- insert 용 -->
+					             <input type="hidden" name="stScore" id="studentQuizScore"/>
+				             
+				           		<!-- testList =>  TestQ-->
+				             	<c:forEach var="TestQ" items="${data.testQList}" varStatus="stat">
+				             	<br><br>
+				             	<!-- 보기 시작 -->
+				                 <table class="table table-centered mb-0">
+				                     <thead>
+				                         <tr>
+				                             <th>
+				                             	<label id="QNo">${stat.count}</label>
+												<span>.&emsp;${TestQ.teqCon }&emsp;&emsp;<input id="${stat.count}" name="stdList[${stat.index}].stdAnswer" class="checking" type="text" readOnly /></span>
+												<input type="hidden" class="quizAnswer_${stat.count}" value="${TestQ.teqAnswer }"/>
+												<!-- 점수 -->
+												<input type="hidden" class="quizScore_${stat.count }" />
+												<!-- teqCd -->
+												<input type="hidden" name="stdList[${stat.index}].teqCd" value="${TestQ.teqCd }">
+												<!-- no session 학생 코드 -->
+												<input type="hidden" name="stuNo" value="${data.stuTest.stuNo}" />
+												<!-- 강의 코드 -->
+												<input type="hidden" name="lecaCd" value="${data.lecaCd }" />
+												<!-- testCd -->
+												<input type="hidden" name="testCd" value="${data.testCd }" />
+				                             </th>
+				                         </tr>
+				                     </thead>
+				                     <tbody>
+				                         <tr>
+				                             <td>
+				                             	<div class="mt-3">
+							          				<div class="custom-control custom-radio">
+														<input type="radio" id="teqOp1_${stat.count}" name="${stat.count}" value="1" class="custom-control-input">&emsp;
+														<label class="custom-control-label" for="teqOp1_${stat.count}">${TestQ.teqOption1 }</label>
+													</div>
 												</div>
-											</div>
-			                             </td>
-			                         </tr>
-			                         <tr>
-			                             <td>
-			                             	<div class="mt-3">
-						          				<div class="custom-control custom-radio">
-													<input type="radio" id="teqOp2_${stat.count}" name="${stat.count}" value="2" class="custom-control-input">&emsp;
-													<label class="custom-control-label" for="teqOp2_${stat.count}">${TestQ.teqOption2 }</label>
+				                             </td>
+				                         </tr>
+				                         <tr>
+				                             <td>
+				                             	<div class="mt-3">
+							          				<div class="custom-control custom-radio">
+														<input type="radio" id="teqOp2_${stat.count}" name="${stat.count}" value="2" class="custom-control-input">&emsp;
+														<label class="custom-control-label" for="teqOp2_${stat.count}">${TestQ.teqOption2 }</label>
+													</div>
 												</div>
-											</div>
-			                             </td>
-			                         </tr>
-			                         <tr>
-			                             <td>
-			                             	<div class="mt-3">
-						          				<div class="custom-control custom-radio">
-													<input type="radio" id="teqOp3_${stat.count}" name="${stat.count}" value="3" class="custom-control-input">&emsp;
-													<label class="custom-control-label" for="teqOp3_${stat.count}">${TestQ.teqOption3 }</label>
+				                             </td>
+				                         </tr>
+				                         <tr>
+				                             <td>
+				                             	<div class="mt-3">
+							          				<div class="custom-control custom-radio">
+														<input type="radio" id="teqOp3_${stat.count}" name="${stat.count}" value="3" class="custom-control-input">&emsp;
+														<label class="custom-control-label" for="teqOp3_${stat.count}">${TestQ.teqOption3 }</label>
+													</div>
 												</div>
-											</div>
-			                             </td>
-			                         </tr>
-			                         <tr>
-			                             <td>
-			                             	<div class="mt-3">
-						          				<div class="custom-control custom-radio">
-													<input type="radio" id="teqOp4_${stat.count}" name="${stat.count}" value="4" class="custom-control-input">&emsp;
-													<label class="custom-control-label" for="teqOp4_${stat.count}">${TestQ.teqOption4 }</label>
+				                             </td>
+				                         </tr>
+				                         <tr>
+				                             <td>
+				                             	<div class="mt-3">
+							          				<div class="custom-control custom-radio">
+														<input type="radio" id="teqOp4_${stat.count}" name="${stat.count}" value="4" class="custom-control-input">&emsp;
+														<label class="custom-control-label" for="teqOp4_${stat.count}">${TestQ.teqOption4 }</label>
+													</div>
 												</div>
-											</div>
-			                             </td>
-			                         </tr>
-			                     </tbody>
-			                 </table>
-			                 <!-- 보기 끝 -->
-			                 <hr>
-			                 </c:forEach>
-			             </div> <!-- end table-responsive-->
-			         </div> <!-- end preview-->
-			     
-			     </div>
-			     <input type="text" value="${Today}">
+				                             </td>
+				                         </tr>
+				                     </tbody>
+				                 </table>
+				                 <!-- 보기 끝 -->
+				                 <hr>
+				                 </c:forEach>
+				             </div> <!-- end table-responsive-->
+				         </div> <!-- end preview-->
+				     </div>
+			     <input type="hidden" value="${Today}">
 			     <a href="/studentLecture/quiz?lecCd=${data.lecaCd }" class="btn btn-light btn-sm" style="float: left;">목록</a>
 				<c:if test="${Today > testEdt }">
 					<button type="button" class="btn btn-primary btn-sm noSubmit" style="float:right;">퀴즈 제출</button>
@@ -254,11 +242,11 @@
 // 		})
 		
 		
-		
 	})
 
+	
+	
 	function CheckAnswer() {
-		
 		var cnt = 1;
 		var total = 0;
 			for(var i = 1; i <= '<c:out value="${fn:length(data.testQList)}" />'; i++) {
@@ -294,10 +282,7 @@
 			return false;
 		}
 		
-		
-		
-		
-		document.getElementById('frm').submit();
+		document.querySelector("#lectfrm").submit();
 		
 	}
 	
