@@ -226,9 +226,15 @@
 					]);
 					
 				});
+<<<<<<< HEAD
 				data.addRows(arr);
 				
 				var options_fullStacked = {
+=======
+				rateData = google.visualization.arrayToDataTable(arr);
+
+		        var options_fullStacked = {
+>>>>>>> branch 'feature/151' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 		                isStacked: 'percent',
 		                height: 600,
 		                legend: {position: 'top', maxLines: 4},
@@ -241,8 +247,13 @@
 		                    easing: 'out',
 		                    startup : "true"
 		                }
+<<<<<<< HEAD
 		        };
 				var view = new google.visualization.DataView(data);
+=======
+		              };
+		        var view = new google.visualization.DataView(rateData);
+>>>>>>> branch 'feature/151' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 		        view.setColumns([0, 1,
 		                         { calc: "stringify",
 		                           sourceColumn: 1,
@@ -251,7 +262,12 @@
 		                         2]);
 				recruitChart = new google.visualization.BarChart(document
 						.getElementById('recruitmentRate'));
+<<<<<<< HEAD
 				recruitChart.draw(data, options_fullStacked);
+=======
+				
+				chart.draw(rateData, options_fullStacked);
+>>>>>>> branch 'feature/151' of https://github.com/ShimSeongBo/LMSProjectDDIT.git
 			}
 		})
 	}
