@@ -137,6 +137,107 @@
 			WHERE D.COL_CD = #{colCd}
 		</if>
 	</select>
+	
+	<select id="evaluationList" parameterType="keyIndicators" resultType="keyIndicators">
+		<if test="colCd == 0 and depCd == 0">
+			SELECT C.COL_CD
+			     , C.COL_NM
+			     , TRIM((
+			            SELECT ROUND(NVL(AVG(T.LEC_AVG),0),2)
+			            FROM (
+			                    SELECT AVG(EV.EVL_SCORE) LEC_AVG
+			                         , LA.PRO_NO
+			                         , LA.LECA_YR
+			                         , LA.LECA_SEM
+			                         , SP.DEP_CD
+			                         , SD.COL_CD
+			                    FROM EVALUATION EV, LEC_APPLY LA, PROFESSOR SP, DEPARTMENT SD
+			                    WHERE EV.LECA_CD = LA.LECA_CD
+			                    AND LA.PRO_NO = SP.PRO_NO
+			                    AND SD.DEP_CD = SP.DEP_CD
+			                    <if test="yr != 0">
+			                    AND LA.LECA_YR = #{yr}
+			                    </if>
+			                    <if test="sem != null and sem != ''">
+			                    AND LA.LECA_SEM = #{sem}
+			                    </if>
+			                    GROUP BY  LA.LECA_CD
+			                            , LA.PRO_NO
+			                            , LA.LECA_YR
+			                            , LA.LECA_SEM
+			                            , SP.DEP_CD
+			                            , SD.COL_CD
+			            ) T, DEPARTMENT SD, COLLEGE SC
+			            WHERE T.DEP_CD = SD.DEP_CD
+			            AND SD.COL_CD = SC.COL_CD
+			            AND SC.COL_CD = C.COL_CD
+			        )) EVL_RATE
+			FROM COLLEGE C
+		</if>
+		<if test="colCd != 0 and depCd == 0">
+			SELECT D.DEP_CD
+			     , D.DEP_NM
+			     , TRIM((
+			            SELECT ROUND(NVL(AVG(T.LEC_AVG),0),2)
+			            FROM (
+			                    SELECT AVG(EV.EVL_SCORE) LEC_AVG
+			                         , LA.PRO_NO
+			                         , LA.LECA_YR
+			                         , LA.LECA_SEM
+			                         , SP.DEP_CD
+			                    FROM EVALUATION EV, LEC_APPLY LA, PROFESSOR SP
+			                    WHERE EV.LECA_CD = LA.LECA_CD
+			                    AND LA.PRO_NO = SP.PRO_NO
+			                    <if test="yr != 0">
+			                    AND LA.LECA_YR = #{yr}
+			                    </if>
+			                    <if test="sem != null and sem != ''">
+			                    AND LA.LECA_SEM = #{sem}
+			                    </if>
+			                    GROUP BY  LA.LECA_CD
+			                            , LA.PRO_NO
+			                            , LA.LECA_YR
+			                            , LA.LECA_SEM
+			                            , SP.DEP_CD
+			            ) T, DEPARTMENT SD
+			            WHERE T.DEP_CD = SD.DEP_CD
+			            AND T.DEP_CD = D.DEP_CD
+			        )) EVL_RATE
+			FROM DEPARTMENT D, COLLEGE C
+			WHERE D.COL_CD = C.COL_CD
+			AND D.COL_CD = #{colCd}
+		</if>
+		<if test="depCd != 0">
+			SELECT E.EMP_NO
+			     , E.EMP_NM
+			     , TRIM((
+			            SELECT ROUND(NVL(AVG(T.LEC_AVG),0),2)
+			            FROM (
+			                    SELECT AVG(EV.EVL_SCORE) LEC_AVG
+			                         , LA.PRO_NO
+			                         , LA.LECA_YR
+			                         , LA.LECA_SEM
+			                    FROM EVALUATION EV, LEC_APPLY LA, PROFESSOR SP
+			                    WHERE EV.LECA_CD = LA.LECA_CD
+			                    AND LA.PRO_NO = SP.PRO_NO
+			                    <if test="yr != 0">
+			                    AND LA.LECA_YR = #{yr}
+			                    </if>
+			                    <if test="sem != null and sem != ''">
+			                    AND LA.LECA_SEM = #{sem}
+			                    </if>
+			                    GROUP BY  LA.LECA_CD
+			                            , LA.PRO_NO
+			                            , LA.LECA_YR
+			                            , LA.LECA_SEM
+			            ) T
+			            WHERE T.PRO_NO = E.EMP_NO
+			        )) EVL_RATE
+			FROM EMPLOYEE E, PROFESSOR P
+			WHERE E.EMP_NO = P.PRO_NO
+			AND P.DEP_CD = #{depCd}
+		</if>
+	</select>
 
 </mapper>
 

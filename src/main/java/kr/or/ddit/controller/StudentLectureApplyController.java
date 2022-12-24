@@ -90,17 +90,13 @@ public class StudentLectureApplyController {
 		
 		log.info("상세 계획서 코드 : " + lecaCd);
 		
-		Professor professor = this.lectureApplyService.inquiryFormPriInfoStudentApply(lecaCd);
+		Professor professor = this.lectureApplyService.inquiryFormProInfoStudentApply(lecaCd);
 		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
-		
-		log.info("상세professor : " + professor);
-		log.info("상세lecApplyList : " + lecApplyList);
-		log.info("상세weekPlanList : " + weekPlanList);
 		
 		return "professor/lecApplyForm/inquiryForm";
 	}
