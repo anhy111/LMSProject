@@ -27,8 +27,8 @@ public class LectureApplyServiceImpl implements LectureApplyService {
     }
     
     @Override
-    public Professor inquiryFormPriInfoStudentApply(int lecaCd) {
-    	return null;
+    public Professor inquiryFormProInfoStudentApply(int lecaCd) {
+    	return this.lectureApplyMapper.inquiryFormProInfoStudentApply(lecaCd);
     }
 
 	@Override

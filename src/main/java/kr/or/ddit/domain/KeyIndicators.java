@@ -8,8 +8,10 @@ public class KeyIndicators {
 	private int colCd;
 	private String colNm;
 	private int yr;
+	private String sem;
 	private int depCd;
 	private String depNm; 
+	private String empNm;
 	
 	// 최대정원으로 충원율 기준잡음
 	private int capacity;
@@ -27,4 +29,6 @@ public class KeyIndicators {
 	// 졸업
 	private int graduate;
 	
+	// 평점평균
+	private double evlRate;	
 }

@@ -6,7 +6,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <div class="content">
-	<div class="container-fluid"> 
+	<div class="container-fluid">
 		<div class="row">
 			<div class="card mb-0 col-10 offset-1">
 				<div class="card-header tab-regular">
@@ -45,13 +45,9 @@
 													readonly />
 											</div>
 										</div>
-									</div>
-								</div>
-								<hr>
-								<div class="row">
-									<div class="card-body container-fluid">
-										<div class="row">
-											<h5 class="col-1">이수한 학점</h5>
+
+										<div class="row mt-3">
+											<h5 class="col-1">이수학점</h5>
 											<div class="col-2">
 												<label>전공필수</label><input type="text" class="form-control"
 													value="${studentCurrentCredit.crdMrc}" readonly />
@@ -76,7 +72,79 @@
 									</div>
 								</div>
 								<hr>
-								<div class="row p-3">
+
+								<div class="row pl-3 pr-3">
+									<h3 class="col-3">수강신청된 강의목록</h3>
+									<div class="form-group col-2 offset-7">
+										<button type="button" id="timeTableApply"
+											class="btn btn-flat btn-primary" data-toggle="modal"
+											data-target="#applySchedule">
+											신청된<br>시간표 보기
+										</button>
+									</div>
+								</div>
+								<div class="row pl-3 pb-3">
+									<div class="card-body table-responsive col-11 p-0"
+										style="height: 300px;">
+										<table
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											<thead>
+												<tr class="text-center">
+													<th width="4%">순번</th>
+													<th width="8%">이수구분</th>
+													<th width="18%">개설학과</th>
+													<th width="4%">학년</th>
+													<th width="20%">과목명</th>
+													<th width="4%">학점</th>
+													<th width="6%">최대인원</th>
+													<th width="10%">현재인원</th>
+													<th>교수명</th>
+													<th>강의계획서</th>
+													<th>취소</th>
+												</tr>
+											</thead>
+											<tbody id="completeApplyLecture">
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+								<div class="row pl-3 pr-3 mt-5">
+									<div class="col-4">
+										<h3 style="display: inline-block;">장바구니 목록</h3>
+										&nbsp;&nbsp;&nbsp; <label>※ 예비수강신청에서 장바구니에 담은 강의
+											목록입니다.<br> ※ 강의가 신청되면 목록에서 사라집니다.
+										</label>
+									</div>
+								</div>
+								<div class="row pl-3"></div>
+								<div class="row pl-3 pb-3">
+									<div class="card-body table-responsive col-11 p-0"
+										style="height: 300px;">
+										<table
+											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+											<thead>
+												<tr class="text-center">
+													<th width="4%">순번</th>
+													<th width="8%">이수구분</th>
+													<th width="18%">개설학과</th>
+													<th width="4%">학년</th>
+													<th width="20%">과목명</th>
+													<th width="4%">학점</th>
+													<th width="6%">최대인원</th>
+													<th width="10%">현재인원</th>
+													<th>교수명</th>
+													<th>강의계획서</th>
+													<th>신청</th>
+												</tr>
+											</thead>
+											<tbody id="notApplySaveLecture">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row p-3 mt-5">
 									<div class="form-group col-1">
 										<h5>키워드 검색</h5>
 									</div>
@@ -128,7 +196,6 @@
 											class="btn btn-flat btn-primary" value="">검색</button>
 									</div>
 								</div>
-								<hr>
 								<div class="row pl-3">
 									<h3>강의목록</h3>
 								</div>
@@ -155,77 +222,6 @@
 											</thead>
 											<tbody id="notApplyLecture">
 
-											</tbody>
-										</table>
-									</div>
-								</div>
-
-								<div class="row pl-3 pr-3">
-									<div class="col-4">
-										<h3 style="display: inline-block;">장바구니 목록</h3>
-										&nbsp;&nbsp;&nbsp; <label>※ 예비수강신청에서 장바구니에 담은 강의
-											목록입니다.<br> ※ 강의가 신청되면 목록에서 사라집니다.
-										</label>
-									</div>
-								</div>
-								<div class="row pl-3"></div>
-								<div class="row pl-3 pb-3">
-									<div class="card-body table-responsive col-11 p-0"
-										style="height: 300px;">
-										<table
-											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
-											<thead>
-												<tr class="text-center">
-													<th width="4%">순번</th>
-													<th width="8%">이수구분</th>
-													<th width="18%">개설학과</th>
-													<th width="4%">학년</th>
-													<th width="20%">과목명</th>
-													<th width="4%">학점</th>
-													<th width="6%">최대인원</th>
-													<th width="10%">현재인원</th>
-													<th>교수명</th>
-													<th>강의계획서</th>
-													<th>신청</th>
-												</tr>
-											</thead>
-											<tbody id="notApplySaveLecture">
-
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="row pl-3 pr-3">
-									<h3 class="col-3">수강신청된 강의목록</h3>
-									<div class="form-group col-2 offset-7">
-										<button type="button" id="timeTableApply"
-											class="btn btn-flat btn-primary" data-toggle="modal"
-											data-target="#applySchedule">
-											신청된<br>시간표 보기
-										</button>
-									</div>
-								</div>
-								<div class="row pl-3 pb-3">
-									<div class="card-body table-responsive col-11 p-0"
-										style="height: 300px;">
-										<table
-											class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
-											<thead>
-												<tr class="text-center">
-													<th width="4%">순번</th>
-													<th width="8%">이수구분</th>
-													<th width="18%">개설학과</th>
-													<th width="4%">학년</th>
-													<th width="20%">과목명</th>
-													<th width="4%">학점</th>
-													<th width="6%">최대인원</th>
-													<th width="10%">현재인원</th>
-													<th>교수명</th>
-													<th>강의계획서</th>
-													<th>취소</th>
-												</tr>
-											</thead>
-											<tbody id="completeApplyLecture">
 											</tbody>
 										</table>
 									</div>
@@ -355,8 +351,8 @@
 							role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
 							<div class="tab-pane fade show active" id="custom-tabs-four-home"
 								role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+								<h5>예비수강신청</h5>
 								<div class="card container-fluid">
-									<h5>예비수강신청</h5>
 									<div class="row">
 										<div class="card-body container-fluid">
 											<div class="row">
@@ -376,13 +372,9 @@
 														readonly />
 												</div>
 											</div>
-										</div>
-									</div>
-									<hr>
-									<div class="row">
-										<div class="card-body container-fluid">
-											<div class="row">
-												<h5 class="col-1">이수한 학점</h5>
+
+											<div class="row mt-3">
+												<h5 class="col-1">이수학점</h5>
 												<div class="col-2">
 													<label>전공필수</label><input type="text" class="form-control"
 														value="${studentCurrentCredit.crdMrc}" readonly />
@@ -407,6 +399,40 @@
 										</div>
 									</div>
 									<hr>
+									<div class="row pl-3 pr-3 pb-3">
+										<h3 class="col-3">장바구니</h3>
+										<div class="form-froup col-2 offset-7">
+											<button type="button" id="timeTableSave"
+												class="btn btn-flat btn-primary" data-toggle="modal"
+												data-target="#saveSchedule">
+												장바구니 <br>시간표 보기
+											</button>
+										</div>
+									</div>
+									<div class="row pl-3 pb-3">
+										<div class="card-body table-responsive col-11 p-0"
+											style="height: 300px;">
+											<table
+												class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+												<thead>
+													<tr class="text-center">
+														<th width="4%">순번</th>
+														<th width="8%">이수구분</th>
+														<th width="18%">개설학과</th>
+														<th width="4%">학년</th>
+														<th width="20%">과목명</th>
+														<th width="4%">학점</th>
+														<th width="6%">최대인원</th>
+														<th>교수명</th>
+														<th>강의계획서</th>
+														<th>취소</th>
+													</tr>
+												</thead>
+												<tbody id="completeSaveLecture">
+												</tbody>
+											</table>
+										</div>
+									</div>
 									<div class="row p-3">
 										<div class="form-group col-1">
 											<h5>키워드 검색</h5>
@@ -463,7 +489,6 @@
 												class="btn btn-flat btn-primary" value="">검색</button>
 										</div>
 									</div>
-									<hr>
 									<div class="row pl-3">
 										<h3>강의목록</h3>
 									</div>
@@ -493,40 +518,7 @@
 											</table>
 										</div>
 									</div>
-									<div class="row pl-3 pr-3">
-										<h3 class="col-3">장바구니</h3>
-										<div class="form-froup col-2 offset-7">
-											<button type="button" id="timeTableSave"
-												class="btn btn-flat btn-primary"
-												data-toggle="modal" data-target="#saveSchedule">
-												장바구니 <br>시간표 보기
-											</button>
-										</div>
-									</div>
-									<div class="row pl-3 pb-3">
-										<div class="card-body table-responsive col-11 p-0"
-											style="height: 300px;">
-											<table
-												class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
-												<thead>
-													<tr class="text-center">
-														<th width="4%">순번</th>
-														<th width="8%">이수구분</th>
-														<th width="18%">개설학과</th>
-														<th width="4%">학년</th>
-														<th width="20%">과목명</th>
-														<th width="4%">학점</th>
-														<th width="6%">최대인원</th>
-														<th>교수명</th>
-														<th>강의계획서</th>
-														<th>취소</th>
-													</tr>
-												</thead>
-												<tbody id="completeSaveLecture">
-												</tbody>
-											</table>
-										</div>
-									</div>
+
 									<div class="modal fade" id="saveSchedule" tabindex="-1"
 										role="dialog" aria-labelledby="exampleModalCenterTitle"
 										aria-hidden="true">
@@ -888,7 +880,7 @@
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>등록된 강의가 없습니다.</td>";
+					str += "<td colspan='11'>검색된 강의가 없습니다.</td>";
 					str += "</tr>";
 					$("#notApplyLecture").html(str);
 					return;
@@ -1022,7 +1014,7 @@
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>등록된 강의가 없습니다.</td>";
+					str += "<td colspan='11'>검색된 강의가 없습니다.</td>";
 					str += "</tr>";
 					$("#notSaveLecture").html(str);
 					return;
@@ -1108,7 +1100,6 @@
 			};
 
 		
-		
 		$.ajax({
 			url : "/student/lectureApply/loadNotApplySaveLecture",
 			type : "get",
@@ -1124,7 +1115,7 @@
 				let str = "";
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
-					str += "<td colspan='11'>신청 가능한 강의가 없습니다.</td>";
+					str += "<td colspan='11'>모두 신청했거나 담긴 강의가 없습니다.</td>";
 					str += "</tr>";
 					$("#notApplySaveLecture").html(function(){
 						return str;
