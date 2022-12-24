@@ -1,0 +1,13 @@
+/*
+공통으로 사용할 css 추가/변경시 최종프로젝트 게시판에 공지(필수)
+*/
+
+.container{}
+.col-6 {}
+.card{
+	text-align : center;
+}
+.card-header{}
+.card-title{}
+.card-body{}
+table{}

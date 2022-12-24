@@ -34,7 +34,7 @@
 								</div>
 								<div class="col-5 text-center">
 									<!-- 단과대 이미지URL -->
-									<img src="/resources/upload/college/${collegeList.colImgUrl }">
+									<img src="/upload/college/${collegeList.colImgUrl }">
 								</div>
 							</div>
 						</div>

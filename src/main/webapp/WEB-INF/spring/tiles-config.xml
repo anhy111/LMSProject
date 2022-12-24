@@ -34,8 +34,11 @@
 	<definition name="professor/management/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/professor/management/{1}.jsp" />
 	</definition>
-	<definition name="professor/evaluation/*" extends="tiles-layout">
-		<put-attribute name="body" value="/WEB-INF/views/professor/evaluation/{1}.jsp" />
+	<definition name="professor/stuManage/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/professor/stuManage/{1}.jsp" />
+	</definition>
+	<definition name="professor/mineEvaluation" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/professor/mineEvaluation.jsp" />
 	</definition>
 	<definition name="lecture/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/lecture/{1}.jsp" />
@@ -124,6 +127,22 @@
 	
 	<definition name="counsel/studentside/checkAnswer" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkAnswer.jsp" />
+	</definition>
+	
+	<definition name="department/notile/*" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/department/notile/{1}.jsp" />
+	</definition>
+	
+	<definition name="counsel/studentside/answerNote" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/answerNote.jsp" />
+	</definition>
+	
+	<definition name="counsel/professorside/answerNoteWriteUpdate" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/professorside/answerNoteWriteUpdate.jsp" />
+	</definition>
+	
+	<definition name="counsel/studentside/checkReject" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkReject.jsp" />
 	</definition>
 
 </tiles-definitions>

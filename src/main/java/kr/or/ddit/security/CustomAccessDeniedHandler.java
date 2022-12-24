@@ -18,8 +18,11 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		log.info("handle 로그인 권한 없음 !!!");
-		
-		response.sendRedirect("/security/accessError");
+		if(request.authenticate(response)) {
+			response.sendRedirect("/login/login");
+		}else {
+			response.sendRedirect("/security/accessError");
+		}
 	}
 	
 	

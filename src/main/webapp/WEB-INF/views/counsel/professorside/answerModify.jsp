@@ -3,9 +3,11 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
-<style>div{border:1px solid black;}</style>
 <div class="container" align="center">
-	<div class="row">
+	<div class="row"style="
+    border: 50px inset aliceblue;
+    padding: 20px;
+">
 		<div class="col-12" id="answerModifyTable">
 			<h3><label>답변수정</label></h3> <br>
 				<input type="hidden"  id="cnslCd"  value="${answerDetail.cnslCd}"readonly>
@@ -33,13 +35,14 @@
 	</div>
 </div>
 <script type="text/javascript">
-let cnslRpl,cnslCd = "";
+let cnslRpl,cnslCd,cnslType = "";
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
-let data = {cnslRpl : "",cnslCd : ""};
+let data = {cnslRpl : "",cnslCd : "", cnslType:""};
 function insertRpl(){
 	data.cnslCd = $("#cnslCd").val();
 	data.cnslRpl = $("#cnslRpl").val();
+	alert(JSON.stringify(data));
 	$.ajax({
 		url:"/counsel/professorside/answer",
 		type:'POST',
@@ -50,8 +53,12 @@ function insertRpl(){
 			xhr.setRequestHeader(header, token);
 		},
 		success:function(result){
+			if(result > 0){
 			opener.parent.location.reload();
 			window.close();
+			} else{
+				alert("실패");
+			}
 		}
 	});
 }

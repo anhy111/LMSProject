@@ -41,8 +41,9 @@
 
 
                 <div class="card-body">
-                    <form role="form" action="/notice/noticeForm" method="post" id="form" name="form">
+                    <form action="/notice/noticeForm" method="post" enctype="multipart/form-data" name="form">
                         <sec:csrfInput/>
+                        <input type="file" name="files2"  multiple >
                         <div class="row">
                             <table class="table table-bordered">
                                 <tbody>
@@ -77,20 +78,13 @@
                             <div class="col-xl-4">
                                 <div class="drop-zone ">
                                     <br/>
-                                    <%--                                    <div style="text-align: center; font-size: 50px;">--%>
-                                    <%--                                        <i class="fas fa-upload"></i>--%>
-                                    <%--                                    </div>--%>
-                                    <%--                                    <div--%>
-                                    <%--                                        style="text-align: center; font-size: 20px; font-weight: bold;">--%>
-                                    <%--                                        파일 선택 클릭<br />또는 파일을 여기로 드래그하세요.--%>
-                                    <%--                                    </div>--%>
-
                                 </div>
-                                <input style="padding-left:210px;" type="file" id="fileUpload" multiple> <br> <br>
                             </div>
                         </div>
                         <button type="submit">등록</button>
                     </form>
+
+
 
                     <div class="row justify-content-end mt-3"
                          style="padding-right: 30px; padding-bottom: 50px;">

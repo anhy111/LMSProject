@@ -16,17 +16,17 @@
         <!-- Sidebar user panel (optional) -->
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search"
-                       placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+<!--         <div class="form-inline"> -->
+<!--             <div class="input-group" data-widget="sidebar-search"> -->
+<!--                 <input class="form-control form-control-sidebar" type="search" -->
+<!--                        placeholder="Search" aria-label="Search"> -->
+<!--                 <div class="input-group-append"> -->
+<!--                     <button class="btn btn-sidebar"> -->
+<!--                         <i class="fas fa-search fa-fw"></i> -->
+<!--                     </button> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -95,21 +95,9 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
+							<li class="nav-item"><a href="/record/main?stuNo=<%= no %>" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
-									<p>휴학 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>복학 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>자퇴 신청</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>졸업</p>
+									<p>학적 변동 신청</p>
 							</a></li>
 							<li class="nav-item"><a href="#" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
@@ -160,6 +148,10 @@
 							class="nav-icon far fa-envelope"></i>
 							<p>상담</p>
 					</a></li>
+					<li class="nav-item"><a href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link"> <i
+							class="nav-icon far fa-envelope"></i>
+							<p>내가 듣는 강의 (임시. 지우지 마시오)</p>
+					</a></li>
 				</sec:authorize>
 				<!-- 교수 어사이드 -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
@@ -190,18 +182,22 @@
 							</a></li>
 						</ul></li>
 					<!-- 학적관리 -->
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-copy"></i>
+					<li class="nav-item">
+						<a href="#" class="nav-link"> 
+							<i class="nav-icon fas fa-copy"></i>
 							<p>
 								평가 <i class="right fas fa-angle-left"></i>
 							</p>
-					</a>
+						</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="/professor/evaluation/list" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
+							<li class="nav-item">
+								<a href="/professor/mineEvaluation" class="nav-link"> 
+								<i class="far fa-circle nav-icon"></i>
 									<p>수업 평가 조회</p>
-							</a></li>
-						</ul></li>
+								</a>
+							</li>
+						</ul>
+					</li>
 					<li class="nav-item"><a href="#" class="nav-link"> <i
 							class="nav-icon fas fa-chart-pie"></i>
 							<p>공지사항</p>
@@ -218,7 +214,7 @@
 					</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="#" class="nav-link"> 
+								<a href="/professor/stuManageOfPro" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 										<p>학생 목록</p>
 								</a>
@@ -396,7 +392,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
+					<li class="nav-item"><a href="/ketIndicators/chart" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
 							<p>중점 지표</p>
 					</a></li>

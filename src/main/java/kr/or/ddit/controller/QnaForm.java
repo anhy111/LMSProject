@@ -7,7 +7,6 @@ import lombok.Setter;
 public class QnaForm {
 
     private Long memberNumber;
-
     private String title;
     private String content;
     private String accessType;

@@ -44,6 +44,8 @@ public class Student {
 	
 	private String empNm;
 	
+	private List<SclHistory> stuSclList; //장학금 내역 조회
+
 
 
 }

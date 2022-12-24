@@ -3,9 +3,11 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
-<style>div{border:1px solid black;}</style>
 <div class="container" align="center">
-	<div class="row">
+	<div class="row"style="
+    border: 50px inset aliceblue;
+    padding: 20px;
+">
 		<div class="col-12" id="answerTable">
 			<h3><label>답변확인</label></h3> <br>
 				<input type="hidden" value="${answerDetail.cnslCd }" readonly>

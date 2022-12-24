@@ -4,12 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<%
-    request.setCharacterEncoding("utf-8");
-    Long sessionId = (Long) session.getAttribute("memNo");
-%>
-
-
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <link rel="stylesheet" href="/resources/css/qnaBoard.css"/>
@@ -45,7 +39,6 @@
 <script type="text/javascript" defer="defer">
 
     $(function () {
-
         let header = "${_csrf.headerName}";
         let token = "${_csrf.token}";
 
@@ -72,13 +65,13 @@
                 type: "POST",
                 dataType: "json",
                 data: {
-                    memberNumber: <%=sessionId%>,
+                    memberNumber: memberNumber,
                     title: title,
                     content: content,
                     accessType: accessType
                 },
 
-                beforeSend : function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
 
@@ -93,13 +86,9 @@
                 }
 
             })
-
-        })
-
-        $("#cancelBtn").on('click', function () {
-            location.href = "/qna/main";
         })
     })
+
 </script>
 
 <div class="card">
@@ -123,22 +112,19 @@
                     <input type="text" class="inputText" name="title" id="title"/>
                 </div>
                 <div class="textArea"><textarea name="content" id="content"></textarea></div>
-                <input type="hidden" name="memberNumber" value="<%=sessionId%>" id="memberNumber"/>
+                <input type="hidden" name="memberNumber" value="${memberNumber}" id="memberNumber"/>
 
-                    <input id="N101" name="accessType" type="radio" value="1" checked />
-                    <label for="N101">공개</label>&emsp;
-                    <input id="N102" name="accessType" type="radio" value="2" />
-                    <label for="N102">비공개</label>&emsp;
+                <input id="N101" name="accessType" type="radio" value="1" checked/>
+                <label for="N101">공개</label>&emsp;
+                <input id="N102" name="accessType" type="radio" value="2"/>
+                <label for="N102">비공개</label>&emsp;
 
                 <div id="btnRound">
                     <input type="submit" id="insertBtn" class="btn btn-primary" value="등록">
-                    <input type="button" id="cancelBtn" class="btn btn-primary" value="취소">
+                    <input type="button" onclick="history.back()" id="cancelBtn" class="btn btn-primary" value="취소">
                 </div>
                 <sec:csrfInput/>
             </form>
-
-
-
 
         </div>
     </div>

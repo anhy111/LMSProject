@@ -1,18 +1,23 @@
 package kr.or.ddit.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
+import kr.or.ddit.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
-import oracle.jdbc.proxy.annotation.Post;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @Controller
@@ -20,17 +25,47 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor // 어노테이션이 궁금하면 생성자 주입과 관련해서 찾아보시길..!
 public class NoticeBasicController {
 
+//    @GetMapping("/editArticle/{id}")
+//    public String editArticle(@PathVariable int id, Model model, Principal principal) {
+//
+//        // Get the current user
+//        String username = principal.getName();
+//
+//        // Check if the user has the "writer" role
+//        boolean isWriter = false;
+//        for (GrantedAuthority authority : SecurityContextHolder.getContext().getAuthentication().getAuthorities()) {
+//            if (authority.getAuthority().equals("ROLE_STUDENT")) {
+//                isWriter = true;
+//                break;
+//            }
+//        }
+//
+//        if (isWriter) {
+//            // User has the "writer" role, so they are allowed to edit the article
+//            Article article = articleService.getArticleById(id);
+//            model.addAttribute("article", article);
+//            return "editArticle";
+//        } else {
+//            // User does not have the "writer" role, so they are not allowed to edit the article
+//            return "test/home";
+//        }
+//    }
+
     /**
-     *     DI(의존성 주입)을 하는 방법에는 3가지가 있다.
-     *     1) 필드 주입
-     *     2) 수정자(Setter) 주입
-     *     3) 생성자 주입
-     *
-     *     이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
-     *     장/단점이 궁금하면 슬랙으로..ㅎ
+     * DI(의존성 주입)을 하는 방법에는 3가지가 있다.
+     * 1) 필드 주입
+     * 2) 수정자(Setter) 주입
+     * 3) 생성자 주입
+     * <p>
+     * 이 중 3) 생성자 주입을 쓸 것을 Spring 에서 권장한다.
+     * 장/단점이 궁금하면 슬랙으로..ㅎ
      */
 
     private final NoticeBasicService noticeBasicService; // final을 붙인 이유: 생성시 초기값을 꼭 넣어줘야 함!
+
+    private final FileUploadUtil fileUploadUtil;
+
+    private static final String HOME = "redirect:/notice/list";
 
     //공지사항 리스트
     @GetMapping("/list")
@@ -40,18 +75,15 @@ public class NoticeBasicController {
 
         List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
 
-        //공통 약속
-        model.addAttribute("bodyTitle", "공지사항목록");
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
 
-        //forwarding
         return "notice/list";
     }
 
     //공지사항 등록 폼
     @GetMapping("/noticeForm")
-    public String createNoticeForm(Model model) {
+    public String createNoticeForm(NoticeForm form, Model model) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
@@ -61,17 +93,25 @@ public class NoticeBasicController {
 
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
-    public String createNotice(NoticeForm form) {
+    public String createNotice(NoticeForm form,
+                               @RequestParam MultipartFile[] files2,
+                               HttpServletRequest request) {
+
+        // IP 저장 가능하지만, 로컬 서버 0:0:0:0:0:0:0:1
+        String clientIp = request.getRemoteAddr();
+
+        log.info(clientIp);
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
-        log.info(noticeBasic.toString());
-
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         noticeBasicService.noticeBasicSave(noticeBasic);
+        if (files2[0].getSize() > 0) {
+            fileUploadUtil.fileUploadAction(files2);
+        }
 
-        return "redirect:list";
+        return HOME;
     }
 
     //공지사항 상세페이지
@@ -103,7 +143,7 @@ public class NoticeBasicController {
 
         noticeBasicService.noticeBasicUpdate(form);
 
-        return "redirect:/notice/list";
+        return HOME;
     }
 
     //공지사항 삭제
@@ -112,31 +152,22 @@ public class NoticeBasicController {
 
         noticeBasicService.delete(noticeCd);
 
-        return "redirect:/notice/list";
+        return HOME;
     }
 
-    @GetMapping("/upload")
-    public String uploadView() {
+    //공지사항 등록
 
-        return "json/fileInput";
-    }
+    @GetMapping("/test")
+    public String testHome(Model model) {
 
-    @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
 
-        // 파일을 저장하거나 처리합니다.
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
 
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+        model.addAttribute("noticeBasicList", noticeBasicList);
+        model.addAttribute("totalRow", totalRow);
 
-        return "redirect:/notice/list";
-    }
-
-    @GetMapping("/json/index")
-    public String jsonIndex() {
-
-        return "json/index";
+        return "notice/test";
     }
 
 }
