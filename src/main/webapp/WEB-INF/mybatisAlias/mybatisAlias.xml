@@ -38,6 +38,8 @@
 		<typeAlias type="kr.or.ddit.domain.CommonDetail" alias="commonDetail"/>
 		<typeAlias type="kr.or.ddit.domain.TaskSubmit" alias="tasksubmit"/>
 		<typeAlias type="kr.or.ddit.domain.Allocation" alias="allocation"/>
+		<typeAlias type="kr.or.ddit.domain.Scholarship" alias="scholarship"/>
+		<typeAlias type="kr.or.ddit.domain.SclHistory" alias="sclHistory"/>
 
 		<typeAlias type="kr.or.ddit.domain.LecData" alias="lecData"/>
 

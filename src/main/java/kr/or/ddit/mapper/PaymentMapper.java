@@ -16,6 +16,9 @@ public interface PaymentMapper {
 	//등록금 고지 관리 리스트 개수
 	public int adminBillCount();
 	
+	//등록금 납부 총 납부액
+	public Payment sumFee();
+	
 	//등록금 납부 관리 리스트
 	public List<Payment> adminPaymentList();
 }

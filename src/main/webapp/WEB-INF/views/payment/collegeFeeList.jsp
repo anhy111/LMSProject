@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>등록금 목록</title>
 <style>
 table *{
 text-align: center;
@@ -19,7 +19,7 @@ height : 40px;
 
 <body>
 <div>
-<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i>등록 및 장학  <i class="dripicons-chevron-right"></i><span>등록금납부이력</span>
+<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i>등록 및 장학  <i class="dripicons-chevron-right"></i><span>등록</span>
 <i class="dripicons-chevron-right"></i><span style="font-weight: bold;">등록금 목록 조회</span>
 </div>
 <br><br>

@@ -82,10 +82,14 @@
 
 	<definition name="payment/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/payment/{1}.jsp" />
+	</definition>
 
 	<definition name="chart/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/chart/{1}.jsp" />
-
+	</definition>
+	
+	<definition name="scholarship/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/scholarship/{1}.jsp" />
 	</definition>
 	
 

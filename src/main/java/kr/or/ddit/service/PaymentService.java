@@ -13,6 +13,9 @@ public interface PaymentService {
 
 	public int adminBillCount();
 
+	public Payment sumFee();
+
 	public List<Payment> adminPaymentList();
+
 
 }
