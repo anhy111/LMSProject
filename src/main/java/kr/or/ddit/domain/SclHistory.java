@@ -23,7 +23,6 @@ public class SclHistory {
 	private double totalAvg;	//성적
 	private int ranking;		//등수
 	
-	private String sclNm;		//장학금명
 	private int sclAmt;			//장학금액
 	private String sclDetail;	//상세설명
 	private int sclCap;			//수여인원
