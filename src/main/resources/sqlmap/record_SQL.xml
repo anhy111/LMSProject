@@ -14,8 +14,8 @@ INSERT INTO RECORD (
 		, RGB_CD
 		, REC_YR
 		, REC_SEM
-		, REC_DT
 		, REC_YN
+		, REC_DT
 		, REC_PER
 		, REC_RSN
 		)
@@ -23,11 +23,11 @@ VALUES(
 		RECORD_SEQ.NEXTVAL
 		, #{stuNo}
 		, #{rgbCd}
-		<if test="recYr == null or recYr =='' ">, TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))</if>
+		, TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
 		, #{recSem}
-		<if test="recDt == null or recDt =='' ">, SYSDATE</if>
 		, #{recYn}
-		<if test="recPer != null or recPer != '' ">, #{recPer}</if>
+		<if test="recDt == null or recDt =='' ">, SYSDATE</if>
+		<if test="recPer != 0 ">, #{recPer}</if>
 		<if test="recRsn != null or recRsn != '' ">, #{recRsn}</if>
 		)
 </insert>
