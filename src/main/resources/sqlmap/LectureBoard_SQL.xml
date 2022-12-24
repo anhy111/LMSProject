@@ -92,7 +92,7 @@
 	
 	
 	<resultMap type="testQ" id="testQMap">               
-		<result property="teqCd "     column="TEQ_CD" />      
+		<result property="teqCd"     column="TEQ_CD" />      
 		<result property="testCd"     column="TEST_CD" />      
 		<result property="teqSeq"     column="TEQ_SEQ" />     
 		<result property="teqOption1" column="TEQ_OPTION1" />      
@@ -104,6 +104,7 @@
 	</resultMap>	                                           
 	
 	<resultMap type="stuTest" id="stuTestMap">
+		<result property="stCd"  column="ST_CD" />
 		<result property="stuNo"  column="STU_NO" />
 		<result property="lecaCd"   column="LECA_CD" />
 		<result property="testCd"   column="TEST_CD" />
@@ -112,8 +113,7 @@
 	</resultMap>
 	<resultMap type="std"  id="stdMap">
 		<result property="teqCd"     column="TEQ_CD"/>
-		<result property="stuNo"    column="STU_NO"/>
-		<result property="lecaCd"     column="LECA_CD"/>
+		<result property="stCd"     column="ST_CD"/>
 		<result property="stdAnswer" column="STD_ANSWER"/>
 	</resultMap>
 	
@@ -223,22 +223,22 @@
 	</insert>
 	
 	<!-- 시험 리스트 -->
-	<select id="testList" parameterType="String" resultType="test">
-	SELECT 
-	     TEST_CD
-	    ,LECA_CD
-	    ,TEST_NM
-	    ,TEST_CON
-	    ,TEST_REG
-	    ,TEST_SDT
-	    ,TEST_EDT
-	FROM 
-		 TEST
-	WHERE 
-		 LECA_CD = #{lecaCd}
-	ORDER BY 	
-		 TEST_CD DESC	 
+	<select id="testList" parameterType="String" resultMap="testMap">
+		SELECT *
+		FROM TEST T, STU_TEST ST
+		WHERE T.TEST_CD = ST.TEST_CD(+)
+		AND T.LECA_CD = #{lecaCd}
+		ORDER BY T.TEST_CD DESC			 
 	</select>
+	<!-- 제출 여부 판단 -->
+	<select id="submitCheck" parameterType="String" resultMap="testMap">
+	SELECT *
+	FROM TEST T, STU_TEST ST
+	WHERE T.TEST_CD = ST.TEST_CD
+		AND T.LECA_CD = #{lecaCd}
+        and t.test_cd = #{testCd}
+        and st.stu_no = #{stuNo}
+	</select>        
 	
 	<!-- 강의 계획서 조회 -->
 	<select id="lecApplySearch" parameterType="String" resultType="lecApply">
@@ -329,6 +329,7 @@
 			,T.TEST_EDT
 			
 			,TQ.TEST_CD
+			,TQ.TEQ_CD
 			,TQ.TEQ_SEQ
 			,TQ.TEQ_OPTION1
 			,TQ.TEQ_OPTION2
@@ -353,43 +354,81 @@
 		WHERE TEST_CD = #{testCd}
 	</delete>
 		
-	<!-- 시험 제출 여부 확인 -->
-	<select id="checkTestSubmit" resultMap="testMap" parameterType="String">
-							SELECT  
-		                         TT.TEST_CD AS TTTESTCD
-		                        ,TT.LECA_CD AS TTLECACD
-		                        ,TT.TEST_NM
-		                        ,TT.TEST_CON
-		                        ,TT.TEST_REG
-		                        ,TT.TEST_SDT
-		                        ,TT.TEST_EDT
-		                        ,ST.LECA_CD AS STLECACD
-		                        ,ST.TEST_CD AS STTESTCD
-		                        ,ST.STU_NO
-		                        ,ST.ST_SCORE
-		                        ,ST.ST_YN 
-		                    FROM STU_TEST ST, TEST TT
-		                    WHERE ST.TEST_CD = TT.TEST_CD
-		                    AND ST.STU_NO = #{stuNo}
-	</select>	
 
 	<insert id="stuTestInsert" parameterType="stuTest">
-		INSERT INTO STU_TEST (   STU_NO
+		<selectKey order="BEFORE" keyProperty="stCd" resultType="int">
+			SELECT NVL(MAX(ST_CD),0)+1 FROM STU_TEST
+		</selectKey>
+		INSERT INTO STU_TEST (  
+								 ST_CD
+								,STU_NO
 								,LECA_CD
 								,TEST_CD
 								,ST_SCORE
+								,ST_YN
 								)
-					  VALUES ( 
-						  		 #{stuNo}
+					  VALUES (   
+					  			 #{stCd}
+						  		,#{stuNo}
 								,#{lecaCd}
 								,#{testCd}
 								,ROUND((#{stScore}/(5* (SELECT COUNT(TEQ_CD) TEQ_CD FROM TEST_Q WHERE TEST_CD = #{testCd})))*100)
+								,'Y'
 							 )
 		
 	</insert>
 	
+	<update id="insertStdList" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" > 
+		         into STU_TEST_DETAIL (
+			         					 TEQ_CD
+										,STD_ANSWER
+										,ST_CD
+		        						 )
+						        values (
+		        						 #{item.teqCd}
+		        						,#{item.stdAnswer} 	
+		        						,#{item.stCd} 	
+		        						)
+		            
+        </foreach>
+	</update>
 	
-	
+	<!-- 퀴즈 학생 제출 답안과 점수 확인 -->
+	<select id="stuTestDetail" parameterType="String" resultMap="testMap">
+			WITH aaa AS(
+            SELECT    T.TEST_CD
+					, T.LECA_CD
+					, T.TEST_NM
+					, T.TEST_CON
+					, T.TEST_REG
+					, T.TEST_SDT
+					, T.TEST_EDT
+					
+		            , TQ.TEQ_CD
+		            , TQ.TEQ_CON
+		            , TQ.TEQ_SEQ
+		            , TQ.TEQ_OPTION1
+		            , TQ.TEQ_OPTION2
+		            , TQ.TEQ_OPTION3
+		            , TQ.TEQ_OPTION4
+		            , TQ.TEQ_ANSWER
+		            
+		            , STD.ST_CD
+		            , STD.STD_ANSWER
+            FROM 
+	            	 TEST T
+	            	,TEST_Q TQ
+	            	,STU_TEST_DETAIL STD
+            WHERE 
+            	T.TEST_CD = TQ.TEST_CD
+            	AND TQ.TEQ_CD = STD.TEQ_CD
+            	AND STD.ST_CD = #{stCd}
+            ORDER BY TQ.TEQ_CD)
+            
+            select * from aaa a, stu_test st
+            where a.test_cd = st.test_cd
+	</select>
 	
 	
 	

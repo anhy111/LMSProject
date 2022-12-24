@@ -102,7 +102,9 @@
 		     , EMP_NM
 		FROM EMPLOYEE
 		WHERE EMP_DIV = 'DIV002'
+		<if test="empNm != null and empNm != ''">
 		AND EMP_NM LIKE '%' || #{empNm} || '%'
+		</if>
 	</select>
 </mapper>
 

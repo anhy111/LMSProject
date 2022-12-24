@@ -51,16 +51,16 @@ width:90px;}
 					</div>	
 					<br>
 					<div class="col-sm-4 select">
-						<select id="recSem" name="recSem">
+						<select id="recSem" name="recSem" required>
 								<option selected>학기선택</option>
-								<option value="1">1학기</option>
-								<option value="2">2학기</option>
 						</select>
 					</div>
 					<br>
 					<div class="col-sm-4 select">
 						<select id="recPer" name="recPer">
 								<option selected>기간선택</option>
+								<option value="1">1년</option>
+								<option value="2">2년</option>
 						</select>
 					</div>
 				</div>
@@ -69,12 +69,9 @@ width:90px;}
 				<br> <br>
 					<div class="col-sm-6" id="cnslReservationDt"
 						style="padding-left: 0px;padding-top: 20px;">
-						<div class="col-sm-2">
-							<label>예약일</label>
-						</div>
 						<div class="col-sm-6" style="display: -webkit-inline-box;">
 							<div class="alert alert-info">
-								<p id="target">상담 예약일</p>
+								<p id="target">신청날짜</p>
 							</div>
 							<input style="height: 50px; border: 1px solid aliceblue;padding-left: 30px;"
 								type="date" name="cnslDt" id="cnslDt" required />
@@ -93,7 +90,7 @@ width:90px;}
 					</div>
 				</div>
 				<div class="col-4" style="display: inherit; padding-top: 20px;">
-					<button type="submit" class="cbtn btn__primary"><lable>등록</label></button> 
+					<button type="submit" class="cbtn btn__primary"><label>등록</label></button> 
 					<a onclick="dataReset()" class="cbtn btn__secondary"><label>취소</label></a>
 					<a href="/record/main?stuNo=<%=stuNo %>" class="cbtn btn__secondary"><label>메인<label></a>
 				</div>
@@ -105,42 +102,97 @@ width:90px;}
 	</div>
 
 <script type="text/javascript">
-		let currentRecYr,nextRecYr ="";
-		var date = new Date();
-		let year = date.getFullYear(); //년도 recYr
-		let nextYear =""; //현재학기가 2학기일경우 다음년도 recYr
-		let month = date.getMonth();
-		var semester;
-
-		if (month == '3' || month == '4' || month == '5' || month == '6') semester = 1;
-		else if (month == '9' || month == '10' || month == '11' || month == '12') semester = 2;
+		//현재년도/다음년도/현재학기/다음학기/체크된라디오
+		//option에 append 해줄 변수
+		let setCurrentRecYr,setNextRecYr,setCurrentSemester,setNextSemester,checkedRgbCdValue ="";
+		let setDefaultRecSem = `<option selected>학기선택</option>`;
+		let setDefaultRecYr = `<option selected>년도</option>`;
+		//option value에 담을 변수
+		let month,year,nextYear,currentSemester,nextSemester = ""; 
+		let date = new Date();
+		let temp = "";
+		let recYrFlag = false;
+		let recSemFlag = false;
 		
-		let setRecYr = "";
-		let setNextRecYr = "";
+		$(document).ready(function(){
+			year = date.getFullYear(); //년도 recYr
+		    month = date.getMonth();
+		    if (month == '3' || month == '4' || month == '5' || month == '6') currentSemester = 1;
+			else if (month == '9' || month == '10' || month == '11' || month == '12') currentSemester = 2;
+			var currentDateString = date.toISOString().substr(0, 10);
+			$('input[type="date"]').val(currentDateString).prop('readonly', true);
+			$("#recRsn").summernote();//섬머노트변환
+			setApplyTerm();//현재년도가 2학기일경우 현재년도 + 다음년도
+		});	
 		
-	$(document).ready(function(){
-		$('input[type="date"]').change(function() {
-			/* on change get value then print to page */
-			var outputDate = (this.value);
-			$("#target").text(outputDate);
-		});
-// 			CKEDITOR.replace("recRsn");
-			$("#recRsn").summernote();
-			setRecYr = `<option value='\${year}'>\${year}년도</option>`;
-			$("#recYr").append(setRecYr);
-			setApplyTerm();
-			//복학이나 졸업을 선택할 경우 사유를 적지 않아도 된다
-			$("input[type='radio'][name='rgbCd']").change(function() {
-				if($("input[type='radio'][name='rgbCd']:checked").val() == 'RCD003' || $("input[type='radio'][name='rgbCd']:checked").val() == 'RCD005'){
-// 					$("#cnslConTextArea").hide();
-					$("#recRsn").summernote('disabled');
-				} else { 
-// 					$("#cnslConTextArea").show();
-					$("#recRsn").summernote('enable');
-				}
-			});
-	});	
+		function selectedNextYearThenRecSemChangebyRecYr(){
+			if(nextYear != ""){
+			temp = currentSemester;
+			currentSemester = nextSemester;
+			nextSemester = temp;
+			recSemFlag = true;
+			}
 			
+			if(recSemFlag){
+			$("#recSem option").remove();	
+			$("#recSem").append(setDefaultRecSem);
+			setCurrentSemester = `<option value='\${currentSemester}'>\${currentSemester}학기</option>`
+// 			setNextSemester = `<option value='\${nextSemester}'>\${nextSemester}학기</option>`
+			$("#recSem").append(setCurrentSemester);
+// 			$("#recSem").append(setNextSemester);
+			}
+		}
+		
+		$("#recYr").change(function(){
+			if($("#recYr option:selected").val() == nextYear){
+				recYrFlag = true;
+			} else {
+				recYrFlag = false;
+			}
+			
+			if(recYrFlag){
+				selectedNextYearThenRecSemChangebyRecYr();
+			} else {
+// 				$("#recYr option").remove();
+// 				$("#recYr").append(setDefaultRecYr);
+				$("#recSem option").remove();	
+				$("#recSem").append(setDefaultRecSem);
+				setApplyTerm();
+				$("#recYr option:eq(3)").remove();
+				$("#recYr option:eq(4)").remove();
+			}
+		});
+		$("input[type='radio'][name='rgbCd']").change(function() {
+			//복학이나 졸업을 선택할 경우 사유를 적지 않아도 된다
+			 checkedRgbCdValue =$("input[type='radio'][name='rgbCd']:checked").val();
+			switch (checkedRgbCdValue) {
+				  case 'RCD001'://휴학 현학기 다음학기 기간 니맘대로 사유o
+				  $("#recRsn").summernote('enable');
+				  $("#recSem option:eq(1)").removeAttr("disabled","disabled");
+				  $("#recSem option:eq(2)").removeAttr("disabled","disabled");
+				  $("#recPer").removeAttr("disabled","disabled");
+		 		   break;
+				  case 'RCD003'://복학 무조건 다음학기 기간x 사유x
+				  $("#recRsn").summernote('disable');
+				  $("#recSem option:eq(1)").attr("disabled","disabled");
+				  $("#recSem option:eq(2)").removeAttr("disabled","disabled");
+				  $("#recPer").attr("disabled","disabled");
+				    break;
+				  case 'RCD004'://자퇴 무조건 현학기 기간x 사유o
+				  $("#recRsn").summernote('enable');
+				  $("#recSem option:eq(2)").attr("disabled","disabled");
+				  $("#recSem option:eq(1)").removeAttr("disabled","disabled");
+				  $("#recPer").attr("disabled","disabled");
+				    break;
+				  case 'RCD005'://졸업 무조건 다음학기 기간x 사유x
+				  $("#recRsn").summernote('disable');
+				  $("#recSem option:eq(1)").attr("disabled","disabled");
+				  $("#recSem option:eq(2)").removeAttr("disabled","disabled");
+				  $("#recPer").attr("disabled","disabled");
+				    break;
+				}
+		});
+		
 	   $('#recRsn').summernote({
 	        placeholder: '사유를 작성해주세요',
 	        tabsize: 2,
@@ -151,21 +203,45 @@ width:90px;}
 			
 	//현재 학기가 2학기일경우 nextYear를 다음년도로 
 	function setApplyTerm(){
-		if(semester == 2){ 
-			nextYear = year + 1;
-			if(!(nextYear - year == 1)){nextYear--; return;}
+		
+		if(!(nextYear - year == 1)){nextYear--; return;}
+		
+		if(currentSemester == 2){
+			
+			//현재2학기면
+			
+			nextYear = year + 1;//다음년도
+			nextSemester = 1;//다음학기
+			
+			setCurrentRecYr = `<option value='\${year}'>\${year}년도</option>`;
+			$("#recYr").append(setCurrentRecYr);
 			setNextRecYr = `<option value='\${nextYear}'>\${nextYear}년도</option>`;
 			$("#recYr").append(setNextRecYr);
+			setCurrentSemester = `<option value='\${currentSemester}'>\${currentSemester}학기</option>`
+			$("#recSem").append(setCurrentSemester);
+			return;
+			} else {
+				
+			//현재 2학기가아니면
+			
+			setCurrentRecYr = `<option value='\${year}'>\${year}년도</option>`;
+			$("#recYr").append(setCurrentRecYr);	
+			setCurrentSemester = `<option value='\${currentSemester}'>\${currentSemester}학기</option>`
+			setNextSemester = `<option value='\${nextSemester}'>\${nextSemester}학기</option>`
+			$("#recSem").append(setCurrentSemester);
+			$("#recSem").append(setNextSemester);
+			
+			}
+			
 		}
-	}
+	
 
 	function dataReset(){
-		
-		var confirmResult = window.confirm("작성내용 모두 취소 하시겠습니까?");
+	var confirmResult = window.confirm("작성내용 모두 취소 하시겠습니까?");
 		if (confirmResult == true) {
-			form.reset();
 			$("#recRsn").summernote("reset");
 		}else{
+			$("#recRsn").summernote('enable');//복학 or 자퇴선택후 취소시 변경됨
 			return;
 		}
 	}

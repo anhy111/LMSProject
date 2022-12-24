@@ -48,14 +48,6 @@ public class RecordController {
 	
 	@PostMapping("/applyPost")
 	public String RecordApplyPost(@ModelAttribute Record record) {
-		if(record.getRgbCd().contains("휴학")) {
-			String subRgbCd = record.getRgbCd().substring(3,7);
-			record.setRgbCd(subRgbCd);
-		}
-		if(record.getRgbCd().contains("복학") || record.getRgbCd().contains("자퇴") || record.getRgbCd().contains("졸업")  ) {
-			String subRgbCd = record.getRgbCd().substring(0,2);
-			record.setRgbCd(subRgbCd);
-		}
 		
 		List<CommonDetail> commonDetailList = this.commonDetailService.commonDetailList("APPROVAL");
 		for (CommonDetail commonDetail : commonDetailList) {
@@ -63,7 +55,7 @@ public class RecordController {
 				record.setRecYn(commonDetail.getComdCd());
 			}
 		}
-		log.info("들어온 값 : " + record.toString());
+//		log.info("들어온 값 : " + record.toString());
 		int result = this.recordService.RecordApply(record);
 		if (result == 0 ) {
 			log.info("등록실패");
