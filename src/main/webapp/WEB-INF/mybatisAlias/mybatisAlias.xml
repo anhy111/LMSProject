@@ -43,6 +43,7 @@
 		<typeAlias type="kr.or.ddit.domain.LecData" alias="lecData"/>
 		<typeAlias type="kr.or.ddit.domain.Evaluation" alias="evaluation"/>
 		<typeAlias type="kr.or.ddit.domain.Payment" alias="payment"/>
+		<typeAlias type="kr.or.ddit.domain.KeyIndicators" alias="keyIndicators"/>
 		<typeAlias type="kr.or.ddit.domain.StudentTest" alias="stuTest"/>
 		<typeAlias type="kr.or.ddit.domain.StudentTestDetail" alias="std"/>
 		<typeAlias type="kr.or.ddit.domain.SclHistory" alias="sclHistory"/>
