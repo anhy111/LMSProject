@@ -4,6 +4,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 
+<%
+	String strReferer = request.getHeader("referer");
+
+	if (strReferer == null) {
+%>
+	<script language="JavaScript">
+		alert("정상적인 경로로 들어와주세요");
+		document.location.href="/";
+	</script>
+<%
+	return;
+	}
+%>
 
 <!-- 게시판상세 -->
 <!-- ================================================= -->

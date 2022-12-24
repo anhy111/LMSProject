@@ -16,4 +16,8 @@ public class SclHistory {
 	private String sclhYn;		//지급상태
 	private String sclhPayYn;	//추천인
 	private int proNo;			//지급액
+	private String sclhRcmd; 	//추천사유
+	private String sclNm;		//장학금명
+	
+	private String empNm;	//추천인 명
 }

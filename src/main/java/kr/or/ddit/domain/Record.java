@@ -2,6 +2,10 @@ package kr.or.ddit.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -13,6 +17,8 @@ public class Record {
 	private String recSem; //신청학기
 	private int recPer; //기간
 	private String recRsn; //사유
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date recDt; //신청날짜
-	private int recYn; //승인여부
+	private String recYn; //승인여부
+	private String recRej;//반려사유
 }

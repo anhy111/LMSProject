@@ -19,6 +19,11 @@
 		FROM COMMON_DETAIL
 		WHERE COM_CD = #{comCd}
 	</select>
-
+<select id="comdNmConvert" parameterType="String"  resultType="commonDetail">
+SELECT
+COMD_NM
+FROM COMMON_DETAIL
+WHERE COMD_CD = #{comdCd}
+</select>
 </mapper>
 

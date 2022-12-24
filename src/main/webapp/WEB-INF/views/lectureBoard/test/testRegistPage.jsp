@@ -1,20 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript" src="/resources/ckeditor/ckeditor.js"></script>
 <!-- css -->
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- js -->
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	
 <style>
 	/* 기본 틀 잡기 (사이버캠퍼스 / 변동 가능 / suwon.css 파일에 넣었다가 주석 처리함) */
 	.card {
@@ -145,7 +140,74 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
+<button type=button id=aaa> <b>외 않 되</b></button>
+<script type="text/javascript" defer="defer">
+let count = 1;
+	// 문제 생성
+	$('.plusBtn').on('click', function() {
+		var str = '<table class="table table-centered mb-0">';
+		str += '<thead><tr><th>';
+		str += '<label style="margin:10px;float:left;" class="cnt">' + (parseInt(count) + 1) + '.&nbsp;</label>';
+		str += '<span><input type="text" minlength="1" class="form-control" name="testQList['+count +'].teqCon" placeholder="문제를 입력하세요." value="" style="width:90%;display: inline-block;"/><button type="button" class="minusbtn btn btn-light">-</button></span>';
+		str += '</th></tr></thead>';
+		str += '<tbody><tr><td>';
+		//-----
+		str += '<input type="text"   name="testQList['+count +'].teqOption1" class="form-control firchoice zero" placeholder="첫 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="text"   name="testQList['+count +'].teqOption2" class="form-control secchoice zero" placeholder="두 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="text"   name="testQList['+count +'].teqOption3" class="form-control thichoice zero" placeholder="세 번째 보기 답안을 입력하세요."  minlength="1"  style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="text"   name="testQList['+count +'].teqOption4" class="form-control forchoice zero" placeholder="네 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="number" name="testQList['+count +'].teqAnswer"  class="form-control questionAnswer zero" placeholder="정답을 숫자로 입력하세요.(예시:&nbsp;3)"   minlength="1" min="1" max="4" stequestionAnswerp="1"style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '</td></tr></tbody></table>';
+		
+			if(count == 10) {
+				alert("퀴즈를 생성할 수 있는 최대 문항 수는 10개 입니다.");
+				return false;
+			}
+			
+		$('#plusArea').append(str);
+		
+		count += 1;
+	})
+	
+	$(document).on('click', '#delbtncntsix', function() {
+		var tb = $(this).closest("table");
+		console.log(tb);
+		
+		tb.remove();
+	})
+	
+	$(document).on('click','.minusbtn', function() {
+		var tb = $(this).closest("table");
+		console.log(tb);
+		console.log(count);
+		function replaceAt (input, index, character){
+		     return input.substr(0, index) + character + input.substr(11);
+		}
+		
+		if(count == 1) {
+			alert("최소 한 문제 이상은 있어야 합니다.");
+			
+			return false;
+		}
+		
+		tb.remove();
+		
+		count--;
+		if(count == 1) {
+			for(var i = 0;i<6;i++){
+			var nameVal = replaceAt($(".zero").eq(i).attr('name'),10,0);
+				$(".zero").eq(i).attr('name',nameVal);
+			}
+		}		
+		
+		$('.cnt').each(function(i, v){
+			$(this).text(i+1 + ".");
+		});
+		
+		
+	})
+</script>
+<script type="text/javascript" >
 	$("#reservationtime").daterangepicker(
 			{
 				locale : {
@@ -184,72 +246,7 @@
 		$("#testEdt").val(testEdt);
 	});
 	
-</script>
-<script type="text/javascript" defer="defer">
-
-	let cnt = 1;
-	
-	// 문제 생성
-	$('.plusBtn').on('click', function() {
-		var str = '<table class="table table-centered mb-0">';
-		str += '<thead><tr><th>';
-		str += '<label style="margin:10px;float:left;" class="cnt">' + (parseInt(cnt) + 1) + '.&nbsp;</label>';
-		str += '<span><input type="text" minlength="1" class="form-control" name="testQList['+cnt +'].teqCon" placeholder="문제를 입력하세요." value="" style="width:90%;display: inline-block;"/><button type="button" class="minusbtn btn btn-light">-</button></span>';
-		str += '</th></tr></thead>';
-		str += '<tbody><tr><td>';
-		//-----
-		str += '<input type="text"   name="testQList['+cnt +'].teqOption1" class="form-control firchoice zero" placeholder="첫 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="text"   name="testQList['+cnt +'].teqOption2" class="form-control secchoice zero" placeholder="두 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="text"   name="testQList['+cnt +'].teqOption3" class="form-control thichoice zero" placeholder="세 번째 보기 답안을 입력하세요."  minlength="1"  style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="text"   name="testQList['+cnt +'].teqOption4" class="form-control forchoice zero" placeholder="네 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="number" name="testQList['+cnt +'].teqAnswer"  class="form-control questionAnswer zero" placeholder="정답을 숫자로 입력하세요.(예시:&nbsp;3)"   minlength="1" min="1" max="4" stequestionAnswerp="1"style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '</td></tr></tbody></table>';
-		
-			if(cnt == 10) {
-				alert("퀴즈를 생성할 수 있는 최대 문항 수는 10개 입니다.");
-				return false;
-			}
-			
-		$('#plusArea').append(str);
-		
-		cnt += 1;
-	})
-	
-	$(document).on('click', '#delbtncntsix', function() {
-		var tb = $(this).closest("table");
-		console.log(tb);
-		
-		tb.remove();
-	})
-	
-	$(document).on('click','.minusbtn', function() {
-		var tb = $(this).closest("table");
-		console.log(tb);
-		console.log(cnt);
-		function replaceAt (input, index, character){
-		     return input.substr(0, index) + character + input.substr(11);
-		}
-		
-		if(cnt == 1) {
-			alert("최소 한 문제 이상은 있어야 합니다.");
-			
-			return false;
-		}
-		
-		tb.remove();
-		
-		cnt--;
-		if(cnt == 1) {
-			for(var i = 0;i<6;i++){
-			var nameVal = replaceAt($(".zero").eq(i).attr('name'),10,0);
-				$(".zero").eq(i).attr('name',nameVal);
-			}
-		}		
-		
-		$('.cnt').each(function(i, v){
-			$(this).text(i+1 + ".");
-		});
-		
-		
+	$("#aaa").on("click", function(){
+		alert("외 않 되");
 	})
 </script>

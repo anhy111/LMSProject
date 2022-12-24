@@ -41,12 +41,10 @@
 <script src="/resources/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
 </head>
 <body>
-<div>
     <!-- Content Header (Page header) -->
     <!-- body 시작 /.content-header -->
     <tiles:insertAttribute name="body" />
     <!-- body 끝 /.content -->
-</div>
 <!-- ./wrapper -->
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
@@ -73,7 +71,7 @@
 <!-- overlayScrollbars -->
 <script src="/resources/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="/resources/adminlte/dist/js/adminlte.js"></script>
+<!-- <script src="/resources/adminlte/dist/js/adminlte.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/resources/adminlte/dist/js/pages/dashboard.js"></script>
 <!-- datatables -->

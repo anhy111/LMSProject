@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.StudentTest;
+import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
 import kr.or.ddit.domain.TestQ;
 import kr.or.ddit.mapper.LectureBoardMapper;
@@ -95,5 +97,47 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 		}
 		
 		 return result;
+	}
+	
+	//시험 상세
+	@Override
+	public Test testDetail(String testCd) {
+		return this.lectureBoardMapper.testDetail(testCd);
+	}
+	
+	//시험 삭세
+	@Override
+	public int testDelete(String testCd) {
+		int result = 0;
+		
+		result = this.lectureBoardMapper.testQDelete(testCd);
+		log.info(result+"DKDKDKDKDK");
+		if(result > 0) {
+			result = this.lectureBoardMapper.testDelete(testCd);
+		}
+		return result;
+	}
+	
+	//시험 응시 추가
+	@Override
+	public int stuTestInsert(StudentTest stuTest) {
+		return this.lectureBoardMapper.stuTestInsert(stuTest);
+	}
+	//시험 응시 상세추가
+	@Override
+	public int insertStdList(List<StudentTestDetail> list) {
+		return this.lectureBoardMapper.insertStdList(list);
+	}
+	
+	@Override
+	//학생 시험본거 상세
+	public Test stuTestDetail(String stCd){
+		return this.lectureBoardMapper.stuTestDetail(stCd);
+	}
+	
+	//시험 제출여부 	
+	@Override
+	public Test submitCheck(String stuNo,String lecaCd,String testCd) {
+		return this.lectureBoardMapper.submitCheck(stuNo, lecaCd, testCd);
 	}
 }

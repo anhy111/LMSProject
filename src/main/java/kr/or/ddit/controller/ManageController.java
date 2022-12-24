@@ -72,6 +72,7 @@ public class ManageController {
 		return "manage/stuManage";
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR', 'ROLE_MANAGER')")
 	@PostMapping("/manage/detailStu")
 	@ResponseBody
 	public Student detailStu(@RequestBody Map<String, String> map) {

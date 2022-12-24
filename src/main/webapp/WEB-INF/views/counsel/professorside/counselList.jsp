@@ -2,24 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<style>
-.card {
-	width: 1600px;
-	padding: 20px;
-	border: 10px outset lightblue;
-	align-items: center;
-}
-</style>
-<div class="container"
-	style="border: 20px outset lightgrey; padding: 20px; text-align: center;float: left;">
-	<div class="col-12" style="display: flex;">
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<link rel="stylesheet" type="text/css" href="/resources/css/inputTemplate.css">
+
+<div class="container">
+	<div class="col-12" >
 		<h1>
 			<label>상담요청목록</label>
 		</h1>
 	</div>
-	<div class="col-6" style="display: flex; padding-top: 10px;">
+	<div class="col-6" >
 		<button onclick="counselListUp()"
 			class="btn btn-md btn-outline-primary">대면상담</button>
 		<button onclick="nonFaceCounselListUp()"

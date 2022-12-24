@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.StuManageOfProMapper">
+	
+	<select id="stuList" parameterType="int" resultType="student">
+		SELECT  S.STU_NO
+		        , S.DEP_CD
+		        , S.STU_YR
+		        , S.STU_SEM
+		        , S.STU_NM
+		        , S.STU_NME
+		        , S.STU_TEL
+		        , S.STU_ZIP
+		        , S.STU_ADDR1
+		        , S.STU_ADDR2
+		        , S.STU_BANK_CD
+		        , S.STU_DEPO
+		        , S.STU_ACT
+		        , S.STU_PIC
+		        , S.STU_BIR
+		        , S.PRO_NO
+		        , E.EMP_NM
+		FROM DEPARTMENT D, PROFESSOR P, EMPLOYEE E, STUDENT S
+		WHERE D.DEP_CD = P.DEP_CD
+		AND P.PRO_NO = E.EMP_NO
+		AND P.PRO_NO = S.PRO_NO
+		AND P.DEP_CD = #{depCd}
+	</select>
+	
+	<select id="stuSclList" parameterType="map" resultType="sclHistory"> 
+		SELECT   SH.SCLH_CD 
+		        , SH.SCL_CD 
+		        , SH.STU_NO 
+		        , SH.SCLH_YR 
+		        , SH.SCLH_SEM 
+		        , SH.SCLH_DT 
+		        , SH.SCLH_YN 
+		        , SH.SCLH_PAY_YN 
+		        , SH.PRO_NO 
+		        , SH.SCLH_AMT 
+		        , SH.SCLH_RCMD 
+		        , (SELECT S.SCL_NM FROM SCHOLARSHIP S WHERE S.SCL_CD = SH.SCL_CD) SCL_NM
+		        , E.EMP_NM 
+		FROM    EMPLOYEE E, PROFESSOR P, SCL_HISTORY SH
+		WHERE E.EMP_NO = P.PRO_NO
+		AND P.PRO_NO = SH.PRO_NO
+		AND SH.SCLH_YN = 'AP001'
+		AND SH.STU_NO = #{detailStu}
+	</select>
+	
+</mapper>
+

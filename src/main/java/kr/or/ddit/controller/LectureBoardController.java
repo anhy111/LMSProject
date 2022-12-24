@@ -5,16 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
-import org.apache.velocity.runtime.directive.Parse;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.StudentTest;
+import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
-import kr.or.ddit.domain.TestQ;
 import kr.or.ddit.service.LectureBoardService;
 import kr.or.ddit.util.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -140,6 +142,38 @@ public class LectureBoardController {
 		
 		return "lectureBoard/test/test";
 	}
+	// 학생 퀴즈 리스트
+	@GetMapping("/test/studentTest")
+	public String studentTest(@RequestParam("lecaCd") String lecaCd, Model model, Principal cipal) {
+		
+		LecApply lec = this.lectureBoardService.lecApplySearch(lecaCd);
+		List<Test> testList = this.lectureBoardService.testList(lecaCd);
+		
+		String memCd = cipal.getName();
+		log.info(memCd);
+		
+		
+		log.info("testList : " + testList);
+		for (Test test : testList) {
+			log.info("하하하 : " + test );
+		}
+		model.addAttribute("memId", memCd);
+		model.addAttribute("data", lec);
+		model.addAttribute("list", testList);
+		
+		return "lectureBoard/test/studentTest";
+	}
+	//시험 제출 체크
+	@GetMapping("test/submitCheck")
+	public String checkSubmit(Principal cipal,String lecaCd,String testCd) {
+		String stuNo = cipal.getName();
+		if(this.lectureBoardService.submitCheck(stuNo, lecaCd, testCd) != null) {
+			Test test = this.lectureBoardService.submitCheck(stuNo, lecaCd, testCd);
+			int stCd = test.getStuTest().getStCd();
+			return "redirect:/lectureBoard/test/testResult?stCd="+stCd;
+		}
+		return "redirect:/lectureBoard/test/studentTestDetail?testCd="+ testCd;
+	}
 	
 	//시험 추가 페이지
 	@PostMapping("/test/testRegistPage")
@@ -156,8 +190,73 @@ public class LectureBoardController {
 		
 		return "redirect:/lectureBoard/test/test?lecaCd="+test.getLecaCd();
 	}
+	
+	//시험 디테일(교수)
+	@GetMapping("test/testDetail")
+	public String DetailTest(Model model,String testCd, String lecaCd) {
+		
+		Test data = this.lectureBoardService.testDetail(testCd);
+		log.info(data.toString());
+		model.addAttribute("data", data);
+		
+		return "lectureBoard/test/testDetail";
+	}
+	//시험 디테일(학생)
+	@GetMapping("test/studentTestDetail")
+	public String DetailTest1(Model model,String testCd, String lecaCd,Principal cipal,HttpSession session,HttpServletRequest request) {
+	
+		Test data = this.lectureBoardService.testDetail(testCd);
+		data.getStuTest().setStuNo(Integer.parseInt(cipal.getName()));
+		
+		log.info("Test : "+data.toString());
+		
+		model.addAttribute("data", data);
+	
+		return "lectureBoard/test/studentTestDetail";
+	}
+	
+	//시험 삭제
+	@PostMapping("test/testDelete")
+	public String deleteTest(String testCd,String lecaCd) {
+		this.lectureBoardService.testDelete(testCd);
+		return "redirect:/lectureBoard/test/test?lecaCd="+lecaCd;
+	}
+	// 학생 시험 제출
+	@PostMapping("test/testPost")
+//	@GetMapping("test/testPost")
+	public String stuTestInsertPost(int stuNo, StudentTest stuTest) {
+		log.info("==============================================================");
+		log.info("stuTest 인서트 전 >> " + stuTest.toString());
+		this.lectureBoardService.stuTestInsert(stuTest);
+		log.info("stuTest 인서트 후 >> "+stuTest.toString());
+		log.info("==============================================================");
+		List<StudentTestDetail> list = stuTest.getStdList();
+		for(int i = 0; i <list.size();i++) {
+			list.get(i).setStCd(stuTest.getStCd());
+		}
+		log.info("sdtList : "+list.toString());
+		log.info("==============================================================");
+		
+		int result = this.lectureBoardService.insertStdList(list);
+		
+		
+		return "redirect:/lectureBoard/test/testResult?stCd=" + stuTest.getStCd() + "&&lecaCd=" + stuTest.getLecaCd();
+	}
 
-
-
+	@GetMapping("test/testResult")
+	public String testResultGet(String stCd, String lecaCd,Model model,Principal cipal) {
+		
+		Test data = this.lectureBoardService.stuTestDetail(stCd);
+		log.info("데이터 : "+data.toString());
+		
+		
+		model.addAttribute("data", data);
+		
+		return "lectureBoard/test/testResult";
+	}
+	
+	
+	
+	
 
 }

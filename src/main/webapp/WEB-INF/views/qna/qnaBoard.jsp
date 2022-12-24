@@ -10,7 +10,7 @@
     SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy.MM.dd");
     String simDate = simpleDate.format(date);
 %>
-<c:set var="date" value="<%= simDate %>" />
+<c:set var="date" value="<%= simDate %>"/>
 
 <div class="card">
     <div class="card-body">
@@ -20,7 +20,10 @@
                     <table id="example1"
                            class="table table-bordered table-striped dataTable dtr-inline"
                            aria-describedby="example1_info">
-                        <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span style="color: red;"><fmt:formatNumber maxFractionDigits="3" value="${ totalRow }"></fmt:formatNumber></span>건의 게시물이 있습니다.</p>
+                        <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span
+                                style="color: red;"><fmt:formatNumber maxFractionDigits="3"
+                                                                      value="${ totalRow }"></fmt:formatNumber></span>건의
+                            게시물이 있습니다.</p>
                         <thead>
                         <tr>
                             <th class="sorting" tabindex="0" aria-controls="example1"
@@ -71,7 +74,7 @@
                     </table>
                     <div style="text-align: right">
 
-                    <a href="/qna/qnaWrite" class="btn btn-sm btn-primary">글쓰기</a>
+                        <a href="/qna/qnaWrite" class="btn btn-sm btn-primary">글쓰기</a>
                     </div>
                 </div>
             </div>

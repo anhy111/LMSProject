@@ -24,4 +24,5 @@ public interface NoticeBasicService {
 
     //공지사항 삭제
     void delete(Long noticeCd);
+
 }

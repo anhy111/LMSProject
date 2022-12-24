@@ -44,6 +44,7 @@ public class Student {
 	private String colNm;
 	private int colCd;
 	
+	private List<SclHistory> stuSclList; //장학금 내역 조회
 
 
 }

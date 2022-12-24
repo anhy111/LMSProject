@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+</head>
+<body>
+<h1>FAIL!</h1>
+<script>
+  alert("No Input In Some Textfield!");
+  window.location.replace("http://localhost:8070/bind");
+</script>
+</body>
+</html>

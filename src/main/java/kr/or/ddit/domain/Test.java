@@ -19,6 +19,8 @@ public class Test {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date        testEdt   ;   //시험종료시간
 	private List<TestQ> testQList; //1 : N 시험문제
+	private StudentTest stuTest;
+	private List<StudentTestDetail> stdList;
 	
 	
 	

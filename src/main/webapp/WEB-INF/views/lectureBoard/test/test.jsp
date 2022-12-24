@@ -20,13 +20,13 @@
 		min-width: 1090px;
 		margin: 0 auto;
 	}
-	
+
 	.card-body {
 		width: 100%;
 	}
-	
+
 	/* 기본 틀 잡기 끝 */
-	
+
 	.quizNotice {
 		background: #eee;
 		width: 100%;
@@ -34,16 +34,16 @@
 		padding: 5%;
 		margin-bottom: 10px;
 	}
-	
+
 	.emphasisR {
 		color: red;
 	}
-	
+
 	.table-responsive-sm {
 		margin-bottom: 40px;
 		min-height: 500px;
 	}
-	
+
 	.table {
 		border-bottom: 1px solid #eef2f7;
 	}
@@ -98,31 +98,32 @@
 								<thead class="table-light">
 									<tr style="border-top: 2px solid #112a63">
 										<th style="width: 5%; text-align: center;">NO</th>
-										<th style="width: 50%;text-align: center;">제목</th>
+										<th style="width: 40%;text-align: center;">제목</th>
 										<th style="width: 15%;text-align: center;">시험 시작</th>
 										<th style="width: 15%;text-align: center;">시험 종료</th>
 										<th style="width: 15%;text-align: center;">등록일</th>
+										<th style="width: 10%;text-align: center;">제출 목록</th>
 									</tr>
 								</thead>
 								<tbody>
 								<c:if test="${empty list}">
-								
+
 								<tr style="border-bottom: 1px solid #112a63">
 									<td colspan="5" style="text-align: center;color: #888;">예정된 시험이 없습니다.</td>
 								</tr>
-							
+
 								</c:if>
 								<c:if test="${not empty list}">
-								
-									<c:forEach var="list" items="${list }" varStatus="status">
+	
+									<c:forEach var="list" items="${list }" varStatus="status" end="${list.size()}">
 									<fmt:formatDate var="testReg" value="${list.testReg }" pattern="yyyy.MM.dd"/>
 										<tr>
-											<td style="text-align: center;">${status.count}</td>
+											<td style="text-align: center;">${status.end - status.index}</td>
 											<td>
 												<c:if test="${ date <= testReg }">
 					                              <span class="badge badge-outline-warning badge-pill" style="float:left;">NEW</span>
 					                           </c:if>
-												<a href="/professorLecture/quizDetail?testCd=${list.testCd }" style="color:#6c757d;">
+												<a href="/lectureBoard/test/testDetail?testCd=${list.testCd}&&lecaCd=${list.lecaCd}" style="color:#6c757d;">
 													${list.testNm }
 												</a>
 											</td>
@@ -133,6 +134,7 @@
 												<fmt:formatDate value="${list.testEdt }" pattern="MM.dd HH:mm" />
 											</td>
 											<td style="text-align: center;">${testReg }</td>
+											<td style="text-align: center;"><button class="btn btn-block btn-outline-secondary btn-sm">목록</button> </td>
 										</tr>
 									</c:forEach>
 									</c:if>
@@ -144,12 +146,12 @@
 				<div id="pageBarBtn" style="text-align:center;">
 				    <button type="button" class="btn btn-light" disabled="" onclick="#"><i class="uil-angle-double-left"></i></button>
 				    <button type="button" class="btn btn-light" disabled="" onclick="#"><i class="uil uil-angle-left"></i></button>
-				         	
-				         		
+
+
 					    <button type="button" class="btn btn-primary" onclick="#">
 					    	1
 				    	</button>
-					
+
 				    <button type="button" class="btn btn-light" onclick="#"><i class="uil uil-angle-right"></i></button>
 				    <button type="button" class="btn btn-light" disabled="" onclick="#"><i class="uil-angle-double-right"></i></button>
 				</div>
@@ -162,7 +164,7 @@
 
 function a(){
 	function bv(){
-		
+
 	}
 }
 

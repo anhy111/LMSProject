@@ -12,7 +12,7 @@ let token = "${_csrf.token}";
 function fn_add(data){
 	
 	$("#recYn").attr("value", data.recYn);
-	$("#recPer").attr("value", data.recPer);
+	$("#recPer").attr("value", data.recPer + "개월");
 	$("#recDt").attr("value", data.recDt);
 	$("#recYr").attr("value", data.recYr + "년 " + data.recSem + "학기");
 	$("#depNm").attr("value", data.depNm);
