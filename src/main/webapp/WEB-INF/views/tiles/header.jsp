@@ -106,7 +106,7 @@ $(function(){
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
-						<%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=position %> 
+						<%=name %> 교수 &nbsp;&nbsp; | &nbsp;&nbsp;<%=position %> 
 					</div>
 				</div>
 			</a>
