@@ -13,6 +13,9 @@ public class Payment {
 	private int payAmt;	//납부금액
 	private String payYn;	//납부상태
 	
+	private int paySumfee;	//납부되는 등록금 총액
+	private int paySumamt;	//납부된 등록금 총액
+	
 	private int depCd;		//학과코드
 	private String depNm;	//학과명
 	
@@ -27,6 +30,8 @@ public class Payment {
 	private String stuNm;	//학생이름
 	private int stuYr;		//학년
 	private int stuSem;		//학생현재학기
+	
+	private int sclhAmt;	//장학금 지급액
 	
 	private int sclAmt;		//장학금액
 }

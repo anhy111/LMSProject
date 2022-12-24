@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>강의계획서 신청</title>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 </head>
 <body>

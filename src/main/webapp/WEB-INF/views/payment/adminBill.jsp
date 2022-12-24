@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>등록금 고지 관리</title>
 <style>
 #grid *{
 text-align: center;
@@ -20,16 +20,12 @@ color : green;
 }
 </style>
 </head>
-
-<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
-
 <body>
 	<div>
 		<i class="mdi mdi-home" style="font-size: 1.3em"></i>
 		<i class="dripicons-chevron-right"></i>등록 및 장학 
-		<i class="dripicons-chevron-right"></i><span>등록금</span> 
-		<i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">등록금고지관리</span>
+		<i class="dripicons-chevron-right"></i><span>등록</span> 
+		<i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">등록금 고지 관리</span>
 	</div>
 	<br>
 	<br>
@@ -140,9 +136,21 @@ color : green;
 					<td>\${data[i].stuYr}</td>
 					<td>\${data[i].paySem}</td>
 					<td>\${data[i].stuNm}</td>
-					<td>\${data[i].payYn}</td>
+					<td class='checklecaAp'>\${data[i].payYn}</td>
 					</tr>
 				`
+				
+				//완납, 미납 글자색 변경
+				$(function(){
+					for(var i=0; i<data.length;i++){
+						console.log($(".checklecaAp").eq(i).html());
+						if($(".checklecaAp").eq(i).html() == '미납'){
+							$(".checklecaAp").eq(i).css("color","red");
+						}else if($(".checklecaAp").eq(i).html() == '완납'){
+							$(".checklecaAp").eq(i).css("color","blue");
+						}
+					}
+				});
 			}
 			$("#BillList").html(str);
 		}
