@@ -107,7 +107,6 @@ function dataReset(){
 	
 	var confirmResult = window.confirm("작성내용 모두 취소 하시겠습니까?");
 	if (confirmResult == true) {
-		form.reset();
 		$("#textarea").summernote("reset");
 	}else{
 		return;
