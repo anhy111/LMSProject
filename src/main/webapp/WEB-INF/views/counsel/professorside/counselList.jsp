@@ -3,22 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<link rel="stylesheet" type="text/css" href="/resources/css/inputTemplate.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
 
 <div class="container">
-	<div class="col-12" >
-		<h1>
-			<label>상담요청목록</label>
-		</h1>
-	</div>
-	<div class="col-6" >
-		<button onclick="counselListUp()"
-			class="btn btn-md btn-outline-primary">대면상담</button>
-		<button onclick="nonFaceCounselListUp()"
-			class="btn btn-md btn-outline-success">비대면상담</button>
+		<div class="col-12" style="text-align: end;">
+		<button onclick="counselListUp()"class="btn btn-md btn-outline-primary">대면상담</button>
+		<button onclick="nonFaceCounselListUp()"class="btn btn-md btn-outline-success">비대면상담</button>
 		<button onclick="allListUp()" class="btn btn-md btn-outline-secondary">전체리스트</button>
 	</div>
-	<br> <br>
 	<div class="row" id="nonFaceCounselListTable">
 		<div class="card">
 			<div class="card-header">
@@ -27,7 +19,7 @@
 				</h3>
 			</div>
 			<div class="card-body table-responsive col-11 p-0"
-				style="height: 300px;">
+				style="height: 300px;width:1600px;">
 				<table
 					class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 					<thead>
@@ -87,7 +79,7 @@
 				</h3>
 			</div>
 			<div class="card-body table-responsive col-11 p-0"
-				style="height: 300px;">
+				style="height: 300px;width:1600px;">
 				<table
 					class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 					<thead>
@@ -130,7 +122,11 @@
 			</div>
 		</div>
 	</div>
-
+		<div class="col-12" style="text-align: end;">
+<!-- 			<a class="col-sm-1 btn btn-md btn-primary" href="#" >등록</a> -->
+<!-- 			<a class="col-sm-1 btn btn-md btn-primary" href="#">삭제</a> -->
+<!-- 			<a class="col-sm-1 btn btn-md btn-primary" href="#">목록</a> -->
+			</div>
 </div>
 
 <script type="text/javascript">

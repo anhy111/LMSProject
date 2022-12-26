@@ -2,12 +2,16 @@
 공통으로 사용할 css 추가/변경시 최종프로젝트 게시판에 공지(필수)
 */
 
-.container{}
+.container{padding:0px;padding-top:20px;margin:0px;}
 .col-6 {}
 .card{
-	text-align : center;
+	align-items:center;
+	margin:0px;
+	
 }
 .card-header{}
 .card-title{}
-.card-body{}
+.card-body{
+	text-align:center;
+}
 table{}
