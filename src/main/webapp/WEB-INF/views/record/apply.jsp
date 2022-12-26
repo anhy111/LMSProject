@@ -64,6 +64,7 @@
 				<div class="form-group">
 					<select class="col-3 custom-select rounded-0"
 						id="recPer" name="recPer">
+						<option>기간</option>
 						<option value="1">1년</option>
 						<option value="2">2년</option>
 					</select> <label for="recPer">&nbsp;기간 <code>&nbsp;
@@ -137,7 +138,6 @@
 			var sem = this.innerHTML
 			$("input[name='recSem']").val(sem.substr(0,1));
 			var yr = $("select[name=recYr] :selected").val();
-// 			$("#selectedYRSEMlabel").html("&nbsp;선택된학기는");
 			$("#selectedYRSEM").html("&nbsp;"+ yr +"년도 "+ sem + "입니다");
 		});
 		
@@ -149,7 +149,6 @@
 			var sem = this.innerHTML
 			$("input[name='recSem']").val(sem.substr(0,1));
 			var yr = $("select[name=recYr] :selected").val();
-// 			$("#selectedYRSEMlabel").html("&nbsp;선택된학기는");
 			$("#selectedYRSEM").html("&nbsp;"+ yr +"년도 "+ sem + "입니다");
 		});
 		
@@ -158,13 +157,14 @@
 				if($("#recYr option:selected").val() == nextYear){
 					$("#nextSem").show();
 					$("#currentSem").hide();
+					return;
 				} else {
 					$("#currentSem").show();
 					$("#nextSem").hide();
+					return;
 				}
-			} else { 
+			} 
 				return;
-			}
 		});
 		
 		function resetYRSEM(){
@@ -181,6 +181,7 @@
 		    $("#selectedYRSEM").html("");
 			rgbCdisChanged = false;
 			}
+			return;
 		}
 		
 		$("input[type='radio'][name='rgbCd']").change(function() {
@@ -219,19 +220,23 @@
 	  휴학이 아닐때는 다음학기(내년도 1학기)만 선택 하여야 한다.
 	*/
 	function nextYearViewOnlyRCD001(){
-		if(nextYearExist){
+		if(nextYearExist){//내년이 존재하나요?(2학기있나요?)
 			if($("input[type='radio'][name='rgbCd']:checked").val()=='RCD001'){//휴학이면 리턴
 				$("#recYr option:eq(1)").removeAttr("disabled");
 				$("#recYr option:eq(2)").removeAttr("disabled");
 				return;
-			} else if($("input[type='radio'][name='rgbCd']:checked").val()=='RCD004') {//자퇴면 현학기만
-				$("#recYr option:eq(1)").removeAttr("disabled");
-				$("#recYr option:eq(2)").attr("disabled","disabled");
+			} 
+			if($("input[type='radio'][name='rgbCd']:checked").val()=='RCD004') {//자퇴면 현학기만
+					$("#recYr option:eq(1)").removeAttr("disabled");
+					$("#recYr option:eq(2)").attr("disabled","disabled");
+					return;
 			} else {
-				$("#recYr option:eq(1)").attr("disabled","disabled");
-				$("#recYr option:eq(2)").removeAttr("disabled");
+					$("#recYr option:eq(1)").attr("disabled","disabled");
+					$("#recYr option:eq(2)").removeAttr("disabled");
+					return;
 			}
 		}
+		return;
 	}		
 	//현재 학기가 2학기일경우 nextYear를 다음년도로 
 	function setRecYr(){
@@ -252,7 +257,7 @@
 			setNextRecYr = `<option value='\${nextYear}'>\${nextYear}년도</option>`;
 			$("#recYr").append(setNextRecYr);
 			return;
-			} else {
+			}
 				
 			//현재 2학기가아니면
 			
@@ -262,7 +267,7 @@
 			$("#currentSem").text(currentSemester+"학기");
 			$("#nextSem").text(nextSemester+"학기");
 			
-			}
+			
 		}
 	
 	
@@ -283,7 +288,7 @@
 // 		    } else if (type === 'checkbox' || type === 'radio') {
 // 		      this.checkedIndex = 0;
 		    } else if (tag === 'select') {
-		      this.selectedIndex = -1;
+		      this.selectedIndex = 0;
 		    }
 		  });
 		};
@@ -292,19 +297,16 @@
 		if($("#recSem").val() == "" || $("#recSem").val() == null){
 			alert("학기를 선택해 주세요");
 			return false;
-		} else {
-			alert("학기선택 완료");
-			return true;
 		} 
+			return true;
 	}
 		
 	function dataReset(){
 	var confirmResult = window.confirm("작성내용 모두 취소 하시겠습니까?");
 		if (confirmResult == true) {
 			$("#form").clearForm();
-		}else{
-			return;
 		}
+			return;
 	}
 </script>
 
