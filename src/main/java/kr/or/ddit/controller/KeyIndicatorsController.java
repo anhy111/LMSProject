@@ -67,6 +67,6 @@ public class KeyIndicatorsController {
 		return this.keyIndicatorsService.evaluationList(keyIndicators);
 	}
 	
-
+	
 }                                                                            
                                                                               
