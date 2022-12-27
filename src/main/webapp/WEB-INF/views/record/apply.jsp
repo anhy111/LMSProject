@@ -11,11 +11,11 @@
 	int stuNo = (int) session.getAttribute("no");
 	String name = String.valueOf(session.getAttribute("name"));
 %>
-<div class="row" style="padding-left: 10px;">
+<div class="row">
 	<form id="form" action="/record/applyPost" class="col-12" method="post" onsubmit="return checkFormData()">
 	<div class="col-4">
 		<div class="card card-primary">
-			<div class="card-header">
+			<div class="card-header" style="background-color:#112a63;">
 				<h3 class="card-title">학적변동 신청서 작성</h3>
 			</div>
 			<div class="alert alert-light" role="alert" style="font-size: 0.9em;padding:1em;border: 1px solid #eee;">
@@ -27,11 +27,11 @@
 <!-- 						 - <strong>기간을 설정하지 않고 문제를 등록하여 문제 유출이 되는 경우가 종종 발생합니다.</strong><br> -->
 						<br>
 						(2) 학적구분에 따라 선택할수 있는 옵션이 달라집니다<br>
-						 - <strong>해당하는옵션</strong>만 입력이 가능합니다.<br>
+						 - <strong>활성화된 옵션</strong>만 입력이 가능합니다.<br>
 						<br>
 						(3) 이름 및 신청날짜는 자동 입력됩니다<br>
 						<br>
-						(4) *는 필수 입력 정보입니다.
+						(4) *는 필수 선택/입력 정보입니다.
 					</p>
 				</div>
 			<div class="card-body">
@@ -48,38 +48,38 @@
 						for="tab-5" class="segmented-control__6"><p>자퇴</p></label> <input
 						type="radio" name="rgbCd" value="RCD005" id="tab-6" /> <label
 						for="tab-6" class="segmented-control__7"><p>졸업</p></label>
-					<label style="margin:0px;"class="col-sm-4" for="segmented-control2">&nbsp;학적구분*</label>
+				
+				<label class="col-sm-1"style="color:black; margin:0px;"for="segmented-control2">&nbsp;*</label>
 				</div>
+				<label>&nbsp;학기 선택*&nbsp;</label>
 				<div class="form-group">
-					<select class="col-2 custom-select rounded-0"
+					<select class="col-4 custom-select rounded-0"
 						id="recYr" name="recYr">
 						<option selected>년도</option>
-					</select> <label for="recYr">&nbsp;신청학기*<code>&nbsp;
-							*(휴학제외) 다음학기 신청 가능합니다</code></label>
-				</div>
+					</select> 
+					
 				    <button class="btn btn-secondary" type="button" id="currentSem"></button>
 				    <button class="btn btn-secondary"type="button" id="nextSem"></button>
-				    <label id="selectedYRSEMlabel">&nbsp;선택된학기 : <code id="selectedYRSEM"></code></label>
-			    <br><br>
+				    <label id="selectedYRSEMlabel">&nbsp; : <code style="color:blue" id="selectedYRSEM"></code></label>
+				</div>
 				<div class="form-group">
-					<select class="col-3 custom-select rounded-0"
-						id="recPer" name="recPer">
+					<select class="col-4 custom-select rounded-0"
+						id="recPer" name="recPer" required="required">
 						<option>기간</option>
 						<option value="1">1년</option>
 						<option value="2">2년</option>
-					</select> <label for="recPer">&nbsp;기간 <code>&nbsp;
-							*휴학일경우 선택</code></label>
+					</select> <code>&nbsp;[휴학 선택시]</code>
 				</div>
 				<div class="form-group">
-					<label for="exampleInputBorder">신청자명*</label> <input type="text"
-						class="col-3 form-control form-control-border"
+					<label for="exampleInputBorder">신청자*</label> <input type="text"
+						class="col-4 form-control form-control-border"
 						id="exampleInputBorder" readonly value="<%=name%>">
 				</div>
 				<div class="form-group">
 					<label for="exampleInputRounded0">사유</label> <br>
 					<div class="row">
-					<textarea class="col-12" rows="3"  name="recRsn" id="recRsn"
-						placeholder="    사유를입력하여주세요" required="required"></textarea>
+					<textarea class="col-12 form-control" rows="3"  name="recRsn" id="recRsn" required="required"
+						placeholder="사유를입력하여주세요" ></textarea>
 						</div>
 				</div>
 				<div class="form-group">
@@ -97,10 +97,9 @@
 				<div style="text-align: end; padding-top: 10px;">
 				
 					<div class="btn-group">
-					<button type="submit" class="btn btn-sm btn-outline-primary"><label>등록</label></button>
-					<a onclick="dataReset()" class="btn btn-sm btn-outline-secondary"><label>취소</label></a>
-					<a href="/record/main?stuNo=<%=stuNo%>"
-						class="btn btn-sm btn-outline-info"><label>목록<label></a>
+					<button type="submit" class="btn btn-sm btn-outline-primary">등록</button>
+					<a onclick="dataReset()" class="btn btn-sm btn-outline-secondary">취소</a>
+					<a href="/record/main?stuNo=<%=stuNo%>"class="btn btn-sm btn-outline-info">목록</a>
 					</div>
 				</div>
 			</div>
@@ -111,16 +110,12 @@
 </div>
 
 <script type="text/javascript">
-		//현재년도/다음년도/현재학기/다음학기/체크된라디오
-		//option에 append 해줄 변수
+		//option에 append 해줄 변수 // 현재년도/다음년도/현재학기/다음학기/체크된라디오
 		let setCurrentRecYr,setNextRecYr,setCurrentSemester,setNextSemester,checkedRgbCdValue ="";
-		let setDefaultRecSem = `<option selected>학기선택</option>`;
-		let setDefaultRecYr = `<option selected>년도</option>`;
 		//option value에 담을 변수
 		let month,year,nextYear,currentSemester,nextSemester = ""; 
 		let date = new Date();
-		let nextYearExist = false;
-		let rgbCdisChanged = false;
+		let nextYearExist,rgbCdisChanged = false;
 		
 		$(document).ready(function(){
 			year = date.getFullYear(); //년도 recYr
@@ -132,7 +127,10 @@
 		
 		$("#nextSem").on("click",function(){
 			if($("#recYr option:selected").val() == $("#recYr option:eq(0)").val()){
-				alert("년도를 선택해주세요");
+				Swal.fire({
+					  icon: 'error',
+					  title: '년도를 먼저 선택해 주세요',
+					})
 				return;
 			}
 			var sem = this.innerHTML
@@ -143,7 +141,10 @@
 		
 		$("#currentSem").on("click",function(){
 			if($("#recYr option:selected").val() == $("#recYr option:eq(0)").val()){
-				alert("년도를 선택해주세요");
+				Swal.fire({
+					  icon: 'error',
+					  title: '년도를 먼저 선택해 주세요',
+					})
 				return;
 			}
 			var sem = this.innerHTML
@@ -171,30 +172,32 @@
 			if(rgbCdisChanged){
 			$("#recYr option:eq(0)").prop("selected",true);
 			$("#recPer option:eq(0)").prop("selected",true);
+			$("#recSem option:eq(0)").prop("selected",true);
 			$("#currentSem").hide();
 			$("#nextSem").hide();
-			$("#recSem").val("");
 		    $("#recRsn").removeAttr('disabled');
 		    $("#recPer").removeAttr("disabled");
 		    $("#recRsn").attr("required",false);
-			$("#recPer").attr("required",false);
+		    $("#recPer").attr("required",false);
 		    $("#selectedYRSEM").html("");
 			rgbCdisChanged = false;
+			 recPerValidation = false;
+		 	  recRsnValidation = false;
+			return;
 			}
 			return;
 		}
 		
 		$("input[type='radio'][name='rgbCd']").change(function() {
-
 			rgbCdisChanged = true;
 			resetYRSEM();
 			//복학이나 졸업을 선택할 경우 사유를 적지 않아도 된다
 			 checkedRgbCdValue =$("input[type='radio'][name='rgbCd']:checked").val();
 			switch (checkedRgbCdValue) {
 				  case 'RCD001'://휴학 현학기 다음학기 기간 니맘대로 사유o
-				  nextYearViewOnlyRCD001()
-				  $("#recPer").attr("required","required");
+				  nextYearViewOnlyRCD001();
 				  $("#recRsn").attr("required","required");
+				  $("#recPer").attr("required","required");
 		 		  break;
 				  case 'RCD003'://복학 무조건 다음학기 기간x 사유x
 				  nextYearViewOnlyRCD001();
@@ -206,6 +209,7 @@
 				  nextYearViewOnlyRCD001();
 				  $("#currentSem").show();
 				  $("#recPer").attr("disabled","disabled");
+				  recRsnValidation = true;
 				  $("#recRsn").attr("required","required");
 				    break;
 				  case 'RCD005'://졸업 무조건 다음학기 기간x 사유x
@@ -260,13 +264,12 @@
 			}
 				
 			//현재 2학기가아니면
-			
+			nextYearExist = false;
 			nextSemester = currentSemester+1;
 			setCurrentRecYr = `<option value='\${year}'>\${year}년도</option>`;
 			$("#recYr").append(setCurrentRecYr);	
 			$("#currentSem").text(currentSemester+"학기");
 			$("#nextSem").text(nextSemester+"학기");
-			
 			
 		}
 	
@@ -294,19 +297,60 @@
 		};
 	
 	function checkFormData(){
-		if($("#recSem").val() == "" || $("#recSem").val() == null){
-			alert("학기를 선택해 주세요");
+		
+		if($("#recYr option:selected").val() == $("#recYr option:eq(0)").val()){
+			Swal.fire({
+				  icon: 'error',
+				  title: '년도 선택해 주세요',
+				})
 			return false;
+		}
+		
+		if($("#recSem").val() == "" || $("#recSem").val() == null){
+			Swal.fire({
+				  icon: 'error',
+				  title: '학기를 선택해주세요',
+				})
+		    return false;
 		} 
-			return true;
+		
+		var checkPer = $("input[type='radio'][name='rgbCd']:checked").val() == 'RCD001'
+			?  $("#recPer option:checked").val() == $("#recPer option:eq(0)").val()
+					?  true   :  false 
+						:	false ;
+		if(checkPer){
+		Swal.fire({
+		icon: 'error',
+		title: '기간을 선택해주세요',
+		})
+		return false;	
+		} 
+
+		return true;
 	}
 		
 	function dataReset(){
-	var confirmResult = window.confirm("작성내용 모두 취소 하시겠습니까?");
-		if (confirmResult == true) {
-			$("#form").clearForm();
-		}
-			return;
+		Swal.fire({
+			  title: '작성을 취소하시겠습니까?',
+			  text: "작성한 내용이 모두 지워집니다",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    Swal.fire(
+			      '삭제완료',
+			      '작성 내용 모두 삭제 되었습니다',
+			      'success',
+			    )
+			      $("#selectedYRSEM").html("");
+			      $("#form").clearForm();
+			  }
+			});
+			  return;
 	}
 </script>
 
