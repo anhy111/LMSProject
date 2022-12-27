@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import kr.or.ddit.domain.Attendence;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
@@ -140,4 +142,47 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	public Test submitCheck(String stuNo,String lecaCd,String testCd) {
 		return this.lectureBoardMapper.submitCheck(stuNo, lecaCd, testCd);
 	}
+
+	//출결 학생리스트
+	@Override
+	public List<Student> studentList(String lecaCd){
+		return this.lectureBoardMapper.studentList(lecaCd);
+	}
+	
+	//출결 학생 정보
+	@Override
+	public Attendence attenStudentDetail(String lecaCd, String stuNo) {
+		return this.lectureBoardMapper.attenStudentDetail(lecaCd, stuNo);
+	}
+	
+	//출결 디테일
+	@Override
+	public Attendence attendenceDetail(String lecaCd, String stuNo) {
+		return this.lectureBoardMapper.attendenceDetail(lecaCd, stuNo);
+	}
+	
+	//출결 디테일
+	@Override
+	public List<Attendence> attendStuDetail(String lecaCd, String stuNo) {
+		return this.lectureBoardMapper.attendStuDetail(lecaCd, stuNo);
+	}
+	
+	//출결 카운트 체크
+	@Override
+	public int attenChkCnt(Map<String, Object> map) {
+		return this.lectureBoardMapper.attenChkCnt(map);
+	}
+	
+	//출결 인서트
+	@Override
+	public int attendStuInsert(Attendence attendence) {
+		return this.lectureBoardMapper.attendStuInsert(attendence);
+	}
+	
+	//출결 수정
+	@Override
+	public int attendStuUpdate(Attendence attendence) {
+		return this.lectureBoardMapper.attendStuUpdate(attendence);
+	}
+	
 }

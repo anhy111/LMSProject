@@ -57,4 +57,5 @@ public interface LectureBoardService {
 	
 	//시험 제출여부 
 	public Test submitCheck(String stuNo,String lecaCd,String testCd);
+	
 }
