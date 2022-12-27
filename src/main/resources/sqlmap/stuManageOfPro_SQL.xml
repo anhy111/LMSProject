@@ -27,5 +27,143 @@
 		AND P.DEP_CD = #{depCd}
 	</select>
 	
+	<!--학생이 받은 장학금 내역  -->
+	<select id="stuSclList" parameterType="map" resultType="sclHistory"> 
+		SELECT   SH.SCLH_CD 
+		        , SH.SCL_CD 
+		        , SH.STU_NO 
+		        , SH.SCLH_YR 
+		        , SH.SCLH_SEM 
+		        , SH.SCLH_DT 
+		        , SH.SCLH_YN 
+		        , SH.SCLH_PAY_YN 
+		        , SH.PRO_NO 
+		        , SH.SCLH_AMT 
+		        , SH.SCLH_RCMD 
+		        , (SELECT S.SCL_NM FROM SCHOLARSHIP S WHERE S.SCL_CD = SH.SCL_CD) SCL_NM
+		        , P.PRO_NO
+		        , NVL(E.EMP_NM, ' ') EMP_NM 
+		FROM    EMPLOYEE E, PROFESSOR P, SCL_HISTORY SH
+		WHERE E.EMP_NO(+) = P.PRO_NO
+		AND P.PRO_NO(+) = SH.PRO_NO
+		AND SH.SCLH_YN = 'AP001'
+		AND SH.STU_NO = #{detailStu}
+	</select>
+	
+	<!-- 담당교수 장학생 추천 -->
+	<insert id="recommendationStu" parameterType="map">
+		<![CDATA[
+			INSERT INTO SCL_HISTORY (
+			        SCLH_CD
+			        , SCL_CD
+			        , STU_NO
+			        , SCLH_YR
+			        , SCLH_SEM
+			        , SCLH_AMT
+			        , PRO_NO
+			        , SCLH_RCMD
+			        )
+			VALUES (
+			        SCLH_SEQ.NEXTVAL
+			        , 4
+			        , #{stuNo}
+			        , TO_CHAR(SYSDATE, 'YYYY') + CASE WHEN TO_CHAR(SYSDATE, 'MM') <= 6 AND TO_CHAR(SYSDATE, 'MM') > 2 THEN 0 ELSE 1 END
+			        , CASE WHEN TO_CHAR(SYSDATE, 'MM') <= 6 AND TO_CHAR(SYSDATE, 'MM') > 2 THEN 2 ELSE 1 END
+			        , 300000
+			        , #{proNo}
+			        , #{sclhRcmd}
+			        )
+		]]>
+	</insert>
+	
+	<!-- 추천받은 장학생 리스트 -->	
+	<select id="schStuList" resultType="sclHistory">
+		SELECT  SH.SCLH_CD
+				, SH.STU_NO 
+		        , S.STU_NM
+		        , S.STU_PIC
+		        , SH.SCLH_YR
+		        , SH.SCLH_SEM
+		        , SH.SCLH_DT
+		        , SH.SCLH_YN
+		        , SH.SCLH_PAY_YN
+		        , SH.PRO_NO
+		        , SH.SCLH_AMT
+		        , SH.SCLH_RCMD
+		        , E.EMP_NM
+		FROM EMPLOYEE E, PROFESSOR P, STUDENT S, SCL_HISTORY SH
+		WHERE E.EMP_NO = P.PRO_NO
+		AND P.PRO_NO = SH.PRO_NO
+		AND S.STU_NO = SH.STU_NO
+		AND SH.SCLH_YN = 'AP002'
+	</select>
+	
+	<!-- 추천받은 장학생의 상세내역 및 추천서 -->
+	<select id="schStuRcmd" parameterType="map" resultMap="schMap"> 
+		SELECT  SH.SCLH_CD
+		        , D.DEP_NM
+		        , C.COL_NM
+		        , SH.STU_NO 
+		        , S.DEP_CD
+		        , S.STU_YR
+		        , S.STU_SEM
+		        , S.STU_NM
+		        , S.STU_NME
+		        , S.STU_TEL
+		        , S.STU_ZIP
+		        , S.STU_ADDR1
+		        , S.STU_ADDR2
+		        , S.STU_PIC
+		        , S.STU_BIR
+		        , S.PRO_NO
+		        , SH.SCLH_YR
+		        , SH.SCLH_SEM
+		        , SH.SCLH_DT
+		        , SH.SCLH_YN
+		        , SH.SCLH_PAY_YN
+		        , SH.SCLH_AMT
+		        , SH.SCLH_RCMD
+		        , E.EMP_NM
+		FROM COLLEGE C, DEPARTMENT D, EMPLOYEE E, PROFESSOR P, STUDENT S, SCL_HISTORY SH
+		WHERE E.EMP_NO = P.PRO_NO
+		AND P.PRO_NO = SH.PRO_NO
+		AND C.COL_CD = D.COL_CD
+		AND D.DEP_CD = S.DEP_CD
+		AND S.STU_NO = SH.STU_NO
+		AND SH.SCLH_CD = #{sclhCd}
+	</select>
+	
+	<resultMap type="student" id="schMap">
+		<result property="depNm" column="DEP_NM" />
+		<result property="depCd" column="DEP_CD" />
+		<result property="colCd" column="COL_CD" />
+		<result property="colNm" column="COL_NM" />
+		<result property="stuYr" column="STU_YR" />
+		<result property="stuSem" column="STU_SEM" />
+		<result property="stuNm" column="STU_NM" />
+		<result property="stuNme" column="STU_NME" />
+		<result property="stuTel" column="STU_TEL" />
+		<result property="stuZip" column="STU_ZIP" />
+		<result property="stuAddr1" column="STU_ADDR1" />
+		<result property="stuAddr2" column="STU_ADDR2" />
+		<result property="stuPic" column="STU_PIC" />
+		<result property="stuBir" column="STU_BIR" />
+		<result property="proNo" column="PRO_NO" />
+		<result property="empNm" column="EMP_NM" />
+		<collection property="sclHistory" resultMap="schMap2" />
+	</resultMap>
+	
+	<resultMap type="sclHistory" id="schMap2">
+		<result property="sclhCd" column="SCLH_CD"/>
+		<result property="stuNo" column="STU_NO"/>
+		<result property="sclhYr" column="SCLH_YR"/>
+		<result property="sclhSem" column="SCLH_SEM"/>
+		<result property="sclhDt" column="SCLH_DT"/>
+		<result property="sclhYn" column="SCLH_YN"/>
+		<result property="sclhPayYn" column="SCLH_PAY_YN"/>
+		<result property="sclhAmt" column="SCLH_AMT"/>
+		<result property="sclhRcmd" column="SCLH_RCMD"/>
+	</resultMap>
+	
 </mapper>
 

@@ -24,19 +24,18 @@
 		    , S.STU_YR
 		    , P.PAY_SEM
 		    , S.STU_NM
-		    , CASE WHEN P.PAY_YN = 0 THEN '미납'
-		    END PAY_YN
+		    , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = P.PAY_YN) PAY_YN
 		FROM    COLLEGE C, DEPARTMENT D, PAYMENT P, STUDENT S
 		WHERE   S.STU_NO = P.STU_NO
 		AND     D.DEP_CD = S.DEP_CD
 		AND     C.COL_CD = D.COL_CD
-		AND     PAY_YN = 0
+		AND     PAY_YN = 'PAY001'
 	</select>
 	
 	<select id="adminBillCount" resultType="int">
 		SELECT COUNT(PAY_YN)
 		FROM PAYMENT
-		WHERE PAY_YN = 0
+		WHERE PAY_YN = 'PAY001'
 	</select>
 	
 	<!-- 관리자의 등록금 납부 조회 -->
@@ -48,13 +47,29 @@
 		    , S.STU_YR
 		    , P.PAY_SEM
 		    , S.STU_NM
-		    , CASE WHEN P.PAY_YN = 0 THEN '미납'
-		    END PAY_YN
-		FROM    COLLEGE C, DEPARTMENT D, PAYMENT P, STUDENT S
+		    , C.COL_FEE
+		    , SH.SCLH_AMT
+		    , P.PAY_AMT
+		    , P.PAY_DT
+		    , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = P.PAY_YN) PAY_YN
+		FROM    COLLEGE C, DEPARTMENT D, PAYMENT P, STUDENT S, SCL_HISTORY SH
 		WHERE   S.STU_NO = P.STU_NO
 		AND     D.DEP_CD = S.DEP_CD
 		AND     C.COL_CD = D.COL_CD
-		AND     PAY_YN = 0
+		AND     S.STU_NO = SH.STU_NO (+)
+	</select>
+	
+	<!-- 올해 납부되어야 할 등록금 총액과 현재 납부된 등록금 총액 -->
+	<select id="sumFee" resultType="payment">
+		SELECT
+		(SELECT SUM(C.COL_FEE) FROM STUDENT A INNER JOIN DEPARTMENT B ON A.DEP_CD = B.DEP_CD INNER JOIN COLLEGE C ON C.COL_CD = B.COL_CD
+		WHERE STU_RGB = 'RCD006') AS PAY_SUMFEE,
+		(
+		SELECT SUM(PAY_AMT)
+		FROM PAYMENT
+		WHERE PAY_YN = 'PAY002'
+		) AS PAY_SUMAMT
+		FROM DUAL
 	</select>
 	
 </mapper>

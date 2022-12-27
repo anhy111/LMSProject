@@ -21,7 +21,7 @@
                             <tbody>
                             <tr>
                                 <th style="width:10%">제목</th>
-                                <td colspan="5" class="table-title">${form.qnaTtl}</td>
+                                <td colspan="5" class="table-title"><c:out value="${form.qnaTtl}"></c:out></td>
                             </tr>
                             <tr>
                                 <th style="width:5%">작성자</th>
@@ -29,20 +29,29 @@
                                 <th style="width:5%">문의일자</th>
                                 <td style="width:5%" class="table-title">${form.qnaDt}</td>
                                 <th style="width:5%">답변일자</th>
-                                <td style="width:5%" class="table-title">답변일자넣기</td>
+                                <td style="width:5%" class="table-title">${qnaReply.qnarDt}</td>
                             </tr>
                             <tr>
                                 <td colspan="6" class="table-title">
-                                    <p class="m-3">${form.qnaCon}</p>
+                                    <p class="m-3"><c:out value="${form.qnaCon}"></c:out></p>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <form action="addReply" method="post">
+                    <form method="post" action="addReply" >
                         <sec:csrfInput/>
                         <input type="hidden" name="parentId" value="${form.qnaCd}"/>
+                            <p>
+                                <label>관리자</label>
+                            </p>
+                            <p>
+                                <textarea rows="5" cols="50" name="content"></textarea>
+                            </p>
+                            <p>
+                                <button type="submit">댓글 등록</button>
+                            </p>
                     </form>
 
                     <!-- ================================================= -->
@@ -64,24 +73,18 @@
 
                     <hr/>
                     <ul>
-                        <li>첫번째 댓글</li>
-                        <li>두번째 댓글</li>
-                        <li>세번째 댓글</li>
+                        <c:set var="qnaReply" value="${qnaReply}" />
+                        <c:if test="${not empty qnaReply.qnarCon}">
+                            <tr>
+                                <th style="width:10%">내용</th>
+                                <td colspan="5" class="table-title"><c:out value="${qnaReply.qnarCon}"></c:out></td>
+                            </tr>
+                            <fmt:formatDate var="replyRegDate" value="${qnaReply.qnarDt}" pattern="yyyy.MM.dd.mm"/>
+                            <tr>
+                                <th style="width:10%">${qnaReply.qnarDt}</th>
+                            </tr>
+                        </c:if>
                     </ul>
-
-                    <div>
-                        <p>
-                            <label>댓글 작성자</label> <input type="text">
-                        </p>
-                        <p>
-                            <textarea rows="5" cols="50"></textarea>
-                        </p>
-                        <p>
-                            <button type="button">댓글 작성</button>
-                        </p>
-                    </div>
-
-
                 </div>
             </div>
         </div>

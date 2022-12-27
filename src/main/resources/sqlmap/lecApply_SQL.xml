@@ -31,6 +31,7 @@
 		AND     P.PRO_NO = #{empNo}
 	</select>
 	
+	
 	<select id="getYrNSem" parameterType="int" resultType="lecApply">
 		SELECT  DISTINCT L.LECA_YR
 		        , L.LECA_SEM
@@ -97,6 +98,22 @@
 		AND     P.DEP_CD = D.DEP_CD
 		AND     D.COL_CD = C.COL_CD
 		AND     E.EMP_NO = #{proNo}
+	</select>
+	
+	<select id="inquiryFormProInfoStudentApply" parameterType="int" resultType="professor"> 
+	
+		SELECT  P.PRO_NO,
+				E.EMP_NM,
+		        C.COL_NM || ' ' || D.DEP_NM EMP_ADDR1,
+		        D.DEP_TEL DEP_TEL,
+		        E.EMP_TEL EMP_TEL
+		FROM    EMPLOYEE E, PROFESSOR P, DEPARTMENT D, COLLEGE C, LEC_APPLY LA
+		WHERE   E.EMP_NO = P.PRO_NO
+		AND     P.DEP_CD = D.DEP_CD
+		AND     D.COL_CD = C.COL_CD
+		AND     P.PRO_NO = LA.PRO_NO
+        AND     LA.LECA_CD = #{lecaCd}
+	
 	</select>
 	
 	<select id="inquiryFormLecApInfo" parameterType="int" resultType="lecApply">

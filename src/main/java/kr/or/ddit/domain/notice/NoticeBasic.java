@@ -15,6 +15,8 @@ public class NoticeBasic {
     private Date noticeReg; // 작성일자
     private Date noticeUpd; //수정일자
 
+    private Long noticeHit; // 조회수
+
     public NoticeBasic() {
     }
 
@@ -31,6 +33,7 @@ public class NoticeBasic {
                 ", noticeCon='" + noticeCon + '\'' +
                 ", noticeReg=" + noticeReg +
                 ", noticeUpd=" + noticeUpd +
+                ", noticeHit=" + noticeHit +
                 '}';
     }
 }

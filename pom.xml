@@ -391,6 +391,20 @@
         </dependency>
 
         <!-- json 사용을 위한 의존관계 정의 끝 -->
+        
+        <!--  웹소켓 추가  -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>5.2.5.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		</dependency>
+		<!--  웹소켓 끝  -->
 
 
     </dependencies>

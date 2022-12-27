@@ -23,6 +23,11 @@
 			   )
 	</insert>
 
+	<insert id="qnaReplySave" parameterType="qnaReply">
+		INSERT INTO QNA_REPLY VALUES ( #{qnaCd}, #{qnarCon}, SYSDATE)
+	</insert>
+
+
 	<update id="update" parameterType="qna">
 		UPDATE QNA
 		SET

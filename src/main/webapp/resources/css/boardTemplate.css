@@ -3,12 +3,10 @@
 */
 
 .card {
-		min-height: 780px;
 		width: 100%;
-		padding: 2%;
+		padding: 3%;
 		border-top: 5px solid #112a63;
 		border-radius: 10px 10px 0 0 ;
-		max-width: 1400px;
 		min-width: 1090px;
 		margin: 0 auto;
 	}

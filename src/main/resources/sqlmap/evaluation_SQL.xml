@@ -11,11 +11,11 @@
 	
 	<select id="studentEvaluationList" parameterType="evaluation" resultType="evaluation"> 
 		SELECT LA.LECA_NM
-			 , L.LECA_CD
+		     , L.LECA_CD
 		     , E.EMP_NM
 		     , SL.STU_NO
 		     , CASE 
-		        WHEN NVL(EVLQ_CD,0) > 0 THEN '완료'
+		        WHEN NVL(EV.STU_NO,0) > 0 AND NVL(EV.LECA_CD,0) > 0 THEN '완료'
 		        ELSE '미완료'
 		        END
 		      EVLQ_YN

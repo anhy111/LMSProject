@@ -32,6 +32,11 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
+	public Payment sumFee() {
+		return this.paymentMapper.sumFee();
+	}
+
+	@Override
 	public List<Payment> adminPaymentList() {
 		return this.paymentMapper.adminPaymentList();
 	}

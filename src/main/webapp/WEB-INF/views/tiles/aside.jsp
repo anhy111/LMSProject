@@ -16,17 +16,17 @@
         <!-- Sidebar user panel (optional) -->
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search"
-                       placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+<!--         <div class="form-inline"> -->
+<!--             <div class="input-group" data-widget="sidebar-search"> -->
+<!--                 <input class="form-control form-control-sidebar" type="search" -->
+<!--                        placeholder="Search" aria-label="Search"> -->
+<!--                 <div class="input-group-append"> -->
+<!--                     <button class="btn btn-sidebar"> -->
+<!--                         <i class="fas fa-search fa-fw"></i> -->
+<!--                     </button> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -219,10 +219,14 @@
 										<p>학생 목록</p>
 								</a>
 							</li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>장학생 추천</p>
-							</a></li>
+							<sec:authorize access="hasRole('ROLE_DEAN')">
+								<li class="nav-item">
+									<a href="/professor/scholarshipStu" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+										<p>장학생 추천 목록</p>
+									</a>
+								</li>
+							</sec:authorize>
 						</ul></li>
 					<li class="nav-item"><a href="/counsel/professorside/counselList" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>
@@ -286,12 +290,6 @@
 											<p>등록금 납부 관리</p>
 										</a>
 									</li>
-									<li class="nav-item">
-										<a href="pages/examples/recover-password.html" class="nav-link">
-											<i class="far fa-circle nav-icon"></i>
-											<p>Recover Password v1</p>
-										</a>
-									</li>
 								</ul>
 							</li>
 							<li class="nav-item"><a href="#" class="nav-link"> <i
@@ -302,26 +300,20 @@
 							</a>
 								<ul class="nav nav-treeview">
 									<li class="nav-item"><a
-										href="pages/examples/login-v2.html" class="nav-link"> <i
+										href="/scholarship/scholarshipList" class="nav-link"> <i
 											class="far fa-circle nav-icon"></i>
-											<p>Login v2</p>
+											<p>장학금 목록</p>
 									</a></li>
 									<li class="nav-item"><a
-										href="pages/examples/register-v2.html" class="nav-link"> <i
+										href="/scholarship/scholarshipAward" class="nav-link"> <i
 											class="far fa-circle nav-icon"></i>
-											<p>Register v2</p>
+											<p>장학금 수여</p>
 									</a></li>
 									<li class="nav-item"><a
-										href="pages/examples/forgot-password-v2.html" class="nav-link">
+										href="/scholarship/scholarshipStudentList" class="nav-link">
 											<i class="far fa-circle nav-icon"></i>
-											<p>Forgot Password v2</p>
+											<p>장학생 조회</p>
 									</a></li>
-									<li class="nav-item">
-										<a href="#" class="nav-link">
-											<i class="far fa-circle nav-icon"></i>
-											<p>Recover Password v2</p>
-										</a>
-									</li>
 								</ul>
 							</li>
 						</ul>
