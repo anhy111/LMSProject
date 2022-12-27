@@ -37,7 +37,7 @@ public class NoticeBasicController {
 
     //공지사항 리스트
     @GetMapping("/list")
-    public String noticeList(Model model) {
+    public String testHome(Model model) {
 
         int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
 
@@ -46,7 +46,7 @@ public class NoticeBasicController {
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
 
-        return "notice/list";
+        return "notice/test";
     }
 
     //공지사항 등록 폼
@@ -80,6 +80,8 @@ public class NoticeBasicController {
     //공지사항 상세페이지
     @GetMapping("/list/{noticeBasic.noticeCd}/detail")
     public String detail(@PathVariable("noticeBasic.noticeCd") Long noticeCd, Model model) {
+
+        noticeBasicService.updateViewCount(noticeCd);
 
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
         NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
@@ -120,17 +122,6 @@ public class NoticeBasicController {
 
     //공지사항 등록
 
-    @GetMapping("/test")
-    public String testHome(Model model) {
 
-        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
-
-        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
-
-        model.addAttribute("noticeBasicList", noticeBasicList);
-        model.addAttribute("totalRow", totalRow);
-
-        return "notice/test";
-    }
 
 }
