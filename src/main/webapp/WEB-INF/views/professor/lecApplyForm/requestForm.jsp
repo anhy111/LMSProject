@@ -157,7 +157,7 @@
 	    			</select>
 	    		</td>
 	    		<th>최대정원</th>
-	    		<td colspan="2"><input type="text" id="lecaCap" name="lecaCap" size=5>&nbsp;명&emsp;※&nbsp;사이버강의는 0입력</td>
+	    		<td colspan="2"><input type="number" id="lecaCap" name="lecaCap" size=5>&nbsp;명&emsp;&emsp;&emsp;&emsp;※&nbsp;사이버강의는 0입력</td>
 	    	</tr>
 	    	<tr>
 	    		<th rowspan="2">평가방법(%)</th>

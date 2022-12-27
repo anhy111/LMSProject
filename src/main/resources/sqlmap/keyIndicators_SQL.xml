@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : xml파일은 여러개일 수 있음. 
+이를 구별하기 위한 식별 용도로 사용 -->
+<mapper namespace="kr.or.ddit.mapper.KeyIndicatorsMapper">
+
+	<select id="recruitmentRateList" parameterType="keyIndicators" resultType="keyIndicators">  
+		<if test="colCd == 0">
+			WITH T AS (
+			    SELECT
+			        NVL(COUNT(S.STU_NO),0) RECRUITMENT_RATE, 
+			        C.COL_NM,
+			        C.COL_CD
+			    FROM
+			        COLLEGE C,
+			        DEPARTMENT D,
+			        STUDENT S
+			    WHERE
+			        D.DEP_CD = S.DEP_CD
+			        AND   C.COL_CD = D.COL_CD (+)
+			        <if test="yr > 0">
+			        AND   SUBSTR(S.STU_NO,1,4) = #{yr}
+			        </if>
+			    GROUP BY
+			        C.COL_NM,
+			        C.COL_CD
+			) SELECT
+			    NVL(T.RECRUITMENT_RATE,0) RECRUITMENT_RATE,
+			    TC.COL_NM,
+			    TC.COL_CD,
+			    (
+			        SELECT
+			            NVL(SUM(DE.DEP_CAP),0)
+			        FROM
+			            DEPARTMENT DE
+			        WHERE
+			            DE.COL_CD = TC.COL_CD
+			    ) 
+			    <if test="yr == 0">
+			    <![CDATA[
+			    * (
+                        SELECT
+                        (SELECT MAX(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4)   <= TO_CHAR(SYSDATE,'YYYY'))
+                        - (SELECT MIN(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4) <= TO_CHAR(SYSDATE,'YYYY'))
+                        + 1 
+                        FROM DUAL
+                   ) 
+                ]]>
+                </if>
+			    CAPACITY
+			  FROM
+			    T,
+			    COLLEGE TC
+			  WHERE
+			    T.COL_CD (+) = TC.COL_CD
+		  ORDER BY TC.COL_NM
+		  </if>
+		 <if test="colCd != 0">
+		 	WITH T AS (
+			    SELECT
+			        NVL(COUNT(S.STU_NO),0) RECRUITMENT_RATE,
+			        D.DEP_NM,
+			        D.DEP_CD
+			    FROM
+			        DEPARTMENT D,
+			        STUDENT S
+			    WHERE
+			        D.DEP_CD(+) = S.DEP_CD
+		         	<if test="yr > 0">
+			        AND   SUBSTR(S.STU_NO,1,4) = #{yr}
+			        </if>
+			    GROUP BY
+			        D.DEP_NM,
+			        D.DEP_CD
+			) SELECT
+			    NVL(T.RECRUITMENT_RATE,0) RECRUITMENT_RATE,
+			    TD.DEP_NM,
+			    TD.DEP_CD, 
+			    TD.DEP_CAP
+			    <if test="yr == 0">
+			    <![CDATA[
+			    * (
+                        SELECT
+                        (SELECT MAX(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4)   <= TO_CHAR(SYSDATE,'YYYY'))
+                        - (SELECT MIN(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4) <= TO_CHAR(SYSDATE,'YYYY'))
+                        + 1 
+                        FROM DUAL
+                   ) 
+                ]]>
+                </if>
+                 CAPACITY
+			  FROM
+			    T,
+			    DEPARTMENT TD
+			  WHERE
+			    T.DEP_CD (+) = TD.DEP_CD
+			  AND TD.COL_CD = #{colCd}
+			    ORDER BY TD.DEP_NM
+		 </if>
+	</select>
+	
+	<select id="studentState" parameterType="keyIndicators" resultType="keyIndicators">
+		<if test="colCd == 0">
+			SELECT C.COL_NM
+			     , (SELECT NVL(COUNT(S1.STU_NO),0) FROM STUDENT S1, DEPARTMENT D1 WHERE S1.DEP_CD = D1.DEP_CD AND D1.COL_CD = C.COL_CD 
+				     		<if test="yr != 0">
+					     		AND SUBSTR(STU_NO,1,4) = #{yr}
+				     		</if>
+			     	) ALL_STU
+			     , (SELECT NVL(COUNT(S2.STU_NO),0) FROM STUDENT S2, DEPARTMENT D2 WHERE S2.DEP_CD = D2.DEP_CD AND D2.COL_CD = C.COL_CD AND STU_RGB = 'RCD006' 
+						    <if test="yr != 0">
+					     		AND SUBSTR(STU_NO,1,4) = #{yr}
+				     		</if>
+					) IN_SCHOOL
+			     , (SELECT NVL(COUNT(S3.STU_NO),0) FROM STUDENT S3, DEPARTMENT D3 WHERE S3.DEP_CD = D3.DEP_CD AND D3.COL_CD = C.COL_CD AND STU_RGB IN( 'RCD001', 'RCD002') 
+							<if test="yr != 0">
+					     		AND SUBSTR(STU_NO,1,4) = #{yr}
+				     		</if>
+			    	) LEAVE_OF_ABSENCE
+			     , (SELECT NVL(COUNT(S4.STU_NO),0) FROM STUDENT S4, DEPARTMENT D4 WHERE S4.DEP_CD = D4.DEP_CD AND D4.COL_CD = C.COL_CD AND STU_RGB = 'RCD004' 
+							<if test="yr != 0">
+				     			AND SUBSTR(STU_NO,1,4) = #{yr}
+				    		</if>
+			     	) EXPELLED
+			     , (SELECT NVL(COUNT(S5.STU_NO),0) FROM STUDENT S5, DEPARTMENT D5 WHERE S5.DEP_CD = D5.DEP_CD AND D5.COL_CD = C.COL_CD AND STU_RGB = 'RCD005' 
+							<if test="yr != 0">
+				     			AND SUBSTR(STU_NO,1,4) = #{yr}
+				    		</if>
+			     	) GRADUATE
+			FROM COLLEGE C	
+		</if>
+		<if test="colCd != 0">
+			SELECT D.DEP_NM
+			     , (SELECT NVL(COUNT(S1.STU_NO),0) FROM STUDENT S1, DEPARTMENT D1 WHERE S1.DEP_CD = D1.DEP_CD AND D1.DEP_CD = D.DEP_CD AND D1.COL_CD = #{colCd}
+							<if test="yr != 0">
+				     			AND SUBSTR(STU_NO,1,4) = #{yr}
+				    		</if>			      	
+		    		) ALL_STU
+			     , (SELECT NVL(COUNT(S2.STU_NO),0) FROM STUDENT S2, DEPARTMENT D2 WHERE S2.DEP_CD = D2.DEP_CD AND D2.DEP_CD = D.DEP_CD AND STU_RGB = 'RCD006' AND D2.COL_CD = #{colCd} 
+							<if test="yr != 0">
+				     			AND SUBSTR(STU_NO,1,4) = #{yr}
+				    		</if>			     	
+		    		) IN_SCHOOL
+			     , (SELECT NVL(COUNT(S3.STU_NO),0) FROM STUDENT S3, DEPARTMENT D3 WHERE S3.DEP_CD = D3.DEP_CD AND D3.DEP_CD = D.DEP_CD AND STU_RGB IN( 'RCD001', 'RCD002') AND D3.COL_CD = #{colCd}  
+							<if test="yr != 0">
+				     			AND SUBSTR(STU_NO,1,4) = #{yr}
+				    		</if>			     	
+		    		) LEAVE_OF_ABSENCE
+			     , (SELECT NVL(COUNT(S4.STU_NO),0) FROM STUDENT S4, DEPARTMENT D4 WHERE S4.DEP_CD = D4.DEP_CD AND D4.DEP_CD = D.DEP_CD AND STU_RGB = 'RCD004' AND D4.COL_CD = #{colCd}
+							<if test="yr != 0">
+				     			AND SUBSTR(STU_NO,1,4) = #{yr}
+				    		</if>			     	
+		    		) EXPELLED
+			     , (SELECT NVL(COUNT(S5.STU_NO),0) FROM STUDENT S5, DEPARTMENT D5 WHERE S5.DEP_CD = D5.DEP_CD AND D5.DEP_CD = D.DEP_CD AND STU_RGB = 'RCD005' AND D5.COL_CD = #{colCd}
+							<if test="yr != 0">
+				     			AND SUBSTR(STU_NO,1,4) = #{yr}
+				    		</if>			     	
+	    			) GRADUATE
+			FROM DEPARTMENT D
+			WHERE D.COL_CD = #{colCd}
+		</if>
+	</select>
+	
+	<select id="evaluationList" parameterType="keyIndicators" resultType="keyIndicators">
+		<if test="colCd == 0 and depCd == 0">
+			SELECT C.COL_CD
+			     , C.COL_NM
+			     , TRIM((
+			            SELECT ROUND(NVL(AVG(T.LEC_AVG),0),2)
+			            FROM (
+			                    SELECT AVG(EV.EVL_SCORE) LEC_AVG
+			                         , LA.PRO_NO
+			                         , LA.LECA_YR
+			                         , LA.LECA_SEM
+			                         , SP.DEP_CD
+			                         , SD.COL_CD
+			                    FROM EVALUATION EV, LEC_APPLY LA, PROFESSOR SP, DEPARTMENT SD
+			                    WHERE EV.LECA_CD = LA.LECA_CD
+			                    AND LA.PRO_NO = SP.PRO_NO
+			                    AND SD.DEP_CD = SP.DEP_CD
+			                    <if test="yr != 0">
+			                    AND LA.LECA_YR = #{yr}
+			                    </if>
+			                    <if test="sem != null and sem != ''">
+			                    AND LA.LECA_SEM = #{sem}
+			                    </if>
+			                    GROUP BY  LA.LECA_CD
+			                            , LA.PRO_NO
+			                            , LA.LECA_YR
+			                            , LA.LECA_SEM
+			                            , SP.DEP_CD
+			                            , SD.COL_CD
+			            ) T, DEPARTMENT SD, COLLEGE SC
+			            WHERE T.DEP_CD = SD.DEP_CD
+			            AND SD.COL_CD = SC.COL_CD
+			            AND SC.COL_CD = C.COL_CD
+			        )) EVL_RATE
+			FROM COLLEGE C
+		</if>
+		<if test="colCd != 0 and depCd == 0">
+			SELECT D.DEP_CD
+			     , D.DEP_NM
+			     , TRIM((
+			            SELECT ROUND(NVL(AVG(T.LEC_AVG),0),2)
+			            FROM (
+			                    SELECT AVG(EV.EVL_SCORE) LEC_AVG
+			                         , LA.PRO_NO
+			                         , LA.LECA_YR
+			                         , LA.LECA_SEM
+			                         , SP.DEP_CD
+			                    FROM EVALUATION EV, LEC_APPLY LA, PROFESSOR SP
+			                    WHERE EV.LECA_CD = LA.LECA_CD
+			                    AND LA.PRO_NO = SP.PRO_NO
+			                    <if test="yr != 0">
+			                    AND LA.LECA_YR = #{yr}
+			                    </if>
+			                    <if test="sem != null and sem != ''">
+			                    AND LA.LECA_SEM = #{sem}
+			                    </if>
+			                    GROUP BY  LA.LECA_CD
+			                            , LA.PRO_NO
+			                            , LA.LECA_YR
+			                            , LA.LECA_SEM
+			                            , SP.DEP_CD
+			            ) T, DEPARTMENT SD
+			            WHERE T.DEP_CD = SD.DEP_CD
+			            AND T.DEP_CD = D.DEP_CD
+			        )) EVL_RATE
+			FROM DEPARTMENT D, COLLEGE C
+			WHERE D.COL_CD = C.COL_CD
+			AND D.COL_CD = #{colCd}
+		</if>
+		<if test="depCd != 0">
+			SELECT E.EMP_NO
+			     , E.EMP_NM
+			     , TRIM((
+			            SELECT ROUND(NVL(AVG(T.LEC_AVG),0),2)
+			            FROM (
+			                    SELECT AVG(EV.EVL_SCORE) LEC_AVG
+			                         , LA.PRO_NO
+			                         , LA.LECA_YR
+			                         , LA.LECA_SEM
+			                    FROM EVALUATION EV, LEC_APPLY LA, PROFESSOR SP
+			                    WHERE EV.LECA_CD = LA.LECA_CD
+			                    AND LA.PRO_NO = SP.PRO_NO
+			                    <if test="yr != 0">
+			                    AND LA.LECA_YR = #{yr}
+			                    </if>
+			                    <if test="sem != null and sem != ''">
+			                    AND LA.LECA_SEM = #{sem}
+			                    </if>
+			                    GROUP BY  LA.LECA_CD
+			                            , LA.PRO_NO
+			                            , LA.LECA_YR
+			                            , LA.LECA_SEM
+			            ) T
+			            WHERE T.PRO_NO = E.EMP_NO
+			        )) EVL_RATE
+			FROM EMPLOYEE E, PROFESSOR P
+			WHERE E.EMP_NO = P.PRO_NO
+			AND P.DEP_CD = #{depCd}
+		</if>
+	</select>
+
+</mapper>
+

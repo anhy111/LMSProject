@@ -198,7 +198,7 @@
     		<br><br>
     		
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;비고</p>
-    		<textarea id="lecaNote" rows="9" cols="45">${lecApplyList[0].lecaNote}</textarea>
+    		<textarea id="lecaNote" rows="9" cols="45" disabled>${lecApplyList[0].lecaNote}</textarea>
     	</div>
     </div>
     

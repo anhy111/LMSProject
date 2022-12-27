@@ -19,6 +19,9 @@ public interface LectureApplyService {
 	public int getCnt(Map<String, Object> map);
 
 	public Professor inquiryFormProInfo(int proNo);
+	
+	// 수강신청시 교수정보 불러오기
+	public Professor inquiryFormProInfoStudentApply(int lecaCd);
 
 	public List<LecApply> inquiryFormLecApInfo(int lecaCd);
 

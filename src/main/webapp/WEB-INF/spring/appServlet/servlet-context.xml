@@ -4,6 +4,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:beans="http://www.springframework.org/schema/beans" 
 xmlns:context="http://www.springframework.org/schema/context" 
 xmlns:security="http://www.springframework.org/schema/security" 
+xmlns:websocket="http://www.springframework.org/schema/websocket"
 xsi:schemaLocation="http://www.springframework.org/schema/mvc 
 http://www.springframework.org/schema/mvc/spring-mvc.xsd 
 http://www.springframework.org/schema/beans 
@@ -11,7 +12,9 @@ http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/context 
 http://www.springframework.org/schema/context/spring-context.xsd 
 http://www.springframework.org/schema/security 
-http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+http://www.springframework.org/schema/security/spring-security-4.2.xsd
+http://www.springframework.org/schema/websocket
+https://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -46,6 +49,18 @@ http://www.springframework.org/schema/security/spring-security-4.2.xsd">
         </beans:bean>
     </interceptors>
 	<!-- 다국어 처리 끝 -->
+	
+	<!-- websocket handler 시작 -->
+	<beans:bean id="echoHandler" class="kr.or.ddit.util.EchoHandler" />
+	
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo" />
+		<websocket:handshake-interceptors>
+	         <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+	    </websocket:handshake-interceptors>
+	    <websocket:sockjs/>
+	 </websocket:handlers>
+	 <!-- websocket handler 끝 -->
 	
 	<context:component-scan base-package="kr.or.ddit" />
 	<context:component-scan base-package="kr.or.ddit.security" />

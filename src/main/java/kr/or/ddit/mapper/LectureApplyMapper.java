@@ -24,7 +24,10 @@ public interface LectureApplyMapper {
 
 	// 강의계획서 상세페이지 교수정보
 	public Professor inquiryFormProInfo(int proNo);
-
+	
+	// 수강신청 시 강의계획서 상세페이지 교수정보
+	public Professor inquiryFormProInfoStudentApply(int lecaCd);
+	
 	// 강의계획서 상세페이지 기본사항,상세내용
 	public List<LecApply> inquiryFormLecApInfo(int lecaCd);
 
