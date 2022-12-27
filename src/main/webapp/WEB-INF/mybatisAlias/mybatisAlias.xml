@@ -45,6 +45,7 @@
 		<typeAlias type="kr.or.ddit.domain.Payment" alias="payment"/>
 		<typeAlias type="kr.or.ddit.domain.StudentTest" alias="stuTest"/>
 		<typeAlias type="kr.or.ddit.domain.StudentTestDetail" alias="std"/>
+		<typeAlias type="kr.or.ddit.domain.Attendence" alias="attendence"/>
 
 
 		<!-- 시설예약 시작 -->

@@ -16,14 +16,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ddit.domain.Attendence;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
@@ -253,6 +257,77 @@ public class LectureBoardController {
 		model.addAttribute("data", data);
 		
 		return "lectureBoard/test/testResult";
+	}
+	
+	//출결
+	@GetMapping("attendence/attendence")
+	public String attendence(String lecaCd, Model model) {
+		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
+		
+		model.addAttribute("data", lecApplySearch);
+		
+		
+		return "lectureBoard/attendence/attendence";
+	}
+	
+	@ResponseBody
+	@PostMapping("studentList")
+	public List<Student> listStudent(String lecaCd){
+		
+		List<Student> a = this.lectureBoardService.studentList(lecaCd);
+						
+		return a;
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("attendDetail")
+	public HashMap<String, Object> attendDetail(String lecaCd, String stuNo) {
+		//출결 상태 카운트
+		Attendence detail = this.lectureBoardService.attendenceDetail(lecaCd, stuNo);
+		log.info("detail : "+detail.toString());
+		
+		//출결 학생 이름, 학번 조회
+		Attendence studentDetail = this.lectureBoardService.attenStudentDetail(lecaCd, stuNo);
+		log.info("studentDetail : " + studentDetail);
+		
+		//한 주에 몇 번 수업인지 체크?
+		List<Attendence> attenDetail = this.lectureBoardService.attendStuDetail(lecaCd, stuNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("attendence", detail);
+		map.put("studentDetail",studentDetail);
+		map.put("attenDetail", attenDetail);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("attenChkCnt")
+	public int attenChkCntPost(@RequestBody Attendence a) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		log.info( " lecaCd : "+a.getLecaCd()+" stuNo : "+a.getStuNo()+" atenWk : "+a.getAtenWk()+" atenHr : "+a.getAtenHr());
+		map.put("lecaCd", a.getLecaCd());
+		map.put("stuNo", a.getStuNo());
+		map.put("atenWk", a.getAtenWk());
+		map.put("atenHr", a.getAtenHr());
+		
+		int result = this.lectureBoardService.attenChkCnt(map);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("attendStuInsert")
+	public int attendStuInsertPost(Attendence attendence) {
+		int result = this.lectureBoardService.attendStuInsert(attendence);
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("attendStuUpdate")
+	public int attendStuUpdatePost(Attendence attendence) {
+		int result = this.lectureBoardService.attendStuUpdate(attendence);
+		return result;
 	}
 	
 	
