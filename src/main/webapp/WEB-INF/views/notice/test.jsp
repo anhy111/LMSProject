@@ -47,6 +47,7 @@
     .table {
         border-bottom: 1px solid #eef2f7;
     }
+
 </style>
 
 <%

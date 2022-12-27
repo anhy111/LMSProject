@@ -3,6 +3,7 @@ package kr.or.ddit.controller;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.domain.qna.Qna;
+import kr.or.ddit.domain.qna.qnareply.QnaReply;
 import kr.or.ddit.service.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,19 +29,6 @@ public class QnaController {
 
     //QnA 메인 페이지
     @GetMapping("/main")
-    public String qnaMain(Model model) {
-
-        int totalRow = this.qnaService.getQnaTotalRow();
-
-        List<Qna> showList = qnaService.showList();
-
-        model.addAttribute("showList", showList);
-        model.addAttribute("totalRow", totalRow);
-
-        return "qna/qnaBoard";
-    }
-
-    @GetMapping("/test")
     public String qna(Model model) {
 
         int totalRow = this.qnaService.getQnaTotalRow();
@@ -49,6 +37,8 @@ public class QnaController {
 
         model.addAttribute("qnaList", showList);
         model.addAttribute("totalRow", totalRow);
+
+        log.info(showList.toString());
 
         return "qna/test";
     }
@@ -76,8 +66,16 @@ public class QnaController {
     @GetMapping("/qnaDetail/{list.qnaCd}/detail")
     public String detail(@PathVariable("list.qnaCd") Long qnaCd, Model model) {
 
+        //조회수++
+        qnaService.updateViewCount(qnaCd);
+
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
         Qna qna = qnaService.findOne(qnaCd);
+
+        log.info("111111111111");
+        // 댓글 조회
+        QnaReply qnaReply = qnaService.findReplyOne(qnaCd);
+        model.addAttribute("qnaReply", qnaReply);
 
         // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
         model.addAttribute("form", qna);
@@ -114,11 +112,15 @@ public class QnaController {
         return "redirect:/qna/main";
     }
 
-    @PostMapping("/addReply")
+    @PostMapping("/qnaDetail/{form.qnaCd}/addReply")
     public String addReply(@RequestParam("parentId") Long parentId,
-                           @RequestParam("replyContent") String content) {
+                           @RequestParam("content") String content) {
 
-        return "";
+        QnaReply qnaReply = new QnaReply(parentId, content);
+
+        qnaService.qnaReplySave(qnaReply);
+
+        return "redirect:/qna/qnaDetail/"+parentId+"/detail";
     }
 
 }
