@@ -52,4 +52,9 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
     public void delete(Long noticeCd) {
         this.noticeBasicMapper.noticeBasicDelete(noticeCd);
     }
+
+    @Override
+    public void updateViewCount(Long noticeCd) {
+        this.noticeBasicMapper.noticeBasicUpdateViewCount(noticeCd);
+    }
 }

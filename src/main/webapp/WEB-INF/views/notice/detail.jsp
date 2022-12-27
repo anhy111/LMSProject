@@ -30,7 +30,7 @@
                                 <th style="width:10%">작성일</th>
                                 <td style="width:20%" class="table-title">${form.noticeReg}</td>
                                 <th style="width:10%">조회수</th>
-                                <td style="width:20%" class="table-title">조회수 넣기</td>
+                                <td style="width:20%" class="table-title">${form.noticeHit}</td>
                             </tr>
                             <tr>
                                 <th style="width:10%">첨부파일</th>
