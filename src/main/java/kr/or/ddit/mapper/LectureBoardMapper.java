@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.amazonaws.services.chime.model.Attendee;
 
 import kr.or.ddit.domain.Attendence;
 import kr.or.ddit.domain.LecApply;
