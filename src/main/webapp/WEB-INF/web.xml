@@ -52,10 +52,10 @@
 <!-- 		<async-supported>true</async-supported> -->
 <!-- 	</servlet> -->
 
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>appServlet</servlet-name> -->
-<!-- 		<url-pattern>/</url-pattern> -->
-<!-- 	</servlet-mapping> -->
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
 
 	<!-- 인코딩 필터 시작 -->
 	<filter>
