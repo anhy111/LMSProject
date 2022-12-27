@@ -430,8 +430,103 @@
             where a.test_cd = st.test_cd
 	</select>
 	
+	<!-- 출결 : 학생 리스트 -->
+	<select id="studentList" parameterType="String" resultType="student">
+	SELECT  C.COL_NM
+	       ,D.DEP_NM
+	       ,S.STU_YR
+	       ,S.STU_NO
+	       ,S.STU_NM
+	       ,S.STU_TEL
+	       
+	FROM COLLEGE C, DEPARTMENT D, STUDENT S, STU_LEC SL
+	
+	WHERE  C.COL_CD = D.COL_CD
+		   AND D.DEP_CD = S.DEP_CD
+		   AND S.STU_NO = SL.STU_NO
+		   AND SL.LECA_CD = #{lecaCd}
+	</select>
+	
+	<!-- 출결 : 출결 상태 카운트 -->
+	<select id="attendenceDetail" parameterType="String" resultType="attendence">
+	SELECT 
+	       (SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo}) "atenCate"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A001') "atenAttend"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A002') "atenLate"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A003') "atenAbsent"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A004') "atenEarly"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A005') "atenOffically"
+	FROM 	
+			DUAL
+	</select>
+	
+	<!-- 출결 : 학생 정보 상세(이름 , 학번) -->
+	<select id="attenStudentDetail" parameterType="String" resultType="attendence">
+		SELECT   S.STU_NO
+		        ,S.STU_NM
+		FROM 	
+		        STUDENT S, STU_LEC ST
+		WHERE 	S.STU_NO = ST.STU_NO
+		        AND ST.LECA_CD = #{lecaCd}
+		        AND S.STU_NO = #{stuNo}
+	</select>
+	<!-- 출결 : ????수정 해야 될듯 -->
+	<select id="attendStuDetail" parameterType="String" resultType="attendence">
+		SELECT  ATEN_CD
+		    ,   LECA_CD
+		    ,   STU_NO
+			,	ATEN_CATE
+		    ,   ATEN_WK
+		    ,   ATEN_HR
+		FROM    ATTENDENCE
+		WHERE   STU_NO = #{stuNo}
+		AND     LECA_CD = #{lecaCd}
+		ORDER BY ATEN_WK, ATEN_HR
+	</select>
+	
+	<select id="attenChkCnt" parameterType="hashMap" resultType="int">
+		SELECT COUNT(ATEN_CD) ATEN_CNT
+		FROM ATTENDENCE
+		WHERE ATEN_WK = #{atenWk}
+		AND ATEN_HR = #{atenHr}
+		AND LECA_CD = #{lecaCd}
+		AND STU_NO = #{stuNo}
+	</select>
 	
 	
+	<!-- 학생별 출결 INSERT -->
+	<insert id="attendStuInsert" parameterType="attendence">
+		<selectKey order="BEFORE" resultType="int" keyProperty="atenCd">
+			SELECT NVL(MAX(ATEN_CD),0)+1 FROM ATTENDENCE
+		</selectKey>
+		INSERT INTO ATTENDENCE (
+		            ATEN_CD
+		        ,   LECA_CD
+		        ,   STU_NO
+		        ,   ATEN_CATE
+		        ,   ATEN_DT
+		        ,   ATEN_WK
+		        ,   ATEN_HR
+		) VALUES (
+		    #{atenCd},
+		    #{lecaCd},
+		    #{stuNo},
+		    #{atenCate},
+		    SYSDATE,
+		    #{atenWk},
+		    #{atenHr}
+		)
+	</insert>
+	
+	<!-- 학생별 출결 update -->
+	<update id="attendStuUpdate" parameterType="attendence">
+		UPDATE ATTENDENCE
+		SET ATEN_CATE = #{atenCate}
+		WHERE ATEN_WK = #{atenWk}
+		AND ATEN_HR = #{atenHr}
+		AND LECA_CD = #{lecaCd}
+		AND STU_NO = #{stuNo}
+	</update>
 	
 	
 	

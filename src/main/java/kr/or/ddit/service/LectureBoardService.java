@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+import kr.or.ddit.domain.Attendence;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
@@ -57,5 +61,27 @@ public interface LectureBoardService {
 	
 	//시험 제출여부 
 	public Test submitCheck(String stuNo,String lecaCd,String testCd);
+	
+	//출결 학생리스트
+	public List<Student> studentList(String lecaCd);
+	
+	//출결 학생 정보
+	public Attendence attenStudentDetail(String lecaCd, String stuNo);
+	
+	//출결 디테일
+	public Attendence attendenceDetail(String lecaCd, String stuNo);
+	
+	//출결 디테일
+	public List<Attendence> attendStuDetail(String lecaCd, String stuNo);
+	
+	//출결 카운트 체크
+	public int attenChkCnt(Map<String, Object> map);
+	
+	//출결 인서트
+	public int attendStuInsert(Attendence attendence);
+	
+	//출결 수정
+	public int attendStuUpdate(Attendence attendence);
+	
 	
 }
