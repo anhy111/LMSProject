@@ -75,12 +75,34 @@ public class StudentLectureApplyController {
 		List<College> collegeList = this.collegeService.CollegeList();
 		Credit studentCurrentCredit = this.creditService.studentCurrentCredit(studentLecture);
 		
+		model.addAttribute("bodyTitle","수강신청");
 		model.addAttribute("collegeList",collegeList);
 		model.addAttribute("stuNo",stuNo.toString());
 		model.addAttribute("graduateCredit",graduateCredit);
 		model.addAttribute("studentCurrentCredit",studentCurrentCredit);
 		
 		return "student/lectureApply/lectureList";
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_MANAGER')")
+	@GetMapping("/spareList")
+	public String spareLectureList(Model model, HttpServletRequest req) {
+		
+		Integer stuNo = (Integer)req.getSession().getAttribute("no");
+		
+		StudentLecture studentLecture = new StudentLecture();
+		studentLecture.setStuNo(stuNo);
+		GraduateCredit graduateCredit = this.graduateCreditService.studentApplyMaxCredit(stuNo.toString());
+		List<College> collegeList = this.collegeService.CollegeList();
+		Credit studentCurrentCredit = this.creditService.studentCurrentCredit(studentLecture);
+		
+		model.addAttribute("bodyTitle","예비수강신청");
+		model.addAttribute("collegeList",collegeList);
+		model.addAttribute("stuNo",stuNo.toString());
+		model.addAttribute("graduateCredit",graduateCredit);
+		model.addAttribute("studentCurrentCredit",studentCurrentCredit);
+		
+		return "student/lectureApply/spareLectureList";
 	}
 	
 	

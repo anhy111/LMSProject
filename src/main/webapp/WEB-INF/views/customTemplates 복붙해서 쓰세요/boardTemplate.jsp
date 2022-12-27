@@ -48,7 +48,7 @@ String simDate = simpleDate.format(date);
 </p>
 <div class="row">
 	<div class="table-responsive-sm col-12 p-0">
-		<table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
+		<table class="table mb-0 pt-0" style="border-bottom: 1px solid #eef2f7">
 			<thead class="table-light">
 				<tr style="border-top: 2px solid #112a63">
 					<th style="text-align: center;">
