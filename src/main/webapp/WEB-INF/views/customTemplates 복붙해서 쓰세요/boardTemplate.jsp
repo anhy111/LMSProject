@@ -16,7 +16,6 @@ SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy.MM.dd");
 String simDate = simpleDate.format(date);
 %>
 
-
 <!-- 공통 css 파일 임포트  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/boardTemplate.css">
 
@@ -55,7 +54,7 @@ String simDate = simpleDate.format(date);
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="list" items="${list }" varStatus="status">
+								<c:forEach var="list" items="${list}" varStatus="status">
 
 									<tr>
 										<td></td>

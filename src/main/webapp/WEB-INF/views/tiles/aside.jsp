@@ -219,10 +219,14 @@
 										<p>학생 목록</p>
 								</a>
 							</li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>장학생 추천</p>
-							</a></li>
+							<sec:authorize access="hasRole('ROLE_DEAN')">
+								<li class="nav-item">
+									<a href="/professor/scholarshipStu" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+										<p>장학생 추천 목록</p>
+									</a>
+								</li>
+							</sec:authorize>
 						</ul></li>
 					<li class="nav-item"><a href="/counsel/professorside/counselList" class="nav-link"> <i
 							class="nav-icon fas fa-book"></i>

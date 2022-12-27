@@ -1,24 +1,15 @@
-<%@page import="java.util.Date"%>
-<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<% 
-Date nowTime = new Date();
-SimpleDateFormat date = new SimpleDateFormat("yyyy년   MM월   dd일"); 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
 String name = String.valueOf(session.getAttribute("name"));
 %>
-<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/schRcmd.css">
 <script type="text/javascript">
 function fn_add(data){
 	
 	$("#stuImg").attr("src", "/upload"+data.stuPic);
-	$("#stuNo").attr("value", data.stuNo);
-	$(".stuNo").html(data.stuNo);
+	$("#stuNo").attr("value", data.sclHistory.stuNo);
+	$(".stuNo").html(data.sclHistory.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$(".stuNm").html(data.stuNm);
 	$("#stuNme").attr("value", data.stuNme);
@@ -28,20 +19,17 @@ function fn_add(data){
 	$('#stuYr').val(data.stuYr);
 	$('#stuSem').val(data.stuSem);
 	$("#stuBir").attr("value", data.stuBir);
-	//id로 select 선택하고 value가 'test2'인 option 선택
 	$("#stuTel").attr("value", data.stuTel);
 	$("#stuZip").attr("value", data.stuZip);
 	$("#stuAddr1").attr("value", data.stuAddr1);
 	$("#stuAddr2").attr("value", data.stuAddr2);
 	$("#proNo").attr("value", data.proNo);
+	$("#empNm").html(data.empNm);
+	$("#sclhRcmd").html(data.sclHistory.sclhRcmd);
+	$(".sclhDt").html(data.sclHistory.sclhDt);
 	
 }
-
 $(function(){
-	
-	$("input[type='file']").on('change',function(){
-	    $(this).next('.custom-file-label').html(event.target.files[0].name);
-	});
 	
 	let header = "${_csrf.headerName}";
 	let token = "${_csrf.token}";
@@ -49,20 +37,20 @@ $(function(){
 	$(".btnDetail").on("click", function(){
 // 		alert("오나요?");
 		
-		let stuNo = $(this).val();
-		let data = {"detailStu":stuNo}
-		console.log("상세정보 가져왓 " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		let sclhCd = $(this).val();
+		let data = {"sclhCd":sclhCd}
+		console.log("상세정보 가져왓 " + sclhCd + " data 가져왓 " + JSON.stringify(data));
 		
 		$.ajax({
 			type: 'post',
-			url: '/professor/detailStu',
+			url: '/professor/schStuRcmd',
 			contentType:"application/json;charset=utf-8",
 			data:JSON.stringify(data),
 			beforeSend:function(xhr){
 				xhr.setRequestHeader(header, token);
 			},
 			success :function(data){
-// 				console.log("성공이라해주라 ", data.stuSclList[0].sclhRcmd);
+				console.log("성공이라해주라 ", data.sclHistory.sclhRcmd);
 				fn_add(data);
 				
 				let str = "";
@@ -100,71 +88,7 @@ $(function(){
 		});
 		
 	});
-	$().ready(function () {
-		$("#recommendation").on("click", function(){
-	// 		alert("하이")
 	
-			let stuNo = $(".stuNo").val();
-			let proNo = $("#proNo").val();
-			let sclhRcmd = $("#sclhRcmd").val();
-			
-			console.log("stuNo: " + stuNo + " proNo: " + proNo + " sclhRcmd: " + sclhRcmd)
-	
-			let data = {
-				"stuNo":stuNo,
-				"proNo":proNo,
-				"sclhRcmd":sclhRcmd
-			}
-			Swal.fire({
-	            title: '본 학생을 추천 하시겠습니까?',
-	            text: "",
-	            icon: 'question',
-	            showCancelButton: true,
-	            confirmButtonColor: '#3085d6',
-	            cancelButtonColor: '#d33',
-	            confirmButtonText: '확인',
-	            cancelButtonText: '취소'
-			 }).then(function(dlt) {
-				if(dlt.isConfirmed){
-					$.ajax({
-						type: 'post',
-						url: '/professor/recommendationStu',
-						contentType:"application/json;charset=utf-8",
-						data:JSON.stringify(data),
-						beforeSend:function(xhr){
-							xhr.setRequestHeader(header, token);
-						},
-						success :function(data){
-							console.log("insert성공이라해주라 ", data);
-							
-			                Swal.fire(
-			                    '추천 완료',
-			                    '정상적으로 장학생 추천 되었습니다.',
-			                    'success'
-			                ).then(function(){
-			                	$("#sclhRcmd").html("");
-					        	window.location.reload(true);			        	
-					        });
-				            
-						},
-						error:function(request, status, error){
-							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-							 Swal.fire(
-							      	"추천 실패",
-							        "에러 났어요!", // had a missing comma
-							        "error"
-							      )
-						}
-						
-					});
-				
-				}
-				
-			});
-			
-		});
-		
-	});
 	
 });
 
@@ -174,7 +98,7 @@ $(function(){
 	<div class="col-sm-10 offset-1">
 		<div class="card">
 			<div class="card-header">
-				<h3 class="card-title">학생 목록 조회</h3>
+				<h3 class="card-title">추천 장학생 목록 조회</h3>
 			</div>
 		
 			<div class="card-body">
@@ -196,7 +120,7 @@ $(function(){
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										aria-label="Platform(s): activate to sort column ascending">이름</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
-										aria-label="CSS grade: activate to sort column ascending">담당교수</th>
+										aria-label="CSS grade: activate to sort column ascending">추천인</th>
 									<th class="sorting" tabindex="0" aria-controls="example1"
 										aria-label="CSS grade: activate to sort column ascending">상세</th>
 								</tr>
@@ -215,7 +139,7 @@ $(function(){
 									<td>${list.empNm}</td>
 									<td>
 										<button class="btn btn-block btn-outline-info btn-sm btnDetail" 
-											value="${list.stuNo}" data-toggle="modal" data-target="#modal-lg" >상세</button>
+											value="${list.sclhCd}" data-toggle="modal" data-target="#modal-lg" >학생 상세</button>
 									</td>
 									</tr>
 								</c:forEach>
@@ -228,6 +152,7 @@ $(function(){
 	</div>
 </div>
 
+<!-- 모달 -->
 <div class="modal fade" id="modal-lg" style="display: none;"aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -393,33 +318,8 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<!-- 추천사유-->
-<!-- 	<div class="modal fade" id="modal-default" -->
-<!-- 		style="display: none; z-index: 1041" aria-hidden="true"> -->
-<!-- 		<div class="modal-dialog modal-dialog-centered"> -->
-<!-- 			<div class="modal-content"> -->
-<!-- 				<div class="modal-header"> -->
-<!-- 					<h4 class="modal-title">장학생 추천</h4> -->
-<!-- 					<button type="button" class="close" data-dismiss="modal" -->
-<!-- 						aria-label="Close"> -->
-<!-- 						<span aria-hidden="true">×</span> -->
-<!-- 					</button> -->
-<!-- 				</div> -->
-<!-- 				<div class="modal-body"> -->
-<!-- 					<div class="mb-3"> -->
-<!-- 						<label for="sclhRcmd" class="col-form-label">장학생 추천 사유를 입력해주세요.</label> -->
-<!-- 						<textarea class="form-control sclhRcmd" rows="7"></textarea> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="modal-footer justify-content-between"> -->
-<!-- 					<button type="button" id="recommendation" -->
-<!-- 						class="btn btn-block btn-success">추천</button> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
 	<div class="modal fade" id="modal-default"
-		style="display: none; z-index: 1041" aria-hidden="true">
+			style="display: none; z-index: 1041" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -430,8 +330,8 @@ $(function(){
 					</button>
 				</div>
 				<div class="modal-body" style="padding:0px;">
-
-
+	
+	
 					<div class="hpa" style="width: 210mm; height: 296.99mm;">
 						<div class="hcD" style="left: 20mm; top: 25mm;">
 							<div class="hcI">
@@ -441,10 +341,10 @@ $(function(){
 								</div>
 								<div class="hls ps20"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 13.90mm; height: 4.23mm; width: 170mm;"></div>
-								<div class="hls ps20" style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 20.67mm; height: 4.23mm; width: 170mm;">
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 20.67mm; height: 4.23mm; width: 170mm;">
 									<div style="position:absolute;right: 90px;">
-										<span class="hrt cs9" style="position:static;">학과 :</span>
-										<span class="hrt cs9 depNm"></span>
+										<span class="hrt cs9">학과 :</span><span class="hrt cs9 depNm"></span>
 									</div>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
@@ -452,8 +352,7 @@ $(function(){
 								<div class="hls ps20"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 27.45mm; height: 4.23mm; width: 170mm;">
 									<div style="position:absolute;right: 90px;">
-										<span class="hrt cs9" style="position:static;">학번 :</span>
-										<span class="hrt cs9 stuNo"></span>
+										<span class="hrt cs9">학번 :</span><span class="hrt cs9 stuNo"></span>
 									</div>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
@@ -461,8 +360,7 @@ $(function(){
 								<div class="hls ps20"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 34.22mm; height: 4.23mm; width: 170mm;">
 									<div style="position:absolute;right: 90px;">
-										<span class="hrt cs9" style="position:static;">성명 :</span>
-										<span class="hrt cs9 stuNm"></span>
+										<span class="hrt cs9">성명 :</span><span class="hrt cs9 stuNm"></span>
 									</div>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
@@ -488,7 +386,7 @@ $(function(){
 								<div class="hls ps20"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 148.05mm; height: 4.23mm; width: 170mm;">
 									<span class="hrt cs10">추천교수 : &nbsp;</span>
-									<span class="hrt cs10" id="empNm"><%=name %></span>
+									<span class="hrt cs10" id="empNm"></span>
 									<span class="htC" style="left: 1.06mm; width: 9.17mm; height: 100%;"></span>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 									<img alt="" src="/resources/upload/img/교수도장sh.jpg">
@@ -499,9 +397,10 @@ $(function(){
 								<div class="hls ps20"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 161.60mm; height: 4.23mm; width: 170mm;">
 									<span class="hrt cs10">학과장 : &nbsp;</span>
+									<span class="hrt cs10"><%=name %></span>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<img alt="" src="/resources/upload/img/교수도장ys.jpg">
 									<span class="hrt cs10">(인)</span>
 								</div>
 								<div class="hls ps20"
@@ -526,12 +425,7 @@ $(function(){
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 209.01mm; height: 4.23mm; width: 170mm;"></div>
 								<div class="hls ps19"
 									style="line-height: 4.44mm; white-space: nowrap; left: 0mm; top: 215.73mm; height: 5.29mm; width: 170mm;">
-<!-- 									<span class="hrt cs11">2023년&nbsp;</span> -->
-<!-- 									<span class="htC" style="left: 1.32mm; width: 5.51mm; height: 100%;"></span> -->
-<!-- 									<span class="hrt cs11">&nbsp;월</span> -->
-<!-- 									<span class="htC" style="left: 1.32mm; width: 3.53mm; height: 100%;"></span> -->
-<!-- 									<span class="hrt cs11">&nbsp;&nbsp;일</span> -->
-									<span class="hrt cs11"><%= date.format(nowTime) %></span>
+									<span class="hrt cs11 sclhDt"></span>
 								</div>
 								<div class="hls ps19"
 									style="line-height: 21.71mm; white-space: nowrap; left: 0mm; top: 224.47mm; height: 21.71mm; width: 170mm;">
@@ -558,4 +452,3 @@ $(function(){
 		</div>
 	</div>
 </div>
-

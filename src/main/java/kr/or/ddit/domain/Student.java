@@ -44,7 +44,7 @@ public class Student {
 	private String colNm;
 	private int colCd;
 	
-	private List<SclHistory> stuSclList; //장학금 내역 조회
-
+	private List<SclHistory> stuSclList; //받은 장학금 내역 조회
+	private SclHistory sclHistory; //추천 장학생 상세 조회
 
 }

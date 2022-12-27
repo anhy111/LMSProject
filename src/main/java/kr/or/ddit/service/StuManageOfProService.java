@@ -12,4 +12,10 @@ public interface StuManageOfProService{
 
 	public List<SclHistory> stuSclList(Map<String, String> map);
 
+	public int recommendationStu(Map<String, String> map);
+
+	public List<SclHistory> schStuList();
+
+	public Student schStuRcmd(Map<String, String> map);
+
 }
