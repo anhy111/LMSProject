@@ -29,4 +29,18 @@ public class StuManageOfProServiceImpl implements StuManageOfProService{
 		return this.stuManageOfProMapper.stuSclList(map);
 	}
 	
+	@Override
+	public int recommendationStu(Map<String, String> map) {
+		return this.stuManageOfProMapper.recommendationStu(map);
+	}
+	
+	@Override
+	public List<SclHistory> schStuList(){
+		return this.stuManageOfProMapper.schStuList();
+	}
+	
+	@Override
+	public Student schStuRcmd(Map<String, String> map) {
+		return this.stuManageOfProMapper.schStuRcmd(map);
+	}
 }

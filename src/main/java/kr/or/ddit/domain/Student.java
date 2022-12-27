@@ -43,11 +43,11 @@ public class Student {
 	//단과대학명 조회
 	private String colNm;
 	private int colCd;
-	
+
 	private String empNm;
 	
 	private List<SclHistory> stuSclList; //장학금 내역 조회
-
+  private SclHistory sclHistory; //추천 장학생 상세 조회
 
 
 }
