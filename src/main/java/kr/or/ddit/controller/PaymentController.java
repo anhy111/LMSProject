@@ -72,7 +72,12 @@ public class PaymentController {
 
 	//등록금 납부 관리
 	@GetMapping("/adminPayment")
-	public String adminPayment() {
+	public String adminPayment(Model model) {
+		Payment payment = this.paymentService.sumFee();
+		
+		log.info("납부 payment : " + payment);
+		
+		model.addAttribute("payment", payment);
 		
 		return "payment/adminPayment";
 	}

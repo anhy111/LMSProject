@@ -6,10 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+<title>등록금 납부 관리</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <style>
 #allPayCnt td:first-child{
@@ -36,8 +33,8 @@
 	<div>
 		<i class="mdi mdi-home" style="font-size: 1.3em"></i>
 		<i class="dripicons-chevron-right"></i> 등록 및 장학 
-		<i class="dripicons-chevron-right"></i> <span>등록금</span>
-		<i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">등록금납부관리</span>
+		<i class="dripicons-chevron-right"></i> <span>등록</span>
+		<i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">등록금 납부 관리</span>
 	</div>
 	<br>
 	<br>
@@ -106,13 +103,13 @@
 	</div>
 	<table id='allPayCnt' border="1">
 		<tr>
-			<td>올해 납부되는 등록금 총액</td>
-			<td><fmt:formatNumber value="${paymentVO.payCd }"
+			<td>납부되는 등록금 총액</td>
+			<td><fmt:formatNumber value="${payment.paySumfee }"
 					pattern="#,###" /> (원)</td>
 		</tr>
 		<tr>
-			<td>현재 납부된 등록금 총액</td>
-			<td><fmt:formatNumber value="${paymentVO.payAmt }"
+			<td>납부된 등록금 총액</td>
+			<td><fmt:formatNumber value="${payment.paySumamt }"
 					pattern="#,###" /> (원)</td>
 		</tr>
 	</table>
@@ -134,22 +131,61 @@
 		},
 		success:function(data){
 			console.log("data : " + data);
+			//개수표현
+			$('#cntSpan').text(data.length);
+			
 			let str ="";
 			for(var i=0;i<data.length;i++){
+				if (data[i].payDt != null) {
+					let day = moment(data[i].payDt).format("yyyy-MM-DD");
+					data[i].payDt = day;
+				} else {
+					data[i].payDt = "-";
+				}
+				let fee = data[i].colFee;
+				let numWithCommas1 = addCommas(fee);
+				console.log(numWithCommas1);
+				
+				let sclhAmt = data[i].sclhAmt;
+				let numWithCommas2 = addCommas(sclhAmt);
+				console.log(numWithCommas2);
+				
+				let payAmt = data[i].payAmt;
+				let numWithCommas3 = addCommas(payAmt);
+				console.log(numWithCommas3);
+				
 				str += `
 					<tr>
 					<td>\${i+1}</td>
 					<td>\${data[i].colNm}</td>
 					<td>\${data[i].stuNo}</td>
 					<td>\${data[i].stuNm}</td>
-					<td>\${data[i].payAmt}</td>
-					<td>\${data[i].paySem}</td>
-					<td>\${data[i].stuNm}</td>
-					<td>\${data[i].payYn}</td>
+					<td>\${numWithCommas1}</td>
+					<td>\${numWithCommas2}</td>
+					<td>\${numWithCommas3}</td>
+					<td>\${data[i].payDt}</td>
+					<td class='checklecaAp'>\${data[i].payYn}</td>
 					</tr>
 				`
 			}
 			$("#PaymentList").html(str);
+			
+			//완납, 미납 글자색 변경
+			$(function(){
+				for(var i=0; i<data.length;i++){
+					console.log($(".checklecaAp").eq(i).html());
+					if($(".checklecaAp").eq(i).html() == '미납'){
+						$(".checklecaAp").eq(i).css("color","red");
+					}else if($(".checklecaAp").eq(i).html() == '완납'){
+						$(".checklecaAp").eq(i).css("color","blue");
+					}
+				}
+			});
+			
+			//콤마찍긔
+			function addCommas(num) {
+			  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
 		}
 	});
 </script>

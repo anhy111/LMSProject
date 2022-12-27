@@ -18,7 +18,7 @@
 					</div>
 					<div class="row">
 						<div class="form-group col-2 ">
-							<select id="yr" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+							<select id="yr" class="select2bs4 select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
 								<option value="0">연도</option>
 								<option value="2019">2019</option>
 								<option value="2020">2020</option>
@@ -27,7 +27,7 @@
 							</select>
 						</div>
 						<div class="form-group col-2">
-							<select id="college" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+							<select id="college" class="select2bs4 select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
 								<option value="0">단과대학</option>
 								<c:forEach var="college" items="${collegeList}">
 									<option value="${college.colCd}">${college.colNm}</option>
@@ -45,7 +45,7 @@
 					</div>
 					<div class="row">
 						<div class="form-group col-2 ">
-							<select id="yrSt" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+							<select id="yrSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
 								<option value="0">연도</option>
 								<option value="2019">2019</option>
 								<option value="2020">2020</option>
@@ -54,7 +54,7 @@
 							</select>
 						</div>
 						<div class="form-group col-2">
-							<select id="collegeSt" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+							<select id="collegeSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
 								<option value="0">단과대학</option>
 								<c:forEach var="college" items="${collegeList}">
 									<option value="${college.colCd}">${college.colNm}</option>
@@ -72,7 +72,7 @@
 					</div>
 					<div class="row">
 						<div class="form-group col-2 ">
-							<select id="yrAv" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+							<select id="yrAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 								<option value="0">연도</option>
 								<option value="2019">2019</option>
 								<option value="2020">2020</option>
@@ -80,8 +80,15 @@
 								<option value="2022">2022</option>
 							</select>
 						</div>
+						<div class="form-group col-2 ">
+							<select id="semAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
+								<option value="">학기</option>
+								<option value="1학기">1학기</option>
+								<option value="2학기">2학기</option>
+							</select>
+						</div>
 						<div class="form-group col-2">
-							<select id="collegeAv" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+							<select id="collegeAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 								<option value="0">단과대학</option>
 								<c:forEach var="college" items="${collegeList}">
 									<option value="${college.colCd}">${college.colNm}</option>
@@ -89,14 +96,14 @@
 							</select>
 						</div>
 						<div class="form-group col-2">
-							<select id="departmentAv" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+							<select id="departmentAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 								<option value="0">학과</option>
 							</select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-8">
-							<div id="barchart_values" style="width: 900px; height: 400px;"></div>
+							<div id="evaluation" style="width: 1000px; height: 600px;"></div>
 						</div>
 					</div>
 				</div>
@@ -120,32 +127,21 @@
 			theme : 'bootstrap4'
 		});
 
-		$("#yr").on("change",function(){
+		$(".rc").on("change",function(){
 			recruitmentRateChart();
 		});
 		
-		$("#yrSt").on("change",function(){
+		$(".st").on("change",function(){
 			recordStateChart();
 		});
 		
-		$("#yrAv").on("change",function(){
+		$(".av").on("change",function(){
+			if(this.id == "collegeAv"){
+				departmentByCollege.call(this, "departmentAv");
+			}
 			evaluationChart();
 		});
 		
-		$("#departmentAv").on("change",function(){
-			evaluationChart();
-		});
-		
-		$("#college").on("change", function() {
-			recruitmentRateChart();
-		});
-		$("#collegeSt").on("change", function() {
-			recordStateChart();
-		});
-		$("#collegeAv").on("change", function() {
-			departmentByCollege.call(this, "departmentAv");
-			evaluationChart();
-		})
 	});
 
 	function departmentByCollege(p_id) {
@@ -230,18 +226,13 @@
 		                  ticks: [0, .25, .5, .75, 1]
 		                },
 		                animation:{
-		                    duration: 1500,
+		                    duration: 1000,
 		                    easing: 'out',
 		                    startup : true
 		                }
 		        };
 				var view = new google.visualization.DataView(data);
-		        view.setColumns([0, 1,
-		                         { calc: "stringify",
-		                           sourceColumn: 1,
-		                           type: "string",
-		                           role: "annotation" },
-		                         2]);
+		        view.setColumns([1]);
 				recruitChart = new google.visualization.BarChart(document
 						.getElementById('recruitmentRate'));
 				recruitChart.draw(data, options_fullStacked);
@@ -253,16 +244,16 @@
 
 	function recordStateChart() {
 		
-		let colCdSt = $("#collegeSt").val()
-		let ajaxDataSt = {
+		let colCd = $("#collegeSt").val()
+		let ajaxData = {
 				yr : $("#yrSt").val(),
-				colCd : colCdSt
+				colCd : colCd
 		}
 		
 		$.ajax({
 			url : "/ketIndicators/recordStateChart",
 			type : "get",
-			data : ajaxDataSt,
+			data : ajaxData,
 			success : function(result){
 				console.log(result);
 				let data = new google.visualization.DataTable();
@@ -282,7 +273,7 @@
 				}
 				
 				$.each(result, function(p_inx, keyIndicator){
-					if(colCdSt == 0){
+					if(colCd == 0){
 						arr.push([
 							  keyIndicator.colNm
 						  	, keyIndicator.allStu == 0 ? maxData * 0.02 : keyIndicator.allStu
@@ -306,7 +297,7 @@
 				data.addRows(arr);
 				var options = {
 					height : 500,
-					colors : ["#34314c","#47b8e0","#ffc952","#ff7473","#a5d296"],
+					colors : ["#34314c","#47b8e0","#ffc952","#ff7473","#a5d296","#addeea"],
 					vAxis: {
 						viewWindow:{
 							max : maxData * 1.2,
@@ -314,7 +305,7 @@
 						}
 					},
 					animation:{
-	                    duration: 2000,
+	                    duration: 1000,
 	                    easing: 'out',
 	                    startup : "true"
 	                },
@@ -328,38 +319,68 @@
 	}// end function
 
 	function evaluationChart() {
-		var data = google.visualization.arrayToDataTable([
-				[ "Element", "Density","gg", {
-					role : "style"
-				} ], [ "Copper", 8.94, "#b87333" ],
-				[ "Silver", 10.49, "silver" ], [ "Gold", 19.30, "gold" ],
-				[ "Platinum", 21.45, "color: #e5e4e2" ] ]);
-
-		var view = new google.visualization.DataView(data);
-		view.setColumns([ 0, 1, {
-			calc : "stringify",
-			sourceColumn : 1,
-			type : "string",
-			role : "annotation"
-		}, 2 ]);
-
-		var options = {
-			title : "Density of Precious Metals, in g/cm^3",
-			width : 600,
-			height : 400,
-			bar : {
-				groupWidth : "95%"
-			},
-			legend : {
-				position : "none"
-			},
-			animation:{
-		        duration: 1500,
-		        easing: 'out',
-	      	}
-		};
-		var chart = new google.visualization.BarChart(document
-				.getElementById("barchart_values"));
-		chart.draw(view, options);
+		
+		let colCd = $("#collegeAv").val();
+		let depCd = $("#departmentAv").val();
+		
+		let ajaxData = {
+				yr : $("#yrAv").val(),
+				sem : $("#semAv").val(),
+				colCd : colCd,
+				depCd : depCd
+		}
+		
+		$.ajax({
+			url : "/ketIndicators/evaluationChart",
+			type : "get",
+			data : ajaxData,
+			success : function(result){
+				console.log("evaluationChart : ", result);
+				let data = new google.visualization.DataTable();
+				data.addColumn("string","강의평가 평점평균");
+				data.addColumn("number","평균점수");
+				let arr = [];
+				$.each(result, function(p_inx, keyIndicator){
+					if(colCd == 0){
+						arr.push([
+							  keyIndicator.colNm
+							, keyIndicator.evlRate == 0 ? 0.1 : keyIndicator.evlRate
+						]);
+						return;
+					} else if(colCd != 0 && depCd == 0){
+						arr.push([
+							  keyIndicator.depNm
+							,  keyIndicator.evlRate == 0 ? 0.1 : keyIndicator.evlRate
+						]);
+						return;
+					}
+					arr.push([
+						  keyIndicator.empNm
+						,  keyIndicator.evlRate == 0 ? 0.1 : keyIndicator.evlRate
+					]);
+				});
+				
+				data.addRows(arr);
+				
+				var options = {
+					title : "수강평가 평점평균",
+					height : 600,
+					hAxis: {
+		                  maxValue : 4.5
+		            },
+					legend : {
+						position : "top", maxLines : 4
+					},
+					animation:{
+				        duration: 1000,
+				        easing: 'out',
+				        startup: true
+			      	}
+				};
+				var chart = new google.visualization.BarChart(document
+						.getElementById("evaluation"));
+				chart.draw(data, options);
+			}
+		});
 	}
 </script>

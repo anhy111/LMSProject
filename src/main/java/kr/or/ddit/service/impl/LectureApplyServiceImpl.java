@@ -25,6 +25,11 @@ public class LectureApplyServiceImpl implements LectureApplyService {
     public Professor proInfo(int proNo) {
         return this.lectureApplyMapper.proInfo(proNo);
     }
+    
+    @Override
+    public Professor inquiryFormProInfoStudentApply(int lecaCd) {
+    	return this.lectureApplyMapper.inquiryFormProInfoStudentApply(lecaCd);
+    }
 
 	@Override
 	public List<LecApply> getYrNSem(int proNo) {

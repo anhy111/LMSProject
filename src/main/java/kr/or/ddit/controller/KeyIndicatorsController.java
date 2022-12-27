@@ -64,9 +64,9 @@ public class KeyIndicatorsController {
 	@GetMapping("/evaluationChart")
 	public List<KeyIndicators> evaluationChart(KeyIndicators keyIndicators){
 		log.info("keyIndicators : " + keyIndicators);
-		return null;
+		return this.keyIndicatorsService.evaluationList(keyIndicators);
 	}
 	
-
+	
 }                                                                            
                                                                               
