@@ -70,10 +70,6 @@
 									cursorshover="true" aria-sort="descending">학년</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
 									rowspan="1" colspan="1"
-									aria-label="Platform(s): activate to sort column ascending"
-									cursorshover="true">과목번호</th>
-								<th class="sorting" tabindex="0" aria-controls="example1"
-									rowspan="1" colspan="1"
 									aria-label="Engine version: activate to sort column ascending"
 									cursorshover="true">강의명</th>
 								<th class="sorting" tabindex="0" aria-controls="example1"
@@ -160,7 +156,6 @@
 						<tr>
 						<td>\${data[i].lecaYs}</td>
 						<td>\${data[i].lecaTrg }</td>
-						<td>\${data[i].subCd }</td>
 						<td>\${data[i].lecaNm }</td>
 						<td>\${data[i].lecaCate }</td>
 						<td>\${data[i].lecaCrd }</td>

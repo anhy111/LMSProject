@@ -48,7 +48,7 @@
         border-bottom: 1px solid #eef2f7;
     }
 
-    .icon-lock {
+    .icon-reply {
         width: 20px;
     }
 
@@ -89,24 +89,30 @@
                             <table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
                                 <thead class="table-light">
                                 <tr style="border-top: 2px solid #112a63">
-                                    <th style="width: 5%; text-align: center;">순번</th>
+                                    <th style="width: 5%; text-align: center;">번호</th>
                                     <th style="width: 50%;text-align: center;">제목</th>
-                                    <th style="width: 15%;text-align: center;">등록일</th>
-                                    <th style="width: 15%;text-align: center;">조회수</th>
+                                    <th style="width: 50%;text-align: center;">학번</th>
+                                    <th style="width: 15%;text-align: center;">작성일</th>
+                                    <th style="width: 15%;text-align: center;">조회</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+
+                                <c:set var="length" value="${fn:length(qnaList)}"/>
                                 <c:forEach var="qnaList" items="${qnaList}" varStatus="status">
-                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}" pattern="yyyy.MM.dd"/>
+                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}" pattern="yyyy/MM/dd"/>
                                     <tr>
-                                        <td style="text-align: center;">${status.count}</td>
+                                        <td style="text-align: center;">${length - (status.count-1)}</td>
                                         <td>
                                             <a href="/qna/qnaDetail/${qnaList.qnaCd}/detail" style="color:#6c757d;">
-                                                <c:out value="${qnaList.qnaTtl }" /></a>
-                                            <c:if test="${qnaList.qnaYn == 2}">
-                                                <img src="../../../resources/image/lock.png" alt="lock" class="icon-lock">
+                                                <c:out value="${qnaList.qnaTtl }" />
+                                            <c:if test="${qnaList.qnaReplyCount == 1 }">
+                                                <img src="${pageContext.request.contextPath}/resources/image/replyIcon.jpeg" alt="new"
+                                                     class="icon-reply">
                                             </c:if>
+                                            </a>
                                         </td>
+                                        <td style="text-align: center;">${qnaList.memNo}</td>
                                         <td style="text-align: center;">${qnaRegDate}</td>
                                         <td style="text-align: center;">${qnaList.qnaHit}</td>
                                     </tr>

@@ -37,7 +37,6 @@ public class ManagementOfStudentByProfessorController {
 		List<Student> studentList = this.managementOfStudentByProfessorService.StudentList(professorId);
 		
 		//공통 약속
-		model.addAttribute("bodyTitle","학생관리");
 		model.addAttribute("studentList", studentList);
 		
 		//forwarding
@@ -50,7 +49,6 @@ public class ManagementOfStudentByProfessorController {
 		log.info("학생상세 : " + studentDetail.toString());
 		
 		//공통 약속
-		model.addAttribute("bodyTitle","학생정보상세");
 		model.addAttribute("studentDetail", studentDetail);
 		
 		//forwarding

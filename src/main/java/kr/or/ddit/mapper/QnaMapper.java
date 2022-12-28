@@ -15,7 +15,6 @@ public interface QnaMapper {
     void qnaSave(Qna qna);
 
     //문의게시판/검색결과 리스트 출력
-    @Select("SELECT * FROM qna")
     List<Qna> showList();
 
     @Select("SELECT * FROM qna WHERE qna_cd = #{qnaCd}")
@@ -33,4 +32,7 @@ public interface QnaMapper {
 
     @Select("SELECT * FROM QNA_REPLY WHERE QNA_CD = #{qnaCd}")
     QnaReply qnaReplyFindOne(Long qnaCd);
+
+    @Select("SELECT * FROM QNA_REPLY")
+    List<QnaReply> showReplyList();
 }

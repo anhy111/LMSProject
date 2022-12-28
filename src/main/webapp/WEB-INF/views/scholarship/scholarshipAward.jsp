@@ -169,25 +169,6 @@ color : green;
 	let trs = "";
 	let tdValues = "";
 	
-	function insertCheck(){
-
-	 	$.ajax({
-	 		url : "/scholarship/scholarshipCheck",
-	 		method : "POST",
-	 		dataType : "json",
-	 		beforeSend: function (xhr) {
-				xhr.setRequestHeader(header, token);
-			},
-	 		success : function(result){
-				if(result>0){
-	 			$('#btn1').hide();
-	 			var str ="<span style='color:red;'>&ensp;&ensp;*이미 성적장학금을 수여하였습니다.</span>";
-	 			$('#checkP').append(str);
-				}
-	 		}
-	 	})	
-	};
-	
 	$(document).ready(function () {
 		
 		//장학금 수여대상자 목록
@@ -200,10 +181,6 @@ color : green;
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(data){
-				console.log(data);
-				
-				insertCheck();
-				
 				let str ="";
 				for(var i=0;i<data.length;i++){
 					
@@ -236,58 +213,80 @@ color : green;
 			    for (var i = 0; i < trs.length; i++) {
 			        trs[i].addEventListener('click', function () {
 			        	tdValues = Array.from(this.querySelectorAll('td')).map(td => td.textContent);
-			        	console.log(tdValues[1] + "학번은?");
-			        	
+
 			        	let stuNo = tdValues[1];
-			        	console.log("제이슨 오시나요? " + JSON.stringify(stuNo));
 			        	
-			        	//학생성적상세
+			        	//중복수여 췤
 			    		$.ajax({
-			    			url:"/scholarship/studentInfoList",
-			    			contentType: "application/json;charset=utf-8",
-			    			data: stuNo,
-			    			dataType:'json',
-			    			type: "POST",
-			    			beforeSend: function (xhr) {
+			    	 		url : "/scholarship/scholarshipCheck",
+			    	 		method : "POST",
+			    	 		contentType: "application/json;charset=utf-8",
+			    	 		data: stuNo,
+			    	 		dataType : "json",
+			    	 		beforeSend: function (xhr) {
 			    				xhr.setRequestHeader(header, token);
 			    			},
-			    			success:function(data){
-			    				console.log(data);
-			    				let str ="";
-			    				for(var i=0;i<data.length;i++){
-			    					str += `
-			    						<tr>
-			    						<td>\${data[i].lecaCrd}</td>
-			    						<td>\${data[i].lecaCate}</td>
-			    						<td>\${data[i].lecaNm}</td>
-			    						<td>\${data[i].slScore}</td>
-			    						</tr>
-			    					`
+			    	 		success : function(result){
+			    				if(result>0){
+			    	 			$('#btn1').hide();
+			    	 			var str ="<span style='color:red;'>&ensp;&ensp;*이미 성적장학금을 수여하였습니다.</span>";
+			    	 			$('#checkP').append(str);
 			    				}
-			    				$("#StuInfoList").html(str);
-			    				
-			    			}
-			    		});
+			    	 		}
+			    	 	});
 			        	
+				        	//학생성적상세
+				    		$.ajax({
+				    			url:"/scholarship/studentInfoList",
+				    			contentType: "application/json;charset=utf-8",
+				    			data: stuNo,
+				    			dataType:'json',
+				    			type: "POST",
+				    			beforeSend: function (xhr) {
+				    				xhr.setRequestHeader(header, token);
+				    			},
+				    			success:function(data){
+				    				let str ="";
+				    				for(var i=0;i<data.length;i++){
+				    					str += `
+				    						<tr>
+				    						<td>\${data[i].lecaCrd}</td>
+				    						<td>\${data[i].lecaCate}</td>
+				    						<td>\${data[i].lecaNm}</td>
+				    						<td>\${data[i].slScore}</td>
+				    						</tr>
+				    					`
+				    				}
+				    				$("#StuInfoList").html(str);
+				    				
+				    			}
+				    		});
 			        });
 			    }
 			}
 		});
 		
 		$('#btn1').on('click',function(){
+			const number = tdValues[8].replaceAll(",", "");
+			let insertScholarship = {
+					sclCd : tdValues[7],
+					stuNo : tdValues[1],
+					sclhAmt : number,
+			};
 			var submitCheck = confirm("성적장학금을 수여하시겠습니까?");
-			console.log("");
 			if(submitCheck){
 				$.ajax({
 					url : "/scholarship/scholarshipConfer",
 					type : "POST",
-					data : JSON.stringify(),
+					data : JSON.stringify(insertScholarship),
 					dataType:'json',
-					contentType: 'application/json',
+					beforeSend: function (xhr) {
+	    				xhr.setRequestHeader(header, token);
+	    			},
+					contentType: 'application/json;charset=utf-8',
 					success : function(result){
 		             	if(result>0){
 		             	alert("성적장학금이 수여되었습니다.");
-		             	insertCheck();
 		             	}
 		             }
 				})

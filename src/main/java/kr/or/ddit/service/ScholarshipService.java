@@ -11,7 +11,7 @@ public interface ScholarshipService {
 
 	public List<SclHistory> scholarshipAwardList();
 
-	public int scholarshipCheck();
+	public int scholarshipCheck(int stuNo);
 
 	public List<SclHistory> studentInfoList(int stuNo);
 

@@ -96,7 +96,7 @@
 	    		<td>
 		    		<input type="text" name="subNm" size=30 value="${lecApplyList[0].subNm }" disabled>
 	    		</td>
-	    		<th>학수번호</th>
+	    		<th>과목번호</th>
 	    		<td>
 	    			<input type="text" name="subCd" size=30 value="${lecApplyList[0].subCd }" disabled>
 	    		</td>

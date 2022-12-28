@@ -24,7 +24,6 @@ public class LecNoticeController {
 			List<LecNotice> lectureNoticeList = this.lecNoticeService.LectureNoticeList();
 			
 			//공통 약속
-			model.addAttribute("bodyTitle","공지사항목록");
 			model.addAttribute("lectureNoticeList", lectureNoticeList);
 			
 			//forwarding
