@@ -1,6 +1,8 @@
 package kr.or.ddit.service;
 
 import kr.or.ddit.domain.qna.Qna;
+import kr.or.ddit.domain.qna.qnareply.QnaReply;
+
 import java.util.List;
 
 public interface QnaService {
@@ -22,4 +24,11 @@ public interface QnaService {
     //게시글 삭제
     void delete(Long qnaCd);
 
+    void updateViewCount(Long qnaCd);
+
+    void qnaReplySave(QnaReply qnaReply);
+
+    QnaReply findReplyOne(Long qnaCd);
+
+    List<QnaReply> showReplyList();
 }

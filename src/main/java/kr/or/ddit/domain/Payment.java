@@ -13,6 +13,8 @@ public class Payment {
 	private int payAmt;	//납부금액
 	private String payYn;	//납부상태
 	
+	private String payDate;
+	
 	private int paySumfee;	//납부되는 등록금 총액
 	private int paySumamt;	//납부된 등록금 총액
 	

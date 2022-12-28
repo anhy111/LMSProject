@@ -25,7 +25,6 @@ public class ApprovalController {
 		log.info("approvalList : " + approvalList);
 		
 		//공통 약속
-		model.addAttribute("bodyTitle","결재요청목록");
 		model.addAttribute("approvalList", approvalList);
 		
 		//forwarding

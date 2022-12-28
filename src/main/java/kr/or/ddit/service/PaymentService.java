@@ -17,5 +17,7 @@ public interface PaymentService {
 
 	public List<Payment> adminPaymentList();
 
+	public List<Payment> stuPaymentList(int stuNo);
+
 
 }

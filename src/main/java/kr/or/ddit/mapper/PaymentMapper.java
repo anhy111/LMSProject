@@ -21,4 +21,7 @@ public interface PaymentMapper {
 	
 	//등록금 납부 관리 리스트
 	public List<Payment> adminPaymentList();
+	
+	//학생 등록금 납부내역 리스트
+	public List<Payment> stuPaymentList(int stuNo);
 }

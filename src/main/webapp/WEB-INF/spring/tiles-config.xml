@@ -148,6 +148,10 @@
 	<definition name="counsel/studentside/checkReject" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/counsel/studentside/checkReject.jsp" />
 	</definition>
+	
+	<definition name="record/apply" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/record/apply.jsp" />
+	</definition>
 
 </tiles-definitions>
 

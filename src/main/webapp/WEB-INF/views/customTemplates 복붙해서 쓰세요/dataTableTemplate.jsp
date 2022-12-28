@@ -43,3 +43,10 @@
 		</tbody>
 	</table>
 </div>
+
+			<div class="col-12" style="text-align: end;padding-right:20px;">
+			<a class="btn btn-sm btn-outline-primary" href="#" >등록</a>
+			<a class="btn btn-sm btn-outline-danger" href="#">삭제</a>
+			<a class="btn btn-sm btn-outline-info" href="#">목록</a>
+			</div>
+</div>

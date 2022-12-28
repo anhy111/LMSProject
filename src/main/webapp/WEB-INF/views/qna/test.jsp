@@ -47,6 +47,11 @@
     .table {
         border-bottom: 1px solid #eef2f7;
     }
+
+    .icon-reply {
+        width: 20px;
+    }
+
 </style>
 
 <%
@@ -84,29 +89,32 @@
                             <table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
                                 <thead class="table-light">
                                 <tr style="border-top: 2px solid #112a63">
-                                    <th style="width: 5%; text-align: center;">순번</th>
+                                    <th style="width: 5%; text-align: center;">번호</th>
                                     <th style="width: 50%;text-align: center;">제목</th>
-                                    <th style="width: 15%;text-align: center;">등록일</th>
-                                    <th style="width: 15%;text-align: center;">조회수</th>
-                                    <th style="width: 15%;text-align: center;">공개여부</th>
+                                    <th style="width: 50%;text-align: center;">학번</th>
+                                    <th style="width: 15%;text-align: center;">작성일</th>
+                                    <th style="width: 15%;text-align: center;">조회</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+
+                                <c:set var="length" value="${fn:length(qnaList)}"/>
                                 <c:forEach var="qnaList" items="${qnaList}" varStatus="status">
-                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}"
-                                                    pattern="yyyy.MM.dd"/>
+                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}" pattern="yyyy/MM/dd"/>
                                     <tr>
-                                        <td style="text-align: center;">${status.count}</td>
+                                        <td style="text-align: center;">${length - (status.count-1)}</td>
                                         <td>
-                                            <c:if test="${ date <= qnaRegDate }">
-                                                    <span class="badge badge-outline-warning badge-pill"
-                                                          style="float:end;">NEW</span>
+                                            <a href="/qna/qnaDetail/${qnaList.qnaCd}/detail" style="color:#6c757d;">
+                                                <c:out value="${qnaList.qnaTtl }" />
+                                            <c:if test="${qnaList.qnaReplyCount == 1 }">
+                                                <img src="${pageContext.request.contextPath}/resources/image/replyIcon.jpeg" alt="new"
+                                                     class="icon-reply">
                                             </c:if>
-                                            <a href="/qna/qnaDetail/${list.qnaCd}/detail" style="color:#6c757d;"><c:out value="${qnaList.qnaTtl }" /></a>
+                                            </a>
                                         </td>
-                                        <td style="text-align: center;">${qnaList.qnaCd}</td>
-                                        <td style="text-align: center;">${qnaList.qnaYn}</td>
-                                        <td style="text-align: center;">${qnaList.qnaYn}</td>
+                                        <td style="text-align: center;">${qnaList.memNo}</td>
+                                        <td style="text-align: center;">${qnaRegDate}</td>
+                                        <td style="text-align: center;">${qnaList.qnaHit}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

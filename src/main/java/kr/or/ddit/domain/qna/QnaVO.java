@@ -1,7 +1,7 @@
 package kr.or.ddit.domain.qna;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import kr.or.ddit.domain.qna.qnareply.QnaReplyVO;
+import kr.or.ddit.domain.qna.qnareply.QnaReply;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -33,7 +33,7 @@ public class QnaVO {
 
     private int rnum;
 
-    private QnaReplyVO qnaReplyVO;
+    private QnaReply qnaReplyVO;
 
     public QnaVO(String qnaTtl, String qnaCon) {
         this.qnaTtl = qnaTtl;

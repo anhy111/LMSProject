@@ -14,7 +14,7 @@ public interface ScholarshipMapper {
 	public List<SclHistory> scholarshipAwardList();
 	
 	//장학금 수여자 확인
-	public int scholarshipCheck();
+	public int scholarshipCheck(int stuNo);
 	
 	//장학금 수여학생 정보 가져오긔
 	public List<SclHistory> studentInfoList(int stuNo);
