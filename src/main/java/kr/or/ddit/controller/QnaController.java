@@ -37,12 +37,8 @@ public class QnaController {
         // 목록 조회
         List<Qna> showList = qnaService.showList();
 
-        // 댓글 조회
-//        List<QnaReply> qnaReplies = qnaService.showReplyList();
-
         model.addAttribute("qnaList", showList);
         model.addAttribute("totalRow", totalRow);
-//        model.addAttribute("showReplyList", qnaReplies);
 
         return "qna/test";
     }

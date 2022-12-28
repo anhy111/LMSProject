@@ -94,6 +94,10 @@
 	<definition name="scholarship/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/scholarship/{1}.jsp" />
 	</definition>
+
+	<definition name="bambooboard/*" extends="tiles-layout">
+		<put-attribute name="body" value="/WEB-INF/views/bambooboard/{1}.jsp" />
+	</definition>
 	
 	<definition name="customTemplates 복붙해서 쓰세요/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/customTemplates 복붙해서 쓰세요/{1}.jsp" />
