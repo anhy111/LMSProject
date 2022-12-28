@@ -371,5 +371,7 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-acl:5.0.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:5.2.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: javax.websocket:javax.websocket-api:1.1" level="project" />
   </component>
 </module>

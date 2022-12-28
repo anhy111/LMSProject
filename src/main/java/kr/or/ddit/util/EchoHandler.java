@@ -11,7 +11,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class EchoHandler extends TextWebSocketHandler{
+public class  EchoHandler extends TextWebSocketHandler{
 
 	
 	private static List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();

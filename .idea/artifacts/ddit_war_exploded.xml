@@ -339,6 +339,8 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:5.0.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.5.4" />
           <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-websocket:5.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.websocket:javax.websocket-api:1.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">
