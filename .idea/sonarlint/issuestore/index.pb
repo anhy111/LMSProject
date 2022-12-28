@@ -7,8 +7,6 @@ t
 Dsrc/main/java/kr/or/ddit/service/impl/FacilityMemberServiceImpl.java,0\5\050bd2a94e3e8bb79918b84d973be599b8c21e3f
 i
 9src/main/java/kr/or/ddit/mapper/FacilityMemberMapper.java,f\4\f417f8f673dc51f60cc2be8e58ccadc4a78c64d2
-i
-9src/main/java/kr/or/ddit/service/impl/QnaServiceImpl.java,b\7\b7302e4b5dcbecfcbfd81a62281754c947667d18
 p
 @src/main/java/kr/or/ddit/domain/facility/FacilityScheduleVO.java,c\a\caf16751923382d78d3becd20a72ca1e6b043234
 j

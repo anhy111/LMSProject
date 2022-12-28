@@ -31,14 +31,18 @@ public class QnaController {
     @GetMapping("/main")
     public String qna(Model model) {
 
+        // 조회수 조회
         int totalRow = this.qnaService.getQnaTotalRow();
 
+        // 목록 조회
         List<Qna> showList = qnaService.showList();
+
+        // 댓글 조회
+//        List<QnaReply> qnaReplies = qnaService.showReplyList();
 
         model.addAttribute("qnaList", showList);
         model.addAttribute("totalRow", totalRow);
-
-        log.info(showList.toString());
+//        model.addAttribute("showReplyList", qnaReplies);
 
         return "qna/test";
     }
@@ -72,11 +76,9 @@ public class QnaController {
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
         Qna qna = qnaService.findOne(qnaCd);
 
-        log.info("111111111111");
         // 댓글 조회
         QnaReply qnaReply = qnaService.findReplyOne(qnaCd);
         model.addAttribute("qnaReply", qnaReply);
-
         // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
         model.addAttribute("form", qna);
 
@@ -109,7 +111,7 @@ public class QnaController {
 
         qnaService.delete(qnaCd);
 
-        return "redirect:/qna/main";
+        return MAIN;
     }
 
     @PostMapping("/qnaDetail/{form.qnaCd}/addReply")
@@ -120,7 +122,7 @@ public class QnaController {
 
         qnaService.qnaReplySave(qnaReply);
 
-        return "redirect:/qna/qnaDetail/"+parentId+"/detail";
+        return "redirect:/qna/qnaDetail/" + parentId + "/detail";
     }
 
 }
