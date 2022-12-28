@@ -151,7 +151,6 @@
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<li class="nav-header">교수 어사이드</li>
 					<li class="nav-item"><a href="#" class="nav-link">
-
 							<p>
 								강의 <i class="right fas fa-angle-left"></i>
 							</p>
@@ -161,9 +160,6 @@
 								class="nav-link">  
 									<p>전체 강의 조회</p>
 							</a></li>
-
-							<li class="nav-item"><a href="/professor/lecApply/inquiry"
-								class="nav-link">  
 
 							<li class="nav-item"><a href="/professor/lecApply/inquiry" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
@@ -201,7 +197,6 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-
 							<li class="nav-item"><a href="/professor/stuManageOfPro"
 								class="nav-link">
 
@@ -213,7 +208,7 @@
 
 										<p>장학생 추천 목록</p>
 								</a></li>
-
+							</sec:authorize>
 							<li class="nav-item">
 								<a href="/professor/stuManageOfPro" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
