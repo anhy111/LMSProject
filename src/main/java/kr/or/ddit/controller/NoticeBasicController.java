@@ -1,15 +1,11 @@
 package kr.or.ddit.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
 import kr.or.ddit.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,39 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Slf4j
 @Controller
 @RequestMapping("/notice")
 @RequiredArgsConstructor // 어노테이션이 궁금하면 생성자 주입과 관련해서 찾아보시길..!
 public class NoticeBasicController {
-
-//    @GetMapping("/editArticle/{id}")
-//    public String editArticle(@PathVariable int id, Model model, Principal principal) {
-//
-//        // Get the current user
-//        String username = principal.getName();
-//
-//        // Check if the user has the "writer" role
-//        boolean isWriter = false;
-//        for (GrantedAuthority authority : SecurityContextHolder.getContext().getAuthentication().getAuthorities()) {
-//            if (authority.getAuthority().equals("ROLE_STUDENT")) {
-//                isWriter = true;
-//                break;
-//            }
-//        }
-//
-//        if (isWriter) {
-//            // User has the "writer" role, so they are allowed to edit the article
-//            Article article = articleService.getArticleById(id);
-//            model.addAttribute("article", article);
-//            return "editArticle";
-//        } else {
-//            // User does not have the "writer" role, so they are not allowed to edit the article
-//            return "test/home";
-//        }
-//    }
 
     /**
      * DI(의존성 주입)을 하는 방법에는 3가지가 있다.
@@ -69,7 +37,7 @@ public class NoticeBasicController {
 
     //공지사항 리스트
     @GetMapping("/list")
-    public String noticeList(Model model) {
+    public String testHome(Model model) {
 
         int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
 
@@ -78,12 +46,12 @@ public class NoticeBasicController {
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
 
-        return "notice/list";
+        return "notice/test";
     }
 
     //공지사항 등록 폼
     @GetMapping("/noticeForm")
-    public String createNoticeForm(NoticeForm form, Model model) {
+    public String createNoticeForm (NoticeForm form, Model model) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
@@ -93,14 +61,9 @@ public class NoticeBasicController {
 
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
-    public String createNotice(NoticeForm form,
-                               @RequestParam MultipartFile[] files2,
-                               HttpServletRequest request) {
-
-        // IP 저장 가능하지만, 로컬 서버 0:0:0:0:0:0:0:1
-        String clientIp = request.getRemoteAddr();
-
-        log.info(clientIp);
+    public String createNotice (NoticeForm form,
+                                @RequestParam MultipartFile[] files2
+                                ) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
@@ -117,6 +80,8 @@ public class NoticeBasicController {
     //공지사항 상세페이지
     @GetMapping("/list/{noticeBasic.noticeCd}/detail")
     public String detail(@PathVariable("noticeBasic.noticeCd") Long noticeCd, Model model) {
+
+        noticeBasicService.updateViewCount(noticeCd);
 
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
         NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
@@ -157,17 +122,6 @@ public class NoticeBasicController {
 
     //공지사항 등록
 
-    @GetMapping("/test")
-    public String testHome(Model model) {
 
-        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
-
-        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
-
-        model.addAttribute("noticeBasicList", noticeBasicList);
-        model.addAttribute("totalRow", totalRow);
-
-        return "notice/test";
-    }
 
 }

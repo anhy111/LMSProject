@@ -9,7 +9,7 @@
 		<if test="colCd == 0">
 			WITH T AS (
 			    SELECT
-			        NVL(COUNT(S.STU_NO),0) RECRUITMENT_RATE,
+			        NVL(COUNT(S.STU_NO),0) RECRUITMENT_RATE, 
 			        C.COL_NM,
 			        C.COL_CD
 			    FROM
@@ -36,7 +36,19 @@
 			            DEPARTMENT DE
 			        WHERE
 			            DE.COL_CD = TC.COL_CD
-			    ) CAPACITY
+			    ) 
+			    <if test="yr == 0">
+			    <![CDATA[
+			    * (
+                        SELECT
+                        (SELECT MAX(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4)   <= TO_CHAR(SYSDATE,'YYYY'))
+                        - (SELECT MIN(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4) <= TO_CHAR(SYSDATE,'YYYY'))
+                        + 1 
+                        FROM DUAL
+                   ) 
+                ]]>
+                </if>
+			    CAPACITY
 			  FROM
 			    T,
 			    COLLEGE TC
@@ -64,8 +76,20 @@
 			) SELECT
 			    NVL(T.RECRUITMENT_RATE,0) RECRUITMENT_RATE,
 			    TD.DEP_NM,
-			    TD.DEP_CD,
-			    TD.DEP_CAP CAPACITY
+			    TD.DEP_CD, 
+			    TD.DEP_CAP
+			    <if test="yr == 0">
+			    <![CDATA[
+			    * (
+                        SELECT
+                        (SELECT MAX(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4)   <= TO_CHAR(SYSDATE,'YYYY'))
+                        - (SELECT MIN(SUBSTR(SS.STU_NO,1,4)) FROM STUDENT SS WHERE SUBSTR(SS.STU_NO,1,4) > 2000 AND SUBSTR(SS.STU_NO,1,4) <= TO_CHAR(SYSDATE,'YYYY'))
+                        + 1 
+                        FROM DUAL
+                   ) 
+                ]]>
+                </if>
+                 CAPACITY
 			  FROM
 			    T,
 			    DEPARTMENT TD

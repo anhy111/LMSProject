@@ -5,6 +5,7 @@
 	<title>Home</title>
 </head>
 <body>
+<jsp:include page="popup.jsp"/>
 <h1>
 	Hello world!  
 </h1>

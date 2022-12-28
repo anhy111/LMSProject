@@ -34,7 +34,7 @@
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-				<!-- 수강관리 -->
+				<!-- 학생 수강관리 ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★-->
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
 							<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
@@ -188,7 +188,7 @@
 <!-- 							<p>상담</p> -->
 <!-- 					</a></li> -->
 				</sec:authorize>
-				<!-- 교수 어사이드 -->
+				<!-- 교수 어사이드 수강관리 ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
@@ -231,7 +231,7 @@
 							</p>
 						</a>
 					</li><li class="nav-item">
-						<a href="#" class="nav-link"> 
+						<a href="/lectureBoard/attendence/attendence?lecaCd=${param.lecaCd}" class="nav-link"> 
 							<i class="nav-icon fas fa-copy"></i>
 							<p>
 								출결 </i>

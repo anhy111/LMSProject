@@ -49,6 +49,11 @@
 		<typeAlias type="kr.or.ddit.domain.StudentTest" alias="stuTest"/>
 		<typeAlias type="kr.or.ddit.domain.StudentTestDetail" alias="std"/>
 
+		<typeAlias type="kr.or.ddit.domain.Attendence" alias="attendence"/>
+
+
+		<typeAlias type="kr.or.ddit.domain.qna.qnareply.QnaReply" alias="qnaReply"/>
+
 
 		<!-- 시설예약 시작 -->
         <typeAlias type="kr.or.ddit.domain.facility.FacilityScheduleVO" alias="facilityScheduleVO"/>

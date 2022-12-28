@@ -47,6 +47,11 @@
     .table {
         border-bottom: 1px solid #eef2f7;
     }
+
+    .icon-lock {
+        width: 20px;
+    }
+
 </style>
 
 <%
@@ -88,25 +93,22 @@
                                     <th style="width: 50%;text-align: center;">제목</th>
                                     <th style="width: 15%;text-align: center;">등록일</th>
                                     <th style="width: 15%;text-align: center;">조회수</th>
-                                    <th style="width: 15%;text-align: center;">공개여부</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach var="qnaList" items="${qnaList}" varStatus="status">
-                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}"
-                                                    pattern="yyyy.MM.dd"/>
+                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}" pattern="yyyy.MM.dd"/>
                                     <tr>
                                         <td style="text-align: center;">${status.count}</td>
                                         <td>
-                                            <c:if test="${ date <= qnaRegDate }">
-                                                    <span class="badge badge-outline-warning badge-pill"
-                                                          style="float:end;">NEW</span>
+                                            <a href="/qna/qnaDetail/${qnaList.qnaCd}/detail" style="color:#6c757d;">
+                                                <c:out value="${qnaList.qnaTtl }" /></a>
+                                            <c:if test="${qnaList.qnaYn == 2}">
+                                                <img src="../../../resources/image/lock.png" alt="lock" class="icon-lock">
                                             </c:if>
-                                            <a href="/qna/qnaDetail/${list.qnaCd}/detail" style="color:#6c757d;"><c:out value="${qnaList.qnaTtl }" /></a>
                                         </td>
-                                        <td style="text-align: center;">${qnaList.qnaCd}</td>
-                                        <td style="text-align: center;">${qnaList.qnaYn}</td>
-                                        <td style="text-align: center;">${qnaList.qnaYn}</td>
+                                        <td style="text-align: center;">${qnaRegDate}</td>
+                                        <td style="text-align: center;">${qnaList.qnaHit}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

@@ -1,6 +1,7 @@
 package kr.or.ddit.service.impl;
 
 import kr.or.ddit.domain.qna.Qna;
+import kr.or.ddit.domain.qna.qnareply.QnaReply;
 import kr.or.ddit.mapper.QnaMapper;
 import kr.or.ddit.service.QnaService;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +47,20 @@ public class QnaServiceImpl implements QnaService {
     @Override
     public void delete(Long qnaCd) {
         this.qnaMapper.delete(qnaCd);
+    }
+
+    @Override
+    public void updateViewCount(Long qnaCd) {
+        this.qnaMapper.updateViewCount(qnaCd);
+    }
+
+    @Override
+    public void qnaReplySave(QnaReply qnaReply) {
+        this.qnaMapper.qnaReplySave(qnaReply);
+    }
+
+    @Override
+    public QnaReply findReplyOne(Long qnaCd) {
+       return this.qnaMapper.qnaReplyFindOne(qnaCd);
     }
 }

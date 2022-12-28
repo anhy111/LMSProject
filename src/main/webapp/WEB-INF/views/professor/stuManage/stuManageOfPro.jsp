@@ -1,18 +1,30 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<% 
+Date nowTime = new Date();
+SimpleDateFormat date = new SimpleDateFormat("yyyy년   MM월   dd일"); 
+
+String name = String.valueOf(session.getAttribute("name"));
+%>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/schRcmd.css">
 <script type="text/javascript">
 function fn_add(data){
 	
 	$("#stuImg").attr("src", "/upload"+data.stuPic);
 	$("#stuNo").attr("value", data.stuNo);
+	$(".stuNo").html(data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
+	$(".stuNm").html(data.stuNm);
 	$("#stuNme").attr("value", data.stuNme);
 	$('#colCd').val(data.colNm);
 	$('#department').val(data.depNm);
+	$('.depNm').html(data.depNm);
 	$('#stuYr').val(data.stuYr);
 	$('#stuSem').val(data.stuSem);
 	$("#stuBir").attr("value", data.stuBir);
@@ -21,6 +33,7 @@ function fn_add(data){
 	$("#stuZip").attr("value", data.stuZip);
 	$("#stuAddr1").attr("value", data.stuAddr1);
 	$("#stuAddr2").attr("value", data.stuAddr2);
+	$("#proNo").attr("value", data.proNo);
 	
 }
 
@@ -55,7 +68,7 @@ $(function(){
 				let str = "";
 				if(data.stuSclList != null && data.stuSclList.length != 0){
 					for(let i=0; i < data.stuSclList.length; i++){
-						console.log("오라고 제발 ㅠ  " + data.stuSclList[i].sclhRcmd );
+						console.log("오라고 제발 ㅠ  " + data.stuSclList[i].empNm );
 						
 						str += `
 						<tr>
@@ -63,7 +76,7 @@ $(function(){
 							<td>\${data.stuSclList[i].sclNm}</td>
 							<td>\${data.stuSclList[i].sclhYr}년 \${data.stuSclList[i].sclhSem}학기</td>
 							<td>\${data.stuSclList[i].sclhAmt}</td>
-							<td>\${data.stuSclList[i].empNm}교수</td>
+							<td>\${data.stuSclList[i].empNm}</td>
 						</tr>
 						
 						`
@@ -83,6 +96,71 @@ $(function(){
 			error:function(request, status, error){
 				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
+			
+		});
+		
+	});
+	$().ready(function () {
+		$("#recommendation").on("click", function(){
+	// 		alert("하이")
+	
+			let stuNo = $(".stuNo").val();
+			let proNo = $("#proNo").val();
+			let sclhRcmd = $("#sclhRcmd").val();
+			
+			console.log("stuNo: " + stuNo + " proNo: " + proNo + " sclhRcmd: " + sclhRcmd)
+	
+			let data = {
+				"stuNo":stuNo,
+				"proNo":proNo,
+				"sclhRcmd":sclhRcmd
+			}
+			Swal.fire({
+	            title: '본 학생을 추천 하시겠습니까?',
+	            text: "",
+	            icon: 'question',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: '확인',
+	            cancelButtonText: '취소'
+			 }).then(function(dlt) {
+				if(dlt.isConfirmed){
+					$.ajax({
+						type: 'post',
+						url: '/professor/recommendationStu',
+						contentType:"application/json;charset=utf-8",
+						data:JSON.stringify(data),
+						beforeSend:function(xhr){
+							xhr.setRequestHeader(header, token);
+						},
+						success :function(data){
+							console.log("insert성공이라해주라 ", data);
+							
+			                Swal.fire(
+			                    '추천 완료',
+			                    '정상적으로 장학생 추천 되었습니다.',
+			                    'success'
+			                ).then(function(){
+			                	$("#sclhRcmd").html("");
+					        	window.location.reload(true);			        	
+					        });
+				            
+						},
+						error:function(request, status, error){
+							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							 Swal.fire(
+							      	"추천 실패",
+							        "에러 났어요!", // had a missing comma
+							        "error"
+							      )
+						}
+						
+					});
+				
+				}
+				
+			});
 			
 		});
 		
@@ -172,13 +250,13 @@ $(function(){
 									<div class="row mt-1 mb-2">
 										<div class="col-10">
 											<label for="stuNo" class="form-label">학번</label> 
-											<input type="text" class="form-control" id="stuNo" name="stuNo" readonly />
+											<input type="text" class="form-control stuNo" id="stuNo" name="stuNo" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
 										<div class="col-10">
 											<label for="stuNm" class="form-label">이름</label> 
-											<input type="text" class="form-control stu" id="stuNm" name="stuNm" readonly />
+											<input type="text" class="form-control stu stuNm" id="stuNm" name="stuNm" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
@@ -289,7 +367,7 @@ $(function(){
 						</div>
 
 						<div class="card-body table-responsive p-0"
-							style="height: 300px;">
+							style="height: 230px;">
 							<table class="table table-head-fixed text-nowrap">
 								<thead>
 									<tr>
@@ -301,13 +379,6 @@ $(function(){
 									</tr>
 								</thead>
 								<tbody id="sclList">
-									<tr>
-										<td>183</td>
-										<td>John Doe</td>
-										<td>11-7-2014</td>
-										<td><span class="tag tag-success">Approved</span></td>
-										<td>하이</td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -323,9 +394,33 @@ $(function(){
 		</div>
 	</div>
 	<!-- 추천사유-->
+<!-- 	<div class="modal fade" id="modal-default" -->
+<!-- 		style="display: none; z-index: 1041" aria-hidden="true"> -->
+<!-- 		<div class="modal-dialog modal-dialog-centered"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-header"> -->
+<!-- 					<h4 class="modal-title">장학생 추천</h4> -->
+<!-- 					<button type="button" class="close" data-dismiss="modal" -->
+<!-- 						aria-label="Close"> -->
+<!-- 						<span aria-hidden="true">×</span> -->
+<!-- 					</button> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-body"> -->
+<!-- 					<div class="mb-3"> -->
+<!-- 						<label for="sclhRcmd" class="col-form-label">장학생 추천 사유를 입력해주세요.</label> -->
+<!-- 						<textarea class="form-control sclhRcmd" rows="7"></textarea> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-footer justify-content-between"> -->
+<!-- 					<button type="button" id="recommendation" -->
+<!-- 						class="btn btn-block btn-success">추천</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 	<div class="modal fade" id="modal-default"
 		style="display: none; z-index: 1041" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">장학생 추천</h4>
@@ -334,10 +429,125 @@ $(function(){
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<div class="mb-3">
-						<label for="sclhRcmd" class="col-form-label">장학생 추천 사유를 입력해주세요.</label>
-						<textarea class="form-control sclhRcmd" rows="7"></textarea>
+				<div class="modal-body" style="padding:0px;">
+
+
+					<div class="hpa" style="width: 210mm; height: 296.99mm;">
+						<div class="hcD" style="left: 20mm; top: 25mm;">
+							<div class="hcI">
+								<div class="hls ps19"
+									style="line-height: 8.29mm; white-space: nowrap; left: 0mm; top: -0.44mm; height: 8.82mm; width: 170mm;">
+									<span class="hrt cs12">장학생 추천서</span>
+								</div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 13.90mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps20" style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 20.67mm; height: 4.23mm; width: 170mm;">
+									<div style="position:absolute;right: 90px;">
+										<span class="hrt cs9" style="position:static;">학과 :</span>
+										<span class="hrt cs9 depNm"></span>
+									</div>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+								</div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 27.45mm; height: 4.23mm; width: 170mm;">
+									<div style="position:absolute;right: 90px;">
+										<span class="hrt cs9" style="position:static;">학번 :</span>
+										<span class="hrt cs9 stuNo"></span>
+									</div>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+								</div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 34.22mm; height: 4.23mm; width: 170mm;">
+									<div style="position:absolute;right: 90px;">
+										<span class="hrt cs9" style="position:static;">성명 :</span>
+										<span class="hrt cs9 stuNm"></span>
+									</div>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+								</div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 40.99mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps0"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 47.77mm; height: 4.23mm; width: 170mm;">
+									<span class="hrt cs9">◎ 추천 사유 :</span>
+								</div>
+								<div class="hls ps0"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 54.54mm; height: 4.23mm; width: 0mm;"></div>
+								<div class="hls ps0"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 120.96mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps0"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 127.73mm; height: 4.23mm; width: 170mm;">
+									<span class="hrt cs9">위와 같이 장학생을 추천합니다.&nbsp;</span>
+								</div>
+								<div class="hls ps19"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 134.51mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps19"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 141.28mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 148.05mm; height: 4.23mm; width: 170mm;">
+									<span class="hrt cs10">추천교수 : &nbsp;</span>
+									<span class="hrt cs10" id="empNm"><%=name %></span>
+									<span class="htC" style="left: 1.06mm; width: 9.17mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<img alt="" src="/resources/upload/img/교수도장sh.jpg">
+									<span class="hrt cs10">(인)</span>
+								</div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 154.83mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 161.60mm; height: 4.23mm; width: 170mm;">
+									<span class="hrt cs10">학과장 : &nbsp;</span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="hrt cs10">(인)</span>
+								</div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 168.37mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps20"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 175.15mm; height: 4.23mm; width: 170mm;">
+									<span class="hrt cs10">관리자 : &nbsp;</span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
+									<span class="hrt cs10">(인)</span>
+								</div>
+								<div class="hls ps19"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 181.92mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps19"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 188.69mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps19"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 195.47mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps19"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 202.24mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps19"
+									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 209.01mm; height: 4.23mm; width: 170mm;"></div>
+								<div class="hls ps19"
+									style="line-height: 4.44mm; white-space: nowrap; left: 0mm; top: 215.73mm; height: 5.29mm; width: 170mm;">
+<!-- 									<span class="hrt cs11">2023년&nbsp;</span> -->
+<!-- 									<span class="htC" style="left: 1.32mm; width: 5.51mm; height: 100%;"></span> -->
+<!-- 									<span class="hrt cs11">&nbsp;월</span> -->
+<!-- 									<span class="htC" style="left: 1.32mm; width: 3.53mm; height: 100%;"></span> -->
+<!-- 									<span class="hrt cs11">&nbsp;&nbsp;일</span> -->
+									<span class="hrt cs11"><%= date.format(nowTime) %></span>
+								</div>
+								<div class="hls ps19"
+									style="line-height: 21.71mm; white-space: nowrap; left: 0mm; top: 224.47mm; height: 21.71mm; width: 170mm;">
+									<div class="hsR"
+										style="top: 0mm; left: 0mm; margin-bottom: 0mm; margin-right: 0mm; width: 86.99mm; height: 21.71mm; display: inline-block; position: relative; vertical-align: middle; background-repeat: no-repeat;"></div>
+								</div>
+							</div>
+						</div>
+						<div class="htb"
+							style="left: 21mm; width: 170.97mm; top: 80.75mm; height: 66.42mm;">
+							<textarea rows="10" cols="90" placeholder="취득한 자격증과 학과 전공과의 연관성" id="sclhRcmd"></textarea>
+						</div>
+						<div style="text-align:center; margin-top: 125%;">
+							<img alt="" src="/resources/upload/img/yeonSu_logo.png">
+						</div>
+						<input type="hidden" id="proNo">
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">

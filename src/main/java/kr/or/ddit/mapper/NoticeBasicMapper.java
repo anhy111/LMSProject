@@ -31,5 +31,6 @@ public interface NoticeBasicMapper {
     //공지사항 삭제
     void noticeBasicDelete(Long noticeCd);
 
-
+    @Select("UPDATE NOTICE_BASIC SET NOTICE_HIT = NOTICE_HIT + 1 WHERE NOTICE_CD = #{noticeCd}")
+    void noticeBasicUpdateViewCount(Long noticeCd);
 }

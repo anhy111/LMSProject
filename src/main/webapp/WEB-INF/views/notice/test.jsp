@@ -47,6 +47,7 @@
     .table {
         border-bottom: 1px solid #eef2f7;
     }
+
 </style>
 
 <%
@@ -64,29 +65,6 @@
                 <h4>공지 사항</h4>
                 <div class="alert alert-light" role="alert"
                      style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
-                    <p>
-                        <strong>&#8251; 시험 제출자 안내 사항</strong>
-                        <br><br>
-                        (1) 반드시 <strong>기간을 먼저 설정</strong>한 후, 시험을 등록하는 것을 권장합니다.<br>
-                        &emsp;- 시험 기간 미설정시, 등록 직후 바로 시험에 응시 가능합니다.<br>
-                        &emsp;- <strong>기간을 설정하지 않고 문제를 등록하여 문제 유출이 되는 경우가 종종 발생합니다.</strong><br>
-                        <br>
-                        (2) 시험은 한 문항당 4지 선다 방식으로 등록할 수 있습니다.<br>
-                        &emsp;- <strong>정답 란에는 1~4까지의 숫자</strong>만 입력이 가능합니다.<br>
-                        <br>
-                        (3) 시험 생성 시 문제 개수는 최대 10문제로 설정할 수 있습니다.<br>
-                        &emsp;- 하단의 + 버튼과 문제의 -버튼을 통해 문항 수를 제어할 수 있습니다.<br>
-                        <br>
-                        (4) 모바일 앱, 웹에서 가능하지만 권장하지 않으며, 안정적인 PC웹에서 응시를 권장합니다.<br>
-                        &emsp;- 모바일의 경우 무선 네트워크 환경이 불안정할 경우
-                        시험 응시 도중 문제가 발생할 수 있기 때문입니다.시간 제한,시도 횟수 제한 등이 설정된
-                        평가활동은 안정적으로 수행할 수 있도록 PC에서 시도하는 것을 권장드립니다(대부분 대학에서도
-                        위와 같은 사항을 고지).
-                        <br><br>
-                        (5) 시험 문제 배점 및 자동 평가 대한 안내<br>
-                        &emsp;- 시험은 <strong>한 문항당 5점</strong>씩 채점되며, 수강생이 제출을 완료하면 <strong>자동 채점</strong>됩니다. 총점은 백분율로
-                        계산하여 보여집니다.
-                    </p>
                 </div>
                 <a href="/notice/noticeForm" class="btn btn-sm btn-primary" style="float: right;">등록</a>
                 <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span
@@ -97,11 +75,6 @@
                             <table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
                                 <thead class="table-light">
                                 <tr style="border-top: 2px solid #112a63">
-                                    <th style="width: 5%; text-align: center;">순번</th>
-                                    <th style="width: 50%;text-align: center;">제목</th>
-                                    <th style="width: 15%;text-align: center;">등록일</th>
-                                    <th style="width: 15%;text-align: center;">조회수</th>
-                                    <th style="width: 15%;text-align: center;">등록일</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -109,19 +82,22 @@
                                     <fmt:formatDate var="noticeRegDate" value="${noticeBasic.noticeReg }"
                                                     pattern="yyyy.MM.dd"/>
                                     <tr>
-                                        <td style="text-align: center;">${status.count}</td>
                                         <td>
-                                            <c:if test="${ date <= noticeRegDate }">
-                                                    <span class="badge badge-outline-warning badge-pill"
-                                                          style="float:end;">NEW</span>
-                                            </c:if>
                                             <a href="/notice/list/${noticeBasic.noticeCd}/detail"
                                                style="color:#6c757d;">
-                                                    <c:out value="${noticeBasic.noticeTtl }"/>
+                                                    <span>
+                                                        <c:out value="${noticeBasic.noticeTtl }"/>
+                                                    </span>
                                             </a>
+
+                                            <c:if test="${ date <= noticeRegDate }">
+                                                <img src="../../../resources/image/new.png" alt="new" class="icon-new">
+                                            </c:if>
+
+                                            <img src="../../../resources/image/file.png" alt="file" class="icon-file">
+
                                         </td>
-                                        <td style="text-align: center;">${noticeBasic.noticeCd}</td>
-                                        <td style="text-align: center;">${noticeBasic.noticeCd}</td>
+<%--                                        <td style="text-align: center;">${noticeBasic.noticeHit}</td>--%>
                                         <td style="text-align: center;">${noticeRegDate }</td>
                                     </tr>
                                 </c:forEach>

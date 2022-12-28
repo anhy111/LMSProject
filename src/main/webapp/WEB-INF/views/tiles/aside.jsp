@@ -119,12 +119,21 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
+
 							<li class="nav-item"><a href="/payment/stuPaymentDetail"
 								class="nav-link">  
 									<p>등록금 납부 내역</p>
 							</a></li>
 							<li class="nav-item"><a href="/payment/stuPaymentDetail"
 								class="nav-link">  
+
+							<li class="nav-item"><a href="/payment/stuPaymentDetail" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+									<p>등록금 납부 내역</p>
+							</a></li>
+							<li class="nav-item"><a href="/payment/stuPaymentDetail" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+
 									<p>장학금 수혜 내역</p>
 							</a></li>
 						</ul></li>
@@ -152,8 +161,13 @@
 								class="nav-link">  
 									<p>전체 강의 조회</p>
 							</a></li>
+
 							<li class="nav-item"><a href="/professor/lecApply/inquiry"
 								class="nav-link">  
+
+							<li class="nav-item"><a href="/professor/lecApply/inquiry" class="nav-link"> <i
+									class="far fa-circle nav-icon"></i>
+
 									<p>강의계획서 관리</p>
 							</a></li>
 							<li class="nav-item"><a href="/lecture/myLecture"
@@ -187,6 +201,7 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
+
 							<li class="nav-item"><a href="/professor/stuManageOfPro"
 								class="nav-link">
 
@@ -198,6 +213,21 @@
 
 										<p>장학생 추천 목록</p>
 								</a></li>
+
+							<li class="nav-item">
+								<a href="/professor/stuManageOfPro" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+										<p>학생 목록</p>
+								</a>
+							</li>
+							<sec:authorize access="hasRole('ROLE_DEAN')">
+								<li class="nav-item">
+									<a href="/professor/scholarshipStu" class="nav-link"> 
+									<i class="far fa-circle nav-icon"></i>
+										<p>장학생 추천 목록</p>
+									</a>
+								</li>
+
 							</sec:authorize>
 						</ul></li>
 					<li class="nav-item"><a

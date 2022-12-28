@@ -2,7 +2,7 @@ package kr.or.ddit.domain.qna;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import kr.or.ddit.domain.Member;
-import kr.or.ddit.domain.qna.qnareply.QnaReplyVO;
+import kr.or.ddit.domain.qna.qnareply.QnaReply;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.validator.GenericValidator;
@@ -25,7 +25,9 @@ public class Qna {
 
     private int rnum;
 
-    private QnaReplyVO qnaReplyVO;
+    private Long qnaHit;
+
+    private QnaReply qnaReplyVO;
 
     private Member memberVO;
 
