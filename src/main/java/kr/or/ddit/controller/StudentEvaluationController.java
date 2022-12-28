@@ -45,6 +45,7 @@ public class StudentEvaluationController {
 		model.addAttribute("evaluationQList", evaluationQList);
 		model.addAttribute("evaluationList",evaluationList);
 		model.addAttribute("student",student);
+		model.addAttribute("bodyTitle","수강평가");
 		
 		return "student/evaluation/evaluationList";
 	}

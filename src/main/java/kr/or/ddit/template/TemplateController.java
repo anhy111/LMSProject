@@ -27,7 +27,10 @@ public class TemplateController {
 	}
 	
 	@GetMapping("/dataTable")
-	public String dataTableTemplate() {
+	public String dataTableTemplate(Model model) {
+		model.addAttribute("bodyTitle","데이터 테이블 템플릿 타이틀");
+		List<Student> list = manageService.studentList();
+		model.addAttribute("list",list);
 		return "customTemplates 복붙해서 쓰세요/dataTableTemplate";
 	}
 	

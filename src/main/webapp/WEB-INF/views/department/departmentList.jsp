@@ -3,126 +3,119 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<div class="content">
-	<div class="container-fluid">
-		<div class="row pl-3">
-			<div class="card col-6">
-				<div class="container-fluid">
-					<br>
-					<h5>학과관리</h5>
-					<br>
-					<div class="row">
-						<div class="form-group col-2">
-							<label>단과대학</label> <select id="college" class="select2bs4 select2-hidden-accessible" style="width: 100%;">
-								<option value="0">모든단과대학</option>
-								<c:forEach var="college" items="${collegeList}">
-									<option value="${college.colCd}">${college.colNm}</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="form-group col-2 offset-8">
-							<a class="btn btn-primary btn-flat" href="/department/register">학과등록</a>
+<div class="row">
+	<div class="form-group col-2 pl-0">
+		<select id="college" class="select2bs4 select2-hidden-accessible" style="width: 100%;">
+			<option value="0">모든단과대학</option>
+			<c:forEach var="college" items="${collegeList}">
+				<option value="${college.colCd}">${college.colNm}</option>
+			</c:forEach>
+		</select>
+	</div>
+
+</div>
+<div class="row" id="list"></div>
+<div class="row">
+	<div class="form-group col text-right pl-0">
+		<a class="btn btn-primary btn-flat" href="/department/register">학과등록</a>
+	</div>
+</div>
+<div class="modal fade" id="modal-lg" style="display: none;"aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">학과상세정보</h4>
+				<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="form-group col-5">
+						<label>단과대학:</label>
+						<select id="detailCollege" name="colCd" class="select2bs4 select2-hidden-accessible" style="width: 100%;">
+							<option value="0">모든단과대학</option>
+							<c:forEach var="college" items="${collegeList}">
+								<option value="${college.colCd}">${college.colNm}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="form-group col-6 offset-1">
+						<label>학과명:</label> <input type="hidden" name="depCd">
+						<!-- 학과코드 -->
+						<input type="hidden" id="proNo" name="proNo">
+						<!-- 학과장 -->
+						<input type="hidden" id="empNo" name="empNo">
+						<!-- 조교 -->
+						<div class="input-group date" id="reservationdate" data-target-input="nearest">
+							<input type="text" name="depNm" class="form-control rounded-0" value="" readonly />
 						</div>
 					</div>
-					<div class="row card-body" id="list"></div>
 				</div>
-			</div>
-			<div class="col-6">
-				<div class="card col-10 offset-1">
-					<div class="container-fluid">
-						<br>
-						<h5>학과상세정보</h5>
-						<div class="card-body">
-							<div class="row">
-								<div class="form-group col-4">
-									<label>단과대학:</label> <select id="detailCollege" name="colCd" class="select2bs4 select2-hidden-accessible" style="width: 100%;">
-										<option value="0">모든단과대학</option>
-										<c:forEach var="college" items="${collegeList}">
-											<option value="${college.colCd}">${college.colNm}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col">
-									<label>학과명:</label> <input type="hidden" name="depCd">
-									<!-- 학과코드 -->
-									<input type="hidden" id="proNo" name="proNo">
-									<!-- 학과장 -->
-									<input type="hidden" id="empNo" name="empNo">
-									<!-- 조교 -->
-									<div class="input-group date" id="reservationdate" data-target-input="nearest">
-										<input type="text" name="depNm" class="form-control rounded-0" value="" readonly />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col">
-									<label>학과소개:</label>
-									<div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-										<textarea name="depDes" class="form-control rounded-0" rows="8" readonly></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col container-fluid p-0">
-									<label class="p-1">학과장:</label>
-									<div class="input-group col-6">
-										<input type="text" class="form-control" id="proNm" name="proNm" readonly />
-										<div class="input-group-append">
-											<button type="button" class="btn btn-default" id="btnPro">
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col">
-									<label>최대정원:</label>
-									<div class="input-group date" id="reservationdatetime">
-										<input type="number" name="depCap" class="form-control rounded-0" value="" readonly />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col">
-									<label>연락처:</label>
-									<div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-										<input type="text" name="depTel" class="form-control rounded-0" value="" readonly />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col container-fluid p-0">
-									<label class="p-1">조교:</label>
-									<div class="input-group col-6">
-										<input type="text" class="form-control" id="empNm" name="empNm" readonly />
-										<div class="input-group-append">
-											<button type="button" class="btn btn-default" id="btnEmp">
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row text-right container-fluid p-0" id="spn1">
-								<div class="col text-right">
-									<button type=button id="edit" class="btn btn-primary">수정</button>
-									<button type="button" id="delete" class="btn btn-danger">삭제</button>
-								</div>
-							</div>
-							<div class="row text-right container-fluid p-0" id="spn2">
-								<div class="col text-left">
-									<button id="autoFill" class="btn btn-secondary">자동채우기</button>
-								</div>
-								<div class="col text-right">
-									<button type="button" id="update" class="btn btn-primary">확인</button>
-									<button type="button" id="cancel" class="btn btn-warning">취소</button>
-								</div>
-							</div>
-							<sec:csrfInput />
+				<div class="row">
+					<div class="form-group col">
+						<label>학과소개:</label>
+						<div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+							<textarea name="depDes" class="form-control rounded-0" rows="6" readonly></textarea>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-5">
+						<label>최대정원:</label>
+						<div class="input-group date" id="reservationdatetime">
+							<input type="number" name="depCap" class="form-control rounded-0" value="" readonly />
+						</div>
+					</div>
+					<div class="form-group col-6 offset-1">
+						<label>연락처:</label>
+						<div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+							<input type="text" name="depTel" class="form-control rounded-0" value="" readonly />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-5">
+						<label>학과장:</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="proNm" name="proNm" readonly />
+							<div class="input-group-append">
+								<button type="button" class="btn btn-default" id="btnPro">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-6 offset-1">
+						<label>조교:</label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="empNm" name="empNm" readonly />
+							<div class="input-group-append">
+								<button type="button" class="btn btn-default" id="btnEmp">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<sec:csrfInput />
+			</div>
+			<div class="modal-footer justify-content-align">
+				<div class="row text-right container-fluid p-0" id="spn1">
+					<div class="col text-right">
+						<button type=button id="edit" class="btn btn-outline-warning">수정</button>
+						<button type="button" id="delete" class="btn btn-outline-danger">삭제</button>
+					</div>
+				</div>
+				<div class="row text-right container-fluid p-0" id="spn2">
+					<div class="col text-left">
+						<button id="autoFill" class="btn btn-outline-secondary">자동채우기</button>
+					</div>
+					<div class="col text-right">
+						<button type="button" id="update" class="btn btn-outline-primary">확인</button>
+						<button type="button" id="cancel" class="btn btn-outline-secondary">취소</button>
 					</div>
 				</div>
 			</div>
@@ -298,6 +291,7 @@
 	
 	function loadDetail(p_depCd){
 		detailMode();
+		$('#modal-lg').modal("show");
 		
 		data = {
 			depCd : p_depCd
@@ -348,7 +342,7 @@
 				console.log(result);
 				
 				$.each(result,function(p_inx, department){
-					str += `<div class="col-lg-3 col-6">
+					str += `<div class="col-lg-3 col-6 pl-0">
 								<div class="small-box bg-success">
 									<div class="inner">
 										<input type="hidden" value="1">
@@ -357,8 +351,8 @@
 									<div class="icon">
 										<i class="ion ion-bag"></i>
 									</div>
-									<a href="javascript:loadDetail(\${department.depCd})" class="small-box-footer">홈페이지이동 <i
-										class="fas fa-arrow-circle-right"></i></a>
+									<a href="javascript:loadDetail(\${department.depCd})" class="small-box-footer">상세보기<i
+										class="fas fa-arrow-circle-right" data-toggle="modal" data-target="#modal-lg"></i></a>
 								</div>
 							</div>`;
 				});
