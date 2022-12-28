@@ -24,7 +24,6 @@ public class LecQnaController {
 			List<LecQna> lectureQnaList = this.lecQnaService.LecQnaList();
 			
 			//공통 약속
-			model.addAttribute("bodyTitle","질문게시판");
 			model.addAttribute("lectureQnaList", lectureQnaList);
 			
 			//forwarding

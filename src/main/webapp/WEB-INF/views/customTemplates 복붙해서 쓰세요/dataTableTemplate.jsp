@@ -12,8 +12,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
 
 <div class="container">
-	<!-- 상단 버튼 등록시 해당 div 태그내에 삽입 -->
-	<div class="col-6"></div>
 	<div class="row">
 		<div class="card">
 			<div class="card-header">
@@ -47,5 +45,10 @@
 					</table>
 			</div>
 		</div>
+			<div class="col-12" style="text-align: end;">
+			<a class="col-sm-1 btn btn-md btn-primary" href="#" >등록</a>
+			<a class="col-sm-1 btn btn-md btn-primary" href="#">삭제</a>
+			<a class="col-sm-1 btn btn-md btn-primary" href="#">목록</a>
+			</div>
 	</div>
 </div>

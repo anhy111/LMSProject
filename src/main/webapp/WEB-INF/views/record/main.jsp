@@ -8,9 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
 
 <div class="container">
-<div class="col-6">
-<a class="btn btn-md btn-primary" href="/record/apply?stuNo=<%= stuNo%>">신청하기</a>
-</div>
+
 	<div class="row">
 		<div class="card">
 			<div class="card-header">
@@ -58,6 +56,11 @@
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div class="col-12" style="text-align: end;">
+			<a class="col-sm-1 btn btn-md btn-primary" href="/record/apply?stuNo=<%= stuNo%>" >신청</a>
+			<a class="col-sm-1 btn btn-md btn-primary" href="/record/apply?stuNo=<%= stuNo%>">신총</a>
+			<a class="col-sm-1 btn btn-md btn-primary" href="/record/apply?stuNo=<%= stuNo%>">신쳥</a>
 		</div>
 	</div>
 </div>

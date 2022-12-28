@@ -28,7 +28,6 @@ public class CollegeController {
 		List<College> collegeList = this.collegeService.CollegeList();
 		
 		//공통 약속
-		model.addAttribute("bodyTitle","단과대학");
 		model.addAttribute("collegeList", collegeList);
 		
 		//forwarding
@@ -41,7 +40,6 @@ public class CollegeController {
 		List<Department> departments = this.collegeService.DepartmentByCollegeList(colCd);
 		
 		//공통 약속
-		model.addAttribute("bodyTitle","단과대학상세");
 		model.addAttribute("collgeDetail", collgeDetail);
 		model.addAttribute("departments", departments);
 		
@@ -70,7 +68,6 @@ public class CollegeController {
 	@GetMapping("/regist")
 	public String CollegeRegist(Model model) {
 		
-		model.addAttribute("bodyTitle","단과대학 등록");
 		
 		//forwarding
 		return "college/regist";

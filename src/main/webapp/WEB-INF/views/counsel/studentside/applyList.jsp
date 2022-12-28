@@ -25,11 +25,6 @@
 }
 </style>
 <div class="container">
-	<div class="col-12">
-		<h1>
-			<label>상담신청리스트</label>
-		</h1>
-	</div>
 	<div class="col-6">
 		<button onclick="counselListUp()"
 			class="btn btn-md btn-outline-primary">대면상담</button>
@@ -48,7 +43,7 @@
 				</h3>
 			</div>
 			<div class="card-body table-responsive col-11 p-0"
-				style="height: 300px;">
+				style="height: 300px;width:1600px;">
 				<table
 					class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 					<thead>
@@ -111,7 +106,7 @@
 				</h3>
 			</div>
 			<div class="card-body table-responsive col-11 p-0"
-				style="height: 300px;">
+				style="height: 300px;width:1600px;">
 				<table
 					class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 					<thead>

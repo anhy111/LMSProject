@@ -29,7 +29,6 @@ public class AllTimeLecturesController {
 	public String searchMain(Model model) {
 		AllTimeLectures atls = new AllTimeLectures();
 		List<AllTimeLectures> atlsList = this.allTimeLecturesService.AllTimeLectrueList(atls);
-		model.addAttribute("bodyTitle","역대강의조회");
 		model.addAttribute("atlsList", atlsList);
 		for (AllTimeLectures allTimeLectures : atlsList) {
 			log.info("강의계획코드 가온나 : " + allTimeLectures.getLecApply().getLecaCd());
