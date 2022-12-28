@@ -8,7 +8,13 @@
     <!-- 공지사항 등록 -->
     <insert id="noticeBasicSave" parameterType="NoticeBasic">
 
-        INSERT INTO NOTICE_BASIC
+        INSERT INTO
+            NOTICE_BASIC (
+            NOTICE_CD,
+            NOTICE_TTL,
+            NOTICE_REG,
+            NOTICE_CON
+        )
         VALUES
             (
             NOTICEBASIC_SEQ.NEXTVAL,
