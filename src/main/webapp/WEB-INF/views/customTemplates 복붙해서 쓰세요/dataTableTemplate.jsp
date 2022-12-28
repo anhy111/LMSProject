@@ -11,15 +11,13 @@
 <!-- 공통 css 파일 임포트  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
 
-<div class="container">
-	<div class="row">
-		<div class="card">
+
 			<div class="card-header">
 				<h3 class="card-title">
 					<!-- 테이블 제목 -->
 				</h3>
 			</div>
-			<div class="card-body table-responsive col-11 p-0"
+			<div class="card-body table-responsive col-12"
 				style="height: 300px;width:1600px;">
 				<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 					<thead>
@@ -43,12 +41,9 @@
 						</c:forEach>
 						</tbody>
 					</table>
+			<div class="col-12" style="text-align: end;padding-right:20px;">
+			<a class="btn btn-sm btn-outline-primary" href="#" >등록</a>
+			<a class="btn btn-sm btn-outline-danger" href="#">삭제</a>
+			<a class="btn btn-sm btn-outline-info" href="#">목록</a>
 			</div>
-		</div>
-			<div class="col-12" style="text-align: end;">
-			<a class="col-sm-1 btn btn-md btn-primary" href="#" >등록</a>
-			<a class="col-sm-1 btn btn-md btn-primary" href="#">삭제</a>
-			<a class="col-sm-1 btn btn-md btn-primary" href="#">목록</a>
 			</div>
-	</div>
-</div>
