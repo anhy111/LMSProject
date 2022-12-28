@@ -34,7 +34,7 @@
 
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column"
+			<ul class="nav nav-pills nav-sidebar flex-column nav-child-indent"
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -68,23 +68,19 @@
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
 								<a href="/student/lectureApply/spareList" class="nav-link"> 
-									<i class="far fa-circle nav-icon"></i>
 									<p>예비수강신청</p>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="/student/lectureApply/list" class="nav-link"> 
-									<i class="far fa-circle nav-icon"></i>
 									<p>수강신청</p>
 							</a></li>
 							<li class="nav-item"><a href="/student/lecture/list"
 								class="nav-link">
-
 									<p>수강 편람</p>
 							</a></li>
 							<li class="nav-item"><a href="/student/evaluation/list"
 								class="nav-link">
-
 									<p>수강평가</p>
 							</a></li>
 						</ul></li>
