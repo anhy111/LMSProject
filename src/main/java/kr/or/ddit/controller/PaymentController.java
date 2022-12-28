@@ -93,4 +93,25 @@ public class PaymentController {
 		return adminPaymentList;
 	}
 	
+	//학생 등록금 납부내역 시작페이지
+	@GetMapping("/stuPaymentDetail")
+	public String stuPaymentDetail() {
+		
+		return "payment/stuPaymentDetail";
+	}
+	
+	//학생 등록금 납부내역 리스트
+	@ResponseBody
+	@PostMapping("stuPaymentList")
+	public List<Payment> stuPaymentList(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int stuNo = (int)session.getAttribute("no");
+		
+		List<Payment> stuPaymentList = this.paymentService.stuPaymentList(stuNo);
+		
+		log.info("학생 등록금 납부내역 리스트 : " + stuPaymentList);
+		
+		return stuPaymentList;
+	}
+	
 }

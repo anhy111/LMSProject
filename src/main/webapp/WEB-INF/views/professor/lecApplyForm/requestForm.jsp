@@ -123,7 +123,7 @@
 	    				<option value="">선택</option>
 	    			</select>
 	    		</td>
-	    		<th>학수번호</th>
+	    		<th>과목번호</th>
 	    		<td>
 	    			<input type="text" id="subCd" name="subCd" size=32 value="" readonly>
 	    		</td>

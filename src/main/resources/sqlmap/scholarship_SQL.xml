@@ -121,7 +121,7 @@
 	</select>
 	
 	<!-- 장학금 수여자 확인 -->
-	<select id="scholarshipCheck" resultType="sclHistory">
+	<select id="scholarshipCheck" parameterType="int" resultType="int">
 		SELECT COUNT(SCLH_CD)
 		FROM SCL_HISTORY
 		WHERE STU_NO = #{stuNo}
@@ -150,27 +150,27 @@
 	</select>
 	
 	<!-- 장학금 수여 -->
-<!-- 	<insert id="studentInfoList" parameterType="sclHistory"> -->
-<!-- 		INSERT INTO SCL_HISTORY ( -->
-<!-- 		     SCLH_CD -->
-<!-- 		     , SCL_CD -->
-<!-- 		     , STU_NO -->
-<!-- 		     , SCLH_YR -->
-<!-- 		     , SCLH_SEM -->
-<!-- 		     , SCLH_YN -->
-<!-- 		     , SCLH_PAY_YN -->
-<!-- 		     , SCLH_AMT -->
-<!-- 		) VALUES ( -->
-<!-- 		    SCLH_SEQ.NEXTVAL -->
-<!-- 		    , #{sclCd} -->
-<!-- 		    , #{stuNo} -->
-<!-- 		    , #{sclhYr} -->
-<!-- 		    , #{sclhSem} -->
-<!-- 		    , #{sclhYn} -->
-<!-- 		    , #{sclhPayYn} -->
-<!-- 		    , #{sclhAmt} -->
-<!-- 		); -->
-<!-- 	</insert> -->
+	<insert id="scholarshipConfer" parameterType="sclHistory">
+		INSERT INTO SCL_HISTORY (
+		     SCLH_CD
+		     , SCL_CD
+		     , STU_NO
+		     , SCLH_YR
+		     , SCLH_SEM
+		     , SCLH_YN
+		     , SCLH_PAY_YN
+		     , SCLH_AMT
+		) VALUES (
+		    SCLH_SEQ.NEXTVAL
+		    , #{sclCd}
+		    , #{stuNo}
+		    , TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+       		, (SELECT STU_SEM FROM STUDENT WHERE STU_NO = #{stuNo})
+		    , 'AP001'
+		    , 'PVD001'
+		    , #{sclhAmt}
+		)
+	</insert>
 	
 </mapper>
 
