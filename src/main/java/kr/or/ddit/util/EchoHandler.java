@@ -20,6 +20,7 @@ public class  EchoHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessions.add(session); //리스트에 접속한 session들을 담음
+		log.info("session : " + session);
 	}
 
 	// 소켓에 메세지를 보냈을때
