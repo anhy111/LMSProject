@@ -40,4 +40,9 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<Payment> adminPaymentList() {
 		return this.paymentMapper.adminPaymentList();
 	}
+
+	@Override
+	public List<Payment> stuPaymentList(int stuNo) {
+		return this.paymentMapper.stuPaymentList(stuNo);
+	}
 }

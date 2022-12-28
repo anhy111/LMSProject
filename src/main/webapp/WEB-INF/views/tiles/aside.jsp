@@ -131,17 +131,13 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="#" class="nav-link"> <i
+							<li class="nav-item"><a href="/payment/stuPaymentDetail" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
 									<p>등록금 납부 내역</p>
 							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
+							<li class="nav-item"><a href="/payment/stuPaymentDetail" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
-									<p>등록금 고지서</p>
-							</a></li>
-							<li class="nav-item"><a href="#" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>장학 내역 조회</p>
+									<p>장학금 수혜 내역</p>
 							</a></li>
 						</ul></li>
 					<li class="nav-item"><a href="/counsel/studentside/applyList?stuNo=<%= no %>" class="nav-link"> <i
@@ -170,11 +166,7 @@
 							</a></li>
 							<li class="nav-item"><a href="/professor/lecApply/inquiry" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
-									<p>강의계획서 조회</p>
-							</a></li>
-							<li class="nav-item"><a href="/professor/lecApply/request" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>강의계획서 신청</p>
+									<p>강의계획서 관리</p>
 							</a></li>
 							<li class="nav-item"><a href="/lecture/myLecture" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>

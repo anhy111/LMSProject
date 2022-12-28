@@ -27,8 +27,8 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	}
 	
 	@Override
-	public int scholarshipCheck() {
-		return this.scholarshipMapper.scholarshipCheck();
+	public int scholarshipCheck(int stuNo) {
+		return this.scholarshipMapper.scholarshipCheck(stuNo);
 	}
 	
 	@Override
