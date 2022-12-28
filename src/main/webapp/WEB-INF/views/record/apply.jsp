@@ -11,7 +11,7 @@
 	int stuNo = (int) session.getAttribute("no");
 	String name = String.valueOf(session.getAttribute("name"));
 %>
-<div class="row">
+<div class="row"style="box-sizing:border-box;">
 	<form id="form" action="/record/applyPost" class="col-12" method="post" onsubmit="return checkFormData()">
 	<div class="col-4">
 		<div class="card card-primary">
