@@ -36,21 +36,42 @@ VALUES(
 SELECT 
   R.REC_CD
 , R.STU_NO
-, R.RGB_CD
+, (SELECT CMD.COMD_NM FROM COMMON_DETAIL CMD WHERE R.RGB_CD = CMD.COMD_CD) AS RGB_CD
 , R.REC_YR
 , R.REC_SEM
 , R.REC_PER
 , R.REC_RSN
 , R.REC_DT
-, CD.COMD_NM AS REC_YN
+, (SELECT CMD.COMD_NM FROM COMMON_DETAIL CMD WHERE R.REC_YN = CMD.COMD_CD) AS REC_YN
 , R.REC_REJ
-FROM RECORD R, STUDENT S, COMMON_DETAIL CD, COMMON C
+FROM RECORD R, STUDENT S, COMMON_DETAIL CD
 WHERE R.STU_NO = S.STU_NO
-AND CD.COM_CD = C.COM_CD
-AND CD.COMD_CD = R.REC_YN
+AND CD.COMD_CD = R.RGB_CD
 AND R.STU_NO = #{stuNo}
 </select>
-
+<select id="detailRecord" parameterType="int" resultType="Record">
+SELECT 
+  (SELECT COMD_NM FROM COMMON_DETAIL WHERE RGB_CD = COMD_CD)AS RGB_CD
+, REC_YR
+, REC_SEM
+, REC_PER
+, REC_RSN
+FROM RECORD
+WHERE REC_CD = #{recCd}
+</select>
+<update id="modifyRecordByStudent" parameterType="Record">
+UPDATE RECORD
+<set>
+<if test="recPer != null and recPer !='' "> REC_PER = #{recPer}</if>
+<if test="recRsn != null and recRsn !='' ">, REC_RSN = #{recRsn}</if>
+, REC_DT = SYSDATE
+</set>
+WHERE
+AND REC_CD = #{recCd}
+</update>
+<delete id="deleteRecordByStudent" parameterType="int">
+DELETE FROM RECORD WHERE REC_CD = #{recCd}
+</delete>
 <!--[상담테이블] (신청 목록 조회) 단, 상담에 추가된 학적신청 번호는 제외 -->
 <select id="counselFilteredRecordList" parameterType="int" resultType="Record">
 SELECT 
@@ -71,5 +92,6 @@ AND CD.COMD_CD = R.REC_YN
 AND R.STU_NO = #{stuNo}
 AND CS.REC_CD IS NULL
 </select>
+
 </mapper> 
 
