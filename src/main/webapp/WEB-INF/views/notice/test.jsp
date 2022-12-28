@@ -25,20 +25,6 @@
         width: 100%;
     }
 
-    /* 기본 틀 잡기 끝 */
-
-    .quizNotice {
-        background: #eee;
-        width: 100%;
-        height: auto;
-        padding: 5%;
-        margin-bottom: 10px;
-    }
-
-    .emphasisR {
-        color: red;
-    }
-
     .table-responsive-sm {
         margin-bottom: 40px;
         min-height: 500px;
@@ -66,6 +52,7 @@
         word-wrap: break-word;
         overflow: hidden;
     }
+
     .txt {
         display: inline-block;
         letter-spacing: -0.025em;
@@ -85,7 +72,7 @@
         letter-spacing: 0;
         vertical-align: middle;
         color: #3364c4;
-    }항
+    }
 </style>
 
 <%
@@ -124,13 +111,15 @@
                                             <a href="/notice/list/${noticeBasic.noticeCd}/detail">
                                                     <span class="txt">
                                                         <c:out value="${noticeBasic.noticeTtl }"/>
-
-                                                           <c:if test="${ date = noticeRegDate }">
+                                                           <c:if test="${ date <= noticeRegDate }">
                                                                <img src="../../../resources/image/new.png" alt="new"
                                                                     class="icon-new">
                                                            </c:if>
+                                                            <c:if test="${}">
+                                                                <img src="../../../resources/image/file.png" alt="file"
+                                                                     class="icon-file">
+                                                            </c:if>
 
-                                                            <img src="../../../resources/image/file.png" alt="file" class="icon-file">
                                                     </span>
                                             </a>
                                         </td>

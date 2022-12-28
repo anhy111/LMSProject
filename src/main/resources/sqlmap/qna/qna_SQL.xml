@@ -15,17 +15,18 @@
 <!--	</resultMap>-->
 
 	<select id="showList" resultType="qna" >
-		SELECT q.QNA_CD,
-		       q.MEM_NO,
-		       q.QNA_TTL,
-		       q.QNA_CON,
-		       q.QNA_DT,
-		       q.QNA_YN,
-		       q.QNA_UPDATE,
-		       q.QNA_HIT,
-		       (select nvl(count(r.qna_cd),0) from qna_reply r where r.qna_cd = q.qna_cd) qna_reply_count
-		 FROM qna q
-	</select>
+        SELECT q.QNA_CD,
+               q.MEM_NO,
+               q.QNA_TTL,
+               q.QNA_CON,
+               q.QNA_DT,
+               q.QNA_YN,
+               q.QNA_UPDATE,
+               q.QNA_HIT,
+               (select nvl(count(r.qna_cd), 0) from qna_reply r where r.qna_cd = q.qna_cd) qna_reply_count
+        FROM qna q
+        ORDER BY q.QNA_DT DESC
+    </select>
 
 	<insert id="qnaSave" parameterType="qna">
 		INSERT INTO qna (
