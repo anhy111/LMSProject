@@ -38,6 +38,7 @@ public class DepartmentController {
 		List<Department> departments = this.departmentService.departmentByCollegeList(0);
 		model.addAttribute("collegeList",collegeList);
 		model.addAttribute("departmentList",departments);
+		model.addAttribute("bodyTitle","학과조회");
 		
 		return "department/departmentList";
 	}
@@ -56,6 +57,7 @@ public class DepartmentController {
 	public String register(Model model) {
 		List<College> collegeList = this.collegeService.CollegeList();
 		model.addAttribute("collegeList",collegeList);
+		model.addAttribute("bodyTitle","학과등록");
 		return "department/register";
 	}
 	

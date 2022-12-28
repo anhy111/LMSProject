@@ -133,6 +133,7 @@ public class StudentLectureApplyController {
 	@ResponseBody
 	@PostMapping("/save")
 	public String lectureSave(@RequestBody StudentLecture studentLecture) {
+		log.info("lectureSave.studentLecture : " + studentLecture);
 		return this.studentLectureApplyService.save(studentLecture);
 	}
 	

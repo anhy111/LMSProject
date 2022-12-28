@@ -31,10 +31,10 @@
 			</tr>
 			<tr>
 				<th>현재신청학점</th>
-				<td id="creditState"></td>
+				<td id="creditState">0</td>
 				<th>남은학점</th>
-				<td id="creditRemainder"></td>
-				<td colspan="4"></td>
+				<td id="creditRemainder">${graduateCredit.rdcReqCrd}</td>
+				<td colspan="4"> </td>
 			</tr>
 		</tbody>
 	</table>
@@ -325,6 +325,7 @@
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(result) {
+					console.log('result : ' + result);
 					loadCompleteSaveLecture();
 					loadNotYetSaveLecture();
 				}
@@ -347,8 +348,8 @@
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(result) {
-					loadCompleteSaveLecture();
 					loadNotYetSaveLecture();
+					loadCompleteSaveLecture();
 				}
 			});
 		});
@@ -359,7 +360,7 @@
 		});
 		
 		loadCompleteSaveLecture();
-		
+		loadNotYetSaveLecture();
 	}); // end document
 	
 	function loadNotYetSaveLecture(){
@@ -439,6 +440,7 @@
 					return "";
 				});
 				let str = "";
+				let credit = 0;
 				if(result.length == 0){
 					str = "<tr class='text-center p-0'>";
 					str += "<td colspan='11'>담긴 강의가 없습니다.</td>";
@@ -446,9 +448,12 @@
 					$("#completeSaveLecture").html(function(){
 						return str;
 					});
+					$("#creditState").html(credit);
+					$("#creditRemainder").html($("#maxCredit").html() - credit);
 					return;
 				}
 				$.each(result,function(p_inx, lecture){
+					credit += lecture.lecApply.lecaCrd;
 					str += `<tr class="text-center">
 								<td>\${p_inx+1}</td>
 								<td>\${lecture.lecApply.lecaCate}</td>
@@ -467,6 +472,8 @@
 							</tr>`
 				});
 				$("#completeSaveLecture").append(str);
+				$("#creditState").html(credit);
+				$("#creditRemainder").html($("#maxCredit").html() - credit);
 			}
 		}); // end ajax
 	} // end function

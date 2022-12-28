@@ -3,7 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <% String no = String.valueOf(session.getAttribute("no")); %>
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-light-primary elevation-4">
+<aside class="main-sidebar elevation-4 sidebar-light-navy ">
     <!-- Brand Logo -->
     <a href="/test/home" class="brand-link"> <img
             src="/resources/upload/연수대icon.png" alt="AdminLTE Logo"
@@ -30,7 +30,7 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column"
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent"
                 data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
