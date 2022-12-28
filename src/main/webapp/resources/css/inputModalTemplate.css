@@ -14,7 +14,7 @@
 *, *::before, *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+/*   box-sizing: inherit; */
 }
 
 p{
@@ -41,7 +41,9 @@ p{
 /*   background: var(--greyLight-1); */
 }
 
-
+.form-group{
+	margin-bottom : 0px;
+}
 /*  SEGMENTED-CONTROL */
 .segmented-control { 
   grid-column: 3 / 4;
@@ -104,3 +106,24 @@ p{
   color: var( --white);
   transition: all .5s ease;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

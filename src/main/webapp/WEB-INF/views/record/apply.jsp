@@ -11,9 +11,10 @@
 	int stuNo = (int) session.getAttribute("no");
 	String name = String.valueOf(session.getAttribute("name"));
 %>
-<div class="row"style="box-sizing:border-box;">
-	<form id="form" action="/record/applyPost" class="col-12" method="post" onsubmit="return checkFormData()">
-	<div class="col-4">
+<!-- <div class="row"style="box-sizing:border-box;"> -->
+
+	<form id="form" action="/record/applyPost" class="row" method="post" onsubmit="return checkFormData()"style=" justify-content: center;display: flex;">
+	<div class="col-6">
 		<div class="card card-primary">
 			<div class="card-header" style="background-color:#112a63;">
 				<h3 class="card-title">학적변동 신청서 작성</h3>
@@ -78,16 +79,24 @@
 				<div class="form-group">
 					<label for="exampleInputRounded0">사유</label> <br>
 					<div class="row">
-					<textarea class="col-12 form-control" rows="3"  name="recRsn" id="recRsn" required="required"
-						placeholder="사유를입력하여주세요" ></textarea>
+					<textarea class="col-8 form-control" rows="3"  name="recRsn" id="recRsn" required="required"
+						placeholder="사유를입력하여주세요" style="
+						    padding-left: 12px;
+						    margin-left: 10px;
+						"></textarea>
 						</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group col-6 ">
 				<label for="exampleInputFile">파일첨부</label>
 				<div class="input-group">
 				<div class="custom-file">
 				<input type="file" class="custom-file-input" id="exampleInputFile" cursorshover="true">
-				<label class="custom-file-label" for="exampleInputFile"></label>
+				<label class="custom-file-label" for="exampleInputFile" style="
+				    padding-bottom: 0px;
+				    border-bottom-width: 1px;
+				    margin-bottom: 0px;
+				    height: 30px;
+				"></label>
 				</div>
 				<div class="input-group-append">
 				<span class="input-group-text">Upload</span>
@@ -107,7 +116,7 @@
 	</div>
 			<sec:csrfInput />
 	</form>
-</div>
+<!-- </div> -->
 
 <script type="text/javascript">
 		//option에 append 해줄 변수 // 현재년도/다음년도/현재학기/다음학기/체크된라디오
