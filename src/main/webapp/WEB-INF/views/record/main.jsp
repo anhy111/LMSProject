@@ -42,25 +42,25 @@ cursor:pointer;
 		class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
 			<tr class="text-center">
-				<th class="text-left"width="4%">NO</th>
+				<th width="4%">No</th>
 				<th width="4%">신청유형</th>
-				<th class="text-right" width="10%">신청연도</th>
+				<th width="10%">신청연도</th>
 				<th width="4%">신청학기</th>
 				<th width="4%">기간</th>
-				<th class="text-right" width="10%">신청일자</th>
+				<th width="10%">신청일자</th>
 				<th width="6%">승인여부</th>
 			</tr>
 		</thead>
 		<tbody class="text-center">
 			<c:forEach var="recordsList" items="${recordsList}" varStatus="status" end="${recordsList.size() }">
 				<tr data-toggle="modal" data-target="#modal-modify">
-					<td class="text-left" data-value="${recordsList.recCd }">${status.end-status.index }</td>
+					<td  data-value="${recordsList.recCd }">${status.end-status.index }</td>
 					<td>${recordsList.rgbCd}</td>
-					<td class="text-right">${recordsList.recYr}년도</td>
+					<td >${recordsList.recYr}년도</td>
 					<td>${recordsList.recSem}학기</td>
 					<td>${recordsList.recPer}년</td>
-					<td class="text-right"><fmt:formatDate value="${recordsList.recDt }"
-							pattern="yyyy/MM/dd" /></td>
+					<td ><fmt:formatDate value="${recordsList.recDt }"
+							pattern="yy/MM/dd" /></td>
 					<c:if test="${recordsList.recYn eq '반려'}">
 					<td style="color: red;">${recordsList.recYn }</td>
 					</c:if> 
@@ -77,7 +77,7 @@ cursor:pointer;
 </div>
 <div class="col-12" style="text-align: end; padding-right: 20px;">
 	<!-- 			<button class="btn btn-sm btn-outline-primary" >신청</button> -->
-	<button class="btn btn-sm btn-outline-primary"data-toggle="modal" data-target="#modal-default">신청</button>
+	<button class="btn btn-lg btn-outline-primary"data-toggle="modal" data-target="#modal-default">신청</button>
 </div>
 
 <!-- 신청 모달-->
@@ -161,19 +161,6 @@ cursor:pointer;
 								style="margin-left: 10px;"></textarea>
 						</div>
 					</div>
-<!-- 					<div class="form-group col-8 "> -->
-<!-- 						<label for="exampleInputFile">파일첨부</label> -->
-<!-- 						<div class="input-group"> -->
-<!-- 							<div class="custom-file"> -->
-<!-- 								<input type="file" class="custom-file-input" -->
-<!-- 									id="exampleInputFile" cursorshover="true"> <label -->
-<!-- 									class="custom-file-label" for="exampleInputFile"></label> -->
-<!-- 							</div> -->
-<!-- 							<div class="input-group-append"> -->
-<!-- 								<span class="input-group-text">Upload</span> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
 					<sec:csrfInput />
 				</form>
 
@@ -248,21 +235,6 @@ cursor:pointer;
 							<textarea class="col-11 form-control" rows="3" id="modifyRecRsn"required="required" placeholder="사유를입력하여주세요"style="margin-left: 10px;"></textarea>
 						</div>
 					</div>
-<!-- 					<div class="form-group col-8 "> -->
-<!-- 						<label for="exampleInputFile">파일첨부</label> -->
-<!-- 						<div class="input-group"> -->
-<!-- 							<div class="custom-file"> -->
-<!-- 								<input type="file" class="custom-file-input" -->
-<!-- 									id="exampleInputFile" cursorshover="true"> <label -->
-<!-- 									class="custom-file-label" for="exampleInputFile"></label> -->
-<!-- 							</div> -->
-<!-- 							<div class="input-group-append"> -->
-<!-- 								<span class="input-group-text">Upload</span> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<%-- 					<sec:csrfInput /> --%>
-<!-- 				</form> -->
 
 				<!-- 모달바디 -->
 			</div>
