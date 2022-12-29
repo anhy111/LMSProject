@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.domain.Department;
 import kr.or.ddit.domain.Payment;
+import kr.or.ddit.domain.Student;
 
 public interface PaymentMapper {
 
@@ -24,4 +25,12 @@ public interface PaymentMapper {
 	
 	//학생 등록금 납부내역 리스트
 	public List<Payment> stuPaymentList(int stuNo);
+	
+	//학생 등록금 납부내역 미납자 확인
+	public int billCount(int stuNo);
+	
+	//학생 납부확인서
+	public Student paymentFormStuInfo(int stuNo);
+	public List<Payment> paymentFormInfo(int payCd);
+	public List<Department> paymentFormDepInfo(int payCd);
 }
