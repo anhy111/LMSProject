@@ -132,7 +132,7 @@
 	}
 	
 	.informDetailBot table {
-		border-top: none;
+/* 		border-top: none; */
 }
 	
 	.fitTable {
@@ -146,7 +146,7 @@ let token = "${_csrf.token}";
 	$(function() {
 		
 		// 로딩창
-		loadingWithMask();
+// 		loadingWithMask();
 		
 		var lateCnt = 0;
 		var atenEarly = 0;
@@ -163,7 +163,6 @@ let token = "${_csrf.token}";
 		
 		var stuNo = 0;
 		var lecaCd = $('#lecaCd').val();
-// 		console.log("lecaCd : " + lecaCd);
 		
 		
 		// 토스트에서 학생 선택시 상세 정보 ajax
@@ -207,7 +206,7 @@ let token = "${_csrf.token}";
 						
 // 						$('#hr_' + wk + '_' + hr).html(v.atenCate);
 						$('#hr_' + wk + '_' + hr + ' option[value = ' + v.atenCate + ']').attr("selected", true);
-						$('#hr_' + wk + '_' + hr + ' select').attr("disabled", false);
+						$('#hr_' + wk + '_' + hr + ' select').attr("disabled");
 					})
 					if(wk == 16 && hr ==3){
 						return false;
@@ -215,7 +214,7 @@ let token = "${_csrf.token}";
 					
 					// 아무 값도 안들어 있을 경우!!
 					if(wk == 0 && hr == 0) {
-						$('#hr_' + 1 + '_' + 1 + ' select').attr("disabled", false);
+						$('#hr_' + 1 + '_' + 1 + ' select').attr("disabled");
 						console.log("new wk / hr : " + wk + " / " + hr);
 						
 						return false;
@@ -223,19 +222,19 @@ let token = "${_csrf.token}";
 					if(${data.lecaCrd} == 3){
 						if(hr != 3){
 							console.log("1change atendWk + hr : " + wk + " / " + (parseInt(hr)+1))
-							$('#hr_' + wk + '_' + (parseInt(hr)+1) + ' select').attr("disabled", false);
+							$('#hr_' + wk + '_' + (parseInt(hr)+1) + ' select').attr("disabled");
 						}else{
 							console.log("2change atendWk + hr : " + (parseInt(wk)+1) + " / " + (parseInt(hr)-2))
-							$('#hr_' + (parseInt(wk)+1) + '_' +( parseInt(hr)-2) + ' select').attr("disabled", false);
+							$('#hr_' + (parseInt(wk)+1) + '_' +( parseInt(hr)-2) + ' select').attr("disabled");
 						}
 					}
 					if(${data.lecaCrd} == 2){
 						if(hr != 2){
 							console.log("1change atendWk + hr : " + wk + " / " + (parseInt(hr)+1))
-							$('#hr_' + wk + '_' + (parseInt(hr)+1) + ' select').attr("disabled", false);
+							$('#hr_' + wk + '_' + (parseInt(hr)+1) + ' select').attr("disabled");
 						}else{
 							console.log("2change atendWk + hr : " + (parseInt(wk)+1) + " / " + (parseInt(hr)-1))
-							$('#hr_' + (parseInt(wk)+1) + '_' +( parseInt(hr)-1) + ' select').attr("disabled", false);
+							$('#hr_' + (parseInt(wk)+1) + '_' +( parseInt(hr)-1) + ' select').attr("disabled");
 						}
 					}
 					
@@ -244,114 +243,7 @@ let token = "${_csrf.token}";
 			})
 		}
 		
-		// 출결 상태를 변화하면
-		$(document).on('change', '.attendSelect' ,function() {
-			console.log(this.value);
-			console.log($(this).parent().data('wk'));
-			console.log($(this).parent().data('hr'));
-			
-			// 선택한 출결(공통코드)
-			selectCate = this.value;
-			// 선택한 주차
-			selectWk = $(this).parent().data('wk');
-			// 선택한 차시
-			selectHr = $(this).parent().data('hr');
-			
-			console.log("atenCate : " + selectCate + " / atenWk : " + selectWk + " / atendHr : " + selectHr + " / stuNo : " + stuNo + " / lecaCd : " + lecaCd);
-			
-			// 출결 확인 cnt ajax
-			$.ajax({
-				url : "/lectureBoard/attenChkCnt",
-				type : 'post',
-				data : JSON.stringify({
-					lecaCd : lecaCd,
-					stuNo : stuNo,
-					atenWk : selectWk,
-					atenHr : selectHr
-				}),
-				contentType:"application/json;charset=utf-8",
-				beforeSend : function(xhr){
-					xhr.setRequestHeader(header, token);
-				},
-				dataType : 'JSON',
-				success : function(result) {
-					console.log("인서트 DB 여부 확인  : " + result);
-					
-					if(result == 0) {
-						attenInsert(lecaCd, stuNo, atenWk, atenHr);
-					}else {
-						attenUpdate(lecaCd, stuNo, atenWk, atenHr, selectCate);
-					}
-				}
-				
-			})
-			
-			
-			// 출결 insert ajax
-			function attenInsert(lecaCd, stuNo, atenWk, atenHr) {
-				$.ajax({
-					url : "/lectureBoard/attendStuInsert",
-					type : 'post',
-					data : {
-						lecaCd : lecaCd,
-						stuNo : stuNo,
-						atenCate : selectCate,
-						atenWk : selectWk,
-						atenHr : selectHr
-					},
-					beforeSend : function(xhr){
-						xhr.setRequestHeader(header, token);
-					},
-					dataType : 'JSON',
-					success : function(result) {
-						console.log("등록 성공");
-						detail(stuNo, lecaCd);
-						
-						name = $('#stuNm').val();
-						
-// 						chk = $('#checkOrNo').val();
-						if ($('#checkOrNo').is(":checked")) {
-				            return false;
-				        }else {
-							alert(name + " 학생의 출결을 등록했습니다.");
-				        }
-						
-					}
-				})
-			}
-			
-			// 출결 update ajax
-			function attenUpdate(lecaCd, stuNo, atenWk, atenHr, selectCate) {
-				$.ajax({
-					url : "/lectureBoard/attendStuUpdate",
-					type : 'post',
-					data : {
-						lecaCd : lecaCd,
-						stuNo : stuNo,
-						atenCate : selectCate,
-						atenWk : selectWk,
-						atenHr : selectHr
-					},
-					beforeSend : function(xhr){
-						xhr.setRequestHeader(header, token);
-					},
-					dataType : 'JSON',
-					success : function(result) {
-						console.log("수정 성공");
-						detail(stuNo, lecaCd);
-						
-						name = $('#stuNm').val();
-						
-						if ($('#checkOrNo').is(":checked")) {
-				            return false;
-				        }else {
-							alert(name + " 학생의 출결을 수정했습니다.");
-				        }
-					}
-				})
-			}
-			
-		})
+// 		
 		
 		
 		// 학생 리스트 불러오기(최초)
@@ -368,32 +260,6 @@ let token = "${_csrf.token}";
 			success : function(result) {
 				console.log("성공");
 				
-				$('#grid').empty();
-				
-				grid = new tui.Grid({
-					el : document.getElementById('grid'),
-					data : result,
-					scrollX : true,
-					scrollY : true,
-					minBodyHeight : 400,
-					bodyHeight : 250,
-// 					width : 1100,
-					columns : [
-						{header : '단과대학', name : 'colNm', filter : 'select',   align : 'center'},     //width : ,  
-						{header : '학과', name : 'depNm', filter : 'select',      align : 'center'},     //width : ,
-						{header : '학년', name : 'stuYr', filter : 'select',      align : 'center'},     //width : , 
-						{header : '학번', name : 'stuNo', filter : 'select',      align : 'center'},     //width : ,
-						{header : '이름', name : 'stuNm', filter : 'select',      align : 'center'},     //width : ,
-						{header : '연락처', name : 'stuTel', filter : 'select',    align : 'center'}     //width : ,  
-					],
-					rowHeaders: ['rowNum'],
-					columnOptions: { resizable: true }
-				});
-				
-				setTimeout(closeLoadingWithMask, 1000);
-// 				closeLoadingWithMask();
-				
-				grid.on('click', function(object) {
 					
 					str = '<select name="atenCate" class="attendSelect" disabled>';
 					str += '<option value="" selected>&nbsp;-</option>';
@@ -407,14 +273,10 @@ let token = "${_csrf.token}";
 					$('.H').html(str);
 								
 								
-					stuNo = grid.getRow(object.rowKey).stuNo;
-					
-					console.log(stuNo);
-					console.log(lecaCd);
+					stuNo = ${stuNo}
 					
 					detail(stuNo, lecaCd);
 					
-				})
 				
 			}
 		})
@@ -442,6 +304,7 @@ let token = "${_csrf.token}";
 									<p>(1) 출결 표시 방법 안내.</p>
 									&emsp;-&nbsp;<strong>출석&nbsp;:&nbsp;○&emsp;|&emsp;지각&nbsp;:&nbsp;△&emsp;|&emsp;결석&nbsp;:&nbsp;⨉&emsp;|&emsp;공결&nbsp;:&nbsp;◎</strong><br><br>
 									<p>(2) 출결표는 주차와 차시로 구분됩니다.</p>
+									<p>(3) 지각/조퇴 3회는 결석 1회로 산정됩니다.</p>
 							</div>
 							
 						<p style="margin-top: 30px;display: inline-block;float: right;">
@@ -451,7 +314,6 @@ let token = "${_csrf.token}";
 								<span id="totalAbsent">-</span>&nbsp;일
 							</span>
 							<br>
-							<span style="font-size: 0.9em;">지각/조퇴 3회는 결석 1회로 산정됨</span>
 						</p>
 						<!-- 학생 정보 -->
 						<div class="informDetailTop">

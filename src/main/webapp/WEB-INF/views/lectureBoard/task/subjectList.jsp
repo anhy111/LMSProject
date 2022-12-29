@@ -19,25 +19,19 @@ border-radius: 10px;
 <title></title>
 </head>
 <body>
-	<div class="col">
-		<div class="card card-outline card-primary">
-			<div class="card-header">
-				<h1 class="card-title">
+				<h3>
 					<strong id="lectureListYear">
 					<c:if test="${lecture != null}">
 						${lecture.lecApply.lecaNm} 
 					</c:if>
 					과제</strong>
-				</h1>
+				</h3>
 				<div class="card-tools">
 					<button type="button" class="btn btn-tool"
 						data-card-widget="collapse">
-						<i class="fas fa-minus"></i>
 					</button>
 				</div>
-			</div>
-			<div class="card-body">
-				<div class="col-sm-12" id="subInfo">
+				<div  class="col-sm-12 alert alert-light bg-light border-0" role="alert" style="font-size: 0.9em;padding: 15px 30px 15px; 20px;border: 1px solid #eee;" id="subInfo">
 				<br>
 					<h4><b>※과제 안내 사항</b></h4>
 					<p>1. 반드시 <strong>기간을 먼저 설정</strong>한 후, 과제를 등록하는 것을 권장합니다.</p>
@@ -102,8 +96,5 @@ border-radius: 10px;
 
 
 				</div>
-			</div>
-		</div>
-	</div>
 </body>
 </html>

@@ -9,20 +9,20 @@
 	<div class="col-sm-1" ></div>
 	<div class="col-sm-10" >
 		<form action="/lectureBoard/task/registTask" id="frm" method="post" enctype="multipart/form-data" >
-			<div class="card card-outline card-primary">
-				<div class="card-header">
-					<div class="form-group">
-						<h1 class="card-title">
-							<input type="text" id="taskNm" name="taskNm" class="form-control change" required>
-						</h1>
+					<div class="form-group row">
+							<div style="display:inline-block" class="col-sm-5">
+								<label>제목</label>
+								<input type="text" id="taskNm" name="taskNm" class="form-control change" required>
+							</div>
+							<div class="col-sm-5">
+							<label>과제 점수 (5~20점)</label>
+							<input type="text" id="taskScore" name="taskScore" class="form-control change" required>
+							</div>
+							
 					</div>
-				</div>
-				<div class="card-body">
 					<div class="col-sm-12">
 						<section class="content">
 							<div class="container-fluid">
-								<div class="card card-danger">
-										<div class="card-body">
 											<div class="form-group">
 												<div class="input-group">
 													<input type="hidden" name="lecaCd" value="${param.lecaCd}">											
@@ -57,17 +57,13 @@
 												</div>
 												<br>
 											</div>
-										</div>
-								</div>
 							</div>
 						</section>
 					</div>
-				</div>
 			</div>
 			<sec:csrfInput/>
 		</form>
  	</div>
-</div>
 <script type="text/javascript">
 // 	CKEDITOR.replace("taskCon",
 // 			{

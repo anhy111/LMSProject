@@ -50,7 +50,6 @@
 
 <div class="quizWrapper">
 	<div class="col-lg-12">
-		<div class="card" style="min-height: 700px;">
 			<div class="card-body">
 				<h4>${data.lecaNm }&emsp;&#45;&emsp;과목 시험</h4>
 					<div class="alert alert-light" role="alert" style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
@@ -136,4 +135,3 @@
 				</div>
 			</div>
 		</div>
-</div>
