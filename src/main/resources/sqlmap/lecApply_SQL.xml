@@ -46,7 +46,7 @@
 		FROM    LEC_APPLY U
 		WHERE   U.PRO_NO = #{empNo}
 		<include refid="yrNsem"></include>
-		AND     U.LECA_IMSI_YN IS NULL
+<!-- 		AND     U.LECA_IMSI_YN IS NULL -->
 	</select>
 	
 	<select id="list" parameterType="hashMap" resultType="lecApply">
@@ -69,6 +69,7 @@
 		        CASE    WHEN U.LECA_YN = 0 THEN '승인대기'
 		                WHEN U.LECA_YN = 1 THEN '승인'
 		                WHEN U.LECA_YN = 2 THEN '반려'
+		                WHEN U.LECA_YN = 3 THEN '임시저장'
 		        END LECA_APPROVAL
 		FROM
 		(
@@ -82,7 +83,6 @@
 		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM
 		) U
 		WHERE   U.PRO_NO = #{proNo}
-		AND     U.LECA_IMSI_YN IS NULL
 		<include refid="yrNsem"></include>
 		ORDER BY U.LECA_CD DESC
 	</select>
@@ -154,7 +154,7 @@
 		                LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE
 		) U
 		WHERE   U.LECA_CD = #{lecaCd}
-		AND     U.LECA_IMSI_YN IS NULL
+<!-- 		AND     U.LECA_IMSI_YN IS NULL -->
 		ORDER BY U.LECA_CD DESC
 	</select>
 	
@@ -176,9 +176,11 @@
 		INSERT INTO LECTURE (
 		             LECA_CD
 		            , SUB_CD
+		            , LECA_YN
 		) VALUES (
 		    #{lecaCd}
 		    , #{subCd}
+		    , 3
 		)
 	</insert>
 	
@@ -255,7 +257,8 @@
 		            , LECA_NOTE
 		            , LECA_DT
 		            , LECA_GRADE
-		            , LECA_IMSI_YN
+		            , LECA_YN
+<!-- 		            , LECA_IMSI_YN -->
 		            , LECA_CATE
 		            , LECA_MP
 		            , LECA_FP
@@ -277,7 +280,8 @@
 		    , #{lecaNote}
 		    , SYSDATE
 		    , #{lecaGrade}
-		    , 1
+		    , 3
+<!-- 		    , 1 -->
 		    , #{lecaCate}
 		    , #{lecaMp}
 		    , #{lecaFp}
@@ -328,7 +332,7 @@
 		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM
 		) U
 		WHERE   U.PRO_NO = #{proNo}
-		AND     U.LECA_IMSI_YN = 1
+<!-- 		AND     U.LECA_IMSI_YN = 1 -->
 		ORDER BY U.LECA_CD DESC
 	</select>
 	
@@ -370,7 +374,7 @@
 		                LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE
 		) U
 		WHERE   U.LECA_CD = #{lecaCd}
-		AND     U.LECA_IMSI_YN = 1
+<!-- 		AND     U.LECA_IMSI_YN = 1 -->
 		ORDER BY U.LECA_CD DESC
 	</select>
 
@@ -431,8 +435,9 @@
             , LECA_NOTE = #{lecaNote}
             , LECA_DT = SYSDATE
             , LECA_GRADE = #{lecaGrade}
-            , LECA_IMSI_YN = null
+<!--             , LECA_IMSI_YN = null -->
             , LECA_CATE = #{lecaCate}
+            , LECA_YN = 3
             , LECA_MP = #{lecaMp}
             , LECA_FP = #{lecaFp}
             , LECA_TP = #{lecaTp}

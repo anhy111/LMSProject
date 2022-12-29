@@ -33,6 +33,7 @@ public class MypageController {
 		Student student = this.memberService.readStudent(memNo);
 		
 		model.addAttribute("student", student);
+		model.addAttribute("bodyTitle", "마이페이지");
 		
 		return "mypage/mypage";
 	}
@@ -48,13 +49,6 @@ public class MypageController {
 		log.info("리다이렉트가 안되는겨??");
 		
 		return "redirect:/mypage/mypage?memNo="+stuNo;
-	}
-	
-	@GetMapping("/mypage/changeStuPw")
-	public String changeStuPw() {
-		
-		return "mypage/changeStuPw";
-		
 	}
 	
 	@PostMapping("/mypage/changeStuPwPost")

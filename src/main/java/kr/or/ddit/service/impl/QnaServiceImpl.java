@@ -63,4 +63,9 @@ public class QnaServiceImpl implements QnaService {
     public QnaReply findReplyOne(Long qnaCd) {
        return this.qnaMapper.qnaReplyFindOne(qnaCd);
     }
+
+    @Override
+    public List<QnaReply> showReplyList() {
+        return this.qnaMapper.showReplyList();
+    }
 }

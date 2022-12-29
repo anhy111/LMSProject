@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import kr.or.ddit.domain.student.StudentLectureForm;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Lecture;
@@ -28,6 +29,7 @@ public class LectureServiceImpl implements LectureService{
 	
 	@Override
 	public List<Lecture> professorLecture(String professorId){
+
 		return this.lectureMapper.professorLecture(professorId);
 	}
 	
@@ -93,6 +95,12 @@ public class LectureServiceImpl implements LectureService{
 	public List<Lecture> searchList(StudentLecture studentLecture) {
 		return this.lectureMapper.searchList(studentLecture);
 	}
+
+	@Override
+	public List<StudentLectureForm> studentLectureSearchAll(String studentId) {
+		return this.lectureMapper.studentLectureSearchAll(studentId);
+	}
+
 	//과제 제출 리스트
 	@Override
 	public List<Task> taskSubmitList(String tsubCd) {

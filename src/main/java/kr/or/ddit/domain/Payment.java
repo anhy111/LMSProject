@@ -7,11 +7,14 @@ import lombok.Data;
 @Data
 public class Payment {
 
+	private int payCd;  //등록금 납부 코드
 	private int stuNo;	//학번
 	private int paySem;	//납부학기
 	private Date payDt;	//납부일자
 	private int payAmt;	//납부금액
 	private String payYn;	//납부상태
+	
+	private String payDate;	//년 학기 합친 고지일자
 	
 	private int paySumfee;	//납부되는 등록금 총액
 	private int paySumamt;	//납부된 등록금 총액

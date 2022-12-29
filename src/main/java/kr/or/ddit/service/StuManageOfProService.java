@@ -14,7 +14,7 @@ public interface StuManageOfProService{
 
 	public int recommendationStu(Map<String, String> map);
 
-	public List<SclHistory> schStuList();
+	public List<SclHistory> schStuList(String depCd);
 
 	public Student schStuRcmd(Map<String, String> map);
 

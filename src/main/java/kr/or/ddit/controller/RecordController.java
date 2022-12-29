@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,16 +35,11 @@ public class RecordController {
 		
 		List<Record> recordsList = this.recordService.RecordList(stuNo);
 		//공통 약속
+		model.addAttribute("bodyTitle","학적 변동 내역");
 		model.addAttribute("recordsList",recordsList);
 		
 		//forwarding
 		return "record/main";
-	}
-	
-	@GetMapping("/apply")
-	public String RecordApply(Model model) {
-		//forwarding
-		return "record/apply";
 	}
 	
 	@PostMapping("/applyPost")
@@ -64,4 +60,45 @@ public class RecordController {
 		}
 		return "redirect:/record/main?stuNo="+record.getStuNo();
 	}
+	
+	@ResponseBody
+	@PostMapping("/applyDetail")
+	public Record RecordDetail(@RequestBody Record record) {
+		Record resultRecord = new Record();
+		resultRecord = this.recordService.detailRecord(record.getRecCd());
+		return resultRecord; 
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/applyModify")
+	public int RecordApplyModify(@RequestBody Record record) {
+		log.info("들어왔니? " + record.toString());
+		int result = this.recordService.modifyRecordByStudent(record);
+		if (result == 0 ) {
+			log.info("등록실패");
+		} else {
+			log.info("등록성공");
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/applyDelete")
+	public int RecordApplyDelete(@RequestBody Record record) {
+		int result = this.recordService.deleteRecordByStudent(record.getRecCd());
+		if (result == 0 ) {
+			log.info("등록실패");
+		} else {
+			log.info("등록성공");
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

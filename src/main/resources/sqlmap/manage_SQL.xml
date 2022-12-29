@@ -96,6 +96,7 @@
 		SELECT  S.STU_NO
 		        ,S.STU_NM
 		        ,D.DEP_NM
+		        ,R.REC_CD
 		        ,R.REC_YR
 		        ,R.REC_SEM
 		        ,(SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
@@ -113,6 +114,7 @@
 		        , S.STU_NM
 		        , S.STU_TEL
 		        , D.DEP_NM
+		        , R.REC_CD
 		        , R.REC_YR
 		        , R.REC_SEM
 		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
@@ -124,7 +126,7 @@
 		FROM STUDENT S, DEPARTMENT D, RECORD R
 		WHERE S.DEP_CD = D.DEP_CD
 		AND S.STU_NO = R.STU_NO
-		AND S.STU_NO = #{stuNo}
+		AND R.REC_CD = #{recCd}
 	</select>
 	
 	<update id="yesOrNo" parameterType="map"> 
@@ -224,8 +226,8 @@
 		        , E.EMP_JOIN
 		        , E.EMP_RET
 		        , E.EMP_BIR
-		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_DIV) AS EMP_DIV
-		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_POS) AS EMP_POS
+		        , E.EMP_DIV
+		        , E.EMP_POS
 		        , P.PRO_POS
 		        , D.DEP_CD
 		        , D.DEP_NM

@@ -6,7 +6,12 @@
 <mapper namespace="kr.or.ddit.mapper.StudentLectureApplyMapper">
 
 	<insert id="apply" parameterType="studentLecture"> 
-		INSERT INTO STU_LEC(STU_NO, LECA_CD) VALUES(#{stuNo}, #{lecaCd})
+		<selectKey order="BEFORE" resultType="int" keyProperty="slSn">
+			SELECT NVL(MAX(SL_SN),0) + 1
+			FROM STU_LEC
+			WHERE STU_NO = #{stuNo}
+		</selectKey>
+		INSERT INTO STU_LEC(STU_NO, LECA_CD, SL_SN) VALUES(#{stuNo}, #{lecaCd}, #{slSn})
 	</insert>
 	
 	<delete id="applyCancel" parameterType="studentLecture">
@@ -16,7 +21,12 @@
 	</delete>
 	
 	<insert id="save" parameterType="studentLecture"> 
-		INSERT INTO WISH(STU_NO, LECA_CD) VALUES(#{stuNo}, #{lecaCd})
+		<selectKey order="BEFORE" resultType="int" keyProperty="wsSn">
+			SELECT NVL(MAX(WS_SN),0) + 1
+			FROM WISH
+			WHERE STU_NO = #{stuNo}
+		</selectKey>
+		INSERT INTO WISH(STU_NO, LECA_CD, WS_SN) VALUES(#{stuNo}, #{lecaCd}, #{wsSn})
 	</insert>
 	
 	<delete id="saveCancel" parameterType="studentLecture">

@@ -25,20 +25,6 @@
         width: 100%;
     }
 
-    /* 기본 틀 잡기 끝 */
-
-    .quizNotice {
-        background: #eee;
-        width: 100%;
-        height: auto;
-        padding: 5%;
-        margin-bottom: 10px;
-    }
-
-    .emphasisR {
-        color: red;
-    }
-
     .table-responsive-sm {
         margin-bottom: 40px;
         min-height: 500px;
@@ -48,12 +34,51 @@
         border-bottom: 1px solid #eef2f7;
     }
 
+    .col-title {
+        padding: 10px;
+    }
+
+    .txt {
+        max-height: 40px;
+        padding: 0 0 0 10px;
+        margin: 10px 0 5px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        word-wrap: break-word;
+        overflow: hidden;
+    }
+
+    .txt {
+        display: inline-block;
+        letter-spacing: -0.025em;
+        vertical-align: top;
+        color: #333;
+    }
+
+    .current-page {
+        margin-top: 13px;
+        font-size: 25px;
+    }
+
+    .current-page {
+        font-family: 'Noto Serif KR', serif;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 0;
+        vertical-align: middle;
+        color: #3364c4;
+    }
 </style>
 
 <%
     Date date = new Date();
     date.setDate(date.getDate() - 6);
-    SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy.MM.dd");
+    SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy/MM/dd");
     String simDate = simpleDate.format(date);
 %>
 <c:set var="date" value="<%= simDate %>"/>
@@ -62,7 +87,7 @@
     <div class="col-lg-12">
         <div class="card" style="min-height: 700px;">
             <div class="card-body">
-                <h4>공지 사항</h4>
+                <p class="current-page">공사사항</p>
                 <div class="alert alert-light" role="alert"
                      style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
                 </div>
@@ -80,24 +105,25 @@
                                 <tbody>
                                 <c:forEach var="noticeBasic" items="${noticeBasicList }" varStatus="status">
                                     <fmt:formatDate var="noticeRegDate" value="${noticeBasic.noticeReg }"
-                                                    pattern="yyyy.MM.dd"/>
+                                                    pattern="yyyy/MM/dd"/>
                                     <tr>
-                                        <td>
-                                            <a href="/notice/list/${noticeBasic.noticeCd}/detail"
-                                               style="color:#6c757d;">
-                                                    <span>
+                                        <td class="col-title">
+                                            <a href="/notice/list/${noticeBasic.noticeCd}/detail">
+                                                    <span class="txt">
                                                         <c:out value="${noticeBasic.noticeTtl }"/>
+                                                           <c:if test="${ date <= noticeRegDate }">
+                                                               <img src="../../../resources/image/new.png" alt="new"
+                                                                    class="icon-new">
+                                                           </c:if>
+<%--                                                            <c:if test="${}">--%>
+                                                                <img src="../../../resources/image/file.png" alt="file"
+                                                                     class="icon-file">
+<%--                                                            </c:if>--%>
+
                                                     </span>
                                             </a>
-
-                                            <c:if test="${ date <= noticeRegDate }">
-                                                <img src="../../../resources/image/new.png" alt="new" class="icon-new">
-                                            </c:if>
-
-                                            <img src="../../../resources/image/file.png" alt="file" class="icon-file">
-
                                         </td>
-<%--                                        <td style="text-align: center;">${noticeBasic.noticeHit}</td>--%>
+                                            <%--                                        <td style="text-align: center;">${noticeBasic.noticeHit}</td>--%>
                                         <td style="text-align: center;">${noticeRegDate }</td>
                                     </tr>
                                 </c:forEach>

@@ -3,12 +3,11 @@ package kr.or.ddit.service;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Task;
 import kr.or.ddit.domain.TaskSubmit;
+import kr.or.ddit.domain.student.StudentLectureForm;
 
 
 public interface LectureService {
@@ -57,4 +56,6 @@ public interface LectureService {
 
 	// 수강편람 강의 조회
 	public List<Lecture> searchList(StudentLecture studentLecture);
+
+    List<StudentLectureForm> studentLectureSearchAll(String studentId);
 }

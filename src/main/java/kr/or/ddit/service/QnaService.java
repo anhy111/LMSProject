@@ -29,4 +29,6 @@ public interface QnaService {
     void qnaReplySave(QnaReply qnaReply);
 
     QnaReply findReplyOne(Long qnaCd);
+
+    List<QnaReply> showReplyList();
 }

@@ -1,14 +1,16 @@
 package kr.or.ddit.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/bamboo")
+@Controller
+@RequestMapping("/bambooBoard")
 public class BambooBoardController {
 
+    @GetMapping("/main")
     public String bambooBoard() {
 
-
-
-        return "";
+        return "bambooboard/list";
     }
 }
