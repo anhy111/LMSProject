@@ -18,6 +18,12 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
+	
+	<definition name="mainPage" template="/WEB-INF/views/tiles/mainPage.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
 	<!--
 	    name 의 */*은 body 의 value 에서 1과 2에 해당
 		controller 에서 forwarding 시 return "1/2";
@@ -101,6 +107,16 @@
 	
 	<definition name="customTemplates 복붙해서 쓰세요/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/customTemplates 복붙해서 쓰세요/{1}.jsp" />
+	</definition>
+	
+	<definition name="approval/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/approval/{1}.jsp" />
+	</definition>
+	
+	
+	
+	<definition name="main/*" extends="mainPage">
+	<put-attribute name="body" value="/WEB-INF/views/main/{1}.jsp" />
 	</definition>
 	
 
