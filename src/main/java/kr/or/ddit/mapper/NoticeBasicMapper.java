@@ -15,7 +15,7 @@ public interface NoticeBasicMapper {
     int getNoticeBasicTotalRow();
 
     //공지사항 목록 조회
-    @Select("SELECT * FROM notice_basic")
+    @Select("SELECT * FROM notice_basic ORDER BY notice_reg DESC")
     List<NoticeBasic> noticeBasicList();
 
     //공지사항 상세 조회
@@ -31,5 +31,6 @@ public interface NoticeBasicMapper {
     //공지사항 삭제
     void noticeBasicDelete(Long noticeCd);
 
-
+    @Select("UPDATE NOTICE_BASIC SET NOTICE_HIT = NOTICE_HIT + 1 WHERE NOTICE_CD = #{noticeCd}")
+    void noticeBasicUpdateViewCount(Long noticeCd);
 }

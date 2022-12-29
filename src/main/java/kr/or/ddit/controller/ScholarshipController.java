@@ -62,8 +62,8 @@ public class ScholarshipController {
 	//장학금 수여자 확인
 	@ResponseBody
 	@PostMapping("/scholarshipCheck")
-	public int scholarshipCheck() {
-		int result = this.scholarshipService.scholarshipCheck();
+	public int scholarshipCheck(@RequestBody int stuNo) {
+		int result = this.scholarshipService.scholarshipCheck(stuNo);
 		
 		log.info("장학금 수여자 확인 : " + result);
 		

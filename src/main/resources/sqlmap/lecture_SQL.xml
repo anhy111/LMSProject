@@ -297,6 +297,7 @@
 			INNER JOIN DEPARTMENT D ON(P.DEP_CD = D.DEP_CD)
 			LEFT OUTER JOIN STU_LEC SL ON(SL.LECA_CD = L.LECA_CD)
 		WHERE SL.STU_NO =#{stuNo}
+		ORDER BY SL.SL_SN DESC
 	</select>
 
 	<insert id="insertTask" parameterType="task">
@@ -350,13 +351,27 @@
 		AND LA.LECA_SEM =
 		DECODE(TO_CHAR(SYSDATE,'MM'),'12','1학기','01','1학기','02','1학기','03','1학기','04','1학기','05','1학기','2학기')
 		)
-		SELECT * FROM T
+		SELECT T.LECA_CD
+			 , T.EMP_NM
+			 , T.LECA_NM	 
+			 , T.LECA_CRD
+			 , T.LECA_TRG
+			 , T.LEC_HCNT
+			 , T.DEP_NM
+			 , T.LECA_CAP
+			 , T.LECA_CATE
+			 , T.LECA_YR
+			 , T.LECA_SEM
+			 , T.COL_NM
+	         , T.COL_CD
+		FROM T, WISH W
 		WHERE NOT EXISTS(
 		SELECT W.LECA_CD
 		FROM WISH W
 		WHERE W.STU_NO = #{stuNo}
 		AND W.LECA_CD = T.LECA_CD
 		)
+        AND T.LECA_CD = W.LECA_CD(+)
 		<if test="colCd > 0">
 			AND COL_CD = #{colCd}
 		</if>
@@ -372,6 +387,7 @@
 		<if test="lecaNm != null and lecaNm != ''">
 			AND LECA_NM LIKE '%' || #{lecaNm} || '%'
 		</if>
+		ORDER BY W.WS_SN DESC
 	</select>
 
 	<select id="studentCompleteSaveLectureList"
@@ -389,6 +405,7 @@
 		, LA.LECA_YR
 		, LA.LECA_SEM
 		, W.STU_NO
+		, W.WS_SN
 		FROM DEPARTMENT D
 		INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
 		INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
@@ -397,6 +414,7 @@
 		INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
 		LEFT OUTER JOIN WISH W ON(W.LECA_CD = L.LECA_CD)
 		WHERE W.STU_NO = #{stuNo}
+		ORDER BY W.WS_SN DESC
 	</select>
 
 
@@ -467,6 +485,7 @@
 		, LA.LECA_SEM
 		, W.STU_NO
 		, SL.STU_NO
+		, W.WS_SN
 		FROM DEPARTMENT D
 		INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
 		INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
@@ -478,6 +497,7 @@
 		SL.STU_NO)
 		WHERE W.STU_NO = #{stuNo}
 		AND SL.STU_NO IS NULL
+		ORDER BY W.WS_SN DESC
 	</select>
 	<!-- 과제 삭제 -->
 	<delete id="deleteTask" parameterType="String">

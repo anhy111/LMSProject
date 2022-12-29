@@ -5,6 +5,7 @@
 .card {
 		width: 100%;
 		padding: 3%;
+		padding-top:2%;
 		border-top: 5px solid #112a63;
 		border-radius: 10px 10px 0 0 ;
 		min-width: 1090px;
@@ -27,4 +28,9 @@ border-bottom: 1px solid #eef2f7;
 font-size: 0.9em; 
 padding: 35px; 
 border: 1px solid #eee;
+}
+
+.myinfo th{
+	background-color: #001f3f;
+	color: white;
 }

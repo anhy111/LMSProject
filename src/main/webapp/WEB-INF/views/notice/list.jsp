@@ -49,6 +49,7 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         <c:forEach var="noticeBasic" items="${noticeBasicList}" varStatus="stat">
                         <fmt:formatDate var="noticeRegDate" value="${ noticeBasic.noticeReg }" pattern="yyyy.MM.dd"/>
                         <c:if test="${stat.count%2!=0 }">
@@ -58,12 +59,13 @@
                             <td class="dtr-control sorting_1" tabindex="0">${noticeBasic.noticeCd}</td>
                             <td><a href="/notice/list/${noticeBasic.noticeCd}/detail">${noticeBasic.noticeTtl}
                                 <c:if test="${ date <= noticeRegDate }">
-                                <span class="badge badge-outline-warning badge-pill" style="float: right;">NEW</span>
+                                    <span class="badge badge-outline-warning badge-pill" style="float: right;">NEW</span>
                                 </c:if>
                             </td>
                             <td><fmt:formatDate value="${noticeBasic.noticeReg }" pattern="yyyy년 MM월 dd일"/></td>
                             <td class="dtr-control sorting_1" tabindex="0">${noticeBasic.noticeCd}</td>
                             </c:forEach>
+
                         </tbody>
                     </table>
                     <div style="text-align: right">

@@ -12,6 +12,15 @@
 	String no = String.valueOf(session.getAttribute("no"));
 	String pic = String.valueOf(session.getAttribute("pic"));
 %>
+<style>
+.info,.nav-link{
+color:white;
+}
+.d-block:hover{
+opacity:1;
+transition:opacity 1s;
+}
+</style>
 <script type="text/javascript">
 let tid;
 let cnt = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
@@ -111,7 +120,8 @@ $(function(){
 	}
 </style>
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #001F3F;opacity:0.9;">
+
 	<!-- Right navbar links -->
 	<ul class="navbar-nav ml-auto">
 		<!-- 로그인 하지 않은 경우 -->
@@ -128,7 +138,7 @@ $(function(){
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
-			<div class="nav-link">
+			<div class="nav-link" style="color:white;">
 				<div class="row">
 					<span id="counter" style="padding-right:7px;"></span>
 					<div class="text-center" style="width:15px;">
@@ -154,7 +164,7 @@ $(function(){
 			<p class="arrow_box">마이페이지</p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-			<div class="nav-link">
+			<div class="nav-link" style="color:white;">
 				<span id="counter"></span>
 			</div>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
@@ -173,7 +183,7 @@ $(function(){
 			</a>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
-			<div class="nav-link">
+			<div class="nav-link" style="color:white;">
 				<span id="counter"></span>
 			</div>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
@@ -193,7 +203,7 @@ $(function(){
 		</sec:authorize>
 
 		<!-- Notifications Dropdown Menu -->
-		<li class="nav-item dropdown"><a class="nav-link"
+		<li class="nav-item dropdown"><a class="nav-link" style="color:white;"
 			data-toggle="dropdown" href="#"> <i class="far fa-bell"></i> <span
 				class="badge badge-warning navbar-badge">15</span>
 		</a>
@@ -221,17 +231,17 @@ $(function(){
 		</li>
 		<div style="margin:5px;">
 			<form action="/logout" method="post">
-				<button type="submit" class="btn btn-outline-light btn-sm">logout</button>
+				<button type="submit" class="btn btn-light btn-sm"><b>로그아웃</b></button>
 				<sec:csrfInput />
 			</form>
 		</div>
 <!-- 		<li class="nav-item"> -->
-<!-- 			<a class="nav-link" data-widget="fullscreen"href="#" role="button">  -->
+<!-- 			<a class="nav-link" style="color:white;" data-widget="fullscreen"href="#" role="button">  -->
 <!-- 				<i class="fas fa-expand-arrows-alt"></i> -->
 <!-- 			</a> -->
 <!-- 		</li> -->
 <!-- 		<li class="nav-item"> -->
-<!-- 			<a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">  -->
+<!-- 			<a class="nav-link" style="color:white;" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">  -->
 <!-- 				<i class="fas fa-th-large"></i> -->
 <!-- 			</a> -->
 <!-- 		</li> -->

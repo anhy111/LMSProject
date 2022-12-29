@@ -47,8 +47,8 @@ String simDate = simpleDate.format(date);
 	총&nbsp;<span style="color: red;">${fn:length(list) }</span>건의 게시물이 있습니다
 </p>
 <div class="row">
-	<div class="table-responsive-sm col-12 p-0">
-		<table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
+	<div class="table-responsive-sm col-12">
+		<table class="table pt-0 pl-0" style="border-bottom: 1px solid #eef2f7">
 			<thead class="table-light">
 				<tr style="border-top: 2px solid #112a63">
 					<th style="text-align: center;">

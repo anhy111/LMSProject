@@ -52,9 +52,6 @@ public class StudentLectureApplyServiceImpl implements StudentLectureApplyServic
 	
 	@Override
 	public String save(StudentLecture studentLecture) {
-		if(this.studentLectureApplyMapper.maxCredit(studentLecture) == 0) {
-			return "maxCredit"; 
-		}
 		if(this.studentLectureApplyMapper.save(studentLecture)==0) {
 			return "unknown";
 		}

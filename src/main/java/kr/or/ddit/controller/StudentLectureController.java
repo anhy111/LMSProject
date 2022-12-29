@@ -34,7 +34,7 @@ public class StudentLectureController {
 		List<College> collegeList = this.collegeService.CollegeList();
 		
 		model.addAttribute("collegeList",collegeList);
-		
+		model.addAttribute("bodyTitle","수강편람");
 		return "student/lecture/lectureList";
 	}
 	
