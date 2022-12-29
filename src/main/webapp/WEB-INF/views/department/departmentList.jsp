@@ -343,13 +343,13 @@
 				
 				$.each(result,function(p_inx, department){
 					str += `<div class="col-lg-3 col-6 pl-0">
-								<div class="small-box bg-success">
+								<div class="small-box bg-info">
 									<div class="inner">
 										<input type="hidden" value="1">
 										<h4>\${department.depNm}</h4>
 									</div>
 									<div class="icon">
-										<i class="ion ion-bag"></i>
+										<i class="ion-ios-book fas"></i>
 									</div>
 									<a href="javascript:loadDetail(\${department.depCd})" class="small-box-footer">상세보기<i
 										class="fas fa-arrow-circle-right" data-toggle="modal" data-target="#modal-lg"></i></a>
