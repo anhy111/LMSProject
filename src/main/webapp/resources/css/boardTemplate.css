@@ -29,6 +29,9 @@ font-size: 0.9em;
 padding: 35px; 
 border: 1px solid #eee;
 }
+.alert-light p{
+	margin-bottom: 0px;	
+}
 
 .myinfo th{
 	background-color: #001f3f;
