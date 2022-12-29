@@ -29,6 +29,7 @@ top: 0px;
 	$(function() {
 		$("#lectureListYear").text(lectureListYear);
 	})
+
 </script>
 </head>
 <body>

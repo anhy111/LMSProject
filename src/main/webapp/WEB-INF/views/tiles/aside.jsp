@@ -50,6 +50,11 @@
                     </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a href="/student/lecture/myLecture" class="nav-link">
+                                    <p>수강중인 강의</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="/student/lectureApply/spareList" class="nav-link">
                                     <p>예비수강신청</p>
                                 </a>

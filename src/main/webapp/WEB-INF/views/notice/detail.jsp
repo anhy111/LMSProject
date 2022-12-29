@@ -57,8 +57,6 @@
         vertical-align: middle;
         color: #3364c4;
     }
-
-    항
         /*  공지사항 끝  */
         /*  다운로드 시작 */
     .download {
@@ -214,6 +212,7 @@
                             "이전글" ::after
                         </span>
                         </p>
+                        </a>
                         <a href="/notice/list/${standardNoticeCd + 1}/detail" class="btn next">
                     <span class="title">
                         <span class="clip">다음글 제목 넣기 / 다음글 없음</span>

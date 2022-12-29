@@ -1,12 +1,15 @@
 package kr.or.ddit.controller;
 
+import java.security.Principal;
 import java.util.List;
 
+import kr.or.ddit.domain.student.StudentLectureForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -50,5 +53,25 @@ public class StudentLectureController {
 	public List<Department> departmentByCollege(int colCd){
 		log.info("colCd : " + colCd);
 		return this.collegeService.DepartmentByCollegeList(colCd);
+	}
+
+	@GetMapping("/myLecture")
+	public String myLecture(Model model, Principal principal) {
+
+		//로그인 아이디(세션) 가져오기.
+		String studentId = principal.getName();
+		List<StudentLectureForm> lectureList = lectureService.studentLectureSearchAll(studentId);
+		log.info(lectureList.toString());
+
+		model.addAttribute("lectureList", lectureList);
+
+		return "student/lecture/myLecture";
+	}
+
+	@GetMapping("/CourseDescription")
+	public String courseDescription() {
+
+
+		return "/student/lectureApply/inquiryForm?lecaCd=1";
 	}
 }

@@ -38,7 +38,7 @@
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
 							<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
-						<a href="#" class="nav-link"> 
+						<a href="/student/lectureApply/inquiryForm?lecaCd=${param.lecaCd}" class="nav-link">
 							<i class="nav-icon fas fa-book"></i>
 							<p>
 								강의 계획서</i>
@@ -54,7 +54,7 @@
 							</p>
 						</a>
 					</li>
-					<li class="nav-item"><a href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}"" class="nav-link"> <i
+					<li class="nav-item"><a href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}" class="nav-link"> <i
 							class="nav-icon fas fa-chart-pie"></i>
 							<p>강의 자료실</p>
 					</a></li>
@@ -192,7 +192,7 @@
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
-						<a href="#" class="nav-link"> 
+						<a href="#" class="nav-link">
 							<i class="nav-icon fas fa-book"></i>
 							<p>
 								강의 계획서</i>
