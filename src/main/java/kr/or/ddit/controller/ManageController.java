@@ -68,6 +68,7 @@ public class ManageController {
 		model.addAttribute("list", studentList);
 		model.addAttribute("commonDetailList", commonDetailList);
 		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("bodyTitle", "학생 목록 조회");
 
 		return "manage/stuManage";
 	}
@@ -123,6 +124,7 @@ public class ManageController {
 		
 		model.addAttribute("commonDetailList", commonDetailList);
 		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("bodyTitle", "학생 등록");
 		
 		return "manage/insertStu";
 	}
@@ -131,6 +133,8 @@ public class ManageController {
 	
 	@GetMapping("/manage/recordManage")
 	public String academicStatus(Model model) {
+		
+		model.addAttribute("bodyTitle", "휴복학 관리");
 		
 		return "manage/recordManage";
 	}
@@ -148,7 +152,7 @@ public class ManageController {
 	@ResponseBody
 	public Student recordManagePost(@RequestBody Map<String, String> map) {
 		
-		log.info("데이터 넘어오나 ! " + map.get("stuNo"));
+		log.info("데이터 넘어오나 ! " + map.get("recCd"));
 		
 		Student recordManagePost = this.manageService.recordManagePost(map);
 		
@@ -187,6 +191,7 @@ public class ManageController {
 		model.addAttribute("pPosition", pPosition);
 		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("empId", createEmpId);
+		model.addAttribute("bodyTitle", "교직원 등록");
 		
 		
 		return"manage/insertEmp";
@@ -226,6 +231,7 @@ public class ManageController {
 		model.addAttribute("ePosition", ePosition);
 		model.addAttribute("pPosition", pPosition);
 		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("bodyTitle", "교직원 목록 조회");
 		
 		return "manage/empManage";
 	}
@@ -237,6 +243,8 @@ public class ManageController {
 		log.info("empNo 넘어올까 " +  map.get("empNo"));
 		
 		Employee detailEmp = this.manageService.detailEmp(map);
+		
+		log.info("교수 상세 : " + detailEmp);
 		
 		return detailEmp;
 	}
@@ -275,6 +283,7 @@ public class ManageController {
 		List<Evaluation> evaluationList = this.manageService.evaluationList();
 		
 		model.addAttribute("evaluationList", evaluationList);
+		model.addAttribute("bodyTitle", "강의 평가 조회");
 		
 		return "manage/proEvaluation";
 	}
@@ -300,6 +309,7 @@ public class ManageController {
 		List<Evaluation> mineEvlList = this.manageService.mineEvlList(no);
 		
 		model.addAttribute("mineEvlList", mineEvlList);
+		model.addAttribute("bodyTitle", "강의 평가 조회");
 		
 		return "professor/mineEvaluation";
 	}

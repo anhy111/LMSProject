@@ -44,25 +44,6 @@
                     <li class="nav-item"><a href="#" class="nav-link">
 
                         <p>
-                            마이페이지 <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="/mypage/mypage?memNo=<%=no%>"
-                                                    class="nav-link">
-
-                                <p>내 정보 확인</p>
-                            </a></li>
-                            <li class="nav-item"><a href="/mypage/changeStuPw"
-                                                    class="nav-link">
-
-                                <p>비밀번호 변경</p>
-                            </a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a href="#" class="nav-link">
-
-                        <p>
                             수강관리 <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -82,7 +63,7 @@
                             </a></li>
                             <li class="nav-item"><a href="/student/evaluation/list"
                                                     class="nav-link">
-                                <p>수강평가</p>
+                                <p>강의 평가</p>
                             </a></li>
                         </ul>
                     </li>
@@ -201,7 +182,7 @@
                             <li class="nav-item"><a href="/professor/mineEvaluation"
                                                     class="nav-link">
 
-                                <p>수업 평가 조회</p>
+                                <p>강의 평가 조회</p>
                             </a></li>
                         </ul>
                     </li>
@@ -217,18 +198,6 @@
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="/professor/stuManageOfPro"
-                                                    class="nav-link">
-
-                                <p>학생 목록</p>
-                            </a></li>
-                            <sec:authorize access="hasRole('ROLE_DEAN')">
-                                <li class="nav-item"><a href="/professor/scholarshipStu"
-                                                        class="nav-link">
-
-                                    <p>장학생 추천 목록</p>
-                                </a></li>
-                            </sec:authorize>
                             <li class="nav-item">
                                 <a href="/professor/stuManageOfPro" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
@@ -336,11 +305,6 @@
 
                                 <p>학생 목록 조회</p>
                             </a></li>
-                            <li class="nav-item"><a href="/manage/insertStu"
-                                                    class="nav-link">
-
-                                <p>학생 등록</p>
-                            </a></li>
                             <li class="nav-item"><a href="/manage/recordManage"
                                                     class="nav-link">
 
@@ -368,7 +332,7 @@
                             <li class="nav-item"><a href="/manage/proEvaluation"
                                                     class="nav-link">
 
-                                <p>교수 평가 조회</p>
+                                <p> 평가 조회</p>
                             </a></li>
                         </ul>
                     </li>
