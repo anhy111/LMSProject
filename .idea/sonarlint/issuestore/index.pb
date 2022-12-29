@@ -39,8 +39,6 @@ r
 Bsrc/main/java/kr/or/ddit/service/impl/LectureBoardServiceImpl.java,c/f/cf9d2fa581c3fba052d8e7a214b4328e4dd6816c
 V
 &src/main/webapp/WEB-INF/views/home.jsp,1/a/1af60de6709e573f5dad4fe0319db0bb3a87e804
-h
-8src/main/java/kr/or/ddit/controller/LoginController.java,8/4/8431640677651e3b3b1b0c0dfa53c385e5b9ed0d
 [
 +src/main/webapp/WEB-INF/views/test/home.jsp,9/a/9adcfb5941afef62304cc72a0aa433bcd09542d6
 r

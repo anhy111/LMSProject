@@ -71,7 +71,6 @@ public class StudentLectureController {
 	@GetMapping("/CourseDescription")
 	public String courseDescription() {
 
-
 		return "/student/lectureApply/inquiryForm?lecaCd=1";
 	}
 }
