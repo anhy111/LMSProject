@@ -137,16 +137,17 @@
 	
 	<!-- 장학금 수여학생 정보 -->
 	<select id="studentInfoList" resultType="sclHistory">
-		SELECT DISTINCT
+		SELECT
 		        LECA_CRD
 		        , LECA_CATE
 		        , LECA_NM
 		        , SL_SCORE
-		FROM    STU_LEC SL, LEC_APPLY LA, LECTURE L, STUDENT S, DEPARTMENT D, SUBJECT SJ
-		WHERE   SL.STU_NO = S.STU_NO
-		AND     SL.LECA_CD = L.LECA_CD
+		FROM    STU_LEC SL, LEC_APPLY LA, LECTURE L, DEPARTMENT D, SUBJECT SJ
+		WHERE   SL.LECA_CD = L.LECA_CD
 		AND     L.LECA_CD = LA.LECA_CD
-		AND     S.STU_NO = #{stuNo}
+		AND     SJ.DEP_CD = D.DEP_CD
+		AND     SJ.SUB_CD = L.SUB_CD
+		AND     SL.STU_NO = #{stuNo};
 	</select>
 	
 	<!-- 장학금 수여 -->
