@@ -17,7 +17,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 	
 	//결재 요청 목록
 	@Override
-	public List<Approval> ApprovalList(){
-		return this.approvalMapper.ApprovalList();
+	public List<Approval> approvalList(Approval approval){
+		return this.approvalMapper.approvalList(approval);
 	}
+	
 }
