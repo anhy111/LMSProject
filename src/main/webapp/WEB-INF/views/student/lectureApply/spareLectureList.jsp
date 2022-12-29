@@ -362,7 +362,8 @@
 		loadCompleteSaveLecture();
 		loadNotYetSaveLecture();
 	}); // end document
-	
+
+
 	function loadNotYetSaveLecture(){
 		let college = $("#cartCollege").val();
 		let department = $("#cartDepartment").val();
