@@ -23,7 +23,7 @@ VALUES(
 		RECORD_SEQ.NEXTVAL
 		, #{stuNo}
 		, #{rgbCd}
-		, TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		, #{recYr}
 		, #{recSem}
 		, #{recYn}
 		<if test="recDt == null or recDt =='' ">, SYSDATE</if>
