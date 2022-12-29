@@ -40,6 +40,7 @@
                with font-awesome or any other icon font library -->
                 <!-- 수강관리 -->
                 <sec:authorize access="hasRole('ROLE_STUDENT')">
+                
                     <li class="nav-header">학생 어사이드</li>
                     <li class="nav-item"><a href="#" class="nav-link">
 
@@ -146,7 +147,8 @@
                             href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link">
                         <p>내가 듣는 강의 (임시. 지우지 마시오)</p>
                     </a></li>
-                </sec:authorize>
+                   </sec:authorize>
+                
                 <!-- 교수 어사이드 -->
                 <sec:authorize access="hasRole('ROLE_PROFESSOR')">
                     <li class="nav-header">교수 어사이드</li>
@@ -173,9 +175,8 @@
                     </li>
                     <!-- 학적관리 -->
                     <li class="nav-item"><a href="#" class="nav-link">
-
                         <p>
-                            평가 <i class="right fas fa-angle-left"></i>
+                            	평가 <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
@@ -211,7 +212,6 @@
                                         <p>장학생 추천 목록</p>
                                     </a>
                                 </li>
-
                             </sec:authorize>
                         </ul>
                     </li>

@@ -82,10 +82,36 @@ $(function(){
     }
     
     /* 말풍선 적절한 top 과 margin-left 로 위치조정 */
-	.arrow_box {
+	.arrow_box1 {
+		display: none;
+		position: absolute;
+		padding: 8px;
+		left: 0;
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+		background: #333;
+		color: #fff;
+		font-size: 14px;
+	}
+	
+	.arrow_box1:after {
+	  position: absolute;
+	  bottom: 100%;
+	  left: 50%;
+	  width: 0;
+	  height: 0;
+	  margin-left: -10px;
+	  border: solid transparent;
+	  border-color: rgba(51, 51, 51, 0);
+	  border-bottom-color: #333;
+	  border-width: 10px;
+	  pointer-events: none;
+	  content: ' ';
+	}
+	.arrow_box2 {
 	  display: none;
 	  position: absolute;
-	  width: 100px;
 	  padding: 8px;
 	  left: 0;
 	  -webkit-border-radius: 8px;
@@ -96,7 +122,7 @@ $(function(){
 	  font-size: 14px;
 	}
 	
-	.arrow_box:after {
+	.arrow_box2:after {
 	  position: absolute;
 	  bottom: 100%;
 	  left: 50%;
@@ -111,16 +137,16 @@ $(function(){
 	  content: ' ';
 	}
     
-    span:hover + p.arrow_box {
+    span:hover + p.arrow_box1 {
 	  display: block;
 	}
 	
-	a:hover + p.arrow_box {
+	a:hover + p.arrow_box2 {
 	  display: block;
 	}
 </style>
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #001F3F;opacity:0.9;">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: white;opacity:0.9;">
 
 	<!-- Right navbar links -->
 	<ul class="navbar-nav ml-auto">
@@ -138,12 +164,12 @@ $(function(){
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
-			<div class="nav-link" style="color:white;">
+			<div class="nav-link">
 				<div class="row">
 					<span id="counter" style="padding-right:7px;"></span>
 					<div class="text-center" style="width:15px;">
 						<span class="fas fa-sync-alt" id="refresh"></span>
-						<p class="arrow_box">시간 연장</p>
+						<p class="arrow_box1">시간 연장</p>
 					</div>
 				</div>
 			</div>
@@ -161,7 +187,7 @@ $(function(){
 					</div>
 				</div>
 			</a>
-			<p class="arrow_box">마이페이지</p>
+			<p class="arrow_box2">마이페이지</p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 			<div class="nav-link" style="color:white;">
