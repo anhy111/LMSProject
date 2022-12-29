@@ -4,10 +4,10 @@
 
 
 <div class="row">
-	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm text-center">
 		<thead>
 			<tr>
-				<th>No</th>
+				<th width="6%">결재번호</th>
 				<th>기안자</th>
 				<th>구분</th>
 				<th>승인 여부</th>
@@ -22,16 +22,16 @@
 				<tr>
 					<td>${approval.apprCd}</td>
 					<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
-					<td>${approval.proNo}</td>
+					<td>${approval.proNm}</td>
 					<td>${approval.apprCate}</td>
 					<td>${approval.apprYn}</td>
 					<td>
-						<fmt:formatDate value="${approval.apprSdt}" pattern="YYYY/MM/DD" />
+						<fmt:formatDate value="${approval.apprSdt}" pattern="YYYY/MM/dd" />
 					</td>
 					<td>
-						<fmt:formatDate value="${approval.apprDt}" pattern="YYYY/MM/DD" />
+						<fmt:formatDate value="${approval.apprDt}" pattern="YYYY/MM/dd" />
 					</td>
-					<td>${approval.empNo}</td>
+					<td>${approval.empNm}</td>
 					<td><button>결제</button></td>
 				</tr>
 			</c:forEach>

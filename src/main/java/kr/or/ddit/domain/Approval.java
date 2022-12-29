@@ -14,6 +14,8 @@ public class Approval {
 	private String apprCate; // 종류 - 강의계획서, 장학생추천
 	private int proNo; // 기안자
 	private int empNo; // 결재자
+	private String proNm; // 기안자이름
+	private String empNm; // 결재자 이름
 	
 	
 }

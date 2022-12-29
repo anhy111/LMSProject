@@ -7,7 +7,7 @@
 	<div class="col text-center">
 		<h1>나는 메인페이지</h1>
 		<h1>포틀릿해줘</h1>
-		<a href="/department/list" style="font-size: 10em;">어사이드 어디감?</a>
+		<a href="/approval/main" style="font-size: 10em;">어사이드 어디감?</a>
 	</div>
 </div>
 

@@ -7,10 +7,18 @@
 
 
 <!-- 결재요청 목록 -->
+<!-- 결재자가 로그인한 관리자인 결재목록만 조회 -->
 <select id="approvalList" parameterType="Approval" resultType="Approval">
-	SELECT APPR_CD, APPR_DT, APPR_YN, APPR_RSN, APPR_CATE, PRO_NO, EMP_NO, APPR_SDT
-	FROM APPROVAL
-	WHERE EMP_NO = #{empNo}
+	SELECT A.APPR_CD
+		 , A.APPR_DT
+		 , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = A.APPR_YN ) APPR_YN
+		 , A.APPR_RSN
+		 , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = A.APPR_CATE ) APPR_CATE
+		 , (SELECT EP.EMP_NM FROM EMPLOYEE EP WHERE EP.EMP_NO = A.PRO_NO ) PRO_NM
+		 , (SELECT EE.EMP_NM FROM EMPLOYEE EE WHERE EE.EMP_NO = A.EMP_NO ) EMP_NM
+		 , APPR_SDT
+	FROM APPROVAL A
+	WHERE A.EMP_NO = #{empNo}
 </select>
 
 <!-- 상세 -->
