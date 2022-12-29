@@ -18,6 +18,8 @@ public class Test {
 	private Date        testSdt   ;   //시험시작시간
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date        testEdt   ;   //시험종료시간
+	private String		testPart  ;   //시험구분
+	private String		testPartNm  ;   //시험구분이름
 	private List<TestQ> testQList; //1 : N 시험문제
 	private StudentTest stuTest;
 	private List<StudentTestDetail> stdList;

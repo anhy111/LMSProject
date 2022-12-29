@@ -27,6 +27,7 @@ import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.Student;
+import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
@@ -145,7 +146,7 @@ public class LectureBoardController {
 		
 		return "lectureBoard/test/test";
 	}
-	// 학생 퀴즈 리스트
+	// 학생 시험 리스트
 	@GetMapping("/test/studentTest")
 	public String studentTest(@RequestParam("lecaCd") String lecaCd, Model model, Principal cipal) {
 		
@@ -153,13 +154,8 @@ public class LectureBoardController {
 		List<Test> testList = this.lectureBoardService.testList(lecaCd);
 		
 		String memCd = cipal.getName();
-		log.info(memCd);
 		
 		
-		log.info("testList : " + testList);
-		for (Test test : testList) {
-			log.info("하하하 : " + test );
-		}
 		model.addAttribute("memId", memCd);
 		model.addAttribute("data", lec);
 		model.addAttribute("list", testList);
@@ -329,7 +325,88 @@ public class LectureBoardController {
 		return result;
 	}
 	
+	@GetMapping("attendence/studentAttendence")
+	public String stuAttend(String lecaCd, Model model,Principal cipal) {
+		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
+		String stuNo = cipal.getName();
+		model.addAttribute("data", lecApplySearch);
+		model.addAttribute("stuNo", stuNo);
+		return "lectureBoard/attendence/studentAttendence";
+	}
 	
+	
+	@GetMapping("score/totalScore")
+	public String stuAttend1(Model model, String lecaCd) {
+		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
+		model.addAttribute("data", lecApplySearch);
+		log.info("a");
+		return "lectureBoard/score/totalScore";
+	}
+	
+	//학생 성적 전체 리스트
+	@ResponseBody
+	@PostMapping("lecStuTotScore")
+	public List<Student> lecStuTotScore (@RequestBody String lecaCd) {
+		log.info("lecStuTotScore ajax 도착");
+		String a = lecaCd.substring(7);
+		int lecaCd1 = Integer.parseInt(a);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("lecaCd", lecaCd);
+		
+		List<Student> list = this.lectureBoardService.getGradeList(lecaCd1);
+		
+		log.info("list : " + list);
+		
+		return list;
+	}
+		
+		// 학생 성적 상세 리스트
+		@ResponseBody
+		@PostMapping("lecStuScoreDetail")
+		public List<Student> lecStuScoreDetail(int lecaCd, int stuNo) {
+			log.info("lecStuScoreDetail ajax 도착");
+			
+			log.info("lecaCd : " + lecaCd + " stuNo : " + stuNo);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("lecaCd", lecaCd);
+			map.put("stuNo", stuNo);
+			
+			List<Student> list = this.lectureBoardService.lecStuScoreDetail(map);
+			
+			return list;
+		}
+		
+		// 학생 점수 및 총 점
+		@ResponseBody
+		@PostMapping("stuScoreandMaxScore")	
+		public Student stuScoreandMaxScore(int lecaCd, int stuNo) {
+			log.info("stuScoreandMaxScore ajax 도착");
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("lecaCd", lecaCd);
+			map.put("stuNo", stuNo);
+			
+			Student vo = this.lectureBoardService.getStuScoreAndMaxScore(map);
+			
+			return vo;
+		}
+		
+		// 성적 부여
+		@ResponseBody
+		@PostMapping("stuGradeUpdate")
+		public int stuGradeUpdate(StudentLecture stuLec) {
+			log.info("stuGradeUpdate ajax 도착");
+			
+			int result = this.lectureBoardService.stuGradeUpdate(stuLec);
+			
+			return result;
+		}
+		
 	
 	
 

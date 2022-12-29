@@ -428,8 +428,6 @@ let token = "${_csrf.token}";
 
 <!-- 출결 -->
 <div class="col-lg-12">
-	<div class="card" style="min-height: 700px;padding-bottom: 15%;">
-		<div class="card-body">
 			<div id="bodyWrapper">
 				<h4	class="lecApplyName">${data.lecaNm }&emsp;&#45;&emsp;출결 관리</h4>
 				
@@ -556,5 +554,3 @@ let token = "${_csrf.token}";
 				<!-- attenBotWrap End -->
 			</div>
 		</div>
-	</div>
-</div>

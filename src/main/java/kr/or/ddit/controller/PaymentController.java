@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Payment;
+import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Student;
+import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -95,7 +99,9 @@ public class PaymentController {
 	
 	//학생 등록금 납부내역 시작페이지
 	@GetMapping("/stuPaymentDetail")
-	public String stuPaymentDetail() {
+	public String stuPaymentDetail(Model model) {
+		
+		model.addAttribute("bodyTitle", "등록금 납부 내역");
 		
 		return "payment/stuPaymentDetail";
 	}
@@ -112,6 +118,38 @@ public class PaymentController {
 		log.info("학생 등록금 납부내역 리스트 : " + stuPaymentList);
 		
 		return stuPaymentList;
+	}
+
+	//학생 등록금 납부내역 미납금 확인
+	@ResponseBody
+	@PostMapping("billCount")
+	public int billCount(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int stuNo = (int)session.getAttribute("no");
+		
+		int cnt = this.paymentService.billCount(stuNo);
+		
+		log.info("학생 등록금 납부내역 미납자 : " + cnt);
+		
+		return cnt;
+	}
+	
+	//납부확인서 이동(관련 파라미터 넘긱기)
+	@GetMapping("/paymentConfirmation")
+	public String paymentConfirmation(HttpServletRequest request, Model model, int payCd) {
+		
+		HttpSession session = request.getSession();
+		int stuNo = (int)session.getAttribute("no");
+		
+		Student student = this.paymentService.paymentFormStuInfo(stuNo);
+		List<Payment> paymentList = this.paymentService.paymentFormInfo(payCd);
+		List<Department> departmentList = this.paymentService.paymentFormDepInfo(payCd);
+		
+		model.addAttribute("student", student);
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("departmentList", departmentList);
+		
+		return "payment/paymentConfirmation";
 	}
 	
 }

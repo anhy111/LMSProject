@@ -47,6 +47,7 @@
 		<typeAlias type="kr.or.ddit.domain.Payment" alias="payment"/>
 		<typeAlias type="kr.or.ddit.domain.KeyIndicators" alias="keyIndicators"/>
 		<typeAlias type="kr.or.ddit.domain.StudentTest" alias="stuTest"/>
+		<typeAlias type="kr.or.ddit.domain.StudentLecture" alias="stuLec"/>
 		<typeAlias type="kr.or.ddit.domain.StudentTestDetail" alias="std"/>
 
 		<typeAlias type="kr.or.ddit.domain.Attendence" alias="attendence"/>

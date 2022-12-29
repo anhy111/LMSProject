@@ -31,7 +31,6 @@
 	<div class="row">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-10">
-			<div class="card card-outline card-primary">
 				<div class="card-header" style="padding-bottom: 0px">
 					<div class="row form-group">
 						<div class="col-sm-6">
@@ -60,8 +59,6 @@
 					<div class="col-sm-12">
 						<section class="content">
 							<div class="container-fluid">
-								<div class="card card-danger">
-									<div class="card-body">
 										<div>
 											<textarea id="tsubCon" name="tsubCon" class="form-control"
 												cols="15" rows="15">${task.taskSubmitList[0].tsubCon}</textarea>
@@ -99,10 +96,10 @@
 											<hr>
 											<div class="col-2" style="display: inline-block;">
 												<input type="number" class="form-control" value="${task.taskSubmitList[0].tsubScore}"
-													max="10" min="0" id="tsubScore" name="tsubScore">
+													max="${task.taskScore}" min="0" id="tsubScore" name="tsubScore">
 											</div>
 											<div class="col-2" style="display: inline-block;">
-												<p>/ 10</p>
+												<p>/ ${task.taskScore}</p>
 											</div>
 											<div class="col-2" style="display: inline-block;">
 												<button type="button" class="btn btn-outline-success"
@@ -116,8 +113,6 @@
 											<label class="custom-file-label" for="customFile">Choose
 												file</label>
 										</div>
-									</div>
-								</div>
 							</div>
 						</section>
 					</div>
@@ -144,7 +139,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
 		</div>
 	</div>
 	<sec:csrfInput />

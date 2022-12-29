@@ -56,10 +56,9 @@
         letter-spacing: 0;
         vertical-align: middle;
         color: #3364c4;
-    }항
-
-    /*  공지사항 끝  */
-    /*  다운로드 시작 */
+    }
+        /*  공지사항 끝  */
+        /*  다운로드 시작 */
     .download {
         padding: 10px 8px;
         margin: 20px 0;
@@ -151,7 +150,6 @@
     }
 
     .btn-list {
-        top: 45px;
         font-size: 11px;
     }
 
@@ -201,28 +199,31 @@
                 <div class="download">
                     <a href="#">2023정시_모집인원_변경안내.pdf(636 KB)</a>
                 </div>
-
-                <footer class="footer">
-                    <p class="btn prev">
+                <div>
+                    <footer class="footer">
+                        <c:set var="standardNoticeCd" value="${form.noticeCd}"/>
+                        <a href="/notice/list/${standardNoticeCd - 1}/detail" class="btn next">
+                        <p class="btn prev">
                         <span class="title">
-                            <span class="clip">이전글 없음</span>
+                            <span class="clip">이전글 제목 넣기 / 이전글 없음</span>
                         </span>
-                        <span class="arrow prev">
-                            "이전글"
-                            ::after
+                            <a href="/notice/list" class="btn-list">목록보기</a>
+                            <span class="arrow prev">
+                            "이전글" ::after
                         </span>
-                    </p>
-                    <a href="/notice/list" class="btn-list">목록보기</a>
-                    <a href="#" class="btn next">
-                <span class="title">
-                    <span class="clip">제9회 연수대학교 인문학 캠프 개최안내</span>
-                </span>
-                        <span class="arrow next">
-                    "다음글"
-                    ::after
-                </span>
-                    </a>
-                </footer>
+                        </p>
+                        </a>
+                        <a href="/notice/list/${standardNoticeCd + 1}/detail" class="btn next">
+                    <span class="title">
+                        <span class="clip">다음글 제목 넣기 / 다음글 없음</span>
+                    </span>
+                            <span class="arrow next">
+                        "다음글"
+                        ::after
+                    </span>
+                        </a>
+                    </footer>
+                </div>
             </div>
         </div>
     </div>

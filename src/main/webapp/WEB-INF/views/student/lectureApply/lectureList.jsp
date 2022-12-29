@@ -91,7 +91,7 @@
 					<th>교수명</th>
 					<th>강의계획서</th>
 					<th>신청</th>
-				</tr>
+				</tr>획
 			</thead>
 			<tbody id="notApplySaveLecture">
 

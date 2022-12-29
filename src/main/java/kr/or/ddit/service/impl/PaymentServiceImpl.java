@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.domain.Department;
 import kr.or.ddit.domain.Payment;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.PaymentMapper;
 import kr.or.ddit.service.PaymentService;
 
@@ -44,5 +45,23 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public List<Payment> stuPaymentList(int stuNo) {
 		return this.paymentMapper.stuPaymentList(stuNo);
+	}
+	
+	@Override
+	public int billCount(int stuNo) {
+		return this.paymentMapper.billCount(stuNo);
+	}
+	
+	@Override
+	public Student paymentFormStuInfo(int stuNo) {
+		return this.paymentMapper.paymentFormStuInfo(stuNo);
+	}
+	@Override
+	public List<Payment> paymentFormInfo(int payCd) {
+		return this.paymentMapper.paymentFormInfo(payCd);
+	}
+	@Override
+	public List<Department> paymentFormDepInfo(int payCd) {
+		return this.paymentMapper.paymentFormDepInfo(payCd);
 	}
 }

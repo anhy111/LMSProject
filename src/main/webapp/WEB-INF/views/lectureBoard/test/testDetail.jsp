@@ -45,32 +45,41 @@
 </style>
 
 <div class="col-lg-12">
-	<div class="card" style="min-height: 700px;">
-		<div class="card-body">
 			<div class="quizWrapper">
 				<h1 class="header-title mb-3"></h1>
 				
 				<div>
-					<div class="mb-3" style="width:40%;float:left;">
-						<label for="example-disable" class="form-label">퀴즈 제목</label> <input
+					<div class="mb-3" style="float:left;margin-right: 20px;">
+						<label for="example-disable" class="form-label">시험 제목</label> <input
 							type="text" class="form-control" id="example-disable" disabled
 							value="${data.testNm }">
 					</div>
 					
 			<!-- 		<div class="clear"></div> -->
 				
-					<div class="mb-3" style="width:20%;float:left;margin:0 10%;'">
-						<label for="example-disable" class="form-label">퀴즈 시작일</label> <input
+					<div class="mb-3" style="float:left;margin-right: 20px;'">
+						<label for="example-disable" class="form-label">시험 시작일</label> <input
 							type="text" class="form-control" id="example-disable" disabled
 							value="<fmt:formatDate value="${data.testSdt }" pattern="yyyy-MM-dd HH:mm" />">
 					</div>
 			
 			<!-- 		<div class="clear"></div> -->
 				
-					<div class="mb-3" style="width:20%;float:left;">
-						<label for="example-disable" class="form-label">퀴즈 종료일</label> <input
+					<div class="mb-3" style="float:left;margin-right: 20px;">
+						<label for="example-disable" class="form-label">시험 종료일</label> <input
 							type="text" class="form-control" id="example-disable" disabled
 							value="<fmt:formatDate value="${data.testEdt }" pattern="yyyy-MM-dd HH:mm" />">
+					</div>
+					<div class="mb-3" style="float:left;margin-right: 20px;">
+					<input type="hidden" value="${data.testPart}" id="testPart" name="testPart">
+						<label for="example-disable" class="form-label">시험 구분</label> 
+						<c:if test="${data.testPart == 'T01'}">
+							<input type="text" class="form-control" value="중간고사" disabled >
+						</c:if>
+						<c:if test="${data.testPart == 'T02'}">
+							<input type="text" class="form-control" value="기말고사" disabled >
+						</c:if>
+						
 					</div>
 					
 					<div class="clear"></div>
@@ -167,9 +176,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
-</div>
 
 <script type="text/javascript">
 
