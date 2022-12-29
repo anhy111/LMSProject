@@ -72,138 +72,117 @@ $(function(){
 
 
 </script>
+<style>
+	.mycard {
+		padding: 0px;
+		border-radius: 0.25rem;
+		min-width: 0px;
+		text-align: left;
+	}
+</style>
 <div class="row">
-	<div class="col-sm-10 offset-1">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">교수 평가 조회</h3>
-			</div>
-		
-			<div class="card-body">
-				<div id="example1_wrapper">
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<table id="example1"
-							class="table table-bordered table-striped dataTable dtr-inline table-sm text-center"
-							aria-describedby="example1_info">
-							<thead>
-								<tr>
-									<th class="sorting sorting_asc" tabindex="0"
-										aria-controls="example1" rowspan="1" colspan="1"
-										aria-sort="ascending"
-										aria-label="Rendering engine: activate to sort column descending">번호</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Browser: activate to sort column ascending">강의번호</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">강의명</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending">이수구분</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending">평가점수</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending">상세</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="mineEvlList" items="${mineEvlList}" varStatus="stat">
-									<tr>
-									<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">${stat.count}</td>
-									<td>${mineEvlList.lecaCd}</td>
-									<td>${mineEvlList.lecaNm}</td>
-									<td>${mineEvlList.lecaCate}</td>
-									<td>${mineEvlList.evlScore}</td>
-									<td>
-										<button class="btn btn-block btn-outline-info btn-sm btnDetail" 
-											value="${mineEvlList.lecaCd}" data-toggle="modal" data-target="#modal-xl">상세</button>
-									</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="col-sm-12">
+		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+			<thead>
+				<tr class="text-center">
+					<th width="10%">번호</th>
+					<th width="10%">강의번호</th>
+					<th width="10%">강의명</th>
+					<th width="10%">이수구분</th>
+					<th width="10%">평가점수</th>
+					<th width="10%">상세</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="mineEvlList" items="${mineEvlList}" varStatus="stat">
+					<tr>
+						<td>${stat.count}</td>
+						<td>${mineEvlList.lecaCd}</td>
+						<td>${mineEvlList.lecaNm}</td>
+						<td>${mineEvlList.lecaCate}</td>
+						<td>${mineEvlList.evlScore}</td>
+						<td>
+							<button class="btn btn-block btn-outline-info btn-sm btnDetail" 
+								value="${mineEvlList.lecaCd}" data-toggle="modal" data-target="#modal-lg">상세</button>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </div>
 
 <!-- 모달 -->
 <!-- 상세정보확인 -->
-<div class="modal fade" id="modal-xl" style="display:none;" aria-hidden="true">
-	<div class="modal-dialog modal-xl">
+<div class="modal fade" id="modal-lg" style="display:none;" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">교수 평가 상세</h4>
+				<h4 class="modal-title">강의 평가 상세</h4>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="col-md-11 offset-1">
+				<div class="col-md-12">
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="container">
 									<div class="row mt-1 mb-2">
-										<div class="col-3">
+										<div class="col-4">
 											<label for="lecaNm" class="form-label">강의명</label> 
 											<input type="text" class="form-control stu" id="lecaNm"
 												name="lecaNm" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
-										<div class="col-3">
+										<div class="col-4">
 											<label for="lecaCd" class="form-label">강의코드</label> 
 											<input type="text" class="form-control stu" id="lecaCd"
 												name="lecaCd" readonly />
 										</div>
-										<div class="col-3 offset-1">
+										<div class="col-4">
 											<label for="proNo" class="form-label">교번</label> 
 											<input type="text" class="form-control stu" id="proNo"
 												name="proNo" readonly />
 										</div>
-										<div class="col-3 offset-1">
+										<div class="col-4">
 											<label for="empNm" class="form-label">교수명</label> 
 											<input type="text" class="form-control stu" id="empNm"
 												name="empNm" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
-										<div class="col-3">
+										<div class="col-4">
 											<label for="lecaSem" class="form-label">개설연도/학기</label> 
 											<input type="text" class="form-control stu" id="lecaSem"
 												name="lecaSem" readonly />
 										</div>
-										<div class="col-3 offset-1">
+										<div class="col-4">
 											<label for="lecaCate" class="form-label">이수구분</label> 
 											<input type="text" class="form-control stu" id="lecaCate"
 												name="lecaCate" readonly />
 										</div>
-										<div class="col-3 offset-1">
+										<div class="col-4">
 											<label for="lecHcnt" class="form-label">수강생 수</label> 
 											<input type="text" class="form-control stu" id="lecHcnt"
 												name="lecHcnt" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
-										<div class="col-3">
+										<div class="col-4">
 											<label for="count" class="form-label">응답자 수</label> 
 											<input type="text" class="form-control stu" id="count"
 												name="count" readonly />
 										</div>
-										<div class="col-3 offset-1">
+										<div class="col-4">
 											<label for="recYn" class="form-label">응답 비율</label> 
 											<input type="text" class="form-control stu" id="recYn"
 												name="recYn" readonly />
 										</div>
-										<div class="col-3 offset-1">
+										<div class="col-4">
 											<label for="evlScore" class="form-label">평가 점수</label> 
 											<input type="text" class="form-control stu" id="evlScore"
 												name="evlScore" readonly />
@@ -212,9 +191,9 @@ $(function(){
 								</div>
 							</div>
 						</div>
-						<div class="row mt-5">
-							<div class="col-11">
-								<div class="card">
+						<div class="row mt-3">
+							<div class="col-12">
+								<div class="card mycard">
 									<div class="card-body table-responsive p-0" style="height: 300px;">
 										<table class="table table-head-fixed text-nowrap">
 											<thead>

@@ -41,28 +41,6 @@
 						<a href="#" class="nav-link"> 
 							<i class="nav-icon fas fa-book"></i>
 							<p>
-								마이페이지 <i class="right fas fa-angle-left"></i>
-							</p>
-						</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item">
-								<a href="/mypage/mypage?memNo=<%=no%>" class="nav-link"> 
-									<i class="far fa-circle nav-icon"></i>
-									<p>내 정보 확인</p>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="/mypage/changeStuPw" class="nav-link"> 
-									<i class="far fa-circle nav-icon"></i>
-									<p>비밀번호 변경</p>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="nav-item">
-						<a href="#" class="nav-link"> 
-							<i class="nav-icon fas fa-book"></i>
-							<p>
 								수강관리 <i class="right fas fa-angle-left"></i>
 							</p>
 						</a>
@@ -82,7 +60,7 @@
 							<li class="nav-item">
 								<a href="/student/evaluation/list" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
-									<p>수강평가</p>
+									<p>강의 평가</p>
 								</a>
 							</li>
 						</ul>
@@ -193,7 +171,7 @@
 							<li class="nav-item">
 								<a href="/professor/mineEvaluation" class="nav-link"> 
 								<i class="far fa-circle nav-icon"></i>
-									<p>수업 평가 조회</p>
+									<p>강의 평가 조회</p>
 								</a>
 							</li>
 						</ul>
@@ -333,12 +311,6 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="/manage/insertStu" class="nav-link"> 
-									<i class="far fa-circle nav-icon"></i>
-									<p>학생 등록</p>
-								</a>
-							</li>
-							<li class="nav-item">
 								<a href="/manage/recordManage" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
 									<p>휴복학 관리</p>
@@ -369,7 +341,7 @@
 							<li class="nav-item">
 								<a href="/manage/proEvaluation" class="nav-link"> 
 									<i class="far fa-circle nav-icon"></i>
-									<p>교수 평가 조회</p>
+									<p>강의 평가 조회</p>
 								</a>
 							</li>
 						</ul>

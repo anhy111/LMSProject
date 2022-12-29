@@ -41,6 +41,7 @@ public class StuManageOfProController {
 		List<Student> stuList = this.stuManageOfProService.stuList(depCd);
 		
 		model.addAttribute("list", stuList);
+		model.addAttribute("bodyTitle", "학생목록조회");
 		
 		return "professor/stuManage/stuManageOfPro";
 	}
@@ -74,11 +75,14 @@ public class StuManageOfProController {
 	
 	//추천받은 장학생 list
 	@GetMapping("/professor/scholarshipStu")
-	public String scholarshipStu(Model model) {
+	public String scholarshipStu(Model model, HttpSession session) {
 		
-		List<SclHistory> schStuList = this.stuManageOfProService.schStuList();
+		String depCd = String.valueOf(session.getAttribute("depCd"));
+		
+		List<SclHistory> schStuList = this.stuManageOfProService.schStuList(depCd);
 		
 		model.addAttribute("list", schStuList);
+		model.addAttribute("bodyTitle", "추천장학생 목록조회");
 	
 	return "professor/stuManage/scholarshipStu";
 	}

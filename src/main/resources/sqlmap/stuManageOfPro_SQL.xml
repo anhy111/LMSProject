@@ -77,9 +77,9 @@
 	</insert>
 	
 	<!-- 추천받은 장학생 리스트 -->	
-	<select id="schStuList" resultType="sclHistory">
+	<select id="schStuList" parameterType="String" resultType="sclHistory">
 		SELECT  SH.SCLH_CD
-				, SH.STU_NO 
+		        , SH.STU_NO 
 		        , S.STU_NM
 		        , S.STU_PIC
 		        , SH.SCLH_YR
@@ -91,11 +91,13 @@
 		        , SH.SCLH_AMT
 		        , SH.SCLH_RCMD
 		        , E.EMP_NM
+		        , P.DEP_CD
 		FROM EMPLOYEE E, PROFESSOR P, STUDENT S, SCL_HISTORY SH
 		WHERE E.EMP_NO = P.PRO_NO
 		AND P.PRO_NO = SH.PRO_NO
 		AND S.STU_NO = SH.STU_NO
 		AND SH.SCLH_YN = 'AP002'
+		AND P.DEP_CD = #{depCd}
 	</select>
 	
 	<!-- 추천받은 장학생의 상세내역 및 추천서 -->

@@ -12,64 +12,10 @@
 <script type="text/javascript" src="/resources/login/js/common/eventKeyBlock.js"></script>
 <script type="text/javascript" src="/resources/login/js/common/cookieUtil.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
-<style>
-html, body {
-  width: 100vw;
-  height: 100vh;
-}
-.container {
-  width: 100%;
-  height: 100%;
-  background: pink;
-}
-ul,li{
-  list-style:none;
-}
-.imgSlide{
-	overflow : hidden;
-	width: 100%;
-	height : 100%;
-}
-.slides, .slides li{
-	display : inline-block;
-	width : 100%;
-	height : 100%;
-	position : absolute;
-	top: 0;
-	left : 0;
-	overflow : hidden;
-}
-.slides #roll{
-	display : inline-block;
-	width : 100%;
-	height : 100%;
-	overflow : hidden;
-}
-</style>
 <script type="text/javascript" defer="defer">
 
 $(function(){
 	
-	var roll = 0;
-	
-	setTimeout(function images(){
-		
-		roll ++;
-		
-		if(roll == 10){
-			roll = 0;
-		}
-		
-		setTimeout(function() {}, 1000);
-		
-		$("#roll").fadeTo(1000, 0.6, function(){
-			$("#roll").attr("src", "/resources/upload/login/login_" + (roll+1)+ ".jpg");
-		});
-		
-		$("#roll").fadeTo(1000, 1);
-		
-		setTimeout(images, 3000);
-	}, 3000);
 	
 	//저장된 쿠키값을 가져와서 ID칸에 넣어주는데 없으면 공백으로 들어감.
 	var key = getCookie("key");
@@ -201,15 +147,125 @@ $(function(){
 		$('#memPass').val('7');
 		$('#frm').submit();
 	}
-	
 </script>
-<!-- <div class="imgSlide"> -->
-<!-- 	<ul class="slides"> -->
-<!-- 		<li><img src="/resources/upload/login/login_1.jpg" id="roll" style="filter: brightness(0.5);"/></li> -->
-<!-- 	</ul> -->
-<!-- </div> -->
+<!-- 비밀번호찾기 -->
+<script type="text/javascript" defer="defer">
+$(function(){
+	
+	$(document).on("click", "#findId", function(){
+		$('#login').hide();
+		$('#find').show();
+		$('#findForm form').show();
+		$('#labelId').show();
+		$('#labelPass').hide();
+		$('#passForm').hide();
+		
+	});
+	
+	$(document).on("click", "#findPass", function(){
+		$('#login').hide();
+		$('#find').show();
+		$('#findForm form').hide();
+		$('#labelId').hide();
+		$('#labelPass').show();
+		$('#passForm').show();
+	});
+	
+	$('#searchId').on('click', function() {
+		
+		memNm = $('#memNm').val();
+		memBir = $('#memBir').val();
+		memTel = $('#memTel').val();
+		
+		console.log("memNm은?? " + memNm + " memBir은?? " + memBir + " memTel은?? " + memTel);
+		
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+		
+		$.ajax({
+			type: 'post',
+			url: '/login/searchId',
+			data: { 
+					memNm : memNm,
+					memBir : memBir,
+					memTel : memTel
+			},
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(searchId){
+				console.log(searchId);
+				//alert("회원님의 아이디는 " + res + "입니다.");
+				
+				if(searchId == null || searchId == '') {
+					$('#alertId').text("일치하는 아이디가 없습니다.");
+				}else {
+					$('#alertId').text("회원님의 아이디는 " + searchId + "입니다.");
+					$('#alertId').css("color", "blue");
+				}
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+	});
+	
+	
+	$('#searchPass').on('click', function() {
+		
+		let memNo = $("#memNo").val();
+		let tel = $('#tel').val();
 
-<div class="login-bg">
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+		
+		if(memNo == '') {
+			alert("아이디를 입력해주세요.");
+			return;
+		}else if(tel == '') {
+			alert("전화번호를 입력해주세요.");
+			return;
+		}
+		
+		let data = {"memNo":memNo, "tel":tel};
+		
+		console.log("data : " + JSON.stringify(data));
+		
+		$.ajax({
+			type: 'post',
+			url: '/login/searchPass',
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(data),
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(res){
+				console.log("res : " + JSON.stringify(res));
+				alert(res + "\n(으)로 임시비밀번호를 전송하였습니다.");
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+		
+	});
+
+
+	$('#idInfoInsertBtn').on('click',function(){
+		$('#memNm').attr('value','이승연');
+		$('#memBir').attr('value','990119');
+		$('#memTel').attr('value','01055395081');
+	})
+	
+	$('#passInfoInsertBtn').on('click',function(){
+		$('#memNo').attr('value','201209001');
+		$('#tel').attr('value','01099327362');
+	})
+	
+});
+</script>
+
+<div class="login-bg" id="login">
 	<div class="login-wrap">
 		<input type="hidden" id="tap_check" name="tap_check" value="id">
 
@@ -307,70 +363,129 @@ $(function(){
 				</div>
 			</div>
 
-			<div id="naverIdLogin" style="display: none;">
-				<a id="naverIdLogin_loginButton" href="#">
-					<img src="https://static.nid.naver.com/oauth/big_g.PNG?version=js-2.0.1" height="60">
-				</a>
-			</div>
-			<div id="naverdisplay" style="display: none;">
-				<a id="naverIdLogin_loginButton" onclick="NaverLoginex(event);">
-					<img src="/sso/user/pm/img/btnW_naver.png" tabindex="0" alt="네이버인증서로그인"
-						style="width: 260px; cursor: pointer;">
-				</a>
-			</div>
 			<sec:csrfInput/>
 		</form>
 		
 		<div class="box03">
 			<ul>
-				<li><a href="/login/findID" title="새 창 열림"><span>아이디
-							찾기</span></a></li>
-				<li><a href="/login/findID" title="새 창 열림"><span>임시
-							비밀번호 발급</span></a></li>
-				<li><a
-					href="https://underwood1.yonsei.ac.kr/haksa/HELP/dugrock-01.htm"
-					target="_blank" title="새 탭 열림"><span>로그인 도움말</span></a></li>
+				<li>
+					<a href="#" id="findId" title="새 창 열림">
+						<span>아이디 찾기</span>
+					</a>
+				</li>
+				<li>
+					<button id="findPass" title="새 창 열림">
+						<span>임시 비밀번호 발급</span>
+					</button>
+				</li>
+				<li>
+					<a href="#" target="_blank" title="새 탭 열림">
+						<span>로그인 도움말</span>
+					</a>
+				</li>
 			</ul>
 		</div>
+	</div>
+</div>
 
-		<!-- (2) LoginWithNaverId Javscript SDK -->
-		<script
-			src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.1.js"></script>
-		<!-- (3) LoginWithNaverId Javscript 설정 정보 및 초기화 -->
-		<script>
-            window.name='opener';
-            var naverLogin = new naver.LoginWithNaverId(
-                {
-                    clientId: "4JwXlRmFN3fGWDQdKLn9",
-                    callbackUrl: document.location.protocol + "//" + document.location.host + "/sso/callback.jsp",
-                    isPopup: true,
-                    loginButton: {color: "green", type: 3, height: 60}
-                }
-            );
-            /* (4) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */
-            naverLogin.init();
+<!-- 아이디 비밀번호 찾기  -->
+<div class="login-bg" id="find" style="display:none;">
+	<div class="login-wrap">
+		<input type="hidden" id="tap_check" name="tap_check" value="id">
 
-            /* (5) 현재 로그인 상태를 확인 */
-            function callBackFunction(event) {
-                console.log(event.data);
-                console.log(event);
-                if(event.origin == 'https://infra.yonsei.ac.kr'){
+			<!-- 여기서 작업 변경 -->
+			<div class="box01">
+				<p class="text01">
+					나는 <span>연수인</span><br>
+					<span>나의 미래</span>를 만든다!
+				</p>
+				<p class="text02">진리와 자유를 향한 연수의 도전</p>
+			</div>
 
-                    naverLogin.getLoginStatus(function (status) {
-                        console.log(status);
-                        if (event.data != "") {
-
-                            fSubmitSSONaverCertLoginForm(event.data);
-                        }
-                    });
-                }
-            };
-
-            if( window.attachEvent ) {
-                window.attachEvent("onmessage", callBackFunction );
-            } else if( window.addEventListener ){
-                window.addEventListener( "message" , callBackFunction );
-            }
-        </script>
+			<div class="box02">
+				<div>
+					<div class="login-top">
+						<div class="logo-wrap text-right"></div>
+						<label id="labelId">아이디찾기</label>
+						<label id="labelPass">임시 비밀번호 발급</label>
+					</div>
+					<div class="login-cont-wrap">
+						<div id="fullScreen">
+							<div id="findForm">
+<!-- 								<button id="findId">아이디 찾기</button> -->
+<!-- 								<button id="findPass">비밀번호 찾기</button> -->
+		
+								<!-- 아이디 -->
+								<div id="id_pw" class="findId-cont is-active">
+									<form action="/login/hi" method="post">
+										<label style="margin-bottom: 10px;">이름</label> 
+										<input type="text" id="memNm" placeholder="이름을 입력하세요." maxlength="16" /> <br>
+										
+										<label style="margin-bottom: 10px;">생년월일</label> 
+										<input type="text" id="memBir" placeholder="생년월일  6자리를 입력하세요." /> <br>
+										
+										<label style="margin-bottom: 10px;">전화번호</label> 
+										<input type="text" id="memTel" placeholder="전화번호를 입력하세요." />
+										
+										<div class="text-right" style="margin-top:10px;">
+											<span style="padding-right:15px" id="alertId"></span>
+											<button type="button" class="btn btn-outline-dark" id="searchId">확인</button>
+											<button type="button" id="idInfoInsertBtn" class="btn btn-secondary">자동입력</button>
+										</div>
+										<a href="/login/login" id="goBackToLogin"
+											style="text-decoration: none;"> 
+											<i class="dripicons-reply" id="goBackToLoginIcon" style="color: #001353;"></i> 
+											&nbsp;로그인 페이지로 돌아가기
+										</a>
+										<sec:csrfInput />
+									</form>
+								</div>
+								
+								<!-- 비밀번호 -->
+								<div id="id_pw" class="findId-cont is-active">
+									<div id="passForm" style="display: none;">
+										<label style="margin-bottom: 10px;">아이디</label> 
+										<input type="text" id="memNo" placeholder="ID를 입력하세요." /> <br> 
+										
+										<label style="margin-bottom: 10px;">전화번호</label> 
+										<input type="text" id="tel" placeholder="-없이 숫자만 입력하세요." />
+										
+										<div class="text-right" style="margin-top:10px;">
+											<button type="button" class="btn btn-outline-dark" id="searchPass">임시 비밀번호 전송</button>
+											<button type="button" id="passInfoInsertBtn" class="btn btn-secondary">자동입력</button>
+											<span id="spanForMargin"></span>
+										</div>
+										<p>
+											<a href="/login/login" id="goBackToLogin" style="text-decoration: none;"> 
+												<i class="dripicons-reply" id="goBackToLoginIcon" style="color: #001353;"></i> &nbsp;로그인 페이지로 돌아가기
+											</a>
+										</p>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		<div class="box03">
+			<ul>
+				<li>
+					<a href="#" id="findId" title="새 창 열림">
+						<span>아이디 찾기</span>
+					</a>
+				</li>
+				<li>
+					<button id="findPass" title="새 창 열림">
+						<span>임시 비밀번호 발급</span>
+					</button>
+				</li>
+				<li>
+					<a href="#" target="_blank" title="새 탭 열림">
+						<span>로그인 도움말</span>
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>

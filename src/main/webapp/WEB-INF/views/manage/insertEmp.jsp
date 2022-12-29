@@ -118,180 +118,158 @@ $(function(){
 
 
 </script>
-<div class="row" >
-	<div class="col-sm-11 offset-1">
-		<div class="col-md-11">
-			<div class="card card-outline card-primary">
-				<div class="card-header">
-					<h3 class="card-title">직원 등록</h3>
-				</div>
-				<form action="/manage/insertEmpPost" method="post" enctype="multipart/form-data">
-					<div class="card-body">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-2 offset-1 empImg">
-									<img class="img-thumbnail" width="200px;" height="300px;" id="empImg">
+<div class="mt-3">
+	<form action="/manage/insertEmpPost" method="post" enctype="multipart/form-data">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-2 offset-1 empImg">
+						<img class="img-thumbnail" width="170px;" height="250px;" id="empImg">
+					</div>
+					<div class="col-9">
+						<div class="container">
+							<div class="row mt-1 mb-2">
+								<div class="col-3">
+									<label for="empNo" class="form-label">교번</label> 
+									<input type="text" class="form-control" id="empNo" name="empNo" value="${empId.memNo}" readonly/>
 								</div>
-								<div class="col-9">
-									<div class="container">
-										<div class="row mt-1 mb-2">
-											<div class="col-4 offset-1">
-												<label for="empNo" class="form-label">교번</label> 
-												<input type="text" class="form-control" id="empNo" name="empNo" value="${empId.memNo}" readonly/>
-											</div>
-											<div class="col-4 offset-1">
-												<label for="empPass" class="form-label">비밀번호</label>
-												 <input type="text" class="form-control stu" id="empPass" name="empPass" required />
-											</div>
-										</div>
-										<div class="row mb-2">
-											<div class="col-4 offset-1">
-												<label for="empNm" class="form-label">이름</label> 
-												<input type="text" class="form-control stu" id="empNm" name="empNm" required  />
-											</div>
-											<div class="col-4 offset-1">
-												<label for="empNme" class="form-label">영문 이름</label>
-												 <input type="text" class="form-control stu" id="empNme" name="empNme" required />
-											</div>
-										</div>
-										<div class="row mb-2">
-											<div class="col-4 offset-1">
-												<label for="empPic" class="form-label">사진 등록</label> 
-											</div>
-										</div>
-										<div class="row">
-											<div class="custom-file col-9 offset-1">
-												<input type="file" class="custom-file-input stu" id="empPic" name="file" required >
-												<label class="custom-file-label" for="empPic">Choose file</label>
-											</div>
-										</div>
+								<div class="col-3">
+									<label for="empPass" class="form-label">비밀번호</label>
+									 <input type="text" class="form-control stu" id="empPass" name="empPass" required />
+								</div>
+								<div class="col-3">
+									<label for="empNm" class="form-label">이름</label> 
+									<input type="text" class="form-control stu" id="empNm" name="empNm" required  />
+								</div>
+								<div class="col-3">
+									<label for="empNme" class="form-label">영문 이름</label>
+									 <input type="text" class="form-control stu" id="empNme" name="empNme" required />
+								</div>
+							</div>
+							<div class="row mt-1 mb-2">
+								<div class="col-4">
+									<label for="empPic" class="form-label">사진 등록</label> 
+									<div class="custom-file">
+										<input type="file" class="custom-file-input stu" id="empPic" name="file" required >
+										<label class="custom-file-label" for="empPic">Choose file</label>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="row mt-5 mb-2">
-							<div class="col-4 offset-1">
-								<label for="empJoin" class="form-label">입사일</label> <input
-									type="date" class="form-control stu" id="empJoin" name="empJoin" required />
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="col-4 offset-1">
-								<label>부서</label> 
-								<select class="form-control stu" id="empDiv" name="empDiv">
-									<c:forEach var="division" items="#{division}">
-										<option value="${division.comdCd}">${division.comdNm}</option>
-									</c:forEach>
-								</select>
-							</div>
-							<div class="col-4 offset-1">
-								<label>직책</label> 
-								<select class="form-control stu" id="empPos" name="empPos">
-									<c:forEach var="ePosition" items="#{ePosition}">
-										<option value="${ePosition.comdCd}">${ePosition.comdNm}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="col-4 offset-1">
-								<label>보직</label> 
-								<select class="form-control stu" id="proPos" name="proPos" disabled>
-									<c:forEach var="pPosition" items="#{pPosition}">
-										<option value="${pPosition.comdCd}">${pPosition.comdNm}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="col-4 offset-1">
-								<label for="colCd" class="form-label">단과대학</label> 
-								<select class="form-control stu" id="colCd" name="colCd" disabled>
-									<c:forEach var="college" items="#{collegeList}">
-										<option value="${college.colCd}">${college.colNm}</option>
-									</c:forEach>
-								</select>
-							</div>
-							<div class="col-4 offset-1">
-								<label for="depCd" class="form-label">학과</label> 
-								<select id="depCd" name="depCd" class="form-control stu" disabled>
-									<option value="">학과</option>
-								</select>
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="col-10 offset-1">
-								<label for="empBir" class="form-label">주민등록번호</label> 
-							</div>
-							<div class="col-10 offset-1">
-								<input type="text" class="form-control stu col-3" id="empBir" name="empBir" placeholder="숫자만 입력" style="display:inline-block" required />
-								<h3 style="display:inline-block"> - </h3>
-								<input type="text" class="form-control stu col-3" id="empReg" name="empReg" placeholder="숫자만 입력" style="display:inline-block" required />
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="col-4 offset-1">
-								<label for="empTel" class="form-label">연락처</label> <input
-									type="text" class="form-control stu" id="empTel" name="empTel" placeholder="숫자만 입력" required />
-							</div>
-							<div class="col-4 offset-1">
-								<label for="empTel2" class="form-label">비상 연락처</label> <input
-									type="text" class="form-control stu" id="empTel2" name="empTel2" placeholder="숫자만 입력" />
-							</div>
-						</div>
-						<div class="row mt-3">
-							<div class="col-4 offset-1">
-								<div class="form-group">
-									<label>은행</label> 
-									<select class="form-control stu" id="empBankCd" name="empBankCd" >
-										<c:forEach var="bank" items="#{bank}">
-											<option value="${bank.comdCd}">${bank.comdNm}</option>
-										</c:forEach>
-									</select>
+								<div class="col-4">
+									<label for="empTel" class="form-label">연락처</label> <input
+										type="text" class="form-control stu" id="empTel" name="empTel"
+										placeholder="숫자만 입력" required />
+								</div>
+								<div class="col-4">
+									<label for="empTel2" class="form-label">비상 연락처</label> <input
+										type="text" class="form-control stu" id="empTel2" name="empTel2"
+										placeholder="숫자만 입력" />
 								</div>
 							</div>
-						</div>
-						<div class="row mb-2">
-							<div class="col-4 offset-1">
-								<label for="empDepo" class="form-label">예금주</label> <input
-									type="text" class="form-control stu" id="empDepo" name="empDepo" required/>
-							</div>
-							<div class="col-4 offset-1">
-								<label for="empAct" class="form-label">계좌번호</label> <input
-									type="text" class="form-control stu" id="empAct" name="empAct" placeholder="숫자만 입력" required />
-							</div>
-						</div>
-						<div class="row mt-4 mb-2">
-							<div class="col-3 offset-1">
-								<label for="empZip" class="form-label">우편번호</label>
-								<div class="input-group">
-									<input type="text" class="form-control stu" id="empZip" name="empZip" required />
-									<div class="input-group-append">
-										<button type="button" class="btn btn-default" id="btnZipCode">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
+							<div class="row mt-1 mb-2">
+								<div class="col-10">
+									<label for="empBir" class="form-label">주민등록번호</label>
+								</div>
+								<div class="col-10">
+									<input type="text" class="form-control stu col-5" id="empBir"
+										name="empBir" placeholder="숫자만 입력" style="display: inline-block"
+										required />
+									<h2 style="display: inline-block">-</h2>
+									<input type="text" class="form-control stu col-5" id="empReg"
+										name="empReg" placeholder="숫자만 입력" style="display: inline-block"
+										required />
 								</div>
 							</div>
-		
-						</div>
-						<div class="row mb-2">
-							<div class="col-4 offset-1" >
-								<label for="empAddr1" class="form-label">기본주소</label> <input
-									type="text" class="form-control stu" id="empAddr1" name="empAddr1" required />
-							</div>
-							<div class="col-4 offset-1">
-								<label for="empAddr2" class="form-label">상세주소</label> <input
-									type="text" class="form-control stu" id="empAddr2" name="empAddr2" required />
-							</div>
-						</div>
-						<div id="stuBtn" align="right">
-							<button type="submit" id="insertStu" class="btn btn-outline-success">등록</button>
 						</div>
 					</div>
-					<sec:csrfInput/>
-				</form>
+				</div>
 			</div>
-		</div>
-	</div>
+			<div class="row mt-3 mb-2">
+				<div class="col-4">
+					<label for="empJoin" class="form-label">입사일</label> <input
+						type="date" class="form-control stu" id="empJoin" name="empJoin" required />
+				</div>
+				<div class="col-4">
+					<label>부서</label> 
+					<select class="form-control stu" id="empDiv" name="empDiv">
+						<c:forEach var="division" items="#{division}">
+							<option value="${division.comdCd}">${division.comdNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col-4">
+					<label>직책</label> 
+					<select class="form-control stu" id="empPos" name="empPos">
+						<c:forEach var="ePosition" items="#{ePosition}">
+							<option value="${ePosition.comdCd}">${ePosition.comdNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="row mt-3 mb-2">
+				<div class="col-4">
+					<label>보직</label> 
+					<select class="form-control stu" id="proPos" name="proPos" disabled>
+						<c:forEach var="pPosition" items="#{pPosition}">
+							<option value="${pPosition.comdCd}">${pPosition.comdNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col-4">
+					<label for="colCd" class="form-label">단과대학</label> 
+					<select class="form-control stu" id="colCd" name="colCd" disabled>
+						<c:forEach var="college" items="#{collegeList}">
+							<option value="${college.colCd}">${college.colNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col-4">
+					<label for="depCd" class="form-label">학과</label> 
+					<select id="depCd" name="depCd" class="form-control stu" disabled>
+						<option value="">학과</option>
+					</select>
+				</div>
+			</div>
+			<div class="row mt-3 mb-2">
+				<div class="col-4">
+					<label>은행</label> 
+					<select class="form-control stu" id="empBankCd" name="empBankCd" >
+						<c:forEach var="bank" items="#{bank}">
+							<option value="${bank.comdCd}">${bank.comdNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col-4">
+					<label for="empDepo" class="form-label">예금주</label> <input
+						type="text" class="form-control stu" id="empDepo" name="empDepo" required/>
+				</div>
+				<div class="col-4">
+					<label for="empAct" class="form-label">계좌번호</label> <input
+						type="text" class="form-control stu" id="empAct" name="empAct" placeholder="숫자만 입력" required />
+				</div>
+			</div>
+			<div class="row mt-3 mb-2">
+				<div class="col-3">
+					<label for="empZip" class="form-label">우편번호</label>
+					<div class="input-group">
+						<input type="text" class="form-control stu" id="empZip" name="empZip" required />
+						<div class="input-group-append">
+							<button type="button" class="btn btn-default" id="btnZipCode">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-4" >
+					<label for="empAddr1" class="form-label">기본주소</label> <input
+						type="text" class="form-control stu" id="empAddr1" name="empAddr1" required />
+				</div>
+				<div class="col-5">
+					<label for="empAddr2" class="form-label">상세주소</label> <input
+						type="text" class="form-control stu" id="empAddr2" name="empAddr2" required />
+				</div>
+			</div>
+			<div class="row mt-5" id="stuBtn" style="float:right">
+				<button type="submit" id="insertStu" class="btn btn-outline-success">등록</button>
+			</div>
+		<sec:csrfInput/>
+	</form>
 </div>

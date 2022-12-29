@@ -67,6 +67,7 @@ public class CustomLoginSuccessHandler extends
 			if (readProfessor != null) {
 				session.setAttribute("position", readProfessor.getProPos());
 				session.setAttribute("department", readProfessor.getDepCd());
+				session.setAttribute("depCd", readProfessor.getDepCd());
 
 			} else {
 				session.setAttribute("position", readManager.getEmpPos());

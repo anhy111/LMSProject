@@ -172,151 +172,138 @@ $(function(){
 
 
 </script>
-<div class="row" >
-	<div class="col-sm-11 offset-1">
-		<div class="col-md-11">
-			<div class="card card-outline card-primary">
-				<div class="card-header">
-					<h3 class="card-title">학생 등록</h3>
-				</div>
-				<form action="insertStuPost" method="post" enctype="multipart/form-data">
-					<div class="card-body">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-4">
-									<img class="img-thumbnail" width="200px;" height="300px;" id="stuImg">
-								</div>
-								<div class="col-md-8">
-									<div class="container">
-										<div class="row mt-1 mb-2">
-											<div class="col-5 offset-1">
-												<label for="stuNo" class="form-label">학번</label> 
-												<input type="text" class="form-control" id="stuNo" name="stuNo" />
-											</div>
-										</div>
-										<div class="row mb-2">
-											<div class="col-5 offset-1">
-												<label for="stuNm" class="form-label">이름</label> 
-												<input type="text" class="form-control stu" id="stuNm" name="stuNm"  />
-											</div>
-											<div class="col-5 offset-1">
-												<label for="stuNme" class="form-label">영문 이름</label>
-												 <input type="text" class="form-control stu" id="stuNme" name="stuNme" />
-											</div>
-										</div>
-										<div class="row mb-2">
-											<div class="col-5 offset-1">
-												<label for="stuPic" class="form-label">사진 변경</label> 
-											</div>
-										</div>
-										<div class="row">
-											<div class="custom-file col-9 offset-1">
-												<input type="file" class="custom-file-input stu" id="stuPic" name="stuPic" >
-												<label class="custom-file-label" for="stuPic">Choose file</label>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="col-4 offset-1">
-								<label>학년</label> 
-								<select class="form-control stu" id="stuYr" name="stuYr" >
-									<option value="1">1학년</option>
-									<option value="2">2학년</option>
-									<option value="3">3학년</option>
-									<option value="4">4학년</option>
-									<option value="5">5학년</option>
-									<option value="6">6학년</option>
-								</select>
-							</div>
-							<div class="col-4 offset-1">
-								<label>학기</label> 
-								<select class="form-control stu" id="stuSem" name="stuSem" >
-									<option value="1">1학기</option>
-									<option value="2">2학기</option>
-								</select>
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="form-group col-4 offset-1">
-								<label for="colCd" class="form-label">단과대학</label> 
-								<select id="colCd" class="form-control stu" >
-									<option value="0">단과대학</option>
-									<c:forEach var="college" items="${collegeList}">
-										<option value="${college.colCd}">${college.colNm}</option>
-									</c:forEach>
-								</select>
-							</div>
-							<div class="col-4 offset-1">
-								<label for="department" class="form-label">학과</label> 
-								<select id="department" class="form-control stu" >
-									<option value="">학과</option>
-								</select>
-		
-							</div>
-						</div>
-						<div class="row mt-3 mb-2">
-							<div class="col-4 offset-1">
-								<label for="stuBir" class="form-label">생년월일</label> <input
-									type="text" class="form-control stu" id="stuBir" name="stuBir" />
-							</div>
-							<div class="col-4 offset-1">
-								<label for="stuTel" class="form-label">전화번호</label> <input
-									type="text" class="form-control stu" id="stuTel" name="stuTel" />
-							</div>
-						</div>
-						<div class="row mt-4 mb-2">
-							<div class="col-4">
-								<div class="form-group">
-									<label>은행</label> <select class="form-control stu" id="stuBankCd" name="stuBankCd" >
-										<c:forEach var="detail" items="#{commonDetailList}">
-											<option value="${detail.comdCd}">${detail.comdNm}</option>
-										</c:forEach>
-									</select>
-								</div>
-							</div>
-		
-							<div class="col-3 offset-1">
-								<label for="stuDepo" class="form-label">예금주</label> <input
-									type="text" class="form-control stu" id="stuDepo" name="stuDepo"/>
-							</div>
-							<div class="col-3 offset-1">
-								<label for="stuAct" class="form-label">계좌번호</label> <input
-									type="text" class="form-control stu" id="stuAct" name="stuAct" />
-							</div>
-						</div>
-						<div class="row mt-4 mb-2">
-							<div class="col-3">
-								<label for="stuZip" class="form-label">우편번호</label>
-								<div class="input-group">
-									<input type="text" class="form-control stu" id="stuZip" name="stuZip" />
-									<div class="input-group-append">
-										<button type="button" class="btn btn-default" id="btnZipCode">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-		
-						</div>
-						<div class="row mb-2">
-							<div class="col-6" style="">
-								<label for="stuAddr1" class="form-label">기본주소</label> <input
-									type="text" class="form-control stu" id="stuAddr1" name="stuAddr1" />
-							</div>
-							<div class="col-6">
-								<label for="stuAddr2" class="form-label">상세주소</label> <input
-									type="text" class="form-control stu" id="stuAddr2" name="stuAddr2" />
-							</div>
-						</div>
-						<div id="stuBtn" align="right">
-							<button type="submit" id="insertStu" class="btn btn-outline-success">확인</button>
+<form action="insertStuPost" method="post" enctype="multipart/form-data">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4">
+				<img class="img-thumbnail" width="200px;" height="300px;" id="stuImg">
+			</div>
+			<div class="col-md-8">
+				<div class="container">
+					<div class="row mt-1 mb-2">
+						<div class="col-5 offset-1">
+							<label for="stuNo" class="form-label">학번</label> 
+							<input type="text" class="form-control" id="stuNo" name="stuNo" />
 						</div>
 					</div>
-				</form>
+					<div class="row mb-2">
+						<div class="col-5 offset-1">
+							<label for="stuNm" class="form-label">이름</label> 
+							<input type="text" class="form-control stu" id="stuNm" name="stuNm"  />
+						</div>
+						<div class="col-5 offset-1">
+							<label for="stuNme" class="form-label">영문 이름</label>
+							 <input type="text" class="form-control stu" id="stuNme" name="stuNme" />
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-5 offset-1">
+							<label for="stuPic" class="form-label">사진 변경</label> 
+						</div>
+					</div>
+					<div class="row">
+						<div class="custom-file col-9 offset-1">
+							<input type="file" class="custom-file-input stu" id="stuPic" name="stuPic" >
+							<label class="custom-file-label" for="stuPic">Choose file</label>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+	<div class="row mt-3 mb-2">
+		<div class="col-4 offset-1">
+			<label>학년</label> 
+			<select class="form-control stu" id="stuYr" name="stuYr" >
+				<option value="1">1학년</option>
+				<option value="2">2학년</option>
+				<option value="3">3학년</option>
+				<option value="4">4학년</option>
+				<option value="5">5학년</option>
+				<option value="6">6학년</option>
+			</select>
+		</div>
+		<div class="col-4 offset-1">
+			<label>학기</label> 
+			<select class="form-control stu" id="stuSem" name="stuSem" >
+				<option value="1">1학기</option>
+				<option value="2">2학기</option>
+			</select>
+		</div>
+	</div>
+	<div class="row mt-3 mb-2">
+		<div class="form-group col-4 offset-1">
+			<label for="colCd" class="form-label">단과대학</label> 
+			<select id="colCd" class="form-control stu" >
+				<option value="0">단과대학</option>
+				<c:forEach var="college" items="${collegeList}">
+					<option value="${college.colCd}">${college.colNm}</option>
+				</c:forEach>
+			</select>
+		</div>
+		<div class="col-4 offset-1">
+			<label for="department" class="form-label">학과</label> 
+			<select id="department" class="form-control stu" >
+				<option value="">학과</option>
+			</select>
+
+		</div>
+	</div>
+	<div class="row mt-3 mb-2">
+		<div class="col-4 offset-1">
+			<label for="stuBir" class="form-label">생년월일</label> <input
+				type="text" class="form-control stu" id="stuBir" name="stuBir" />
+		</div>
+		<div class="col-4 offset-1">
+			<label for="stuTel" class="form-label">전화번호</label> <input
+				type="text" class="form-control stu" id="stuTel" name="stuTel" />
+		</div>
+	</div>
+	<div class="row mt-4 mb-2">
+		<div class="col-4">
+			<div class="form-group">
+				<label>은행</label> <select class="form-control stu" id="stuBankCd" name="stuBankCd" >
+					<c:forEach var="detail" items="#{commonDetailList}">
+						<option value="${detail.comdCd}">${detail.comdNm}</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+
+		<div class="col-3 offset-1">
+			<label for="stuDepo" class="form-label">예금주</label> <input
+				type="text" class="form-control stu" id="stuDepo" name="stuDepo"/>
+		</div>
+		<div class="col-3 offset-1">
+			<label for="stuAct" class="form-label">계좌번호</label> <input
+				type="text" class="form-control stu" id="stuAct" name="stuAct" />
+		</div>
+	</div>
+	<div class="row mt-4 mb-2">
+		<div class="col-3">
+			<label for="stuZip" class="form-label">우편번호</label>
+			<div class="input-group">
+				<input type="text" class="form-control stu" id="stuZip" name="stuZip" />
+				<div class="input-group-append">
+					<button type="button" class="btn btn-default" id="btnZipCode">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="row mb-2">
+		<div class="col-6" style="">
+			<label for="stuAddr1" class="form-label">기본주소</label> <input
+				type="text" class="form-control stu" id="stuAddr1" name="stuAddr1" />
+		</div>
+		<div class="col-6">
+			<label for="stuAddr2" class="form-label">상세주소</label> <input
+				type="text" class="form-control stu" id="stuAddr2" name="stuAddr2" />
+		</div>
+	</div>
+	<div id="stuBtn" align="right">
+		<button type="submit" id="insertStu" class="btn btn-outline-success">확인</button>
+	</div>
+</form>
