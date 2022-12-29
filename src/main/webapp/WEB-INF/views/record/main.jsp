@@ -19,7 +19,7 @@ transition: opacity 1s, color 1s, background-color 1;
 cursor:pointer;
 }
 </style>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <!-- <div class="card-header"> -->
 <!-- 	<h3 class="card-title"> -->
@@ -27,14 +27,23 @@ cursor:pointer;
 <!-- 	</h3> -->
 <!-- </div> -->
 <div class="row">
-<div class="alert alert-light" role="alert"
+<div class="col-6 alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
 						<p>
 							<strong>※ 안내사항</strong> <br>
 							<br> (1)<strong>신청유형</strong>에 따라 담당교수의 상담 내역이 필요합니다.<br>
 							<br> (2) <strong>승인대기</strong>시에는 수정, 삭제 할 수 있으며&nbsp;&nbsp;<strong>승인 및 반려</strong>처리가 되면 수정, 삭제할 수 없습니다.<br> 
 							<br> (3) 하단의 <strong>신청</strong> 버튼을 눌러 신청 할 수 있습니다.<br>
-							<br> (4) 신청시에는 <strong>본인확인</strong>이 필요 합니다.
+							<br> (4) 만약 현재&nbsp;<strong>휴학</strong>중 이라면 <code><b>신청 할 수 없습니다.</b></code> 
+						</p>
+					</div>
+<div class="col-6 alert alert-light" role="alert"
+						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
+						<p>
+							<strong>현재 내 학적 상태</strong> <br>
+							<br> <strong>학적구분&nbsp;:&nbsp;</strong>&nbsp;<span id="recordStateNow"></span><br>
+							<br> <strong>신청날짜&nbsp;:&nbsp;</strong>&nbsp;<span id="recordApplyDate"style="color:blue;"></span><br> 
+							<br> <strong>종료날짜&nbsp;:&nbsp;</strong>&nbsp;<span id="recordEndDate" style="color:blue;"></span><br>
 						</p>
 					</div>
 </div>
@@ -60,17 +69,16 @@ cursor:pointer;
 					<td>${recordsList.rgbCd}</td>
 					<td >${recordsList.recYr}년도</td>
 					<td>${recordsList.recSem}학기</td>
-					<td>${recordsList.recPer}년</td>
-					<td ><fmt:formatDate value="${recordsList.recDt }"
-							pattern="yy/MM/dd" /></td>
+					<td class="applyPer">${recordsList.recPer}년</td>
+					<td class="applyRecDt" data-value="${recordsList.recDt }" ><fmt:formatDate value="${recordsList.recDt }" pattern="yy/MM/dd"  /></td>
 					<c:if test="${recordsList.recYn eq '반려'}">
-					<td style="color: red;">${recordsList.recYn }</td>
+					<td class="applyState" style="color: red;">${recordsList.recYn }</td>
 					</c:if> 
 					<c:if test="${recordsList.recYn eq '승인대기'}">
-					<td style="color: black;">${recordsList.recYn }</td>
+					<td class="applyState"  style="color: black;">${recordsList.recYn }</td>
 					</c:if> 
 					<c:if test="${recordsList.recYn eq '승인'}">
-					<td style="color: blue;">${recordsList.recYn }</td>
+					<td class="applyState"  style="color: blue;">${recordsList.recYn }</td>
 					</c:if>
 				</tr>
 			</c:forEach>
@@ -81,7 +89,7 @@ cursor:pointer;
 <div class="row">
 <div class="col-12 pr-0	" style="text-align: end;">
 	<!-- 			<button class="btn btn-sm btn-outline-primary" >신청</button> -->
-	<button class="btn btn-outline-primary"data-toggle="modal" data-target="#modal-default">신청</button>
+	<button id="applyBtn" class="btn btn-primary"data-toggle="modal" data-target="#modal-default">신청</button>
 </div>
 </div>
 
@@ -261,9 +269,10 @@ cursor:pointer;
 		//option value에 담을 변수
 		let month,year,nextYear,currentSemester,nextSemester = ""; 
 		let date = new Date();
-		//내년도가있는지, 구분이변경되었는지 체크하는 플래그변수
-		let nextYearExist,rgbCdisChanged = false;
-		let linkval = "";
+		
+		//내년도가있는지, 구분이변경되었는지, 승인된 학적변동 사항이 있는지 체크하는 플래그변수
+		let nextYearExist,rgbCdisChanged,confirmedApplyIsExist = false;
+		let linkval,applyState = "";
 		let setModifyData = {
 			recCd : "",
 			rgbCd: "",
@@ -273,12 +282,74 @@ cursor:pointer;
 			recRsn:""
 		};
 		
+		/**
+		 *  yyyyMMdd 포맷으로 반환
+		 */
+		function getFormatDate(date){
+		    var year = date.getFullYear();              //yyyy
+		    var month = (1 + date.getMonth());          //M
+		    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+		    var day = date.getDate();                   //d
+		    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+		    return  year + '/' + month + '/' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+		}
+		
 		$(document).ready(function(){
 			year = date.getFullYear(); //년도 recYr
-			month = date.getMonth();
+			month = date.getMonth()+1;
 		    if (month == '3' || month == '4' || month == '5' || month == '6' || month == '7' || month == '8') currentSemester = 1;
 			else if (month == '9' || month == '10' || month == '11' || month == '12' || month == '1' || month == '2') currentSemester = 2;
 		    setRecYr();//현재년도가 2학기일경우 현재년도 + 다음년도
+		    applyState = document.querySelectorAll(".applyState");
+		    applyState.forEach(apply=>{
+		    	if(apply.innerHTML == '반려'){
+		    		var parent = apply.parentNode;
+		    	    parent.removeAttribute("data-target");
+		    	    parent.removeAttribute("data-toggle");
+		    	}
+		    	if(apply.innerHTML == '승인'){
+		    		$("#applyBtn").attr("disabled","disabeld");
+		    	    var parent = apply.parentNode;
+		    	    parent.removeAttribute("data-target");
+		    	    parent.removeAttribute("data-toggle");
+		    	    
+		    	    var tds = parent.getElementsByTagName('td');
+		    	    
+					//날짜 계산
+		    	     var confirmedPer = Number(tds[4].innerHTML.substring(0,1));//기간
+		    	     console.log("기간 : " + confirmedPer);
+		    	     var confirmedReg = tds[5].dataset.value;//신청일
+		    	     
+		    	     var confirmedRegDateStr = confirmedReg;
+		    	     var confirmedRegDateToDate = new Date(confirmedRegDateStr.replace(/(\w+ \w+ \d+) [0-9:]+ KST (\d+)/, "$1 $2"));
+		    	     var confirmedRegDateToDateSet = [confirmedRegDateToDate.getFullYear(),
+		    	    	 			('0'+(confirmedRegDateToDate.getMonth()+1)).slice(-2),
+		    	    	 			('0'+confirmedRegDateToDate.getDate()).slice(-2)].join('-');
+		    	     
+		    	     var confirmedRegDay = new Date(confirmedRegDateToDateSet);
+// 		    	     console.log("신청일 날짜 :"  + confirmedRegDay);
+					var endConfirmedReg = new Date(confirmedRegDay.setFullYear(confirmedRegDay.getFullYear() + confirmedPer));
+// 					var endConfirmedReg = new Date(confirmedRegDay.setMinutes(confirmedRegDay.getMinutes() + 1));//test 1분후
+// 		    	     console.log("신청일로부터 1년후 : " + endConfirmedReg);
+					  
+// 					console.log("현재날짜 : " + date);
+// 					console.log("마감날짜 : " + endConfirmedReg);
+					
+					 //나의 학적 정보
+		    	    $("#recordStateNow").text(tds[1].innerHTML);
+		    	    $("#recordApplyDate").text(tds[5].innerHTML);
+		    	    $("#recordEndDate").text(getFormatDate(endConfirmedReg).substring(2,10));
+		    	    if (Math.abs(confirmedRegDay.getTime() - endConfirmedReg.getTime()) === 31536000000) {  // 31536000000 is the number of milliseconds in one year
+						  Swal.fire({
+							  icon: 'info',
+							  title: '학적을 변동 할 수 있습니다!',
+							})
+					  $("#applyBtn").removeAttr("disabled");
+					  tds[6].innerHTML = "처리완료";
+					  tds[6].style.color = "black";
+					}
+		    	}
+		    })
 		  });
 		
 			
@@ -566,6 +637,13 @@ cursor:pointer;
 		};
 	
 	function checkFormData(){
+		if(!($("#recRsn").val().length >= 10))	{
+			Swal.fire({
+				  icon: 'error',
+				  title: '사유는 10글자 이상 작성해주세요',
+				})
+			return false;
+		}
 		
 		if($("#recYr option:selected").val() == $("#recYr option:eq(0)").val()){
 			Swal.fire({
