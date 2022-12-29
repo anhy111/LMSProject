@@ -64,10 +64,9 @@ UPDATE RECORD
 <set>
 <if test="recPer != null and recPer !='' "> REC_PER = #{recPer}</if>
 <if test="recRsn != null and recRsn !='' ">, REC_RSN = #{recRsn}</if>
-, REC_DT = SYSDATE
+<if test="recDt == null">, REC_DT = SYSDATE</if>
 </set>
-WHERE
-AND REC_CD = #{recCd}
+WHERE REC_CD = #{recCd}
 </update>
 <delete id="deleteRecordByStudent" parameterType="int">
 DELETE FROM RECORD WHERE REC_CD = #{recCd}

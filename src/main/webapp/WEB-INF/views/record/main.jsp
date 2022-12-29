@@ -21,11 +21,12 @@ cursor:pointer;
 </style>
 
 
-<div class="card-header">
-	<h3 class="card-title">
-		<b>학적 변동 리스트</b>
-	</h3>
-</div>
+<!-- <div class="card-header"> -->
+<!-- 	<h3 class="card-title"> -->
+<!-- 		<b>학적 변동 리스트</b> -->
+<!-- 	</h3> -->
+<!-- </div> -->
+<div class="row">
 <div class="alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
 						<p>
@@ -36,8 +37,9 @@ cursor:pointer;
 							<br> (4) 신청시에는 <strong>본인확인</strong>이 필요 합니다.
 						</p>
 					</div>
-<div class="card-body table-responsive col-12 "
-	style="min-height: 300px;">
+</div>
+<!-- <div class="card-body table-responsive col-12 "style="min-height: 300px;"> -->
+<div class="row">
 	<table id="applyTable"
 		class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
@@ -74,10 +76,13 @@ cursor:pointer;
 			</c:forEach>
 		</tbody>
 	</table>
+<!-- </div> -->
 </div>
-<div class="col-12" style="text-align: end; padding-right: 20px;">
+<div class="row">
+<div class="col-12 pr-0	" style="text-align: end;">
 	<!-- 			<button class="btn btn-sm btn-outline-primary" >신청</button> -->
-	<button class="btn btn-lg btn-outline-primary"data-toggle="modal" data-target="#modal-default">신청</button>
+	<button class="btn btn-outline-primary"data-toggle="modal" data-target="#modal-default">신청</button>
+</div>
 </div>
 
 <!-- 신청 모달-->
@@ -242,7 +247,7 @@ cursor:pointer;
 				<button type="button" id="modifyApply"class="btn btn-outline-primary">수정</button>
 				<button type="button" id="deleteApply"class="btn btn-outline-danger">삭제</button>
 <!-- 				<a onclick="dataReset()" class="btn btn-outline-secondary">작성취소</a> -->
-				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				<button id="closeModifyModal" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
@@ -276,6 +281,7 @@ cursor:pointer;
 		    setRecYr();//현재년도가 2학기일경우 현재년도 + 다음년도
 		  });
 		
+			
 		var tds = document.querySelectorAll('td');
 		tds.forEach(td=>{
 		td.addEventListener('click', function() {
@@ -342,10 +348,13 @@ cursor:pointer;
 						xhr.setRequestHeader(header, token);
 					},
 				  success:function(data){
-					  Swal.fire({
-						  icon: 'success',
-						  title: '수정되었습니다',
-						})
+					  Swal.fire(
+			                    '수정 완료',
+			                    '정상적으로 수정 되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
 				  }
 			})
 		})
@@ -370,10 +379,13 @@ cursor:pointer;
 						xhr.setRequestHeader(header, token);
 					},
 				  success:function(data){
-					  Swal.fire({
-						  icon: 'success',
-						  title: '삭제되었습니다',
-						})
+					  Swal.fire(
+			                    '삭제 완료',
+			                    '정상적으로 삭제 되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
 				  }	
 				})
 			  }
@@ -393,7 +405,7 @@ cursor:pointer;
 			var sem = this.innerHTML
 			$("input[name='recSem']").val(sem.substr(0,1));
 			var yr = $("select[name=recYr] :selected").val();
-			$("#selectedYRSEM").html("&nbsp;"+ yr +"년도 "+ sem);
+			$("#selectedYRSEM").html("&nbsp;"+ yr +"년도 "+ sem + "입니다");
 		});
 		
 		$("#currentSem").on("click",function(){
