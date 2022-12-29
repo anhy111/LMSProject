@@ -14,8 +14,6 @@
 <div class="row">
 	<div class="col-sm-1" ></div>
 	<div class="col-sm-10" >
-			<div class="card card-outline card-primary">
-				<div class="card-header" style="padding-bottom:0px">
 						<div class="row form-group">
 							<div class="col-sm-8">
 								<br>
@@ -29,18 +27,19 @@
 							<div class="col-sm-4" style="text-align:right;">
 								<br>
 								<b class="col taskData">등록일 : <fmt:formatDate value="${task.taskSdt}" pattern="yyyy-MM-dd"/>&nbsp; |&nbsp; 마감일 : <fmt:formatDate value="${task.taskEdt}" pattern="yyyy-MM-dd hh:mm"/></b>
+								<br>
+								<b class="col taskData">과제 점수 : ${task.taskScore}</b>
+								
 							</div>
 						</div>
-				</div>
-				<div class="card-body">
 					<div class="col-sm-12">
 						<section class="content">
 							<div class="container-fluid">
-								<div class="card card-danger">
-										<div class="card-body"  >
 											<div class="modifyDisplay">
 												<label>마감일</label>
 												<input type="date" class="modifyDisplay" id="taskEdt"name="taskEdt" required>
+												<label>과제 점수</label>
+												<input type="text" class="modifyDisplay" id="taskScore"name="taskScore" required>
 											</div>
 											<div>
 												<textarea id="taskCon" name="taskCon" class="form-control" cols="15" rows="15">${task.taskCon}</textarea>
@@ -66,8 +65,6 @@
 													<input type="file" id="customFile" name="files"  multiple >
 													<label class="custom-file-label" for="customFile">Choose file</label>
 												</div>
-										</div>
-								</div>
 							</div>
 						</section>
 					</div>
@@ -92,8 +89,6 @@
 						<button  type="button" class="btn btn-outline-warning modifyDisplay" id="cancle">취소</button>
 					</div>
 				</div>
-			</div>
- 	</div>
 </div>
 </div>
 <sec:csrfInput/>

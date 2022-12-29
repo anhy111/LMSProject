@@ -6,7 +6,7 @@ import lombok.Data;
 public class StudentLecture {
 	private int stuNo;
 	private int lecaCd;
-	private int slScore;
+	private float slScore;
 	
 	// 키워드검색
 	private int colCd;

@@ -63,7 +63,7 @@
 							<p>과제 및 평가</p>
 					</a></li>
 					<li class="nav-item">
-						<a href="/lectureBoard/test/test?lecaCd=${param.lecaCd}" class="nav-link"> 
+						<a href="/lectureBoard/test/studentTest?lecaCd=${param.lecaCd}" class="nav-link"> 
 							<i class="nav-icon fas fa-copy"></i>
 							<p>
 								시험 </i>
@@ -77,7 +77,7 @@
 							</p>
 						</a>
 					</li><li class="nav-item">
-						<a href="#" class="nav-link"> 
+						<a href="/lectureBoard/attendence/studentAttendence?lecaCd=${param.lecaCd}" class="nav-link"> 
 							<i class="nav-icon fas fa-copy"></i>
 							<p>
 								출결 </i>
@@ -224,7 +224,7 @@
 							</p>
 						</a>
 					</li><li class="nav-item">
-						<a href="#" class="nav-link"> 
+						<a href="/lectureBoard/score/totalScore?lecaCd=${param.lecaCd}" class="nav-link"> 
 							<i class="nav-icon fas fa-copy"></i>
 							<p>
 								성적 </i>

@@ -62,20 +62,15 @@
 	}
 </style>
 <div class="row">
-	<div class="col-sm-1"></div>
-	<div class="col-sm-10">
-		<div class="card card-outline card-primary">
-			<div class="card-body">
 				<div class="col-lg-12">
-					<div class="card" style="min-height: 700px;">
 						<div class="card-body">
 							<div class="quizWrapper">
 								<form id="frm" method="post" action="/lectureBoard/test/testRegist">       
 									<div class="row">
-										<div class="form-group col-sm-6">
+										<div class="form-group col-sm-4">
 											<label class="modifyDisplay">제목</label> <input type="text" class="form-control" id="testNm" name="testNm" placeholder="제목을 입력하세요">
 										</div>
-										<div class="form-group col-sm-6">
+										<div class="form-group col-sm-4">
 											<label>시험 일정</label>
 											<div class="input-group">
 												<div class="input-group-prepend">
@@ -90,11 +85,17 @@
 												
 											</div>
 										</div>
+										<div class="form-group col-sm-4">										
+										<label>시험 구분</label>
+										<select class="form-control" id="testPart" name="testPart" required>
+											<option value="T01">중간고사</option>
+											<option value="T02">기말고사</option>
+										</select>
+										</div>
 									</div>
 									<div>
 										<textarea id="testCon" name="testCon" class="form-control"cols="7" rows="5"></textarea>
 									</div>
-									<hr>
 									<div class="clear"></div>
 
 									<div class="table-responsive-sm" id="plusArea" style="border-bottom: 1px solid #e0e0e0">
@@ -134,11 +135,7 @@
 								<a href="/lectureBoard/test/test?lecaCd=${param.lecaCd}" class="btn btn-light">취소</a>
 							</div>
 						</div>
-					</div>
 				</div>
-			</div>
-		</div>
-	</div>
 </div>
 <button type=button id=aaa> <b>외 않 되</b></button>
 <script type="text/javascript" defer="defer">

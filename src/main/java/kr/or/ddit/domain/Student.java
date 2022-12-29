@@ -48,6 +48,25 @@ public class Student {
 	
 	private List<SclHistory> stuSclList; //장학금 내역 조회
   private SclHistory sclHistory; //추천 장학생 상세 조회
+  
+
+	// 임의 컬럼 추가 - 성적
+	private String stuYrs;
+	private float mtestScore; 
+	private float ftestScore; 
+	private float taskScore;
+	private float attendScore;
+	private float totalScore;
+	private String totalGrade;
+	private String div;
+	private String evelNm;
+	private String score;
+	// 학생 총점
+	private int stuCurScore;
+	// 총 점수
+	private int lecScore;
+	// 등급 자동 계산
+	private String grade;
 
 
 }

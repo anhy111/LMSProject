@@ -100,6 +100,7 @@
 		<result property="taskSdt"            column="TASK_SDT" />
 		<result property="taskEdt"            column="TASK_EDT" />
 		<result property="atchFileId"         column="ATCH_FILE_ID" />
+		<result property="taskScore"         column="TASK_SCORE" />
 		<collection property="attach"         resultMap="attachMap"></collection>
 		<collection property="taskSubmitList" resultMap="taskSubmitMap"></collection>
 			
@@ -305,9 +306,9 @@
 			SELECT NVL(MAX(TASK_CD),0)+1 FROM TASK
 		</selectKey>
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT,
-		TASK_EDT, ATCH_FILE_ID)
+		TASK_EDT, ATCH_FILE_ID,TASK_SCORE)
 		values(#{taskCd}, #{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},(SELECT
-		MAX(ATCH_FILE_ID) FROM ATTACH))
+		MAX(ATCH_FILE_ID),#{taskScore} FROM ATTACH))
 	</insert>
 
 	<insert id="insertTask2" parameterType="task">
@@ -316,8 +317,8 @@
 			SELECT NVL(MAX(TASK_CD),0)+1 FROM TASK
 		</selectKey>
 		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT,
-		TASK_EDT)
-		values(#{taskCd},#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt})
+		TASK_EDT,TASK_SCORE)
+		values(#{taskCd},#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},#{taskScore})
 	</insert>
 
 	<select id="studentNotYetSaveLectureList"
@@ -418,6 +419,7 @@
 		, T.TASK_CON
 		, T.TASK_SDT
 		, T.TASK_EDT
+		, T.TASK_SCORE
 		, T.ATCH_FILE_ID
 		, A.ATCH_FILE_ID
 		, A.FILE_SN
@@ -442,6 +444,7 @@
 			TASK_NM=#{taskNm}
 			,TASK_CON=#{taskCon}
 			,TASK_EDT=#{taskEdt}
+			,TASK_SCORE=#{taskScore}
 			<if test='result > "0"'>
 				, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
 			</if>
@@ -618,6 +621,7 @@
 				,S.STU_NM
 				,T.TASK_NM
 				,T.TASK_EDT
+				,T.TASK_SCORE
 		<if test='result > "0"'>
 				, A.ATCH_FILE_ID
 				, A.FILE_SN

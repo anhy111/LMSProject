@@ -18,6 +18,7 @@ import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.Student;
+import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
@@ -184,5 +185,31 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	public int attendStuUpdate(Attendence attendence) {
 		return this.lectureBoardMapper.attendStuUpdate(attendence);
 	}
+	
+	@Override
+	public List<Student> getGradeList(int lecaCd){
+		return this.lectureBoardMapper.getGradeList(lecaCd);
+	}
+	
+	@Override
+	public List<Student> lecStuScoreDetail(Map<String, Object> map){
+		return this.lectureBoardMapper.lecStuScoreDetail(map);
+	}
+
+	@Override
+	public Student getStuScoreAndMaxScore(Map<String, Object> map) {
+		return this.lectureBoardMapper.getStuScoreAndMaxScore(map);
+	}
+	
+	@Override
+	public int stuGradeUpdate(StudentLecture stuLec) {
+		return this.lectureBoardMapper.stuGradeUpdate(stuLec);
+	}
+	
+	
+	
+	
+	
+	
 	
 }
