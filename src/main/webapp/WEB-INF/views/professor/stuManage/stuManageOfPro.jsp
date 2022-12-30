@@ -8,6 +8,7 @@ Date nowTime = new Date();
 SimpleDateFormat date = new SimpleDateFormat("yyyy년   MM월   dd일"); 
 
 String name = String.valueOf(session.getAttribute("name"));
+int depCd = (int)session.getAttribute("department");
 %>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
@@ -177,6 +178,26 @@ $(function(){
 		text-align: left;
 	}
 </style>
+<!-- 학생 검색 -->
+<div class="row mt-3 ml-1">
+	<div class="form-group col-2 ">
+		<select id="yr" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+			<option value="">입학 연도</option>
+			<option value="2022">2022</option>
+			<option value="2021">2021</option>
+			<option value="2020">2020</option>
+			<option value="2019">2019</option>
+			<option value="2012">2012</option>
+		</select>
+	</div>
+	<div class="form-gruop col-3">
+		<input id="name" type="text" class="form-control" placeholder="학생 이름" />
+	</div>
+
+	<div class="form-group col-1">
+		<button id="search" type="button" class="btn btn-primary" value="">검색</button>
+	</div>
+</div>
 <div style="text-align:center;">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
@@ -188,7 +209,7 @@ $(function(){
 				<th width="10%">상세</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="stuList"> <!-- id="stuList" -->
 			<c:forEach var="list" items="${list}" varStatus="stat">
 				<tr>
 					<td>${stat.count}</td>
@@ -523,3 +544,86 @@ $(function(){
 	</div>
 </div>
 
+<script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<!-- <script src="/resources/adminlte/dist/js/adminlte.min.js"></script> -->
+<script src="/resources/adminlte/dist/js/demo.js"></script>
+<script type="text/javascript">
+
+var header = "${_csrf.headerName}";
+var token = "${_csrf.token}";
+
+$(function() {
+	//Initialize Select2 Elements
+	$('.select2').select2();
+
+	//Initialize Select2 Elements
+	$('.select2bs4').select2({
+		theme : 'bootstrap4'
+	});
+
+	$("#search").on("click",loadSearchStuList);
+	
+	loadSearchStuList();
+});
+
+function loadSearchStuList(){
+	
+	let yr = $("#yr").val();
+	let name = $("#name").val();
+	let depCd = '${depCd}';
+	
+	
+	let data = {
+		stuNo : yr,
+		stuNm : name,
+		depCd : depCd
+	};
+
+
+	$.ajax({
+		url : "/professor/myStuSearch",
+		type : "post",
+		data : JSON.stringify(data),
+		contentType : "application/json; charset=utf-8",
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(result) {
+			$("#stuList").html("");
+			let str = "";
+			
+// 			console.log("result" + result);
+			
+			if(result.length == 0){
+				str = "<tr class='text-center p-0'>";
+				str += "<td colspan='11'>검색된 학생이 없습니다.</td>";
+				str += "</tr>";
+				$("#stuList").html(str);
+				return;
+			}
+			$.each(result,function(index, student){
+				
+				str += `<tr class="text-center">
+							<td>\${index+1}</td>
+							<td>\${student.stuNo}</td>
+							<td>
+								<div class="image">
+									<img src="/upload\${student.stuPic}" class="img-circle" alt="User Image" style="max-width: 20px;"> 
+									\${student.stuNm}
+								</div>
+							</td>
+							<td>\${student.empNm}</td>
+							<td>
+								<button class="btn btn-block btn-outline-secondary btn-sm btnDetail"
+									value="\${student.stuNo}" data-toggle="modal" data-target="#modal-lg">상세</button>
+							</td>
+						</tr>`
+			});
+			$("#stuList").append(str);
+			
+		}
+	});
+}
+
+</script>

@@ -13,17 +13,12 @@
 	String pic = String.valueOf(session.getAttribute("pic"));
 %>
 <style>
-.info,.nav-link{
-color:white;
-}
-.d-block:hover{
-opacity:1;
-transition:opacity 1s;
-}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
 let tid;
 let cnt = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
+// var socket = null;
 
 function counter_init(){
 	tid =setInterval("counter_run()", 990);
@@ -62,9 +57,25 @@ function time_format(s) {
 	return nMin+":"+nSec;
 }
 
+// function onMessage(evt){
+//     var data = evt.data;
+//     // toast
+//     let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+//     toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+//     toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+//     toast += "<span aria-hidden='true'>&times;</span></button>";
+//     toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+//     $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+//     $(".toast").toast({"animation": true, "autohide": false});
+//     $('.toast').toast('show');
+// };	
+
 $(function(){
 
 	counter_init();
+// 	socket = new SockJS("<c:url value="/echo-ws"/>");
+//     // 데이터를 전달 받았을때 
+//     socket.onmessage = onMessage; // toast 생성)
 	
 	$("#refresh").on("click", function(){
 		
@@ -87,12 +98,12 @@ $(function(){
 		position: absolute;
 		padding: 8px;
 		left: 0;
-		-webkit-border-radius: 8px;
-		-moz-border-radius: 8px;
+		bottom: -65px;
 		border-radius: 8px;
-		background: #333;
+		background: #dcdcdc;
 		color: #fff;
 		font-size: 14px;
+		opacity:0.9;
 	}
 	
 	.arrow_box1:after {
@@ -104,22 +115,23 @@ $(function(){
 	  margin-left: -10px;
 	  border: solid transparent;
 	  border-color: rgba(51, 51, 51, 0);
-	  border-bottom-color: #333;
+	  border-bottom-color: #dcdcdc;
 	  border-width: 10px;
 	  pointer-events: none;
 	  content: ' ';
+	  opacity:0.9;
 	}
 	.arrow_box2 {
 	  display: none;
 	  position: absolute;
 	  padding: 8px;
-	  left: 0;
-	  -webkit-border-radius: 8px;
-	  -moz-border-radius: 8px;
+	  right: 175px;
+	  bottom: -50px;
 	  border-radius: 8px;
-	  background: #333;
+	  background: #dcdcdc;
 	  color: #fff;
 	  font-size: 14px;
+	  opacity:0.9;
 	}
 	
 	.arrow_box2:after {
@@ -131,10 +143,11 @@ $(function(){
 	  margin-left: -10px;
 	  border: solid transparent;
 	  border-color: rgba(51, 51, 51, 0);
-	  border-bottom-color: #333;
+	  border-bottom-color: #dcdcdc;
 	  border-width: 10px;
 	  pointer-events: none;
 	  content: ' ';
+	  opacity:0.9;
 	}
     
     span:hover + p.arrow_box1 {
@@ -146,7 +159,7 @@ $(function(){
 	}
 </style>
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: white;opacity:0.9;">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 0.9);">
 
 	<!-- Right navbar links -->
 	<ul class="navbar-nav ml-auto">
@@ -164,7 +177,7 @@ $(function(){
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
-			<div class="nav-link">
+			<div class="nav-link" style="color:white;">
 				<div class="row">
 					<span id="counter" style="padding-right:7px;"></span>
 					<div class="text-center" style="width:15px;">
@@ -182,7 +195,7 @@ $(function(){
 						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
-					<div class="info">
+					<div class="info" style="color:white;">
 						<%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=department %> 
 					</div>
 				</div>
@@ -191,7 +204,13 @@ $(function(){
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 			<div class="nav-link" style="color:white;">
-				<span id="counter"></span>
+				<div class="row">
+					<span id="counter" style="padding-right:7px;"></span>
+					<div class="text-center" style="width:15px;">
+						<span class="fas fa-sync-alt" id="refresh"></span>
+						<p class="arrow_box1">시간 연장</p>
+					</div>
+				</div>
 			</div>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
@@ -202,7 +221,7 @@ $(function(){
 						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
-					<div class="info">
+					<div class="info" style="color:white;">
 						<%=name %> 교수 &nbsp;&nbsp; | &nbsp;&nbsp;<%=position %> 
 					</div>
 				</div>
@@ -210,7 +229,13 @@ $(function(){
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
 			<div class="nav-link" style="color:white;">
-				<span id="counter"></span>
+				<div class="row">
+					<span id="counter" style="padding-right:7px;"></span>
+					<div class="text-center" style="width:15px;">
+						<span class="fas fa-sync-alt" id="refresh"></span>
+						<p class="arrow_box1">시간 연장</p>
+					</div>
+				</div>
 			</div>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
@@ -221,7 +246,7 @@ $(function(){
 						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
-					<div class="info">
+					<div class="info" style="color:white;">
 						 <%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=division %>&nbsp;&nbsp; | &nbsp;&nbsp;<%=position %>  
 					</div>
 				</div>
@@ -229,30 +254,32 @@ $(function(){
 		</sec:authorize>
 
 		<!-- Notifications Dropdown Menu -->
-		<li class="nav-item dropdown"><a class="nav-link" style="color:white;"
-			data-toggle="dropdown" href="#"> <i class="far fa-bell"></i> <span
-				class="badge badge-warning navbar-badge">15</span>
-		</a>
-			<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-				<span class="dropdown-item dropdown-header">15 Notifications</span>
+		<li class="nav-item dropdown">
+			<a class="nav-link" style="color: white;" data-toggle="dropdown" href="#"> 
+				<i class="far fa-bell"></i> 
+				<span id="notificationBadge" class="badge badge-warning navbar-badge">0</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-xl">
+				<span class="dropdown-item dropdown-header">알림내역</span>
 				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item"> <i
-					class="fas fa-envelope mr-2"></i> 4 new messages <span
-					class="float-right text-muted text-sm">3 mins</span>
+				<a href="#" class="dropdown-item"> 
+					<i class="fas fa-book fa-lg"></i>
+						경제학개론 - 과제게시판
+					<span class="float-right text-muted text-sm">
+						12 시간전
+					</span><br>
+					<span class="text-muted text-sm">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 글이 등록되었습니다.
+					</span>
 				</a>
 				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item"> <i class="fas fa-users mr-2"></i>
-					8 friend requests <span class="float-right text-muted text-sm">12
-						hours</span>
+				<a href="#" class="dropdown-item"> <i class="fas fa-school mr-1"></i> 개강<span class="float-right text-muted text-sm">12 시간전</span>
 				</a>
 				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item"> <i class="fas fa-file mr-2"></i>
-					3 new reports <span class="float-right text-muted text-sm">2
-						days</span>
+				<a href="#" class="dropdown-item"> <i class="fas fa-won-sign mr-1"></i> 등록금 납부<span class="float-right text-muted text-sm">2 일전</span>
 				</a>
 				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item dropdown-footer">See All
-					Notifications</a>
+				<a href="#" class="dropdown-item dropdown-footer btn btn-outline-secondary">펼쳐보기</a>
 			</div>
 		</li>
 		<div style="margin:5px;">
@@ -275,27 +302,3 @@ $(function(){
 </nav>
 <!-- /.navbar -->
 
-<!-- 세션 타임아웃 모달 -->
-<div class="modal fade" id="session" style="display: none;"
-	aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">로그인 시간 연장</h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<p>One fine body…</p>
-			</div>
-			<div class="modal-footer justify-content-between">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-
-	</div>
-
-</div>

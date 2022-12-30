@@ -50,6 +50,11 @@
                     </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a href="/student/lecture/myLecture" class="nav-link">
+                                    <p>수강중인 강의</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="/student/lectureApply/spareList" class="nav-link">
                                     <p>예비수강신청</p>
                                 </a>
@@ -108,12 +113,12 @@
                     </a>
                         <ul class="nav nav-treeview">
 
-                            <li class="nav-item"><a href="/payment/stuPaymentDetail"
+                            <li class="nav-item"><a href="/payment/stu/stuPaymentDetail"
                                                     class="nav-link">
                                 <p>등록금 납부 내역</p>
                             </a></li>
                             </a></li>
-                            <li class="nav-item"><a href="/payment/stuPaymentDetail" class="nav-link">
+                            <li class="nav-item"><a href="/payment/stu/stuPaymentDetail" class="nav-link">
                                 <p>장학금 수혜 내역</p>
                             </a></li>
                         </ul>
@@ -195,20 +200,18 @@
                     </a></li>
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
-                            학생 관리
+                            학생 관리 <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="/professor/stuManageOfPro" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
                                     <p>학생 목록</p>
                                 </a>
                             </li>
                             <sec:authorize access="hasRole('ROLE_DEAN')">
                                 <li class="nav-item">
                                     <a href="/professor/scholarshipStu" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>장학생 추천 목록</p>
                                     </a>
                                 </li>
@@ -253,17 +256,17 @@
                                 </p>
                             </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item"><a href="/payment/collegeFeeList"
+                                    <li class="nav-item"><a href="/payment/admin/collegeFeeList"
                                                             class="nav-link">
 
                                         <p>등록금 목록 조회</p>
                                     </a></li>
-                                    <li class="nav-item"><a href="/payment/adminBill"
+                                    <li class="nav-item"><a href="/payment/admin/adminBill"
                                                             class="nav-link">
 
                                         <p>등록금 고지 관리</p>
                                     </a></li>
-                                    <li class="nav-item"><a href="/payment/adminPayment"
+                                    <li class="nav-item"><a href="/payment/admin/adminPayment"
                                                             class="nav-link">
 
                                         <p>등록금 납부 관리</p>

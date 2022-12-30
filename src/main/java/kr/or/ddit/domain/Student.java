@@ -38,7 +38,7 @@ public class Student {
 	private String rgbCd; //학적 구분
 	private String recPer; //기간
 	private String recRsn; //사유
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy.MM.dd", timezone = "Asia/Seoul")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy/MM/dd", timezone = "Asia/Seoul")
 	private Date recDt; //신청날짜
 	private String recYn; //승인여부
 	private String recRej; //반려사유
@@ -52,6 +52,25 @@ public class Student {
 	
 	private List<SclHistory> stuSclList; //장학금 내역 조회
   private SclHistory sclHistory; //추천 장학생 상세 조회
+  
+
+	// 임의 컬럼 추가 - 성적
+	private String stuYrs;
+	private float mtestScore; 
+	private float ftestScore; 
+	private float taskScore;
+	private float attendScore;
+	private float totalScore;
+	private String totalGrade;
+	private String div;
+	private String evelNm;
+	private String score;
+	// 학생 총점
+	private int stuCurScore;
+	// 총 점수
+	private int lecScore;
+	// 등급 자동 계산
+	private String grade;
 
 
 }

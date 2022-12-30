@@ -29,6 +29,11 @@ public class ManageServiceImpl implements ManageService{
 	}
 	
 	@Override
+	public List<Student> stuSearch(Map<String, String> map){
+		return this.manageMapper.stuSearch(map);
+	}
+	
+	@Override
 	public Student detailStu(Map<String, String> map) {
 		return this.manageMapper.detailStu(map);
 	}
@@ -49,8 +54,8 @@ public class ManageServiceImpl implements ManageService{
 	}
 	
 	@Override
-	public List<Student> recordManage(){
-		return this.manageMapper.recordManage();
+	public List<Student> recordSearch(Map<String, String> map){
+		return this.manageMapper.recordSearch(map);
 	}
 	
 	@Override

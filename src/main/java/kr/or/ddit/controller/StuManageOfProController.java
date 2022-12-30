@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.SclHistory;
 import kr.or.ddit.domain.Student;
+import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.ManageService;
 import kr.or.ddit.service.StuManageOfProService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,8 @@ public class StuManageOfProController {
 
 	@Autowired
 	StuManageOfProService stuManageOfProService;
-	
+	@Autowired
+	CollegeService collegeService;
 	@Autowired
 	ManageService manageService;
 	
@@ -39,11 +42,22 @@ public class StuManageOfProController {
 		log.info("모가문젠데 controller " + depCd);
 		
 		List<Student> stuList = this.stuManageOfProService.stuList(depCd);
+		List<College> collegeList = this.collegeService.CollegeList();
 		
 		model.addAttribute("list", stuList);
 		model.addAttribute("bodyTitle", "학생목록조회");
+		model.addAttribute("collegeList", collegeList);
 		
 		return "professor/stuManage/stuManageOfPro";
+	}
+	
+	@PostMapping("/professor/myStuSearch")
+	@ResponseBody
+	public List<Student> myStuSearch(@RequestBody Map<String, String> map){
+		
+		List<Student> myStuSearch = this.stuManageOfProService.myStuSearch(map);
+		
+		return myStuSearch;
 	}
 	
 	//학생 상세
