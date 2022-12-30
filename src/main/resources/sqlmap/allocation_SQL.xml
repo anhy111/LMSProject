@@ -37,5 +37,15 @@
 		AND W.LECA_CD = L.LECA_CD
 		AND W.STU_NO = #{stuNo}
 	</select>
+	
+	<select id="allocationByRoomList" parameterType="int" resultType="allocation">
+		SELECT ROOM_CD
+		     , LECA_CD
+		     , ALT_DT
+		     , ALT_ST
+		     , ALT_EN
+		FROM ALLOCATION
+		WHERE ROOM_CD = ${roomNo}
+	</select>
 </mapper>
 

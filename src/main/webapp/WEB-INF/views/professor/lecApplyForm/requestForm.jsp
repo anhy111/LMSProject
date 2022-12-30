@@ -203,7 +203,21 @@
     
     <div id="blockNum3">
     	<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;시간표 선택</p>
-    	
+    	<div class="row pl-4">
+	    	<div class="col-2 ">
+		  		<select id="building" class="select2bs4 select2-hidden-accessible col-2 offset-1" style="width: 100%;" aria-hidden="true">
+					<option value="0">건물</option>
+					<c:forEach var="building" items="${buildingList}">
+					<option value="${building.bldCd}">${building.bldSnm}</option>
+					</c:forEach>
+				</select>
+			</div>
+	    	<div class="col-2">
+		  		<select id="room" class="select2bs4 select2-hidden-accessible col-2 offset-1" style="width: 100%;" aria-hidden="true">
+					<option value="0">강의실</option>
+				</select>
+			</div>
+		</div>
     	<div id="blockNum3TimeTable" style="float : left; width : 400px;">
     		<table id="timeTableChoice" border="1">
     			<tr><th style="width : 70px;"></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr>
@@ -237,6 +251,9 @@
     
     </div>
 </body>
+<script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
 
 	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
@@ -244,7 +261,8 @@
 	let token = "${_csrf.token}";
 	
 	console.log("header : " + header + ", token : " + token);
-
+	var roomTime = "";
+	
 	function insertData() {
 		$('#lecaYr').val('2022');
 		$('#lecaSem').val('2학기');
@@ -281,7 +299,14 @@
 	}
 	
 window.onload = function() {
+	//Initialize Select2 Elements
+	$('.select2').select2();
 
+	//Initialize Select2 Elements
+	$('.select2bs4').select2({
+		theme : 'bootstrap4'
+	});
+	
 	var date = new Date();
 	let year = date.getFullYear();
 	
@@ -441,37 +466,108 @@ window.onload = function() {
 		}
 	});
 	
+	// 시간표 건물 선택시 강의실 목록 띄워줌
+	$("#building").on("change",function(){
+		let data = {
+			bldCd : this.value
+		};
+		
+		$.ajax({
+			url : "/professor/lecApplyForm/roomByBuildingList",
+			type : "get",
+			data : data,
+			success : function(result){
+				let str = "";
+				if(!result.length){
+					str += "<option value='0'>강의실</option>";
+					str += "<option value='0'>강의실이 없습니다.</option>";
+				} else{
+					str += "<option value='0'>강의실</option>";
+					$.each(result,function(p_inx, p_val){
+						str += `<option value='\${p_val.roomNo}'>\${p_val.roomNo}호</option>`;
+					});
+				}
+				$("#room").html(str);
+				timeTableInit();
+			}
+		})
+	});
+	
+	// 시간표 강의실 선택시 존재하는 강의는 선택불가
+	$("#room").on("change",function(){
+		let data = {
+			roomCd : this.value
+		};
+		
+		$.ajax({
+			url : "/professor/lecApplyForm/timeTableByRoomList",
+			type : "get",
+			data : data,
+			success : function(result){
+				timeTableInit();
+			}
+		});
+		
+	});
+	
 	//시간표 작성
 	$('#timeTableBtn').on('click', function() {
 		
-		$('#textArea4time').empty();
+		if($("#building").val() == 0){
+			alert("건물을 선택해주세요");
+			return;
+		}
+		if($("#room").val() == 0){
+			alert("강의실을 선택해주세요");
+			return;
+		}
 		
 		timeTable = $('#timeTableChoice');
 		
 		str = '';
-		
+		buildingText = $("#building option:selected").text() + " ";
+		room = $("#room").val() + " ";
+		roomText = $("#room option:selected").text() + " ";
+		dataStr = "";
 		for(j = 0; j <= 4; j++) {
 			for(i = 1; i <= 9; i++) {
 				cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
 				
 				if(cellObj.hasClass("highlighted")) {
 					
-					if(j == 0) {
-						str += "월 " + i + "교시\n";
-					}else if(j == 1) {
-						str += "화 " + i + "교시\n";
-					}else if(j == 2) {
-						str += "수 " + i + "교시\n";
-					}else if(j == 3) {
-						str += "목 " + i + "교시\n";
-					}else if(j == 4) {
-						str += "금 " + i + "교시\n";
+					switch(j) {
+					case 0:
+						str += buildingText + roomText + "월 " + i + "교시\n";
+						dataStr += room + "m " + i + "교시,"; 
+						break;
+					case 1:
+						str += buildingText + roomText + "화 " + i + "교시\n";
+						dataStr += room + "m " + i + "교시,";
+						break;
+					case 2:
+						str += buildingText + roomText + "수 " + i + "교시\n";
+						dataStr += room + "m " + i + "교시,";
+						break;
+					case 3:
+						str += buildingText + roomText + "목 " + i + "교시\n";
+						dataStr += room + "m " + i + "교시,";
+						break;
+					case 4:
+						str += buildingText + roomText + "금 " + i + "교시\n";
+						dataStr += room + "m " + i + "교시,";
+						break;
+					default:
+						break;
 					}
 				}
 			}
 		}
 		//alert(str);
+		if($('#textArea4time').html().substr(0,1) == '시'){
+			$('#textArea4time').html("");
+		}
 		$('#textArea4time').append(str);
+		console.log("dataStr : " + dataStr );
 	});
 	
 	//임시저장 버튼 클릭 시
@@ -588,5 +684,8 @@ window.onload = function() {
 	
 }
 
+function timeTableInit(){
+	$('#timeTableChoice td').removeClass("highlighted");
+}
 </script>
 </html>
