@@ -345,9 +345,20 @@ public class LectureBoardController {
 		log.info("a");
 		return "lectureBoard/score/totalScore";
 	}
+
+	@GetMapping("score/studentList")
+	@PreAuthorize("hasRole('ROLE_PROFESSOR') or hasRole('ROLE_STUDENT')")
+	public String stuAttend2(Model model, String lecaCd) {
+
+		log.info(lecaCd);
+		LecApply lecApplySearch = lectureBoardService.lecApplySearch(lecaCd);
+		model.addAttribute("data", lecApplySearch);
+		return "lectureBoard/score/totalScore2";
+	}
+
 	
 	//학생 성적 전체 리스트
-	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@PreAuthorize("hasRole('ROLE_PROFESSOR') or hasRole('ROLE_STUDENT')")
 	@ResponseBody
 	@PostMapping("lecStuTotScore")
 	public List<Student> lecStuTotScore (@RequestBody String lecaCd) {
@@ -413,8 +424,4 @@ public class LectureBoardController {
 		
 		return result;
 	}
-		
-	
-	
-
 }

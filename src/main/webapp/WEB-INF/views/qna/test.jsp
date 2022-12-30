@@ -102,18 +102,18 @@
                             <table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
                                 <thead class="table-light">
                                 <tr style="border-top: 2px solid #112a63">
-                                    <th style="width: 5%; text-align: center;">번호</th>
-                                    <th style="width: 50%;text-align: center;">제목</th>
-                                    <th style="width: 50%;text-align: center;">학번</th>
-                                    <th style="width: 15%;text-align: center;">작성일</th>
-                                    <th style="width: 15%;text-align: center;">조회</th>
+                                    <th style="width: 10%; text-align: center;">No</th>
+                                    <th style="width: 60%;text-align: center;">제목</th>
+                                    <th style="width: 10%;text-align: center;">학번</th>
+                                    <th style="width: 10%;text-align: center;">작성일</th>
+                                    <th style="width: 10%;text-align: center;">조회</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 <c:set var="length" value="${fn:length(qnaList)}"/>
                                 <c:forEach var="qnaList" items="${qnaList}" varStatus="status">
-                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}" pattern="yyyy/MM/dd"/>
+                                    <fmt:formatDate var="qnaRegDate" value="${qnaList.qnaDt}" pattern="yy/MM/dd"/>
                                     <tr>
                                         <td style="text-align: center;">${length - (status.count-1)}</td>
                                         <td>
