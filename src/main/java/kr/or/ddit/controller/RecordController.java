@@ -35,6 +35,7 @@ public class RecordController {
 		
 		List<Record> recordsList = this.recordService.RecordList(stuNo);
 		//공통 약속
+		model.addAttribute("bodyTitle","학적 변동 내역");
 		model.addAttribute("recordsList",recordsList);
 		
 		//forwarding
@@ -50,7 +51,7 @@ public class RecordController {
 				record.setRecYn(commonDetail.getComdCd());
 			}
 		}
-//		log.info("들어온 값 : " + record.toString());
+		log.info("들어온 값 : " + record.toString());
 		int result = this.recordService.RecordApply(record);
 		if (result == 0 ) {
 			log.info("등록실패");
@@ -72,6 +73,7 @@ public class RecordController {
 	@ResponseBody
 	@PostMapping("/applyModify")
 	public int RecordApplyModify(@RequestBody Record record) {
+		log.info("들어왔니? " + record.toString());
 		int result = this.recordService.modifyRecordByStudent(record);
 		if (result == 0 ) {
 			log.info("등록실패");

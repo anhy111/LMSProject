@@ -85,6 +85,7 @@
 		<result property="testReg"     column="TEST_REG" />
 		<result property="testSdt"     column="TEST_SDT" />
 		<result property="testEdt"     column="TEST_EDT" />
+		<result property="testPart"     column="TEST_PART" />
 		<collection property="stuTest" resultMap="stuTestMap"></collection>
 		<collection property="testQList"   resultMap="testQMap"></collection>
 		<collection property="stdList" resultMap="stdMap"></collection>
@@ -282,6 +283,7 @@
 		                 ,TEST_CON
 		                 ,TEST_SDT
 		                 ,TEST_EDT
+		                 ,TEST_PART
 		                 )
 				VALUES(
 						  #{testCd}
@@ -290,6 +292,7 @@
 						 ,#{testCon}
 						 ,#{testSdt}
 						 ,#{testEdt}
+						 ,#{testPart}
 				)
 	</insert>
 
@@ -327,6 +330,7 @@
 			,T.TEST_REG
 			,T.TEST_SDT
 			,T.TEST_EDT
+			,T.TEST_PART
 			
 			,TQ.TEST_CD
 			,TQ.TEQ_CD
@@ -366,6 +370,7 @@
 								,TEST_CD
 								,ST_SCORE
 								,ST_YN
+								,TEST_PART
 								)
 					  VALUES (   
 					  			 #{stCd}
@@ -374,6 +379,7 @@
 								,#{testCd}
 								,ROUND((#{stScore}/(5* (SELECT COUNT(TEQ_CD) TEQ_CD FROM TEST_Q WHERE TEST_CD = #{testCd})))*100)
 								,'Y'
+								,#{testPart}
 							 )
 		
 	</insert>
@@ -394,7 +400,7 @@
         </foreach>
 	</update>
 	
-	<!-- 퀴즈 학생 제출 답안과 점수 확인 -->
+	<!-- 시험 학생 제출 답안과 점수 확인 -->
 	<select id="stuTestDetail" parameterType="String" resultMap="testMap">
 			WITH aaa AS(
             SELECT    T.TEST_CD
@@ -404,6 +410,7 @@
 					, T.TEST_REG
 					, T.TEST_SDT
 					, T.TEST_EDT
+					, T.TEST_PART
 					
 		            , TQ.TEQ_CD
 		            , TQ.TEQ_CON
@@ -450,7 +457,7 @@
 	<!-- 출결 : 출결 상태 카운트 -->
 	<select id="attendenceDetail" parameterType="String" resultType="attendence">
 	SELECT 
-	       (SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo}) "atenCate"
+	        (SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo}) "atenCate"
 	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A001') "atenAttend"
 	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A002') "atenLate"
 	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A003') "atenAbsent"
@@ -470,7 +477,7 @@
 		        AND ST.LECA_CD = #{lecaCd}
 		        AND S.STU_NO = #{stuNo}
 	</select>
-	<!-- 출결 : ????수정 해야 될듯 -->
+	<!-- 출결 :  -->
 	<select id="attendStuDetail" parameterType="String" resultType="attendence">
 		SELECT  ATEN_CD
 		    ,   LECA_CD
@@ -527,6 +534,128 @@
 		AND LECA_CD = #{lecaCd}
 		AND STU_NO = #{stuNo}
 	</update>
+	
+	
+	
+	<select id="getGradeList" parameterType="int" resultType="student">
+	<![CDATA[
+			SELECT  S.*
+				    ,   CASE WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.2) THEN 'A+'
+		                     WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.3) THEN 'A'
+				             WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.4) THEN 'B+'
+		                     WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.5) THEN 'B'
+				             WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.6) THEN 'C+'
+		                     WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.7) THEN 'C'
+				             ELSE 'D'
+				        END AS GRADE
+				FROM (
+				    SELECT  T.*
+				        ,   RANK() OVER(ORDER BY T.TOTAL_SCORE DESC) RANK
+				    FROM(
+							SELECT U.DEP_NM, U.COL_NM, U.MEM_NO, U.STU_NM, U.STU_YRS,U.STU_NO,
+							        U.TASK_SCORE, U.MTEST_SCORE,U.FTEST_SCORE, U.ATTEND_SCORE,
+							         U.MTEST_SCORE+U.FTEST_SCORE+U.TASK_SCORE  + U.ATTEND_SCORE AS TOTAL_SCORE
+		                             ,U.SL_SCORE AS TOTAL_GRADE
+							FROM    (
+		                                SELECT  D.DEP_NM
+		                                    ,   C.COL_NM
+		                                    ,   M.MEM_NO
+		                                    ,   S.STU_NM
+		                                    ,   L.SL_SCORE
+		                                    ,   S.STU_YR || '학년' AS STU_YRS
+		                                    ,	S.STU_NO
+		                                       
+		                                    
+		                                
+		                                    ,  NVL((SELECT ROUND((((SELECT SUM(TSUB_SCORE) FROM TASK_SUBMIT WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO)/(SELECT SUM(TASK_SCORE) FROM TASK  WHERE LECA_CD = #{lecaCd})) * (SELECT LECA_TP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
+		                                        TASK_SCORE
+		                                    ,   NVL((SELECT ROUND(((SELECT SUM(ST_SCORE) FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO AND TEST_PART = 'T01')/( 100) * (SELECT LECA_FP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
+		                                        MTEST_SCORE
+		                                    ,   NVL((SELECT ROUND(((SELECT SUM(ST_SCORE) FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO AND TEST_PART = 'T02')/( 100) * (SELECT LECA_FP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
+		                                        FTEST_SCORE     
+		                                    ,  NVL(
+		                                            (SELECT ROUND((
+		                                                ((SELECT SUM(CASE 	WHEN ATEN_CATE = 'A001' THEN 1
+		                                                                    WHEN ATEN_CATE = 'A002' THEN 0
+		                                                                    WHEN ATEN_CATE = 'A003' THEN 0.5
+		                                                                    WHEN ATEN_CATE = 'A004' THEN 0.5
+		                                                                    WHEN ATEN_CATE = 'A005' THEN 1
+		                                                    END
+		                                                    )
+		                                                    FROM ATTENDENCE
+		                                                    WHERE LECA_CD = #{lecaCd}
+		                                                    AND STU_NO = M.MEM_NO)/
+		                                                (16 * (SELECT LECA_CRD FROM LEC_APPLY WHERE LECA_CD = #{lecaCd}))* (SELECT LECA_AP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd}))),2)
+		                                                FROM DUAL
+		                                        ),0) ATTEND_SCORE
+		FROM    MEMBER  M INNER JOIN STUDENT    S ON(M.MEM_NO = S.STU_NO)
+		                  INNER JOIN DEPARTMENT D ON(S.DEP_CD = D.DEP_CD)
+		                  INNER JOIN COLLEGE    C ON(D.COL_CD = C.COL_CD)
+		                  LEFT OUTER JOIN STU_LEC    L ON(S.STU_NO = L.STU_NO)
+		WHERE    L.LECA_CD = #{lecaCd} group by D.DEP_NM, C.COL_NM, M.MEM_NO, S.STU_NM, S.STU_YR || '학년', 
+		'학년', L.SL_SCORE,S.STU_NO
+		ORDER BY S.STU_NM
+							) U
+					) T
+			    	ORDER BY T.TOTAL_SCORE DESC
+				)S
+				]]>
+	</select>
+	
+	<select id="lecStuScoreDetail" parameterType="hashMap" resultType="student">
+	WITH W AS(
+			SELECT '시험' AS DIV, 
+            COMD_NM AS EVEL_NM,
+            NVL((SELECT ST_SCORE FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND TEST_PART = C.COMD_CD), 0) || '/' || 100 SCORE
+            , NULL AS ET
+		    FROM COMMON_DETAIL C
+		    WHERE COM_CD = 'TEST'
+			
+			UNION ALL
+			SELECT  '과제' AS DIV
+			    ,   K.TASK_NM AS EVEL_NM
+			    ,   NVL((SELECT T.TSUB_SCORE FROM TASK_SUBMIT T WHERE K.TASK_CD = T.TASK_CD AND T.STU_NO = #{stuNo} AND T.LECA_CD = #{lecaCd}),0) || '/' || K.TASK_SCORE AS SCORE
+			    ,   K.TASK_EDT
+			FROM TASK K
+			WHERE K.LECA_CD = #{lecaCd})
+			
+		SELECT W.DIV, W.EVEL_NM, W.SCORE
+		FROM W
+		ORDER BY (CASE DIV WHEN '시험' THEN 1
+		                WHEN '과제' THEN 2
+		                ELSE 3 END), W.ET
+	
+	</select>
+	
+	
+	
+	<select id="getStuScoreAndMaxScore" parameterType="hashmap" resultType="student">
+		SELECT  NVL((SELECT SUM(ST_SCORE)FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo}), 0)
+		    +   NVL((SELECT SUM(TSUB_SCORE)FROM TASK_SUBMIT WHERE STU_NO = #{stuNo} AND LECA_CD = 1),0)  AS STU_CUR_SCORE
+		    ,  (SELECT SUM(TASK_SCORE) FROM TASK WHERE LECA_CD = #{lecaCd}) + ((SELECT COUNT(TEST_CD) FROM TEST WHERE LECA_CD = #{lecaCd}) * 100) LEC_SCORE
+		FROM DUAL             
+	</select>
+	
+	
+	<!-- 학생 최종 성적 등급 부여 -->
+	<update id="stuGradeUpdate" parameterType="stuLec">
+		UPDATE STU_LEC
+		SET SL_SCORE = #{slScore}
+		WHERE STU_NO = #{stuNo}
+		AND LECA_CD = #{lecaCd}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

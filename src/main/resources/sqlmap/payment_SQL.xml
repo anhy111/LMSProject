@@ -130,34 +130,73 @@
 	</select>
 	
 	<!-- 해당 학기의 학생 등록금 납부증명서 상세내역 -->
-	<select id="payDetail" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
-		SELECT 
-		TO_CHAR(A.PAY_DT,'YYYY')||'년'|| CASE WHEN TO_NUMBER(TO_CHAR(A.PAY_DT,'MM'))>=3 AND
-		TO_NUMBER(TO_CHAR(A.PAY_DT,'MM'))<= 8 THEN 1 ELSE 2 END ||'학기' AS PAY_DT2
-		, TO_CHAR(A.PAY_DT,'YYYY"년"MM"월"DD"일') AS PAY_DT
-		, TO_CHAR(A.PAY_AMT, 'FM999,999,999') PAY_AMT
-		, (SELECT TO_CHAR(NVL(SUM(B.SCLH_AMT),0),'FM999,999,999') FROM SCL_HISTORY B WHERE A.STU_CD = B.STU_CD AND A.PAY_SEM = (B.SCLH_SEM+1)) SCHL_AMT
-		, (SELECT TO_CHAR(E.COL_FEE , 'FM999,999,999') FROM DEPARTMENT D, COLLEGE E WHERE D.COL_CD = E.COL_CD AND D.DEP_CD = #{depCd}) AS COL_FEE
-		, CASE WHEN PAY_SEM < 3 THEN 1 
-		WHEN PAY_SEM < 5 THEN 2 
-		WHEN PAY_SEM < 7 THEN 3
-		ELSE 4 END AS PAY_SEM
-		, E.COL_NM 
-		, D.DEP_NM
-		, A.STU_CD
-		FROM 
-		PAYMENT A , STUDENT C, DEPARTMENT D, COLLEGE E
-		WHERE 
-		A.STU_CD = #{stuCd}
-		AND A.STU_CD = C.STU_CD
-		AND A.PAY_YN = 1 
-		AND C.DEP_CD = D.DEP_CD
-		AND D.COL_CD = E.COL_CD
-		AND PAY_CD = #{payCd}
-		ORDER BY PAY_SEM DESC
-		]]>
+	<select id="payMentDetail" parameterType="hashmap" resultType="hashmap">
+		SELECT
+		    TO_CHAR(P.PAY_DT,'YYYY')||'년'|| P.PAY_SEM ||'학기' PAY_DATE
+		    , TO_CHAR(P.PAY_DT,'YYYY"년"MM"월"DD"일') AS PAY_DT
+		    , P.PAY_AMT
+		    , ( SELECT
+		            NVL(MAX(SH.SCLH_AMT),0)
+		        FROM
+		            SCL_HISTORY SH
+		        WHERE
+		            SH.STU_NO = P.STU_NO
+		            AND   SH.SCLH_YN = 'AP001'
+		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY')
+		            AND   SH.SCLH_SEM = 1 + MOD(P.PAY_SEM,2)
+		    ) SCLH_AMT
+		    , C.COL_FEE
+		    , C.COL_NM
+		    , D.DEP_NM
+		    , S.STU_NM
+		    , S.STU_NO
+		    , S.STU_YR
+		FROM PAYMENT P, STUDENT S, DEPARTMENT D, COLLEGE C
+		WHERE   S.DEP_CD = D.DEP_CD
+		AND     D.COL_CD = C.COL_CD
+		AND     P.STU_NO = S.STU_NO
+		AND     S.STU_NO = #{stuNo}
+		AND     P.PAY_CD = #{payCd}
 	</select>
+	
+	<!-- 등록금 고지서 출력 -->
+	<select id="payingTuition" resultType="hashmap" parameterType="int">
+		SELECT
+		    S.STU_NO
+		    , TO_CHAR(P.PAY_NT,'YYYY')||'년'|| P.PAY_SEM ||'학기' PAY_DATE
+		    , S.STU_YR
+		    , S.STU_NM
+		    , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = S.STU_BANK_CD) STU_BANK_CD
+		    , S.STU_ACT
+		    , D.DEP_NM
+		    , C.COL_FEE
+		    , (
+		        SELECT
+		            NVL(MAX(SH.SCLH_AMT),0)
+		        FROM
+		            SCL_HISTORY SH
+		        WHERE
+		            SH.STU_NO = P.STU_NO
+		    ) SCLH_AMT
+		    , C.COL_FEE -
+		     ( 
+		        SELECT
+		            NVL(MAX(SH.SCLH_AMT),0)
+		        FROM
+		            SCL_HISTORY SH
+		        WHERE
+		            SH.STU_NO = P.STU_NO
+		     ) PAY_AMT
+		     , P.PAY_CD
+		FROM
+		    STUDENT S, DEPARTMENT D, COLLEGE C, PAYMENT P
+		WHERE   S.DEP_CD = D.DEP_CD
+		AND     D.COL_CD = C.COL_CD
+		AND     P.STU_NO = S.STU_NO
+		AND     S.STU_NO = #{stuNo}
+		AND     P.PAY_YN = 'PAY001'
+	</select>
+
 	
 </mapper>
 

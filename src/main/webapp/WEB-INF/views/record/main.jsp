@@ -19,25 +19,37 @@ transition: opacity 1s, color 1s, background-color 1;
 cursor:pointer;
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-
-<div class="card-header">
-	<h3 class="card-title">
-		<b>학적 변동 리스트</b>
-	</h3>
-</div>
-<div class="alert alert-light" role="alert"
+<!-- <div class="card-header"> -->
+<!-- 	<h3 class="card-title"> -->
+<!-- 		<b>학적 변동 리스트</b> -->
+<!-- 	</h3> -->
+<!-- </div> -->
+<div class="row">
+<div class="col-6 alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
 						<p>
 							<strong>※ 안내사항</strong> <br>
 							<br> (1)<strong>신청유형</strong>에 따라 담당교수의 상담 내역이 필요합니다.<br>
-							<br> (2) <strong>승인대기</strong>시에는 수정, 삭제 할 수 있으며&nbsp;&nbsp;<strong>승인 및 반려</strong>처리가 되면 수정, 삭제할 수 없습니다.<br> 
+							<br> (2) <strong>승인대기</strong>시에는 수정, 삭제 할 수 있으며<br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>승인 및 반려</strong>처리가 되면 수정, 삭제할 수 없습니다.<br> 
 							<br> (3) 하단의 <strong>신청</strong> 버튼을 눌러 신청 할 수 있습니다.<br>
-							<br> (4) 신청시에는 <strong>본인확인</strong>이 필요 합니다.
+							<br> (4) 현재 승인된 내역이 있다면 만료 후 새로 <strong>신청 할 수 있습니다.</strong>
 						</p>
 					</div>
-<div class="card-body table-responsive col-12 "
-	style="min-height: 300px;">
+<div class="col-6 alert alert-light" role="alert"
+						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
+						<p>
+							<strong>현재 내 학적 상태</strong> <br>
+							<br> <strong>학적구분&nbsp;:&nbsp;</strong>&nbsp;<span id="recordStateNow"></span><br>
+							<br> <strong>신청날짜&nbsp;:&nbsp;</strong>&nbsp;<span id="recordApplyDate"style="color:blue;"></span><br> 
+							<br> <strong>종료날짜&nbsp;:&nbsp;</strong>&nbsp;<span id="recordEndDate" style="color:blue;"></span><br>
+							<br> <strong>비고&nbsp;:&nbsp;</strong>&nbsp;<span id="recordStateEtc" style="color:blue;"></span><br>
+						</p>
+					</div>
+</div>
+<!-- <div class="card-body table-responsive col-12 "style="min-height: 300px;"> -->
+<div class="row">
 	<table id="applyTable"
 		class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
@@ -58,26 +70,28 @@ cursor:pointer;
 					<td>${recordsList.rgbCd}</td>
 					<td >${recordsList.recYr}년도</td>
 					<td>${recordsList.recSem}학기</td>
-					<td>${recordsList.recPer}년</td>
-					<td ><fmt:formatDate value="${recordsList.recDt }"
-							pattern="yy/MM/dd" /></td>
+					<td class="applyPer">${recordsList.recPer}년</td>
+					<td class="applyRecDt" data-value="${recordsList.recDt }" ><fmt:formatDate value="${recordsList.recDt }" pattern="yy/MM/dd"  /></td>
 					<c:if test="${recordsList.recYn eq '반려'}">
-					<td style="color: red;">${recordsList.recYn }</td>
+					<td class="applyState" style="color: red;">${recordsList.recYn }</td>
 					</c:if> 
 					<c:if test="${recordsList.recYn eq '승인대기'}">
-					<td style="color: black;">${recordsList.recYn }</td>
+					<td class="applyState"  style="color: black;">${recordsList.recYn }</td>
 					</c:if> 
 					<c:if test="${recordsList.recYn eq '승인'}">
-					<td style="color: blue;">${recordsList.recYn }</td>
+					<td class="applyState"  style="color: blue;">${recordsList.recYn }</td>
 					</c:if>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+<!-- </div> -->
 </div>
-<div class="col-12" style="text-align: end; padding-right: 20px;">
+<div class="row">
+<div class="col-12 pr-0	" style="text-align: end;">
 	<!-- 			<button class="btn btn-sm btn-outline-primary" >신청</button> -->
-	<button class="btn btn-lg btn-outline-primary"data-toggle="modal" data-target="#modal-default">신청</button>
+	<button id="applyBtn" class="btn btn-primary"data-toggle="modal" data-target="#modal-default">신청</button>
+</div>
 </div>
 
 <!-- 신청 모달-->
@@ -196,10 +210,10 @@ cursor:pointer;
 					<div class="alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee; width: 100%;">
 						<p>
-							<strong>※ 수정시 안내/주의 사항</strong> <br>
-							<br> (1)<strong>기간/사유</strong>외에는 수정 할 수 없습니다<br>
-							<br> (2) 수정할 수 없는 값이 입력되었다면 <strong style="color:red">삭제</strong>후 재 신청 바랍니다<br>
-							<br> (3) 이름 및 신청날짜는 자동 입력됩니다<br>
+							<strong>※ 수정시 안내 및 주의 사항</strong> <br>
+							<br> (1)&nbsp;<strong>기간/사유</strong>외에는 수정 할 수 없습니다<br>
+							<br> (2)&nbsp;수정할 수 없는 값이 입력되었다면 <strong style="color:red">삭제</strong>후 재 신청 바랍니다<br>
+							<br> (3)&nbsp;<strong style="color:blue">졸업</strong>&nbsp;및&nbsp;<strong style="color:blue">복학</strong>&nbsp;신청은&nbsp;수정 할 수 없습니다.<br>
 						</p>
 					</div>
 					<label>구분*</label>
@@ -242,7 +256,7 @@ cursor:pointer;
 				<button type="button" id="modifyApply"class="btn btn-outline-primary">수정</button>
 				<button type="button" id="deleteApply"class="btn btn-outline-danger">삭제</button>
 <!-- 				<a onclick="dataReset()" class="btn btn-outline-secondary">작성취소</a> -->
-				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				<button id="closeModifyModal" type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
@@ -256,9 +270,10 @@ cursor:pointer;
 		//option value에 담을 변수
 		let month,year,nextYear,currentSemester,nextSemester = ""; 
 		let date = new Date();
-		//내년도가있는지, 구분이변경되었는지 체크하는 플래그변수
-		let nextYearExist,rgbCdisChanged = false;
-		let linkval = "";
+		
+		//내년도가있는지, 구분이변경되었는지, 승인된 학적변동 사항이 있는지 체크하는 플래그변수
+		let nextYearExist,rgbCdisChanged,confirmedApplyIsExist = false;
+		let linkval,applyState = "";
 		let setModifyData = {
 			recCd : "",
 			rgbCd: "",
@@ -268,20 +283,140 @@ cursor:pointer;
 			recRsn:""
 		};
 		
+		/**
+		 *  yyyyMMdd 포맷으로 반환
+		 */
+		function getFormatDate(date){
+		    var year = date.getFullYear();              //yyyy
+		    var month = (1 + date.getMonth());          //M
+		    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+		    var day = date.getDate();                   //d
+		    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+		    return  year + '/' + month + '/' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+		}
+		
 		$(document).ready(function(){
 			year = date.getFullYear(); //년도 recYr
-			month = date.getMonth();
+			month = date.getMonth()+1;
 		    if (month == '3' || month == '4' || month == '5' || month == '6' || month == '7' || month == '8') currentSemester = 1;
 			else if (month == '9' || month == '10' || month == '11' || month == '12' || month == '1' || month == '2') currentSemester = 2;
 		    setRecYr();//현재년도가 2학기일경우 현재년도 + 다음년도
+		    applyState = document.querySelectorAll(".applyState");
+		    applyState.forEach(apply=>{
+		    	if(apply.innerHTML == '반려'){
+		    		var parent = apply.parentNode;
+		    	    parent.removeAttribute("data-target");
+		    	    parent.removeAttribute("data-toggle");
+		    	}
+		    	if(apply.innerHTML == '승인'){
+		    		$("#applyBtn").attr("disabled","disabled");
+		    	    var parent = apply.parentNode;
+		    	    parent.removeAttribute("data-target");
+		    	    parent.removeAttribute("data-toggle");
+		    	    
+		    	    var tds = parent.getElementsByTagName('td');
+		    	    
+		    	    if(tds[1].innerHTML == '휴학'){
+					//날짜 계산
+		    	     var confirmedPer = Number(tds[4].innerHTML.substring(0,1));//기간
+		    	     console.log("기간 : " + confirmedPer);
+		    	     var confirmedReg = tds[5].dataset.value;//신청일
+		    	     
+		    	     var confirmedRegDateStr = confirmedReg;
+		    	     var confirmedRegDateToDate = new Date(confirmedRegDateStr.replace(/(\w+ \w+ \d+) [0-9:]+ KST (\d+)/, "$1 $2"));
+		    	     var confirmedRegDateToDateSet = [confirmedRegDateToDate.getFullYear(),
+		    	    	 			('0'+(confirmedRegDateToDate.getMonth()+1)).slice(-2),
+		    	    	 			('0'+confirmedRegDateToDate.getDate()).slice(-2)].join('-');
+		    	     
+		    	     var confirmedRegDay = new Date(confirmedRegDateToDateSet);
+// 		    	     console.log("신청일 날짜 :"  + confirmedRegDay);
+					var endConfirmedReg = new Date(confirmedRegDay.setFullYear(confirmedRegDay.getFullYear() + confirmedPer));
+// 					var endConfirmedReg = new Date(confirmedRegDay.setMinutes(confirmedRegDay.getMinutes() + 1));//test 1분후
+// 		    	     console.log("신청일로부터 1년후 : " + endConfirmedReg);
+					  
+// 					console.log("현재날짜 : " + date);
+// 					console.log("마감날짜 : " + endConfirmedReg);
+					
+					 //나의 학적 정보
+		    	    $("#recordStateNow").text(tds[1].innerHTML);
+		    	    $("#recordApplyDate").text(tds[5].innerHTML);
+		    	    $("#recordEndDate").text(getFormatDate(endConfirmedReg).substring(2,10));
+		    	    
+		    	    if (Math.abs(confirmedRegDay.getTime() - endConfirmedReg.getTime()) === confirmedPer * 31536000000) {  // 31536000000 is the number of milliseconds in one year
+						  Swal.fire({
+							  icon: 'info',
+							  title: '학적 변동 신청 가능합니다!',
+							})
+					  $("#applyBtn").removeAttr("disabled");
+					  tds[6].innerHTML = "처리완료";
+					  tds[6].style.color = "black";
+					}
+	    	      } else { //복학,자퇴,졸업
+		    	    var parent = apply.parentNode;
+    	    	    var tds = parent.getElementsByTagName('td');
+    	    	    $("#applyBtn").attr("disabled","disabled");
+		    	    parent.removeAttribute("data-target");
+		    	    parent.removeAttribute("data-toggle");
+    	    	  	$("#recordStateNow").text(tds[1].innerHTML);
+		    	    $("#recordApplyDate").text("");
+		    	    $("#recordEndDate").text("");
+		    	    $("#recordStateEtc").text(tds[2].innerHTML+" "+tds[3].innerHTML+" "+tds[1].innerHTML+"예정");// 신청한 학기에 복학 예정
+		    	    appliedRecordIsDone(tds[2].innerHTML,tds[3].innerHTML,tds[1].innerHTML);
+	    	      }
+		    	}
+		    })
 		  });
 		
+		function appliedRecordIsDone(appliedYear, appliedSem, appliedRgbCd){
+			var yearNow = year;
+			var semesterNow = currentSemester;
+			if(appliedRgbCd == "복학"){
+			  if(appliedYear == yearNow && appliedSem == semesterNow-1){
+				  Swal.fire({
+					  icon: 'info',
+					  title: '학적 변동 신청 가능합니다!',
+					})
+			  $("#applyBtn").removeAttr("disabled");
+			  tds[6].innerHTML = "처리완료";
+			  tds[6].style.color = "black";
+			  } else {
+				  return;
+			  }
+			  if(appliedYear == yearNow+1 && appliedSem == semesterNow+1){
+				  Swal.fire({
+					  icon: 'info',
+					  title: '학적 변동 신청 가능합니다!',
+					})
+			  $("#applyBtn").removeAttr("disabled");
+			  tds[6].innerHTML = "처리완료";
+			  tds[6].style.color = "black";
+			  } else {
+				  return;
+			  }
+			  return;
+			}
+		}
+			
 		var tds = document.querySelectorAll('td');
 		tds.forEach(td=>{
 		td.addEventListener('click', function() {
+			$("#modifyRecPer").removeAttr("disabled");
+			 $("#modifyRecRsn").removeAttr("disabled");
+			  $("#modifyApply").removeAttr("disabled");
 			  var row = this.parentNode;
 			  var cells = row.querySelectorAll('td');
 			  linkval = cells[0].dataset.value;
+			  if(cells[1].innerHTML != '휴학'){
+				  $("#modifyRecPer").attr("disabled","disabled");
+				  if(cells[1].innerHTML == '졸업' || cells[1].innerHTML == '복학'){
+					  $("#modifyRecRsn").attr("disabled","disabled");
+					  $("#modifyApply").attr("disabled","disabled");
+					  Swal.fire({
+						  icon: 'warning',
+						  title: '수정 할 수 없습니다. 삭제 후 재 신청해주세요',
+					  })
+				  }
+			  }
 			  setModifyData.recCd = linkval
 			  $.ajax({
 				  url:"/record/applyDetail",
@@ -323,12 +458,14 @@ cursor:pointer;
 					})
 				return;
 			} 
-			if(!($("#modifyRecRsn").val().length >= 10))	{
-				Swal.fire({
-					  icon: 'error',
-					  title: '사유는 10글자 이상 작성해주세요',
-					})
-				return;
+			if($("#modifyRgbCd").val() == '휴학'||$("#modifyRgbCd").val() == '자퇴'){ //휴학,자퇴 일때
+				if(!($("#recRsn").val().length >= 10)){
+					Swal.fire({
+						  icon: 'error',
+						  title: '사유는 10글자 이상 작성해주세요',
+						})
+					return false;
+				}
 			}
 			setModifyData.recPer = $("#modifyRecPer option:selected").val();
 			setModifyData.recRsn = $("#modifyRecRsn").val();
@@ -342,10 +479,13 @@ cursor:pointer;
 						xhr.setRequestHeader(header, token);
 					},
 				  success:function(data){
-					  Swal.fire({
-						  icon: 'success',
-						  title: '수정되었습니다',
-						})
+					  Swal.fire(
+			                    '수정 완료',
+			                    '정상적으로 수정 되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
 				  }
 			})
 		})
@@ -370,10 +510,13 @@ cursor:pointer;
 						xhr.setRequestHeader(header, token);
 					},
 				  success:function(data){
-					  Swal.fire({
-						  icon: 'success',
-						  title: '삭제되었습니다',
-						})
+					  Swal.fire(
+			                    '삭제 완료',
+			                    '정상적으로 삭제 되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
 				  }	
 				})
 			  }
@@ -393,7 +536,7 @@ cursor:pointer;
 			var sem = this.innerHTML
 			$("input[name='recSem']").val(sem.substr(0,1));
 			var yr = $("select[name=recYr] :selected").val();
-			$("#selectedYRSEM").html("&nbsp;"+ yr +"년도 "+ sem);
+			$("#selectedYRSEM").html("&nbsp;"+ yr +"년도 "+ sem + "입니다");
 		});
 		
 		$("#currentSem").on("click",function(){
@@ -432,6 +575,7 @@ cursor:pointer;
 			$("#recSem option:eq(0)").prop("selected",true);
 			$("#currentSem").hide();
 			$("#nextSem").hide();
+			$("#recRsn").val("");
 		    $("#recRsn").removeAttr('disabled');
 		    $("#recPer").removeAttr("disabled");
 		    $("#recRsn").attr("required",false);
@@ -554,6 +698,15 @@ cursor:pointer;
 		};
 	
 	function checkFormData(){
+		if($("input[type='radio'][name='rgbCd']:checked").val() == 'RCD001'||$("input[type='radio'][name='rgbCd']:checked").val() == 'RCD004'){ //휴학,자퇴 일때
+			if(!($("#recRsn").val().length >= 10)){
+				Swal.fire({
+					  icon: 'error',
+					  title: '사유는 10글자 이상 작성해주세요',
+					})
+				return false;
+			}
+		}
 		
 		if($("#recYr option:selected").val() == $("#recYr option:eq(0)").val()){
 			Swal.fire({

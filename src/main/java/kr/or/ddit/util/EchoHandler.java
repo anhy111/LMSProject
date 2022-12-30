@@ -1,7 +1,10 @@
 package kr.or.ddit.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -14,18 +17,27 @@ import lombok.extern.slf4j.Slf4j;
 public class  EchoHandler extends TextWebSocketHandler{
 
 
-	private static List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
-
+	private static Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
+	
 	// 서버 접속 성공시
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		sessions.add(session); //리스트에 접속한 session들을 담음
+		String memNo = getMemberNo(session);
+		if(memNo != null) {
+			log.info("afterConnectionEstablished."+memNo + " 연결 됨");
+			sessions.put(memNo,session); //리스트에 접속한 session들을 담음
+		}
 	}
 
 	// 소켓에 메세지를 보냈을때
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		for(WebSocketSession single : sessions) {
+		String senderMemNo = getMemberNo(session);
+		
+		// 특정 유저에게 보내기?
+		String msg = message.getPayload();
+		for(Entry<String, WebSocketSession> single : sessions.entrySet()) {
+			String memNo = single.getKey();
 			String memId = message.getPayload();
 			log.info("memId : " + memId);
 //			int count = alarmDAO.selectAlarmUchkCount(memId);
@@ -41,7 +53,16 @@ public class  EchoHandler extends TextWebSocketHandler{
 	//연결이 종료됐을 때
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		//전체 세션리스트에서 세션 삭제
-		sessions.remove(session);
+		String memNo = getMemberNo(session);
+		if(memNo != null) {
+			log.info("afterConnectionClosed."+memNo + " 연결 종료 됨");
+			sessions.remove(memNo); //리스트에 접속한 session들을 담음
+		}
+	}
+	
+	private String getMemberNo(WebSocketSession session) {
+		Map<String, Object> httpSession = session.getAttributes();
+		String memId = (String) httpSession.get("memNo");
+		return memId == null ? null : memId;
 	}
 }

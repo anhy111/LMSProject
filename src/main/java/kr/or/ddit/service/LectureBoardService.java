@@ -12,6 +12,7 @@ import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.Student;
+import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
@@ -83,5 +84,12 @@ public interface LectureBoardService {
 	//출결 수정
 	public int attendStuUpdate(Attendence attendence);
 	
+	public List<Student> getGradeList(int lecaCd);
+	
+	public List<Student> lecStuScoreDetail(Map<String, Object> map);
+	
+	public Student getStuScoreAndMaxScore(Map<String, Object> map);
+	
+	public int stuGradeUpdate(StudentLecture stuLec);
 	
 }

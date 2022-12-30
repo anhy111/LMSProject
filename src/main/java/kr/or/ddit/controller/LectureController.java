@@ -224,8 +224,10 @@ public class LectureController {
 			task = this.lectureservice.submitDetail(map);
 			mav.addObject("task", task);
 			mav.setViewName("lectureBoard/task/taskSubmitDetail");
+			log.info(task.toString());
 			return mav;
 		}
+		log.info(task.toString());
 		mav.addObject("task", task);
 		mav.setViewName("lectureBoard/task/taskSubmitDetail");
 		return mav;

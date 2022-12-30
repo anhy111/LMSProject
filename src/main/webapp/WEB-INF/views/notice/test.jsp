@@ -115,10 +115,10 @@
                                                                <img src="../../../resources/image/new.png" alt="new"
                                                                     class="icon-new">
                                                            </c:if>
-                                                            <c:if test="${}">
+<%--                                                            <c:if test="${}">--%>
                                                                 <img src="../../../resources/image/file.png" alt="file"
                                                                      class="icon-file">
-                                                            </c:if>
+<%--                                                            </c:if>--%>
 
                                                     </span>
                                             </a>

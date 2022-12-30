@@ -13,6 +13,9 @@
 	String pic = String.valueOf(session.getAttribute("pic"));
 %>
 <style>
+.info,.nav-link{
+color:white;
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
