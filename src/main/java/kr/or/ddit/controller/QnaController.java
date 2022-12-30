@@ -1,7 +1,5 @@
 package kr.or.ddit.controller;
 
-import kr.or.ddit.domain.Member;
-import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.domain.qna.Qna;
 import kr.or.ddit.domain.qna.qnareply.QnaReply;
 import kr.or.ddit.service.QnaService;
@@ -12,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j

@@ -35,8 +35,8 @@ public class StuManageOfProServiceImpl implements StuManageOfProService{
 	}
 	
 	@Override
-	public List<SclHistory> schStuList(){
-		return this.stuManageOfProMapper.schStuList();
+	public List<SclHistory> schStuList(String depCd){
+		return this.stuManageOfProMapper.schStuList(depCd);
 	}
 	
 	@Override

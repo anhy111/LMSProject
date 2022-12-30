@@ -91,65 +91,45 @@ $(function(){
 	
 	
 });
-
-
 </script>
-<div class="row">
-	<div class="col-sm-10 offset-1">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">추천 장학생 목록 조회</h3>
-			</div>
-		
-			<div class="card-body">
-				<div id="example1_wrapper">
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<table id="example1"
-							class="table table-bordered table-striped dataTable dtr-inline table-sm text-center"
-							aria-describedby="example1_info">
-							<thead>
-								<tr>
-									<th class="sorting sorting_asc" tabindex="0"
-										aria-controls="example1"
-										aria-sort="ascending"
-										aria-label="Rendering engine: activate to sort column descending">번호</th>
-									<th class="sorting" tabindex="0" aria-controls="example1" 
-										aria-label="Browser: activate to sort column ascending">학번</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										aria-label="Platform(s): activate to sort column ascending">이름</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										aria-label="CSS grade: activate to sort column ascending">추천인</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										aria-label="CSS grade: activate to sort column ascending">상세</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="list" items="${list}" varStatus="stat">
-									<tr>
-									<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
-									<td class="detailStu">${list.stuNo}</td>
-									<td>
-										<div class="image">
-											<img src="/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width:20px;">
-											${list.stuNm}
-										</div> 
-									</td>
-									<td>${list.empNm}</td>
-									<td>
-										<button class="btn btn-block btn-outline-info btn-sm btnDetail" 
-											value="${list.sclhCd}" data-toggle="modal" data-target="#modal-lg" >학생 상세</button>
-									</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<style>
+	.mycard {
+		padding: 0px;
+		border-radius: 0.25rem;
+		min-width: 0px;
+		text-align: left;
+	}
+</style>
+<div style="text-align:center;">
+	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+		<thead>
+			<tr class="text-center">
+				<th width="10%">번호</th>
+				<th width="10%">학번</th>
+				<th width="10%">이름</th>
+				<th width="10%">추천인</th>
+				<th width="10%">상세</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="list" items="${list}" varStatus="stat">
+				<tr>
+					<td>${stat.count}</td>
+					<td class="detailStu">${list.stuNo}</td>
+					<td>
+						<div class="image">
+							<img src="/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width: 20px;"> ${list.stuNm}
+						</div>
+					</td>
+					<td>${list.empNm}</td>
+					<td>
+						<button class="btn btn-block btn-outline-info btn-sm btnDetail"
+							value="${list.sclhCd}" data-toggle="modal" data-target="#modal-lg">상세</button>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 </div>
 
 <!-- 모달 -->
@@ -164,38 +144,49 @@ $(function(){
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="col-sm-10 offset-1">
+				<div class="col-12">
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-4 offset-1">
+							<div class="col-4" style="text-align:center;">
 								<img class="img-thumbnail" width="180px;" height="250px;" id="stuImg">
 							</div>
-							<div class="col-6 offset-1">
+							<div class="col-8 mycard">
 								<div class="container">
 									<div class="row mt-1 mb-2">
-										<div class="col-10">
+										<div class="col-6">
 											<label for="stuNo" class="form-label">학번</label> 
 											<input type="text" class="form-control stuNo" id="stuNo" name="stuNo" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
-										<div class="col-10">
+										<div class="col-6">
 											<label for="stuNm" class="form-label">이름</label> 
 											<input type="text" class="form-control stu stuNm" id="stuNm" name="stuNm" readonly />
 										</div>
+										<div class="col-6">
+											<label for="stuNm" class="form-label">직전학기 성적</label> 
+											<input type="text" class="form-control stu stuNm" id="" name="" readonly />
+										</div>
 									</div>
 									<div class="row mb-2">
-										<div class="col-10">
-											<label for="stuNme" class="form-label">영문 이름</label> 
-											<input type="text" class="form-control stu" id="stuNme" name="stuNme" readonly />
+										<div class="form-group col-6">
+											<label for="colCd" class="form-label">단과대학</label> <input
+												type="text" class="form-control stu" id="colCd" name="colCd"
+												readonly />
+										</div>
+										<div class="col-6">
+											<label for="department" class="form-label">학과</label> <input
+												type="text" class="form-control stu" id="department"
+												name="depCd" readonly />
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
-					<div class="card card-outline card-primary collapsed-card mt-4 mb-4 ">
+				</div>
+				<div class="col-12">
+					<div class="card collapsed-card mt-4 mb-4 mycard ">
 						<div class="card-header">
 							<h3 class="card-title">상세 정보</h3>
 							<div class="card-tools">
@@ -207,48 +198,39 @@ $(function(){
 						</div>
 
 						<div class="card-body" style="display: none;">
-							<div class="row mt-3 mb-2">
-								<div class="col-6">
+							<div class="row mt-2 mb-2">
+								<div class="col-4">
 									<label>학년</label> <input type="text" class="form-control stu"
 										id="stuYr" name="stuYr" readonly />
 								</div>
-								<div class="col-6">
+								<div class="col-4">
 									<label>학기</label> <input type="text" class="form-control stu"
 										id="stuSem" name="stuSem" readonly />
 								</div>
-							</div>
-							<div class="row mt-3 mb-2">
-								<div class="form-group col-6">
-									<label for="colCd" class="form-label">단과대학</label> <input
-										type="text" class="form-control stu" id="colCd" name="colCd"
+								<div class="col-4">
+									<label for="stuNme" class="form-label">영문 이름</label> 
+									<input type="text" class="form-control stu" id="stuNme" name="stuNme"
 										readonly />
 								</div>
-								<div class="col-6">
-									<label for="department" class="form-label">학과</label> <input
-										type="text" class="form-control stu" id="department"
-										name="depCd" readonly />
-								</div>
 							</div>
 							<div class="row mt-3 mb-2">
-								<div class="col-6">
+								<div class="col-4">
+									<label for="stuZip" class="form-label">우편번호</label> <input
+										type="text" class="form-control stu" id="stuZip" name="stuZip"
+										readonly />
+								</div>
+								<div class="col-4">
 									<label for="stuBir" class="form-label">생년월일</label> <input
 										type="text" class="form-control stu" id="stuBir" name="stuBir"
 										readonly />
 								</div>
-								<div class="col-6">
+								<div class="col-4">
 									<label for="stuTel" class="form-label">전화번호</label> <input
 										type="text" class="form-control stu" id="stuTel" name="stuTel"
 										readonly />
 								</div>
 							</div>
-							<div class="row mt-4 mb-2">
-								<div class="col-5">
-									<label for="stuZip" class="form-label">우편번호</label> <input
-										type="text" class="form-control stu" id="stuZip" name="stuZip"
-										readonly />
-								</div>
-							</div>
-							<div class="row mb-2">
+							<div class="row mt-3 mb-2">
 								<div class="col-6">
 									<label for="stuAddr1" class="form-label">기본주소</label> <input
 										type="text" class="form-control stu" id="stuAddr1"
@@ -263,24 +245,7 @@ $(function(){
 						</div>
 					</div>
 					
-					<div class="card card-outline card-primary collapsed-card mt-4 mb-4 ">
-						<div class="card-header">
-							<h3 class="card-title">학사 정보</h3>
-							<div class="card-tools">
-								<button type="button" class="btn btn-tool"
-									data-card-widget="collapse">
-									<i class="fas fa-plus"></i>
-								</button>
-							</div>
-						</div>
-
-						<div class="card-body" style="display: none;">
-						
-						
-						</div>
-					</div>
-					
-					<div class="card card-outline card-primary collapsed-card mt-4 mb-4 ">
+					<div class="card collapsed-card mt-4 mb-4 mycard ">
 						<div class="card-header">
 							<h3 class="card-title">장학 내역</h3>
 							<div class="card-tools">

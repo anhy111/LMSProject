@@ -19,6 +19,7 @@ public class Task {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date taskEdt;
 	private int atchFileId;
+	private int taskScore;
 	private List<Attach> attach;
 	private List<TaskSubmit> taskSubmitList;
 

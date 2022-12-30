@@ -19,22 +19,14 @@ border-radius: 10px;
 <title></title>
 </head>
 <body>
-	<div class="col">
-		<div class="card card-outline card-primary">
-			<div class="card-header">
-				<h1 class="card-title">
+			<div >
+				<h3 class="card-title">
 					<strong id="lectureListYear">${lecture.lecApply.lecaNm} 과제</strong>
-				</h1>
-				<div class="card-tools">
-					<button type="button" class="btn btn-tool"
-						data-card-widget="collapse">
-						<i class="fas fa-minus"></i>
-					</button>
-				</div>
+				</h3>
 			</div>
 			<div class="card-body">
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-					<div class="col-sm-12" id="subInfo">
+					<div class="col-sm-12 alert alert-light bg-light border-0" role="alert" style="font-size: 0.9em;padding: 15px 30px 15px; 20px;border: 1px solid #eee;"" id="subInfo">
 					<br>
 						<h4><b>※과제 안내 사항</b></h4>
 						<p>1. 반드시 <strong>기간을 먼저 설정</strong>한 후, 과제를 등록하는 것을 권장합니다.</p>
@@ -44,9 +36,9 @@ border-radius: 10px;
 				</sec:authorize>
 				
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
-					<div class="col-sm-12" id="subInfo">
+					<div class="col-sm-12 alert alert-light bg-light border-0" role="alert" style="font-size: 0.9em;padding: 15px 30px 15px; 20px;border: 1px solid #eee;" id="subInfo">
 					<br>
-						<h4><b>※과제 안내 사항</b></h4>
+						<h3><b>※과제 안내 사항</b></h3>
 						<p>1. 과제에 대한 <strong>제출 마감 기간</strong>을 잘 확인하여 불이익이 없도록 합니다.</p>
 						<p>2. 담당교수 채점 후 과제에 대한 점수를 확인할 수 있습니다.</p>
 					</div>

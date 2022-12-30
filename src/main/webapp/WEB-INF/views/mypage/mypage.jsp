@@ -3,15 +3,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
-<style>
-div {
-/* 	border: 1px solid red; */
-}
-</style>
+<% String no = String.valueOf(session.getAttribute("no")); %>
 <script type="text/javascript">
 $(function(){
 	$("#btnZipCode").on("click",function(){
-		alert("하이루");
+// 		alert("하이루");
 		new daum.Postcode({
 			oncomplete:function(data){
 				$("input[name='stuZip']").val(data.zonecode); // 우편번호 5자리
@@ -21,170 +17,269 @@ $(function(){
 		}).open();
 	});
 });
+
+function onSubmit(){
+	Swal.fire(
+            '수정 완료',
+            '정상적으로 수정 되었습니다.',
+            'success'
+        ).then(function(){
+			$("#mysub").submit();
+    });
+	
+	
+}
 </script>
-<div class="content container-fluid">
-	<div class="row">
-		<div class="col-md-8 offset-2">
-			<div class="card card-outline card-primary p-5">
-				<div class="card-header">
-					<h3 class="card-title">내 정보 확인</h3>
-				</div>
-				<div class="card-body">
-					<form action="/mypage/stuUpdate" method="post">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-3">
-									<img src="/upload${student.stuPic}"
-										class="img-thumbnail" alt="User Image">
-								</div>
-								<div class="col-md-9">
-									<div class="container">
-										<div class="row mt-1 mb-2">
-											<div class="col-4 offset-1">
-												<label for="memNo" class="form-label">학번</label> 
-												<input type="text" class="form-control" id="memNo" name="stuNo" value="${student.stuNo}" readonly />
-											</div>
-											<div class="col-4 offset-1">
-												<label for="memNm" class="form-label">이름</label> 
-												<input type="text" class="form-control" id="memNm" name="stuNm" value="${student.stuNm}" readonly />
+<script type="text/javascript">
+$(function(){
+	
+	let $newPw = $("#newPw");
+	let $newPwCheck = $("#newPwCheck");
+	let $oldPw = $("#oldPw");
+	let $stuNo = $("#stuNo");
+	
+	$("#newPwCheck").on("keyup", function() {
+// 		alert("오나요??");
+		
+		console.log("newPw : " + newPw );
+		
+		if($newPw.val() == $newPwCheck.val()){
+			$("#alertPw").text("비밀번호가 일치합니다.").css("color","green");
+			$("#changePw").removeAttr("disabled");
+			
+		}else{
+			$("#alertPw").text("비밀번호가 일치하지 않습니다.").css("color","red");
+		}
+		
+	});
+	
+	$("#changePw").on("click", function(){
+// 		alert("오나요??");
+		
+		console.log("newPw : " + $newPw.val());
+		
+		let data = {"oldPw": $oldPw.val(), "newPw":$newPw.val(), "stuNo":$stuNo.val() }
+		let header = "${_csrf.headerName}";
+		let token = "${_csrf.token}";
+		
+		console.log("data : " + JSON.stringify(data));
+		
+		$.ajax({
+			type: 'post',
+			url: '/mypage/changeStuPwPost',
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(data),
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(data){
+				console.log("성공이라해주라 " + data);
+				if(data > 0){
+			        Swal.fire({
+			            icon: 'success',                         // Alert 타입
+			            title: '변경 성공!',         // Alert 제목
+			            text: '비밀번호가 정상적으로 변경되었습니다.',  // Alert 내용
+			        }).then(function(){
+			        	window.location.reload(true);			        	
+			        });
+			        
+			        
+				}else{
+					Swal.fire({
+			            icon: 'error',                         // Alert 타입
+			            title: '변경 실패',         // Alert 제목
+			            text: '비밀번호를 다시 한번 확인해주세요.',  // Alert 내용
+			        });
+					
+					$oldPw.val("");
+					$oldPw.focus();
+					
+				}
+				
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+		
+	});
+	
+	
+});
+
+</script>
+<div class="mt-4">
+	<ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+		<li class="nav-item"><a class="nav-link active"
+			id="custom-content-below-home-tab" data-toggle="pill"
+			href="#custom-content-below-home" role="tab"
+			aria-controls="custom-content-below-home" aria-selected="true">내 정보</a>
+		</li>
+		<li class="nav-item"><a class="nav-link"
+			id="custom-content-below-profile-tab" data-toggle="pill"
+			href="#custom-content-below-profile" role="tab"
+			aria-controls="custom-content-below-profile" aria-selected="false">학사 정보</a>
+		</li>
+		<li class="nav-item"><a class="nav-link"
+			id="custom-content-below-messages-tab" data-toggle="pill"
+			href="#custom-content-below-messages" role="tab"
+			aria-controls="custom-content-below-messages" aria-selected="false">비밀번호 변경</a>
+		</li>
+	</ul>
+	<div class="tab-content" id="custom-content-below-tabContent">
+		<div class="tab-pane fade active show" id="custom-content-below-home"
+				role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+			<div style="margin-top:20px;">
+				<form action="/mypage/stuUpdate" method="post" id="mysub">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2 mt-4">
+								<img src="/upload${student.stuPic}"
+									class="img-thumbnail" alt="User Image">
+							</div>
+							<div class="col-md-10">
+								<div class="container">
+									<div class="row mt-1 mb-2">
+										<div class="col-3">
+											<label for="memNo" class="form-label">학번</label> 
+											<input type="text" class="form-control" id="memNo" name="stuNo" value="${student.stuNo}" readonly />
+										</div>
+										<div class="col-3">
+											<label for="memNm" class="form-label">이름</label> 
+											<input type="text" class="form-control" id="memNm" name="stuNm" value="${student.stuNm}" readonly />
+										</div>
+										<div class="col-3">
+											<label for="stuBir" class="form-label">생년월일</label> <input
+												type="text" class="form-control" id="stuBir" name="stuBir"
+												value="${student.stuBir}" readonly />
+										</div>
+										<div class="col-3">
+											<label for="stuTel" class="form-label">전화번호</label> <input
+												type="text" class="form-control" id="stuTel" name="stuTel"
+												value="${student.stuTel}" readonly />
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-3">
+											<label for="colNm" class="form-label">단과대학</label> <input
+												type="text" class="form-control" id="colNm" name="colNm" value="${student.colNm}" readonly />
+										</div>
+										<div class="col-3">
+											<label for="depNm" class="form-label">학과</label> <input
+												type="text" class="form-control" id="depNm" name="depNm" value="${student.depNm}" readonly />
+										</div>
+										<div class="col-3">
+											<label for="stuYr" class="form-label">학년</label> <input
+												type="text" class="form-control" id="stuYr" name="stuYr" value="${student.stuYr}" readonly />
+										</div>
+										<div class="col-3">
+											<label for="stuSem" class="form-label">재학학기</label> <input
+												type="text" class="form-control" id="stuSem" name="stuSem" value="${student.stuSem}" readonly />
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-3">
+											<div class="form-group">
+												<label>은행</label> 
+												<select class="form-control" id="stuBankCd" name="stuBankCd">
+													<option><c:out value="${student.stuBankCd}"></c:out></option>
+													<option value="BANK003">KEB하나은행</option>
+													<option value="BANK004">SC제일은행</option>
+													<option value="BANK005">국민은행</option>
+													<option value="BANK006">신한은행</option>
+													<option value="BANK002">신협은행</option>
+													<option value="BANK007">한국시티은행</option>
+													<option value="BANK008">기업은행</option>
+													<option value="BANK001">농협</option>
+												</select>
 											</div>
 										</div>
-										<div class="row mb-2">
-											<div class="col-4 offset-1">
-												<label for="colNm" class="form-label">단과대학</label> <input
-													type="text" class="form-control" id="colNm" name="colNm" value="${student.colNm}" readonly />
-											</div>
-											<div class="col-4 offset-1">
-												<label for="depNm" class="form-label">학과</label> <input
-													type="text" class="form-control" id="depNm" name="depNm" value="${student.depNm}" readonly />
+				
+										<div class="col-3 offset-1">
+											<label for="stuDepo" class="form-label">예금주</label> 
+											<input type="text" class="form-control" id="stuDepo" name="stuDepo"
+												value="${student.stuDepo}" readonly />
+										</div>
+										<div class="col-3 offset-1">
+											<label for="stuAct" class="form-label">계좌번호</label> 
+											<input type="text" class="form-control" id="stuAct" name="stuAct"
+												value="${student.stuAct}" required />
+										</div>
+									</div>
+									<div class="row mb-2">
+										<div class="col-3">
+											<label for="stuZip" class="form-label">우편번호</label>
+											<div class="input-group">
+												<input type="text" class="form-control" placeholder="우편번호 검색"
+													value="${student.stuZip}" name="stuZip" readonly />
+												<div class="input-group-append">
+													<button type="button" class="btn btn-default" id="btnZipCode">
+														<i class="fa fa-search"></i>
+													</button>
+												</div>
 											</div>
 										</div>
-										<div class="row mb-2">
-											<div class="col-4 offset-1">
-												<label for="stuYr" class="form-label">학년</label> <input
-													type="text" class="form-control" id="stuYr" name="stuYr" value="${student.stuYr}" readonly />
-											</div>
-											<div class="col-4 offset-1">
-												<label for="stuSem" class="form-label">재학학기</label> <input
-													type="text" class="form-control" id="stuSem" name="stuSem" value="${student.stuSem}" readonly />
-											</div>
+										<div class="col-4 offset-1">
+											<label for="stuAddr1" class="form-label">기본주소</label> <input
+												type="text" class="form-control" id="stuAddr1" name="stuAddr1"
+												value="${student.stuAddr1}" required />
+										</div>
+										<div class="col-4">
+											<label for="stuAddr2" class="form-label">상세주소</label> <input
+												type="text" class="form-control" id="stuAddr2" name="stuAddr2"
+												value="${student.stuAddr2}" required />
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="row mt-5 mb-2">
-							<div class="col-4 offset-1">
-								<label for="stuBir" class="form-label">생년월일</label> 
-								<input type="text" class="form-control" id="stuBir" name="stuBir" value="${student.stuBir}" readonly />
-							</div>
-							<div class="col-4 offset-1">
-								<label for="stuTel" class="form-label">전화번호</label> 
-								<input type="text" class="form-control" id="stuTel" name="stuTel" value="${student.stuTel}" readonly />
-							</div>
-						</div>
-						<div class="row mt-4 mb-2">
-							<div class="col-3">
-								<div class="form-group">
-									<label>은행</label> 
-									<select class="form-control" id="stuBankCd" name="stuBankCd" value="${student.stuBankCd}" >
-										<option value="1">KEB하나은행</option>
-										<option value="2">SC제일은행</option>
-										<option value="3">국민은행</option>
-										<option value="4">신한은행</option>
-										<option value="5">우리은행</option>
-										<option value="6">한국시티은행</option>
-										<option value="7">기업은행</option>
-										<option value="8">농협</option>
-									</select>
-								</div>
-							</div>
-	
-							<div class="col-3 offset-1">
-								<label for="stuDepo" class="form-label">예금주</label> 
-								<input type="text" class="form-control" id="stuDepo" name="stuDepo" value="${student.stuDepo}" readonly />
-							</div>
-							<div class="col-3 offset-1">
-								<label for="stuAct" class="form-label">계좌번호</label> 
-								<input type="text" class="form-control" id="stuAct" name="stuAct" value="${student.stuAct}" required />
-							</div>
-						</div>
-						<div class="row mt-4 mb-2">
-							<div class="col-3">
-								<label for="stuZip" class="form-label">우편번호</label> 
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="우편번호 검색" value="${student.stuZip}" name="stuZip" readonly />
-									<div class="input-group-append">
-										<button type="button" class="btn btn-default" id="btnZipCode">
-											<i class="fa fa-search"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-	
-						</div>
-						<div class="row mb-2">
-							<div class="col-6" style="">
-								<label for="stuAddr1" class="form-label">기본주소</label> 
-								<input type="text" class="form-control" id="stuAddr1" name="stuAddr1" value="${student.stuAddr1}" required />
-							</div>
-							<div class="col-6">
-								<label for="stuAddr2" class="form-label">상세주소</label> 
-								<input type="text" class="form-control" id="stuAddr2" name="stuAddr2" value="${student.stuAddr2}" required />
-							</div>
-						</div>
-						<div class="col-12" align="right">
-							<button type="submit" class="btn btn-outline-warning">수정</button>
-						</div>
-						<sec:csrfInput/>
-					</form>
-				</div>
+					</div>
+					<div class="col-12 mt-5" align="right">
+						<button type="button" onclick="onSubmit()" class="btn btn-outline-warning">수정</button>
+					</div>
+					<sec:csrfInput/>
+				</form>
 			</div>
 		</div>
-	</div>
-	
-	<!-- 학사정보 -->
-	<div class="row">
-		<div class="col-md-8 offset-2">
-			<div class="card card-primary">
-				<div class="card-header">
-					<h3 class="card-title">나의 학사 정보</h3>
-					<div class="card-tools">
-						<button type="button" class="btn btn-tool"
-							data-card-widget="collapse" title="Collapse">
-							<i class="fas fa-minus"></i>
-						</button>
-					</div>
+		<div class="tab-pane fade" id="custom-content-below-profile"
+			role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+			Mauris tincidunt mi at erat gravida, eget tristique urna bibendum.
+			Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+			ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+			Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula
+			placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus,
+			elementum sit amet ultricies at, posuere nec nunc. Nunc euismod
+			pellentesque diam.
+		</div>
+		<div class="tab-pane fade" id="custom-content-below-messages"
+			role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
+			<div class="row mt-5 mb-2">
+				<div class="col-4 offset-4">
+					<input type="hidden" id="stuNo" value="<%=no%>" /> <label
+						for="oldPw" class="form-label">현재 비밀번호</label> <input
+						type="password" class="form-control" id="oldPw" name="oldPw"
+						required />
 				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label for="inputName">Project Name</label> <input type="text"
-							id="inputName" class="form-control" value="AdminLTE">
-					</div>
-					<div class="form-group">
-						<label for="inputDescription">Project Description</label>
-						<textarea id="inputDescription" class="form-control" rows="4">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</textarea>
-					</div>
-					<div class="form-group">
-						<label for="inputStatus">Status</label> <select id="inputStatus"
-							class="form-control custom-select">
-							<option disabled="">Select one</option>
-							<option>On Hold</option>
-							<option>Canceled</option>
-							<option selected="">Success</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="inputClientCompany">Client Company</label> <input
-							type="text" id="inputClientCompany" class="form-control"
-							value="Deveint Inc">
-					</div>
-					<div class="form-group">
-						<label for="inputProjectLeader">Project Leader</label> <input
-							type="text" id="inputProjectLeader" class="form-control"
-							value="Tony Chicken">
-					</div>
+			</div>
+			<div class="row mt-3 mb-2">
+				<div class="col-4 offset-4">
+					<label for="newPw" class="form-label">새 비밀번호</label> <input
+						type="password" class="form-control" id="newPw" name="newPw"
+						required />
+				</div>
+			</div>
+			<div class="row mt-3 mb-2">
+				<div class="col-4 offset-4">
+					<label for="newPwCheck" class="form-label">새 비밀번호 확인</label> <input
+						type="password" class="form-control" id="newPwCheck"
+						name="newPwCheck" required /> <span id="alertPw"></span>
+				</div>
+			</div>
+			<div class="row mt-4 mb-2">
+				<div class="col-4 offset-4">
+					<button type="button" class="btn btn-block btn-outline-warning"
+						id="changePw" disabled>확인</button>
 				</div>
 			</div>
 		</div>

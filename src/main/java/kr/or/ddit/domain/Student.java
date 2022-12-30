@@ -1,8 +1,11 @@
 package kr.or.ddit.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -31,11 +34,12 @@ public class Student {
 	//학적 구분
 	private String recYr; //신청연도
 	private String recSem; //신청학기
+	private int recCd; //학적 코드
 	private String rgbCd; //학적 구분
 	private String recPer; //기간
 	private String recRsn; //사유
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private String recDt; //신청날짜
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy.MM.dd", timezone = "Asia/Seoul")
+	private Date recDt; //신청날짜
 	private String recYn; //승인여부
 	private String recRej; //반려사유
 	//학과명 조회 
@@ -48,6 +52,25 @@ public class Student {
 	
 	private List<SclHistory> stuSclList; //장학금 내역 조회
   private SclHistory sclHistory; //추천 장학생 상세 조회
+  
+
+	// 임의 컬럼 추가 - 성적
+	private String stuYrs;
+	private float mtestScore; 
+	private float ftestScore; 
+	private float taskScore;
+	private float attendScore;
+	private float totalScore;
+	private String totalGrade;
+	private String div;
+	private String evelNm;
+	private String score;
+	// 학생 총점
+	private int stuCurScore;
+	// 총 점수
+	private int lecScore;
+	// 등급 자동 계산
+	private String grade;
 
 
 }

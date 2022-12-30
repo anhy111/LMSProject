@@ -7,5 +7,5 @@ import kr.or.ddit.domain.Approval;
 public interface ApprovalMapper {
 
 	//결재 요청 목록
-    List<Approval> ApprovalList();
+    List<Approval> approvalList(Approval approval);
 }

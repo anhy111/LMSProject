@@ -3,12 +3,14 @@ package kr.or.ddit.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import kr.or.ddit.domain.student.StudentLectureForm;
 import org.apache.ibatis.annotations.Param;
 
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Task;
 import kr.or.ddit.domain.TaskSubmit;
+import org.apache.ibatis.annotations.Select;
 
 public interface LectureMapper {
 
@@ -69,4 +71,7 @@ public interface LectureMapper {
 	
 	public List<Lecture> searchList(StudentLecture studentLecture);
 
+
+	@Select("SELECT a.leca_cd,(SELECT b.sub_nm from subject b where b.sub_cd = a.leca_cd) sub_nm  FROM stu_lec a where a.stu_no = #{studentId}")
+    List<StudentLectureForm> studentLectureSearchAll(String studentId);
 }

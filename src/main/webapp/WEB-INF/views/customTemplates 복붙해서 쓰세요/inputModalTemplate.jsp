@@ -8,11 +8,19 @@
 	int stuNo = (int) session.getAttribute("no");
 	String name = String.valueOf(session.getAttribute("name"));
 %>
-<!-- 모달실행 버튼 -->
-<button id="recApply" class="btn btn-sm btn-outline-primary"
-		data-toggle="modal" data-target="#modal-default">신청</button>
+<!-- 
+모달실행 버튼 
+또는 본인이 이벤트를 발생시킬 노드의 attribute를 추가해주면 실행 할 수 있다
+data-toggle="modal" data-target="#모달에 준 아이디" 
+-->
+<div class="row">
+<div class="col-12 pr-0">
+<button id="" class="btn btn-sm btn-outline-primary"
+		data-toggle="modal" data-target="#모달 아이디">신청</button>
+</div>
+</div>
 <!-- 모달 -->
-<div class="modal fade show" id="modal-default"
+<div class="modal fade show" id="모달 아이디"
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
@@ -45,6 +53,7 @@
 						style="margin: 0px; padding: 0px;" type="hidden" name="recYn"
 						value="AP002"> <input style="margin: 0px; padding: 0px;"
 						type="hidden" id="recSem" name="recSem">
+						<!-- 그룹 라디오 박스 name, value, text 부분 변경 사용 가능 -->
 					<div class="col-12 segmented-control2"
 						style="width: 330px; padding: 0px; vertical-align: middle;">
 						<input type="radio" name="rgbCd" value="RCD001" id="tab-3" checked /><label
@@ -58,7 +67,6 @@
 							class="col-sm-1" style="color: black; margin: 0px;"
 							for="segmented-control2">&nbsp;*</label>
 					</div>
-					<!-- 				<label>&nbsp;학기 선택*&nbsp;</label> -->
 					<div class="form-group col-12" >
 						<select class="col-4 custom-select rounded-0" id="recYr"
 							name="recYr">
@@ -111,10 +119,9 @@
 				<!-- 모달바디 -->
 			</div>
 			<div class="modal-footer justify-content-align">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="submit" form="form"
-					class="btn btn-outline-primary">등록</button>
+				<button type="submit" form="form" class="btn btn-outline-primary">등록</button>
 				<a onclick="dataReset()" class="btn btn-outline-secondary">취소</a>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>

@@ -74,7 +74,6 @@
 		<div class="card-body">
 			<div class="quizWrapper">
 				<h1 class="header-title mb-3"></h1>
-				
 				<div>
 					<div class="mb-3" style="width:40%;float:left;">
 						<label for="example-disable" class="form-label">퀴즈 제목</label> 
@@ -99,6 +98,7 @@
 					<div class="clear"></div>
 				
 				<form id="lectfrm" action="/lectureBoard/test/testPost" method="post">
+				<input type="hidden" value="${data.testPart}" name="testPart">
 					<div class="tab-content">
 				         <div class="tab-pane show active" id="basic-example-preview">
 				            <div class="table-responsive-sm">

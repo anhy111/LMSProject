@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -54,7 +55,7 @@ function fn_list(){
 					<td id="YOrN\${index}">\${student.recYn}</td>
 					<td><button alt="\${student.recYn}"
 							class="btn btn-block btn-outline-info btn-sm btnDetail"
-							value="\${student.stuNo}" data-toggle="modal" data-target="#modal-lg" >상세</button></td>
+							value="\${student.recCd}" data-toggle="modal" data-target="#modal-lg" >상세</button></td>
 				</tr> `;
 				
 			});
@@ -85,8 +86,8 @@ $(function(){
 	
 	$(document).on("click", ".btnDetail", function(){
 		
-		let stuNo = $(this).val();
-		let data = {"stuNo":stuNo}
+		let recCd = $(this).val();
+		let data = {"recCd":recCd}
 		let alt = $(this).attr("alt");
 		
 		
@@ -329,55 +330,23 @@ $(function(){
 });
 
 </script>
-<div class="row">
-	<div class="col-sm-10 offset-1">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">휴복학 신청 관리</h3>
-			</div>
-	
-			<div class="card-body">
-				<div id="example1_wrapper"></div>
-				<div class="row">
-					<div class="col-sm-12">
-						<table id="example1"
-							class="table table-bordered table-striped dataTable dtr-inline"
-							aria-describedby="example1_info">
-							<thead>
-								<tr>
-									<th class="sorting sorting_asc" tabindex="0"
-										aria-controls="example1" rowspan="1" colspan="1"
-										aria-sort="ascending"
-										aria-label="Rendering engine: activate to sort column descending">번호</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Browser: activate to sort column ascending">학번</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">이름</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending">신청 연도/학기</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending">신청구분</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending">승인구분</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending">상세</th>
-								</tr>
-							</thead>
-							<tbody id="list">
-								
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div style="text-align:center;">
+	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+		<thead>
+			<tr class="text-center">
+				<th width="10%">번호</th>
+				<th width="10%">학번</th>
+				<th width="10%">이름</th>
+				<th width="10%">신청 연도/학기</th>
+				<th width="10%">신청구분</th>
+				<th width="10%">승인구분</th>
+				<th width="10%">상세</th>
+			</tr>
+		</thead>
+		<tbody id="list">
+			
+		</tbody>
+	</table>
 </div>
 
 <!-- 모달 -->

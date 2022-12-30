@@ -89,8 +89,6 @@ table {
 <body>
 
 	<div class="col">
-		<div class="card card-outline card-primary" style="width: 80%">
-			<div class="card-body">
 				<div class="row">
 					<br>
 				</div>
@@ -158,7 +156,5 @@ table {
 					</div>
 				</section>
 			</div>
-		</div>
-	</div>
 </body>
 </html>
