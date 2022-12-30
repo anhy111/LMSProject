@@ -14,8 +14,8 @@
 data-toggle="modal" data-target="#모달에 준 아이디" 
 -->
 <div class="row">
-<div class="col-12 pr-0">
-<button id="" class="btn btn-sm btn-outline-primary"
+<div class="col-12 pr-0" style="text-align: end;">
+<button id="" class="btn btn-outline-primary"
 		data-toggle="modal" data-target="#모달 아이디">신청</button>
 </div>
 </div>

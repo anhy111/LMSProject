@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -169,9 +170,9 @@ public class LectureBoardController {
 		if(this.lectureBoardService.submitCheck(stuNo, lecaCd, testCd) != null) {
 			Test test = this.lectureBoardService.submitCheck(stuNo, lecaCd, testCd);
 			int stCd = test.getStuTest().getStCd();
-			return "redirect:/lectureBoard/test/testResult?stCd="+stCd;
+			return "redirect:/lectureBoard/test/testResult?stCd="+stCd+"&&lecaCd="+lecaCd;
 		}
-		return "redirect:/lectureBoard/test/studentTestDetail?testCd="+ testCd;
+		return "redirect:/lectureBoard/test/studentTestDetail?testCd="+ testCd+"&&lecaCd="+lecaCd;
 	}
 	
 	//시험 추가 페이지
@@ -191,6 +192,7 @@ public class LectureBoardController {
 	}
 	
 	//시험 디테일(교수)
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("test/testDetail")
 	public String DetailTest(Model model,String testCd, String lecaCd) {
 		
@@ -336,14 +338,27 @@ public class LectureBoardController {
 	
 	
 	@GetMapping("score/totalScore")
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	public String stuAttend1(Model model, String lecaCd) {
 		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
 		model.addAttribute("data", lecApplySearch);
 		log.info("a");
 		return "lectureBoard/score/totalScore";
 	}
-	
+
+	@GetMapping("score/studentList")
+	@PreAuthorize("hasRole('ROLE_PROFESSOR') or hasRole('ROLE_STUDENT')")
+	public String stuAttend2(Model model, String lecaCd) {
+
+		log.info(lecaCd);
+		LecApply lecApplySearch = lectureBoardService.lecApplySearch(lecaCd);
+		model.addAttribute("data", lecApplySearch);
+		return "lectureBoard/score/totalScore2";
+	}
+
+
 	//학생 성적 전체 리스트
+	@PreAuthorize("hasRole('ROLE_PROFESSOR') or hasRole('ROLE_STUDENT')")
 	@ResponseBody
 	@PostMapping("lecStuTotScore")
 	public List<Student> lecStuTotScore (@RequestBody String lecaCd) {
@@ -362,52 +377,70 @@ public class LectureBoardController {
 		return list;
 	}
 		
-		// 학생 성적 상세 리스트
-		@ResponseBody
-		@PostMapping("lecStuScoreDetail")
-		public List<Student> lecStuScoreDetail(int lecaCd, int stuNo) {
-			log.info("lecStuScoreDetail ajax 도착");
-			
-			log.info("lecaCd : " + lecaCd + " stuNo : " + stuNo);
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			
-			map.put("lecaCd", lecaCd);
-			map.put("stuNo", stuNo);
-			
-			List<Student> list = this.lectureBoardService.lecStuScoreDetail(map);
-			
-			return list;
-		}
+	// 학생 성적 상세 리스트
+	@ResponseBody
+	@PostMapping("lecStuScoreDetail")
+	public List<Student> lecStuScoreDetail(int lecaCd, int stuNo) {
+		log.info("lecStuScoreDetail ajax 도착");
 		
-		// 학생 점수 및 총 점
-		@ResponseBody
-		@PostMapping("stuScoreandMaxScore")	
-		public Student stuScoreandMaxScore(int lecaCd, int stuNo) {
-			log.info("stuScoreandMaxScore ajax 도착");
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			
-			map.put("lecaCd", lecaCd);
-			map.put("stuNo", stuNo);
-			
-			Student vo = this.lectureBoardService.getStuScoreAndMaxScore(map);
-			
-			return vo;
-		}
+		log.info("lecaCd : " + lecaCd + " stuNo : " + stuNo);
 		
-		// 성적 부여
-		@ResponseBody
-		@PostMapping("stuGradeUpdate")
-		public int stuGradeUpdate(StudentLecture stuLec) {
-			log.info("stuGradeUpdate ajax 도착");
-			
-			int result = this.lectureBoardService.stuGradeUpdate(stuLec);
-			
-			return result;
-		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("lecaCd", lecaCd);
+		map.put("stuNo", stuNo);
+		
+		List<Student> list = this.lectureBoardService.lecStuScoreDetail(map);
+		
+		return list;
+	}
+		
+	// 학생 점수 및 총 점
+	@ResponseBody
+	@PostMapping("stuScoreandMaxScore")	
+	public Student stuScoreandMaxScore(int lecaCd, int stuNo) {
+		log.info("stuScoreandMaxScore ajax 도착");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("lecaCd", lecaCd);
+		map.put("stuNo", stuNo);
+		
+		Student vo = this.lectureBoardService.getStuScoreAndMaxScore(map);
+		
+		return vo;
+	}
+		
+	// 성적 부여
+	@ResponseBody
+	@PostMapping("stuGradeUpdate")
+	public int stuGradeUpdate(StudentLecture stuLec) {
+		log.info("stuGradeUpdate ajax 도착");
+		
+		int result = this.lectureBoardService.stuGradeUpdate(stuLec);
+		
+		return result;
+	}
 		
 	
-	
+	//학생 강의 성적 상세
+	@GetMapping("score/stuLecScore")
+	public String stuLecScoreGet(Model model, String lecaCd,Principal cipal) {
+		String stuNo = cipal.getName();
+		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
+		model.addAttribute("data", lecApplySearch);
+		model.addAttribute("stuNo", stuNo);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("lecaCd", lecaCd);
+		map.put("stuNo", stuNo);
+
+		StudentLecture stuLec = this.lectureBoardService.stuLecScoreSearch(lecaCd, stuNo);
+		model.addAttribute("stuLec", stuLec);
+
+		return "lectureBoard/score/stuLecScore";
+	}
+
 
 }

@@ -207,8 +207,11 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	}
 	
 	
-	
-	
+	//학생이 자기 성적 조회(현재 강의)
+	@Override
+	public StudentLecture stuLecScoreSearch(String lecaCd, String stuNo) {
+		return this.lectureBoardMapper.stuLecScoreSearch(lecaCd, stuNo);
+	}
 	
 	
 	

@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class Counsel {
 	//등록 데이터
-	private Long cnslCd; //상담코드
+	private int cnslCd; //상담코드
 	private int stuNo; //학번
 	private String cnslCate; //카테고리
 	private int proNo; //담당교수

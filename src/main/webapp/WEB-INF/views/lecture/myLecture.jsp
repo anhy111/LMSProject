@@ -5,8 +5,8 @@
 <html>
 <head>
 <style type="text/css">
-#book{
-top: 0px;
+#book {
+	top: 0px;
 }
 </style>
 <title>Home</title>
@@ -29,53 +29,44 @@ top: 0px;
 	$(function() {
 		$("#lectureListYear").text(lectureListYear);
 	})
-
 </script>
 </head>
 <body>
 
 	<div class="col" align="center">
-		<div class="card card-outline card-primary" style="width: 1300px">
-			<div class="card-header">
-				<h1 class="card-title">
-					<strong id="lectureListYear"> 담당 강의</strong>
-				</h1>
-				<div class="card-tools">
-					<button type="button" class="btn btn-tool"
-						data-card-widget="collapse">
-						<i class="fas fa-minus"></i>
-					</button>
+		<div class="card-header">
+			<h1 class="card-title">
+				<strong id="lectureListYear"> 담당 강의</strong>
+			</h1>
+		</div>
+		<br>
+		<div class="col-sm-12">
+			<c:forEach var="row" items="${lecture}" varStatus="stat">
+				<div class="small-box bg-info"
+					style="width: 250px; display: inline-block;">
+					<div class="inner">
+						<h4>${row.lecApply.lecaNm}</h4>
+						<p>${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}</p>
+					</div>
+					<div class="icon" id="book">
+						<i class="ion-ios-book"></i>
+					</div>
+					<a href="/lectureBoard/board/lectureBoard?lecaCd=${row.lecaCd}"
+						class="small-box-footer">강의실 가기 <i
+						class="fas fa-arrow-circle-right"></i></a>
 				</div>
-			</div>
-			<div class="card-body">
-				<div class="col-sm-12">
-					<c:forEach var="row" items="${lecture}" varStatus="stat">
-						<div class="small-box bg-info"
-							style="width: 250px; display: inline-block;" >
-							<div class="inner">
-								<h4>${row.lecApply.lecaNm}</h4>
-								<p>${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}</p>
-							</div>
-							<div class="icon" id="book">
-								<i class="ion-ios-book"></i>
-							</div>
-							<a href="/lectureBoard/board/lectureBoard?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기 <i
-								class="fas fa-arrow-circle-right"></i></a>
-						</div>
-					</c:forEach>
-					<tr class="odd">
-						<td class="dtr-control sorting_1" tabindex="0">${row.lecApply.lecaCd}</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>${row.department.depNm}</td>
-						<td>${row.employee.empNm}</td>
-						<td>${row.lecApply.lecaCap}</td>
-						<td>${row.lecApply.lecaCate}</td>
-					</tr>
+			</c:forEach>
+			<tr>
+				<td class="dtr-control sorting_1" tabindex="0">${row.lecApply.lecaCd}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>${row.department.depNm}</td>
+				<td>${row.employee.empNm}</td>
+				<td>${row.lecApply.lecaCap}</td>
+				<td>${row.lecApply.lecaCate}</td>
+			</tr>
 
-				</div>
-			</div>
 		</div>
 	</div>
 </body>

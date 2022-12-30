@@ -91,5 +91,8 @@ public interface LectureBoardService {
 	public Student getStuScoreAndMaxScore(Map<String, Object> map);
 	
 	public int stuGradeUpdate(StudentLecture stuLec);
-	
+
+	//학생이 자기 성적 조회(현재 강의)
+	public StudentLecture stuLecScoreSearch(String lecaCd, String stuNo);
+
 }

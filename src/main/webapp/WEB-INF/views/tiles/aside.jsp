@@ -74,20 +74,11 @@
                         </ul>
                     </li>
                     <!-- 학적관리 -->
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item"><a href="/record/main?stuNo=<%=no%>" class="nav-link">
                         <p>
-                            학적관리 <i class="right fas fa-angle-left"></i>
+                            학적관리
                         </p>
                     </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="/record/main?stuNo=<%=no%>"
-                                                    class="nav-link">
-                                <p>학적 변동 신청</p>
-                            </a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">
-                                <p>학적 변동 현황</p>
-                            </a></li>
-                        </ul>
                     </li>
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
@@ -148,10 +139,10 @@
                             class="nav-link">
                         <p>대나무숲</p>
                     </a></li>
-                    <li class="nav-item"><a
-                            href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link">
-                        <p>내가 듣는 강의 (임시. 지우지 마시오)</p>
-                    </a></li>
+<!--                     <li class="nav-item"><a -->
+<!--                             href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link"> -->
+<!--                         <p>내가 듣는 강의 (임시. 지우지 마시오)</p> -->
+<!--                     </a></li> -->
                    </sec:authorize>
                 
                 <!-- 교수 어사이드 -->

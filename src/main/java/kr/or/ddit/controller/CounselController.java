@@ -1,12 +1,7 @@
 package kr.or.ddit.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Counsel;
@@ -43,11 +37,15 @@ public class CounselController {
 	
 	@GetMapping("/studentside/applyList")
 	public String studentCounselApplyList(Model model, int stuNo) {
+	List<Counsel> professorList = this.counselService.listOfProfessor(stuNo);
+		model.addAttribute("professorList", professorList);
 		List<Counsel> allList = this.counselService.studentApplyList(stuNo);
 		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
 		List<Counsel> counselList = new ArrayList<Counsel>();
+		List<Record> recordList = this.recordService.RecordList(stuNo);
+		model.addAttribute("recordList", recordList);
 		for (Counsel counsel : allList) {
-//			log.info("리스트보자 : " + counsel.toString());
+			log.info("리스트보자 : " + counsel.toString());
 			if(counsel.getCnslType().equals("비대면") || counsel.getCnslType().equals("반려")) {
 				nonFaceCounselList.add(counsel);
 				model.addAttribute("nonFaceCounselList", nonFaceCounselList);
@@ -56,7 +54,7 @@ public class CounselController {
 				model.addAttribute("counselList", counselList);
 			}
 		}
-	
+		model.addAttribute("bodyTitile","상담내역조회");
 //		log.info(nonFaceCounselList.toString())	;
 		//forwarding
 		return "counsel/studentside/applyList";
@@ -64,11 +62,7 @@ public class CounselController {
 	
 	@GetMapping("/studentside/applyInsert")
 	public String studentCounselApplyInsert(Model model,  int stuNo) {
-		List<Counsel> professorList = this.counselService.listOfProfessor(stuNo);
-		List<Record> recordList = this.recordService.counselFilteredRecordList(stuNo);
-		
-		model.addAttribute("recordList", recordList);
-		model.addAttribute("professorList", professorList);
+	
 		//forwarding
 		return "counsel/studentside/applyInsert";
 	}
@@ -83,7 +77,7 @@ public class CounselController {
 	}
 	
 	@GetMapping("/studentside/applyModify")
-		public String studentApplyModify(Long cnslCd, Model model) {
+		public String studentApplyModify(int cnslCd, Model model) {
 //		log.info("글번호 : " + cnslCd);
 		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
 //		log.info("함보자 : ", answerDetail.getCnslRpl());
@@ -108,7 +102,7 @@ public class CounselController {
 	
 	
 	@GetMapping("/studentside/checkAnswer")
-	public String studentCheckAnswer(Long cnslCd, Model model) {
+	public String studentCheckAnswer(int cnslCd, Model model) {
 //		log.info("글번호 : " + cnslCd);
 		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
 //		log.info("함보자 : ", answerDetail.getCnslRpl());
@@ -117,14 +111,14 @@ public class CounselController {
 	}
 	
 	@GetMapping("/studentside/checkReject")
-	public String studentCheckrReject(Long cnslCd, Model model) {
+	public String studentCheckrReject(int cnslCd, Model model) {
 		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
 		model.addAttribute("answerDetail", answerDetail);
 			return "counsel/studentside/checkReject";
 	}
 	
 	@GetMapping("/studentside/answerNote")
-	public String studentCheckAnswerNote(Long cnslCd, Model model) {
+	public String studentCheckAnswerNote(int cnslCd, Model model) {
 		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
 		log.info("답변내용 : " + answerDetail.toString());
 		model.addAttribute("answerDetail",answerDetail);
@@ -174,7 +168,7 @@ public class CounselController {
 		return "counsel/professorside/counselList";
 	}
 	@GetMapping("/professorside/answer")
-	public String professorCounselAnswer(Long cnslCd, Model model) {
+	public String professorCounselAnswer(int cnslCd, Model model) {
 //		log.info("글번호 : " + cnslCd);
 		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
 //		log.info("함보자 : ", answerDetail.getCnslRpl());
@@ -183,7 +177,7 @@ public class CounselController {
 	}
 	
 	@GetMapping("/professorside/answerModify")
-	public String professorCounselAnswerModify(Long cnslCd, Model model) {
+	public String professorCounselAnswerModify(int cnslCd, Model model) {
 //		log.info("글번호 : " + cnslCd);
 		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
 //		log.info("함보자 : ", answerDetail.getCnslRpl());
@@ -207,7 +201,7 @@ public class CounselController {
 	}
 	
 	@GetMapping("/professorside/answerNoteWriteUpdate")
-	public String prefessorCounselAnswerNote(Model model, Long cnslCd) {
+	public String prefessorCounselAnswerNote(Model model, int cnslCd) {
 		Counsel answerNoteDetail = this.counselService.answerNoteDetail(cnslCd);
 		log.info("교수의 대면 상담 상세 : " + answerNoteDetail.toString());
 		model.addAttribute("answerNoteDetail", answerNoteDetail);

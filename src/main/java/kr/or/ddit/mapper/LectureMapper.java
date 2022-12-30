@@ -72,6 +72,6 @@ public interface LectureMapper {
 	public List<Lecture> searchList(StudentLecture studentLecture);
 
 
-	@Select("SELECT a.leca_cd,(SELECT b.sub_nm from subject b where b.sub_cd = a.leca_cd) sub_nm  FROM stu_lec a where a.stu_no = #{studentId}")
+	@Select("SELECT a.leca_cd,(SELECT b.leca_nm from lec_apply b where b.leca_cd = a.leca_cd) sub_nm  FROM stu_lec a where a.stu_no = #{studentId}")
     List<StudentLectureForm> studentLectureSearchAll(String studentId);
 }
