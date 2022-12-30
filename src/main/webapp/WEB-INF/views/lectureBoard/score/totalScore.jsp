@@ -506,9 +506,9 @@ $(function() {
 	// 결석 일수 세기
 	function absentCnt(lateCnt, AbsentCnt) {
 		
-		cnt = parseInt(lateCnt/3) + parseInt(AbsentCnt);
+		count = parseInt(lateCnt/3) + parseInt(AbsentCnt);
 		
-		$('#tNoCome').html(cnt);
+		$('#tNoCome').html(count);
 		
 	}
 	
