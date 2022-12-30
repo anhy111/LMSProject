@@ -42,8 +42,10 @@ public class PaymentController {
 
 	// 등록금 고지 관리
 	@GetMapping("/admin/adminBill")
-	public String adminBill() {
-
+	public String adminBill(Model model) {
+		
+		model.addAttribute("bodyTitle", "등록금 고지");
+		
 		return "payment/admin/adminBill";
 	}
 
@@ -77,6 +79,7 @@ public class PaymentController {
 		log.info("납부 payment : " + payment);
 
 		model.addAttribute("payment", payment);
+		model.addAttribute("bodyTitle", "등록금 납부");
 
 		return "payment/admin/adminPayment";
 	}

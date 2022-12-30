@@ -2,6 +2,8 @@ package kr.or.ddit.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -10,6 +12,7 @@ public class Payment {
 	private int payCd;  //등록금 납부 코드
 	private int stuNo;	//학번
 	private int paySem;	//납부학기
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy/MM/dd", timezone = "Asia/Seoul")
 	private Date payDt;	//납부일자
 	private int payAmt;	//납부금액
 	private String payYn;	//납부상태

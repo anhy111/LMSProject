@@ -19,24 +19,24 @@ color:white;
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-let tid;
-let cnt = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
+let logoutTid;
+let logoutTime = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
 // var socket = null;
 
 function counter_init(){
-	tid =setInterval("counter_run()", 990);
+	logoutTid =setInterval("counter_run()", 990);
 }
 
 function counter_run(){
-	document.all.counter.innerText = time_format(cnt);
-	cnt--;
+	document.all.counter.innerText = time_format(logoutTime);
+	logoutTime--;
 	
-	if(cnt < 5){
+	if(logoutTime < 5){
 		$("#session").css("display", "block");
 	}
 	
-	if(cnt < 0){
-		clearInterval(tid);
+	if(logoutTime < 0){
+		clearInterval(logoutTid);
 		$("#logoutFrm").submit();
 	}
 }
