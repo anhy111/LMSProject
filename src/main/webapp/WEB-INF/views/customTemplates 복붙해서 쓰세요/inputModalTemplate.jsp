@@ -24,7 +24,7 @@ data-toggle="modal" data-target="#모달에 준 아이디"
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="height: 900px;">
+		<div class="modal-content" style="top:100px;">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
 				<h5 class="modal-title">학적변동 신청서 작성</h5>
 				<button type="button" class="close" data-dismiss="modal"
@@ -89,7 +89,7 @@ data-toggle="modal" data-target="#모달에 준 아이디"
 					</div>
 					<div class="form-group col-12" style="margin:0px;">
 						<label for="exampleInputBorder">신청자*</label> <input type="text"
-							class="col-4 form-control form-control-border"
+							class="col-4 form-control form-control-border-rounded-0"
 							id="exampleInputBorder" readonly value="<%=name%>">
 					</div>
 					<div class="form-group col-12" style="margin:0px;">
@@ -137,7 +137,7 @@ $.fn.clearForm = function () {
 	      return $(':input', this).clearForm();
 	    }
 	    if (
-//		      type === 'text' ||
+		      type === 'text' ||
 //		      type === 'password' ||
 //		      type === 'hidden' ||
 	      tag === 'textarea'
