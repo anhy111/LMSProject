@@ -42,21 +42,14 @@
 </head>
 <body>
 
-<div class="col" align="center">
-    <div class="card card-outline card-primary" style="width: 1300px">
+<div class="col" >
         <div class="card-header">
-            <h1 class="card-title">
+            <h3>
                 <strong id="lectureListYear"> 수강중인 강의</strong>
-            </h1>
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool"
-                        data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-            </div>
+            </h3>
         </div>
         <div class="card-body">
-            <div class="col-sm-12">
+            <div class="col-sm-12" align="center">
 
                 <c:forEach var="row" items="${lectureList}" varStatus="stat">
                     <div class="small-box bg-info"
@@ -75,7 +68,6 @@
 
             </div>
         </div>
-    </div>
 </div>
 </body>
 </html>
