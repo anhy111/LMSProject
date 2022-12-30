@@ -1,5 +1,6 @@
 package kr.or.ddit.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.or.ddit.domain.Department;
@@ -30,7 +31,8 @@ public interface PaymentMapper {
 	public int billCount(int stuNo);
 	
 	//학생 납부확인서
-	public Student paymentFormStuInfo(int stuNo);
-	public List<Payment> paymentFormInfo(int payCd);
-	public List<Department> paymentFormDepInfo(int payCd);
+	public HashMap<String, Object> payMentDetail(HashMap<String,Integer>map);
+	
+	//학생 등록금 고지서
+	public HashMap<String, Object> payingTuition(int stuNo);
 }

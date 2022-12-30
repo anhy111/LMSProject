@@ -1,5 +1,5 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -7,9 +7,9 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
-<div class="card-header">
+<div class="card-header" style="padding-right:0px;">
 	<p style="float: left; margin-right: 6px;"id="stuPaymentListSelect"><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;등록금납부이력</p>
-	<p style="float: right; margin-right: 6px;">[총 <span style="color : #001353; font-weight: bold;" id="cntSpan"></span>건]</p>
+	<p style="float: right;">[총 <span style="color : #001353; font-weight: bold;" id="cntSpan"></span>건]</p>
 </div>
 <table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 	<thead>
@@ -24,6 +24,8 @@
 		<tbody id="stuPayList">
 		</tbody>
 </table>
+<div id="btn" style="padding-top:10px;">
+</div>
 
 <script type="text/javascript" defer="defer">
 	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
@@ -33,7 +35,7 @@
 	$(document).ready(function () {
 		function checkBillCnt(){
 			$.ajax({
-				url : '/payment/billCount',
+				url : '/payment/stu/billCount',
 				type : 'POST',
 				dataType : 'json',
 				beforeSend: function (xhr) {
@@ -41,9 +43,12 @@
 				},
 				success : function(res) {
 					if (res == 1) {
-						var str = "";
-						str +=" &nbsp;<span id='noticeSpan' style='color:red;'>*납부해야할 등록금이 있습니다.</span><button onclick='getBill()' class='btn btn-primary' id='noticeBill' style='float:right;'>등록금고지서</button>"
-						$('#stuPaymentListSelect').append(str);
+						var str1 = "";
+						var str2 = "";
+						str1 +=" &nbsp;<span id='noticeSpan' style='color:red;'>*납부해야할 등록금이 있습니다.</span>"
+						str2 +="<button onclick='payingTuition()' class='btn btn-primary' id='noticeBill' style='float:right;'>등록금고지서</button>"
+						$('#stuPaymentListSelect').append(str1);
+						$('#btn').append(str2);
 					}
 				}
 			})
@@ -53,7 +58,7 @@
 		
 		//등록금 납부내역 리스트
 		$.ajax({
-			url: "/payment/stuPaymentList",
+			url: "/payment/stu/stuPaymentList",
 			type: "POST",
 			contentType: "application/json;charset=utf-8",
 			dataType: "JSON",
@@ -118,16 +123,31 @@
 						var pleft = (window.screen.width/2) - (pwidth/2);
 						var ptop = (window.screen.height/2) - (pheight/2);
 						
-						window.open('/payment/paymentConfirmation/?payCd='+payCd,'paymentForm','width='+ pwidth +',height='+ pheight +',top='+ ptop +',left='+ pleft);
+						window.open('/payment/stuForm/paymentConfirmation?payCd='+payCd,'paymentForm','width='+ pwidth +',height='+ pheight +',top='+ ptop +',left='+ pleft);
 
 					}else{
 						alert("현재 등록금 미납 상태 이므로 수납서를 확인할 수 없습니다.");
 					}
-		        	
 				});
-				
 			}
 		});
-		
 	})
+	
+	function payingTuition(){
+		var result;
+		var pwidth = 1400;
+		var pheight = 800;
+		
+		var pleft = (window.screen.width/2) - (pwidth/2);
+		var ptop = (window.screen.height/2) - (pheight/2);
+		
+		result = window.open("/payment/stuForm/payingTuition",'b','width='+ pwidth +',height='+ pheight +',top='+ ptop +',left='+ pleft); 
+		
+		console.log("result", result);
+		if(result!=null){
+			result.addEventListener('unload', function(){
+				
+			});
+		}
+	}
 </script>

@@ -103,6 +103,14 @@
 	<put-attribute name="body" value="/WEB-INF/views/customTemplates 복붙해서 쓰세요/{1}.jsp" />
 	</definition>
 	
+	<definition name="payment/admin/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/payment/admin/{1}.jsp" />
+	</definition>
+
+	<definition name="payment/stu/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/payment/stu/{1}.jsp" />
+	</definition>
+	
 
 	<!-- 타일즈 미적용 -->
 	<definition name="no-tiles" template="/WEB-INF/views/tiles/empty.jsp">
@@ -155,6 +163,10 @@
 	
 	<definition name="record/apply" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/record/apply.jsp" />
+	</definition>
+	
+	<definition name="payment/stuForm/*" extends="no-tiles">
+	<put-attribute name="body" value="/WEB-INF/views/payment/stuForm/{1}.jsp" />
 	</definition>
 
 </tiles-definitions>
