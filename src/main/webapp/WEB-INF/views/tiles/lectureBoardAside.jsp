@@ -70,7 +70,7 @@
 							</p>
 						</a>
 					</li><li class="nav-item">
-						<a href="#" class="nav-link"> 
+						<a href="/lectureBoard/score/stuLecScore?lecaCd=${param.lecaCd}" class="nav-link"> 
 							<i class="nav-icon fas fa-copy"></i>
 							<p>
 								성적 </i>

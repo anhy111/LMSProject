@@ -338,7 +338,6 @@ public class LectureBoardController {
 	
 	
 	@GetMapping("score/totalScore")
-	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	public String stuAttend1(Model model, String lecaCd) {
 		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
 		model.addAttribute("data", lecApplySearch);
@@ -347,7 +346,6 @@ public class LectureBoardController {
 	}
 	
 	//학생 성적 전체 리스트
-	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@ResponseBody
 	@PostMapping("lecStuTotScore")
 	public List<Student> lecStuTotScore (@RequestBody String lecaCd) {
@@ -366,8 +364,7 @@ public class LectureBoardController {
 		return list;
 	}
 		
-		// 학생 성적 상세 리스트
-	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	// 학생 성적 상세 리스트
 	@ResponseBody
 	@PostMapping("lecStuScoreDetail")
 	public List<Student> lecStuScoreDetail(int lecaCd, int stuNo) {
@@ -385,8 +382,7 @@ public class LectureBoardController {
 		return list;
 	}
 		
-		// 학생 점수 및 총 점
-	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	// 학생 점수 및 총 점
 	@ResponseBody
 	@PostMapping("stuScoreandMaxScore")	
 	public Student stuScoreandMaxScore(int lecaCd, int stuNo) {
@@ -402,8 +398,7 @@ public class LectureBoardController {
 		return vo;
 	}
 		
-		// 성적 부여
-	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	// 성적 부여
 	@ResponseBody
 	@PostMapping("stuGradeUpdate")
 	public int stuGradeUpdate(StudentLecture stuLec) {
@@ -415,6 +410,24 @@ public class LectureBoardController {
 	}
 		
 	
+	//학생 강의 성적 상세
+	@GetMapping("score/stuLecScore")
+	public String stuLecScoreGet(Model model, String lecaCd,Principal cipal) {
+		String stuNo = cipal.getName();
+		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
+		model.addAttribute("data", lecApplySearch);
+		model.addAttribute("stuNo", stuNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("lecaCd", lecaCd);
+		map.put("stuNo", stuNo);
+		
+		StudentLecture stuLec = this.lectureBoardService.stuLecScoreSearch(lecaCd, stuNo);
+		model.addAttribute("stuLec", stuLec);
+	
+		return "lectureBoard/score/stuLecScore";
+	}
 	
 
 }

@@ -632,28 +632,17 @@ $(function() {
 							<select name="slScore" id="slScore" class="gradeSelect" disabled>
 								<option value="null" class="defaultSelect" selected>-</option>
 								<option value="4.5">4.5</option>
-								<option value="4.0">4.0</option>
+								<option value="4">4</option>
 								<option value="3.5">3.5</option>
-								<option value="3.0">3.0</option>
+								<option value="3">3</option>
 								<option value="2.5">2.5</option>
-								<option value="2.0">2.0</option>
+								<option value="2">2</option>
 								<option value="1.5">1.5</option>
 								<option value="1">1</option>
 							</select>
 						</td>
 					</tr>
 				</table>
-							<select name="slScore" id="slScore" class="gradeSelect">
-								<option value="null" class="defaultSelect" selected>-</option>
-								<option value="4.5">4.5</option>
-								<option value="4.0">4.0</option>
-								<option value="3.5">3.5</option>
-								<option value="3.0">3.0</option>
-								<option value="2.5">2.5</option>
-								<option value="2.0">2.0</option>
-								<option value="1.5">1.5</option>
-								<option value="1">1</option>
-							</select>
 			</div>
 		</div>
 		<!-- 상세 정보와 성적 상세 및 기준표 끝-->
@@ -677,28 +666,28 @@ $(function() {
 							<tr>
 								<td>출석</td>
 								<td class="ww">
-									<input type="text" id="atenCome" class="form-control f9 frontInput" disabled placeholder="유효 출석일수" />
-									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" disabled placeholder="총 출석 일수" />
+									<input type="text" id="atenCome" class="form-control f9 frontInput" style="font-size:9px;" disabled placeholder="유효 출석일수" />
+									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" style="font-size:9px;" disabled placeholder="총 출석 일수" />
 								</td>
 								<td>지각</td>
 								<td class="ww">
-									<input type="text" id="atenLate" class="form-control f9 frontInput" disabled placeholder="지각일수"/>
-									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" disabled placeholder="총 출석 일수" />
+									<input type="text" id="atenLate" class="form-control f9 frontInput" style="font-size:9px;" disabled placeholder="지각일수"/>
+									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" style="font-size:9px;" disabled placeholder="총 출석 일수" />
 								</td>
 								<td>결석</td>
 								<td class="ww">
-									<input type="text" id="atenAbsent" class="form-control f9 frontInput" disabled placeholder="결석일수"/>
-									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" disabled placeholder="총 출석 일수" />
+									<input type="text" id="atenAbsent" class="form-control f9 frontInput" style="font-size:9px;" disabled placeholder="결석일수"/>
+									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" style="font-size:9px;" disabled placeholder="총 출석 일수" />
 								</td>
 								<td>조퇴</td>
 								<td class="ww">
-									<input type="text" id="atenEarly" class="form-control f9 frontInput" disabled placeholder="조퇴 일수"/>
-									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" disabled placeholder="총 조퇴 일수" />
+									<input type="text" id="atenEarly" class="form-control f9 frontInput" style="font-size:9px;" disabled placeholder="조퇴 일수"/>
+									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" style="font-size:9px;" disabled placeholder="총 조퇴 일수" />
 								</td>
 								<td>공결</td>
 								<td class="ww">
-									<input type="text" id="atenOfiAbsent" class="form-control f9 frontInput" disabled placeholder="공결일수"/>
-									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" disabled placeholder="총 출석 일수" />
+									<input type="text" id="atenOfiAbsent" class="form-control f9 frontInput" style="font-size:9px;" disabled placeholder="공결일수"/>
+									&nbsp;/&nbsp;<input type="text" class="form-control f9 totat frontInput" style="font-size:9px;" disabled placeholder="총 출석 일수" />
 								</td>
 							</tr>
 							<tr>

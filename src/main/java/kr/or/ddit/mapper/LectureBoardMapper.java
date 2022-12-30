@@ -99,11 +99,10 @@ public interface LectureBoardMapper {
 	
 	public int stuGradeUpdate(StudentLecture stuLec);
 	
+	//학생이 자기 성적 조회(현재 강의)
+	public StudentLecture stuLecScoreSearch(@Param("lecaCd") String lecaCd, @Param("stuNo") String stuNo);
 	
 	
 	
-	
-
-		
 	
 }
