@@ -136,7 +136,7 @@
 		SELECT  SH.SCLH_CD
 		        , D.DEP_NM
 		        , C.COL_NM
-		        , SH.STU_NO 
+		        , S.STU_NO 
 		        , S.DEP_CD
 		        , S.STU_YR
 		        , S.STU_SEM
@@ -156,11 +156,9 @@
 		        , SH.SCLH_PAY_YN
 		        , SH.SCLH_AMT
 		        , SH.SCLH_RCMD
-		        , E.EMP_NM
-		FROM COLLEGE C, DEPARTMENT D, EMPLOYEE E, PROFESSOR P, STUDENT S, SCL_HISTORY SH
-		WHERE E.EMP_NO = P.PRO_NO
-		AND P.PRO_NO = SH.PRO_NO
-		AND C.COL_CD = D.COL_CD
+		        , (SELECT E.EMP_NM FROM EMPLOYEE E, PROFESSOR P WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = SH.PRO_NO AND SH.SCLH_CD = #{sclhCd}) EMP_NM
+		FROM COLLEGE C, DEPARTMENT D, STUDENT S, SCL_HISTORY SH
+		WHERE C.COL_CD = D.COL_CD
 		AND D.DEP_CD = S.DEP_CD
 		AND S.STU_NO = SH.STU_NO
 		AND SH.SCLH_CD = #{sclhCd}
@@ -171,6 +169,7 @@
 		<result property="depCd" column="DEP_CD" />
 		<result property="colCd" column="COL_CD" />
 		<result property="colNm" column="COL_NM" />
+		<result property="stuNo" column="STU_NO" />
 		<result property="stuYr" column="STU_YR" />
 		<result property="stuSem" column="STU_SEM" />
 		<result property="stuNm" column="STU_NM" />
@@ -188,7 +187,6 @@
 	
 	<resultMap type="sclHistory" id="schMap2">
 		<result property="sclhCd" column="SCLH_CD"/>
-		<result property="stuNo" column="STU_NO"/>
 		<result property="sclhYr" column="SCLH_YR"/>
 		<result property="sclhSem" column="SCLH_SEM"/>
 		<result property="sclhDt" column="SCLH_DT"/>

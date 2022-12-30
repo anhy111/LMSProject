@@ -353,12 +353,6 @@ $(function(){
 								<span>임시비밀번호 발급</span>
 							</a>
 						</li>
-						<li>
-							<a href="https://underwood1.yonsei.ac.kr/haksa/HELP/dugrock-01.htm"
-								target="_blank" title="새 탭 열림">
-								<span>로그인 도움말</span>
-							</a>
-						</li>
 					</ul>
 				</div>
 			</div>
@@ -377,11 +371,6 @@ $(function(){
 					<button id="findPass" title="새 창 열림">
 						<span>임시 비밀번호 발급</span>
 					</button>
-				</li>
-				<li>
-					<a href="#" target="_blank" title="새 탭 열림">
-						<span>로그인 도움말</span>
-					</a>
 				</li>
 			</ul>
 		</div>

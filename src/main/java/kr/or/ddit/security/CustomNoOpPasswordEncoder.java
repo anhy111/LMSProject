@@ -20,10 +20,11 @@ public class CustomNoOpPasswordEncoder implements PasswordEncoder {
 
 	@Override
 	public boolean matches(CharSequence rawPassword, String encodedPassword) {
-		log.info("matches : " + rawPassword + " : " + encodedPassword);
+		String passSHA = Sha256.testSHA256(rawPassword.toString());
+		log.info("matches : " + passSHA + " : " + encodedPassword);
+		
 		//로그인 할 때 입력된 비밀번호와 DB상의 비밀번호를 match 시켜 봄
-		return rawPassword.toString().equals(encodedPassword);
+		return passSHA.equals(encodedPassword);
 	}
 
-	
 }

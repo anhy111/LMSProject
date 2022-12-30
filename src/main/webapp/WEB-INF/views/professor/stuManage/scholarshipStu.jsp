@@ -10,8 +10,8 @@ String name = String.valueOf(session.getAttribute("name"));
 function fn_add(data){
 	
 	$("#stuImg").attr("src", "/upload"+data.stuPic);
-	$("#stuNo").attr("value", data.sclHistory.stuNo);
-	$(".stuNo").html(data.sclHistory.stuNo);
+	$("#stuNo").attr("value", data.stuNo);
+	$(".stuNo").html(data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$(".stuNm").html(data.stuNm);
 	$("#stuNme").attr("value", data.stuNme);
@@ -55,32 +55,52 @@ $(function(){
 				console.log("성공이라해주라 ", data.sclHistory.sclhRcmd);
 				fn_add(data);
 				
-				let str = "";
-				if(data.stuSclList != null && data.stuSclList.length != 0){
-					for(let i=0; i < data.stuSclList.length; i++){
-						console.log("오라고 제발 ㅠ  " + data.stuSclList[i].empNm );
+				$.ajax({
+					type: 'post',
+					url: '/professor/stuSclList',
+					contentType:"application/json;charset=utf-8",
+					data:JSON.stringify(data),
+					beforeSend:function(xhr){
+						xhr.setRequestHeader(header, token);
+					},
+					success :function(data){
+						console.log("2아작스 ", data);
 						
-						str += `
-						<tr>
-							<td>\${i+1}</td>
-							<td>\${data.stuSclList[i].sclNm}</td>
-							<td>\${data.stuSclList[i].sclhYr}년 \${data.stuSclList[i].sclhSem}학기</td>
-							<td>\${data.stuSclList[i].sclhAmt}</td>
-							<td>\${data.stuSclList[i].empNm}</td>
-						</tr>
+// 						let str = "";
+// 						if(data.stuSclList != null && data.stuSclList.length != 0){
+// 							for(let i=0; i < data.stuSclList.length; i++){
+// 								console.log("오라고 제발 ㅠ  " + data.stuSclList[i].empNm );
+								
+// 								str += `
+// 								<tr>
+// 									<td>\${i+1}</td>
+// 									<td>\${data.stuSclList[i].sclNm}</td>
+// 									<td>\${data.stuSclList[i].sclhYr}년 \${data.stuSclList[i].sclhSem}학기</td>
+// 									<td>\${data.stuSclList[i].sclhAmt}</td>
+// 									<td>\${data.stuSclList[i].empNm}</td>
+// 								</tr>
+								
+// 								`
+// 							}
+// 						}else{
+							
+// 							str = `
+// 							<tr>
+// 								<td colspan='5'>받은 장학금 내역이 없습니다.</td>
+// 							</tr>
+// 							`
+// 						}
 						
-						`
+// 						$("#sclList").html(str);
+						
+						
+						
+					},
+					error:function(request, status, error){
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
-				}else{
 					
-					str = `
-					<tr>
-						<td colspan='5'>받은 장학금 내역이 없습니다.</td>
-					</tr>
-					`
-				}
-				
-				$("#sclList").html(str);
+				});
 				
 			},
 			error:function(request, status, error){

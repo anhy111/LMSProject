@@ -64,6 +64,8 @@ public class StuManageOfProController {
 	@PostMapping("/professor/detailStu")
 	@ResponseBody
 	public Student detailStu(@RequestBody Map<String, String> map) {
+		
+		log.info(map.get("detailStu"));
 
 		Student detailStu = this.manageService.detailStu(map);
 		
@@ -106,11 +108,24 @@ public class StuManageOfProController {
 	@ResponseBody
 	public Student schStuRcmd(@RequestBody Map<String,String> map) {
 		
+		log.info(map.get("stuNo"));
+		
 		Student schStuRcmd = this.stuManageOfProService.schStuRcmd(map);
 		log.info("추천내용나오냐 " + schStuRcmd);
 		
 		return schStuRcmd;
 		
+	}
+	
+	//나의 받은 장학 내역
+	@PostMapping("/professor/stuSclList")
+	@ResponseBody
+	public List<SclHistory> stuSclList(@RequestBody Map<String,String> map) {
+		
+		List<SclHistory> stuSclList = this.stuManageOfProService.stuSclList(map);
+		log.info("학생이 받은 장학 내역은 ? " + stuSclList);
+		
+		return stuSclList;
 	}
 	
 	
