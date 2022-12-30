@@ -47,14 +47,14 @@
 						</a>
 					</li>
 					<!-- 학적관리 -->
-					<li class="nav-item">
-						<a href="#" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								공지사항 </i>
-							</p>
-						</a>
-					</li>
+<!-- 					<li class="nav-item"> -->
+<!-- 						<a href="#" class="nav-link">  -->
+<!-- 							<i class="nav-icon fas fa-copy"></i> -->
+<!-- 							<p> -->
+<!-- 								공지사항 </i> -->
+<!-- 							</p> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
 					<li class="nav-item"><a href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}" class="nav-link"> <i
 							class="nav-icon fas fa-chart-pie"></i>
 							<p>강의 자료실</p>
@@ -84,14 +84,16 @@
 								출결 </i>
 							</p>
 						</a>
-					</li><li class="nav-item">
-						<a href="#" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								질문게시판 </i>
-							</p>
-						</a>
-					</li><li class="nav-item">
+					</li>
+<!-- 					<li class="nav-item"> -->
+<!-- 						<a href="#" class="nav-link">  -->
+<!-- 							<i class="nav-icon fas fa-copy"></i> -->
+<!-- 							<p> -->
+<!-- 								질문게시판 </i> -->
+<!-- 							</p> -->
+<!-- 						</a> -->
+<!-- 					</li> -->
+					<li class="nav-item">
 						<a href="/student/lecture/studentList?lecaCd=${param.lecaCd}" class="nav-link">
 							<i class="nav-icon fas fa-copy"></i>
 							<p>
