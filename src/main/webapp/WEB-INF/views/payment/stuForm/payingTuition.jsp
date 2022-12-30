@@ -106,12 +106,9 @@ td {
 }
 </style>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"
-	type="text/javascript"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
 </head>
 <body>
@@ -129,8 +126,7 @@ td {
 		<div class="card">
 
 			<div id="tabdiv1" class="card-body">
-				<input type="hidden" value="${map.MEM_ML}" id="memMl"> <input
-					type="hidden" value="${map.MEM_TEL}" id="memTel">
+				<input type="hidden" value="${map.STU_TEL}" id="stuTel">
 				<table id="tab" border='1'>
 					<tr>
 						<td colspan="4" id="header" style="color: inherit;">등록금 고지서
@@ -253,27 +249,27 @@ td {
 		$('#header2').text(year + sem + "[학생용]");
 		
 		var IMP = window.IMP;
-		var code = "imp51127026"; //가맹점 식별코드
+		var code = "imp35881853"; //가맹점 식별코드
 		IMP.init(code);
 
-		var stuCd = $('#td0').text();
-		var stuname = $('#td1').text();
-		var payamt = $('#td2').text();
+		var stuNo = $('#td0').text();
+		var stuNm = $('#td1').text();
+		var payAmt = $('#td2').text();
 		var payCd = $('#pay').data('paycd');
-		var memMl = $('#memMl').val();
-		var memTel = $('#memTel').val();
-		console.log(payCd , payamt);
+		var stuTel = $('#stuTel').val();
+		console.log(payCd , payAmt);
 
 		$('#pay').on('click', function() {
+			console.log("페이 버튼 클뤽");
 			IMP.request_pay({
 				//name과 amout만있어도 결제 진행가능
 				pg : "html5_inicis",
 				pay_method : 'card',
-				merchant_uid : ''+stuCd + payCd,
+				merchant_uid : ''+stuNo + payCd,
 				amount : 100,
 				name : '등록금결제', // 상품명
-				buyer_name : stuname,
-				buyer_email : memMl,
+				buyer_name : stuNm,
+				buyer_tel : stuTel,
 				
 			//결제완료후 이동할 페이지 kko나 kkopay는 생략 가능
 			//m_redirect_url : 'https://localhost:8080/payments/complete'
@@ -292,7 +288,7 @@ td {
 					console.log(rsp.merchant_uid);
 
 					$.ajax({
-						url : '/payment/pay',
+						url : '/payment/stuForm/pay',
 						type : 'POST',
 						data : {
 							"payCd" : payCd

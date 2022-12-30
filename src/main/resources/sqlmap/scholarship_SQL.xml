@@ -147,7 +147,7 @@
 		AND     L.LECA_CD = LA.LECA_CD
 		AND     SJ.DEP_CD = D.DEP_CD
 		AND     SJ.SUB_CD = L.SUB_CD
-		AND     SL.STU_NO = #{stuNo};
+		AND     SL.STU_NO = #{stuNo}
 	</select>
 	
 	<!-- 장학금 수여 -->
