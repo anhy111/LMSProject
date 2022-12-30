@@ -1,110 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>등록금 고지 관리</title>
-<style>
-#grid *{
-text-align: center;
-}
-#check{
-padding : 10px;
-margin-bottom : 20px;
-/* width : 96%; */
-background-color: lightyellow;
-border : 1px solid lightgrey;
-color : green;
-}
-</style>
-</head>
-<body>
-	<div>
-		<i class="mdi mdi-home" style="font-size: 1.3em"></i>
-		<i class="dripicons-chevron-right"></i>등록 및 장학 
-		<i class="dripicons-chevron-right"></i><span>등록</span> 
-		<i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">등록금 고지 관리</span>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="row">
+	<div class="alert alert-light col" role="alert">
+		<!-- 게시판 안내사항 -->
+		<p>
+			<strong>등록금은 현재 재학중인 학생에게만 부여된다. 등록금은 장학금이 자동적으로 차감된 금액이 부과되며, 만약 장학금액이 등록금액을 초과할 경우 등록금은 0원으로 처리된다.</strong>
+		</p>
 	</div>
-	<br>
-	<br>
-	<div id="check">
-		<span>등록금은 현재 재학중인 학생에게만 부여된다. 등록금은 장학금이 자동적으로 차감된 금액이 부과되며, 만약
-			장학금액이 등록금액을 초과할 경우 등록금은 0원으로 처리된다.</span><br>
+</div>
+
+<div class="row">
+	<div class="align-self-end col-2 mb-2" style="text-align:end;">
+		<label class="m-0" style="float: left;">
+			&ensp;등록금 납부 고지대상
+		</label>
 	</div>
-	<p id="noticeCheck" style="float: left;">
-		<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;등록금
-		납부 고지대상
-	</p>
-	<br>
-	<br>
-	<div>
-		<input type="button" id="btn1" class="btn btn-secondary btn-sm"
-			value="등록금 고지" style="float: left">
-		<button id="checkboxAll">전체선택</button>
-		<p style="float: right; margin-right: 6px;">
+	<div class="col-10 align-self-end mb-2" style="text-align:end;">
+		<p class="m-0" style="float: right;">
 			[미고지 <span style="color: #001353; font-weight: bold;" id="cntSpan"></span>건]
 		</p>
 	</div>
-	<br>
-	<div class="card-body">
-		<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			<div class="row">
-				<div class="col-sm-12">
-					<table id="example2"
-						class="table table-bordered table-hover dataTable dtr-inline"
-						aria-describedby="example2_info">
-						<thead>
-							<tr>
-								<th class="sorting sorting_asc" tabindex="0"
-									aria-controls="example2" rowspan="1" colspan="1"
-									aria-sort="ascending"
-									aria-label="Rendering engine: activate to sort column descending">
-									NO.</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="Browser: activate to sort column ascending">
-									선택</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="Platform(s): activate to sort column ascending">
-									단과대</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending">
-									학과</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending">
-									학번</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									학년</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									학기</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									이름</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									고지현황</th>
-							</tr>
-						</thead>
-						<tbody id="BillList">
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+			<thead>
+				<tr class="text-center">
+					<th width="5%">No</th>
+					<th width="5%">선택</th>
+					<th width="15%">단과대학</th>
+					<th width="15%">학과</th>
+					<th width="10%">학번</th>
+					<th width="5%">학년</th>
+					<th width="5%">학기</th>
+					<th width="10%">이름</th>
+					<th width="10%">고지현황</th>
+				</tr>
+			</thead>
+			<tbody id="BillList" class="text-center">
+			</tbody>
+		</table>
 	</div>
-	<br>
-</body>
+</div>
+<div class="row mt-2">
+	<div class="form-group col-12 text-right">
+		<button class="btn btn-outline-secondary" id="checkboxAll">전체선택</button>
+		<button type="button" id="btn1" class="btn btn-outline-primary">등록금 고지</button>
+	</div>
+</div>
 
 <script type="text/javascript" defer="defer">
 
@@ -232,4 +176,3 @@ $(function(){
 	})
 });
 </script>
-</html>

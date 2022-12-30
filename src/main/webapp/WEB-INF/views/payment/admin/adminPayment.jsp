@@ -1,12 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>등록금 납부 관리</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <style>
 #allPayCnt td:first-child{
@@ -28,92 +22,51 @@
 	color : blue;
 }
 </style>
-</head>
-<body>
-	<div>
-		<i class="mdi mdi-home" style="font-size: 1.3em"></i>
-		<i class="dripicons-chevron-right"></i> 등록 및 장학 
-		<i class="dripicons-chevron-right"></i> <span>등록</span>
-		<i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">등록금 납부 관리</span>
+
+<div class="row p-0">
+	<div class="col-4 offset-8 text-right">
+		<table id='allPayCnt' class="table table-bordered">
+			<tr>
+				<td>납부되는 등록금 총액</td>
+				<td><fmt:formatNumber value="${payment.paySumfee}" pattern="#,###" /> (원)</td>
+			</tr>
+			<tr>
+				<td>납부된 등록금 총액</td>
+				<td><fmt:formatNumber value="${payment.paySumamt}" pattern="#,###" /> (원)</td>
+			</tr>
+		</table>
 	</div>
-	<br>
-	<br>
-	<p style="float: left;">
-		<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;전체
-		학생 등록금 납부 조회
-	</p>
-	<p style="float: right; margin-right: 6px;">
-		[총 <span style="color: #001353; font-weight: bold;" id="cntSpan"></span>건]
-	</p>
-	<br>
-	<div class="card-body">
-		<div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			<div class="row">
-				<div class="col-sm-12">
-					<table id="example2"
-						class="table table-bordered table-hover dataTable dtr-inline"
-						aria-describedby="example2_info">
-						<thead>
-							<tr>
-								<th class="sorting sorting_asc" tabindex="0"
-									aria-controls="example2" rowspan="1" colspan="1"
-									aria-sort="ascending"
-									aria-label="Rendering engine: activate to sort column descending">
-									NO.</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending">
-									단과대학</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="Engine version: activate to sort column ascending">
-									학번</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									이름</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									등록금(원)</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									장학금(원)</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									납부총액(원)</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									납부일</th>
-								<th class="sorting" tabindex="0" aria-controls="example2"
-									rowspan="1" colspan="1"
-									aria-label="CSS grade: activate to sort column ascending">
-									납부상태</th>
-							</tr>
-						</thead>
-						<tbody id="PaymentList">
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+</div>
+
+<div class="row">
+	<div class="align-self-end col-2 mb-2" style="text-align:end;">
+		<label class="m-0" style="float:left;"> &ensp;전체 학생 등록금 납부 조회 </label>
 	</div>
-	<table id='allPayCnt' border="1">
-		<tr>
-			<td>납부되는 등록금 총액</td>
-			<td><fmt:formatNumber value="${payment.paySumfee }"
-					pattern="#,###" /> (원)</td>
+	<div class="col-10 align-self-end mb-2" style="text-align:end;">
+		<p class="m-0" style="float:right;">
+			[총 <span style="color: #001353; font-weight: bold;" id="cntSpan"></span>건]
+		</p>
+	</div>
+</div>
+
+<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+	<thead>
+		<tr class="text-center">
+			<th width="5%">No</th>
+			<th width="15%">단과대학</th>
+			<th width="10%">학번</th>
+			<th width="10%">이름</th>
+			<th width="10%">등록금</th>
+			<th width="10%">장학금(원)</th>
+			<th width="10%">납부총액(원)</th>
+			<th width="10%">납부일</th>
+			<th width="10%">납부상태</th>
 		</tr>
-		<tr>
-			<td>납부된 등록금 총액</td>
-			<td><fmt:formatNumber value="${payment.paySumamt }"
-					pattern="#,###" /> (원)</td>
-		</tr>
-	</table>
-</body>
+	</thead>
+	<tbody id="PaymentList" class="text-center">
+	</tbody>
+</table>
+				
 <script type="text/javascript" defer="defer">
 	
 	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
@@ -136,10 +89,7 @@
 			
 			let str ="";
 			for(var i=0;i<data.length;i++){
-				if (data[i].payDt != null) {
-					let day = moment(data[i].payDt).format("yyyy-MM-DD");
-					data[i].payDt = day;
-				} else {
+				if (data[i].payDt == null) {
 					data[i].payDt = "-";
 				}
 				let fee = data[i].colFee;
@@ -189,4 +139,3 @@
 		}
 	});
 </script>
-</html>

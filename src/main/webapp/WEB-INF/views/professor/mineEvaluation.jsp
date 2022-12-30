@@ -85,7 +85,7 @@ $(function(){
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="10%">번호</th>
+					<th width="1%">No</th>
 					<th width="10%">강의번호</th>
 					<th width="10%">강의명</th>
 					<th width="10%">이수구분</th>
@@ -93,7 +93,7 @@ $(function(){
 					<th width="10%">상세</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="text-center">
 				<c:forEach var="mineEvlList" items="${mineEvlList}" varStatus="stat">
 					<tr>
 						<td>${stat.count}</td>
@@ -102,7 +102,7 @@ $(function(){
 						<td>${mineEvlList.lecaCate}</td>
 						<td>${mineEvlList.evlScore}</td>
 						<td>
-							<button class="btn btn-block btn-outline-info btn-sm btnDetail" 
+							<button class="btn btn-block btn-outline-secondary btn-sm btnDetail" 
 								value="${mineEvlList.lecaCd}" data-toggle="modal" data-target="#modal-lg">상세</button>
 						</td>
 					</tr>
