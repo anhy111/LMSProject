@@ -170,9 +170,9 @@ public class LectureBoardController {
 		if(this.lectureBoardService.submitCheck(stuNo, lecaCd, testCd) != null) {
 			Test test = this.lectureBoardService.submitCheck(stuNo, lecaCd, testCd);
 			int stCd = test.getStuTest().getStCd();
-			return "redirect:/lectureBoard/test/testResult?stCd="+stCd;
+			return "redirect:/lectureBoard/test/testResult?stCd="+stCd+"&&lecaCd="+lecaCd;
 		}
-		return "redirect:/lectureBoard/test/studentTestDetail?testCd="+ testCd;
+		return "redirect:/lectureBoard/test/studentTestDetail?testCd="+ testCd+"&&lecaCd="+lecaCd;
 	}
 	
 	//시험 추가 페이지

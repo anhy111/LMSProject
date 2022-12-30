@@ -148,10 +148,10 @@
                             class="nav-link">
                         <p>대나무숲</p>
                     </a></li>
-                    <li class="nav-item"><a
-                            href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link">
-                        <p>내가 듣는 강의 (임시. 지우지 마시오)</p>
-                    </a></li>
+<!--                     <li class="nav-item"><a -->
+<!--                             href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link"> -->
+<!--                         <p>내가 듣는 강의 (임시. 지우지 마시오)</p> -->
+<!--                     </a></li> -->
                    </sec:authorize>
                 
                 <!-- 교수 어사이드 -->
