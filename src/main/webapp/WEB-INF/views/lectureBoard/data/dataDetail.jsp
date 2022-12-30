@@ -14,7 +14,6 @@
 <div class="row">
 	<div class="col-sm-1" ></div>
 	<div class="col-sm-10" >
-			<div class="card card-outline card-primary">
 				<div class="card-header" style="padding-bottom:0px">
 						<div class="row form-group">
 							<div class="col-sm-8">
@@ -33,11 +32,9 @@
 								<input type="text" class="modifyDisplay form-control" id="ldtTtl" name="ldtTtl" value="${lecData.ldtTtl}" placeholder="제목을 입력하세요">
 						</div>
 				</div>
-				<div class="card-body">
 					<div class="col-sm-12">
 						<section class="content">
 							<div class="container-fluid">
-								<div class="card card-danger">
 										<div class="card-body"  >
 											<div>
 												<textarea id="ldtCon" name="ldtCon" class="form-control" cols="15" rows="15">${lecData.ldtCon}</textarea>
@@ -63,7 +60,6 @@
 													<label class="custom-file-label" for="customFile">Choose file</label>
 												</div>
 										</div>
-								</div>
 							</div>
 						</section>
 					</div>
@@ -88,8 +84,6 @@
 						<button  type="button" class="btn btn-outline-warning modifyDisplay" id="cancle">취소</button>
 					</div>
 				</div>
-			</div>
- 	</div>
 </div>
 </div>
 <sec:csrfInput/>
