@@ -82,7 +82,7 @@ CNSL_CON = #{cnslCon}
 WHERE CNSL_CD = #{cnslCd}
 </update>
 <!--  상담 삭제 -->
-<delete id="applyDelete" parameterType="Long">
+<delete id="applyDelete" parameterType="int">
 DELETE 
 FROM COUNSEL
 WHERE CNSL_CD = #{cnslCd}
@@ -123,7 +123,7 @@ AND P.PRO_NO = E.EMP_NO
 AND D.DEP_CD = P.DEP_CD
 </select>
 <!-- 교수의 상담내용 상세보기 -->
-<select id="answerDetail" parameterType="Long" resultType="Counsel">
+<select id="answerDetail" parameterType="int" resultType="Counsel">
 SELECT
  C.CNSL_CD
 ,S.STU_NM
@@ -137,7 +137,7 @@ WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
 </select>
 <!-- 교수의 상담 기록서 상세보기 -->
-<select id="answerNoteDetail" parameterType="Long" resultType="Counsel">
+<select id="answerNoteDetail" parameterType="int" resultType="Counsel">
 SELECT
  C.CNSL_CD
 ,C.CNSL_CATE
@@ -165,7 +165,7 @@ CNSL_RPL = #{cnslRpl}
 WHERE CNSL_CD =  #{cnslCd}
 </update>
 <!-- 상담번호에 따른 학생의 이름 -->
-<select id="studentNameByCounsels" parameterType="Long" resultType="String">
+<select id="studentNameByCounsels" parameterType="int" resultType="String">
 SELECT 
 S.STU_NM
 FROM COUNSEL C, STUDENT S

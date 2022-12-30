@@ -36,7 +36,7 @@ public class CounselServiceImpl implements CounselService {
 	}
 	//학생의 상담 삭제
 	@Override
-	public int applyDelete(Long cnslCd) {
+	public int applyDelete(int cnslCd) {
 		return this.counselMapper.applyDelete(cnslCd);
 		}
 	//교수의 상담목록 조회
@@ -51,18 +51,18 @@ public class CounselServiceImpl implements CounselService {
 	}
 	//교수의 비대면 답변상세
 	@Override
-	public Counsel answerDetail(Long cnslCd) {
+	public Counsel answerDetail(int cnslCd) {
 		return this.counselMapper.answerDetail(cnslCd);
 		}
 	//해당글의 학생명
 	@Override
-	public String studentNameByCounsels(Long cnslCd) {
+	public String studentNameByCounsels(int cnslCd) {
 		return this.counselMapper.studentNameByCounsels(cnslCd);
 	}
 	
 	//교수의 대면 상담 상세
 	@Override
-	public Counsel answerNoteDetail(Long cnslCd) {
+	public Counsel answerNoteDetail(int cnslCd) {
 		return this.counselMapper.answerNoteDetail(cnslCd);
 		}
 	//교수의 대면 상담 작성 및 업데이트
