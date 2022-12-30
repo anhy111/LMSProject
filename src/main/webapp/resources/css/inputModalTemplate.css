@@ -56,7 +56,6 @@ p{
   position: relative;
   vertical-align:middle;
   color: var(--primary);
-  background-color: var(--darkgray);
 }
 .segmented-control input {
   display: none;

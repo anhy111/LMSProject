@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script type="text/javascript" src="/resources/ckeditor/ckeditor.js"></script>
-<link rel="stylesheet" type="text/css" href="/resources/css/inputTemplate.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/inputModalTemplate.css">
 
 <%
 	int stuNo = (int) session.getAttribute("no");
@@ -14,7 +14,7 @@ tr.recordTr {
 	opacity: 1;
 	background-color: white;
 	color: black;
-	transition: background-color 1s;
+	transition: background-color 0.5s;
 	opacity
 	1s;
 }
@@ -24,30 +24,35 @@ tr.recordTr:hover {
 	opacity: 1;
 	background-color: blue;
 	color: white;
-	transition: background-color 1s;
+	transition: background-color 0.5s;
 	opacity
 	1s;
 }
 </style>
-<div class="container">
-	<div class="components">
+<div class="row">
+<div class="col-12 pr-0" style="text-align: end;">
+<button id="" class="btn btn-outline-primary"
+		data-toggle="modal" data-target="#applyCounsel">신청</button>
+</div>
+</div>
+<div class="modal fade show" id="applyCounsel"
+	style="display: none; padding-right: 17px;" aria-modal="true"
+	role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content" style="height: 900px;">
+		<div class="modal-header" style="background-color: #001F3F;color:white;">
+				<h5 class="modal-title">상담 신청</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true"style="color:white;">×</span>
+				</button>
+			</div>
 		<form id="form" action="/counsel/studentside/applyInsert"
 			method="post" onsubmit="return checkInsertData()">
-			<input type="hidden" name="stuNo" value="<%=stuNo%>"> <br>
+			<input type="hidden" name="stuNo" value="<%=stuNo%>">
 			<input type="hidden" id="recCd" name="recCd" value="0" />
-			<div class="col-12">
-				<div class="col-3">
-					<h1>
-						<label>상담 등록</label>
-					</h1>
-				</div>
-			</div>
-			<br>
 			<div class="row">
-				<br>
-
-				<div class="col-sm-2 segmented-control">
-
+				<div class="col-12 segmented-control">
 					<input type="radio" value="대면" id="tab-1" class="counselTypeFace"
 						name="cnslType" checked /> <label for="tab-1"
 						class="segmented-control__1">
@@ -57,10 +62,9 @@ tr.recordTr:hover {
 						class="segmented-control__2">
 						<p>비대면</p>
 					</label>
-
 					<div class="segmented-control__color"></div>
 				</div>
-				<div class="col-sm-6 segmented-control2">
+				<div class="col-12 segmented-control2">
 
 					<input type="radio" name="cnslCate" value="휴학" id="tab-3" checked />
 					<label for="tab-3" class="segmented-control__3">
@@ -84,14 +88,14 @@ tr.recordTr:hover {
 
 					<div class="segmented-control__color2"></div>
 				</div>
-				<div class="col-sm-2">
+				<div class="col-12">
 					<button style="border-radius: .5em;" type="button"
 						class="recordList cbtn btn__secondary" data-toggle="modal"
 						data-target="#modal-lg">
 						<label>학적 조회</label>
 					</button>
 				</div>
-				<div class="col-8" style="padding-top: 20px;">
+				<div class="col-12" style="padding-top: 20px;">
 					<div class="col-sm-4">
 						<label>담당 교수</label>
 					</div>
@@ -103,10 +107,6 @@ tr.recordTr:hover {
 						</select>
 					</div>
 				</div>
-				<br>
-				<!-- 		<div class="row"> -->
-				<br> <br>
-				<!----------------------------- 글제목 --------------------------->
 				<div class="col-12" style="padding-top: 20px;">
 					<div class="col-sm-6" id="cnslTitleTextBox"
 						style="padding-left: 0px;">
@@ -117,13 +117,13 @@ tr.recordTr:hover {
 							<input type="text" class="form__input" name="cnslTtl" required />
 						</div>
 					</div>
-					<br>
-					<div class="col-sm-6" id="cnslReservationDt"
+					 
+					<div class="col-12" id="cnslReservationDt"
 						style="padding-left: 0px;">
 						<div class="col-sm-2">
 							<label>예약일</label>
 						</div>
-						<div class="col-sm-6" style="display: -webkit-inline-box;">
+						<div class="col-12" style="display: -webkit-inline-box;">
 							<div class="alert alert-info">
 								<p id="target">상담 예약일</p>
 							</div>
@@ -132,7 +132,7 @@ tr.recordTr:hover {
 						</div>
 					</div>
 				</div>
-				<br> <br>
+				   
 				<div class="col-12" id="cnslConTextArea">
 					<div>
 						<div class="col-sm-4">
@@ -151,13 +151,13 @@ tr.recordTr:hover {
 					<a href="/counsel/studentside/applyList?stuNo=<%=stuNo%>"
 						class="cbtn btn__secondary"><label>목록</label></a>
 				</div>
-				<br>
+				 
 			</div>
 			<sec:csrfInput />
 		</form>
-	</div>
-	<!-- 모달 -->
-
+		</div></div></div>
+		
+	<!-- 학적 조회 모달 -->
 	<div class="modal fade" id="modal-lg" style="display: none;"
 		aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -216,9 +216,8 @@ tr.recordTr:hover {
 
 		</div>
 	</div>
-</div>
 
-<!-- 모달 -->
+<!-- 학적 조회 모달 -->
 <script type="text/javascript">
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
