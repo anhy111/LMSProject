@@ -123,7 +123,7 @@
 	console.log("header : " + header + ", token : " + token);
 	
 	$.ajax({
-		url:"/payment/adminPaymentList",
+		url:"/payment/admin/adminPaymentList",
 		dataType:'json',
 		type: "POST",
 		beforeSend: function (xhr) {

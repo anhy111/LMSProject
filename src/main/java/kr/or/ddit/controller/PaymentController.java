@@ -34,7 +34,7 @@ public class PaymentController {
 	private PaymentService paymentService;
 	
 	//등록금 목록 조회
-	@GetMapping("/collegeFeeList")
+	@GetMapping("/admin/collegeFeeList")
 	public String collegeFeeList(Model model){
 		List<Department> collegeFeeList = this.paymentService.collegeFeeList();
 		
@@ -42,19 +42,19 @@ public class PaymentController {
 		
 		model.addAttribute("collegeFeeList", collegeFeeList);
 		
-		return "payment/collegeFeeList";
+		return "payment/admin/collegeFeeList";
 	}
 	
 	//등록금 고지 관리
-	@GetMapping("/adminBill")
+	@GetMapping("/admin/adminBill")
 	public String adminBill() {
 		
-		return "payment/adminBill";
+		return "payment/admin/adminBill";
 	}
 	
 	//등록금 고지 관리 리스트
 	@ResponseBody
-	@PostMapping("/adminBillList")
+	@PostMapping("/admin/adminBillList")
 	public List<Payment> adminBillList() {
 		List<Payment> adminBillList = this.paymentService.adminBillList();
 		
@@ -65,7 +65,7 @@ public class PaymentController {
 	
 	//등록금 고지 관리 리스트 개수
 	@ResponseBody
-	@PostMapping("/adminBillCount")
+	@PostMapping("/admin/adminBillCount")
 	public int adminBillCount() {
 		int result = this.paymentService.adminBillCount();
 		
@@ -75,7 +75,7 @@ public class PaymentController {
 	}
 
 	//등록금 납부 관리
-	@GetMapping("/adminPayment")
+	@GetMapping("/admin/adminPayment")
 	public String adminPayment(Model model) {
 		Payment payment = this.paymentService.sumFee();
 		
@@ -83,12 +83,12 @@ public class PaymentController {
 		
 		model.addAttribute("payment", payment);
 		
-		return "payment/adminPayment";
+		return "payment/admin/adminPayment";
 	}
 	
 	//등록금 납부 관리 리스트
 	@ResponseBody
-	@PostMapping("/adminPaymentList")
+	@PostMapping("/admin/adminPaymentList")
 	public List<Payment> adminPaymentList() {
 		List<Payment> adminPaymentList = this.paymentService.adminPaymentList();
 		
@@ -98,17 +98,17 @@ public class PaymentController {
 	}
 	
 	//학생 등록금 납부내역 시작페이지
-	@GetMapping("/stuPaymentDetail")
+	@GetMapping("/stu/stuPaymentDetail")
 	public String stuPaymentDetail(Model model) {
 		
 		model.addAttribute("bodyTitle", "등록금 납부 내역");
 		
-		return "payment/stuPaymentDetail";
+		return "payment/stu/stuPaymentDetail";
 	}
 	
 	//학생 등록금 납부내역 리스트
 	@ResponseBody
-	@PostMapping("stuPaymentList")
+	@PostMapping("/stu/stuPaymentList")
 	public List<Payment> stuPaymentList(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int stuNo = (int)session.getAttribute("no");
@@ -122,7 +122,7 @@ public class PaymentController {
 
 	//학생 등록금 납부내역 미납금 확인
 	@ResponseBody
-	@PostMapping("billCount")
+	@PostMapping("/stu/billCount")
 	public int billCount(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int stuNo = (int)session.getAttribute("no");
@@ -134,22 +134,37 @@ public class PaymentController {
 		return cnt;
 	}
 	
-	//납부확인서 이동(관련 파라미터 넘긱기)
-	@GetMapping("/paymentConfirmation")
+	//학생 납부확인서 펼쳐라
+	@GetMapping("/stuForm/paymentConfirmation")
 	public String paymentConfirmation(HttpServletRequest request, Model model, int payCd) {
 		
 		HttpSession session = request.getSession();
 		int stuNo = (int)session.getAttribute("no");
 		
-		Student student = this.paymentService.paymentFormStuInfo(stuNo);
-		List<Payment> paymentList = this.paymentService.paymentFormInfo(payCd);
-		List<Department> departmentList = this.paymentService.paymentFormDepInfo(payCd);
+		HashMap<String,Integer>map = new HashMap<String, Integer>();
+		map.put("stuNo", stuNo);
+		map.put("payCd", payCd);
 		
-		model.addAttribute("student", student);
-		model.addAttribute("paymentList", paymentList);
-		model.addAttribute("departmentList", departmentList);
+		HashMap<String,Object> detail = this.paymentService.payMentDetail(map);
 		
-		return "payment/paymentConfirmation";
+		model.addAttribute("detail", detail);
+		
+		return "payment/stuForm/paymentConfirmation";
+	}
+
+	//학생 등록금 고지서 펼치기
+	@GetMapping("/stuForm/payingTuition")
+	public String payingTuition(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		int stuNo = (int)session.getAttribute("no");
+		
+		HashMap<String, Object> map = this.paymentService.payingTuition(stuNo);
+		map.put("stuNo", stuNo);
+
+		model.addAttribute("map",map);
+		
+		return "payment/stuForm/payingTuition";
 	}
 	
 }

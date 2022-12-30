@@ -89,10 +89,6 @@
 	<put-attribute name="body" value="/WEB-INF/views/counsel/{1}/{2}.jsp" />
 	</definition>
 
-	<definition name="payment/*" extends="tiles-layout">
-	<put-attribute name="body" value="/WEB-INF/views/payment/{1}.jsp" />
-	</definition>
-
 	<definition name="chart/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/chart/{1}.jsp" />
 	</definition>
@@ -109,12 +105,18 @@
 	<put-attribute name="body" value="/WEB-INF/views/customTemplates 복붙해서 쓰세요/{1}.jsp" />
 	</definition>
 	
-	<definition name="approval/*" extends="tiles-layout">
+	<definition name="payment/admin/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/payment/admin/{1}.jsp" />
+	</definition>
+
+	<definition name="payment/stu/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/payment/stu/{1}.jsp" />
+  </definition>
+
+  <definition name="approval/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/approval/{1}.jsp" />
 	</definition>
-	
-	
-	
+
 	<definition name="main/*" extends="mainPage">
 	<put-attribute name="body" value="/WEB-INF/views/main/{1}.jsp" />
 	</definition>
@@ -171,6 +173,10 @@
 	
 	<definition name="record/apply" extends="no-tiles">
 		<put-attribute name="body" value="/WEB-INF/views/record/apply.jsp" />
+	</definition>
+	
+	<definition name="payment/stuForm/*" extends="no-tiles">
+	<put-attribute name="body" value="/WEB-INF/views/payment/stuForm/{1}.jsp" />
 	</definition>
 
 </tiles-definitions>

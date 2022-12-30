@@ -115,7 +115,7 @@ color : green;
 	console.log("header : " + header + ", token : " + token);
 	
 	$.ajax({
-		url:"/payment/adminBillList",
+		url:"/payment/admin/adminBillList",
 		contentType: "application/json;charset=utf-8",
 		dataType:'json',
 		type: "POST",
@@ -169,7 +169,7 @@ color : green;
 	
 	//count 불러오기
 	$.ajax({
-		url: "/payment/adminBillCount",
+		url: "/payment/admin/adminBillCount",
 		type: "POST",
 		contentType: "application/json;charset=utf-8",
 		dataType: "JSON",
@@ -193,7 +193,7 @@ function submit(){
 		dataSet.push(tmp);
 	})
 	 $.ajax({
-	        url : "/payment/insert",
+	        url : "/payment/admin/insert",
 	        type : "POST",
 	        data : JSON.stringify(dataSet),
 	        contentType: 'application/json',

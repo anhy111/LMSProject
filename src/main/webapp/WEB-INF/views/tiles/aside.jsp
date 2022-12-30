@@ -113,12 +113,12 @@
                     </a>
                         <ul class="nav nav-treeview">
 
-                            <li class="nav-item"><a href="/payment/stuPaymentDetail"
+                            <li class="nav-item"><a href="/payment/stu/stuPaymentDetail"
                                                     class="nav-link">
                                 <p>등록금 납부 내역</p>
                             </a></li>
                             </a></li>
-                            <li class="nav-item"><a href="/payment/stuPaymentDetail" class="nav-link">
+                            <li class="nav-item"><a href="/payment/stu/stuPaymentDetail" class="nav-link">
                                 <p>장학금 수혜 내역</p>
                             </a></li>
                         </ul>
@@ -258,17 +258,17 @@
                                 </p>
                             </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item"><a href="/payment/collegeFeeList"
+                                    <li class="nav-item"><a href="/payment/admin/collegeFeeList"
                                                             class="nav-link">
 
                                         <p>등록금 목록 조회</p>
                                     </a></li>
-                                    <li class="nav-item"><a href="/payment/adminBill"
+                                    <li class="nav-item"><a href="/payment/admin/adminBill"
                                                             class="nav-link">
 
                                         <p>등록금 고지 관리</p>
                                     </a></li>
-                                    <li class="nav-item"><a href="/payment/adminPayment"
+                                    <li class="nav-item"><a href="/payment/admin/adminPayment"
                                                             class="nav-link">
 
                                         <p>등록금 납부 관리</p>

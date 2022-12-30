@@ -1,5 +1,6 @@
 package kr.or.ddit.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.or.ddit.domain.Department;
@@ -22,11 +23,8 @@ public interface PaymentService {
 
 	public int billCount(int stuNo);
 
-	public Student paymentFormStuInfo(int stuNo);
+	public HashMap<String,Object> payMentDetail(HashMap<String,Integer>map);
 
-	public List<Payment> paymentFormInfo(int payCd);
-
-	public List<Department> paymentFormDepInfo(int payCd);
-
+	public HashMap<String, Object> payingTuition(int stuNo);
 
 }

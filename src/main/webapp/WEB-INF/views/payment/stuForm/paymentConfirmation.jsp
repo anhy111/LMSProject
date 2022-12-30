@@ -51,7 +51,7 @@ body{
 	font-weight: bold;
 }
 #detailTab{
-	background-image: url("/resources/images/opacity_logo.png");
+	background-image: url("/resources/upload/연수대학교흰로고.png");
 	background-size : 250px;
 	background-repeat: no-repeat;
 	background-position : top center;
@@ -94,7 +94,7 @@ function savePdf() {
 						imgHeight);
 				heightLeft -= pageHeight;
 				// 파일 저장
-				doc.save('인재대학교_등록금_납부확인서.pdf');
+				doc.save('연수대학교_등록금_납부확인서.pdf');
 			});
 
 
@@ -110,19 +110,19 @@ function savePdf() {
 	<div class="card">
 		<div class="card-body">
 			<div id="header">등록금 납부 확인서</div>
-			<table border ="1" id="detailTab"><tr><td colspan="4" class="center">${detail.PAY_DT2}등록금</td>
+			<table border ="1" id="detailTab"><tr><td colspan="4" class="center">${detail.PAY_DATE}등록금</td>
 			<td class="center">구분</td><td class="center">등록금</td><td class="center">장학금액</td><td class="center">납입금액</td></tr>
 			<tr><td class="center">대학</td><td colspan="3">${detail.COL_NM}</td><td class="center">입학금</td><td class="right">0</td><td class="right">0</td><td class="right">0</td></tr>
 			<tr><td class="center">학과(전공)</td><td colspan="3">${detail.DEP_NM}</td><td class="center">수업료</td>
-			<td class="right">${detail.COL_FEE}</td><td class="right">${detail.SCHL_AMT}</td><td class="right">${detail.PAY_AMT}</td></tr>
-			<tr><td class="center">학번</td><td>${detail.STU_CD}</td><td class="center">학년</td><td class="center">${detail.PAY_SEM}</td>
+			<td class="right">${detail.COL_FEE}</td><td class="right">${detail.SCLH_AMT}</td><td class="right">${detail.PAY_AMT}</td></tr>
+			<tr><td class="center">학번</td><td>${detail.STU_NO}</td><td class="center">학년</td><td class="center">${detail.STU_YR}</td>
 			<td></td><td></td><td></td><td></td></tr>
-			<tr><td class="center">성명</td><td colspan="3">${MEM_NM}</td><td class="center">계</td><td class="right">${detail.COL_FEE}</td><td class="right">${detail.SCLH_AMT}</td>
+			<tr><td class="center">성명</td><td colspan="3">${detail.STU_NM}</td><td class="center">계</td><td class="right">${detail.COL_FEE}</td><td class="right">${detail.SCLH_AMT}</td>
 			<td class="right">${detail.PAY_AMT}</td></tr><tr><td class="center">납부일자</td><td colspan="7">${detail.PAY_DT}</td></tr>
 			<tr id="footer">
 				<td colspan="8">
-					<div class="center">인 재 대 학 교 수 입 징 수 관 </div>
-					<img class="markImg" alt="" src="/resources/images/mark.png">
+					<div class="center">연 수 대 학 교 수 입 징 수 관 </div>
+					<img class="markImg" alt="" src="/resources/upload/연수대도장2.png">
 				</td>
 			</tr>
 			</table>

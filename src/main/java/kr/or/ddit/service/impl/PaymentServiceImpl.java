@@ -1,5 +1,6 @@
 package kr.or.ddit.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,15 +54,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	
 	@Override
-	public Student paymentFormStuInfo(int stuNo) {
-		return this.paymentMapper.paymentFormStuInfo(stuNo);
+	public HashMap<String, Object> payMentDetail(HashMap<String,Integer>map) {
+		return this.paymentMapper.payMentDetail(map);
 	}
+	
 	@Override
-	public List<Payment> paymentFormInfo(int payCd) {
-		return this.paymentMapper.paymentFormInfo(payCd);
-	}
-	@Override
-	public List<Department> paymentFormDepInfo(int payCd) {
-		return this.paymentMapper.paymentFormDepInfo(payCd);
+	public HashMap<String, Object> payingTuition(int stuNo) {
+		return this.paymentMapper.payingTuition(stuNo);
 	}
 }
