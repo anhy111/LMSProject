@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -191,6 +192,7 @@ public class LectureBoardController {
 	}
 	
 	//시험 디테일(교수)
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@GetMapping("test/testDetail")
 	public String DetailTest(Model model,String testCd, String lecaCd) {
 		
@@ -336,6 +338,7 @@ public class LectureBoardController {
 	
 	
 	@GetMapping("score/totalScore")
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	public String stuAttend1(Model model, String lecaCd) {
 		LecApply lecApplySearch = this.lectureBoardService.lecApplySearch(lecaCd);
 		model.addAttribute("data", lecApplySearch);
@@ -344,6 +347,7 @@ public class LectureBoardController {
 	}
 	
 	//학생 성적 전체 리스트
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
 	@ResponseBody
 	@PostMapping("lecStuTotScore")
 	public List<Student> lecStuTotScore (@RequestBody String lecaCd) {
@@ -363,49 +367,52 @@ public class LectureBoardController {
 	}
 		
 		// 학생 성적 상세 리스트
-		@ResponseBody
-		@PostMapping("lecStuScoreDetail")
-		public List<Student> lecStuScoreDetail(int lecaCd, int stuNo) {
-			log.info("lecStuScoreDetail ajax 도착");
-			
-			log.info("lecaCd : " + lecaCd + " stuNo : " + stuNo);
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			
-			map.put("lecaCd", lecaCd);
-			map.put("stuNo", stuNo);
-			
-			List<Student> list = this.lectureBoardService.lecStuScoreDetail(map);
-			
-			return list;
-		}
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@ResponseBody
+	@PostMapping("lecStuScoreDetail")
+	public List<Student> lecStuScoreDetail(int lecaCd, int stuNo) {
+		log.info("lecStuScoreDetail ajax 도착");
+		
+		log.info("lecaCd : " + lecaCd + " stuNo : " + stuNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("lecaCd", lecaCd);
+		map.put("stuNo", stuNo);
+		
+		List<Student> list = this.lectureBoardService.lecStuScoreDetail(map);
+		
+		return list;
+	}
 		
 		// 학생 점수 및 총 점
-		@ResponseBody
-		@PostMapping("stuScoreandMaxScore")	
-		public Student stuScoreandMaxScore(int lecaCd, int stuNo) {
-			log.info("stuScoreandMaxScore ajax 도착");
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			
-			map.put("lecaCd", lecaCd);
-			map.put("stuNo", stuNo);
-			
-			Student vo = this.lectureBoardService.getStuScoreAndMaxScore(map);
-			
-			return vo;
-		}
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@ResponseBody
+	@PostMapping("stuScoreandMaxScore")	
+	public Student stuScoreandMaxScore(int lecaCd, int stuNo) {
+		log.info("stuScoreandMaxScore ajax 도착");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("lecaCd", lecaCd);
+		map.put("stuNo", stuNo);
+		
+		Student vo = this.lectureBoardService.getStuScoreAndMaxScore(map);
+		
+		return vo;
+	}
 		
 		// 성적 부여
-		@ResponseBody
-		@PostMapping("stuGradeUpdate")
-		public int stuGradeUpdate(StudentLecture stuLec) {
-			log.info("stuGradeUpdate ajax 도착");
-			
-			int result = this.lectureBoardService.stuGradeUpdate(stuLec);
-			
-			return result;
-		}
+	@PreAuthorize("hasRole('ROLE_PROFESSOR')")
+	@ResponseBody
+	@PostMapping("stuGradeUpdate")
+	public int stuGradeUpdate(StudentLecture stuLec) {
+		log.info("stuGradeUpdate ajax 도착");
+		
+		int result = this.lectureBoardService.stuGradeUpdate(stuLec);
+		
+		return result;
+	}
 		
 	
 	
