@@ -1,7 +1,6 @@
 package kr.or.ddit.service;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
-import kr.or.ddit.util.Page;
 
 import java.util.List;
 
