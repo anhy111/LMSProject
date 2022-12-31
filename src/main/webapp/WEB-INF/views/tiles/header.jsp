@@ -12,31 +12,26 @@
 	String no = String.valueOf(session.getAttribute("no"));
 	String pic = String.valueOf(session.getAttribute("pic"));
 %>
-<style>
-.info,.nav-link{
-color:white;
-}
-</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
-let tid;
-let cnt = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
+let logoutTid;
+let logoutTime = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
 // var socket = null;
 
 function counter_init(){
-	tid =setInterval("counter_run()", 990);
+	logoutTid =setInterval("counter_run()", 990);
 }
 
 function counter_run(){
-	document.all.counter.innerText = time_format(cnt);
-	cnt--;
+	document.all.counter.innerText = time_format(logoutTime);
+	logoutTime--;
 	
-	if(cnt < 5){
+	if(logoutTime < 5){
 		$("#session").css("display", "block");
 	}
 	
-	if(cnt < 0){
-		clearInterval(tid);
+	if(logoutTime < 0){
+		clearInterval(logoutTid);
 		$("#logoutFrm").submit();
 	}
 }
@@ -101,12 +96,12 @@ $(function(){
 		position: absolute;
 		padding: 8px;
 		left: 0;
-		-webkit-border-radius: 8px;
-		-moz-border-radius: 8px;
+		bottom: -65px;
 		border-radius: 8px;
-		background: #333;
+		background: #dcdcdc;
 		color: #fff;
 		font-size: 14px;
+		opacity:0.9;
 	}
 	
 	.arrow_box1:after {
@@ -118,22 +113,23 @@ $(function(){
 	  margin-left: -10px;
 	  border: solid transparent;
 	  border-color: rgba(51, 51, 51, 0);
-	  border-bottom-color: #333;
+	  border-bottom-color: #dcdcdc;
 	  border-width: 10px;
 	  pointer-events: none;
 	  content: ' ';
+	  opacity:0.9;
 	}
 	.arrow_box2 {
 	  display: none;
 	  position: absolute;
 	  padding: 8px;
-	  left: 0;
-	  -webkit-border-radius: 8px;
-	  -moz-border-radius: 8px;
+	  right: 175px;
+	  bottom: -50px;
 	  border-radius: 8px;
-	  background: #333;
+	  background: #dcdcdc;
 	  color: #fff;
 	  font-size: 14px;
+	  opacity:0.9;
 	}
 	
 	.arrow_box2:after {
@@ -145,10 +141,11 @@ $(function(){
 	  margin-left: -10px;
 	  border: solid transparent;
 	  border-color: rgba(51, 51, 51, 0);
-	  border-bottom-color: #333;
+	  border-bottom-color: #dcdcdc;
 	  border-width: 10px;
 	  pointer-events: none;
 	  content: ' ';
+	  opacity:0.9;
 	}
     
     span:hover + p.arrow_box1 {
@@ -178,7 +175,7 @@ $(function(){
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
-			<div class="nav-link">
+			<div class="nav-link" style="color:white;">
 				<div class="row">
 					<span id="counter" style="padding-right:7px;"></span>
 					<div class="text-center" style="width:15px;">
@@ -196,7 +193,7 @@ $(function(){
 						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
-					<div class="info">
+					<div class="info" style="color:white;">
 						<%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=department %> 
 					</div>
 				</div>
@@ -205,7 +202,13 @@ $(function(){
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 			<div class="nav-link" style="color:white;">
-				<span id="counter"></span>
+				<div class="row">
+					<span id="counter" style="padding-right:7px;"></span>
+					<div class="text-center" style="width:15px;">
+						<span class="fas fa-sync-alt" id="refresh"></span>
+						<p class="arrow_box1">시간 연장</p>
+					</div>
+				</div>
 			</div>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
@@ -216,7 +219,7 @@ $(function(){
 						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
-					<div class="info">
+					<div class="info" style="color:white;">
 						<%=name %> 교수 &nbsp;&nbsp; | &nbsp;&nbsp;<%=position %> 
 					</div>
 				</div>
@@ -224,7 +227,13 @@ $(function(){
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
 			<div class="nav-link" style="color:white;">
-				<span id="counter"></span>
+				<div class="row">
+					<span id="counter" style="padding-right:7px;"></span>
+					<div class="text-center" style="width:15px;">
+						<span class="fas fa-sync-alt" id="refresh"></span>
+						<p class="arrow_box1">시간 연장</p>
+					</div>
+				</div>
 			</div>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
@@ -235,7 +244,7 @@ $(function(){
 						<img src="/upload<%=pic%>"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
-					<div class="info">
+					<div class="info" style="color:white;">
 						 <%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=division %>&nbsp;&nbsp; | &nbsp;&nbsp;<%=position %>  
 					</div>
 				</div>
@@ -291,27 +300,3 @@ $(function(){
 </nav>
 <!-- /.navbar -->
 
-<!-- 세션 타임아웃 모달 -->
-<div class="modal fade" id="session" style="display: none;"
-	aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">로그인 시간 연장</h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<p>One fine body…</p>
-			</div>
-			<div class="modal-footer justify-content-between">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-
-	</div>
-
-</div>

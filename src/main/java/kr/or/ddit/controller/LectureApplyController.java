@@ -46,7 +46,9 @@ public class LectureApplyController {
   
   	//강의계획서 조회 페이지
 	@GetMapping("/lecApply/inquiry")
-	public String inquiry() {
+	public String inquiry(Model model) {
+		
+		model.addAttribute("bodyTitle", "강의계획서 관리");
 		
 		return "professor/lecApply/inquiry";
 	}

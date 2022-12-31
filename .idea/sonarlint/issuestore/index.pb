@@ -31,8 +31,6 @@ e
 5src/main/webapp/WEB-INF/mybatisAlias/mybatisAlias.xml,0\2\02e38ac296a17323bde8602b819a5c8eae112772
 \
 ,src/main/java/kr/or/ddit/domain/qna/Qna.java,1/c/1c9b80a4667dd7067f0d356071eed1b662c90253
-g
-7src/main/java/kr/or/ddit/mapper/LectureBoardMapper.java,6/5/6543d6d3dfbecda761af5a2437eaadd43d3226e3
 i
 9src/main/java/kr/or/ddit/service/LectureBoardService.java,b/0/b06cb052299f16d1df43f9cb19fe69f8e8536335
 r
@@ -47,10 +45,6 @@ U
 %.idea/artifacts/ddit_war_exploded.xml,9/b/9b56395857f92e588f54d5a575ebfd5be4420f43
 8
 ddit.iml,a/c/ac6efc63cea9732ec6f285d5863d05fc8d0baea9
-^
-.src/main/java/kr/or/ddit/util/EchoHandler.java,1/d/1dadabc68555c01afacc4d7919bacad2c6801c30
-j
-:src/main/java/kr/or/ddit/domain/qna/qnareply/QnaReply.java,c/8/c8ca8d636be1035945f1946d37339bd70bd1846d
 c
 3src/main/java/kr/or/ddit/controller/NoticeForm.java,5/2/523c3a4867d4f8f7e9d3dd6fea4aac652d84e85e
 \

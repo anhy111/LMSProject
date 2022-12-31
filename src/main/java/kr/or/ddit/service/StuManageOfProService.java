@@ -18,4 +18,6 @@ public interface StuManageOfProService{
 
 	public Student schStuRcmd(Map<String, String> map);
 
+	public List<Student> myStuSearch(Map<String, String> map);
+
 }

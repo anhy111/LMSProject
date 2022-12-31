@@ -9,111 +9,70 @@
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <!-- 공통 css 파일 임포트  -->
 <link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
-	<div>
-    	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 강의개설관리 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">강의계획서 조회</span>
-  	</div>
-  	<div class="row" id="keywardBox">
-	  	<div class="col-2">
-			<input type="text" class="form-control" placeholder="교번" id="proNo" name="proNo" readonly="readonly">
-		</div>
-	  	<div class="col-2">
-			<input type="text" class="form-control" placeholder="성명" id="empNm" name="empNm" readonly="readonly">
-		</div>
-	  	<div class="col-2">
-			<input type="text" class="form-control" placeholder="연락처" id="empTel" name="empTel" readonly="readonly">
-		</div>
-	</div>
-  	<div class="row" id="keywardBox">
-	  	<div class="col-2">
-			<input type="text" class="form-control" placeholder="소속" id="depNm" name="depNm" readonly="readonly">
-		</div>
-	  	<div class="col-2">
-			<input type="text" class="form-control" placeholder="직책" id="proPos" name="proPos" readonly="readonly">
-		</div>
-	  	<div class="col-2">
-			<input type="text" class="form-control" placeholder="재직상태" id="empRet" name="empRet" readonly="readonly">
-		</div>
-	  	<div class="col-2">
-			<input type="text" class="form-control" placeholder="생년월일" id="empReg" name="empReg" readonly="readonly">
-		</div>
-		<sec:csrfInput/>
-	</div>
 
+<div class="row mt-4">
+	<table class="table table-sm text-center col p-0 myinfo">
+		<tbody>
+			<tr>
+				<th width="12.5%">교번</th>
+				<td width="12.5%" id="proNo"></td>
+				<th width="12.5%">성명</th>
+				<td width="12.5%" id="empNm"></td>
+				<th width="12.5%">연락처</th>
+				<td width="12.5%" id="empTel"></td>
+				<th width="12.5%">소속</th>
+				<td width="12.5%" id="depNm"></td>
+			</tr>
+			<tr>
+				<th>직책</th>
+				<td id="proPos"></td>
+				<th>재직상태</th>
+				<td id="empRet"></td>
+				<th>생년월일</th>
+				<td id="empReg"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 	<br>
 
-	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의계획서
-	<p id="tellCnt">
+<div class="row">
+	<div class="form-group col-2" style="margin-bottom:0.4rem;">
+		<label>연도/학기</label>
+		<select class="form-control" name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
+			<option value="">전체</option>
+		</select>
+	</div>
+	<div id="tellCnt" class="col-10 align-self-end mb-2" style="text-align:end;">
 		[총 <span id="cntSpan"></span>건]
-	</p>
-
-	<br>
-
-	<div id="tgradeYellowBox" style="height:47px;">
-		<label>년도/학기
-			<select name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
-				<option value="">전체</option>
-			</select>
-		</label>
-		<button type="button" class="btn btn-primary" id="newLecApplyBtn">신규강의계획서 작성</button>
 	</div>
-
+</div>
 	<!-- 계획서 리스트 -->
-	<div class="card">
-		<div class="card-body">
-			<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-				<div class="row">
-					<div class="col-sm-12">
-						<table id="example1"
-							class="table table-bordered table-striped dataTable dtr-inline"
-							aria-describedby="example1_info">
-							<thead>
-								<tr>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Rendering engine: activate to sort column ascending"
-										cursorshover="true">년도/학기</th>
-									<th class="sorting sorting_desc" tabindex="0"
-										aria-controls="example1" rowspan="1" colspan="1"
-										aria-label="Browser: activate to sort column ascending"
-										cursorshover="true" aria-sort="descending">학년</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending"
-										cursorshover="true">강의명</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="Engine version: activate to sort column ascending"
-										cursorshover="true">제한인원</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending"
-										cursorshover="true">개설이수구분</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending"
-										cursorshover="true">학점</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending"
-										cursorshover="true">강의시간/강의실</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending"
-										cursorshover="true">성적평가방식</th>
-									<th class="sorting" tabindex="0" aria-controls="example1"
-										rowspan="1" colspan="1"
-										aria-label="CSS grade: activate to sort column ascending"
-										cursorshover="true">계획서 상태</th>
-								</tr>
-							</thead>
-							<tbody id="proList">
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
+			<thead> <!-- css 수정 -->
+				<tr class="text-center">
+					<th width="10%">년도/학기</th>
+					<th width="5%">학년</th>
+					<th width="20%">강의명</th>
+					<th width="5%">제한인원</th>
+					<th width="15%">개설이수구분</th>
+					<th width="5%">학점</th>
+					<th width="20%">강의시간/강의실</th>
+					<th width="10%">성적평가방식</th>
+					<th width="10%">계획서 상태</th>
+				</tr>
+			</thead>
+			<tbody id="proList" class="text-center">
+			</tbody>
+		</table>
 	</div>
+</div>
+<div class="form-group text-right">
+	<button type="button" class="btn btn-primary" id="newLecApplyBtn">신규강의계획서 작성</button>
+</div>
+
 <script type="text/javascript">
 
 	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
@@ -234,13 +193,13 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success: function (data) {
-				$('#proNo').val(data.proNo);
-				$('#empNm').val(data.empNm);
-				$('#empTel').val(data.empTel);
-				$('#proPos').val(data.proPos);
-				$('#depNm').val(data.depNm);
-				$('#empRet').val(data.empRet);
-				$('#empReg').val(data.empReg);
+				$('#proNo').html(data.proNo);
+				$('#empNm').html(data.empNm);
+				$('#empTel').html(data.empTel);
+				$('#proPos').html(data.proPos);
+				$('#depNm').html(data.depNm);
+				$('#empRet').html(data.empRet);
+				$('#empReg').html(data.empReg);
 
 			}
 		});
@@ -319,4 +278,3 @@
 		window.open("/professor/lecApplyForm/requestForm", "lecApplyForm", "width=1000, height=800, left=100, top=50");
 	});
 </script>
-</html>

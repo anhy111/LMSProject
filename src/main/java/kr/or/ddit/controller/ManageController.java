@@ -72,6 +72,18 @@ public class ManageController {
 
 		return "manage/stuManage";
 	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_PROFESSOR')")
+	@PostMapping("/manage/stuSearch")
+	@ResponseBody
+	public List<Student> stuSearch(@RequestBody Map<String, String> map) {
+		
+		List<Student> stuSearch = this.manageService.stuSearch(map);
+		log.info("휴 어떻게 온담" + stuSearch);
+		
+		return stuSearch;
+		
+	}
 
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR', 'ROLE_MANAGER')")
 	@PostMapping("/manage/detailStu")
@@ -130,22 +142,22 @@ public class ManageController {
 	}
 	
 	
-	
 	@GetMapping("/manage/recordManage")
-	public String academicStatus(Model model) {
+	public String recordManage(Model model) {
 		
 		model.addAttribute("bodyTitle", "휴복학 관리");
 		
 		return "manage/recordManage";
 	}
 	
-	@GetMapping("/manage/recordList")
+	@PostMapping("/manage/recordSearch")
 	@ResponseBody
-	public List<Student> list(){
+	public List<Student> recordSearch(@RequestBody Map<String, String> map){
 		
-		List<Student> recordManage = this.manageService.recordManage();
+		List<Student> recordSearch = this.manageService.recordSearch(map);
 		
-		return recordManage;
+		return recordSearch;
+		
 	}
 	
 	@PostMapping("/manage/recordManagePost")

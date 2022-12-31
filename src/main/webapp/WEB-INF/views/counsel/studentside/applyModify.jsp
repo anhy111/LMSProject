@@ -8,33 +8,34 @@
     border: 50px inset aliceblue;
     padding: 20px;
 ">
-		<div class="col-12" >
-			<h3><label>상담글 확인</label></h3> <br>
-				<input type="hidden"  id="cnslCd"  value="${answerDetail.cnslCd }" readonly>
-				<div class="col-6">
-				<h5><label>상담제목</label></h5><br>
-				<input type="text"  value="${answerDetail.cnslTtl }" />
+				<input type="hidden"  id="modifyCnslCd"  value="${answerDetail.modifyCnslCd }" readonly>
+				<div class="form-group col-12">
+				<div class="col-sm-4">
+							<label>제목</label>
+						</div>
+				<input type="text"  class="col-6 form-control form-control-border-rounded-0"  value="${answerDetail.cnslTtl }" />
+				</div>
+				<div class="form-group col-12">
+						<div class="col-sm-4">
+							<label>상담 내용</label>
+						</div>
+					<div class="row">
+				<textarea rows="5"   id="modifyCnslCon" class="col-10 ml-2 form-control">${answerDetail.modifyCnslCon }</textarea>
+					</div>
 				</div>
 				<br>
-				<div class="col-6">
-				<h5><label>상담내용</label></h5><br>
-				<textarea rows="5" cols="50"  id="cnslCon">${answerDetail.cnslCon }</textarea>
-				</div>
-				<br>
-				<button onclick="modifyCont()" type="button" class="btn btn-sm btn-outline-primary">수정하기</button>
-				<button onclick="closeApply()" type="button" class="btn btn-sm btn-outline-warning">취소</button>
-				<button onclick="deleteApply()" type="button" class="btn btn-sm btn-outline-danger">삭제</button>
-		</div>
+				<button onclick="modifyCont()" type="button" class="btn btn-outline-primary">수정하기</button>
+				<button onclick="deleteApply()" type="button" class="btn btn-outline-danger">삭제</button>
 	</div>
 </div>
 <script type="text/javascript">
-let cnslCon,cnslCd = "";
+let modifyCnslCon,modifyCnslCd = "";
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
-let data = {cnslCd : "",cnslCon : ""};
+let data = {modifyCnslCd : "",modifyCnslCon : ""};
 function modifyCont(){
-	data.cnslCd = $("#cnslCd").val();
-	data.cnslCon = $("#cnslCon").val();
+	data.modifyCnslCd = $("#modifyCnslCd").val();
+	data.modifyCnslCon = $("#modifyCnslCon").val();
 	$.ajax({
 		url:"/counsel/studentside/applyModify",
 		type:'POST',
@@ -51,7 +52,7 @@ function modifyCont(){
 	});
 }
 function deleteApply(){
-	data.cnslCd = $("#cnslCd").val();
+	data.modifyCnslCd = $("#modifyCnslCd").val();
 	$.ajax({
 		url:"/counsel/studentside/deleteApply",
 		type:'POST',

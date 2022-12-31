@@ -645,6 +645,15 @@
 		AND LECA_CD = #{lecaCd}
 	</update>
 	
+	<select id="stuLecScoreSearch" parameterType="String" resultType="stuLec">
+	select sl_score
+	from stu_lec
+	where stu_no = #{stuNo}
+			and leca_cd = #{lecaCd} 
+	
+	</select>
+	
+	
 	
 	
 	

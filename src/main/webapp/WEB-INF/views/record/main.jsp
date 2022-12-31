@@ -443,6 +443,7 @@ cursor:pointer;
 			  });
 			});
 		})
+		
 		$("#modifyApply").on("click",function(){
 			if($("#modifyRecPer option:selected").val() == $("#modifyRecPer option:eq(0)").val()){
 				  Swal.fire({

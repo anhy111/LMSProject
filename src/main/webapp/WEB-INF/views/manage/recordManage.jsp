@@ -25,64 +25,84 @@ function fn_add(data){
 	
 }
 
-function fn_list(){
+
+function loadSearchList(){
 	
+	let record = $("#record").val();
+	let approval = $("#approval").val();
+	let yr = $("#yr").val();
+	let sem = $("#sem").val();
+	let name = $("#name").val();
+	
+	
+	let data = {
+		rgbCd : record,
+		recYn : approval,
+		recYr : yr,
+		recSem : sem,
+		stuNm : name
+	};
+
+
 	$.ajax({
-		type: 'get',
-		url: '/manage/recordList',
-		beforeSend:function(xhr){
+		url : "/manage/recordSearch",
+		type : "post",
+		data : JSON.stringify(data),
+		contentType : "application/json; charset=utf-8",
+		beforeSend : function(xhr) {
 			xhr.setRequestHeader(header, token);
 		},
-		success :function(data){
-// 			console.log("성공이라해주라 ", data);
-			
+		success : function(result) {
+			$("#list").html("");
 			let str = "";
 			
-			$.each(data,function(index,student){
-// 				console.log("index는?? " + index + " student는?? ", student);
+// 			console.log("result" + result);
+			
+			if(result.length == 0){
+				str = "<tr class='text-center p-0'>";
+				str += "<td colspan='11'>검색된 내용이 없습니다.</td>";
+				str += "</tr>";
+				$("#list").html(str);
+				return;
+			}
+			$.each(result,function(index, student){
 				
 				str += `
-				<tr>
-					<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">\${index+1}</td>
-					<td class="detailStu">\${student.stuNo}</td>
-					<td>\${student.stuNm}</td>
-					<td>
-						<div class="image">
-							\${student.recYr}년 \${student.recSem}학기
-						</div>
-					</td>
-					<td>\${student.rgbCd}</td>
-					<td id="YOrN\${index}">\${student.recYn}</td>
-					<td><button alt="\${student.recYn}"
-							class="btn btn-block btn-outline-info btn-sm btnDetail"
-							value="\${student.recCd}" data-toggle="modal" data-target="#modal-lg" >상세</button></td>
-				</tr> `;
-				
+					<tr>
+						<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">\${index+1}</td>
+						<td class="detailStu">\${student.stuNo}</td>
+						<td>\${student.stuNm}</td>
+						<td>
+							<div class="image">
+								\${student.recYr}년 \${student.recSem}학기
+							</div>
+						</td>
+						<td>\${student.rgbCd}</td>
+						<td id="YOrN\${index}">\${student.recYn}</td>
+						<td><button alt="\${student.recYn}"
+								class="btn btn-block btn-outline-info btn-sm btnDetail"
+								value="\${student.recCd}" data-toggle="modal" data-target="#modal-lg" >상세</button></td>
+					</tr> `;
+					
 			});
+			$("#list").append(str);
 			
-			$("#list").html(str);
-			
-			for(let i=0;i<data.length; i++){
+			for(let i=0;i<result.length; i++){
 				if($("#YOrN"+i).html()=="승인"){
 					$("#YOrN"+i).css("color", "blue");
 				}else if($("#YOrN"+i).html()=="반려"){
 					$("#YOrN"+i).css("color", "red");
 				}
 			}
-			
-			
-		},
-		error:function(request, status, error){
-			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
-		
 	});
-	
 }
 
 $(function(){
 	
-	fn_list();
+	loadSearchList();
+	
+	$("#search").on("click",loadSearchList);
 	
 	$(document).on("click", ".btnDetail", function(){
 		
@@ -330,6 +350,52 @@ $(function(){
 });
 
 </script>
+
+<!-- 학생 검색 -->
+<div class="row mt-3 ml-1">
+	<div class="form-group col-2 pl-0">
+		<select id="record" class="form-control" style="width: 100%;">
+			<option value="">학적 구분</option>
+			<option value="RCD001">휴학</option>
+			<option value="RCD003">복학</option>
+			<option value="RCD004">자퇴</option>
+			<option value="RCD005">졸업</option>
+		</select>
+	</div>
+	<div class="form-group col-2">
+		<select id="approval" class="form-control" style="width: 100%;">
+			<option value="">승인 여부</option>
+			<option value="AP001">승인</option>
+			<option value="AP002">승인대기</option>
+			<option value="AP003">반려</option>
+		</select>
+	</div>
+	<div class="form-group col-2 ">
+		<select id="yr" class="form-control" style="width: 100%;">
+			<option value="">신청연도</option>
+			<option value="2022">2022</option>
+			<option value="2021">2021</option>
+			<option value="2020">2020</option>
+			<option value="2019">2019</option>
+			<option value="2012">2012</option>
+		</select>
+	</div>
+	<div class="form-group col-2 ">
+		<select id="sem" class="form-control" style="width: 100%;">
+			<option value="">신청 학기</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+		</select>
+	</div>
+	<div class="form-gruop col-3">
+		<input id="name" type="text" class="form-control" placeholder="학생 이름" />
+	</div>
+
+	<div class="form-group col-1">
+		<button id="search" type="button" class="btn btn-primary" value="">검색</button>
+	</div>
+</div>
+
 <div style="text-align:center;">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
@@ -496,3 +562,4 @@ $(function(){
 		</div>
 	</div>
 </div>
+

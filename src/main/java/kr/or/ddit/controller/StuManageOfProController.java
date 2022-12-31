@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.SclHistory;
 import kr.or.ddit.domain.Student;
+import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.ManageService;
 import kr.or.ddit.service.StuManageOfProService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,8 @@ public class StuManageOfProController {
 
 	@Autowired
 	StuManageOfProService stuManageOfProService;
-	
+	@Autowired
+	CollegeService collegeService;
 	@Autowired
 	ManageService manageService;
 	
@@ -39,17 +42,30 @@ public class StuManageOfProController {
 		log.info("모가문젠데 controller " + depCd);
 		
 		List<Student> stuList = this.stuManageOfProService.stuList(depCd);
+		List<College> collegeList = this.collegeService.CollegeList();
 		
 		model.addAttribute("list", stuList);
 		model.addAttribute("bodyTitle", "학생목록조회");
+		model.addAttribute("collegeList", collegeList);
 		
 		return "professor/stuManage/stuManageOfPro";
+	}
+	
+	@PostMapping("/professor/myStuSearch")
+	@ResponseBody
+	public List<Student> myStuSearch(@RequestBody Map<String, String> map){
+		
+		List<Student> myStuSearch = this.stuManageOfProService.myStuSearch(map);
+		
+		return myStuSearch;
 	}
 	
 	//학생 상세
 	@PostMapping("/professor/detailStu")
 	@ResponseBody
 	public Student detailStu(@RequestBody Map<String, String> map) {
+		
+		log.info(map.get("detailStu"));
 
 		Student detailStu = this.manageService.detailStu(map);
 		
@@ -92,11 +108,24 @@ public class StuManageOfProController {
 	@ResponseBody
 	public Student schStuRcmd(@RequestBody Map<String,String> map) {
 		
+		log.info(map.get("stuNo"));
+		
 		Student schStuRcmd = this.stuManageOfProService.schStuRcmd(map);
 		log.info("추천내용나오냐 " + schStuRcmd);
 		
 		return schStuRcmd;
 		
+	}
+	
+	//나의 받은 장학 내역
+	@PostMapping("/professor/stuSclList")
+	@ResponseBody
+	public List<SclHistory> stuSclList(@RequestBody Map<String,String> map) {
+		
+		List<SclHistory> stuSclList = this.stuManageOfProService.stuSclList(map);
+		log.info("학생이 받은 장학 내역은 ? " + stuSclList);
+		
+		return stuSclList;
 	}
 	
 	

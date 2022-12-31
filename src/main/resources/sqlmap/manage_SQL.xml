@@ -31,6 +31,47 @@
 		AND S.PRO_NO = E.EMP_NO
 	</select>
 	
+	<select id="stuSearch" parameterType="map" resultType="student">
+		SELECT 	S.STU_NO
+				, S.DEP_CD
+				, S.STU_YR
+				, S.STU_SEM
+				, S.STU_NM
+				, S.STU_NME
+				, S.STU_TEL
+				, S.STU_ZIP
+				, S.STU_ADDR1
+				, S.STU_ADDR2
+				, S.STU_REG
+				, S.STU_BANK_CD
+				, S.STU_DEPO
+				, S.STU_ACT
+				, S.STU_PIC
+				, S.STU_BIR
+				, S.PRO_NO
+				, D.DEP_CD
+				, D.DEP_NM
+				, C.COL_CD
+				, C.COL_NM
+				, E.EMP_NM
+		FROM STUDENT S, DEPARTMENT D, COLLEGE C, EMPLOYEE E
+		WHERE S.DEP_CD = D.DEP_CD
+		AND D.COL_CD = C.COL_CD
+		AND S.PRO_NO = E.EMP_NO
+        <if test="colCd > 0">
+			AND C.COL_CD = #{colCd}
+		</if>
+        <if test="depNm != null and depNm != ''">
+			AND D.DEP_NM LIKE '%' || #{depNm} || '%'
+		</if>
+		<if test="stuNo > 0">
+			AND S.STU_NO LIKE '%' || #{stuNo} || '%'
+		</if>
+		<if test="stuNm != null and stuNm != ''">
+			AND S.STU_NM LIKE '%' || #{sutNm} || '%'
+		</if>
+	</select>
+	
 	<select id="detailStu" parameterType="map" resultType="student">
 		SELECT 	S.STU_NO
 				, S.DEP_CD
@@ -91,6 +132,38 @@
 		        , S.DEP_CD = (SELECT DEP_CD FROM DEPARTMENT WHERE DEP_CD=#{depCd})
 		WHERE S.STU_NO = #{stuNo}
 	</update>
+	
+	<select id="recordSearch" parameterType="map" resultType="student">  
+		SELECT  S.STU_NO
+		        ,S.STU_NM
+		        ,D.DEP_NM
+		        ,R.REC_CD
+		        ,R.REC_YR
+		        ,R.REC_SEM
+		        ,(SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
+		        ,R.REC_PER
+		        ,R.REC_RSN
+		        ,R.REC_DT
+		        ,(SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
+		FROM STUDENT S, DEPARTMENT D, RECORD R
+		WHERE S.DEP_CD = D.DEP_CD
+		AND S.STU_NO = R.STU_NO
+		<if test="rgbCd != null and rgbCd != ''">
+			AND R.RGB_CD = #{rgbCd}
+		</if>
+        <if test="recYn != null and recYn != ''">
+			AND R.REC_YN = #{recYn}
+		</if>
+		<if test="recYr > 0">
+			AND R.REC_YR LIKE '%' || #{recYr} || '%'
+		</if>
+		<if test="recSem != null and recSem != ''">
+			AND R.REC_SEM LIKE '%' || #{recSem} || '%'
+		</if>
+		<if test="stuNm != null and stuNm != ''">
+			AND S.STU_NM LIKE '%' || #{sutNm} || '%'
+		</if>
+	</select>
 	
 	<select id="recordManage" resultType="student"> 
 		SELECT  S.STU_NO

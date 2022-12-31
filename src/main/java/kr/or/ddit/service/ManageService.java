@@ -10,8 +10,12 @@ import kr.or.ddit.domain.Student;
 
 public interface ManageService {
 
+	//학생 리스트
 	public List<Student> studentList();
-
+	
+	//키워드별 검색한 학생 리스트
+	public List<Student> stuSearch(Map<String, String> map);
+	
 	public Student detailStu(Map<String, String> map);
 
 	public int deleteStu(Map<String, String> map);
@@ -20,7 +24,8 @@ public interface ManageService {
 
 	public int updateStu(Student student);
 
-	public List<Student> recordManage();
+	//학적 검색
+	public List<Student> recordSearch(Map<String, String> map);
 
 	public Student recordManagePost(Map<String, String> map);
 
@@ -51,5 +56,7 @@ public interface ManageService {
 	public Evaluation evaluationCon(Map<String, String> map);
 
 	public List<Evaluation> mineEvlList(String no);
+
+	
 
 }

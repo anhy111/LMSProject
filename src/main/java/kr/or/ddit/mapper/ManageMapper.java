@@ -12,6 +12,8 @@ public interface ManageMapper  {
 	
 	public List<Student> studentList();
 	
+	public List<Student> stuSearch(Map<String, String> map);
+	
 	public Student detailStu(Map<String, String> map);
 	
 	public int deleteStu(Map<String, String> map);
@@ -20,7 +22,7 @@ public interface ManageMapper  {
 	
 	public int updateStu(Student student);
 	
-	public List<Student> recordManage();
+	public List<Student> recordSearch(Map<String, String> map);
 	
 	public Student recordManagePost(Map<String, String> map);
 	

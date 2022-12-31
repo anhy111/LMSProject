@@ -74,20 +74,11 @@
                         </ul>
                     </li>
                     <!-- 학적관리 -->
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item"><a href="/record/main?stuNo=<%=no%>" class="nav-link">
                         <p>
-                            학적관리 <i class="right fas fa-angle-left"></i>
+                            학적관리
                         </p>
                     </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="/record/main?stuNo=<%=no%>"
-                                                    class="nav-link">
-                                <p>학적 변동 신청</p>
-                            </a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">
-                                <p>학적 변동 현황</p>
-                            </a></li>
-                        </ul>
                     </li>
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
@@ -95,13 +86,13 @@
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="#" class="nav-link">
+                            <li class="nav-item"><a href="/totalScore/totalScore" class="nav-link">
                                 <p>전체 성적 조회</p>
                             </a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">
+                            <li class="nav-item"><a href="/totalScore/currentScore" class="nav-link">
                                 <p>전체 학기 성적 조회</p>
                             </a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">
+                            <li class="nav-item"><a href="/totalScore/preAppeal" class="nav-link">
                                 <p>성적 이의 신청</p>
                             </a></li>
                         </ul>
@@ -148,10 +139,10 @@
                             class="nav-link">
                         <p>대나무숲</p>
                     </a></li>
-                    <li class="nav-item"><a
-                            href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link">
-                        <p>내가 듣는 강의 (임시. 지우지 마시오)</p>
-                    </a></li>
+<!--                     <li class="nav-item"><a -->
+<!--                             href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link"> -->
+<!--                         <p>내가 듣는 강의 (임시. 지우지 마시오)</p> -->
+<!--                     </a></li> -->
                    </sec:authorize>
                 
                 <!-- 교수 어사이드 -->
@@ -200,20 +191,18 @@
                     </a></li>
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
-                            학생 관리
+                            학생 관리 <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="/professor/stuManageOfPro" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
                                     <p>학생 목록</p>
                                 </a>
                             </li>
                             <sec:authorize access="hasRole('ROLE_DEAN')">
                                 <li class="nav-item">
                                     <a href="/professor/scholarshipStu" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
                                         <p>장학생 추천 목록</p>
                                     </a>
                                 </li>

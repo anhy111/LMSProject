@@ -38,7 +38,7 @@ public class Student {
 	private String rgbCd; //학적 구분
 	private String recPer; //기간
 	private String recRsn; //사유
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy.MM.dd", timezone = "Asia/Seoul")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yy/MM/dd", timezone = "Asia/Seoul")
 	private Date recDt; //신청날짜
 	private String recYn; //승인여부
 	private String recRej; //반려사유

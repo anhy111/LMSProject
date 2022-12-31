@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +44,9 @@ public class ScholarshipController {
 	
 	//장학금 수여 시작페이지
 	@GetMapping("/scholarshipAward")
-	public String scholarshipAward() {
+	public String scholarshipAward(Model model) {
+		
+		model.addAttribute("bodyTitle", "장학금 수여");
 		
 		return "scholarship/scholarshipAward";
 	}

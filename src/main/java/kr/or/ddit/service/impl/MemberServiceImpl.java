@@ -27,6 +27,7 @@ import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.MemberMapper;
+import kr.or.ddit.security.Sha256;
 import kr.or.ddit.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -73,8 +74,10 @@ public class MemberServiceImpl implements MemberService {
 
 		// 전달된 휴대폰 번호로 문자 전송(content : 임시비밀번호)
 		String temp = sendSMS(map);
+		
+		String passSHA = Sha256.testSHA256(temp);
 
-		map.put("memPass", temp);
+		map.put("memPass", passSHA);
 		map.put("memTel", map.get("tel"));
 		map.put("memNo", map.get("memNo"));
 		log.info("map(완료) : " + map);

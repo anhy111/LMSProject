@@ -166,6 +166,7 @@
 		    , TO_CHAR(P.PAY_NT,'YYYY')||'년'|| P.PAY_SEM ||'학기' PAY_DATE
 		    , S.STU_YR
 		    , S.STU_NM
+		    , S.STU_TEL
 		    , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = S.STU_BANK_CD) STU_BANK_CD
 		    , S.STU_ACT
 		    , D.DEP_NM
@@ -177,6 +178,9 @@
 		            SCL_HISTORY SH
 		        WHERE
 		            SH.STU_NO = P.STU_NO
+		            AND   SH.SCLH_YN = 'AP001'
+		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY')
+		            AND   SH.SCLH_SEM = 1 + MOD(P.PAY_SEM,2)
 		    ) SCLH_AMT
 		    , C.COL_FEE -
 		     ( 
@@ -186,6 +190,9 @@
 		            SCL_HISTORY SH
 		        WHERE
 		            SH.STU_NO = P.STU_NO
+		            AND   SH.SCLH_YN = 'AP001'
+		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY')
+		            AND   SH.SCLH_SEM = 1 + MOD(P.PAY_SEM,2)
 		     ) PAY_AMT
 		     , P.PAY_CD
 		FROM
@@ -196,6 +203,17 @@
 		AND     S.STU_NO = #{stuNo}
 		AND     P.PAY_YN = 'PAY001'
 	</select>
+	
+	<!-- 학생 등록금 납부하긔 -->
+	<update id ="pay" parameterType="hashMap">
+		UPDATE PAYMENT
+		SET 
+		    PAY_DT = SYSDATE
+		    , PAY_YN = 'PAY002'
+		    , PAY_AMT = #{payAmt}
+		WHERE   STU_NO = #{stuNo}
+		AND     PAY_YN = 'PAY001'
+	</update>
 
 	
 </mapper>

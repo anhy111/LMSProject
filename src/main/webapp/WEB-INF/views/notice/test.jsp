@@ -139,9 +139,10 @@
                             class="uil uil-angle-left"></i></button>
 
 
-                    <button type="button" class="btn btn-primary" onclick="#">
-                        1
-                    </button>
+<%--                    페이지--%>
+                    <c:forEach var="pageNumber" begin="1" end="${totalPage}">
+                        <a href="list?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
+                    </c:forEach>
 
                     <button type="button" class="btn btn-light" onclick="#"><i class="uil uil-angle-right"></i></button>
                     <button type="button" class="btn btn-light" disabled="" onclick="#"><i
