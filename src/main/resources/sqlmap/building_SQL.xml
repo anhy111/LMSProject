@@ -10,7 +10,7 @@
 		SELECT B.BLD_CD
 		     , B.BLD_NM
 		     , B.BLD_SNM
-		FROM BUILDING B
+		FROM BUILDING B 
 		WHERE B.COL_CD = (
 		                    SELECT D.COL_CD FROM DEPARTMENT D, LECTURE L, SUBJECT S
 		                    WHERE L.SUB_CD = S.SUB_CD
