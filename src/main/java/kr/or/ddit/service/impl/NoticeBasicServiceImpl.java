@@ -5,7 +5,6 @@ import java.util.List;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.mapper.NoticeBasicMapper;
 import kr.or.ddit.service.NoticeBasicService;
-import kr.or.ddit.util.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

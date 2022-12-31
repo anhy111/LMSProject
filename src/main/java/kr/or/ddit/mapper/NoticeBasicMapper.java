@@ -1,7 +1,6 @@
 package kr.or.ddit.mapper;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
-import kr.or.ddit.util.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
