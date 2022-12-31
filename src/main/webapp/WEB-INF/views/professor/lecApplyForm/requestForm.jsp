@@ -236,9 +236,9 @@
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;희망 시간</p>
     		<textarea id="textArea4time" rows="5" cols="45" disabled>시간 선택하기 버튼을 누르면 자동으로 채워집니다.</textarea>
-    		
-    		<br><br>
-    		
+    		<div class="form-group text-right p-0 m-0">
+    		<button type="button" id="dataInit" class="btn btn-secondary btn-sm mr-5">초기화</button>
+    		</div>
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;비고</p>
     		<textarea id="lecaNote" rows="9" cols="45"></textarea>
     	</div>
@@ -261,7 +261,137 @@
 	let token = "${_csrf.token}";
 	
 	console.log("header : " + header + ", token : " + token);
-	var roomTime = "";
+	
+	var lecTimeTable = [];
+	
+
+	function roomSelectEvent(){
+		if($("#building").val() == 0){
+			alert("건물을 선택해주세요");
+			return;
+		}
+		if($("#room").val() == 0){
+			alert("강의실을 선택해주세요");
+			return;
+		}
+		
+		let timeTable = $('#timeTableChoice');
+		
+		let str = '';
+		let room = $("#room").val();
+		let building = $("#building").val();
+		let buildingText = $("#building option:selected").text();
+		let roomText = $("#room option:selected").text();
+		let data = [];	// json형식으로 시간표 저장
+		for(let j = 0; j <= 4; j++) {
+			for(let i = 1; i <= 9; i++) {
+				let cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
+				
+				if(cellObj.hasClass("highlighted")) {
+					
+					switch(j) {
+					case 0:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "월", time : i + ""}); 
+						break;
+					case 1:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "화", time : i + ""}); 
+						break;
+					case 2:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "수", time : i + ""}); 
+						break;
+					case 3:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "목", time : i + ""}); 
+						break;
+					case 4:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "금", time : i + ""}); 
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
+		
+		// 이미 저장되어있는 같은 강의실의 시간표가 있더라도 버튼을 누르면 그 시간표로 덮어쓰기
+		for(let i=lecTimeTable.length-1; i >= 0; i--){
+			if(room == lecTimeTable[i].roomCd){
+				lecTimeTable.splice(i,1);
+			}
+		}
+		
+		if(lecTimeTable.length + data.length > $("#lecaCrd").val()){
+			alert("학점만큼 시간을 선택해주세요");
+			timeTableInit();
+			return;
+		}
+		
+		
+		// 시간이 겹치면 데이터를 넣지 않는다
+		for(let i=0; i<data.length; i++){
+			let check = false;
+			for(let j=0; j<lecTimeTable.length; j++){
+				if(lecTimeTable[j].roomCd == data[i].roomCd
+					&& lecTimeTable[j].wk == data[i].wk
+					&& lecTimeTable[j].time == data[i].time){
+					check = true;
+					break;
+				}
+			}
+			if(!check){
+				lecTimeTable.push(data[i]);
+			}
+		}
+		
+		// "시간 선택하기 알림 텍스트시에는 초기화"
+		if($('#textArea4time').html().substr(0,1) == '시'){
+			$('#textArea4time').html("");
+		}
+		$('#textArea4time').html(lecTimeTableToText(lecTimeTable));
+		
+	}
+	
+	function lecTimeTableToText(p_timeTable){
+		let str = "";
+		for(let i=0; i<p_timeTable.length; i++){
+			str += p_timeTable[i].bldNm + " " + p_timeTable[i].roomNo + " " + p_timeTable[i].wk + " " + p_timeTable[i].time + "교시\n";
+		}
+		return str;
+	}
+	
+	function timeTableInit(){
+		$('#timeTableChoice td').removeClass("highlighted");
+		let room = $("#room").val();
+		let timeTable = $('#timeTableChoice');
+		// 기존에 선택된 교시는 색칠해주기
+		for(let i=0; i<lecTimeTable.length; i++){
+			if(room == lecTimeTable[i].roomCd){
+				let x;
+				switch(lecTimeTable[i].wk){
+				case "월":
+					x = 0;
+					break;
+				case "화":
+					x = 1;
+					break;
+				case "수":
+					x = 2;
+					break;
+				case "목":
+					x = 3;
+					break;
+				case "금":
+					x = 4;
+					break;
+				}
+				timeTable.find("tr").eq(lecTimeTable[i].time).find("td").eq(x).toggleClass("highlighted");
+			}
+		}
+	}
+	
+	function lecTimeTableInit(){
+		lecTimeTable.splice(0);
+		$('#textArea4time').html("");
+	}
 	
 	function insertData() {
 		$('#lecaYr').val('2022');
@@ -306,6 +436,10 @@ window.onload = function() {
 	$('.select2bs4').select2({
 		theme : 'bootstrap4'
 	});
+	
+	$("#dataInit").on("click",function(){
+		lecTimeTableInit();
+	})
 	
 	var date = new Date();
 	let year = date.getFullYear();
@@ -484,7 +618,7 @@ window.onload = function() {
 				} else{
 					str += "<option value='0'>강의실</option>";
 					$.each(result,function(p_inx, p_val){
-						str += `<option value='\${p_val.roomNo}'>\${p_val.roomNo}호</option>`;
+						str += `<option value='\${p_val.roomCd}'>\${p_val.roomNo}</option>`;
 					});
 				}
 				$("#room").html(str);
@@ -512,62 +646,7 @@ window.onload = function() {
 	
 	//시간표 작성
 	$('#timeTableBtn').on('click', function() {
-		
-		if($("#building").val() == 0){
-			alert("건물을 선택해주세요");
-			return;
-		}
-		if($("#room").val() == 0){
-			alert("강의실을 선택해주세요");
-			return;
-		}
-		
-		timeTable = $('#timeTableChoice');
-		
-		str = '';
-		buildingText = $("#building option:selected").text() + " ";
-		room = $("#room").val() + " ";
-		roomText = $("#room option:selected").text() + " ";
-		dataStr = "";
-		for(j = 0; j <= 4; j++) {
-			for(i = 1; i <= 9; i++) {
-				cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
-				
-				if(cellObj.hasClass("highlighted")) {
-					
-					switch(j) {
-					case 0:
-						str += buildingText + roomText + "월 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,"; 
-						break;
-					case 1:
-						str += buildingText + roomText + "화 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					case 2:
-						str += buildingText + roomText + "수 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					case 3:
-						str += buildingText + roomText + "목 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					case 4:
-						str += buildingText + roomText + "금 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					default:
-						break;
-					}
-				}
-			}
-		}
-		//alert(str);
-		if($('#textArea4time').html().substr(0,1) == '시'){
-			$('#textArea4time').html("");
-		}
-		$('#textArea4time').append(str);
-		console.log("dataStr : " + dataStr );
+		roomSelectEvent();
 	});
 	
 	//임시저장 버튼 클릭 시
@@ -684,8 +763,5 @@ window.onload = function() {
 	
 }
 
-function timeTableInit(){
-	$('#timeTableChoice td').removeClass("highlighted");
-}
 </script>
 </html>

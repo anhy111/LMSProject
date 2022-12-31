@@ -207,7 +207,7 @@
 		            , LECA_AP
 		            , PRO_NO
 		) VALUES (
-		    (select max(LECA_CD) from lecture)
+		    ${lecaCd}
 		    , #{lecaYr}
 		    , #{lecaSem}
 		    , #{lecaNm}
