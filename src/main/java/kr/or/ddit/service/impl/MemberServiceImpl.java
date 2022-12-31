@@ -203,6 +203,17 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateStuPw(Map<String, String> map) {
+		
+		String newPw1 = map.get("newPw");
+		String oldPw1 = map.get("oldPw");
+		log.info("newPw : " + newPw1 + "oldPw : " + oldPw1);
+		
+		String oldPw = Sha256.testSHA256(oldPw1.toString());
+		String newPw = Sha256.testSHA256(newPw1.toString());
+		
+		map.put("newPw", newPw);
+		map.put("oldPw", oldPw);
+		
 		return this.memberMapper.updateStuPw(map);
 	}
 

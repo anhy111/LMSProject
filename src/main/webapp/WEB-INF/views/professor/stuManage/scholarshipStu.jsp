@@ -29,6 +29,7 @@ function fn_add(data){
 	$("#empNm").html(data.empNm);
 	$("#sclhRcmd").html(data.sclHistory.sclhRcmd);
 	$(".sclhDt").html(data.sclHistory.sclhDt);
+	$("#recommendation").attr("value", data.sclHistory.sclhCd);
 	
 }
 $(function(){
@@ -39,15 +40,20 @@ $(function(){
 	$(".btnDetail").on("click", function(){
 // 		alert("오나요?");
 		
-		let sclhCd = $(this).val();
-		let data = {"sclhCd":sclhCd}
-		console.log("상세정보 가져왓 " + sclhCd + " data 가져왓 " + JSON.stringify(data));
+		let stuDetail = $(this).val();
+		let sclhCd = stuDetail.substr(0,5)
+		let stuNo = stuDetail.substr(7,10)
+		let myData = {
+			"sclhCd":sclhCd,
+			"detailStu":stuNo
+		}
+		console.log("상세정보 가져왓 " + stuDetail + " sclhCd: " + sclhCd + " stuNo: " + stuNo);
 		
 		$.ajax({
 			type: 'post',
 			url: '/professor/schStuRcmd',
 			contentType:"application/json;charset=utf-8",
-			data:JSON.stringify(data),
+			data:JSON.stringify(myData),
 			beforeSend:function(xhr){
 				xhr.setRequestHeader(header, token);
 			},
@@ -59,39 +65,38 @@ $(function(){
 					type: 'post',
 					url: '/professor/stuSclList',
 					contentType:"application/json;charset=utf-8",
-					data:JSON.stringify(data),
+					data:JSON.stringify(myData),
 					beforeSend:function(xhr){
 						xhr.setRequestHeader(header, token);
 					},
-					success :function(data){
-						console.log("2아작스 ", data);
+					success :function(result){
+						console.log("2아작스 ", result[0]);
 						
-// 						let str = "";
-// 						if(data.stuSclList != null && data.stuSclList.length != 0){
-// 							for(let i=0; i < data.stuSclList.length; i++){
-// 								console.log("오라고 제발 ㅠ  " + data.stuSclList[i].empNm );
+						let str = "";
+						if(result != null && result.length != 0){
+							for(let i=0; i < result.length; i++){
 								
-// 								str += `
-// 								<tr>
-// 									<td>\${i+1}</td>
-// 									<td>\${data.stuSclList[i].sclNm}</td>
-// 									<td>\${data.stuSclList[i].sclhYr}년 \${data.stuSclList[i].sclhSem}학기</td>
-// 									<td>\${data.stuSclList[i].sclhAmt}</td>
-// 									<td>\${data.stuSclList[i].empNm}</td>
-// 								</tr>
+								str += `
+								<tr>
+									<td>\${i+1}</td>
+									<td>\${result[i].sclNm}</td>
+									<td>\${result[i].sclhYr}년 \${result[i].sclhSem}학기</td>
+									<td>\${result[i].sclhAmt}</td>
+									<td>\${result[i].empNm}</td>
+								</tr>
 								
-// 								`
-// 							}
-// 						}else{
+								`
+							}
+						}else{
 							
-// 							str = `
-// 							<tr>
-// 								<td colspan='5'>받은 장학금 내역이 없습니다.</td>
-// 							</tr>
-// 							`
-// 						}
+							str = `
+							<tr>
+								<td colspan='5'>받은 장학금 내역이 없습니다.</td>
+							</tr>
+							`
+						}
 						
-// 						$("#sclList").html(str);
+						$("#sclList").html(str);
 						
 						
 						
@@ -101,6 +106,32 @@ $(function(){
 					}
 					
 				});
+				
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+			
+		});
+		
+	});
+	
+	$("#recommendation").on("click", function(){
+		
+		let sclhCd = $(this).val();
+		console.log("sclhCd: " + sclhCd);
+		
+		$.ajax({
+			type: 'post',
+			url: '/professor/stuSclList',
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(myData),
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(result){
+				
+				console.log("결과는 과연! 두둥 " + result);
 				
 			},
 			error:function(request, status, error){
@@ -170,7 +201,9 @@ $(function(){
 				<th width="3%">No</th>
 				<th width="10%">학번</th>
 				<th width="10%">이름</th>
+				<th width="10%">추천 연도/학기</th>
 				<th width="10%">추천인</th>
+				<th width="10%">승인여부</th>
 				<th width="10%">학생 상세</th>
 			</tr>
 		</thead>
@@ -184,10 +217,12 @@ $(function(){
 							<img src="/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width: 20px;"> ${list.stuNm}
 						</div>
 					</td>
+					<td>${list.sclhYr}년 ${list.sclhSem}학기</td>
 					<td>${list.empNm}</td>
+					<td>${list.sclhYn}</td>
 					<td>
 						<button class="btn btn-block btn-outline-secondary btn-sm btnDetail"
-							value="${list.sclhCd}" data-toggle="modal" data-target="#modal-lg">학생 상세</button>
+							value="${list.sclhCd}, ${list.stuNo}" data-toggle="modal" data-target="#modal-lg">학생 상세</button>
 					</td>
 				</tr>
 			</c:forEach>
@@ -340,7 +375,7 @@ $(function(){
 					
 					<div id="stuBtn" align="right">
 						<button type="button" id="recommendationStu" class="btn btn-outline-success" 
-							data-toggle="modal" data-target="#modal-default">장학생 추천</button>
+							data-toggle="modal" data-target="#modal-default">장학생 추천 내역</button>
 					</div>
 				</div>
 			</div>
@@ -351,7 +386,7 @@ $(function(){
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">장학생 추천</h4>
+					<h4 class="modal-title">장학생 추천 내역</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
