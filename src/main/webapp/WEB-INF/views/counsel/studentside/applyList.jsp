@@ -85,7 +85,7 @@ cursor:pointer;
 					<div class="tab-pane active" id="tab_1">			<table
 				class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 				<thead>
-					<tr class="text-center">
+					<tr class="text-center counselListTr">
 						<th width="4%">No</th>
 						<th width="8%">구분</th>
 						<th width="18%">제목</th>
@@ -187,12 +187,12 @@ cursor:pointer;
 </div>
 </div>
 
-<!-- 모달 -->
+<!-- 신청 모달 -->
 <div class="modal fade show" id="applyCounsel"
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="height: 900px;">
+		<div class="modal-content" style="top:100px;">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
 				<h5 class="modal-title">학적변동 신청서 작성</h5>
 				<button type="button" class="close" data-dismiss="modal"
@@ -315,7 +315,7 @@ cursor:pointer;
 		</div>
 	</div>
 </div>
-<!-- 모달 -->
+<!-- 신청 모달 -->
 
 	<!-- 학적 조회 모달 -->
 	<div class="modal fade" id="modal-lg" style="display: none;"
@@ -323,7 +323,7 @@ cursor:pointer;
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">신청한 학적 리스트</h4>
+					<h4 class="modal-title">신청한 상담 상세</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -387,61 +387,191 @@ cursor:pointer;
 	</div>
 
 <!-- 학적 조회 모달 -->
+<!-- 수정삭제모달 -->
+<div class="modal fade show" id="modifyCounsel"
+	style="display: none; padding-right: 17px;" aria-modal="true"
+	role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content" style="top:100px;">
+			<div class="modal-header" style="background-color: #001F3F;color:white;">
+				<h5 class="modal-title">상담 상세</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true"style="color:white;">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- 모달바디 -->
+					<div class="form-group col-12" >
+					<input type="hidden" id="modifyCnslCd" value="${answerDetail.modifyCnslCd }"> 
+					</div>
+					<div class="form-group col-12" style="margin:0px;">
+					<div class="col-sm-4">
+						<label >제목*</label> 
+						</div>
+						<input type="text"
+							class="col-6 form-control form-control-border"
+							id="exampleInputBorder" value="${answerDetail.modifyCnslTtl }">
+					</div>
+					<div class="form-group col-12" style="margin:0px;">
+					<div class="col-sm-4">
+						<label >사유</label>
+						</div>
+						<div class="row">
+							<textarea class="col-11 form-control" rows="3" id="modifyCnslCon" ></textarea>
+						</div>
+					</div>
+
+				<!-- 모달바디 -->
+			</div>
+			<div class="modal-footer justify-content-align">
+				<button onclick="modifyCont()" type="button" class="btn btn-outline-primary">수정하기</button>
+				<button onclick="deleteApply()" type="button" class="btn btn-outline-danger">삭제</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 수정삭제모달 -->
+
 <script type="text/javascript">
+let modifyCnslCon,modifyCnslCd,applyCounsel = "";
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+let data = {modifyCnslCd : "",modifyCnslCon : ""};	
+
+function modifyCont(){
+	data.modifyCnslCd = $("#modifyCnslCd").val();
+	data.modifyCnslCon = $("#modifyCnslCon").val();
 	
-	function counselListUp() {
-		$("#nonFaceCounselListTable").hide();
-		$("#counselListTable").show();
-	}
-	function nonFaceCounselListUp() {
-		$("#nonFaceCounselListTable").show();
-		$("#counselListTable").hide();
-	}
-	function allListUp(){
-		$("#nonFaceCounselListTable").show();
-		$("#counselListTable").show();
-	}
+	if(!($("#modifyCnslCon").val().length >= 10)){
+		Swal.fire({
+			  icon: 'error',
+			  title: '사유는 10글자 이상 작성해주세요',
+			})
+		return;
+		}
 	
-	const contHovers = document.querySelectorAll('.contHover');
-	const answerLinks = document.querySelectorAll('.answerLink');
-	const answerHovers = document.querySelectorAll('.answerHover');
-	const checkAnswerNotes = document.querySelectorAll(".checkAnswerNote");
-	const rejectLinks = document.querySelectorAll(".rejectLink");
+	$.ajax({
+		url:"/counsel/studentside/applyModify",
+		type:'POST',
+		data: JSON.stringify(data),
+		datatype:'JSON',
+		contentType: 'application/json; charset=utf-8',
+		beforeSend: function (xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success:function(result){
+			  Swal.fire(
+	                    '수정 완료',
+	                    '정상적으로 수정 되었습니다.',
+	                    'success'
+	                ).then(function(){
+			        	window.location.reload(true);			        	
+			        });
+		}
+	});
+}
+
+
+function deleteApply(){
+	data.modifyCnslCd = $("#modifyCnslCd").val();
+	Swal.fire({
+		  title: '등록된 신청을 삭제 하시겠습니까?',
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: '삭제',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		$.ajax({
+			url:"/counsel/studentside/deleteApply",
+			type:'POST',
+			data: JSON.stringify(data),
+			datatype:'JSON',
+			contentType: 'application/json; charset=utf-8',
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success:function(result){
+				Swal.fire(
+	                    '삭제 완료',
+	                    '정상적으로 삭제 되었습니다.',
+	                    'success'
+	                ).then(function(){
+			        	window.location.reload(true);			        	
+			        });
+			}
+		})
+    }
+});
+	return;
+}
+	
+// 	const contHovers = document.querySelectorAll('.contHover');
+// 	const answerLinks = document.querySelectorAll('.answerLink');
+// 	const answerHovers = document.querySelectorAll('.answerHover');
+// 	const checkAnswerNotes = document.querySelectorAll(".checkAnswerNote");
+// 	const rejectLinks = document.querySelectorAll(".rejectLink");
 	
 
-	contHovers.forEach((link, index)=>{
+// 	contHovers.forEach((link, index)=>{
 		
-	 //제목 클릭시 내용 수정
-	  link.addEventListener('click', function() {
-		  const value = this.dataset.value;
-		  window.open("/counsel/studentside/applyModify?cnslCd="+ value, "applyModify","width=1000, height=800, left=100, top=50");
-		  //alert(value);
-		});
-	});
+// 	 //제목 클릭시 내용 수정
+// 	  link.addEventListener('click', function() {
+// 		  const value = this.dataset.value;
+// 		  window.open("/counsel/studentside/applyModify?cnslCd="+ value, "applyModify","width=1000, height=800, left=100, top=50");
+// 		  //alert(value);
+// 		});
+// 	});
 	
-	answerLinks.forEach((link,index)=>{
-	  //제목 클릭시 답변 확인
-	  link.addEventListener('click', function() {
-		  const value = this.dataset.value;
-		  window.open("/counsel/studentside/checkAnswer?cnslCd="+ value, "checkAnswer","width=1000, height=800, left=100, top=50");
-		  //alert(value);
-		});
-	});
+// 	answerLinks.forEach((link,index)=>{
+// 	  //제목 클릭시 답변 확인
+// 	  link.addEventListener('click', function() {
+// 		  const value = this.dataset.value;
+// 		  window.open("/counsel/studentside/checkAnswer?cnslCd="+ value, "checkAnswer","width=1000, height=800, left=100, top=50");
+// 		  //alert(value);
+// 		});
+// 	});
 	
-	rejectLinks.forEach((link, index)=>{
-		//제목 클릭시 반려 사유 확인
-		link.addEventListener("click",function(){
-			const value= this.dataset.value;
-			window.open("/counsel/studentside/checkReject?cnslCd="+ value, "checkAnswer","width=1000, height=800, left=100, top=50");
-		})
-	})
-	// 클릭시 교수가 작성한 상담 기록서 확인 및 다운
-	checkAnswerNotes.forEach((note, index)=>	{
-		note.addEventListener('click',function(){
-			const value = this.value
-		  window.open("/counsel/studentside/answerNote?cnslCd="+ value, "checkAnswerNote","width=1000, height=800, left=100, top=50");
-		})
-	});
+// 	rejectLinks.forEach((link, index)=>{
+// 		//제목 클릭시 반려 사유 확인
+// 		link.addEventListener("click",function(){
+// 			const value= this.dataset.value;
+// 			window.open("/counsel/studentside/checkReject?cnslCd="+ value, "checkAnswer","width=1000, height=800, left=100, top=50");
+// 		})
+// 	})
+// 	// 클릭시 교수가 작성한 상담 기록서 확인 및 다운
+// 	checkAnswerNotes.forEach((note, index)=>	{
+// 		note.addEventListener('click',function(){
+// 			const value = this.value
+// 		  window.open("/counsel/studentside/answerNote?cnslCd="+ value, "checkAnswerNote","width=1000, height=800, left=100, top=50");
+// 		})
+// 	});
+	
+	$.fn.clearForm = function () {
+	  return this.each(function () {
+	    var type = this.type,
+	      tag = this.tagName.toLowerCase();
+	    if (tag === 'form') {
+	      return $(':input', this).clearForm();
+	    }
+	    if (
+		      type === 'text' ||
+//		      type === 'password' ||
+//		      type === 'hidden' ||
+	      tag === 'textarea'
+	    ) {
+	      this.value = '';
+//		    } else if (type === 'checkbox' || type === 'radio') {
+//		      this.checkedIndex = 0;
+	    } else if (tag === 'select') {
+	      this.selectedIndex = 0;
+	    }
+	  });
+	};
 	
 	function dataReset(){
 		Swal.fire({
@@ -460,7 +590,7 @@ cursor:pointer;
 			      '작성 내용 모두 삭제 되었습니다',
 			      'success',
 			    )
-			      $("#selectedYRSEM").html("");
+			      $("#cnslCon").html("");
 			      $("#form").clearForm();
 			  }
 			});
@@ -481,13 +611,10 @@ cursor:pointer;
 		 }
 	}
 	
-	$(document).ready(function() {
-		$('input[type="date"]').change(function() {
-				/* on change get value then print to page */
+		$("input[type='date'][name='cnslDt']").change(function() {
 				var outputDate = (this.value);
 				$("#target").text(outputDate);
 		});
-});
 	
 	function disableRadioButtons(clickedButton) {
 		  radioButtons.forEach(button => {
@@ -496,12 +623,11 @@ cursor:pointer;
 		    }
 		  });
 		}	
-window.onload = function() {
-	
-	radioButtons  = document.querySelectorAll('input[type="radio"][name="cnslCate"]');
-	
-	recordTrElements  = document.querySelectorAll('.recordTr');
 
+	
+$("#applyBtn").on("click",function(){
+	radioButtons  = document.querySelectorAll('input[type="radio"][name="cnslCate"]');
+	recordTrElements  = document.querySelectorAll('.recordTr');
 	recordTrElements.forEach(element => {
 	  element.addEventListener('click', function() {
 		  for (let i = 0; i < radioButtons.length; i++) {
@@ -516,7 +642,8 @@ window.onload = function() {
 	});
 	$("#cnslConTextArea").hide();
 	$("#cnslReservationDt").show();
-}
+})
+
 $("input:radio[name='cnslType']").change(function() {
 	if ($(".counselTypeFace").is(":checked")) {
 		$("#cnslConTextArea").hide();
