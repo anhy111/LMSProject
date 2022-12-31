@@ -71,6 +71,8 @@ public class Student {
 	private int lecScore;
 	// 등급 자동 계산
 	private String grade;
+	//상담여부
+	private String cnslDt;
 
 
 }

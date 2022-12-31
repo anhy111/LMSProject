@@ -135,19 +135,21 @@
 	
 	<select id="recordSearch" parameterType="map" resultType="student">  
 		SELECT  S.STU_NO
-		        ,S.STU_NM
-		        ,D.DEP_NM
-		        ,R.REC_CD
-		        ,R.REC_YR
-		        ,R.REC_SEM
-		        ,(SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
-		        ,R.REC_PER
-		        ,R.REC_RSN
-		        ,R.REC_DT
-		        ,(SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
-		FROM STUDENT S, DEPARTMENT D, RECORD R
+		        , S.STU_NM
+		        , D.DEP_NM
+		        , R.REC_CD
+		        , R.REC_YR
+		        , R.REC_SEM
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.RGB_CD) AS RGB_CD
+		        , R.REC_PER
+		        , R.REC_RSN
+		        , R.REC_DT
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
+		        , C.CNSL_DT 
+		FROM STUDENT S, DEPARTMENT D, RECORD R, COUNSEL C
 		WHERE S.DEP_CD = D.DEP_CD
 		AND S.STU_NO = R.STU_NO
+		AND R.REC_CD = C.REC_CD
 		<if test="rgbCd != null and rgbCd != ''">
 			AND R.RGB_CD = #{rgbCd}
 		</if>
@@ -356,6 +358,7 @@
 		WHERE EMP_NO = #{empNo}
 	</update>
 	
+	<!-- 강의평가 리스트 -->
 	<select id="evaluationList" parameterType="map" resultType="evaluation"> 
 		SELECT   L.LECA_CD
 		        , L.LEC_HCNT 

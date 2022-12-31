@@ -133,12 +133,11 @@ public class StuManageOfProController {
 	@ResponseBody
 	public int deanRcmd(@RequestBody Map<String,String> map, HttpServletRequest req) {
 		
-		
+		log.info("sclhCd는?? " + map.get("sclhCd"));
 		
 		int deanRecommendation = this.stuManageOfProService.deanRecommendation(map, req);
 		
-		
-		return 1;
+		return deanRecommendation;
 	}
 	
 	

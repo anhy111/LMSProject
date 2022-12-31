@@ -78,10 +78,11 @@ function loadSearchList(){
 							</div>
 						</td>
 						<td>\${student.rgbCd}</td>
+						<td>상담여부?</td>
 						<td id="YOrN\${index}">\${student.recYn}</td>
 						<td><button alt="\${student.recYn}"
-								class="btn btn-block btn-outline-info btn-sm btnDetail"
-								value="\${student.recCd}" data-toggle="modal" data-target="#modal-lg" >상세</button></td>
+								class="btn btn-block btn-outline-secondary btn-sm btnDetail"
+								value="\${student.recCd}" data-toggle="modal" data-target="#modal-lg" >신청 상세</button></td>
 					</tr> `;
 					
 			});
@@ -400,12 +401,13 @@ $(function(){
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
 			<tr class="text-center">
-				<th width="10%">번호</th>
+				<th width="3%">No</th>
 				<th width="10%">학번</th>
 				<th width="10%">이름</th>
 				<th width="10%">신청 연도/학기</th>
 				<th width="10%">신청구분</th>
-				<th width="10%">승인구분</th>
+				<th width="10%">상담여부</th>
+				<th width="10%">승인여부</th>
 				<th width="10%">상세</th>
 			</tr>
 		</thead>

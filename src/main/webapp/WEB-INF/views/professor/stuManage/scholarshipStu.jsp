@@ -120,10 +120,13 @@ $(function(){
 		
 		let sclhCd = $(this).val();
 		console.log("sclhCd: " + sclhCd);
+		let myData = {
+				"sclhCd":sclhCd
+		}
 		
 		$.ajax({
 			type: 'post',
-			url: '/professor/stuSclList',
+			url: '/professor/deanRcmd',
 			contentType:"application/json;charset=utf-8",
 			data:JSON.stringify(myData),
 			beforeSend:function(xhr){
