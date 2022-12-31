@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 @RequestMapping("/professor")
+@EnableTransactionManagement
 public class LectureApplyController {
 	
   @Autowired
@@ -175,10 +177,12 @@ public class LectureApplyController {
 		Professor professor = this.lectureApplyService.inquiryFormProInfo(proNo);
 		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(proNo);
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
+		model.addAttribute("buildingList",buildingList);
 		
 		log.info("상세professor : " + professor);
 		log.info("상세lecApplyList : " + lecApplyList);
@@ -217,7 +221,7 @@ public class LectureApplyController {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		lecApply.setProNo(proNo);
-		
+		lecApply.setLecaYn(0);
 		log.info("제출 proNo : " + proNo);
 		log.info("담긴값들은? : " + lecApply);
 		
@@ -250,6 +254,8 @@ public class LectureApplyController {
 		approval.setProNo(proNo);
 		approval.setApprTagCd(lecApply.getLecaCd());
 		approval.setApprCate("APC001");
+		
+		log.info("Approval : " + approval);
 		int approvalResult = this.approvalService.insertApproval(approval);
 		if(approvalResult <= 0) {
 			log.info("approval실패");
@@ -269,7 +275,7 @@ public class LectureApplyController {
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		lecApply.setProNo(proNo);
-		
+		lecApply.setLecaYn(3);
 		log.info("제출 proNo : " + proNo);
 		log.info("담긴값들은? : " + lecApply);
 		
@@ -330,10 +336,12 @@ public class LectureApplyController {
 		Professor professor = this.lectureApplyService.inquiryFormProInfo(proNo);
 		List<LecApply> lecApplyList = this.lectureApplyService.tempFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(proNo);
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
+		model.addAttribute("buildingList", buildingList);
 		
 		log.info("임시저장 상세professor : " + professor);
 		log.info("임시저장 상세lecApplyList : " + lecApplyList);

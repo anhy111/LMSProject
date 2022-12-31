@@ -204,7 +204,21 @@
     
     <div id="blockNum3">
     	<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;시간표 선택</p>
-    	
+    	<div class="row pl-4">
+	    	<div class="col-2 ">
+		  		<select id="building" class="select2bs4 select2-hidden-accessible col-2 offset-1" style="width: 100%;" aria-hidden="true">
+					<option value="0">건물</option>
+					<c:forEach var="building" items="${buildingList}">
+					<option value="${building.bldCd}">${building.bldSnm}</option>
+					</c:forEach>
+				</select>
+			</div>
+	    	<div class="col-2">
+		  		<select id="room" class="select2bs4 select2-hidden-accessible col-2 offset-1" style="width: 100%;" aria-hidden="true">
+					<option value="0">강의실</option>
+				</select>
+			</div>
+		</div>
     	<div id="blockNum3TimeTable" style="float : left; width : 400px;">
     		<table id="timeTableChoice" border="1">
     			<tr><th style="width : 70px;"></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr>
@@ -223,10 +237,10 @@
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;희망 시간
     		</p>
-    		<textarea id="textArea4time" rows="5" cols="45" disabled>${lecApplyList[0].lecaTt}</textarea>
-    		
-    		<br><br>
-    		
+    		<textarea id="textArea4time" rows="5" cols="45" disabled></textarea>
+    		<div class="form-group text-right p-0 m-0">
+    		<button type="button" id="dataInit" class="btn btn-secondary btn-sm mr-5">초기화</button>
+    		</div>
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;비고</p>
     		<textarea id="lecaNote" rows="9" cols="45">${lecApplyList[0].lecaNote}</textarea>
     	</div>
@@ -239,15 +253,164 @@
     
     </div>
 </body>
+<script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
 
 	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
 	let header = "${_csrf.headerName}";
 	let token = "${_csrf.token}";
 	
-	console.log("header : " + header + ", token : " + token);
-
+	let lecTimeTable = ${lecApplyList[0].lecaTt};
+	let pageInit = true;
+	
+	function initTimeTable(){
+		if(lecTimeTable.length <= 0){
+			return;
+		}
+		$("#building").val(lecTimeTable[0].bldCd)
+						.prop("selected",true)
+						.select2({ theme : 'bootstrap4' })
+						.trigger("change");
+	}
+	
+	function roomSelectEvent(){
+		if($("#building").val() == 0){
+			alert("건물을 선택해주세요");
+			return;
+		}
+		if($("#room").val() == 0){
+			alert("강의실을 선택해주세요");
+			return;
+		}
+		
+		let timeTable = $('#timeTableChoice');
+		
+		let str = '';
+		let room = $("#room").val();
+		let building = $("#building").val();
+		let buildingText = $("#building option:selected").text();
+		let roomText = $("#room option:selected").text();
+		let data = [];	// json형식으로 시간표 저장
+		for(let j = 0; j <= 4; j++) {
+			for(let i = 1; i <= 9; i++) {
+				let cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
+				
+				if(cellObj.hasClass("highlighted")) {
+					
+					switch(j) {
+					case 0:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "월", time : i + ""}); 
+						break;
+					case 1:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "화", time : i + ""}); 
+						break;
+					case 2:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "수", time : i + ""}); 
+						break;
+					case 3:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "목", time : i + ""}); 
+						break;
+					case 4:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "금", time : i + ""}); 
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
+		
+		// 이미 저장되어있는 같은 강의실의 시간표가 있더라도 버튼을 누르면 그 시간표로 덮어쓰기
+		for(let i=lecTimeTable.length-1; i >= 0; i--){
+			if(room == lecTimeTable[i].roomCd){
+				lecTimeTable.splice(i,1);
+			}
+		}
+		
+		if(lecTimeTable.length + data.length > $("#lecaCrd").val()){
+			alert("학점만큼 시간을 선택해주세요");
+			timeTableInit();
+			return;
+		}
+		
+		
+		// 시간이 겹치면 데이터를 넣지 않는다
+		for(let i=0; i<data.length; i++){
+			let check = false;
+			for(let j=0; j<lecTimeTable.length; j++){
+				if(lecTimeTable[j].roomCd == data[i].roomCd
+					&& lecTimeTable[j].wk == data[i].wk
+					&& lecTimeTable[j].time == data[i].time){
+					check = true;
+					break;
+				}
+			}
+			if(!check){
+				lecTimeTable.push(data[i]);
+			}
+		}
+		
+		// "시간 선택하기 알림 텍스트시에는 초기화"
+		if($('#textArea4time').html().substr(0,1) == '시'){
+			$('#textArea4time').html("");
+		}
+		$('#textArea4time').html(lecTimeTableToText(lecTimeTable));
+		
+	}
+	
+	function lecTimeTableToText(p_timeTable){
+		let str = "";
+		for(let i=0; i<p_timeTable.length; i++){
+			str += p_timeTable[i].bldNm + " " + p_timeTable[i].roomNo + " " + p_timeTable[i].wk + " " + p_timeTable[i].time + "교시\n";
+		}
+		return str;
+	}
+	
+	function timeTableInit(){
+		$('#timeTableChoice td').removeClass("highlighted");
+		let room = $("#room").val();
+		let timeTable = $('#timeTableChoice');
+		// 기존에 선택된 교시는 색칠해주기
+		for(let i=0; i<lecTimeTable.length; i++){
+			if(room == lecTimeTable[i].roomCd){
+				let x;
+				switch(lecTimeTable[i].wk){
+				case "월":
+					x = 0;
+					break;
+				case "화":
+					x = 1;
+					break;
+				case "수":
+					x = 2;
+					break;
+				case "목":
+					x = 3;
+					break;
+				case "금":
+					x = 4;
+					break;
+				}
+				timeTable.find("tr").eq(lecTimeTable[i].time).find("td").eq(x).toggleClass("highlighted");
+			}
+		}
+	}
+	
+	function lecTimeTableInit(){
+		lecTimeTable.splice(0);
+		$('#textArea4time').html("");
+	}
+	
 	window.onload = function() {
+		
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		//Initialize Select2 Elements
+		$('.select2bs4').select2({
+			theme : 'bootstrap4'
+		});
 		
 		var date = new Date();
 		let year = date.getFullYear();
@@ -408,36 +571,61 @@
 			}
 		});
 		
-		$('#timeTableBtn').on('click', function() {
+		// 시간표 건물 선택시 강의실 목록 띄워줌
+		$("#building").on("change",function(){
+			let data = {
+				bldCd : this.value
+			};
 			
-			$('#textArea4time').empty();
-			
-			timeTable = $('#timeTableChoice');
-			
-			str = '';
-			
-			for(j = 0; j <= 4; j++) {
-				for(i = 1; i <= 9; i++) {
-					cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
+			$.ajax({
+				url : "/professor/lecApplyForm/roomByBuildingList",
+				type : "get",
+				data : data,
+				success : function(result){
+					let str = "";
+					if(!result.length){
+						str += "<option value='0'>강의실</option>";
+						str += "<option value='0'>강의실이 없습니다.</option>";
+					} else{
+						str += "<option value='0'>강의실</option>";
+						$.each(result,function(p_inx, p_val){
+							str += `<option value='\${p_val.roomCd}'>\${p_val.roomNo}</option>`;
+						});
+					}
+					$("#room").html(str);
+					timeTableInit();
 					
-					if(cellObj.hasClass("highlighted")) {
-						
-						if(j == 0) {
-							str += "월 " + i + "교시\n";
-						}else if(j == 1) {
-							str += "화 " + i + "교시\n";
-						}else if(j == 2) {
-							str += "수 " + i + "교시\n";
-						}else if(j == 3) {
-							str += "목 " + i + "교시\n";
-						}else if(j == 4) {
-							str += "금 " + i + "교시\n";
-						}
+					if(pageInit){
+						$("#room").val(lecTimeTable[0].roomCd)
+									.prop("selected",true)
+									.select2({ theme : 'bootstrap4' })
+									.trigger("change");
+						pageInit = false;
 					}
 				}
-			}
-			//alert(str);
-			$('#textArea4time').append(str);
+			})
+		});
+		
+		// 시간표 강의실 선택시 존재하는 강의는 선택불가
+		$("#room").on("change",function(){
+			let data = {
+				roomCd : this.value
+			};
+			
+			$.ajax({
+				url : "/professor/lecApplyForm/timeTableByRoomList",
+				type : "get",
+				data : data,
+				success : function(result){
+					timeTableInit();
+				}
+			});
+			
+		});
+		
+		// 시간표 작성
+		$('#timeTableBtn').on('click', function() {
+			roomSelectEvent();
 		});
 		
 		//수정하기 버튼 클릭 시
@@ -591,9 +779,10 @@
 						}
 					});//ajax
 			}
-		});
-		
-	}
+		}); // end function
+		$("#textArea4time").html(lecTimeTableToText(lecTimeTable));
+		initTimeTable();
+	}// end window.onload
 	
 </script>
 </html>

@@ -394,7 +394,7 @@
 	}
 	
 	function insertData() {
-		$('#lecaYr').val('2022');
+		$('#lecaYr').val('2023');
 		$('#lecaSem').val('2');
 		$('#lecaNm').val('고급 JAVA 프로그래밍');
 		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
@@ -726,7 +726,7 @@ window.onload = function() {
 				lecaBook : $('#lecaBook').val(),
 				lecaCate : $('#lecaCate').val(),
 				lecaGrade : $('#lecaGrade').val(),
-				lecaTt : $("#textArea4time").val(),
+				lecaTt : JSON.stringify(lecTimeTable),
 				lecaMp : $('#lecaMp').val(),
 				lecaFp : $('#lecaFp').val(),
 				lecaTp : $('#lecaTp').val(),

@@ -180,7 +180,7 @@
 		) VALUES (
 		    #{lecaCd}
 		    , #{subCd}
-		    , 3
+		    , ${lecaYn}
 		)
 	</insert>
 	
