@@ -20,4 +20,6 @@ public interface StuManageOfProMapper {
 	
 	public Student schStuRcmd(Map<String, String> map);
 	
+	public int deanRecommendation(Map<String, String> map);
+	
 }

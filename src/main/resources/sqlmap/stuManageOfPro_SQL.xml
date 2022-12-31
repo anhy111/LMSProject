@@ -116,7 +116,7 @@
 		        , SH.SCLH_YR
 		        , SH.SCLH_SEM
 		        , SH.SCLH_DT
-		        , SH.SCLH_YN
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = SH.SCLH_YN) SCLH_YN
 		        , SH.SCLH_PAY_YN
 		        , SH.PRO_NO
 		        , SH.SCLH_AMT
@@ -163,6 +163,12 @@
 		AND S.STU_NO = SH.STU_NO
 		AND SH.SCLH_CD = #{sclhCd}
 	</select>
+	
+	<update id="deanRecommendation" parameterType="map">
+		UPDATE SCL_HISTORY
+		SET SCLH_YN = 'AP004'
+		WHERE SCLH_CD = #{sclhCd}
+	</update>
 	
 	<resultMap type="student" id="schMap">
 		<result property="depNm" column="DEP_NM" />

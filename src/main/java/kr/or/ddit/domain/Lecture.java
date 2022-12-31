@@ -19,7 +19,7 @@ public class Lecture {
 	private List<Task> taskList;
 	
 	private Allocation allocation;
-    private Builing builing;
+    private Building building;
     private College college;
     private Professor professor;
     private Room room;

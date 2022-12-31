@@ -3,7 +3,7 @@ package kr.or.ddit.domain;
 import lombok.Data;
 
 @Data
-public class Builing {
+public class Building {
 
 	private int bldCd;
 	private int colCd;

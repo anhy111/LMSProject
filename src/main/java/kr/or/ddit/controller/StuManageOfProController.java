@@ -3,6 +3,7 @@ package kr.or.ddit.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,6 +127,18 @@ public class StuManageOfProController {
 		log.info("학생이 받은 장학 내역은 ? " + stuSclList);
 		
 		return stuSclList;
+	}
+	
+	@PostMapping("/professor/deanRcmd")
+	@ResponseBody
+	public int deanRcmd(@RequestBody Map<String,String> map, HttpServletRequest req) {
+		
+		
+		
+		int deanRecommendation = this.stuManageOfProService.deanRecommendation(map, req);
+		
+		
+		return 1;
 	}
 	
 	

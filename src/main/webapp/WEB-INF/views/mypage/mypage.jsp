@@ -49,6 +49,7 @@ $(function(){
 			
 		}else{
 			$("#alertPw").text("비밀번호가 일치하지 않습니다.").css("color","red");
+			$("#changePw").attr("disabled", true);
 		}
 		
 	});

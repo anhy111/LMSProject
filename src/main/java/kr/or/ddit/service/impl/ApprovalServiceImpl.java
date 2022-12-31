@@ -21,4 +21,9 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return this.approvalMapper.approvalList(approval);
 	}
 	
+	@Override
+	public int insertApproval(Approval approval) {
+		return this.approvalMapper.insertApproval(approval);
+	}
+	
 }
