@@ -590,7 +590,7 @@ window.onload = function() {
 				subNm : $('#subNm').val(),
 				subCd : $('#subCd').val(),
 				lecaCap : $('#lecaCap').val(),
-				lecaBook : $('#lecaBook').val(),
+				lecaBook : $('#lecaBook').val(), 
 				lecaCate : $('#lecaCate').val(),
 				lecaGrade : $('#lecaGrade').val(),
 				lecaTt : $("#textArea4time").val(),
