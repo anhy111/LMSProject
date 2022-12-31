@@ -210,7 +210,7 @@
                         </ul>
                     </li>
                     <li class="nav-item"><a
-                            href="/counsel/professorside/counselList" class="nav-link">
+                            href="/counsel/professorside/counselList?proNo=<%=no%>" class="nav-link">
                         <p>상담</p>
                     </a></li>
                 </sec:authorize>
