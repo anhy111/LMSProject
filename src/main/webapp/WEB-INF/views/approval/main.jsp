@@ -17,7 +17,7 @@
 				<th>상세보기</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="approvalList">
 			<c:forEach var="approval" items="${approvalList}" varStatus="stat">
 				<tr>
 					<td>${approval.apprCd}</td>
@@ -32,9 +32,82 @@
 						<fmt:formatDate value="${approval.apprDt}" pattern="YYYY/MM/dd" />
 					</td>
 					<td>${approval.empNm}</td>
-					<td><button>결제</button></td>
+					<td><button type="button" class="btn btn-outline-secondary btn-flat btn-sm" style="width: 100%">상세보기</button></td>
+					
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+
+	var $approvalList;
+
+	$(function(){
+		
+		$approvalList = $("#approvalList");
+		
+		approvalList();
+	});
+	
+	function approvalList(){
+		let data = {
+			
+		};
+		
+		$.ajax({
+			url : "/approval/list",
+			type : "get",
+// 			data : data,
+			success : function(result){
+				$approvalList.html("");
+				let str = "";
+				
+				$.each(result,function(p_inx, approval){
+					
+					let apprSdt = dateFormat(approval.apprSdt);
+					let apprDt = dateFormat(approval.apprDt);
+					let empNm = approval.empNm == null ? "미정" : approval.empNm;
+					str += `<tr>
+								<td>\${approval.apprCd}</td>
+								<td>\${approval.proNm}</td>
+								<td>\${approval.apprCate}</td>
+								<td class="apprYn">\${approval.apprYn}</td>
+								<td>
+									\${apprSdt}
+								</td>
+								<td>
+									\${apprDt}
+								</td>
+								<td>\${empNm}</td>
+								<td><button type="button" class="btn btn-outline-secondary btn-flat btn-sm" style="width: 100%">상세보기</button></td>
+								
+							</tr>`;
+				});
+				$approvalList.append(str);
+				
+				$(".apprYn").html(function(p_inx, p_html){
+					if(p_html == "승인"){
+						$(this).css("color","blue")
+					} else if(p_html == "반려"){
+						$(this).css("color","red");
+					}
+					return p_html;
+				});
+				
+			}
+		})
+	}
+	
+	function dateFormat(p_date){
+		if(p_date == "" || p_date == null){
+			return "";
+		} 
+		let date = new Date(p_date);
+		console.log("date.getFullYear()" + date.getFullYear());
+		let str = date.getFullYear() + "/" 
+					+ (date.getMonth() < 10 ? "0" + date.getMonth() :  date.getMonth()) + "/"
+							+ (date.getDate() < 10 ? "0" + date.getDate() : date.getDate());
+		return str;
+	}
+</script>

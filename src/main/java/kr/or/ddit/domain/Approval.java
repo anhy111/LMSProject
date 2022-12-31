@@ -16,6 +16,7 @@ public class Approval {
 	private int empNo; // 결재자
 	private String proNm; // 기안자이름
 	private String empNm; // 결재자 이름
+	private int apprTagCd;// 결재대상코드(강의계획서코드, 교수추천장학생코드)
 	
 	
 }

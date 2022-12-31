@@ -175,7 +175,13 @@
     
     <div id="blockNum3">
     	<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;시간표 선택</p>
-    	
+    	<select id="yr" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
+			<option value="">학년</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
     	<div id="blockNum3TimeTable" style="float : left; width : 400px;">
     		<table id="timeTableChoice" border="1">
     			<tr><th style="width : 70px;"></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr>
@@ -209,9 +215,19 @@
     
     </div>
 </body>
+<script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
 
 	window.onload = function() {
+		
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		//Initialize Select2 Elements
+		$('.select2bs4').select2({
+			theme : 'bootstrap4'
+		});
 		
 		//더보기 버튼을 누르면
 		$('#showMoreTrs').on('click', function() {
@@ -328,15 +344,15 @@
 					if(cellObj.hasClass("highlighted")) {
 						
 						if(j == 0) {
-							str += "월 " + i + "교시\n";
+							str += "월" + i + "교시\n";
 						}else if(j == 1) {
-							str += "화 " + i + "교시\n";
+							str += "화" + i + "교시\n";
 						}else if(j == 2) {
-							str += "수 " + i + "교시\n";
+							str += "수" + i + "교시\n";
 						}else if(j == 3) {
-							str += "목 " + i + "교시\n";
+							str += "목" + i + "교시\n";
 						}else if(j == 4) {
-							str += "금 " + i + "교시\n";
+							str += "금" + i + "교시\n";
 						}
 					}
 				}

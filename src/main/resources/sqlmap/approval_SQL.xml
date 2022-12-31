@@ -8,7 +8,7 @@
 
 <!-- 결재요청 목록 -->
 <!-- 결재자가 로그인한 관리자인 결재목록만 조회 -->
-<select id="approvalList" parameterType="Approval" resultType="Approval">
+<select id="approvalList" resultType="approval">
 	SELECT A.APPR_CD
 		 , A.APPR_DT
 		 , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = A.APPR_YN ) APPR_YN
@@ -16,14 +16,17 @@
 		 , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = A.APPR_CATE ) APPR_CATE
 		 , (SELECT EP.EMP_NM FROM EMPLOYEE EP WHERE EP.EMP_NO = A.PRO_NO ) PRO_NM
 		 , (SELECT EE.EMP_NM FROM EMPLOYEE EE WHERE EE.EMP_NO = A.EMP_NO ) EMP_NM
-		 , APPR_SDT
+		 , A.APPR_SDT
 	FROM APPROVAL A
-	WHERE A.EMP_NO = #{empNo}
+	ORDER BY A.APPR_SDT DESC
 </select>
 
-<!-- 상세 -->
-<!-- 수정 -->
-<!-- 입력 -->
-<!-- 삭제 -->
+<insert id="insertApproval" parameterType="approval"> 
+	<selectKey order="BEFORE" resultType="int" keyProperty="apprCd">
+		SELECT NVL(MAX(APPR_CD),0) + 1 FROM APPROVAL
+	</selectKey>
+		INSERT INTO APPROVAL(APPR_CD, APPR_YN, APPR_CATE, PRO_NO, APPR_SDT, APPR_TAG_CD)
+		    VALUES(#{apprCd}, 'AP002', #{apprCate}, #{proNo}, SYSDATE, #{apprTagCd})
+</insert>
 </mapper>
 

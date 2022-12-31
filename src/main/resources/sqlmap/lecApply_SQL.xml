@@ -257,7 +257,6 @@
 		            , LECA_NOTE
 		            , LECA_DT
 		            , LECA_GRADE
-		            , LECA_YN
 <!-- 		            , LECA_IMSI_YN -->
 		            , LECA_CATE
 		            , LECA_MP
@@ -280,7 +279,6 @@
 		    , #{lecaNote}
 		    , SYSDATE
 		    , #{lecaGrade}
-		    , 3
 <!-- 		    , 1 -->
 		    , #{lecaCate}
 		    , #{lecaMp}
@@ -381,6 +379,7 @@
 	<update id="lectureUpdate" parameterType="lecApply">
 		UPDATE  LECTURE
 		SET     SUB_CD = #{subCd}
+				, LECA_YN = 0
 		WHERE   LECA_CD = #{lecaCd}
 	</update>
 	
@@ -437,7 +436,6 @@
             , LECA_GRADE = #{lecaGrade}
 <!--             , LECA_IMSI_YN = null -->
             , LECA_CATE = #{lecaCate}
-            , LECA_YN = 3
             , LECA_MP = #{lecaMp}
             , LECA_FP = #{lecaFp}
             , LECA_TP = #{lecaTp}
