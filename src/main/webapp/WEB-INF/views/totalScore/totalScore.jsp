@@ -55,7 +55,7 @@ let token = "${_csrf.token}";
 		};
 		
 		$.ajax({
-			url : "/tgrade/getCnt",
+			url : "/totalScore/getCnt",
 			type : "POST",
 			data : JSON.stringify(dataObject),
 			contentType : "application/json;charset=utf-8",
@@ -127,31 +127,31 @@ let token = "${_csrf.token}";
 		
 		//개인정보 가져오기
 		$.ajax({
-			url : "/tgrade/getInfo",
+			url : "/totalScore/getInfo",
 			type : "POST",
 			dataType : "JSON",
 			beforeSend : function(xhr){
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(res) {
-				//학번(memCd), 이름(memNm), 생년월일(memReg1), 연락처(memTel),
+				//학번(memCd), 이름(memNm), 생년월일(stuBir), 연락처(stuTel),
 				//단과대학/전공(memNme), 입학정보(memAddr1), 변동(memAddr2), 수강신청학년(memMl)
-				$('#stuCd').val(res.memCd);
-				$('#memName').val(res.memNm);
-				$('#memReg1').val(res.memReg1);
-				$('#memTel').val(res.memTel);
-				$('#college').val(res.memNme);
-				$('#admission').val(res.memAddr1);
-				$('#admChange').val(res.memAddr2);
-				$('#yrNsem').val(res.memMl);
+				$('#stuNo').val(res.stuNo);
+				$('#stuNm').val(res.stuNm);
+				$('#stuBir').val(res.stuBir);
+				$('#stuTel').val(res.stuTel);
+				$('#depNm').val(res.depNm);
+				$('#stuRgb').val(res.stuRgb);
+				$('#stuSem').val(res.stuSem);
+				$('#yrNsem').val(res.stuYr);
 				
-				memFnm = res.memFnm;
+				stuPic = res.stuPic;
 			}
 		});
 		
 		//년도 및 학기 불러오기
 		$.ajax({
-			url : "/tgrade/getYrNSem",
+			url : "/totalScore/getYrAndSem",
 			type : "GET",
 			dataType : "JSON",
 			beforeSend : function(xhr){
@@ -243,22 +243,22 @@ let token = "${_csrf.token}";
 		<tr>
 			<th>학번</th>
 			<td>
-				<input type="text" class="infoText" name="stuCd" id="stuCd" readonly="readonly" style="width:68.5%;">
+				<input type="text" class="infoText" name="stuNo" id="stuNo" readonly="readonly" style="width:50%;">
 				<button type="button" class="btn btn-secondary photoBtn" id="photoBtn">
-				<p class="photoP">사진</p>
+					<p class="photoP">사진</p>
 				</button>
 			</td>
 			<th>성명</th>
 			<td>
-				<input type="text" class="infoText" name="memName" id="memName" readonly="readonly">
+				<input type="text" class="infoText" name="stuNm" id="stuNm" readonly="readonly">
 			</td>
-			<th>입학정보</th>
+			<th>학적</th>
 			<td>
-				<input type="text" class="infoText" name="admission" id="admission" readonly="readonly">
+				<input type="text" class="infoText" name="stuRgb" id="stuRgb" readonly="readonly">
 			</td>
 			<th>연락처</th>
 			<td>
-				<input type="text" class="infoText" name="memTel" id="memTel" readonly="readonly">
+				<input type="text" class="infoText" name="stuTel" id="stuTel" readonly="readonly">
 			</td>
 			<th></th>
 		</tr>
@@ -268,19 +268,19 @@ let token = "${_csrf.token}";
 		<tr>
 			<th>소속</th>
 			<td>
-				<input type="text" class="infoText" name="college" id="college" readonly="readonly">
+				<input type="text" class="infoText" name="depNm" id="depNm" readonly="readonly">
 			</td>
 			<th>학년</th>
 			<td>
 				<input type="text" class="infoText" name="yrNsem" id="yrNsem" readonly="readonly">
 			</td>
-			<th>변동</th>
+			<th>학기</th>
 			<td>
-				<input type="text" class="infoText" name="admChange" id="admChange" readonly="readonly">
+				<input type="text" class="infoText" name="stuSem" id="stuSem" readonly="readonly">
 			</td>
 			<th>생년월일</th>
 			<td>
-				<input type="text" class="infoText" name="memReg1" id="memReg1" readonly="readonly">
+				<input type="text" class="infoText" name="stuBir" id="stuBir" readonly="readonly">
 			</td>
 			<th></th>
 		</tr>

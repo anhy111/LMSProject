@@ -2,15 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.TotalScoreMapper">
-	<select id="">
+<sql id="yrNsem">
+      <if test="yrNsem != null and !yrNsem.equals('')">
+         AND #{yrNsem} IN (A.LECA_SEM , A.LECA_YR)
+      </if>
+   </sql>
+
+	<!-- 성적 건수 카운트-->
+	<select id="getCount" parameterType="hashMap" resultType="int">
 		SELECT  
 				COUNT(S.LECA_CD) CNT
 	    FROM    
 	    		STU_LEC S, LEC_APPLY A
 		WHERE   
 				S.LECA_CD = A.LECA_CD
+				 <include refid="yrNsem"></include>
 		        AND   STU_NO = #{stuNo}
-		        AND #{yrNsem} IN (A.LECA_SEM , A.LECA_YR)
+	</select>
+	
+	<!-- 학생 개인정보 조회 -->
+	<select id="getInfo" resultType="student" parameterType="String">
+		SELECT 
+		          S.STU_NO
+		        , S.STU_YR
+		        , S.STU_SEM
+		        , S.STU_NM
+		        , S.STU_TEL
+		        , S.STU_REG
+		        , S.STU_PIC
+		        , S.STU_BIR
+		        , D.DEP_NM AS depNm
+		        , DECODE (S.STU_RGB, 'RCD001', '휴학' , 'RCD002', '재학' , 'RCD003', '복학' , 'RCD004', '자퇴' , 'RCD005', '졸업'  ) AS STU_RGB
+		FROM STUDENT S, DEPARTMENT D 
+		WHERE S.DEP_CD = D.DEP_CD
+		AND STU_NO = #{stuNo}
+	</select>
+	
+	 <select id="getYrAndSem" parameterType="hashMap" resultType="lecApply">
+      SELECT  DISTINCT A.LECA_YR, A.LECA_SEM
+      FROM    STU_LEC S, LEC_APPLY A
+      WHERE   S.LECA_CD = A.LECA_CD
+      AND     (A.LECA_YR != #{YEAR} OR A.LECA_SEM != #{SEMESTER})
+      AND     STU_NO = #{stuNo}
+      ORDER BY    A.LECA_YR DESC, A.LECA_SEM DESC
+   </select>
+   
+	<!-- 현재 년도 학기 구하기 -->
+	<select id="getNow" resultType="hashMap">
+	SELECT  TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) year,
+              TO_NUMBER(CASE WHEN TO_CHAR(SYSDATE, 'MM') IN ('08', '09', '10', '11', '12', '1') THEN 2 ELSE 1 END) semester
+      FROM DUAL
 	</select>
 
 </mapper>
