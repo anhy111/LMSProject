@@ -50,7 +50,7 @@ td {
 }
 
 .card {
-	margin-top: 30px;
+	margin-top: 100px;
 	margin-left: 15%;
 	height: 500px;
 	width: 1000px;
@@ -263,7 +263,7 @@ td {
 			console.log("페이 버튼 클뤽");
 			IMP.request_pay({
 				//name과 amout만있어도 결제 진행가능
-				pg : "html5_inicis",
+				pg : "html5_inicis.INIpayTest",
 				pay_method : 'card',
 				merchant_uid : ''+stuNo + payCd,
 				amount : 100,
@@ -318,7 +318,7 @@ td {
 			})
 		})
 
-	})
+	});
 
 	function savePDF() {
 		//저장 영역 div id
@@ -351,6 +351,6 @@ td {
 					// 파일 저장
 					doc.save('연수대학교_등록금_고지서.pdf');
 				});
-	}
+	};
 </script>
 </html>
