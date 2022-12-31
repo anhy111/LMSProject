@@ -6,7 +6,6 @@ import java.util.Optional;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
 import kr.or.ddit.util.FileUploadUtil;
-import kr.or.ddit.util.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
