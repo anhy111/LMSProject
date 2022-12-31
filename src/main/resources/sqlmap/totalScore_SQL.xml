@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.TotalScoreMapper">
+	<select id="">
+		SELECT  
+				COUNT(S.LECA_CD) CNT
+	    FROM    
+	    		STU_LEC S, LEC_APPLY A
+		WHERE   
+				S.LECA_CD = A.LECA_CD
+		        AND   STU_NO = #{stuNo}
+		        AND #{yrNsem} IN (A.LECA_SEM , A.LECA_YR)
+	</select>
+
+</mapper>

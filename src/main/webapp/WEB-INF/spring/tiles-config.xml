@@ -120,6 +120,9 @@
 	<definition name="main/*" extends="mainPage">
 	<put-attribute name="body" value="/WEB-INF/views/main/{1}.jsp" />
 	</definition>
+	<definition name="totalScore/*" extends="tiles-layout">
+	<put-attribute name="body" value="/WEB-INF/views/totalScore/{1}.jsp" />
+	</definition>
 	
 
 	<!-- 타일즈 미적용 -->
