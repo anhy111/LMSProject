@@ -582,7 +582,7 @@ window.onload = function() {
 		
 		let dataObject = {
 				lecaYr : $('#lecaYr').val(),
-				lecaSem : $('#lecaSem').val(),
+				lecaSem : $('#lecaSem').val(), 
 				lecaNm : $('#lecaNm').val(),
 				lecaCon : $('#lecaCon').val(),
 				lecaTrg : $('#lecaTrg').val(),
