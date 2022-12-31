@@ -68,7 +68,7 @@
 	    		</td>
 	    		<th>학기</th>
 	    		<td>
-	    			<input type="text" name="lecaSem" size=30 value="${lecApplyList[0].lecaSem }" disabled>
+	    			<input type="text" name="lecaSem" size=30 value="${lecApplyList[0].lecaSem }학기" disabled>
 	    		</td>
 	    	</tr>
 	    	<tr>

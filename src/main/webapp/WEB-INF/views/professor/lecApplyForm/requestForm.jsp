@@ -74,8 +74,8 @@
 	    		<td>
 	    			<select id="lecaSem">
 	    				<option value="">선택</option>
-	    				<option value="1학기">1학기</option>
-	    				<option value="2학기">2학기</option>
+	    				<option value="1">1학기</option>
+	    				<option value="2">2학기</option>
 	    			</select>
 	    		</td>
 	    	</tr>
@@ -247,7 +247,7 @@
 
 	function insertData() {
 		$('#lecaYr').val('2022');
-		$('#lecaSem').val('2학기');
+		$('#lecaSem').val('2');
 		$('#lecaNm').val('고급 JAVA 프로그래밍');
 		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
 		$('#lecaTrg').val('3');

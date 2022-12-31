@@ -52,7 +52,7 @@
 	<select id="list" parameterType="hashMap" resultType="lecApply">
 		SELECT  U.LECA_CD,
 		        U.PRO_NO,
-		        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
+		        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
 		        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
 		        NVL(U.LECA_TRG, 0) LECA_TRG,
 		        U.SUB_CD,
@@ -309,7 +309,7 @@
 	
 	<select id="tempList" parameterType="int" resultType="lecApply">
 		SELECT  U.LECA_CD,
-	        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
+	        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
 	        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
 	        NVL(U.LECA_TRG, 0) LECA_TRG,
 	        U.SUB_CD,

@@ -72,8 +72,8 @@
 	    		<td>
 	    			<select id="lecaSem">
 	    				<option value="">선택</option>
-	    				<option value="1학기" <c:if test="${lecApplyList[0].lecaSem == '1학기'}">selected</c:if>>1학기</option>
-	    				<option value="2학기" <c:if test="${lecApplyList[0].lecaSem == '2학기'}">selected</c:if>>2학기</option>
+	    				<option value="1" <c:if test="${lecApplyList[0].lecaSem == '1'}">selected</c:if>>1학기</option>
+	    				<option value="2" <c:if test="${lecApplyList[0].lecaSem == '2'}">selected</c:if>>2학기</option>
 	    			</select>
 	    		</td>
 	    	</tr>

@@ -108,7 +108,7 @@ td {
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 	
 </head>
 <body>
@@ -230,82 +230,92 @@ td {
 		<br>
 	</c:if>
 </body>
-<script type="text/javascript" defer="defer">
+<script type="text/javascript">
 
-	$(function() {
-		
-		var today = new Date();   
+	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+
+	var IMP = window.IMP;
+	var code = "imp35881853"; //가맹점 식별코드
+	IMP.init(code);
+	
+	$(function () {
+
+		var today = new Date();
 		var year = today.getFullYear() + "년 ";
 		var month = today.getMonth();
 		var sem = "";
-		if(month > 3 && month < 8){
+		if (month > 3 && month < 8) {
 			sem = "1학기 ";
-		}else{
+		} else {
 			sem = "2학기 ";
 		}
 		console.log(year + sem);
-		
+
 		$('#header1').text(year + sem + "[은행용]");
 		$('#header2').text(year + sem + "[학생용]");
+
 		
-		var IMP = window.IMP;
-		var code = "imp35881853"; //가맹점 식별코드
-		IMP.init(code);
 
 		var stuNo = $('#td0').text();
 		var stuNm = $('#td1').text();
 		var payAmt = $('#td2').text();
 		var payCd = $('#pay').data('paycd');
 		var stuTel = $('#stuTel').val();
-		console.log(payCd , payAmt);
+		console.log(payCd, payAmt);
 
-		$('#pay').on('click', function() {
+		$('#pay').click(function () {
 			console.log("페이 버튼 클뤽");
 			IMP.request_pay({
 				//name과 amout만있어도 결제 진행가능
-				pg : "html5_inicis.INIpayTest",
-				pay_method : 'card',
-				merchant_uid : ''+stuNo + payCd,
-				amount : 100,
-				name : '등록금결제', // 상품명
-				buyer_name : stuNm,
-				buyer_tel : stuTel,
-				
-			//결제완료후 이동할 페이지 kko나 kkopay는 생략 가능
-			//m_redirect_url : 'https://localhost:8080/payments/complete'
-			}, function(rsp) {
+				pg: "html5_inicis",
+				pay_method: 'card',
+				merchant_uid: '' + stuNo + payCd,
+				amount: 100,
+				name: '등록금결제', // 상품명
+				buyer_name: stuNm,
+				buyer_tel: stuTel,
+
+				//결제완료후 이동할 페이지 kko나 kkopay는 생략 가능
+				//m_redirect_url : 'https://localhost:8080/payments/complete'
+			}, function (rsp) {
+				alert("또로롱");
 				if (rsp.success) {
 					var msg = '결제가 완료되었습니다';
 					var result = {
-						"imp_uid" : rsp.imp_uid,
-						"merchant_uid" : rsp.merchant_uid,
-						"pay_date" : new Date().getTime(),
-						"amount" : rsp.paid_amount,
-						"card_no" : rsp.apply_num,
-						"refund" : 'payed'
+						"imp_uid": rsp.imp_uid,
+						"merchant_uid": rsp.merchant_uid,
+						"pay_date": new Date().getTime(),
+						"amount": rsp.paid_amount,
+						"card_no": rsp.apply_num,
+						"refund": 'payed'
 					}
 					//console.log("결제성공 " + msg);
 					console.log(rsp.merchant_uid);
 
 					$.ajax({
-						url : '/payment/stuForm/pay',
-						type : 'POST',
-						data : {
-							"payCd" : payCd
+						url: '/payment/stuForm/pay',
+						type: 'POST',
+						data: {
+							"payCd": payCd
 						},
-						dataType :'json',
+						dataType: 'json',
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader(header, token);
+						},
 						//contentType : 'application/json', //서버에서 보내줄 데이터 타입
-						success : function(res) {
+						success: function (res) {
 							if (res > 0)
-							alert("결제에 성공하였습니다.")
-							
+								alert("결제에 성공하였습니다.")
+
 							window.opener.location.reload();
-							
+
 							setTimeout(() => {
 								window.close();
 							}, 1000);
 						},
-						error : function() {
+						error: function () {
 							console.log("Insert ajax 통신 실패!!!");
 						}
 					}) //ajax
@@ -325,32 +335,32 @@ td {
 		html2canvas($('#tabdiv1')[0], {
 			//logging : true,		// 디버그 목적 로그
 			//proxy: "html2canvasproxy.php",
-			allowTaint : true, // cross-origin allow 
-			useCORS : true, // CORS 사용한 서버로부터 이미지 로드할 것인지 여부
-			scale : 2
-		// 기본 96dpi에서 해상도를 두 배로 증가
+			allowTaint: true, // cross-origin allow 
+			useCORS: true, // CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+			scale: 2
+			// 기본 96dpi에서 해상도를 두 배로 증가
 
 		}).then(
-				function(canvas) {
-					// 캔버스를 이미지로 변환
-					var imgData = canvas.toDataURL('image/png');
+			function (canvas) {
+				// 캔버스를 이미지로 변환
+				var imgData = canvas.toDataURL('image/png');
 
-					var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
-					var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
-					var imgHeight = canvas.height * imgWidth / canvas.width;
-					var heightLeft = imgHeight;
-					var margin = 10; // 출력 페이지 여백설정
-					var doc = new jsPDF('p', 'mm');
-					var position = 50;
+				var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+				var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
+				var imgHeight = canvas.height * imgWidth / canvas.width;
+				var heightLeft = imgHeight;
+				var margin = 10; // 출력 페이지 여백설정
+				var doc = new jsPDF('p', 'mm');
+				var position = 50;
 
-					// 첫 페이지 출력
-					doc.addImage(imgData, 'PNG', margin, position, imgWidth,
-							imgHeight);
-					heightLeft -= pageHeight;
+				// 첫 페이지 출력
+				doc.addImage(imgData, 'PNG', margin, position, imgWidth,
+					imgHeight);
+				heightLeft -= pageHeight;
 
-					// 파일 저장
-					doc.save('연수대학교_등록금_고지서.pdf');
-				});
+				// 파일 저장
+				doc.save('연수대학교_등록금_고지서.pdf');
+			});
 	};
 </script>
 </html>
