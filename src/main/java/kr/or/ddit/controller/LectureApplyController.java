@@ -226,14 +226,14 @@ public class LectureApplyController {
 		
 		if (lectureResult < 0) {
 			log.info("lecture실패");
-			return 0;
+			new RuntimeException();
 		}
 		//2. lec_apply 테이블에 값 넣기
 		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecApply);
 
 		if (lecApplyResult < 0) {
 			log.info("lecApply실패");
-			return 0;
+			new RuntimeException();
 		}
 		//3. weekplan 테이블에 값 넣기
 		List<Weekplan> weekPlanList = lecApply.getWeekPlanList();
@@ -243,7 +243,7 @@ public class LectureApplyController {
 		
 		if (weekPlanResult < 0) {
 			log.info("weekPlan실패");
-			return 0;
+			new RuntimeException();
 		}
 		
 		Approval approval = new Approval();
@@ -253,7 +253,7 @@ public class LectureApplyController {
 		int approvalResult = this.approvalService.insertApproval(approval);
 		if(approvalResult <= 0) {
 			log.info("approval실패");
-			return 0;
+			new RuntimeException();
 		}
 		
 		return lectureResult + lecApplyResult ; //weekPlanResult;

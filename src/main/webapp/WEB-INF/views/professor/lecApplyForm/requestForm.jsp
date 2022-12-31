@@ -280,8 +280,8 @@
 		let str = '';
 		let room = $("#room").val();
 		let building = $("#building").val();
-		let buildingText = $("#building option:selected").text() + " ";
-		let roomText = $("#room option:selected").text() + " ";
+		let buildingText = $("#building option:selected").text();
+		let roomText = $("#room option:selected").text();
 		let data = [];	// json형식으로 시간표 저장
 		for(let j = 0; j <= 4; j++) {
 			for(let i = 1; i <= 9; i++) {
@@ -291,42 +291,19 @@
 					
 					switch(j) {
 					case 0:
-						data.push({
-							roomCd : room,
-							roomNo : roomText
-							bldCd : building,
-							
-							wk : "m",
-							time : i + ""
-						}); 
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "월", time : i + ""}); 
 						break;
 					case 1:
-						data.push({
-							roomCd : room,
-							wk : "t",
-							time : i + ""
-						});
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "화", time : i + ""}); 
 						break;
 					case 2:
-						data.push({
-							roomCd : room,
-							wk : "w",
-							time : i + ""
-						});
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "수", time : i + ""}); 
 						break;
 					case 3:
-						data.push({
-							roomCd : room,
-							wk : "h",
-							time : i + ""
-						});
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "목", time : i + ""}); 
 						break;
 					case 4:
-						data.push({
-							roomCd : room,
-							wk : "f",
-							time : i + ""
-						});
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "금", time : i + ""}); 
 						break;
 					default:
 						break;
@@ -335,10 +312,10 @@
 			}
 		}
 		
-		// 이미 저장되어있는 시간표가 있더라도 버튼을 다시 누르면 그 시간표로 덮어쓰기
-		for(let i=0; i<lecTimeTable.length; i++){
-			if(room == lecTimeTable.roomCd){
-				lecTimeTable.remove(i);
+		// 이미 저장되어있는 같은 강의실의 시간표가 있더라도 버튼을 누르면 그 시간표로 덮어쓰기
+		for(let i=lecTimeTable.length-1; i >= 0; i--){
+			if(room == lecTimeTable[i].roomCd){
+				lecTimeTable.splice(i,1);
 			}
 		}
 		
@@ -353,12 +330,11 @@
 		for(let i=0; i<data.length; i++){
 			let check = false;
 			for(let j=0; j<lecTimeTable.length; j++){
-				
-				
 				if(lecTimeTable[j].roomCd == data[i].roomCd
 					&& lecTimeTable[j].wk == data[i].wk
 					&& lecTimeTable[j].time == data[i].time){
 					check = true;
+					break;
 				}
 			}
 			if(!check){
@@ -370,18 +346,50 @@
 		if($('#textArea4time').html().substr(0,1) == '시'){
 			$('#textArea4time').html("");
 		}
-		$('#textArea4time').append(str);
-		console.log("data : " , data );
-		console.log("lecTimeTable : ", lecTimeTable);
+		$('#textArea4time').html(lecTimeTableToText(lecTimeTable));
 		
+	}
+	
+	function lecTimeTableToText(p_timeTable){
+		let str = "";
+		for(let i=0; i<p_timeTable.length; i++){
+			str += p_timeTable[i].bldNm + " " + p_timeTable[i].roomNo + " " + p_timeTable[i].wk + " " + p_timeTable[i].time + "교시\n";
+		}
+		return str;
 	}
 	
 	function timeTableInit(){
 		$('#timeTableChoice td').removeClass("highlighted");
+		let room = $("#room").val();
+		let timeTable = $('#timeTableChoice');
+		// 기존에 선택된 교시는 색칠해주기
+		for(let i=0; i<lecTimeTable.length; i++){
+			if(room == lecTimeTable[i].roomCd){
+				let x;
+				switch(lecTimeTable[i].wk){
+				case "월":
+					x = 0;
+					break;
+				case "화":
+					x = 1;
+					break;
+				case "수":
+					x = 2;
+					break;
+				case "목":
+					x = 3;
+					break;
+				case "금":
+					x = 4;
+					break;
+				}
+				timeTable.find("tr").eq(lecTimeTable[i].time).find("td").eq(x).toggleClass("highlighted");
+			}
+		}
 	}
 	
-	function timeDataInit(){
-		data = [];
+	function lecTimeTableInit(){
+		lecTimeTable.splice(0);
 		$('#textArea4time').html("");
 	}
 	
@@ -430,7 +438,7 @@ window.onload = function() {
 	});
 	
 	$("#dataInit").on("click",function(){
-		timeDataInit();
+		lecTimeTableInit();
 	})
 	
 	var date = new Date();
