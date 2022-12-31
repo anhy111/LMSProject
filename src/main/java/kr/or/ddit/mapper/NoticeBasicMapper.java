@@ -1,6 +1,7 @@
 package kr.or.ddit.mapper;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
+import kr.or.ddit.util.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -15,8 +16,8 @@ public interface NoticeBasicMapper {
     int getNoticeBasicTotalRow();
 
     //공지사항 목록 조회
-    @Select("SELECT * FROM notice_basic ORDER BY notice_reg DESC")
-    List<NoticeBasic> noticeBasicList();
+    @Select(" SELECT * FROM notice_basic nb1 WHERE (SELECT COUNT(*) FROM notice_basic nb2 WHERE nb2.notice_reg > nb1.notice_reg) BETWEEN (10 * (#{page} - 1) ) AND (10 * #{page} -1) ORDER BY notice_reg DESC")
+    List<NoticeBasic> noticeBasicList(int page);
 
     //공지사항 상세 조회
     @Select( "SELECT * FROM notice_basic WHERE notice_cd = #{noticeCd}")

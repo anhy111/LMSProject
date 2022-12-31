@@ -1,6 +1,7 @@
 package kr.or.ddit.service;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
+import kr.or.ddit.util.Page;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface NoticeBasicService {
     int getNoticeBasicTotalRow();
 
     //공지사항 목록 조회
-    List<NoticeBasic> noticeBasicList();
+    List<NoticeBasic> noticeBasicList(int page);
 
     //공지사항 상제 조회
     NoticeBasic findOne(Long noticeCd);

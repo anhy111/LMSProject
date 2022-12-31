@@ -1,10 +1,12 @@
 package kr.or.ddit.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
 import kr.or.ddit.util.FileUploadUtil;
+import kr.or.ddit.util.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,21 +39,24 @@ public class NoticeBasicController {
 
     //공지사항 리스트
     @GetMapping("/list")
-    public String testHome(Model model) {
+    public String testHome(Model model, @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
 
+        //총 행의 수
         int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
+        int totalPage = (int) Math.ceil((double) totalRow / 10);
 
-        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList();
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList(viewPage);
 
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
+        model.addAttribute("totalPage", totalPage);
 
         return "notice/test";
     }
 
     //공지사항 등록 폼
     @GetMapping("/noticeForm")
-    public String createNoticeForm (NoticeForm form, Model model) {
+    public String createNoticeForm(NoticeForm form, Model model) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
@@ -61,9 +66,9 @@ public class NoticeBasicController {
 
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
-    public String createNotice (NoticeForm form,
-                                @RequestParam MultipartFile[] files2
-                                ) {
+    public String createNotice(NoticeForm form,
+                               @RequestParam MultipartFile[] files2
+    ) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
@@ -121,7 +126,6 @@ public class NoticeBasicController {
     }
 
     //공지사항 등록
-
 
 
 }

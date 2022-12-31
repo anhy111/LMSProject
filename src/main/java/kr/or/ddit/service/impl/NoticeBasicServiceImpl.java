@@ -5,6 +5,7 @@ import java.util.List;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.mapper.NoticeBasicMapper;
 import kr.or.ddit.service.NoticeBasicService;
+import kr.or.ddit.util.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,9 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
 
     //공지사항 목록 조회
     @Override
-    public List<NoticeBasic> noticeBasicList() {
+    public List<NoticeBasic> noticeBasicList(int page) {
 
-        return this.noticeBasicMapper.noticeBasicList();
+        return this.noticeBasicMapper.noticeBasicList(page);
     }
 
     //공지사항 상세 조회
