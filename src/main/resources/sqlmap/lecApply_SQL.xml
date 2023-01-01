@@ -455,6 +455,18 @@
 		DELETE WEEKPLAN WHERE LECA_CD = #{lecaCd}
 	</delete>
 	
+	<select id="alreadyTimeTableList" parameterType="lecApply" resultType="lecApply">
+		SELECT DECODE(L.LECA_YN
+		                ,0,'승인대기'
+		                ,1,'승인'
+		        )LECA_APPROVAL
+		     , LA.LECA_TT
+		FROM LEC_APPLY LA, LECTURE L
+		WHERE LA.LECA_CD = L.LECA_CD
+		AND L.LECA_YN IN(0,1)
+		AND LA.LECA_YR = #{lecaYr}
+		AND LA.LECA_SEM = #{lecaSem}
+	</select>
 </mapper>
 
 

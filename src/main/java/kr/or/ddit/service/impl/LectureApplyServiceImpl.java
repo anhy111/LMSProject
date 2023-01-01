@@ -133,5 +133,8 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	public int getSubCdList(String subNm) {
 		return this.lectureApplyMapper.getSubCdList(subNm);
 	}
-    
+    @Override
+    public List<LecApply> alreadyTimeTableList(LecApply lecApply) {
+    	return this.lectureApplyMapper.alreadyTimeTableList(lecApply);
+    }
 }

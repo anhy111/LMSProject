@@ -487,10 +487,10 @@ public class LectureApplyController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/lecApplyForm/timeTableByRoomList")
-	public Map<String, Object> timeTableByRoomList(int roomCd){
-		
-		return null;
+	@GetMapping("/lecApplyForm/alreadyTimeTableList")
+	public List<LecApply> alreadyTimeTableList(LecApply lecApply){
+		log.info("alreadyTimeTableList.lecApply : " + lecApply);
+		return this.lectureApplyService.alreadyTimeTableList(lecApply);
 	}
 	
 }
