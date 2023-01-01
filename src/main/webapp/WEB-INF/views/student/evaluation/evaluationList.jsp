@@ -225,6 +225,10 @@
 	
 	function highlightRow(obj, p_lecaCd){
 		
+		for(let i=1; i<=evSize; i++){
+			$(":radio[name='evlq" + i + "']").attr("checked",false);
+		}
+		
 		$("#lecaCd").val(p_lecaCd);
 		var tbody = document.getElementById("tbodyId");
 		var trs = tbody.getElementsByTagName("tr");

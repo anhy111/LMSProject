@@ -205,7 +205,7 @@
     		</table>
     	</div>
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
-    		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;예상 시간</p>
+    		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의 시간</p>
     		<textarea id="textArea4time" rows="16" cols="45" disabled></textarea>
     		
     		<br><br>

@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Approval;
+import kr.or.ddit.domain.Building;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.ApprovalService;
+import kr.or.ddit.service.BuildingService;
 import kr.or.ddit.service.LectureApplyService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +30,8 @@ public class ApprovalController {
 	ApprovalService approvalService;
 	@Autowired
 	LectureApplyService lectureApplyService;
+	@Autowired
+	BuildingService buildingService;
 	
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@GetMapping("/main")
@@ -63,6 +67,9 @@ public class ApprovalController {
 		Professor professor = this.lectureApplyService.inquiryFormProInfoStudentApply(lecaCd);
 		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(professor.getProNo());
+		
+		model.addAttribute("buildingList",buildingList);
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);

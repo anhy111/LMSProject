@@ -99,7 +99,6 @@
 </div>
 <script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
-<script src="/resources/adminlte/dist/js/adminlte.min.js"></script>
 <script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
