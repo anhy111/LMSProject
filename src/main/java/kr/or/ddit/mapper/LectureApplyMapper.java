@@ -71,4 +71,6 @@ public interface LectureApplyMapper {
 	// 과목번호 리스트 가져오기
 	public int getSubCdList(String subNm);
 	
+	public List<LecApply> alreadyTimeTableList(LecApply lecApply);
+	
 }

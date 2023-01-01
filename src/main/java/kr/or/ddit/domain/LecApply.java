@@ -45,4 +45,5 @@ public class LecApply {
 
     private List<Weekplan> weekPlanList;	//주차계획
 
+    private int lecaYn;			// 승인구분
 }
