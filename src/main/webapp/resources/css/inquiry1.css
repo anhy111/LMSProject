@@ -71,10 +71,21 @@
 		color : black;
 	}
 	#timeTableChoice td:hover {
-      background-color : #FFECEF;
+      background-color : rgb(0, 31, 63, 0.15);
     }
 	#timeTableChoice td.highlighted {
-      background-color : #FFCACA;
+      background-color : #001f3f;
+    }
+	#timeTableChoice td.highlighted:hover {
+      background-color : rgb(0, 31, 63, 0.5);
+    }
+	#timeTableChoice td.approve {
+      background-color : red;
+      pointer-events : none;
+    }
+	#timeTableChoice td.pendingApprove {
+      background-color : yellow;
+      pointer-events : none;
     }
     #div4transitionBtns {
     	width : 130px;

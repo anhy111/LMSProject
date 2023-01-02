@@ -52,7 +52,7 @@
 	<select id="list" parameterType="hashMap" resultType="lecApply">
 		SELECT  U.LECA_CD,
 		        U.PRO_NO,
-		        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
+		        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
 		        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
 		        NVL(U.LECA_TRG, 0) LECA_TRG,
 		        U.SUB_CD,
@@ -180,7 +180,7 @@
 		) VALUES (
 		    #{lecaCd}
 		    , #{subCd}
-		    , 3
+		    , ${lecaYn}
 		)
 	</insert>
 	
@@ -207,7 +207,7 @@
 		            , LECA_AP
 		            , PRO_NO
 		) VALUES (
-		    (select max(LECA_CD) from lecture)
+		    ${lecaCd}
 		    , #{lecaYr}
 		    , #{lecaSem}
 		    , #{lecaNm}
@@ -257,7 +257,6 @@
 		            , LECA_NOTE
 		            , LECA_DT
 		            , LECA_GRADE
-		            , LECA_YN
 <!-- 		            , LECA_IMSI_YN -->
 		            , LECA_CATE
 		            , LECA_MP
@@ -280,7 +279,6 @@
 		    , #{lecaNote}
 		    , SYSDATE
 		    , #{lecaGrade}
-		    , 3
 <!-- 		    , 1 -->
 		    , #{lecaCate}
 		    , #{lecaMp}
@@ -309,7 +307,7 @@
 	
 	<select id="tempList" parameterType="int" resultType="lecApply">
 		SELECT  U.LECA_CD,
-	        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
+	        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
 	        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
 	        NVL(U.LECA_TRG, 0) LECA_TRG,
 	        U.SUB_CD,
@@ -381,6 +379,7 @@
 	<update id="lectureUpdate" parameterType="lecApply">
 		UPDATE  LECTURE
 		SET     SUB_CD = #{subCd}
+				, LECA_YN = 0
 		WHERE   LECA_CD = #{lecaCd}
 	</update>
 	
@@ -437,7 +436,6 @@
             , LECA_GRADE = #{lecaGrade}
 <!--             , LECA_IMSI_YN = null -->
             , LECA_CATE = #{lecaCate}
-            , LECA_YN = 3
             , LECA_MP = #{lecaMp}
             , LECA_FP = #{lecaFp}
             , LECA_TP = #{lecaTp}
@@ -457,6 +455,18 @@
 		DELETE WEEKPLAN WHERE LECA_CD = #{lecaCd}
 	</delete>
 	
+	<select id="alreadyTimeTableList" parameterType="lecApply" resultType="lecApply">
+		SELECT DECODE(L.LECA_YN
+		                ,0,'승인대기'
+		                ,1,'승인'
+		        )LECA_APPROVAL
+		     , LA.LECA_TT
+		FROM LEC_APPLY LA, LECTURE L
+		WHERE LA.LECA_CD = L.LECA_CD
+		AND L.LECA_YN IN(0,1)
+		AND LA.LECA_YR = #{lecaYr}
+		AND LA.LECA_SEM = #{lecaSem}
+	</select>
 </mapper>
 
 

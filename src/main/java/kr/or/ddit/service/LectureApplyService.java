@@ -53,7 +53,7 @@ public interface LectureApplyService {
 
 	public int getSubCdList(String subNm);
 
-
+	public List<LecApply> alreadyTimeTableList(LecApply lecApply);
 
 
 

@@ -24,25 +24,25 @@
         <li class="nav-item">
             <a id="firstLecApplyLi" href="#account-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2 active">
                 <i class="mdi mdi-account-circle me-1"></i>
-                <span class="d-none d-sm-inline">기본사항 작성</span>
+                <span class="d-none d-sm-inline">기본사항</span>
             </a>
         </li>
         <li class="nav-item">
             <a id="secondLecApplyLi" href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                 <i class="mdi mdi-pencil"></i>
-                <span class="d-none d-sm-inline">세부사항 작성</span>
+                <span class="d-none d-sm-inline">세부사항</span>
             </a>
         </li>
         <li class="nav-item">
             <a id="thirdLecApplyLi" href="#finish-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 pt-2 pb-2">
                 <i class="mdi mdi-clock-time-nine-outline"></i>
-                <span class="d-none d-sm-inline">시간표 선택</span>
+                <span class="d-none d-sm-inline">시간표</span>
             </a>
         </li>
     </ul>
 	    
 	<div id="blockNum1">
-	    <p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;개인정보</p>
+	    <p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;교수정보</p>
 	    <table class="lecApplyTable" border="1">
 	    	<tr>
 	    		<th>담당교수</th>
@@ -68,7 +68,7 @@
 	    		</td>
 	    		<th>학기</th>
 	    		<td>
-	    			<input type="text" name="lecaSem" size=30 value="${lecApplyList[0].lecaSem }" disabled>
+	    			<input type="text" name="lecaSem" size=30 value="${lecApplyList[0].lecaSem }학기" disabled>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -174,8 +174,22 @@
     </div>
     
     <div id="blockNum3">
-    	<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;시간표 선택</p>
-    	
+    	<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;시간표</p>
+    	<div class="row pl-4">
+	    	<div class="col-2 ">
+		  		<select id="building" class="select2bs4 select2-hidden-accessible col-2 offset-1" style="width: 100%;" aria-hidden="true">
+					<option value="0">건물</option>
+					<c:forEach var="building" items="${buildingList}">
+					<option value="${building.bldCd}">${building.bldSnm}</option>
+					</c:forEach>
+				</select>
+			</div>
+	    	<div class="col-2">
+		  		<select id="room" class="select2bs4 select2-hidden-accessible col-2 offset-1" style="width: 100%;" aria-hidden="true">
+					<option value="0">강의실</option>
+				</select>
+			</div>
+		</div>
     	<div id="blockNum3TimeTable" style="float : left; width : 400px;">
     		<table id="timeTableChoice" border="1">
     			<tr><th style="width : 70px;"></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th></tr>
@@ -189,16 +203,13 @@
    				<tr><th>8교시</th><td></td><td></td><td></td><td></td><td></td></tr>
    				<tr><th>9교시</th><td></td><td></td><td></td><td></td><td></td></tr>
     		</table>
-		    <button type="button" id="timeTableBtn" class="btn btn-primary" style="width:250px; margin : 10px 65px;">시간 선택하기</button>
     	</div>
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
-    		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;희망 시간</p>
-    		<textarea id="textArea4time" rows="5" cols="45" disabled>${lecApplyList[0].lecaTt}</textarea>
+    		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;예상 시간</p>
+    		<textarea id="textArea4time" rows="16" cols="45" disabled></textarea>
     		
     		<br><br>
     		
-    		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;비고</p>
-    		<textarea id="lecaNote" rows="9" cols="45" disabled>${lecApplyList[0].lecaNote}</textarea>
     	</div>
     </div>
     
@@ -209,9 +220,69 @@
     
     </div>
 </body>
+<script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
-
+	let lecTimeTable = ${lecApplyList[0].lecaTt};
+	let pageInit = true;
+	
+	function initTimeTable(){
+		if(lecTimeTable.length <= 0){
+			return;
+		}
+		$("#building").val(lecTimeTable[0].bldCd)
+						.prop("selected",true)
+						.select2({ theme : 'bootstrap4' })
+						.trigger("change");
+	}
+	
+	function lecTimeTableToText(p_timeTable){
+		let str = "";
+		for(let i=0; i<p_timeTable.length; i++){
+			str += p_timeTable[i].bldNm + " " + p_timeTable[i].roomNo + " " + p_timeTable[i].wk + " " + p_timeTable[i].time + "교시\n";
+		}
+		return str;
+	}
+	
+	function highlightedTimeTable(){
+		$('#timeTableChoice td').removeClass("highlighted");
+		let room = $("#room").val();
+		let timeTable = $('#timeTableChoice');
+		// 기존에 선택된 교시는 색칠해주기
+		for(let i=0; i<lecTimeTable.length; i++){
+			if(room == lecTimeTable[i].roomCd){
+				let x;
+				switch(lecTimeTable[i].wk){
+				case "월":
+					x = 0;
+					break;
+				case "화":
+					x = 1;
+					break;
+				case "수":
+					x = 2;
+					break;
+				case "목":
+					x = 3;
+					break;
+				case "금":
+					x = 4;
+					break;
+				}
+				timeTable.find("tr").eq(lecTimeTable[i].time).find("td").eq(x).toggleClass("highlighted");
+			}
+		}
+	}
+	
 	window.onload = function() {
+		
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		//Initialize Select2 Elements
+		$('.select2bs4').select2({
+			theme : 'bootstrap4'
+		});
 		
 		//더보기 버튼을 누르면
 		$('#showMoreTrs').on('click', function() {
@@ -228,32 +299,6 @@
 	    	$('#showMoreTrs').show();
 		});
 		
-		//시간표 드래그 이벤트/////////////////////////////////////////////////////////////////////////////
-		
-		var isMouseDown = false, isHighlighted;
-		
-		$('#timeTableChoice td')
-		.mousedown(function() {
-			isMouseDown = true;
-			$(this).toggleClass("highlighted");
-			
-			isHighlighted = $(this).hasClass("highlighted")
-			
-			return false;
-		})
-		.mouseover(function() {
-			if(isMouseDown) {
-				$(this).toggleClass("highlighted", isHighlighted);
-			}
-		})
-		.bind("selectstart", function() {
-			return false;
-		});
-		
-		$(document)
-		.mouseup(function() {
-			isMouseDown = false;
-		});
 		
 		//블록 클릭 시 div 변경 이벤트////////////////////////////////////////////////////////////////////////////
 		if($('#firstLecApplyLi').hasClass("active")) {
@@ -313,38 +358,47 @@
 			}
 		});
 		
-		$('#timeTableBtn').on('click', function() {
+		$("#timeTableChoice td").css("pointer-events","none");
+		
+		$("#building").on("change",function(){
+			let data = {
+				bldCd : this.value
+			};
 			
-			$('#textArea4time').empty();
-			
-			timeTable = $('#timeTableChoice');
-			
-			str = '';
-			
-			for(j = 0; j <= 4; j++) {
-				for(i = 1; i <= 9; i++) {
-					cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
+			$.ajax({
+				url : "/professor/lecApplyForm/roomByBuildingList",
+				type : "get",
+				data : data,
+				success : function(result){
+					let str = "";
+					if(!result.length){
+						str += "<option value='0'>강의실</option>";
+						str += "<option value='0'>강의실이 없습니다.</option>";
+					} else{
+						str += "<option value='0'>강의실</option>";
+						$.each(result,function(p_inx, p_val){
+							str += `<option value='\${p_val.roomCd}'>\${p_val.roomNo}</option>`;
+						});
+					}
+					$("#room").html(str);
 					
-					if(cellObj.hasClass("highlighted")) {
-						
-						if(j == 0) {
-							str += "월 " + i + "교시\n";
-						}else if(j == 1) {
-							str += "화 " + i + "교시\n";
-						}else if(j == 2) {
-							str += "수 " + i + "교시\n";
-						}else if(j == 3) {
-							str += "목 " + i + "교시\n";
-						}else if(j == 4) {
-							str += "금 " + i + "교시\n";
-						}
+					if(pageInit){
+						$("#room").val(lecTimeTable[0].roomCd)
+									.prop("selected",true)
+									.select2({ theme : 'bootstrap4' })
+									.trigger("change");
+						pageInit = false;
 					}
 				}
-			}
-			//alert(str);
-			$('#textArea4time').append(str);
+			})
 		});
 		
+		$("#room").on("change",function(){
+			highlightedTimeTable();
+		})
+		
+		$("#textArea4time").html(lecTimeTableToText(lecTimeTable));
+		initTimeTable();
 	}
 	
 	function fn_close() {

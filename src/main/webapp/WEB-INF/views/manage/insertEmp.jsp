@@ -118,6 +118,18 @@ $(function(){
 
 
 </script>
+<div class="row">
+	<div class="alert alert-light col" role="alert">
+		<!-- 게시판 안내사항 -->
+		<p>
+			<strong>
+			교번은 입사한 연도로 자동생성됩니다. </br>
+			비밀번호는 해당 직원의 생년월일로 입력해야 합니다.
+			</strong>
+		</p>
+	</div>
+</div>
+
 <div class="mt-3">
 	<form action="/manage/insertEmpPost" method="post" enctype="multipart/form-data">
 			<div class="container-fluid">

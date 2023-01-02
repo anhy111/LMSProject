@@ -82,8 +82,7 @@ $(function(){
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="10%">번호</th>
-					<th width="10%">강의번호</th>
+					<th width="3%">No</th>
 					<th width="10%">강의명</th>
 					<th width="10%">단과대명</th>
 					<th width="10%">학과명</th>
@@ -93,11 +92,10 @@ $(function(){
 					<th width="10%">상세</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="text-center">
 				<c:forEach var="evaluationList" items="${evaluationList}" varStatus="stat">
 					<tr>
 						<td>${stat.count}</td>
-						<td>${evaluationList.lecaCd}</td>
 						<td>${evaluationList.lecaNm}</td>
 						<td>${evaluationList.colNm}</td>
 						<td>${evaluationList.depNm}</td>

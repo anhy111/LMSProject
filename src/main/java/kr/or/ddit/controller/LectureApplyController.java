@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,20 +18,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.Approval;
+import kr.or.ddit.domain.Building;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Room;
 import kr.or.ddit.domain.Subject;
 import kr.or.ddit.domain.Weekplan;
+import kr.or.ddit.service.ApprovalService;
+import kr.or.ddit.service.BuildingService;
 import kr.or.ddit.service.LectureApplyService;
+import kr.or.ddit.service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 @RequestMapping("/professor")
+@EnableTransactionManagement
 public class LectureApplyController {
 	
   @Autowired
   private LectureApplyService lectureApplyService;
+  @Autowired
+  private ApprovalService approvalService;
+  @Autowired
+  private BuildingService buildingService;
+  @Autowired
+  private RoomService roomService;
   
   	//강의계획서 조회 페이지
 	@GetMapping("/lecApply/inquiry")
@@ -162,10 +177,12 @@ public class LectureApplyController {
 		Professor professor = this.lectureApplyService.inquiryFormProInfo(proNo);
 		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(proNo);
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
+		model.addAttribute("buildingList",buildingList);
 		
 		log.info("상세professor : " + professor);
 		log.info("상세lecApplyList : " + lecApplyList);
@@ -184,7 +201,10 @@ public class LectureApplyController {
 		log.info("신청proNo : " + proNo);
 		
 		Professor professor = this.lectureApplyService.inquiryFormProInfo(proNo);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(proNo);
+		
 		model.addAttribute("professor", professor);
+		model.addAttribute("buildingList",buildingList);
 		
 		log.info("신청professor : " + professor);
 
@@ -194,13 +214,14 @@ public class LectureApplyController {
 	//강의계획서 작성 후 제출하기
 	@ResponseBody
 	@PostMapping("/lecApplyForm/lecApplySubmit")
+	@Transactional
 	public int lecApplySubmit(HttpServletRequest request
 			, @RequestBody LecApply lecApply) {
 		
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		lecApply.setProNo(proNo);
-		
+		lecApply.setLecaYn(0);
 		log.info("제출 proNo : " + proNo);
 		log.info("담긴값들은? : " + lecApply);
 		
@@ -209,14 +230,14 @@ public class LectureApplyController {
 		
 		if (lectureResult < 0) {
 			log.info("lecture실패");
-			return 0;
+			new RuntimeException();
 		}
 		//2. lec_apply 테이블에 값 넣기
 		int lecApplyResult = this.lectureApplyService.lecApplySubmit(lecApply);
 
 		if (lecApplyResult < 0) {
 			log.info("lecApply실패");
-			return 0;
+			new RuntimeException();
 		}
 		//3. weekplan 테이블에 값 넣기
 		List<Weekplan> weekPlanList = lecApply.getWeekPlanList();
@@ -226,21 +247,35 @@ public class LectureApplyController {
 		
 		if (weekPlanResult < 0) {
 			log.info("weekPlan실패");
-			return 0;
+			new RuntimeException();
 		}
+		
+		Approval approval = new Approval();
+		approval.setProNo(proNo);
+		approval.setApprTagCd(lecApply.getLecaCd());
+		approval.setApprCate("APC001");
+		
+		log.info("Approval : " + approval);
+		int approvalResult = this.approvalService.insertApproval(approval);
+		if(approvalResult <= 0) {
+			log.info("approval실패");
+			new RuntimeException();
+		}
+		
 		return lectureResult + lecApplyResult ; //weekPlanResult;
 	}
 	
 	//강의계획서 작성 도중 임시저장
 	@ResponseBody
 	@PostMapping("/lecApplyForm/temporarySubmit")
+	@Transactional
 	public int temporarySubmit(HttpServletRequest request
 			, @RequestBody LecApply lecApply) {
 		
 		HttpSession session = request.getSession();
 		int proNo = (int)session.getAttribute("no");
 		lecApply.setProNo(proNo);
-		
+		lecApply.setLecaYn(3);
 		log.info("제출 proNo : " + proNo);
 		log.info("담긴값들은? : " + lecApply);
 		
@@ -301,10 +336,12 @@ public class LectureApplyController {
 		Professor professor = this.lectureApplyService.inquiryFormProInfo(proNo);
 		List<LecApply> lecApplyList = this.lectureApplyService.tempFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(proNo);
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
+		model.addAttribute("buildingList", buildingList);
 		
 		log.info("임시저장 상세professor : " + professor);
 		log.info("임시저장 상세lecApplyList : " + lecApplyList);
@@ -316,6 +353,7 @@ public class LectureApplyController {
 	//임시저장된 강의계획서 수정하기
 	@ResponseBody
 	@PostMapping("/lecApplyForm/temporaryUpdate")
+	@Transactional
 	public int temporaryUpdate(@RequestBody LecApply lecApply) {
 		
 		log.info("수정된 담긴값들은? : " + lecApply);
@@ -361,7 +399,8 @@ public class LectureApplyController {
 	//임시저장된 강의계획서 제출하기
 	@ResponseBody
 	@PostMapping("/lecApplyForm/tempLecApplySubmit")
-	public int tempLecApplySubmit(@RequestBody LecApply lecApply) {
+	@Transactional
+	public int tempLecApplySubmit(@RequestBody LecApply lecApply, HttpServletRequest req) {
 		
 		log.info("수정된 담긴값들은? : " + lecApply);
 		
@@ -385,10 +424,23 @@ public class LectureApplyController {
 		
 		int weekPlanResult = this.lectureApplyService.weekPlanUpdate(weekPlanList);
 		
-		if (weekPlanResult < 0) {
+		if (weekPlanResult != -1) {
 			log.info("weekPlan실패");
 			return 0;
 		}
+		
+		int proNo = (int)req.getSession().getAttribute("no");
+		
+		Approval approval = new Approval();
+		approval.setProNo(proNo);
+		approval.setApprTagCd(lecApply.getLecaCd());
+		approval.setApprCate("APC001");
+		int approvalResult = this.approvalService.insertApproval(approval);
+		if(approvalResult <= 0) {
+			log.info("approval실패");
+			return 0;
+		}
+		
 		return lecApplyResult;
 	}
 	
@@ -426,6 +478,19 @@ public class LectureApplyController {
 		log.info("과목번호 subCd : " + subCd);
 		
 		return subCd;
+	}
+	
+	@ResponseBody
+	@GetMapping("/lecApplyForm/roomByBuildingList")
+	public List<Room> lecApplyForm(int bldCd){
+		return this.roomService.roomByBuildingList(bldCd);
+	}
+	
+	@ResponseBody
+	@GetMapping("/lecApplyForm/alreadyTimeTableList")
+	public List<LecApply> alreadyTimeTableList(LecApply lecApply){
+		log.info("alreadyTimeTableList.lecApply : " + lecApply);
+		return this.lectureApplyService.alreadyTimeTableList(lecApply);
 	}
 	
 }
