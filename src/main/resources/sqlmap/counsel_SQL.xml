@@ -20,7 +20,7 @@ AND P.PRO_NO = E.EMP_NO
 SELECT 
   C.CNSL_CD
 , C.STU_NO 
-, C.CNSL_CATE 
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
 , C.CNSL_TTL
 , C.CNSL_CON
 , C.CNSL_REG 
@@ -74,11 +74,30 @@ VALUES(
 
 )
 </insert>
+<!-- 상담 상세 -->
+<select id="applyDetail" parameterType="int" resultType="Counsel">
+SELECT 
+CNSL_CD
+, STU_NO
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_CATE = COMD_CD) AS CNSL_CATE 
+, CNSL_TTL
+, CNSL_CON
+, CNSL_REG
+, CNSL_DT
+, CNSL_RPL
+, PRO_NO
+, CNSL_TYPE
+, REC_CD
+FROM COUNSEL
+WHERE CNSL_CD = #{cnslCd}
+</select>
 <!-- 상담 수정 -->
 <update id="applyModify" parameterType="Counsel">
 UPDATE COUNSEL 
-SET 
-CNSL_CON = #{cnslCon} 
+<set>
+CNSL_TTL = #{cnslTtl}
+ <if test="cnslCon != null and cnslCon !='' ">,CNSL_CON = #{cnslCon}</if>
+</set>
 WHERE CNSL_CD = #{cnslCd}
 </update>
 <!--  상담 삭제 -->
@@ -105,7 +124,7 @@ WHERE CNSL_CD = #{cnslCd}
 SELECT 
   C.CNSL_CD
 , C.STU_NO
-, C.CNSL_CATE
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
 , C.CNSL_TTL
 , C.CNSL_CON
 , C.CNSL_REG
@@ -130,7 +149,7 @@ SELECT
 ,C.CNSL_TTL
 ,C.CNSL_CON
 ,C.CNSL_RPL 
-,C.CNSL_CATE
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
 ,C.CNSL_TYPE   
 FROM COUNSEL C, STUDENT S 
 WHERE C.CNSL_CD = #{cnslCd}
@@ -140,7 +159,7 @@ AND C.STU_NO = S.STU_NO
 <select id="answerNoteDetail" parameterType="int" resultType="Counsel">
 SELECT
  C.CNSL_CD
-,C.CNSL_CATE
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
 ,S.STU_NM
 ,C.CNSL_DT
 ,C.CNSL_TTL
