@@ -33,12 +33,14 @@ public class NoticeBasicController {
 
     private final FileUploadUtil fileUploadUtil;
 
-    private static final String HOME = "redirect:/notice/list";
+    private static final String VIEWS_NOTICE_MAIN = "notice/test";
+    private static final String VIEWS_NOTICE_DETAIL = "notice/detail";
+    private static final String VIEWS_NOTICE_SEARCH = "notice/searchList";
 
     //공지사항 리스트
     @GetMapping("/list")
     public String testHome(Model model,
-                           @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
+                           @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage) {
 
         //총 행의 수
         int totalRow = noticeBasicService.getNoticeBasicTotalRow();
@@ -52,7 +54,58 @@ public class NoticeBasicController {
         model.addAttribute("totalRow", totalRow);
         model.addAttribute("totalPage", totalPage);
 
-        return "notice/test";
+        return VIEWS_NOTICE_MAIN;
+    }
+
+    @PostMapping("/searchKeyword")
+    public String searchKeyword(Model model,
+                                @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage,
+                                @RequestParam int searchOption,
+                                @RequestParam String keyword) {
+
+        // 정규화 완료 Why? Query Injection을 통해서 DB접근 가능성 차단
+        String sanitizedKeyword = keyword.replaceAll("[^a-zA-Z0-9]", "");
+
+        //총 행의 수
+        int totalRow = 0;
+
+        //총 페이지의 수 계산
+        int totalPage = 0;
+
+        List<NoticeBasic> noticeBasicList = null;
+
+        switch (searchOption) {
+            case 1:
+                //총 행의 수 계산
+                totalRow = noticeBasicService.getNoticeBasicTotalRowTitle(sanitizedKeyword);
+                // 제목 검색 코드
+                noticeBasicList = noticeBasicService.noticeBasicSearchTitle(sanitizedKeyword);
+                break;
+
+            case 2:
+                //총 행의 수 계산
+                totalRow = noticeBasicService.getNoticeBasicTotalRowContent(sanitizedKeyword);
+
+                // 내용 검색 코드
+                noticeBasicList = noticeBasicService.noticeBasicSearchContent(sanitizedKeyword);
+                break;
+
+            default:
+                //총 행의 수
+                totalRow = noticeBasicService.getNoticeBasicTotalRow();
+                // 전체 게시글 조회 코드
+                noticeBasicList = noticeBasicService.noticeBasicList(viewPage);
+                break;
+        }
+
+        //총 페이지의 수 계산
+        totalPage = (int) Math.ceil((double) totalRow / 10);
+
+        model.addAttribute("noticeBasicList", noticeBasicList);
+        model.addAttribute("totalRow", totalRow);
+        model.addAttribute("totalPage", totalPage);
+
+        return VIEWS_NOTICE_SEARCH;
     }
 
     //공지사항 등록 폼
@@ -80,22 +133,28 @@ public class NoticeBasicController {
             fileUploadUtil.fileUploadAction(files2);
         }
 
-        return HOME;
+        return VIEWS_NOTICE_MAIN;
     }
 
     //공지사항 상세페이지
     @GetMapping("/list/{noticeBasic.noticeCd}/detail")
     public String detail(@PathVariable("noticeBasic.noticeCd") Long noticeCd, Model model) {
 
+        // 조회수 증가
         noticeBasicService.updateViewCount(noticeCd);
 
+
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
+        NoticeBasic noticeBasicPre = noticeBasicService.findOne(noticeCd - 1);
         NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
+        NoticeBasic noticeBasicNext = noticeBasicService.findOne(noticeCd + 1);
 
         // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
+        model.addAttribute("formPre", noticeBasicPre);
         model.addAttribute("form", noticeBasic);
+        model.addAttribute("formNext", noticeBasicNext);
 
-        return "notice/detail";
+        return VIEWS_NOTICE_DETAIL;
     }
 
     //공지사항 수정페이지
@@ -114,7 +173,7 @@ public class NoticeBasicController {
 
         noticeBasicService.noticeBasicUpdate(form);
 
-        return HOME;
+        return VIEWS_NOTICE_MAIN;
     }
 
     //공지사항 삭제
@@ -123,10 +182,7 @@ public class NoticeBasicController {
 
         noticeBasicService.delete(noticeCd);
 
-        return HOME;
+        return VIEWS_NOTICE_MAIN;
     }
-
-    //공지사항 등록
-
 
 }

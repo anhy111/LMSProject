@@ -57,8 +57,9 @@
         vertical-align: middle;
         color: #3364c4;
     }
-        /*  공지사항 끝  */
-        /*  다운로드 시작 */
+
+    /*  공지사항 끝  */
+    /*  다운로드 시작 */
     .download {
         padding: 10px 8px;
         margin: 20px 0;
@@ -172,6 +173,19 @@
         -webkit-transform: translate(-50%, 0);
         transform: translate(-50%, 0);
     }
+
+    .p-0 {
+        padding: 0!important;
+    }
+
+    .row {
+         display: -ms-flexbox;
+         display: flex;
+         -ms-flex-wrap: wrap;
+         flex-wrap: wrap;
+         margin-right: -7.5px;
+         margin-left: -7.5px;
+     }
 </style>
 
 <!-- 게시판상세 -->
@@ -183,9 +197,7 @@
     <!-- 111111 -->
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card">
-
-                <p class="current-page">공사사항</p>
+                <h4 class="row p-0">공사사항</h4>
                 <header class="header">
                     <h3 class="title">${form.noticeTtl}</h3>
                     <p class="date">
@@ -202,29 +214,39 @@
                 <div>
                     <footer class="footer">
                         <c:set var="standardNoticeCd" value="${form.noticeCd}"/>
+                        <c:if test="${not empty formPre.noticeTtl}">
                         <a href="/notice/list/${standardNoticeCd - 1}/detail" class="btn next">
-                        <p class="btn prev">
                         <span class="title">
-                            <span class="clip">이전글 제목 넣기 / 이전글 없음</span>
+                            <p class="btn prev">
+                                <span class="clip">${formPre.noticeTtl}</span>
+                                <span class="arrow prev">이전글</span>
+                            </c:if>
+                            </p>
+                            <c:if test="${empty formPre.noticeTtl}">
+                                <span class="clip">이전글 없음</span>
+                                <span class="arrow prev">이전글</span>
+                            </c:if>
                         </span>
-                            <a href="/notice/list" class="btn-list">목록보기</a>
-                            <span class="arrow prev">
-                            "이전글" ::after
-                        </span>
-                        </p>
                         </a>
+                        <a href="/notice/list" class="btn-list">목록보기</a>
+                        <c:if test="${not empty formNext.noticeTtl}">
                         <a href="/notice/list/${standardNoticeCd + 1}/detail" class="btn next">
-                    <span class="title">
-                        <span class="clip">다음글 제목 넣기 / 다음글 없음</span>
-                    </span>
-                            <span class="arrow next">
-                        "다음글"
-                        ::after
-                    </span>
+                            <span class="title">
+                            <c:if test="${not empty formNext.noticeTtl}">
+                                <span class="clip">${formNext.noticeTtl}</span>
+                                <span class="arrow next">다음글</span>
+                            </c:if>
+                            </span>
                         </a>
+                        </c:if>
+                        <c:if test="${empty formNext.noticeTtl}">
+                            <span class="btn next">
+                            <span class="clip" readonly="true">없음</span>
+                            <span class="arrow next" readonly="true">다음글</span>
+                            </span>
+                        </c:if>
                     </footer>
                 </div>
-            </div>
         </div>
     </div>
 

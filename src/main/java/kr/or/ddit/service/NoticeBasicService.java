@@ -10,6 +10,12 @@ public interface NoticeBasicService {
     //공지사항 전체 행의 수 조회
     int getNoticeBasicTotalRow();
 
+    int getNoticeBasicTotalRowTitle(String title);
+
+    int getNoticeBasicTotalRowContent(String content);
+
+
+
     //공지사항 목록 조회
     List<NoticeBasic> noticeBasicList(int page);
 
@@ -26,4 +32,8 @@ public interface NoticeBasicService {
     void delete(Long noticeCd);
 
     void updateViewCount(Long noticeCd);
+
+    List<NoticeBasic> noticeBasicSearchTitle(String keyword);
+
+    List<NoticeBasic> noticeBasicSearchContent(String keyword);
 }
