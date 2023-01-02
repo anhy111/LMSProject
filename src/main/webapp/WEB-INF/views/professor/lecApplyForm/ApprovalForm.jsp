@@ -173,7 +173,7 @@
 		</div>
     </div>
     
-    <div id="blockNum3">
+    <div id="blockNum3" class="mb-0">
     	<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;시간표</p>
     	<div class="row pl-4">
 	    	<div class="col-2 ">
@@ -207,25 +207,81 @@
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의 시간</p>
     		<textarea id="textArea4time" rows="16" cols="45" disabled></textarea>
-    		
-    		<br><br>
-    		
     	</div>
     </div>
     
-    <div id="div4transitionBtns" style="clear : both;">
+    <div id="div4transitionBtns" style="clear : both;" class="mt-0">
 	    <button id="previousBtn" type="button" class="btn btn-primary">이전</button>
 		<button id="nextBtn" type="button" class="btn btn-primary">다음</button>
 	</div>
-    
+    <div class="modal-footer justify-content-align">
+		<div id="apprBtn1" style="display: none">
+			<button type="button" class="btn btn-outline-warning" id="approve">승인</button>
+			<button type="button" id="loadReferModal" class="btn btn-outline-danger">반려</button>
+		</div>
+		<div id="apprBtn2" style="display: none">
+			<button type="button" id="cancelApprove" class="btn btn-outline-danger">승인취소</button>
+		</div>
+		<div id="apprBtn3" style="display: none">
+			<button type="button" class="btn btn-outline-secondary" id="cancelMsg">반려 사유</button>
+			<button type="button" id="cancelRefer" class="btn btn-outline-danger">반려취소</button>
+		</div>
+	</div>
+	<div class="modal fade" id="referReasonWrite" style="display:none; z-index:1041" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">반려</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label for="recRej" class="col-form-label">반려 사유를 입력해주세요.</label>
+						<textarea class="form-control" id="reasonWrite" rows="7"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" id="refer" value="AP003" class="btn btn-block btn-danger">반려</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="referReasonRead" style="display:none;z-index:1041" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">반려 사유</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<textarea class="form-control" id="reasonRead" rows="7" readonly></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     </div>
 </body>
 <script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
 <script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
-	let lecTimeTable = ${lecApplyList[0].lecaTt};
-	let pageInit = true;
+	var lecTimeTable = ${lecApplyList[0].lecaTt};
+	var apprYn = "${approval.apprYn}";
+	var apprRsn = "${approval.apprRsn}";
+	var lecaCd = "${param.lecaCd}";
+	var header = "${_csrf.headerName}";
+	var token = "${_csrf.token}";
+	var pageInit = true;
 	
+	console.log('apprYn : ' + apprYn);
+	console.log("apprRsn : " + apprRsn);
 	function initTimeTable(){
 		if(lecTimeTable.length <= 0){
 			return;
@@ -361,6 +417,9 @@
 		$("#timeTableChoice td").css("pointer-events","none");
 		
 		$("#building").on("change",function(){
+			if(this.value == ""){
+				return;
+			}
 			let data = {
 				bldCd : this.value
 			};
@@ -395,10 +454,112 @@
 		
 		$("#room").on("change",function(){
 			highlightedTimeTable();
-		})
+		});
+		
+		// 승인
+		$("#approve").on("click",function(){
+			approveMode();
+			
+			requestApprove('AP001');
+		});
+		
+		// 반려사유작성
+		$("#loadReferModal").on("click",function(){
+			$("#referReasonWrite").modal('show');
+			$("#reasonWrite").val("");
+		});
+		
+		//반려
+		$("#refer").on("click",function(){
+			referMode();
+			apprRsn = $("#reasonWrite").val();
+			requestApprove('AP003', apprRsn);
+		});
+		
+		//승인취소
+		$("#cancelApprove").on("click",function(){
+			pendingApproveMode();
+			requestApprove('AP002');
+		});
+		
+		//반려취소
+		$("#cancelRefer").on("click",function(){
+			pendingApproveMode();
+			requestApprove('AP002');
+		});
+		
+		//반려사유보기
+		$("#cancelMsg").on("click",function(){
+			$("#referReasonRead").modal('show');
+			$("#reasonRead").val(apprRsn);
+		});
 		
 		$("#textArea4time").html(lecTimeTableToText(lecTimeTable));
 		initTimeTable();
+		
+		// 불러온 강의계획서의 결재상태에 따라 버튼 변경
+		if(apprYn == '승인대기'){
+			pendingApproveMode();
+		}else if (apprYn == '승인') {
+			approveMode();
+		}else if (apprYn == '반려') {
+			referMode();
+		}
+	}
+	
+	function approveMode(){
+		$("#apprBtn1").hide();
+		$("#apprBtn2").show();
+		$("#apprBtn3").hide();
+	}
+	
+	function pendingApproveMode(){
+		$("#apprBtn1").show();
+		$("#apprBtn2").hide();
+		$("#apprBtn3").hide();
+	} 
+	
+	function referMode(){
+		$("#referReasonWrite").modal('hide');
+		$("#apprBtn1").hide();
+		$("#apprBtn2").hide();
+		$("#apprBtn3").show();
+	}
+	
+	function requestApprove(p_code,reason){
+		let data = {
+			apprYn : p_code,
+			apprRsn : typeof reason == "undefined" ? "" : reason,
+			apprTagCd : lecaCd,
+			allocationList : timeTableSetLecaCd(lecTimeTable)
+		}
+		
+		console.log("data : ", data);
+		$.ajax({
+			url : "/approval/updateApproval",
+			type : "post",
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=UTF-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result){
+				console.log(result);
+			}
+		})
+	}
+	
+	function timeTableSetLecaCd(p_timeTable){
+		let table = [];
+		for(let i=0; i<p_timeTable.length; i++){
+			table.push({
+				lecaCd : lecaCd,
+				roomCd : p_timeTable[i].roomCd,
+				altDt : p_timeTable[i].wk,
+				altTt : p_timeTable[i].time,
+			});
+		}
+		return table;
 	}
 	
 	function fn_close() {

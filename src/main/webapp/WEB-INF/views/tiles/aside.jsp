@@ -217,7 +217,7 @@
                 <sec:authorize access="hasRole('ROLE_MANAGER')">
                     <!-- 학사관리자 어사이드 -->
                     <li class="nav-header">관리자 어사이드</li>
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item"><a href="/approval/main" class="nav-link">
                         <p>
                             결재
                         </p>

@@ -249,7 +249,7 @@
 			INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
 		WHERE
 			L.LEC_YN = 'Y'
-			AND LA.LECA_SEM = DECODE(TO_CHAR(SYSDATE,'MM'),'12','1학기','01','1학기','02','1학기','03','1학기','04','1학기','05','1학기','2학기')      
+			AND LA.LECA_SEM = DECODE(TO_CHAR(SYSDATE,'MM'),'12',1,'01',1,'02',1,'03',1,'04',1,'05',1,2)      
         )                                                                                                          
 		SELECT * FROM T
 		WHERE NOT EXISTS(
@@ -350,7 +350,7 @@
 		WHERE
 		L.LEC_YN = 'Y'
 		AND LA.LECA_SEM =
-		DECODE(TO_CHAR(SYSDATE,'MM'),'12','1학기','01','1학기','02','1학기','03','1학기','04','1학기','05','1학기','2학기')
+		DECODE(TO_CHAR(SYSDATE,'MM'),'12',1,'01',1,'02',1,'03',1,'04',1,'05',1,2)
 		)
 		SELECT T.LECA_CD
 			 , T.EMP_NM
@@ -701,5 +701,12 @@
 		from TASK_SUBMIT
 		where TSUB_CD = ${tsubCd}
 	</delete>
+	
+	<update id="approveLecture" parameterType="lecture">
+		UPDATE LECTURE
+		    SET LEC_YN = #{lecYn}
+		      , LECA_YN = #{lecaYn}
+		WHERE LECA_CD = #{lecaCd}
+	</update>
 
 </mapper>

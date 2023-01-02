@@ -389,11 +389,22 @@ public class LectureApplyController {
 	//임시저장된 강의계획서 삭제하기
 	@ResponseBody
 	@PostMapping("/lecApplyForm/temporaryDelete")
+	@Transactional
 	public int temporaryDelete(int lecaCd) {
 		
 		log.info("삭제코드 오나욘? : " + lecaCd);
 		
-		return this.lectureApplyService.deleteLecApply(lecaCd);
+		int deleteLecApplyResult = this.lectureApplyService.deleteLecApply(lecaCd);
+		
+		if(deleteLecApplyResult <= 0) {
+			log.info("강의계획서 삭제 실패");
+			new RuntimeException();
+		}
+		
+		Approval approval = new Approval();
+		approval.setApprCate("APC001");
+		approval.setApprTagCd(lecaCd);
+		return this.approvalService.deleteApproval(approval);
 	}
 	
 	//임시저장된 강의계획서 제출하기

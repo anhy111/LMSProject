@@ -138,4 +138,9 @@ public class LectureServiceImpl implements LectureService{
 	public int scoreUpdate(TaskSubmit tasksubmit) {
 		return this.lectureMapper.scoreUpdate(tasksubmit);
 	}
+	
+	@Override
+	public int approveLecture(Lecture lecture) {
+		return this.lectureMapper.approveLecture(lecture);
+	}
 }

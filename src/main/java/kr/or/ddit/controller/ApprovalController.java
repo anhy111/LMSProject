@@ -7,16 +7,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Approval;
+import kr.or.ddit.domain.Building;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.ApprovalService;
+import kr.or.ddit.service.BuildingService;
 import kr.or.ddit.service.LectureApplyService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +33,8 @@ public class ApprovalController {
 	ApprovalService approvalService;
 	@Autowired
 	LectureApplyService lectureApplyService;
+	@Autowired
+	BuildingService buildingService;
 	
 	@PreAuthorize("hasRole('ROLE_MANAGER')")
 	@GetMapping("/main")
@@ -54,21 +61,35 @@ public class ApprovalController {
 		return this.approvalService.approvalList(approval);
 	}
 	
-	//강의계획서 상세페이지 통합
-	@GetMapping("/inquiryForm")
-	public String inquiryFormStudent(Model model, int lecaCd) {
+	@GetMapping("/lecApplyApproveForm")
+	public String lecApplyApproveForm(Model model, int lecaCd) {
 		
-		log.info("상세 계획서 코드 : " + lecaCd);
-		
-		Professor professor = this.lectureApplyService.inquiryFormProInfoStudentApply(lecaCd);
+		Professor professor = this.lectureApplyService.proInfoByLecaCd(lecaCd);
 		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
+		Approval approval = this.lectureApplyService.getLecaApproval(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(professor.getProNo());
 		
+		model.addAttribute("approval",approval);
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
+		model.addAttribute("buildingList",buildingList);
 		
-		return "professor/lecApplyForm/inquiryForm";
+		return "professor/lecApplyForm/ApprovalForm";
 	}
+	
+	@ResponseBody
+	@PostMapping("/updateApproval")
+	public String updateApproval(@RequestBody Approval approval, HttpServletRequest req) {
+		
+		int empNo = (int)req.getSession().getAttribute("no");
+		
+		approval.setApprCate("APC001");
+		approval.setEmpNo(empNo);
+		log.info("ApprovalController.updateApproval : " + approval);
+		return this.approvalService.updateApproval(approval) + "";
+	}
+	
 	
 }
