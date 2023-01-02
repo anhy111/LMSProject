@@ -63,7 +63,7 @@
 	console.log("header : " + header + ", token : " + token);
 	
 	$.ajax({
-		url:"/scholarship/scholarshipInquiry",
+		url:"/scholarship/admin/scholarshipInquiry",
 		contentType: "application/json;charset=utf-8",
 		dataType:'json',
 		type: "POST",

@@ -1,6 +1,10 @@
 package kr.or.ddit.controller;
 
+import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,15 +29,15 @@ public class ScholarshipController {
 	ScholarshipService scholarshipService;
 	
 	//장학금 목록 시작페이지
-	@GetMapping("/scholarshipList")
+	@GetMapping("/admin/scholarshipList")
 	public String scholarshipList() {
 		
-		return "scholarship/scholarshipList";
+		return "scholarship/admin/scholarshipList";
 	}
 	
 	//장학금 목록 조회
 	@ResponseBody
-	@PostMapping("/scholarshipInquiry")
+	@PostMapping("/admin/scholarshipInquiry")
 	public List<Scholarship> scholarshipInquiry() {
 		List<Scholarship> scholarshipInquiry = this.scholarshipService.scholarshipInquiry();
 		
@@ -43,7 +47,7 @@ public class ScholarshipController {
 	}
 	
 	//장학금 수여 시작페이지
-	@GetMapping("/scholarshipAward")
+	@GetMapping("/admin/scholarshipAward")
 	public String scholarshipAward(Model model) {
 		
 		model.addAttribute("bodyTitle", "장학금 수여");
@@ -53,7 +57,7 @@ public class ScholarshipController {
 	
 	//장학금 수여 목록
 	@ResponseBody
-	@PostMapping("/scholarshipAwardList")
+	@PostMapping("/admin/scholarshipAwardList")
 	public List<SclHistory> scholarshipAwardList() {
 		List<SclHistory> scholarshipAwardList = this.scholarshipService.scholarshipAwardList();
 		
@@ -64,7 +68,7 @@ public class ScholarshipController {
 	
 	//장학금 수여자 확인
 	@ResponseBody
-	@PostMapping("/scholarshipCheck")
+	@PostMapping("/admin/scholarshipCheck")
 	public int scholarshipCheck(@RequestBody int stuNo) {
 		int result = this.scholarshipService.scholarshipCheck(stuNo);
 		
@@ -75,7 +79,7 @@ public class ScholarshipController {
 	
 	//장학금 수여학생 정보
 	@ResponseBody
-	@PostMapping("/studentInfoList")
+	@PostMapping("/admin/studentInfoList")
 	public List<SclHistory> studentInfoList(@RequestBody int stuNo) {
 		log.info("학번 넘어왔나용? : " + stuNo);
 		
@@ -88,7 +92,7 @@ public class ScholarshipController {
 	
 	//장학금 수여
 	@ResponseBody
-	@PostMapping("/scholarshipConfer")
+	@PostMapping("/admin/scholarshipConfer")
 	public int scholarshipConfer(@RequestBody SclHistory sclHistory) {
 		
 		log.info("장학금 수여버튼 클릭 시 담긴 값 : " + sclHistory);
@@ -102,6 +106,48 @@ public class ScholarshipController {
 		
 		return sclHistoryResult;
 		
+	}
+	
+	//학생 장학금 수혜내역 시작 페이지
+	@GetMapping("/stu/stuScholarship")
+	public String stuScholarship(Model model) {
+		
+		model.addAttribute("bodyTitle", "장학금 수혜 내역");
+		
+		return "scholarship/stu/stuScholarship";
+	}
+	
+	//학생 장학금 수혜내역 목록
+	@ResponseBody
+	@PostMapping("/stu/stuScholarshipList")
+	public List<SclHistory> stuScholarshipList(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		int stuNo = (int) session.getAttribute("no");
+		
+		List<SclHistory> stuScholarshipList = this.scholarshipService.stuScholarshipList(stuNo);
+		
+		log.info("장학 수혜내역 : " + stuScholarshipList);
+		
+		return stuScholarshipList;
+	}
+	
+	// 학생 장학금 수혜 증명서 펼치기
+	@GetMapping("/stuScholarshipForm/scholarshipBenefitCertificate")
+	public String scholarshipBenefitCertificate(HttpServletRequest request, Model model, int sclhCd) {
+
+		HashMap<String, Object> map = this.scholarshipService.scholarshipBenefitCertificate(sclhCd);
+		map.put("sclhCd", sclhCd);
+
+		model.addAttribute("map", map);
+
+		return "scholarship/stuScholarshipForm/scholarshipBenefitCertificate";
+	}
+	
+	@GetMapping("test")
+	public String test() {
+		
+		return "scholarship/test";
 	}
 	
 }

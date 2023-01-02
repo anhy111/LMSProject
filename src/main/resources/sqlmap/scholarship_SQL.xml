@@ -98,13 +98,17 @@
 		            INNER JOIN LECTURE L ON T.LECA_CD = L.LECA_CD
 		            INNER JOIN LEC_APPLY LA ON L.LECA_CD = LA.LECA_CD
 		            WHERE
-		            	LA.LECA_YR = TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
-            			AND SUBSTR(LA.LECA_SEM, 1, 1) =
-            				CASE 
-            					WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM'))>=3
-            						AND TO_NUMBER(TO_CHAR(SYSDATE,'MM'))<= 8 THEN 1
-            					ELSE 2
-            				END
+		                LA.LECA_YR = 
+		                CASE 
+		                    WHEN LA.LECA_SEM = 2 THEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) -1
+		                    ELSE TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		                END
+		            AND LA.LECA_SEM =
+		                CASE 
+		                    WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM'))>=3
+		                        AND TO_NUMBER(TO_CHAR(SYSDATE,'MM'))<= 8 THEN 1
+		                    ELSE 2
+		                END
 		        GROUP BY
 		            T.STU_NO,
 		            T.STU_NM,
@@ -172,6 +176,32 @@
 		    , #{sclhAmt}
 		)
 	</insert>
+	
+	<!-- 학생 장학금 수혜내역 리스트 -->
+	<select id="stuScholarshipList" resultType="sclHistory">
+		SELECT
+		    SCLH_YR
+		    , SCLH_SEM
+		    , SCL_NM
+		    , SCLH_AMT
+		    , SCLH_CD
+		FROM SCHOLARSHIP S, SCL_HISTORY SH
+		WHERE SH.SCL_CD = S.SCL_CD
+		AND STU_NO = #{stuNo}
+	</select>
+
+	<!-- 학생 장학금 수혜 증명서 -->
+	<select id="scholarshipBenefitCertificate" parameterType="hashmap" resultType="hashmap">
+		SELECT
+		    SCLH_YR
+		    , SCLH_SEM
+		    , SCL_NM
+		    , SCLH_AMT
+		    , SCLH_CD
+		FROM SCHOLARSHIP S, SCL_HISTORY SH
+		WHERE SH.SCL_CD = S.SCL_CD
+		AND STU_NO = #{stuNo}
+	</select>
 	
 </mapper>
 

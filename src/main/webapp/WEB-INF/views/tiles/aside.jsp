@@ -109,7 +109,7 @@
                                 <p>등록금 납부 내역</p>
                             </a></li>
                             </a></li>
-                            <li class="nav-item"><a href="/payment/stu/stuPaymentDetail" class="nav-link">
+                            <li class="nav-item"><a href="/scholarship/stu/stuScholarship" class="nav-link">
                                 <p>장학금 수혜 내역</p>
                             </a></li>
                         </ul>
@@ -247,7 +247,7 @@
                                 </p>
                             </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item"><a href="/payment/admin/collegeFeeList"
+                                    <li class="nav-item"><a href="#"
                                                             class="nav-link">
 
                                         <p>등록금 목록 조회</p>
@@ -271,7 +271,7 @@
                             </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item"><a
-                                            href="/scholarship/scholarshipList" class="nav-link">
+                                            href="#" class="nav-link">
                                         <p>장학금 목록</p>
                                     </a></li>
                                     <li class="nav-item"><a
@@ -279,7 +279,7 @@
                                         <p>장학금 수여</p>
                                     </a></li>
                                     <li class="nav-item"><a
-                                            href="/scholarship/scholarshipStudentList" class="nav-link">
+                                            href="#" class="nav-link">
 
                                         <p>장학생 조회</p>
                                     </a></li>

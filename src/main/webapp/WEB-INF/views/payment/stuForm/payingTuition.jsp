@@ -107,9 +107,7 @@ td {
 </style>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-	
 </head>
 <body>
 	<c:if test="${not empty map }">
@@ -256,8 +254,6 @@ td {
 		$('#header1').text(year + sem + "[은행용]");
 		$('#header2').text(year + sem + "[학생용]");
 
-		
-
 		var stuNo = $('#td0').text();
 		var stuNm = $('#td1').text();
 		var payAmt = $('#td2').text();
@@ -276,11 +272,7 @@ td {
 				name: '등록금결제', // 상품명
 				buyer_name: stuNm,
 				buyer_tel: stuTel,
-
-				//결제완료후 이동할 페이지 kko나 kkopay는 생략 가능
-				//m_redirect_url : 'https://localhost:8080/payments/complete'
 			}, function (rsp) {
-				alert("또로롱");
 				if (rsp.success) {
 					var msg = '결제가 완료되었습니다';
 					var result = {
@@ -291,14 +283,13 @@ td {
 						"card_no": rsp.apply_num,
 						"refund": 'payed'
 					}
-					//console.log("결제성공 " + msg);
 					console.log(rsp.merchant_uid);
-
 					$.ajax({
 						url: '/payment/stuForm/pay',
 						type: 'POST',
 						data: {
-							"payCd": payCd
+							"payCd": payCd,
+							"payAmt": payAmt
 						},
 						dataType: 'json',
 						beforeSend: function (xhr) {
