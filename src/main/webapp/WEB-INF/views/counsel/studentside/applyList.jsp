@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -10,6 +10,7 @@
 	String name = String.valueOf(session.getAttribute("name"));
 %>
 <style>
+
 
 tr.recordTr {
 	opacity: 1;
@@ -70,7 +71,7 @@ cursor:pointer;
 						<th width="4%">No</th>
 						<th width="8%">구분</th>
 						<th width="18%">제목</th>
-						<th width="12%">신청일자</th>
+						<th width="12%">신청일</th>
 						<th width="12%">상담예약일</th>
 						<th width="6%">상담기록</th>
 						<th width="4%">담당교수</th>
@@ -93,8 +94,7 @@ cursor:pointer;
 							<td><fmt:formatDate value="${counselList.cnslDt }"
 									pattern="yy/MM/dd" /></td>
 							<c:if test="${counselList.cnslRpl != null }">
-								<td>대기<a class="checkAnswerNote" 
-										data-value="${counselList.cnslCd }">상담 기록 확인</a><i class="fa-solid fa-files"></i></td>
+								<td class="waitAnswer">대기<a class="checkAnswerNote" style="color:blue;display:none;"data-value="${counselList.cnslCd }">상담확인</a></td>
 							</c:if>
 							<c:if test="${counselList.cnslRpl == null }">
 								<td><span style="color: blue;">대기</span></td>
@@ -111,7 +111,7 @@ cursor:pointer;
 						<th width="4%">No</th>
 						<th width="8%">구분</th>
 						<th width="18%">제목</th>
-						<th width="12%">신청일자</th>
+						<th width="12%">신청일</th>
 						<th width="6%">답변상태</th>
 						<th width="12%">답변등록일</th>
 						<th width="4%">담당교수</th>
@@ -148,7 +148,8 @@ cursor:pointer;
 						</tr>
 					</c:forEach>
 				</tbody>
-			</table> </div>
+			</table>
+			 </div>
 				</div>
 			</div>
 	</div>
@@ -185,8 +186,7 @@ cursor:pointer;
 							<br> (4) *는 필수 선택/입력 정보입니다.
 						</p>
 					</div>
-				<form id="form" action="/counsel/studentside/applyInsert"
-			method="post" onsubmit="return checkInsertData()">
+<!-- 				<form id="form" action="/counsel/studentside/applyInsert" method="post" onsubmit="return checkInsertData()"> -->
 			<input type="hidden" name="stuNo" value="<%=stuNo%>">
 			<input type="hidden" id="recCd" name="recCd" value="0" />
 			<div class="row">
@@ -276,13 +276,13 @@ cursor:pointer;
 				</div>
 				 
 			</div>
-			<sec:csrfInput />
-		</form>
+<%-- 			<sec:csrfInput /> --%>
+<!-- 		</form> -->
 
 				<!-- 모달바디 -->
 			</div>
 			<div class="modal-footer justify-content-align">
-				<button type="submit" form="form" class="btn btn-outline-primary">등록</button>
+				<button onclick="checkInsertData()" type="button"  class="btn btn-outline-primary">등록</button>
 				<a onclick="dataReset()" class="btn btn-outline-secondary">취소</a>
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
@@ -337,13 +337,11 @@ cursor:pointer;
 										<td class="text-center" >${recordList.recPer}년</td>
 										<td class="text-center" ><fmt:formatDate value="${recordList.recDt }"
 												pattern="yy/MM/dd" /></td>
-										<td class="text-center" ><c:if test="${recordList.recYn eq '반려'}">
-												<span style="color: red;">${recordList.recYn }</span>
-											</c:if> <c:if test="${recordList.recYn eq '승인대기'}">
-												<span style="color: black;">${recordList.recYn }</span>
-											</c:if> <c:if test="${recordList.recYn eq '승인'}">
-												<span style="color: blue;">${recordList.recYn }</span>
-											</c:if></td>
+										<td class="text-center" >
+<%-- 										<c:if test="${recordList.recYn eq '반려'}"><span style="color: red;">${recordList.recYn }</span></c:if>  --%>
+											<c:if test="${recordList.recYn eq '승인대기'}"><span style="color: black;">${recordList.recYn }</span></c:if> 
+											<c:if test="${recordList.recYn eq '승인'}"><span style="color: blue;">${recordList.recYn }</span></c:if>
+											</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -405,10 +403,11 @@ cursor:pointer;
 					</div>
 					<div class="form-group col-12" >
 					<div class="col-sm-4">
-						<label >사유</label>
+						<label id="modifyDtCon">사유</label>
 						</div>
 						<div class="row">
-							<textarea class="col-10 ml-2 form-control" rows="3" id="modifyCnslCon" ></textarea>
+						<input style="height: 50px; border: 1px solid aliceblue;padding-left: 30px;" type="date" id="modifyCnslDt" required />
+						<textarea class="col-10 ml-2 form-control" rows="3" id="modifyCnslCon" ></textarea>
 						</div>
 					</div>
 
@@ -428,8 +427,17 @@ cursor:pointer;
 let modifyCnslCon,modifyCnslCd,applyCounsel,counselListTr,nonFaceCounselListTr = "";
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
-let data = {cnslCd : "", cnslTtl : "" ,cnslCon : "", cnslCate : ""};	
+let data = {cnslCd : "", cnslTtl : "" ,cnslCon : "", cnslCate : "", cnslType : "" , proNo: "" , cnslDt : "" , stuNo : "", recCd : "" };	
 
+$('td.waitAnswer').mouseenter(function() {
+	  $(this).find('a.checkAnswerNote').css('display', 'block');
+// 	  $(this).text('');
+	});
+
+	$('td.waitAnswer').mouseleave(function() {
+	  $(this).find('a.checkAnswerNote').css('display', 'none');
+// 	  $(this).text('대기');
+	});
 function modifyApply(){
 	data.cnslCd = $("#modifyCnslCd").val();
 	data.cnslTtl = $("#modifyCnslTtl").val();
@@ -526,9 +534,13 @@ counselListTr.forEach(counsel => {
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
+					$("#modifyDtCon").text("상담 예약일");
 					$("#modifyCnslCd").val(result.cnslCd);
 					$("#modifyCnslTtl").val(result.cnslTtl);
-					$("#modifyCnslCon").val(result.cnslCon);
+					$("#modifyCnslCon").hide();
+// 					$("#modifyCnslCon").val(result.cnslCon);
+					$("#modifyCnslDt").val(result.cnslDt);
+					$("#modifyCnslDt").show();
 					$("#modifyCnslCate").val(result.cnslCate);
 			}
 		});
@@ -548,36 +560,40 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
+				$("#modifyDtCon").text("사유");
 				$("#modifyCnslCd").val(result.cnslCd);
 				$("#modifyCnslTtl").val(result.cnslTtl);
+				$("#modifyCnslCon").show();
 				$("#modifyCnslCon").val(result.cnslCon);
+// 				$("#modifyCnslDt").val(result.cnslDt);
+				$("#modifyCnslDt").hide();
 				$("#modifyCnslCate").val(result.cnslCate);
 			}
 		});
 	})
 });
 	
-	$.fn.clearForm = function () {
-	  return this.each(function () {
-	    var type = this.type,
-	      tag = this.tagName.toLowerCase();
-	    if (tag === 'form') {
-	      return $(':input', this).clearForm();
-	    }
-	    if (
-		      type === 'text' ||
-//		      type === 'password' ||
-//		      type === 'hidden' ||
-	      tag === 'textarea'
-	    ) {
-	      this.value = '';
-//		    } else if (type === 'checkbox' || type === 'radio') {
-//		      this.checkedIndex = 0;
-	    } else if (tag === 'select') {
-	      this.selectedIndex = 0;
-	    }
-	  });
-	};
+// 	$.fn.clearForm = function () {
+// 	  return this.each(function () {
+// 	    var type = this.type,
+// 	      tag = this.tagName.toLowerCase();
+// 	    if (tag === 'form') {
+// 	      return $(':input', this).clearForm();
+// 	    }
+// 	    if (
+// 		      type === 'text' ||
+// //		      type === 'password' ||
+// //		      type === 'hidden' ||
+// 	     	 tag === 'textarea'
+// 	    ) {
+// 	      this.value = '';
+// 		    } else if (type === 'checkbox' || type === 'radio') {
+// 		      this.checkedIndex = 0;
+// 	    } else if (tag === 'select') {
+// 	      this.selectedIndex = 0;
+// 	    }
+// 	  });
+// 	};
 	
 	function dataReset(){
 		Swal.fire({
@@ -596,25 +612,112 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 			      '작성 내용 모두 삭제 되었습니다',
 			      'success',
 			    )
-			      $("#cnslCon").html("");
-			      $("#form").clearForm();
+			      $("#cnslCon").val("");
+			    $("input[type='date']").val("");
+			    $("input[name='cnslTtl']").val("");
+			    $("#target").text("상담 예약일");
+			      var radioButtons  = document.querySelectorAll('input[type="radio"][name="cnslCate"]');
+			      for (let i = 0; i < radioButtons.length; i++) {
+			    	  ableRadioButtons(radioButtons[i]);
+			      }
 			  }
 			});
 			  return;
 	}
 	
 	var recordTrElements,tdValues,radioButtons,tdRecordValue = "";
-	function checkInsertData(){
+	function checkInsertData(){ 
+		data.stuNo = $("input[name='stuNo']").val();
+		if(!($("input[name='recCd']").val() == "null" || $("input[name='recCd']").val() == "" || $("input[name='recCd']").val() == 0)){
+			data.recCd = $("input[name='recCd']").val();
+		}
 		 if ($(".counselTypeNonFace").is(":checked")) {
+			 	if($("input[name='cnslTtl']").val() == null || $("input[name='cnslTtl']").val() == ""){
+			 		Swal.fire({
+						  icon: 'error',
+						  title: '제목을 입력해주세요',
+						})
+					return;
+			 	}
 				if($("#cnslCon").val() == null || $("#cnslCon").val() == ""){
-					alert("내용을 적어주세요");
-					return false;
-				} else {
-					return true;
-				}
-		 }else if($(".counselTypeFace").is(":checked")) {
-			 return true;
-		 }
+					Swal.fire({
+						  icon: 'error',
+						  title: '내용을 입력해주세요',
+						})
+					return;
+				} 
+				$("input[type='date']").val("");
+				data.cnslType = $("input[type='radio'][name='cnslType']:checked").val();
+				data.cnslCate = $("input[type='radio'][name='cnslCate']:checked").val();
+				data.proNo = $("select[name='proNo']").val();
+				data.cnslTtl = $("input[name='cnslTtl']").val();
+				data.cnslDt = $("input[type='date']").val();
+				data.cnslCon = $("#cnslCon").val();
+				alert(JSON.stringify(data));	
+				$.ajax({
+					url:"/counsel/studentside/applyInsert",
+					type:'POST',
+					data: JSON.stringify(data),
+					datatype:'JSON',
+					contentType: 'application/json; charset=utf-8',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success:function(result){
+						Swal.fire(
+			                    '등록 완료',
+			                    '비대면 상담 신청이 완료되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
+					}
+				})
+				
+		}
+		if($(".counselTypeFace").is(":checked")){
+			if($("input[name='cnslTtl']").val() == null || $("input[name='cnslTtl']").val() == ""){
+				Swal.fire({
+					  icon: 'error',
+					  title: '제목을 선택해주세요',
+					})
+				return;
+		 	}
+			if($("input[type='date']").val() == "" || $("input[type='date']").val() == null){
+				Swal.fire({
+					  icon: 'error',
+					  title: '상담 예약일을 선택해주세요',
+					})
+				return;
+			}
+			$("#cnslCon").val("");
+				data.cnslType = $("input[type='radio'][name='cnslType']:checked").val();
+				data.cnslCate = $("input[type='radio'][name='cnslCate']:checked").val();
+				data.proNo = $("select[name='proNo']").val();
+				data.cnslTtl = $("input[name='cnslTtl']").val();
+				data.cnslDt = $("input[type='date']").val();
+				data.cnslCon = $("#cnslCon").val();
+				alert(JSON.stringify(data));	
+				$.ajax({
+					url:"/counsel/studentside/applyInsert",
+					type:'POST',
+					data: JSON.stringify(data),
+					datatype:'JSON',
+					contentType: 'application/json; charset=utf-8',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success:function(result){
+						Swal.fire(
+			                    '등록 완료',
+			                    '대면 상담 신청이 완료되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
+					}
+				})
+		}
 	}
 	
 		$("input[type='date'][name='cnslDt']").change(function() {
@@ -626,6 +729,15 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 		  radioButtons.forEach(button => {
 		    if (button !== clickedButton) {
 		      button.disabled = true;
+		    }
+		  });
+		}	
+
+	
+	function ableRadioButtons(clickedButton) {
+		  radioButtons.forEach(button => {
+		    if (button !== clickedButton) {
+		      button.disabled = false;
 		    }
 		  });
 		}	

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -17,10 +19,12 @@ public class Counsel {
 	private Date cnslReg; //신청일
 	private String cnslTtl; //제목
 	private String cnslCon; //내용
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@DateTimeFormat(pattern="yy/MM/dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date cnslDt; //상담답변일/대면상담신청일
 	//학적 신청 연계시
 	private int recCd; //학적코드 (상담 기록 확인용)
+	private String cnslYn;//승인여부
 	// 받아오는 데이터
 	private String cnslRpl; //답변
 	private String empNm; //담당교수명

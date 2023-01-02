@@ -8,7 +8,15 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 
-
+<style>
+tr.text-center td:hover{
+opacity:0.6;
+color:white;
+background-color:gray;
+transition: opacity 1s, color 1s, background-color 1;
+cursor:pointer;
+}
+</style>
 <div class="row">
 <div class="alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
@@ -42,9 +50,9 @@
 				</th>
 			</tr>
 		</thead>
-		<tbody class="text-center">
+		<tbody >
 			<c:forEach var="student" items="${list}" varStatus="status" end="${list.size() }">
-				<tr>
+				<tr class="text-center">
 					<td>${status.end-status.index }</td><!-- No -->
 					<td>${student.column1}</td>
 					<td>${student.column2}</td>
