@@ -24,7 +24,7 @@
 	</table>
 </div>
 <div class="modal" id="modal-lg" style="display: none;"aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">강의계획서 결재</h4>
@@ -36,9 +36,6 @@
 			<div class="modal-body">
 				<div class="col-sm-12">
 					<div class="container-fluid">
-						<div class="row">
-							
-						</div>
 					</div>
 					
 					
@@ -112,8 +109,8 @@
 		
 		// 강의계획서 모달
 		$(document).on("click",".lecApply",function(){
-			$("#modal-lg").modal('show');
-			$("#apprBtn1").show();
+			lecaCd = this.value;
+			window.open("/approval/lecApplyApproveForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=850, left=100, top=50");
 		});
 		
 		// 장학금추천 모달
@@ -169,12 +166,15 @@
 					
 					let detail = "";
 					let b_class = "";
+					let btnClass = "";
 					if(approval.apprCate == "강의계획서"){
 						detail = "강의계획서";
 						b_class = "lecApply"
+						btnClass = "secondary";
 					}else{
 						detail = "추천장학생";
 						b_class = "scholarship";
+						btnClass = "info";
 					}
 					
 					let apprSdt = dateFormat(approval.apprSdt);
@@ -193,7 +193,7 @@
 									\${apprDt}
 								</td>
 								<td>\${empNm}</td>
-								<td><button type="button" class="btn btn-outline-secondary btn-flat btn-sm \${b_class}"
+								<td><button type="button" class="btn btn-outline-\${btnClass} btn-flat btn-sm \${b_class}"
 										style="width: 100%" value="\${approval.apprTagCd}">\${detail}</button></td>
 								
 							</tr>`;
@@ -218,9 +218,8 @@
 			return "";
 		} 
 		let date = new Date(p_date);
-		console.log("date.getFullYear()" + date.getFullYear());
 		let str = date.getFullYear() + "/" 
-					+ (date.getMonth() < 10 ? "0" + date.getMonth() :  date.getMonth()) + "/"
+					+ (date.getMonth()+1 < 10 ? "0" + (date.getMonth()+1) :  date.getMonth()+1) + "/"
 							+ (date.getDate() < 10 ? "0" + date.getDate() : date.getDate());
 		return str;
 	}

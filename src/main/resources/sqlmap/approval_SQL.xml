@@ -30,5 +30,32 @@
 		INSERT INTO APPROVAL(APPR_CD, APPR_YN, APPR_CATE, PRO_NO, APPR_SDT, APPR_TAG_CD)
 		    VALUES(#{apprCd}, 'AP002', #{apprCate}, #{proNo}, SYSDATE, #{apprTagCd})
 </insert>
+
+<update id="updateApproval" parameterType="approval"> 
+	UPDATE APPROVAL
+	    SET 
+	   		<if test="apprYn == 'AP002'">
+	    		APPR_DT = ''
+	    	   , EMP_NO = ''
+	    	</if>
+	    	<if test="apprYn == 'AP001'">
+	    		APPR_DT = SYSDATE
+	    		, EMP_NO = #{empNo}
+	    	</if>
+	    	<if test="apprYn == 'AP003'">
+	    		APPR_DT = SYSDATE
+	    		, EMP_NO = #{empNo}
+	    	</if>
+	      , APPR_RSN = #{apprRsn}
+	      , APPR_YN = #{apprYn}
+	WHERE APPR_CATE = #{apprCate}
+	AND APPR_TAG_CD = #{apprTagCd}
+</update>
+
+<delete id="deleteApproval" parameterType="approval"> 
+	DELETE FROM APPROVAL
+	WHERE APPR_CATE = #{apprCate}
+	AND APPR_TAG_CD = #{apprTagCd}
+</delete>
 </mapper>
 

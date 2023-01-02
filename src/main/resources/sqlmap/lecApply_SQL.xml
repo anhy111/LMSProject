@@ -100,7 +100,7 @@
 		AND     E.EMP_NO = #{proNo}
 	</select>
 	
-	<select id="inquiryFormProInfoStudentApply" parameterType="int" resultType="professor"> 
+	<select id="proInfoByLecaCd" parameterType="int" resultType="professor"> 
 	
 		SELECT  P.PRO_NO,
 				E.EMP_NM,
@@ -466,6 +466,19 @@
 		AND L.LECA_YN IN(0,1)
 		AND LA.LECA_YR = #{lecaYr}
 		AND LA.LECA_SEM = #{lecaSem}
+	</select>
+	
+	<select id="getLecaApproval" parameterType="int" resultType="approval">
+		SELECT DECODE(L.LECA_YN
+		                ,0,'승인대기'
+				        ,1,'승인'
+		                ,2,'반려'
+		             ) APPR_YN
+		     , A.APPR_RSN
+		FROM LECTURE L, APPROVAL A 
+		WHERE L.LECA_CD = A.APPR_TAG_CD
+		AND A.APPR_CATE = 'APC001' 
+		AND L.LECA_CD = #{lecaCd}
 	</select>
 </mapper>
 
