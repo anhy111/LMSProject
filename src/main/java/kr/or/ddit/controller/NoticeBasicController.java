@@ -1,7 +1,6 @@
 package kr.or.ddit.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
@@ -38,13 +37,16 @@ public class NoticeBasicController {
 
     //공지사항 리스트
     @GetMapping("/list")
-    public String testHome(Model model, @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
+    public String testHome(Model model,
+                           @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
 
         //총 행의 수
-        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
+        int totalRow = noticeBasicService.getNoticeBasicTotalRow();
+
+        //총 페이지의 수 계산
         int totalPage = (int) Math.ceil((double) totalRow / 10);
 
-        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList(viewPage);
+        List<NoticeBasic> noticeBasicList = noticeBasicService.noticeBasicList(viewPage);
 
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
