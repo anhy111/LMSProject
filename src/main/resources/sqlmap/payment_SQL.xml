@@ -48,15 +48,24 @@
 		    , P.PAY_SEM
 		    , S.STU_NM
 		    , C.COL_FEE
-		    , SH.SCLH_AMT
+		    , (
+		        SELECT
+		            NVL(MAX(SH.SCLH_AMT),0)
+		        FROM
+		            SCL_HISTORY SH
+		        WHERE
+		            SH.STU_NO = P.STU_NO
+		            AND   SH.SCLH_YN = 'AP001'
+		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY')
+		            AND   SH.SCLH_SEM = 1 + MOD(P.PAY_SEM,2)
+		    ) SCLH_AMT
 		    , P.PAY_AMT
 		    , P.PAY_DT
 		    , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = P.PAY_YN) PAY_YN
-		FROM    COLLEGE C, DEPARTMENT D, PAYMENT P, STUDENT S, SCL_HISTORY SH
+		FROM    COLLEGE C, DEPARTMENT D, PAYMENT P, STUDENT S
 		WHERE   S.STU_NO = P.STU_NO
 		AND     D.DEP_CD = S.DEP_CD
 		AND     C.COL_CD = D.COL_CD
-		AND     S.STU_NO = SH.STU_NO (+)
 	</select>
 	
 	<!-- 올해 납부되어야 할 등록금 총액과 현재 납부된 등록금 총액 -->

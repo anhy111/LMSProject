@@ -80,7 +80,7 @@
 		
 		//장학금 수여대상자 목록
 		$.ajax({
-			url:"/scholarship/scholarshipAwardList",
+			url:"/scholarship/admin/scholarshipAwardList",
 			contentType: "application/json;charset=utf-8",
 			dataType:'json',
 			type: "POST",
@@ -126,7 +126,7 @@
 			        	
 			        	//중복수여 췤
 			    		$.ajax({
-			    	 		url : "/scholarship/scholarshipCheck",
+			    	 		url : "/scholarship/admin/scholarshipCheck",
 			    	 		method : "POST",
 			    	 		contentType: "application/json;charset=utf-8",
 			    	 		data: stuNo,
@@ -151,7 +151,7 @@
 			        	
 			        	//학생성적상세
 			    		$.ajax({
-			    			url:"/scholarship/studentInfoList",
+			    			url:"/scholarship/admin/studentInfoList",
 			    			contentType: "application/json;charset=utf-8",
 			    			data: stuNo,
 			    			dataType:'json',
@@ -190,7 +190,7 @@
 			var submitCheck = confirm("성적장학금을 수여하시겠습니까?");
 			if(submitCheck){
 				$.ajax({
-					url : "/scholarship/scholarshipConfer",
+					url : "/scholarship/admin/scholarshipConfer",
 					type : "POST",
 					data : JSON.stringify(insertScholarship),
 					dataType:'json',
