@@ -1,5 +1,6 @@
 package kr.or.ddit.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,14 +58,13 @@ public class CounselController {
 		//forwarding
 		return "counsel/studentside/applyList";
 	}
-	
+	@ResponseBody
 	@PostMapping("/studentside/applyInsert")
-	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel) {
+	public int studentCounselApplyInsertPost(@RequestBody Counsel counsel) {
 		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
-		this.counselService.applyInsert(counsel);
-		
+		int result = this.counselService.applyInsert(counsel);
 		//forwarding
-		return "redirect:/counsel/studentside/applyList?stuNo="+counsel.getStuNo();
+		return result;
 	}
 	
 	@ResponseBody
@@ -77,7 +77,6 @@ public class CounselController {
 	@ResponseBody
 	@PostMapping("/studentside/applyModify")
 	public int studentCounselApplyModify(@RequestBody Counsel counsel) {
-		
 		int result = this.counselService.applyModify(counsel);
 		if(result == 0) {
 			log.info("업데이트 실패");
@@ -88,27 +87,27 @@ public class CounselController {
 		}
 	}
 	
-	@GetMapping("/studentside/checkAnswer")
-	public String studentCheckAnswer(int cnslCd, Model model) {
-		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-		model.addAttribute("answerDetail", answerDetail);
-			return "counsel/studentside/checkAnswer";
-	}
-	
-	@GetMapping("/studentside/checkReject")
-	public String studentCheckrReject(int cnslCd, Model model) {
-		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-		model.addAttribute("answerDetail", answerDetail);
-			return "counsel/studentside/checkReject";
-	}
-	
-	@GetMapping("/studentside/answerNote")
-	public String studentCheckAnswerNote(int cnslCd, Model model) {
-		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
-		log.info("답변내용 : " + answerDetail.toString());
-		model.addAttribute("answerDetail",answerDetail);
-		return "counsel/studentside/answerNote";
-	}
+//	@GetMapping("/studentside/checkAnswer")
+//	public String studentCheckAnswer(int cnslCd, Model model) {
+//		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
+//		model.addAttribute("answerDetail", answerDetail);
+//			return "counsel/studentside/checkAnswer";
+//	}
+//	
+//	@GetMapping("/studentside/checkReject")
+//	public String studentCheckrReject(int cnslCd, Model model) {
+//		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
+//		model.addAttribute("answerDetail", answerDetail);
+//			return "counsel/studentside/checkReject";
+//	}
+//	
+//	@GetMapping("/studentside/answerNote")
+//	public String studentCheckAnswerNote(int cnslCd, Model model) {
+//		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
+//		log.info("답변내용 : " + answerDetail.toString());
+//		model.addAttribute("answerDetail",answerDetail);
+//		return "counsel/studentside/answerNote";
+//	}
 	
 	@ResponseBody
 	@PostMapping("/studentside/deleteApply")
@@ -158,24 +157,20 @@ public class CounselController {
 		
 	}
 	
-	@GetMapping("/professorside/answerNoteWriteUpdate")
-	public String prefessorCounselAnswerNote(Model model, int cnslCd) {
-		Counsel answerNoteDetail = this.counselService.answerNoteDetail(cnslCd);
+	@ResponseBody
+	@PostMapping("/professorside/answerNoteWrite")
+	public Counsel prefessorCounselAnswerNote(@RequestBody Counsel counsel) {
+		Counsel answerNoteDetail = this.counselService.answerNoteDetail(counsel.getCnslCd());
 		log.info("교수의 대면 상담 상세 : " + answerNoteDetail.toString());
-		model.addAttribute("answerNoteDetail", answerNoteDetail);
-		return "counsel/professorside/answerNoteWriteUpdate";
+		return answerNoteDetail;
 	}
 	
 	@ResponseBody	
 	@PostMapping("/professorside/answerNoteWriteUpdate")
-	public int prefessorCounselAnswerNotePost(@RequestBody Counsel counsel) {
+	public Counsel prefessorCounselAnswerNotePost(@RequestBody Counsel counsel) {
 		log.info("들어온값 확인 : " + counsel.toString());
-		int result = this.counselService.answerNoteWriteUpdate(counsel);
-		if(result > 0) {
-			return result;
-		} else {
-			log.info("실패");
-			return 0;
-		}
+		this.counselService.answerNoteWriteUpdate(counsel);
+		Counsel answerNoteDetail = this.counselService.answerNoteDetail(counsel.getCnslCd());
+		return answerNoteDetail;
 	}
 }
