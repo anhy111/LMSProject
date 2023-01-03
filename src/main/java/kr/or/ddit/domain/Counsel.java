@@ -19,8 +19,8 @@ public class Counsel {
 	private Date cnslReg; //신청일
 	private String cnslTtl; //제목
 	private String cnslCon; //내용
-//	@DateTimeFormat(pattern="yy/MM/dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date cnslDt; //상담답변일/대면상담신청일
 	//학적 신청 연계시
 	private int recCd; //학적코드 (상담 기록 확인용)

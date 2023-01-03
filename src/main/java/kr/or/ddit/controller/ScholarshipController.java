@@ -1,6 +1,5 @@
 package kr.or.ddit.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +51,7 @@ public class ScholarshipController {
 		
 		model.addAttribute("bodyTitle", "장학금 수여");
 		
-		return "scholarship/scholarshipAward";
+		return "scholarship/admin/scholarshipAward";
 	}
 	
 	//장학금 수여 목록
@@ -134,20 +133,16 @@ public class ScholarshipController {
 	
 	// 학생 장학금 수혜 증명서 펼치기
 	@GetMapping("/stuScholarshipForm/scholarshipBenefitCertificate")
-	public String scholarshipBenefitCertificate(HttpServletRequest request, Model model, int sclhCd) {
+	public String scholarshipBenefitCertificate(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		int stuNo = (int) session.getAttribute("no");
+		
+		List<SclHistory> scholarshipBenefitCertificateList = this.scholarshipService.scholarshipBenefitCertificate(stuNo);
 
-		HashMap<String, Object> map = this.scholarshipService.scholarshipBenefitCertificate(sclhCd);
-		map.put("sclhCd", sclhCd);
-
-		model.addAttribute("map", map);
+		model.addAttribute("scholarshipBenefitCertificateList", scholarshipBenefitCertificateList);
 
 		return "scholarship/stuScholarshipForm/scholarshipBenefitCertificate";
-	}
-	
-	@GetMapping("test")
-	public String test() {
-		
-		return "scholarship/test";
 	}
 	
 }

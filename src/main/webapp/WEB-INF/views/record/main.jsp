@@ -464,7 +464,7 @@ cursor:pointer;
 				return;
 			} 
 			if($("#modifyRgbCd").val() == '휴학'||$("#modifyRgbCd").val() == '자퇴'){ //휴학,자퇴 일때
-				if(!($("#recRsn").val().length >= 10)){
+				if(!($("#modifyRecRsn").val().length >= 10)){
 					Swal.fire({
 						  icon: 'error',
 						  title: '사유는 10글자 이상 작성해주세요',

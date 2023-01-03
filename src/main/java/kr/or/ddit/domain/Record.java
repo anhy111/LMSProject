@@ -17,8 +17,8 @@ public class Record {
 	private String recSem; //신청학기
 	private int recPer; //기간
 	private String recRsn; //사유
-	@DateTimeFormat(pattern="yy/MM/dd")
-//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd", timezone = "Asia/Seoul")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date recDt; //신청날짜
 	private String recYn; //승인여부
 	private String recRej;//반려사유

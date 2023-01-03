@@ -56,7 +56,7 @@
 		        WHERE
 		            SH.STU_NO = P.STU_NO
 		            AND   SH.SCLH_YN = 'AP001'
-		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY')
+		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY') + MOD(P.PAY_SEM,2)
 		            AND   SH.SCLH_SEM = 1 + MOD(P.PAY_SEM,2)
 		    ) SCLH_AMT
 		    , P.PAY_AMT
@@ -96,7 +96,7 @@
 		        WHERE
 		            SH.STU_NO = P.STU_NO
 		            AND   SH.SCLH_YN = 'AP001'
-		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY')
+		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY') + MOD(P.PAY_SEM,2)
 		            AND   SH.SCLH_SEM = 1 + MOD(P.PAY_SEM,2)
 		    ) SCLH_AMT,
 		    C.COL_FEE - (
@@ -107,7 +107,7 @@
 		        WHERE
 		            SH.STU_NO = P.STU_NO
 		            AND   SH.SCLH_YN = 'AP001'
-		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY')
+		            AND   SH.SCLH_YR = TO_CHAR(P.PAY_NT,'YYYY') + MOD(P.PAY_SEM,2)
 		            AND   SH.SCLH_SEM = 1 + MOD(P.PAY_SEM,2)
 		    ) PAY_AMT,
 		    (

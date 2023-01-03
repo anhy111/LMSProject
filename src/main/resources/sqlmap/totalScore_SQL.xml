@@ -3,12 +3,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.TotalScoreMapper">
 <sql id="yrNsem">
-      <if test="yrNsem != null and !yrNsem.equals('')">
-         AND #{yrNsem} IN (A.LECA_SEM , A.LECA_YR)
+      <if test="lecaSem != null and !lecaSem.equals('') and lecaYr != null and !lecaYr.equals('')">
+          AND  A.LECA_SEM = #{lecaSem}
+          AND  A.LECA_YR = #{lecaYr}
       </if>
    </sql>
 
-	<!-- 성적 건수 카운트-->
+	<!-- 성적 건수 카운트================================================================-->
 	<select id="getCount" parameterType="hashMap" resultType="int">
 		SELECT  
 				COUNT(S.LECA_CD) CNT
@@ -16,9 +17,23 @@
 	    		STU_LEC S, LEC_APPLY A
 		WHERE   
 				S.LECA_CD = A.LECA_CD
-				 <include refid="yrNsem"></include>
+				and   not (A.LECA_YR = #{year} AND A.LECA_SEM = #{semester})
+				<include refid="yrNsem"></include>
 		        AND   STU_NO = #{stuNo}
 	</select>
+	<!-- 현재 학기 성적 카운트 -->
+	<select id="getPreCnt" parameterType="hashMap" resultType="int">
+		SELECT  
+				COUNT(S.LECA_CD) CNT
+	    FROM    
+	    		STU_LEC S, LEC_APPLY A
+		WHERE   
+				S.LECA_CD = A.LECA_CD
+				AND   A.LECA_YR = #{year} AND A.LECA_SEM = #{semester}
+		        AND   STU_NO = #{stuNo}
+	</select>
+	<!-- 성적카운트 끝================================================================= -->
+	
 	
 	<!-- 학생 개인정보 조회 -->
 	<select id="getInfo" resultType="student" parameterType="String">
@@ -53,5 +68,245 @@
               TO_NUMBER(CASE WHEN TO_CHAR(SYSDATE, 'MM') IN ('08', '09', '10', '11', '12', '1') THEN 2 ELSE 1 END) semester
       FROM DUAL
 	</select>
+	
+	<!-- 전체 or 선택 년도/학기 성적불러오기 -->
+	<select id="getList" parameterType="hashMap" resultType="lecApply">
+       SELECT A.LECA_YR || '/' || A.LECA_SEM || '학기' LECA_CON,
+              A.LECA_CD, 
+              A.LECA_NM, 
+              A.LECA_CATE,
+              A.LECA_CRD,
+              DECODE(A.LECA_GRADE, 1,'GRADE',0,'FAIL') LECA_GRADE,  
+              (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CON = TO_CHAR(S.SL_SCORE)) LECA_NOTE, 
+              S.SL_SCORE LECA_ROOM 
+      FROM    STU_LEC S, LEC_APPLY A
+      WHERE   S.LECA_CD = A.LECA_CD
+      AND     not (A.LECA_YR = #{year} AND A.LECA_SEM = #{semester})
+      AND     S.STU_NO = #{stuNo}
+      ORDER BY A.LECA_YR DESC, A.LECA_SEM DESC, A.LECA_CD ASC
+   </select>
+   
+   <!-- 현재학기 성적 조회 -->
+   <select id="getPreList" parameterType="hashMap" resultType="lecApply">
+       SELECT A.LECA_YR || '/' || A.LECA_SEM || '학기' LECA_CON,
+              A.LECA_CD, 
+              A.LECA_NM, 
+              A.LECA_CATE,
+              A.LECA_CRD,
+              DECODE(A.LECA_GRADE, 1,'GRADE',0,'FAIL') LECA_GRADE,  
+              (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CON = TO_CHAR(S.SL_SCORE)) LECA_NOTE, 
+              S.SL_SCORE LECA_ROOM 
+      FROM    STU_LEC S, LEC_APPLY A
+      WHERE   S.LECA_CD = A.LECA_CD
+      AND     A.LECA_YR = #{year} AND A.LECA_SEM = #{semester}
+      AND     S.STU_NO = #{stuNo}
+      ORDER BY A.LECA_YR DESC, A.LECA_SEM DESC, A.LECA_CD ASC
+   </select>
+   
+   
+   <!-- 선택한 년도/학기 성적 불러오기 -->
+	<select id="getListAgain" parameterType="hashMap" resultType="lecApply">
+       SELECT A.LECA_YR ||  '/' || A.LECA_SEM || '학기' LECA_CON,
+              A.LECA_CD, 
+              A.LECA_NM, 
+              A.LECA_CATE,
+              A.LECA_CRD,
+              DECODE(A.LECA_GRADE, 1,'GRADE',0,'FAIL') LECA_GRADE,  
+              (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CON = TO_CHAR(S.SL_SCORE)) LECA_NOTE, 
+              S.SL_SCORE LECA_ROOM 
+      FROM    STU_LEC S, LEC_APPLY A
+      WHERE   S.LECA_CD = A.LECA_CD
+      <if test="lecaYr.equals('') and lecaSem.equals('')">
+       	AND     not (A.LECA_YR = #{year} AND A.LECA_SEM = #{semester})
+      </if>
+      <if test="lecaYr != null and !lecaYr.equals('') and lecaSem != null and !lecaSem.equals('')">
+	      AND     A.LECA_YR = #{lecaYr} 
+	      AND 	  A.LECA_SEM = #{lecaSem}
+      </if>
+      	  AND     S.STU_NO = #{stuNo}
+      
+      ORDER BY A.LECA_YR DESC, A.LECA_SEM DESC, A.LECA_CD ASC
+   </select>
 
+
+	<select id="getTotalCrd" parameterType="String" resultType="int">
+		 SELECT  NVL(SUM(A.LECA_CRD), 0)
+	      FROM    LEC_APPLY A, STU_LEC S
+	      WHERE   A.LECA_CD = S.LECA_CD
+	      AND     S.STU_NO = #{stuNo}
+	</select>
+	
+	<select id="getTotalInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT
+		         IMSI.JP JP
+		        ,IMSI.JS JS
+		        ,IMSI.KP KP
+		        ,IMSI.KS KS
+		        ,IMSI.JP+IMSI.JS JSUM
+		        ,IMSI.KP+IMSI.KS KSUM
+		        ,IMSI.JP+IMSI.JS + IMSI.KP + IMSI.JS TSUM
+		        ,IMSI.JPCNT + IMSI.JSCNT JCNT 
+		        ,IMSI.KPCNT + IMSI.KSCNT KCNT
+		        ,(IMSI.JPSCORE  + IMSI.JSSCORE) / (IMSI.JPCNT + IMSI.JSCNT) JAV 
+		        ,DECODE((IMSI.KPCNT + IMSI.KSCNT),0,0,((IMSI.KPSCORE + IMSI.KSSCORE)/(IMSI.KPCNT + IMSI.KSCNT))) KAV 
+		FROM
+		        (SELECT
+		             (SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공필수' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) JP
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공필수' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) JPCNT
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공필수' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) JPSCORE
+		            ,(SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공선택' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) JS
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공선택' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) JSCNT
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공선택' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) JSSCORE
+		            ,(SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양필수' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) KP
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양필수' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) KPCNT 
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양필수' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) KPSCORE
+		            ,(SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양선택' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) KS
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양선택' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) KSCNT 
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양선택' AND S.STU_NO = #{stuNo} AND NOT(L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem})) KSSCORE
+		        FROM DUAL) 
+		        IMSI 
+	</select>
+	<select id="getPreTotalInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT
+		         IMSI.JP JP
+		        ,IMSI.JS JS
+		        ,IMSI.KP KP
+		        ,IMSI.KS KS
+		        ,IMSI.JP+IMSI.JS JSUM
+		        ,IMSI.KP+IMSI.KS KSUM
+		        ,IMSI.JP+IMSI.JS + IMSI.KP + IMSI.JS TSUM
+		        ,IMSI.JPCNT + IMSI.JSCNT JCNT 
+		        ,IMSI.KPCNT + IMSI.KSCNT KCNT
+		        ,(IMSI.JPSCORE  + IMSI.JSSCORE) / (IMSI.JPCNT + IMSI.JSCNT) JAV 
+		        ,DECODE((IMSI.KPCNT + IMSI.KSCNT),0,0,((IMSI.KPSCORE + IMSI.KSSCORE)/(IMSI.KPCNT + IMSI.KSCNT))) KAV 
+		FROM
+		        (SELECT
+		             (SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공필수' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) JP
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공필수' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) JPCNT
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공필수' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) JPSCORE
+		            ,(SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공선택' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) JS
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공선택' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) JSCNT
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '전공선택' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) JSSCORE
+		            ,(SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양필수' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) KP
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양필수' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) KPCNT 
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양필수' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) KPSCORE
+		            ,(SELECT NVL(SUM(L.LECA_CRD),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양선택' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) KS
+		            ,(SELECT NVL(COUNT(L.LECA_CRD),0) FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양선택' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) KSCNT 
+		            ,(SELECT NVL(SUM(S.SL_SCORE),0)   FROM LEC_APPLY L, STU_LEC S WHERE L.LECA_CD = S.LECA_CD AND L.LECA_CATE = '교양선택' AND S.STU_NO = #{stuNo} AND L.LECA_YR = #{lecaYr} AND L.LECA_SEM = #{lecaSem}) KSSCORE
+		        FROM DUAL) 
+		        IMSI 
+	</select>
+	
+	<select id="checkObjection" parameterType="hashMap" resultType="objection">
+      SELECT  *
+      FROM    OBJECTION
+      WHERE   STU_NO = #{stuNo}
+      AND     LECA_CD = (SELECT LECA_CD FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})
+   </select>
+   
+   <select id="getCourseInfo" parameterType="String" resultType="lecApply">
+	   SELECT 
+		         E.EMP_NM as "proNm"
+		        ,L.LECA_SEM
+		        ,L.LECA_YR
+		        ,L.LECA_NM
+		        ,L.LECA_CD
+		FROM 	
+				 EMPLOYEE E
+				,PROFESSOR P
+				,LEC_APPLY L
+		WHERE 	
+				E.EMP_NO = P.PRO_NO
+				AND P.PRO_NO = L.PRO_NO
+				AND L.LECA_CD = #{lecaCd}
+   </select>
+   
+   <insert id="preAppeal" parameterType="objection">
+   <selectKey order="BEFORE" keyProperty="objCd" resultType="int">
+   		SELECT NVL(MAX(OBJ_CD),0)+1 FROM OBJECTION 
+   </selectKey>
+	INSERT INTO OBJECTION (
+					    	 OBJ_CD
+							,STU_NO
+							,LECA_CD
+							,OBJ_TTL
+							,OBJ_CON
+							,OBJ_DT
+     					  )
+     			  VALUES  (	 #{objCd}
+		     			  	,#{stuNo}
+		     			  	,#{lecaCd}
+		     			  	,#{objTtl}
+		     			  	,#{objCon}
+		     			  	,SYSDATE
+		     			  	)
+   </insert>
+   
+   <!-- 성적 이의 신청 리스트(교수) -->
+	<select id="objectionList" parameterType="String" resultType="objection">
+		SELECT  O.OBJ_CD,
+		        A.LECA_YR || '년도 ' || A.LECA_SEM || '학기' LECA_YRNSEM,
+		        O.OBJ_DT, O.LECA_CD, A.LECA_NM, O.STU_NO, S.STU_NM,
+		        (CASE O.OBJ_YN WHEN 0 THEN '승인대기'
+		                       WHEN 1 THEN '승인'
+		                       WHEN 2 THEN '반려'
+		         END) OBJ_YN
+		FROM    OBJECTION O, LEC_APPLY A, STUDENT S
+		WHERE   A.PRO_NO = #{proNo}
+		AND     O.LECA_CD = A.LECA_CD
+		AND     O.STU_NO = S.STU_NO
+	</select>
+	
+	<!-- 성적 이의 신청 상세정보 출력 -->
+	<select id="objDetail" parameterType="String" resultType="objection">
+		SELECT (CASE O.OBJ_YN WHEN 0 THEN '승인대기'
+                        WHEN 1 THEN '승인'
+                        WHEN 2 THEN '반려'
+        		END) OBJ_YN,
+		        O.LECA_CD, 
+		        A.LECA_NM,
+		        A.LECA_YR || '년도 ' || A.LECA_SEM || '학기' LECA_YRNSEM,
+		        TO_CHAR(O.OBJ_DT, 'YYYY-MM-DD HH:MI:SS') OBJ_DTT,
+		        C.COL_NM || ' ' || D.DEP_NM COL_DEP,
+		        S.STU_YR || '학년(' || S.STU_SEM || '학기)' YR_SEM,
+		        S.STU_NO, 
+		        STU_NM,
+                DECODE(A.LECA_GRADE,0,'PASS',1,'GRADE') LECA_GRADE,
+                SL.SL_SCORE SL_SCORE,
+		        O.OBJ_TTL, 
+		        O.OBJ_CON, 
+		        O.OBJ_RPL,
+		        O.OBJ_DT
+		FROM    OBJECTION O, LEC_APPLY A, STUDENT S, DEPARTMENT D, COLLEGE C, STU_LEC SL
+		WHERE   O.OBJ_CD = #{objCd}
+		AND     A.LECA_CD = O.LECA_CD
+		AND     S.STU_NO = O.STU_NO
+        AND     S.STU_NO = SL.STU_NO
+		AND     SL.LECA_CD = A.LECA_CD
+		AND     S.DEP_CD = D.DEP_CD
+		AND     D.COL_CD = C.COL_CD
+	</select>
+	
+	<!-- 성적이의 승인 -->
+	<update id="updateY" parameterType="objection">
+		UPDATE 
+			 OBJECTION
+		SET 
+			 OBJ_RPL = #{objRpl}
+			,OBJ_YN = 1
+		WHERE 
+			 OBJ_CD = #{objCd}
+	</update>
+	<!-- 성적이의 반려 -->
+	<update id="updateN" parameterType="objection">
+		UPDATE 
+			 OBJECTION
+		SET 
+			 OBJ_RPL = #{objRpl}
+			,OBJ_YN = 2
+		WHERE 
+			 OBJ_CD = #{objCd}
+	</update>
+	
+   
 </mapper>
