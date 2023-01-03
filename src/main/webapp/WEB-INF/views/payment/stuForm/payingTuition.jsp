@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,12 +156,12 @@ td {
 					</tr>
 					<tr>
 						<td colspan="2">수업료</td>
-						<td class="right">${map.COL_FEE}</td>
-						<td class="right">${map.SCLH_AMT}</td>
+						<td class="right"><fmt:formatNumber value="${map.COL_FEE}" pattern="#,###"/></td>
+						<td class="right"><fmt:formatNumber value="${map.SCLH_AMT}" pattern="#,###"/></td>
 					</tr>
 					<tr>
 						<td colspan="2">납입금액</td>
-						<td colspan="2" id="td2" class="right">${map.PAY_AMT}</td>
+						<td colspan="2" id="td2" class="right"><fmt:formatNumber value="${map.PAY_AMT}" pattern="#,###"/></td>
 					</tr>
 					<tr>
 						<td>납부계좌</td>
@@ -203,12 +204,12 @@ td {
 					</tr>
 					<tr>
 						<td colspan="2">수업료</td>
-						<td class="right">${map.COL_FEE}</td>
-						<td class="right">${map.SCLH_AMT}</td>
+						<td class="right"><fmt:formatNumber value="${map.COL_FEE}" pattern="#,###"/></td>
+						<td class="right"><fmt:formatNumber value="${map.SCLH_AMT}" pattern="#,###"/></td>
 					</tr>
 					<tr>
 						<td colspan="2">납입금액</td>
-						<td colspan="2" id="td2" class="right">${map.PAY_AMT}</td>
+						<td colspan="2" id="td2" class="right"><fmt:formatNumber value="${map.PAY_AMT}" pattern="#,###"/></td>
 					</tr>
 					<tr>
 						<td>납부계좌</td>

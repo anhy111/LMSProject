@@ -10,7 +10,7 @@ import kr.or.ddit.domain.Student;
 
 public interface ManageMapper  {
 	
-	public List<Student> studentList();
+	public List<Student> studentList(int viewPage);
 	
 	public List<Student> stuSearch(Map<String, String> map);
 	
@@ -36,7 +36,7 @@ public interface ManageMapper  {
 	
 	public int createProfessor(Employee employee);
 	
-	public List<Employee> employeeList();
+	public List<Employee> employeeList(int viewPage);
 	
 	public Employee detailEmp(Map<String, String> map);
 	
@@ -53,4 +53,10 @@ public interface ManageMapper  {
 	public Evaluation evaluationCon(Map<String, String> map);
 	//교수의 수강 평가 리스트
 	public List<Evaluation> mineEvlList(String no);
+	
+	//학생 페이징 처리
+	public int stuPaging();
+	
+	//교직원 페이징 처리
+	public int empPaging();
 }

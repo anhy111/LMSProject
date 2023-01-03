@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <% String no = String.valueOf(session.getAttribute("no")); %>
 <script type="text/javascript">
 $(function(){
@@ -108,20 +109,57 @@ $(function(){
 	
 });
 
+google.charts.load("current", {packages:["corechart"]});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Task', 'Hours per Day'],
+    ['Work',     11],
+    ['Eat',      2],
+    ['Commute',  2],
+    ['Watch TV', 2],
+    ['Sleep',    7]
+  ]);
+
+  var options = {
+    title: '나의 전체 성적',
+    pieHole: 0.4,
+    width:600,
+    height:600
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+  chart.draw(data, options);
+}
+
 </script>
+
+<style>
+	.mycard {
+		padding: 0px;
+		border-radius: 0.25rem;
+		min-width: 0px;
+		text-align: left;
+	}
+</style>
+
 <div class="mt-4">
 	<ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-		<li class="nav-item"><a class="nav-link active"
+		<li class="nav-item">
+			<a class="nav-link active"
 			id="custom-content-below-home-tab" data-toggle="pill"
 			href="#custom-content-below-home" role="tab"
 			aria-controls="custom-content-below-home" aria-selected="true">내 정보</a>
 		</li>
-		<li class="nav-item"><a class="nav-link"
+		<li class="nav-item">
+			<a class="nav-link"
 			id="custom-content-below-profile-tab" data-toggle="pill"
 			href="#custom-content-below-profile" role="tab"
 			aria-controls="custom-content-below-profile" aria-selected="false">학사 정보</a>
 		</li>
-		<li class="nav-item"><a class="nav-link"
+		<li class="nav-item">
+			<a class="nav-link"
 			id="custom-content-below-messages-tab" data-toggle="pill"
 			href="#custom-content-below-messages" role="tab"
 			aria-controls="custom-content-below-messages" aria-selected="false">비밀번호 변경</a>
@@ -242,17 +280,79 @@ $(function(){
 				</form>
 			</div>
 		</div>
-		<div class="tab-pane fade" id="custom-content-below-profile"
-			role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-			Mauris tincidunt mi at erat gravida, eget tristique urna bibendum.
-			Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis.
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-			ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-			Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula
-			placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus,
-			elementum sit amet ultricies at, posuere nec nunc. Nunc euismod
-			pellentesque diam.
+		<div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+			<div class="row m-3">
+				<div class="card collapsed-card mycard col-6">
+					<div class="card-header">
+						<h3 class="card-title">나의 장학 내역</h3>
+						<div class="card-tools">
+							<button type="button" class="btn btn-tool"
+								data-card-widget="collapse">
+								<i class="fas fa-plus"></i>
+							</button>
+						</div>
+					</div>
+
+					<div class="card-body table-responsive p-0" style="height: 230px;">
+						<table class="table table-head-fixed text-nowrap">
+							<thead>
+								<tr>
+									<th>no</th>
+									<th>장학금 명</th>
+									<th>수혜학기</th>
+									<th>지급액</th>
+									<th>추천인</th>
+								</tr>
+							</thead>
+							<tbody id="sclList">
+								<c:forEach var="list" items="${mySclList}" varStatus="stat">
+									<tr>
+										<td>${stat.count}</td>
+										<td>${list.sclNm}</td>
+										<td>${list.sclhYr}년 >${list.sclhSem}학기</td>
+										<td>${list.sclhAmt}</td>
+										<td>${list.empNm}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-6">
+				</div>
+				<div class="card collapsed-card mycard col-6">
+					<div class="card-header">
+						<h3 class="card-title">나의 상담 내역</h3>
+						<div class="card-tools">
+							<button type="button" class="btn btn-tool" data-card-widget="collapse">
+								<i class="fas fa-plus"></i>
+							</button>
+						</div>
+					</div>
+
+					<div class="card-body table-responsive p-0" style="height: 230px;">
+						<table class="table table-head-fixed text-nowrap">
+							<thead>
+								<tr>
+									<th>no</th>
+									<th>상담구분</th>
+									<th>상담제목</th>
+									<th>상담일자</th>
+									<th>답변자</th>
+								</tr>
+							</thead>
+							<tbody id="sclList">
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-6"></div>
+			</div>
+			<div class="row">
+				<div id="donutchart" style="width: 900px; height: 500px;"></div>
+			</div>
 		</div>
+		
 		<div class="tab-pane fade" id="custom-content-below-messages"
 			role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
 			<div class="row mt-5 mb-2">

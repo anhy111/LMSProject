@@ -77,7 +77,7 @@
 		FROM    EMPLOYEE E, PROFESSOR P, SCL_HISTORY SH
 		WHERE E.EMP_NO(+) = P.PRO_NO
 		AND P.PRO_NO(+) = SH.PRO_NO
-		AND SH.SCLH_YN = 'AP001'
+		AND (SH.SCLH_YN = 'AP001' OR SH.SCLH_YN = 'AP005')
 		AND SH.STU_NO = #{detailStu}
 	</select>
 	
@@ -108,27 +108,41 @@
 	</insert>
 	
 	<!-- 추천받은 장학생 리스트 -->	
-	<select id="schStuList" parameterType="String" resultType="sclHistory">
+	<select id="schStuList" parameterType="map" resultType="sclHistory">
 		SELECT  SH.SCLH_CD
 		        , SH.STU_NO 
-		        , S.STU_NM
-		        , S.STU_PIC
+		        , (SELECT S.STU_NM FROM STUDENT S WHERE P.DEP_CD = S.DEP_CD AND SH.STU_NO = S.STU_NO) STU_NM
+		        , (SELECT S.STU_PIC FROM STUDENT S WHERE P.DEP_CD = S.DEP_CD AND SH.STU_NO = S.STU_NO) STU_PIC
 		        , SH.SCLH_YR
 		        , SH.SCLH_SEM
 		        , SH.SCLH_DT
 		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = SH.SCLH_YN) SCLH_YN
-		        , SH.SCLH_PAY_YN
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = SH.SCLH_PAY_YN) SCLH_PAY_YN
 		        , SH.PRO_NO
 		        , SH.SCLH_AMT
 		        , SH.SCLH_RCMD
 		        , E.EMP_NM
 		        , P.DEP_CD
-		FROM EMPLOYEE E, PROFESSOR P, STUDENT S, SCL_HISTORY SH
+		FROM EMPLOYEE E, PROFESSOR P, SCL_HISTORY SH
 		WHERE E.EMP_NO = P.PRO_NO
 		AND P.PRO_NO = SH.PRO_NO
-		AND S.STU_NO = SH.STU_NO
-		AND SH.SCLH_YN = 'AP002'
+		AND (SH.SCLH_YN = 'AP002' OR SH.SCLH_YN = 'AP003' OR SH.SCLH_YN = 'AP004' OR SH.SCLH_YN = 'AP005')
 		AND P.DEP_CD = #{depCd}
+		<if test="stuNo > 0">
+			AND SH.STU_NO LIKE '%' || #{stuNo} || '%'
+		</if>
+		 <if test="sclhYn != null and sclhYn != ''">
+			AND SH.SCLH_YN = #{sclhYn}
+		</if>
+		<if test="sclhYr > 0">
+			AND SH.SCLH_YR LIKE '%' || #{sclhYr} || '%'
+		</if>
+		<if test="sclhSem != null and sclhSem != ''">
+			AND SH.SCLH_SEM LIKE '%' || #{sclhSem} || '%'
+		</if>
+		<if test="stuNm != null and stuNm != ''">
+			AND (SELECT S.STU_NM FROM STUDENT S WHERE P.DEP_CD = S.DEP_CD AND SH.STU_NO = S.STU_NO) LIKE '%' || #{stuNm} || '%'
+		</if>
 	</select>
 	
 	<!-- 추천받은 장학생의 상세내역 및 추천서 -->
@@ -167,6 +181,12 @@
 	<update id="deanRecommendation" parameterType="map">
 		UPDATE SCL_HISTORY
 		SET SCLH_YN = 'AP004'
+		WHERE SCLH_CD = #{sclhCd}
+	</update>
+	
+	<update id="rejectRcmd" parameterType="map"> 
+		UPDATE SCL_HISTORY
+		SET SCLH_YN = 'AP003'
 		WHERE SCLH_CD = #{sclhCd}
 	</update>
 	

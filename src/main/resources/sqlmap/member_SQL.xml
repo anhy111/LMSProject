@@ -123,6 +123,29 @@
 		AND MEM_NO = #{stuNo}
 	</update>
 
+	<!--학생이 받은 장학금 내역  -->
+	<select id="mySclList" parameterType="int" resultType="sclHistory">
+		SELECT   SH.SCLH_CD 
+		        , SH.SCL_CD 
+		        , SH.STU_NO 
+		        , SH.SCLH_YR 
+		        , SH.SCLH_SEM 
+		        , SH.SCLH_DT 
+		        , SH.SCLH_YN 
+		        , SH.SCLH_PAY_YN 
+		        , SH.PRO_NO 
+		        , SH.SCLH_AMT 
+		        , SH.SCLH_RCMD 
+		        , (SELECT S.SCL_NM FROM SCHOLARSHIP S WHERE S.SCL_CD = SH.SCL_CD) SCL_NM
+		        , P.PRO_NO
+		        , NVL(E.EMP_NM, ' ') EMP_NM 
+		FROM    EMPLOYEE E, PROFESSOR P, SCL_HISTORY SH
+		WHERE E.EMP_NO(+) = P.PRO_NO
+		AND P.PRO_NO(+) = SH.PRO_NO
+		AND (SH.SCLH_YN = 'AP001' OR SH.SCLH_YN = 'AP005')
+		AND SH.STU_NO = #{memNo}
+	</select>
+
 </mapper>
 
 

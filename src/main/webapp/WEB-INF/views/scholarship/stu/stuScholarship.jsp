@@ -45,6 +45,7 @@
 		</table>
 	</div>
 </div>
+<button type="button" class="btn btn-primary btn-sm" id="btn1" style="float:right;">수혜 증명서</button>
 </body>
 <script type="text/javascript" defer="defer">
 	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
@@ -71,7 +72,7 @@
 					let numWithCommas = addCommas(sclhAmt);
 					
 					str += `
-						<tr class='ScholarshipForm' style='cursor:pointer'>
+						<tr>
 						<td class='checksclhCd' value='\${data[i].sclhCd}'>\${data[i].sclhYr}</td>
 						<td>\${data[i].sclhSem}학기</td>
 						<td>\${data[i].sclNm}</td>
@@ -85,24 +86,20 @@
 				function addCommas(num) {
 				  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				}
-				
-				//행 클릭 시 상세페이지 띄우긔
-				$(document).on('click','.ScholarshipForm',function(e){
-		        	let eqSeq = $(this).index();
-		        	let sclhCd = $(".checksclhCd").get(eqSeq).getAttribute('value');
-		        	console.log("여기만떠줭 sclhCd : " + sclhCd);
-		        	
-					var pwidth = 1400;
-					var pheight = 800;
-					
-					var pleft = (window.screen.width/2) - (pwidth/2);
-					var ptop = (window.screen.height/2) - (pheight/2);
-					
-					window.open('/scholarship/stuScholarshipForm/scholarshipBenefitCertificate?sclhCd='+sclhCd,'ScholarshipForm','width='+ pwidth +',height='+ pheight +',top='+ ptop +',left='+ pleft);
-
-				});
 			}
 		});
+	});
+	
+	//버튼 클릭 시 증명서 띄우긔
+	$('#btn1').on('click', function(){
+		
+		var pwidth = 830;
+		var pheight = 1200;
+		var pleft = (window.screen.width/2) - (pwidth/2);
+		var ptop = (window.screen.height/2) - (pheight/2);
+		
+		window.open('/scholarship/stuScholarshipForm/scholarshipBenefitCertificate','t','width='+ pwidth +',height='+ pheight +',top='+ ptop +',left='+ pleft);
+
 	});
 	
 </script>

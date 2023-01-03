@@ -10,6 +10,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Manager;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.SclHistory;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.MemberMapper;
 import kr.or.ddit.security.Sha256;
@@ -216,5 +218,10 @@ public class MemberServiceImpl implements MemberService {
 		
 		return this.memberMapper.updateStuPw(map);
 	}
+	
+	@Override
+	 public List<SclHistory> mySclList(int memNo){
+		 return this.memberMapper.mySclList(memNo);
+	 }
 
 }

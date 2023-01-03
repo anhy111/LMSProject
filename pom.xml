@@ -4,6 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 
 
+
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>kr.or</groupId>
     <artifactId>ddit</artifactId>
@@ -21,6 +23,14 @@
         <h2db.version>1.4.187</h2db.version>
     </properties>
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Spring -->
         <dependency>

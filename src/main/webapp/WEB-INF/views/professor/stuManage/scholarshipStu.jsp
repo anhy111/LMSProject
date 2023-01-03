@@ -7,6 +7,10 @@ String name = String.valueOf(session.getAttribute("name"));
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript">
+
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
+
 function fn_add(data){
 	
 	$("#stuImg").attr("src", "/upload"+data.stuPic);
@@ -30,14 +34,97 @@ function fn_add(data){
 	$("#sclhRcmd").html(data.sclHistory.sclhRcmd);
 	$(".sclhDt").html(data.sclHistory.sclhDt);
 	$("#recommendation").attr("value", data.sclHistory.sclhCd);
+	$("#reject").attr("value", data.sclHistory.sclhCd);
 	
 }
+
+function loadSearchList(){
+	
+	let stratYr = $("#stratYr").val();
+	let approval = $("#approval").val();
+	let yr = $("#yr").val();
+	let sem = $("#sem").val();
+	let name = $("#name").val();
+	
+	
+	let data = {
+		stuNo : stratYr,
+		sclhYn : approval,
+		sclhYr : yr,
+		sclhSem : sem,
+		stuNm : name
+	};
+
+
+	$.ajax({
+		url : "/professor/schlStuSearch",
+		type : "post",
+		data : JSON.stringify(data),
+		contentType : "application/json; charset=utf-8",
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(result) {
+			$("#list").html("");
+			let str = "";
+			
+// 			console.log("result" + result);
+			
+			if(result.length == 0){
+				str = "<tr class='text-center p-0'>";
+				str += "<td colspan='11'>검색된 내용이 없습니다.</td>";
+				str += "</tr>";
+				$("#list").html(str);
+				return;
+			}
+			$.each(result,function(index, sclHistory){
+				
+				str += `
+					<tr>
+						<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">\${index+1}</td>
+						<td>\${sclHistory.stuNo}</td>
+						<td>
+							<div class="image">
+								<img src="/upload\${sclHistory.stuPic}" class="img-circle" alt="User Image" style="max-width: 20px;"> \${sclHistory.stuNm}
+							</div>
+						</td>
+						<td>
+							\${sclHistory.sclhYr}년 \${sclHistory.sclhSem}학기
+						</td>
+						<td>\${sclHistory.empNm}</td>
+						<td id="YOrN\${index}">\${sclHistory.sclhYn}</td>
+						<td>
+							<button class="btn btn-block btn-outline-secondary btn-sm btnDetail"
+								value="\${sclHistory.sclhCd}, \${sclHistory.stuNo}" data-toggle="modal" data-target="#modal-lg" >학생 상세</button>
+						</td>
+					</tr> `;
+					
+			});
+			$("#list").append(str);
+			
+			for(let i=0;i<result.length; i++){
+				if($("#YOrN"+i).html()=="최종승인"){
+					$("#YOrN"+i).css("color", "blue");
+				}else if($("#YOrN"+i).html()=="반려"){
+					$("#YOrN"+i).css("color", "red");
+				}else if($("#YOrN"+i).html()=="학과장승인"){
+					$("#YOrN"+i).css("color", "green");
+				}
+			}
+		}
+	});
+}
+
 $(function(){
 	
-	let header = "${_csrf.headerName}";
-	let token = "${_csrf.token}";
+	loadSearchList();
 	
-	$(".btnDetail").on("click", function(){
+	$("#search").on("click",loadSearchList);
+	
+	let sclhYn = $(".sclhYn").val();
+	console.log("sclhYn오냐? " + sclhYn)
+	
+	$(document).on("click", ".btnDetail", function(){
 // 		alert("오나요?");
 		
 		let stuDetail = $(this).val();
@@ -116,33 +203,102 @@ $(function(){
 		
 	});
 	
-	$("#recommendation").on("click", function(){
-		
-		let sclhCd = $(this).val();
-		console.log("sclhCd: " + sclhCd);
-		let myData = {
-				"sclhCd":sclhCd
-		}
-		
-		$.ajax({
-			type: 'post',
-			url: '/professor/deanRcmd',
-			contentType:"application/json;charset=utf-8",
-			data:JSON.stringify(myData),
-			beforeSend:function(xhr){
-				xhr.setRequestHeader(header, token);
-			},
-			success :function(result){
-				
-				console.log("결과는 과연! 두둥 " + result);
-				
-			},
-			error:function(request, status, error){
-				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	$(document).ready(function () {
+		$("#recommendation").on("click", function(){
+			
+			let sclhCd = $(this).val();
+			console.log("sclhCd: " + sclhCd);
+			let myData = {
+					"sclhCd":sclhCd
 			}
+			
+		 Swal.fire({
+	            title: '본 학생을 추천 하시겠습니까?',
+	            icon: 'question',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: '추천',
+	            cancelButtonText: '취소'
+		 }).then(function(dlt) {
+			 	if(dlt.isConfirmed){
+					$.ajax({
+						type: 'post',
+						url: '/professor/deanRcmd',
+						contentType:"application/json;charset=utf-8",
+						data:JSON.stringify(myData),
+						beforeSend:function(xhr){
+							xhr.setRequestHeader(header, token);
+						},
+						success :function(result){
+							
+							console.log("결과는 과연! 두둥 " + result);
+							 Swal.fire(
+				                    '추천 완료',
+				                    '정상적으로 추천 되었습니다.',
+				                    'success'
+				                ).then(function(){
+						        	window.location.reload(true);			        	
+						        });
+							
+						},
+						error:function(request, status, error){
+							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+						
+					});
+				}
+				
+			});
+		
 			
 		});
 		
+	});
+		
+	$(document).ready(function () {
+		$("#reject").on("click", function(){
+			
+			let sclhCd = $(this).val();
+			console.log("sclhCd: " + sclhCd);
+			let myData = {
+					"sclhCd":sclhCd
+			}
+			Swal.fire({
+	            title: '추천을 반려 하시겠습니까?',
+	            icon: 'question',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: '반려',
+	            cancelButtonText: '취소'
+		 }).then(function(dlt) {
+			 if(dlt.isConfirmed){
+					$.ajax({
+						type: 'post',
+						url: '/professor/rejectRcmd',
+						contentType:"application/json;charset=utf-8",
+						data:JSON.stringify(myData),
+						beforeSend:function(xhr){
+							xhr.setRequestHeader(header, token);
+						},
+						success :function(result){
+							
+							console.log("결과는 과연! 두둥 " + result);
+							
+						},
+						error:function(request, status, error){
+							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+						
+					});
+				
+		 		}
+			
+			});
+			
+		});
+	
 	});
 	
 	$("#savePdfBtn").on("click", function(){
@@ -197,6 +353,55 @@ $(function(){
 	</div>
 </div>
 
+<!-- 학생 검색 -->
+<div class="row mt-3">
+	<div class="form-group col-2 ">
+		<select id="stratYr" class="form-control" style="width: 100%;">
+			<option value="">입학 연도</option>
+			<option value="2023">2023</option>
+			<option value="2022">2022</option>
+			<option value="2021">2021</option>
+			<option value="2020">2020</option>
+			<option value="2019">2019</option>
+			<option value="2012">2012</option>
+		</select>
+	</div>
+	<div class="form-group col-2">
+		<select id="approval" class="form-control" style="width: 100%;">
+			<option value="">승인 여부</option>
+			<option value="AP002">승인대기</option>
+			<option value="AP003">반려</option>
+			<option value="AP004">학과장 승인</option>
+			<option value="AP005">최종 승인</option>
+		</select>
+	</div>
+	<div class="form-group col-2 ">
+		<select id="yr" class="form-control" style="width: 100%;">
+			<option value="">신청연도</option>
+			<option value="2023">2023</option>
+			<option value="2022">2022</option>
+			<option value="2021">2021</option>
+			<option value="2020">2020</option>
+			<option value="2019">2019</option>
+			<option value="2012">2012</option>
+		</select>
+	</div>
+	<div class="form-group col-2 ">
+		<select id="sem" class="form-control" style="width: 100%;">
+			<option value="">신청 학기</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+		</select>
+	</div>
+	<div class="form-gruop col-3">
+		<input id="name" type="text" class="form-control" placeholder="학생 이름" />
+	</div>
+
+	<div class="form-group col-1">
+		<button id="search" type="button" class="btn btn-primary" value="">검색</button>
+	</div>
+</div>
+
 <div style="text-align:center;">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
@@ -210,25 +415,8 @@ $(function(){
 				<th width="10%">학생 상세</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach var="list" items="${list}" varStatus="stat">
-				<tr>
-					<td>${stat.count}</td>
-					<td class="detailStu">${list.stuNo}</td>
-					<td>
-						<div class="image">
-							<img src="/upload${list.stuPic}" class="img-circle" alt="User Image" style="max-width: 20px;"> ${list.stuNm}
-						</div>
-					</td>
-					<td>${list.sclhYr}년 ${list.sclhSem}학기</td>
-					<td>${list.empNm}</td>
-					<td>${list.sclhYn}</td>
-					<td>
-						<button class="btn btn-block btn-outline-secondary btn-sm btnDetail"
-							value="${list.sclhCd}, ${list.stuNo}" data-toggle="modal" data-target="#modal-lg">학생 상세</button>
-					</td>
-				</tr>
-			</c:forEach>
+		<tbody id="list">
+			
 		</tbody>
 	</table>
 </div>
@@ -468,16 +656,6 @@ $(function(){
 										<img alt="" src="/resources/upload/img/교수도장ys.jpg">
 										<span class="hrt cs10">(인)</span>
 									</div>
-									<div class="hls ps20"
-										style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 168.37mm; height: 4.23mm; width: 170mm;"></div>
-									<div class="hls ps20"
-										style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 175.15mm; height: 4.23mm; width: 170mm;">
-										<span class="hrt cs10">관리자 : &nbsp;</span>
-										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-										<span class="hrt cs10">(인)</span>
-									</div>
 									<div class="hls ps19"
 										style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 181.92mm; height: 4.23mm; width: 170mm;"></div>
 									<div class="hls ps19"
@@ -513,7 +691,10 @@ $(function(){
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" id="savePdfBtn" class="btn btn-outline-danger">PDF 다운</button>
-					<button type="button" id="recommendation" class="btn btn-outline-success">추천</button>
+					<div>
+						<button type="button" id="reject" class="btn btn-outline-danger">반려</button>
+						<button type="button" id="recommendation" class="btn btn-outline-success">추천</button>
+					</div>
 				</div>
 			</div>
 		</div>

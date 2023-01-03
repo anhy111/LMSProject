@@ -1,5 +1,6 @@
 package kr.or.ddit.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Member;
+import kr.or.ddit.domain.SclHistory;
 import kr.or.ddit.domain.Student;
 import kr.or.ddit.service.MemberService;
+import kr.or.ddit.service.StuManageOfProService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -31,8 +34,11 @@ public class MypageController {
 		log.info("memNo는?? " + memNo);
 		
 		Student student = this.memberService.readStudent(memNo);
+		List<SclHistory> mySclList = this.memberService.mySclList(memNo);
+		log.info("학생이 받은 장학 내역은 ? " + mySclList);
 		
 		model.addAttribute("student", student);
+		model.addAttribute("mySclList", mySclList);
 		model.addAttribute("bodyTitle", "마이페이지");
 		
 		return "mypage/mypage";
@@ -62,5 +68,6 @@ public class MypageController {
 		
 		return updateStuPw;
 	}
+	
 	
 }

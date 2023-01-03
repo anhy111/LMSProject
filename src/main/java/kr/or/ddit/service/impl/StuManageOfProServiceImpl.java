@@ -48,8 +48,8 @@ public class StuManageOfProServiceImpl implements StuManageOfProService{
 	}
 	
 	@Override
-	public List<SclHistory> schStuList(String depCd){
-		return this.stuManageOfProMapper.schStuList(depCd);
+	public List<SclHistory> schStuList(Map<String, String> map){
+		return this.stuManageOfProMapper.schStuList(map);
 	}
 	
 	@Override
@@ -82,4 +82,10 @@ public class StuManageOfProServiceImpl implements StuManageOfProService{
 		
 		return approvalResult;
 	}
+	
+	@Override
+	public int rejectRcmd(Map<String, String> map) {
+		return this.stuManageOfProMapper.rejectRcmd(map);
+	}
+	
 }

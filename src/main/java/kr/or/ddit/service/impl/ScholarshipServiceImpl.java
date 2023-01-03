@@ -1,6 +1,5 @@
 package kr.or.ddit.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +47,8 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	}
 	
 	@Override
-	public HashMap<String, Object> scholarshipBenefitCertificate(int sclhCd) {
-		return this.scholarshipMapper.scholarshipBenefitCertificate(sclhCd);
+	public List<SclHistory> scholarshipBenefitCertificate(int stuNo) {
+		return this.scholarshipMapper.scholarshipBenefitCertificate(stuNo);
 	}
 	@Override
 	public int approveSclh(SclHistory sclHistory) {

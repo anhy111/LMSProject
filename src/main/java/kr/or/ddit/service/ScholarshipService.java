@@ -1,6 +1,5 @@
 package kr.or.ddit.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import kr.or.ddit.domain.Scholarship;
@@ -20,7 +19,7 @@ public interface ScholarshipService {
 
 	public List<SclHistory> stuScholarshipList(int stuNo);
 
-	public HashMap<String, Object> scholarshipBenefitCertificate(int sclhCd);
+	public List<SclHistory> scholarshipBenefitCertificate(int stuNo);
 
 	// 결재시 지급여부
 	public int approveSclh(SclHistory sclHistory);

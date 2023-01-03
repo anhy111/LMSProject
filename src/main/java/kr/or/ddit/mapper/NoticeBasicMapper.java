@@ -40,9 +40,12 @@ public interface NoticeBasicMapper {
     @Select("SELECT * FROM notice_basic WHERE NOTICE_CON LIKE '%'||#{keyword}||'%' ORDER BY notice_reg DESC")
     List<NoticeBasic> noticeBasicSearchContent(@Param("keyword") String keyword);
 
-    @Select("SELECT COUNT(*) FROM notice_basic WHERE notice_con LIKE '%'||#{keyword}||'%'")
+    @Select("SELECT COUNT(*) FROM notice_basic WHERE notice_ttl LIKE '%'||#{keyword}||'%'")
     int getNoticeBasicTotalRowTitle(@Param("keyword") String keyword);
 
     @Select("SELECT COUNT(*) FROM notice_basic WHERE notice_con LIKE '%'||#{keyword}||'%'")
     int getNoticeBasicTotalRowContent(@Param("keyword") String keyword);
+
+
+    void noticeBasicSaveWithAttach(NoticeBasic noticeBasic);
 }
