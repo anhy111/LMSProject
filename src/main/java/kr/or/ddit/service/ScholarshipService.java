@@ -21,4 +21,6 @@ public interface ScholarshipService {
 
 	public List<SclHistory> scholarshipBenefitCertificate(int stuNo);
 
+	// 결재시 지급여부
+	public int approveSclh(SclHistory sclHistory);
 }

@@ -203,6 +203,11 @@
 		AND STU_NO = #{stuNo}
 	</select>
 	
+	<update id="approveSclh" parameterType="sclHistory">
+		UPDATE SCL_HISTORY
+		    SET SCLH_PAY_YN = #{sclhPayYn}
+		WHERE SCLH_CD = ${sclhCd}
+	</update>
 </mapper>
 
 

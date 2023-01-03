@@ -530,6 +530,7 @@
 		let data = {
 			apprYn : p_code,
 			apprRsn : typeof reason == "undefined" ? "" : reason,
+			apprCate : 'APC001',		
 			apprTagCd : lecaCd,
 			allocationList : timeTableSetLecaCd(lecTimeTable)
 		}

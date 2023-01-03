@@ -19,6 +19,7 @@ import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.Building;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.ApprovalService;
 import kr.or.ddit.service.BuildingService;
@@ -85,10 +86,16 @@ public class ApprovalController {
 		
 		int empNo = (int)req.getSession().getAttribute("no");
 		
-		approval.setApprCate("APC001");
 		approval.setEmpNo(empNo);
 		log.info("ApprovalController.updateApproval : " + approval);
 		return this.approvalService.updateApproval(approval) + "";
+	}
+	
+	@ResponseBody
+	@GetMapping("/schStuDetail")
+	public Student schStuDetail(Approval approval) {
+		log.info("approval : " + approval);
+		return this.approvalService.schStuDetail(approval);
 	}
 	
 	

@@ -50,4 +50,8 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	public List<SclHistory> scholarshipBenefitCertificate(int stuNo) {
 		return this.scholarshipMapper.scholarshipBenefitCertificate(stuNo);
 	}
+	@Override
+	public int approveSclh(SclHistory sclHistory) {
+		return this.scholarshipMapper.approveSclh(sclHistory);
+	}
 }
