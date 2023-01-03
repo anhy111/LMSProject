@@ -1,11 +1,8 @@
 package kr.or.ddit.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,6 +35,7 @@ public class CounselController {
 	public String studentCounselApplyList(Model model, int stuNo) {
 	List<Counsel> professorList = this.counselService.listOfProfessor(stuNo);
 		List<Counsel> allList = this.counselService.studentApplyList(stuNo);
+		log.info("들어와라 : " + allList.toString());
 		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
 		List<Counsel> counselList = new ArrayList<Counsel>();
 		List<Record> recordList = this.recordService.RecordList(stuNo);
@@ -62,6 +59,7 @@ public class CounselController {
 	@PostMapping("/studentside/applyInsert")
 	public int studentCounselApplyInsertPost(@RequestBody Counsel counsel) {
 		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
+		counsel.setCnslYn("AP002");//기본 승인대기
 		int result = this.counselService.applyInsert(counsel);
 		//forwarding
 		return result;
@@ -87,27 +85,13 @@ public class CounselController {
 		}
 	}
 	
-//	@GetMapping("/studentside/checkAnswer")
-//	public String studentCheckAnswer(int cnslCd, Model model) {
-//		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-//		model.addAttribute("answerDetail", answerDetail);
-//			return "counsel/studentside/checkAnswer";
-//	}
-//	
-//	@GetMapping("/studentside/checkReject")
-//	public String studentCheckrReject(int cnslCd, Model model) {
-//		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-//		model.addAttribute("answerDetail", answerDetail);
-//			return "counsel/studentside/checkReject";
-//	}
-//	
-//	@GetMapping("/studentside/answerNote")
-//	public String studentCheckAnswerNote(int cnslCd, Model model) {
-//		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
-//		log.info("답변내용 : " + answerDetail.toString());
-//		model.addAttribute("answerDetail",answerDetail);
-//		return "counsel/studentside/answerNote";
-//	}
+	@GetMapping("/studentside/answerNote")
+	public String studentCheckAnswerNote(int cnslCd, Model model) {
+		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
+		log.info("답변내용 : " + answerDetail.toString());
+		model.addAttribute("answerDetail",answerDetail);
+		return "counsel/studentside/answerNote";
+	}
 	
 	@ResponseBody
 	@PostMapping("/studentside/deleteApply")
@@ -141,20 +125,6 @@ public class CounselController {
 		model.addAttribute("bodyTitle","상담 내역");
 		//forwarding
 		return "counsel/professorside/counselList";
-	}
-	@ResponseBody
-	@PostMapping("/professorside/answer")
-	public Counsel professorCounselAnswer(@RequestBody Counsel counsel) {
-		Counsel answerDetail = this.counselService.answerDetail(counsel.getCnslCd());
-		return answerDetail;
-	}
-	
-	@ResponseBody
-	@PostMapping("/professorside/answerModify")
-	public Counsel professorCounselAnswerModify(@RequestBody Counsel counsel) {
-		Counsel answerDetail = this.counselService.answerDetail(counsel.getCnslCd());
-		return answerDetail;
-		
 	}
 	
 	@ResponseBody

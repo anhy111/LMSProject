@@ -6,14 +6,13 @@
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
-
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
 
 function fn_add(data){
 	
 	$("#recYn").attr("value", data.recYn);
-	$("#recPer").attr("value", data.recPer + "개월");
+	$("#recPer").attr("value", data.recPer + "년");
 	$("#recDt").attr("value", data.recDt);
 	$("#recYr").attr("value", data.recYr + "년 " + data.recSem + "학기");
 	$("#depNm").attr("value", data.depNm);
