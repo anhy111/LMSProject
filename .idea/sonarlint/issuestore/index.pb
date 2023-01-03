@@ -56,13 +56,9 @@ _
 i
 9src/main/java/kr/or/ddit/service/impl/QnaServiceImpl.java,b/7/b7302e4b5dcbecfcbfd81a62281754c947667d18
 7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 ^
 .src/main/java/kr/or/ddit/mapper/QnaMapper.java,6/2/6254787e0f2eae1d7174795853df6b91295c7a54
-i
-9src/main/java/kr/or/ddit/template/TemplateController.java,7/b/7b26485a648a448cc6a0b32a149293b82ed47b60
-O
-src/main/webapp/WEB-INF/web.xml,2/e/2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 k
 ;src/main/java/kr/or/ddit/controller/ApprovalController.java,7/3/73684ae6d65984d316acd8ba1a6e420345addbb7
 †
@@ -71,8 +67,6 @@ v
 Fsrc/main/java/kr/or/ddit/controller/FacilityReservationController.java,e/1/e15d56ce05d29b4f62f28c73c229c9ab1af20bfe
 n
 >src/main/java/kr/or/ddit/controller/BambooBoardController.java,e/5/e561b3124c3dafaf67ebdd970f502b6c14d1c9cf
-]
--src/main/webapp/WEB-INF/views/notice/list.jsp,e/e/ee6e26cacba0c03015cdcb659778eb41480a6ecd
 \
 ,src/main/webapp/WEB-INF/views/test/popup.jsp,c/4/c48a1368fcd2b17aa3fe2acab374590ae46064ba
 _
@@ -101,3 +95,13 @@ g
 7src/main/java/kr/or/ddit/domain/notice/NoticeBasic.java,7/d/7d60b87ba6bf72c7688d1d4030026b5fce218f53
 m
 =src/main/webapp/WEB-INF/views/student/lecture/lectureList.jsp,a/5/a5b6717a1acb5b5abd4cf8bd16059f3836f6a7b0
+^
+.src/main/java/kr/or/ddit/util/EchoHandler.java,1\d\1dadabc68555c01afacc4d7919bacad2c6801c30
+n
+>src/main/java/kr/or/ddit/mapper/StudentLectureApplyMapper.java,9\7\9724395b29332751913f490def813beb0434a60a
+i
+9src/main/java/kr/or/ddit/mapper/StuManageOfProMapper.java,9\6\96f8dd5cdac864fbda8177d8e2f3fbe961f32ae7
+g
+7src/main/java/kr/or/ddit/mapper/LectureApplyMapper.java,3\b\3b44e028dd243be89b78cadcb6af1cb8e4bb37b7
+g
+7src/main/java/kr/or/ddit/mapper/LectureBoardMapper.java,6\5\6543d6d3dfbecda761af5a2437eaadd43d3226e3
