@@ -601,28 +601,6 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 	})
 });
 	
-// 	$.fn.clearForm = function () {
-// 	  return this.each(function () {
-// 	    var type = this.type,
-// 	      tag = this.tagName.toLowerCase();
-// 	    if (tag === 'form') {
-// 	      return $(':input', this).clearForm();
-// 	    }
-// 	    if (
-// 		      type === 'text' ||
-// //		      type === 'password' ||
-// //		      type === 'hidden' ||
-// 	     	 tag === 'textarea'
-// 	    ) {
-// 	      this.value = '';
-// 		    } else if (type === 'checkbox' || type === 'radio') {
-// 		      this.checkedIndex = 0;
-// 	    } else if (tag === 'select') {
-// 	      this.selectedIndex = 0;
-// 	    }
-// 	  });
-// 	};
-	
 	function dataReset(){
 		Swal.fire({
 			  title: '작성을 취소하시겠습니까?',
@@ -640,7 +618,7 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 			      '작성 내용 모두 삭제 되었습니다',
 			      'success',
 			    )
-			      $("#cnslCon").val("");
+			    $("#cnslCon").val("");
 			    $("input[type='date']").val("");
 			    $("input[name='cnslTtl']").val("");
 			    $("#target").text("상담 예약일");
@@ -776,6 +754,7 @@ $("#applyBtn").on("click",function(){
 	recordTrElements  = document.querySelectorAll('.recordTr');
 	recordTrElements.forEach(element => {
 	  element.addEventListener('click', function() {
+		  console.log(this.children[1].innerHTML)
 		  for (let i = 0; i < radioButtons.length; i++) {
 // 			  console.log("라디오밸류:"+ radioButtons[i].value);
 // 			  console.log("라됴밸류:"+radioButtons[i].innerHTML);

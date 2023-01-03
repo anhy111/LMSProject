@@ -307,7 +307,7 @@
                             <li class="nav-item"><a href="/manage/recordManage"
                                                     class="nav-link">
 
-                                <p>휴복학 관리</p>
+                                <p>학적 관리</p>
                             </a></li>
                         </ul>
                     </li>

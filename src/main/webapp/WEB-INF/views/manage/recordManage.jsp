@@ -72,7 +72,7 @@ function loadSearchList(){
 			$.each(result,function(index, student){
 				
 				str += `
-					<tr>
+					<tr class="recList">
 						<td class="dtr-control sorting_1" tabindex="0" style="text-align:center;">\${index+1}</td>
 						<td class="detailStu">\${student.stuNo}</td>
 						<td>\${student.stuNm}</td>
@@ -162,16 +162,17 @@ $(function(){
 	});
 	
 	$(document).on("click", "#approval", function(){
-		
 // 		alert("이거맞지?");
 		
 		let Yn = 'AP001';
 		let recCd = $(".approval").val();
+		let stuNo = $("#stuNo").val();
 		let recRej = "";
 		let data = {
 				"Yn":Yn,
 				"recCd":recCd,
-				"recRej":recRej
+				"recRej":recRej,
+				"stuNo":stuNo
 		}
 		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " recCd는 ?? " + recCd + " data 가져왓 " + JSON.stringify(data));
 		
