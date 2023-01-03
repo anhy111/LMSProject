@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -34,7 +35,9 @@ public class NoticeBasicController {
     private final FileUploadUtil fileUploadUtil;
 
     private static final String VIEWS_NOTICE_MAIN = "notice/test";
+
     private static final String VIEWS_NOTICE_DETAIL = "notice/detail";
+
     private static final String VIEWS_NOTICE_SEARCH = "notice/searchList";
 
     private static final String REDIRECT_MAIN = "redirect:/notice/list";
@@ -77,6 +80,7 @@ public class NoticeBasicController {
 
         List<NoticeBasic> noticeBasicList = null;
 
+        // searchOption을 매개변수로 보내어 통합 가능.
         switch (searchOption) {
             case 1:
                 //총 행의 수 계산
@@ -172,9 +176,10 @@ public class NoticeBasicController {
     }
 
     @PostMapping("/update/{form.noticeCd}")
-    public String updateNotice(@ModelAttribute("form") NoticeBasic form) {
+    public String updateNotice(@ModelAttribute("form") NoticeBasic form, RedirectAttributes redirectAttributes) {
 
         noticeBasicService.noticeBasicUpdate(form);
+        redirectAttributes.addAttribute("status", true);
 
         return REDIRECT_MAIN;
     }
