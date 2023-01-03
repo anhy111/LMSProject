@@ -42,16 +42,18 @@
 <script type="text/javascript" defer="defer">
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
-	var memFnm;
 
 	//성적 건수 가져오기
 	function getCnt(yrNsem) {
 		
-		yrNsem = $(yrNsem).val();
-		console.log("뭐임? ",yrNsem);
-		
+		yrNsem = new String($(yrNsem).val());
+		var lecaYr = yrNsem.substr(0,4);
+		var lecaSem = yrNsem.substr(4);
+		console.log(lecaYr,"년");
+		console.log(lecaSem,"학기");
 		let dataObject = {
-			yrNsem : yrNsem
+				 lecaYr : lecaYr
+				,lecaSem : lecaSem
 		};
 		
 		$.ajax({
@@ -70,16 +72,20 @@ let token = "${_csrf.token}";
 		});
 	}
 
+	//선택한 년도/학기 성적 불러오기
 	function getListAgain(yrNsem) {
 		
 		yrNsem = $(yrNsem).val();
+		var lecaYr = yrNsem.substr(0,4);
+		var lecaSem = yrNsem.substr(4);
 		
 		let dataObject = {
-			yrNsem : yrNsem
+				 "lecaYr" : lecaYr
+				,"lecaSem" : lecaSem
 		};
 		
 		$.ajax({
-			url : "/tgrade/getListAgain",
+			url : "/totalScore/getListAgain",
 			type : "POST",
 			data : JSON.stringify(dataObject),
 			contentType : "application/json;charset=utf-8",
@@ -100,7 +106,7 @@ let token = "${_csrf.token}";
 					bodyHeight : 250,
 					columns : [
 						{header : '년도/학기', filter : 'select', name : 'lecaCon', align : 'center'},
-						{header : '과목번호', filter : 'select', name : 'subCd', align : 'center'},
+						{header : '과목번호', filter : 'select', name : 'lecaCd', align : 'center'},
 						{header : '교과목명', filter : 'select', name : 'lecaNm'},
 						{header : '이수구분', filter : 'select', name : 'lecaCate', align : 'center'},
 						{header : '학점', filter : 'select', name : 'lecaCrd', align : 'center'},
@@ -117,10 +123,6 @@ let token = "${_csrf.token}";
 	}
 	
 	window.onload = function() {
-		
-		//로딩중 화면 띄우기
-// 		loadingWithMask();
-// 		setTimeout(closeLoadingWithMask, 2000);
 		
 		//성적 건수 가져오기
 		getCnt();
@@ -145,7 +147,6 @@ let token = "${_csrf.token}";
 				$('#stuSem').val(res.stuSem);
 				$('#yrNsem').val(res.stuYr);
 				
-				stuPic = res.stuPic;
 			}
 		});
 		
@@ -170,7 +171,7 @@ let token = "${_csrf.token}";
 		
 		//전체 성적 불러오기
 		$.ajax({
-			url : "/tgrade/getList",
+			url : "/totalScore/getList",
 			type : "POST",
 			dataType : "JSON",
 			beforeSend : function(xhr){
@@ -186,7 +187,7 @@ let token = "${_csrf.token}";
 					bodyHeight : 250,
 					columns : [
 						{header : '년도/학기', filter : 'select', name : 'lecaCon', align : 'center'},
-						{header : '과목번호', filter : 'select', name : 'subCd', align : 'center'},
+						{header : '과목번호', filter : 'select', name : 'lecaCd', align : 'center'},
 						{header : '교과목명', filter : 'select', name : 'lecaNm'},
 						{header : '이수구분', filter : 'select', name : 'lecaCate', align : 'center'},
 						{header : '학점', filter : 'select', name : 'lecaCrd', align : 'center'},
@@ -198,32 +199,6 @@ let token = "${_csrf.token}";
 						resizable : true
 					}
 				});
-			}
-		});
-		
-		//백분율환산기준표 띄우기
-		//percentageTable
-		$('#percentageTable').on('click', function() {
-			window.open("/tgrade/crdStandardPdf");
-		});
-		
-		//사진 띄우기
-		$('#photoBtn').on('click', function() {
-			
-			//memFnm : 이미지 이름.확장자
-			if(memFnm == null) {
-				alert("등록된 사진이 없습니다.");
-			}else {
-				
-				const img = new Image();
-				img.src = "/resources/profileImg/" + memFnm;
-				console.log("width : " + img.width + ", height : " + img.height);
-				
-				window.open(
-						"/tgrade/getPhoto?memFnm=" + memFnm,
-						"photo",
-						"width = 175, height = 210, left = 300, top = 150, history = no, resizable = no, status = no, scrollbars = yes, menubar = no"
-				);
 			}
 		});
 	}
@@ -244,9 +219,6 @@ let token = "${_csrf.token}";
 			<th>학번</th>
 			<td>
 				<input type="text" class="infoText" name="stuNo" id="stuNo" readonly="readonly" style="width:50%;">
-				<button type="button" class="btn btn-secondary photoBtn" id="photoBtn">
-					<p class="photoP">사진</p>
-				</button>
 			</td>
 			<th>성명</th>
 			<td>
@@ -292,7 +264,6 @@ let token = "${_csrf.token}";
 	<br><br>
 	
 	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;취득성적
-	<button type="button" class="btn btn-secondary" id="percentageTable">백분율환산기준표</button>
 	
 	<p id="tellCnt">
 		[총 <span id="cntSpan"></span>건]
@@ -319,8 +290,8 @@ let token = "${_csrf.token}";
 	<table id="tgradeTable" border="1">
 		<tr>
 			<th colspan="2"></th>
-			<th colspan="5">교양영역</th>
-			<th colspan="5">전공영역</th>
+			<th colspan="4">교양영역</th>
+			<th colspan="4">전공영역</th>
 		</tr>
 		<tr>
 			<td>신청학점</td>
@@ -328,27 +299,23 @@ let token = "${_csrf.token}";
 			<td>교필</td>
 			<td>교선</td>
 			<td>소계</td>
-			<td>평점 계</td>
 			<td>평균 평점</td>
 			<td>전필</td>
 			<td>전선</td>
 			<td>소계</td>
-			<td>평점 계</td>
 			<td>평균 평점</td>
 		</tr>
 		<tr>
-			<td>${totalCnt}</td>
-			<td>${tgrade.GP + tgrade.GS + tgrade.JP + tgrade.JS}</td>
-			<td>${tgrade.GP}</td>
-			<td>${tgrade.GS}</td>
-			<td>${tgrade.GCNT}</td>
-			<td>${tgrade.GSUM}</td>
-			<td>${tgrade.GDIV}</td>
-			<td>${tgrade.JP}</td>
-			<td>${tgrade.JS}</td>
-			<td>${tgrade.JCNT}</td>
-			<td>${tgrade.JSUM}</td>
-			<td>${tgrade.JDIV}</td>
+			<td>${info.JP + info.JS + info.KP + info.KS}</td>
+			<td>${info.JP + info.JS + info.KP + info.KS}</td>
+			<td>${info.KP}</td>
+			<td>${info.KS}</td>
+			<td>${info.KSUM}</td>
+			<td>${info.KAV}</td>
+			<td>${info.JP}</td>
+			<td>${info.JS}</td>
+			<td>${info.JSUM}</td>
+			<td>${info.JAV}</td>
 		</tr>
 	</table>
 	</div>

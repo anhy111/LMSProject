@@ -90,7 +90,7 @@
                                 <p>전체 성적 조회</p>
                             </a></li>
                             <li class="nav-item"><a href="/totalScore/currentScore" class="nav-link">
-                                <p>전체 학기 성적 조회</p>
+                                <p>현재 학기 성적 조회</p>
                             </a></li>
                             <li class="nav-item"><a href="/totalScore/preAppeal" class="nav-link">
                                 <p>성적 이의 신청</p>
@@ -207,6 +207,11 @@
                                     </a>
                                 </li>
                             </sec:authorize>
+                            <li class="nav-item">
+                                <a href="/totalScore/preAppealManage" class="nav-link">
+                                    <p>성적 이의 신청 관리</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item"><a

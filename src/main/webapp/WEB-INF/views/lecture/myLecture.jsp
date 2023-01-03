@@ -16,7 +16,7 @@
 	let year = date.getFullYear();
 	let month = date.getMonth();
 	var semester;
-	var color = [ primary, info, danger, warning, secondary, dark ];
+// 	var color = [ 'primary', 'info', 'danger', 'warning', 'secondary', 'dark' ];
 
 	if (month == '3' || month == '4' || month == '5' || month == '6')
 		semester = 1;
@@ -46,7 +46,7 @@
 					style="width: 250px; display: inline-block;">
 					<div class="inner">
 						<h4>${row.lecApply.lecaNm}</h4>
-						<p>${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}</p>
+						<p>${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}학기</p>
 					</div>
 					<div class="icon" id="book">
 						<i class="ion-ios-book"></i>
@@ -56,16 +56,16 @@
 						class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</c:forEach>
-			<tr>
-				<td class="dtr-control sorting_1" tabindex="0">${row.lecApply.lecaCd}</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>${row.department.depNm}</td>
-				<td>${row.employee.empNm}</td>
-				<td>${row.lecApply.lecaCap}</td>
-				<td>${row.lecApply.lecaCate}</td>
-			</tr>
+<!-- 		이게 뭐지??	<tr> -->
+<%-- 				<td class="dtr-control sorting_1" tabindex="0">${row.lecApply.lecaCd}</td> --%>
+<!-- 				<td></td> -->
+<!-- 				<td></td> -->
+<!-- 				<td></td> -->
+<%-- 				<td>${row.department.depNm}</td> --%>
+<%-- 				<td>${row.employee.empNm}</td> --%>
+<%-- 				<td>${row.lecApply.lecaCap}</td> --%>
+<%-- 				<td>${row.lecApply.lecaCate}</td> --%>
+<!-- 			</tr> -->
 
 		</div>
 	</div>
