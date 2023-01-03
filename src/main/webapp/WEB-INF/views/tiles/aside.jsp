@@ -275,7 +275,7 @@
                                         <p>장학금 목록</p>
                                     </a></li>
                                     <li class="nav-item"><a
-                                            href="/scholarship/scholarshipAward" class="nav-link">
+                                            href="/scholarship/admin/scholarshipAward" class="nav-link">
                                         <p>장학금 수여</p>
                                     </a></li>
                                     <li class="nav-item"><a

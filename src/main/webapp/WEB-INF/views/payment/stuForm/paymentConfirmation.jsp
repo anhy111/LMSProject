@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,11 +115,11 @@ function savePdf() {
 			<td class="center">구분</td><td class="center">등록금</td><td class="center">장학금액</td><td class="center">납입금액</td></tr>
 			<tr><td class="center">대학</td><td colspan="3">${detail.COL_NM}</td><td class="center">입학금</td><td class="right">0</td><td class="right">0</td><td class="right">0</td></tr>
 			<tr><td class="center">학과(전공)</td><td colspan="3">${detail.DEP_NM}</td><td class="center">수업료</td>
-			<td class="right">${detail.COL_FEE}</td><td class="right">${detail.SCLH_AMT}</td><td class="right">${detail.PAY_AMT}</td></tr>
+			<td class="right"><fmt:formatNumber value="${detail.COL_FEE}" pattern="#,###"/></td><td class="right"><fmt:formatNumber value="${detail.SCLH_AMT}" pattern="#,###"/></td><td class="right"><fmt:formatNumber value="${detail.PAY_AMT}" pattern="#,###"/></td></tr>
 			<tr><td class="center">학번</td><td>${detail.STU_NO}</td><td class="center">학년</td><td class="center">${detail.STU_YR}</td>
 			<td></td><td></td><td></td><td></td></tr>
-			<tr><td class="center">성명</td><td colspan="3">${detail.STU_NM}</td><td class="center">계</td><td class="right">${detail.COL_FEE}</td><td class="right">${detail.SCLH_AMT}</td>
-			<td class="right">${detail.PAY_AMT}</td></tr><tr><td class="center">납부일자</td><td colspan="7">${detail.PAY_DT}</td></tr>
+			<tr><td class="center">성명</td><td colspan="3">${detail.STU_NM}</td><td class="center">계</td><td class="right"><fmt:formatNumber value="${detail.COL_FEE}" pattern="#,###"/></td><td class="right"><fmt:formatNumber value="${detail.SCLH_AMT}" pattern="#,###"/></td>
+			<td class="right"><fmt:formatNumber value="${detail.PAY_AMT}" pattern="#,###"/></td></tr><tr><td class="center">납부일자</td><td colspan="7">${detail.PAY_DT}</td></tr>
 			<tr id="footer">
 				<td colspan="8">
 					<div class="center">연 수 대 학 교 수 입 징 수 관 </div>
