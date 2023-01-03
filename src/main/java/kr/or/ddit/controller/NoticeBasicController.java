@@ -85,7 +85,6 @@ public class NoticeBasicController {
             case 2:
                 //총 행의 수 계산
                 totalRow = noticeBasicService.getNoticeBasicTotalRowContent(sanitizedKeyword);
-
                 // 내용 검색 코드
                 noticeBasicList = noticeBasicService.noticeBasicSearchContent(sanitizedKeyword);
                 break;
@@ -121,16 +120,19 @@ public class NoticeBasicController {
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
     public String createNotice(NoticeForm form,
-                               @RequestParam MultipartFile[] files2
-    ) {
+                               @RequestParam MultipartFile[] files2) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         noticeBasicService.noticeBasicSave(noticeBasic);
+
         if (files2[0].getSize() > 0) {
             fileUploadUtil.fileUploadAction(files2);
+            this.noticeBasicService.noticeBasicSaveWithAttach(noticeBasic);
+        } else {
+            this.noticeBasicService.noticeBasicSave(noticeBasic);
         }
 
         return VIEWS_NOTICE_MAIN;
