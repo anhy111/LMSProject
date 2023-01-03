@@ -227,6 +227,12 @@
 		WHERE R.REC_CD = #{recCd}
 	</update>
 	
+	<update id="updateStudentRecord" parameterType="map">
+	update student
+	set stu_rgb = (select comd_cd from common_detail where comd_nm = #{rgbCd})
+	where stu_no = #{stuNo}
+	</update>
+	
 	<select id="createEmpId" resultType="member"> 
 		SELECT TO_CHAR (SYSDATE,'YYYY') || '01' || (SELECT TRIM(TO_CHAR(NVL(MAX(SUBSTR(EMP_NO,7)),0) + 1,'000')) FROM EMPLOYEE ) AS MEM_NO
 		FROM DUAL

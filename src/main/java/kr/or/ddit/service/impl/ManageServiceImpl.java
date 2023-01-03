@@ -142,4 +142,10 @@ public class ManageServiceImpl implements ManageService{
 	public int empPaging() {
 		return this.manageMapper.empPaging();
 	}
+	
+	@Override
+	public int updateStudentRecord(Map<String, String> map){
+		return this.manageMapper.updateStudentRecord(map);
+		
+	}
 }

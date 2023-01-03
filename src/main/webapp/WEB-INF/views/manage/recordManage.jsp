@@ -118,7 +118,17 @@ $(function(){
 	$("#search").on("click",loadSearchList);
 	
 	$(document).on("click", ".btnDetail", function(){
-		
+		btnsFather = this.parentNode;
+		tdsFather = btnsFather.parentNode;
+		if(tdsFather.children[5].innerHTML == "승인대기" || tdsFather.children[5].innerHTML == "반려"){
+			 Swal.fire(
+	                    '처리 실패',
+	                    '승인되지 않은 신청은 처리 할 수 없습니다.',
+	                    'error'
+         ).then(function(){
+        	 $("#modalClose").click();    	
+	        });
+		}
 		let recCd = $(this).val();
 		let data = {"recCd":recCd}
 		let alt = $(this).attr("alt");
@@ -163,7 +173,10 @@ $(function(){
 	
 	$(document).on("click", "#approval", function(){
 // 		alert("이거맞지?");
-		
+//    		console.log("학적구분 : " + $("#rgbCd").val());
+//    		console.log("학번 : " + $("#stuNo").val());
+   		
+		let rgbCd = $("#rgbCd").val();
 		let Yn = 'AP001';
 		let recCd = $(".approval").val();
 		let stuNo = $("#stuNo").val();
@@ -172,7 +185,8 @@ $(function(){
 				"Yn":Yn,
 				"recCd":recCd,
 				"recRej":recRej,
-				"stuNo":stuNo
+				"stuNo":stuNo,
+				"rgbCd":rgbCd
 		}
 		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " recCd는 ?? " + recCd + " data 가져왓 " + JSON.stringify(data));
 		
@@ -226,6 +240,8 @@ $(function(){
 	
 	$(document).on("click", "#reject", function(){
 		
+		let rgbCd = "재학"
+		let stuNo = $("#stuNo").val();
 		let Yn = 'AP003'
 		let recCd = $(".approval").val();
 		let recRej = $(".recRej").val();
@@ -234,7 +250,9 @@ $(function(){
 		let data = {
 				"Yn":Yn,
 				"recCd":recCd,
-				"recRej":recRej
+				"recRej":recRej,
+				"stuNo":stuNo,
+				"rgbCd":rgbCd
 		}
 		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " recCd는 ?? " + recCd + " data 가져왓 " + JSON.stringify(data));
 		
@@ -276,13 +294,17 @@ $(function(){
 	
 	$(document).on("click", ".cancel", function(){
 		
+		let rgbCd = "재학"
+		let stuNo = $("#stuNo").val();
 		let Yn = 'AP002';
 		let recCd = $(".approval").val();
 		let recRej = ""
 		let data = {
 				"Yn":Yn,
 				"recCd":recCd,
-				"recRej":recRej
+				"recRej":recRej,
+				"stuNo":stuNo,
+				"rgbCd":rgbCd
 		}
 		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " recCd는 ?? " + recCd + " data 가져왓 " + JSON.stringify(data));
 		
@@ -581,7 +603,7 @@ $(function(){
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">상담 내역</h4>
-					<button type="button" class="close" data-dismiss="modal"
+					<button id="modalClose" type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
