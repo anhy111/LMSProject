@@ -37,6 +37,9 @@ public class NoticeBasicController {
     private static final String VIEWS_NOTICE_DETAIL = "notice/detail";
     private static final String VIEWS_NOTICE_SEARCH = "notice/searchList";
 
+    private static final String REDIRECT_MAIN = "redirect:/notice/list";
+
+
     //공지사항 리스트
     @GetMapping("/list")
     public String testHome(Model model,
@@ -126,8 +129,6 @@ public class NoticeBasicController {
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
-        noticeBasicService.noticeBasicSave(noticeBasic);
-
         if (files2[0].getSize() > 0) {
             fileUploadUtil.fileUploadAction(files2);
             this.noticeBasicService.noticeBasicSaveWithAttach(noticeBasic);
@@ -135,7 +136,7 @@ public class NoticeBasicController {
             this.noticeBasicService.noticeBasicSave(noticeBasic);
         }
 
-        return VIEWS_NOTICE_MAIN;
+        return REDIRECT_MAIN;
     }
 
     //공지사항 상세페이지
@@ -175,7 +176,7 @@ public class NoticeBasicController {
 
         noticeBasicService.noticeBasicUpdate(form);
 
-        return VIEWS_NOTICE_MAIN;
+        return REDIRECT_MAIN;
     }
 
     //공지사항 삭제
@@ -184,7 +185,7 @@ public class NoticeBasicController {
 
         noticeBasicService.delete(noticeCd);
 
-        return VIEWS_NOTICE_MAIN;
+        return REDIRECT_MAIN;
     }
 
 }

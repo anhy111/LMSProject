@@ -250,16 +250,16 @@
         </div>
     </div>
 
-    <%--<div class="row justify-content-end mt-3">--%>
-    <%--    <button class="btn btn-outline-primary m-1" type="button"--%>
-    <%--            onclick="location.href='/notice/update/${form.noticeCd}'">수정--%>
-    <%--    </button>--%>
-    <%--    <button class="btn btn-outline-danger m-1" type="button"--%>
-    <%--            onclick="location.href='/notice/delete/${form.noticeCd}'">삭제--%>
-    <%--    </button>--%>
-    <%--    <button class="btn btn-primary m-1" type="button" onclick="location.href='/notice/list'">목록--%>
-    <%--    </button>--%>
-    <%--</div>--%>
+    <div class="row justify-content-end mt-3">
+        <button class="btn btn-outline-primary m-1" type="button"
+                onclick="location.href='/notice/update/${form.noticeCd}'">수정
+        </button>
+        <button class="btn btn-outline-danger m-1" type="button"
+                onclick="location.href='/notice/delete/${form.noticeCd}'">삭제
+        </button>
+        <button class="btn btn-primary m-1" type="button" onclick="location.href='/notice/list'">목록
+        </button>
+    </div>
 
     <script>
         function f_alert() {
