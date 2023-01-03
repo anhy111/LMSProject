@@ -92,16 +92,25 @@ public class StuManageOfProController {
 	
 	//추천받은 장학생 list
 	@GetMapping("/professor/scholarshipStu")
-	public String scholarshipStu(Model model, HttpSession session) {
+	public String scholarshipStu(Model model) {
 		
-		String depCd = String.valueOf(session.getAttribute("depCd"));
-		
-		List<SclHistory> schStuList = this.stuManageOfProService.schStuList(depCd);
-		
-		model.addAttribute("list", schStuList);
 		model.addAttribute("bodyTitle", "추천장학생 목록조회");
 	
 	return "professor/stuManage/scholarshipStu";
+	}
+	
+	@PostMapping("/professor/schlStuSearch")
+	@ResponseBody
+	public List<SclHistory> schlStuSearch(@RequestBody Map<String, String> map, HttpSession session){
+		
+		String depCd = String.valueOf(session.getAttribute("depCd"));
+		
+		map.put("depCd", depCd);
+		
+		List<SclHistory> schStuList = this.stuManageOfProService.schStuList(map);
+		
+		return schStuList;
+		
 	}
 	
 	//추천받은 장학생 상세 
@@ -138,6 +147,16 @@ public class StuManageOfProController {
 		int deanRecommendation = this.stuManageOfProService.deanRecommendation(map, req);
 		
 		return deanRecommendation;
+	}
+	
+	@PostMapping("/professor/rejectRcmd")
+	@ResponseBody
+	public int rejectRcmd(@RequestBody Map<String,String> map) {
+		
+		int rejectRcmd = this.stuManageOfProService.rejectRcmd(map);
+		
+		return rejectRcmd;
+		
 	}
 	
 	

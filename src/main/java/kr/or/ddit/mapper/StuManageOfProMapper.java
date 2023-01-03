@@ -16,10 +16,11 @@ public interface StuManageOfProMapper {
 	
 	public int recommendationStu(Map<String, String> map);
 	
-	public List<SclHistory> schStuList(String depCd);
+	public List<SclHistory> schStuList(Map<String, String> map);
 	
 	public Student schStuRcmd(Map<String, String> map);
 	
 	public int deanRecommendation(Map<String, String> map);
 	
+	public int rejectRcmd(Map<String, String> map);
 }

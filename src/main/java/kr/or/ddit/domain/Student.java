@@ -51,8 +51,7 @@ public class Student {
 	private String empNm;
 	
 	private List<SclHistory> stuSclList; //장학금 내역 조회
-  private SclHistory sclHistory; //추천 장학생 상세 조회
-  
+	private SclHistory sclHistory; //추천 장학생 상세 조회
 
 	// 임의 컬럼 추가 - 성적
 	private String stuYrs;
@@ -72,7 +71,10 @@ public class Student {
 	// 등급 자동 계산
 	private String grade;
 	//상담여부
-	private String cnslDt;
+	private String cnslTtl; //상담제목
+	private String cnslCon; //상담내용
+	private String cnslRpl; //교수답변
+	private String cnslYn; 	//상담여부
 
 
 }
