@@ -59,4 +59,7 @@ public interface ManageMapper  {
 	
 	//교직원 페이징 처리
 	public int empPaging();
+	
+	//학적 변경
+	public int updateStudentRecord(Map<String, String> map);
 }

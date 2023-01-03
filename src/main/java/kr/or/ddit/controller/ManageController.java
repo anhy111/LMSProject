@@ -182,10 +182,12 @@ public class ManageController {
 	@PostMapping("/manage/yesOrNo")
 	@ResponseBody
 	public Student approval(@RequestBody Map<String, String> map) {
+//		log.info("학적코두 : " + map.get("rgbCd") + "학번 : "+ map.get("stuNo") );
+		if(map.get("rgbCd") == "복학") map.put("rgbCd","재학");
 		
-		log.info("map 잘 넘어오나? " +map.get("recCd")+ map.get("stuNo") + map.get("Yn") + map.get("recRej"));
+		log.info("map 잘 넘어오나? " +map.get("rgbCd")+map.get("recCd")+ map.get("stuNo") + map.get("Yn") + map.get("recRej"));
 		int yesOrNo = this.manageService.yesOrNo(map);
-		
+		int updateStudentRecord = this.manageService.updateStudentRecord(map);
 		Student recordManagePost = this.manageService.recordManagePost(map);
 		
 		return recordManagePost;
