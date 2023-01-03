@@ -23,6 +23,28 @@
             #{noticeCon}
             )
     </insert>
+    <!-- 공지사항 등록 첨부파일    -->
+    <insert id="noticeBasicSaveWithAttach" parameterType="NoticeBasic">
+
+        INSERT INTO
+            NOTICE_BASIC (
+            NOTICE_CD,
+            NOTICE_TTL,
+            NOTICE_REG,
+            NOTICE_CON,
+            ATCH_FILE_ID
+        )
+        VALUES
+            (
+                NOTICEBASIC_SEQ.NEXTVAL,
+                #{noticeTtl},
+                SYSDATE,
+                #{noticeCon},
+                (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+            )
+    </insert>
+
+
 
     <!-- 공지사항 수정 -->
     <update id="noticeBasicUpdate" parameterType="NoticeBasic">

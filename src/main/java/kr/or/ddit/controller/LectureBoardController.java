@@ -114,6 +114,7 @@ public class LectureBoardController {
 	public String insertData(String lecaCd) {
 		return "lectureBoard/data/dataInsert";
 	}
+
 	@PostMapping("data/dataInsert")
 	public String insertData2(@RequestParam MultipartFile[] files,LecData lecData, Principal principal, String lecaCd) {
 
@@ -127,8 +128,8 @@ public class LectureBoardController {
 		map.put("lecaCd", lecData.getLecaCd());
 		
 		if (files[0].getSize() > 0) {
-			this.lectureBoardService.dataInsert1(map);
 			this.fileUploadUtil.fileUploadAction(files);
+			this.lectureBoardService.dataInsert1(map);
 		} else {
 			this.lectureBoardService.dataInsert2(map);
 		}

@@ -36,4 +36,6 @@ public interface NoticeBasicService {
     List<NoticeBasic> noticeBasicSearchTitle(String keyword);
 
     List<NoticeBasic> noticeBasicSearchContent(String keyword);
+
+    void noticeBasicSaveWithAttach(NoticeBasic noticeBasic);
 }

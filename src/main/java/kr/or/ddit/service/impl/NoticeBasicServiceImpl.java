@@ -52,6 +52,12 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
         this.noticeBasicMapper.noticeBasicSave(noticeBasic);
     }
 
+    //공지사항 저장 첨부파일 포함
+    @Override
+    public void noticeBasicSaveWithAttach(NoticeBasic noticeBasic) {
+        this.noticeBasicMapper.noticeBasicSaveWithAttach(noticeBasic);
+    }
+
     //공지사항 수정
     @Override
     public void noticeBasicUpdate(NoticeBasic noticeBasic) {
@@ -65,18 +71,23 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
         this.noticeBasicMapper.noticeBasicDelete(noticeCd);
     }
 
+    //공지사항 조회수 카운팅
     @Override
     public void updateViewCount(Long noticeCd) {
         this.noticeBasicMapper.noticeBasicUpdateViewCount(noticeCd);
     }
 
+    //공지사항 제목 검색
     @Override
     public List<NoticeBasic> noticeBasicSearchTitle(String keyword) {
         return noticeBasicMapper.noticeBasicSearchTitle(keyword);
     }
 
+    //공지사항 내용 검색
     @Override
     public List<NoticeBasic> noticeBasicSearchContent(String keyword) {
         return noticeBasicMapper.noticeBasicSearchContent(keyword);
     }
+
+
 }
