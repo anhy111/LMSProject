@@ -48,11 +48,19 @@ INSERT INTO COUNSEL (
 , PRO_NO
 , CNSL_TYPE
 , CNSL_REG
+, CNSL_YN
+<if test="cnslTtl != null or cnslTtl !='' ">
 , CNSL_TTL
+</if>
+<if test="cnslCon != null or cnslCon !='' ">
 , CNSL_CON
+</if>
+<if test="cnslDt != null">
 , CNSL_DT
+</if>
+<if test="recCd != null or recCd !='' ">
 , REC_CD
-
+</if>
 
 )
 VALUES(
@@ -62,13 +70,14 @@ VALUES(
 , #{proNo}
 , #{cnslType}
 , SYSDATE
+, #{cnslYn}
 <if test="cnslTtl != null or cnslTtl !='' ">
 , #{cnslTtl}
 </if>
 <if test="cnslCon != null or cnslCon !='' ">
 , #{cnslCon}
 </if>
-<if test="cnslDt != null or cnslDt !='' ">
+<if test="cnslDt != null">
 , #{cnslDt}
 </if>
 <if test="recCd != null or recCd !='' ">
@@ -116,9 +125,8 @@ UPDATE COUNSEL
 <set>
   CNSL_DT = SYSDATE 
 , CNSL_RPL = #{cnslRpl}
-<if test="cnslType != null and cnslType !='' ">
-, CNSL_TYPE = #{cnslType}
-</if>
+<if test="cnslType != null and cnslType !='' ">, CNSL_TYPE = #{cnslType}</if>
+, CNSL_YN = #{cnslYn}
 , PRO_NO = #{proNo}
 </set>
 WHERE CNSL_CD = #{cnslCd}

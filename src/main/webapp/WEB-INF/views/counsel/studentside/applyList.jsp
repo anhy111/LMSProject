@@ -69,35 +69,26 @@ cursor:pointer;
 				<thead>
 					<tr class="text-center">
 						<th width="4%">No</th>
-						<th width="8%">구분</th>
-						<th width="18%">제목</th>
-						<th width="12%">신청일</th>
-						<th width="12%">상담예약일</th>
+						<th width="4%">구분</th>
+						<th width="20%">제목</th>
+						<th width="6%">상담예약일</th>
 						<th width="6%">상담기록</th>
 						<th width="4%">담당교수</th>
 					</tr>
 				</thead>
 				<tbody id="notSaveLecture">
 					<c:forEach var="counselList" items="${counselList}" varStatus="status" end="${counselList.size()}">
-						<tr class="text-center counselListTr" data-toggle="modal" data-target="#modifyCounsel">
+						<tr class="text-center counselListTr">
 							<td data-value="${counselList.cnslCd}">${status.end-status.index }</td>
 							<td>${counselList.cnslCate }</td>
-
-							<c:if test="${counselList.cnslRpl == null }"><!-- 답변이 없으면 내용 수정 가능-->
-								<td  >${fn:substring(counselList.cnslTtl,0,8) }</td>
+							<td  >${fn:substring(counselList.cnslTtl,0,8) }</td>
+							<td><fmt:formatDate value="${counselList.cnslDt }" pattern="yy/MM/dd" /></td>
+							<c:if test="${counselList.cnslYn eq 'AP001' }"><td class="acceptHover" style="color:blue;">승인완료</td>
+							<td class="acceptHovered" style="display:none;color:blue;background-color:white;">상담기록</td>
 							</c:if>
-							<c:if test="${counselList.cnslRpl != null }"><!-- 답변이 있음-->
-								<td>${fn:substring(counselList.cnslTtl,0,8) }</td>
-							</c:if>
-							<td><fmt:formatDate value="${counselList.cnslReg }"
-									pattern="yy/MM/dd" /></td>
-							<td><fmt:formatDate value="${counselList.cnslDt }"
-									pattern="yy/MM/dd" /></td>
-							<c:if test="${counselList.cnslRpl != null }">
-								<td class="waitAnswer">대기<a class="checkAnswerNote" style="color:blue;display:none;"data-value="${counselList.cnslCd }">상담확인</a></td>
-							</c:if>
-							<c:if test="${counselList.cnslRpl == null }">
-								<td><span style="color: blue;">대기</span></td>
+							<c:if test="${counselList.cnslYn eq 'AP002' }"><td style="color:black;">승인대기</td></c:if>
+							<c:if test="${counselList.cnslYn eq 'AP003' }"><td class="rejectHover" style="color:red;">반려</td>
+							<td class="rejectHovered" style="display:none; color:red; background-color:white;">반려사유</td>
 							</c:if>
 							<td>${counselList.empNm }</td>
 						</tr>
@@ -109,11 +100,9 @@ cursor:pointer;
 				<thead>
 					<tr class="text-center" >
 						<th width="4%">No</th>
-						<th width="8%">구분</th>
-						<th width="18%">제목</th>
-						<th width="12%">신청일</th>
+						<th width="4%">구분</th>
+						<th width="20%">제목</th>
 						<th width="6%">답변상태</th>
-						<th width="12%">답변등록일</th>
 						<th width="4%">담당교수</th>
 					</tr>
 				</thead>
@@ -121,29 +110,11 @@ cursor:pointer;
 					<c:forEach var="nonFaceCounselList" items="${nonFaceCounselList}" varStatus="status" end="${nonFaceCounselList.size() }">
 						<tr class="text-center nonFaceCounselListTr" data-toggle="modal" data-target="#modifyCounsel">
 							<td data-value="${nonFaceCounselList.cnslCd}">${status.end-status.index }</td>
-							<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
 							<td>${nonFaceCounselList.cnslCate }</td>
-							<c:if test="${nonFaceCounselList.cnslRpl == null}">
-								<td  >${fn:substring(nonFaceCounselList.cnslTtl,0,8) }내용수정</td>
-							</c:if>
-							<c:if test="${nonFaceCounselList.cnslRpl != null}">
-								<td>${fn:substring(nonFaceCounselList.cnslTtl,0,8) }</td>
-							</c:if>
-							<td><fmt:formatDate value="${nonFaceCounselList.cnslReg }"
-									pattern="yy/MM/dd" /></td>
-							<td class="checkAnswer"><c:if test="${nonFaceCounselList.cnslRpl == null}">
-									<span style="color: blue;">대기</span>
-								</c:if> <c:if
-									test="${nonFaceCounselList.cnslType == '반려' and nonFaceCounselList.cnslRpl != null and nonFaceCounselList.cnslRpl != ''}">
-									<a class="rejectLink" style="color:red;"
-										data-value="${nonFaceCounselList.cnslCd}">반려</a>
-								</c:if> <c:if
-									test="${nonFaceCounselList.cnslType == '비대면' and nonFaceCounselList.cnslRpl != null and nonFaceCounselList.cnslRpl != ''}">
-									<a class="answerLink" style="color:black;"
-										data-value="${nonFaceCounselList.cnslCd}">답변확인</a><i class="fa-solid fa-envelopes"></i>
-								</c:if></td>
-							<td><fmt:formatDate value="${nonFaceCounselList.cnslDt }"
-									pattern="yy/MM/dd" /></td>
+							<td  >${fn:substring(nonFaceCounselList.cnslTtl,0,8) }</td>
+							<c:if test="${nonFaceCounselList.cnslYn eq 'AP001' }"><td style="color:blue;">승인완료</td></c:if>
+							<c:if test="${nonFaceCounselList.cnslYn eq 'AP002' }"><td style="color:black;">승인대기</td></c:if>
+							<c:if test="${nonFaceCounselList.cnslYn eq 'AP003' }"><td style="color:red;">반려</td></c:if>
 							<td>${nonFaceCounselList.empNm }</td>
 						</tr>
 					</c:forEach>
@@ -384,6 +355,7 @@ cursor:pointer;
 				<!-- 모달바디 -->
 					<div class="form-group col-12" >
 					<input type="hidden" id="modifyCnslCd" > 
+					<input type="hidden" id="modifyCnslType" > 
 					</div>
 					<div class="form-group col-12" >
 					<div class="col-sm-4">
@@ -397,17 +369,25 @@ cursor:pointer;
 					<div class="col-sm-4">
 						<label >제목*</label> 
 						</div>
-						<input type="text" id="modifyCnslTtl"
+						<input required type="text" id="modifyCnslTtl"
 							class="col-6 form-control form-control-border-rounded-0"
 							id="exampleInputBorder">
 					</div>
 					<div class="form-group col-12" >
 					<div class="col-sm-4">
-						<label id="modifyDtCon">사유</label>
+						<label id="modifyDtCon">사유*</label>
 						</div>
 						<div class="row">
 						<input style="height: 50px; border: 1px solid aliceblue;padding-left: 30px;" type="date" id="modifyCnslDt" required />
-						<textarea class="col-10 ml-2 form-control" rows="3" id="modifyCnslCon" ></textarea>
+						<textarea class="col-10 ml-2 form-control" rows="3" id="modifyCnslCon" required></textarea>
+						</div>
+					</div>
+					<div class="form-group col-12" id="modifyCnslRplArea">
+					<div class="col-sm-4">
+						<label id="modifyDtCon">답변*</label>
+						</div>
+						<div class="row">
+						<textarea class="col-10 ml-2 form-control" rows="3" id="modifyCnslRpl" readonly required></textarea>
 						</div>
 					</div>
 
@@ -416,7 +396,7 @@ cursor:pointer;
 			<div class="modal-footer justify-content-align">
 				<button onclick="modifyApply()" type="button" class="btn btn-outline-primary">수정하기</button>
 				<button onclick="deleteApply()" type="button" class="btn btn-outline-danger">삭제</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-default modifyClose" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 	</div>
@@ -424,41 +404,67 @@ cursor:pointer;
 <!-- 수정삭제모달 -->
 
 <script type="text/javascript">
-let modifyCnslCon,modifyCnslCd,applyCounsel,counselListTr,nonFaceCounselListTr = "";
+let modifyCnslCon,modifyCnslCd,applyCounsel,counselListTr,nonFaceCounselListTr,acceptHover,acceptHovered,rejectHover,rejectHovered = "";
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
 let data = {cnslCd : "", cnslTtl : "" ,cnslCon : "", cnslCate : "", cnslType : "" , proNo: "" , cnslDt : "" , stuNo : "", recCd : "" };	
 
-$('td.waitAnswer').mouseenter(function() {
-	  $(this).find('a.checkAnswerNote').css('display', 'block');
-// 	  $(this).text('');
-	});
+acceptHover = document.querySelectorAll(".acceptHover");
+acceptHovered = document.querySelectorAll('.acceptHovered');
+rejectHover = document.querySelectorAll('.rejectHover');
+rejectHovered = document.querySelectorAll('.rejectHovered');
 
-	$('td.waitAnswer').mouseleave(function() {
-	  $(this).find('a.checkAnswerNote').css('display', 'none');
-// 	  $(this).text('대기');
-	});
+acceptHover.forEach((beforeHoverElement, index) => {
+    beforeHoverElement.addEventListener('mouseover', () => {
+      
+      beforeHoverElement.style.display = 'none';
+      acceptHovered[index].style.display = 'block';
+      acceptHovered[index].style.backgroundColor = 'orange';
+      acceptHovered[index].style.color = 'white';
+      
+    });
+    
+    acceptHovered[index].addEventListener('mouseout', () => {
+    
+    acceptHovered[index].style.display = 'none';
+      beforeHoverElement.style.display = 'block';
+    });
+  });
+
+
+
 function modifyApply(){
 	data.cnslCd = $("#modifyCnslCd").val();
 	data.cnslTtl = $("#modifyCnslTtl").val();
 	data.cnslCon = $("#modifyCnslCon").val();
+	if($("#modifyCnslType").val() == '대면'){
+		if($("#modifyCnslTtl").val().length < 1){
+			Swal.fire({
+				  icon: 'error',
+				  title: '제목을 작성해 주세요',
+				})
+			return;
+			}
+	}
 	
-	if($("#modifyCnslTtl").val().length < 1){
-		Swal.fire({
-			  icon: 'error',
-			  title: '제목을 작성해 주세요',
-			})
-		return;
-		}
-	
-	if(!($("#modifyCnslCon").val().length >= 10)){
-		Swal.fire({
-			  icon: 'error',
-			  title: '사유는 10글자 이상 작성해주세요',
-			})
-		return;
-		}
-	
+	if($("#modifyCnslType").val() == '비대면'){
+		if($("#modifyCnslTtl").val().length < 1){
+			Swal.fire({
+				  icon: 'error',
+				  title: '제목을 작성해 주세요',
+				})
+			return;
+			}
+		
+		if(!($("#modifyCnslCon").val().length >= 10)){
+			Swal.fire({
+				  icon: 'error',
+				  title: '사유는 10글자 이상 작성해주세요',
+				})
+			return;
+			}
+	}
+
 	$.ajax({
 		url:"/counsel/studentside/applyModify",
 		type:'POST',
@@ -523,6 +529,20 @@ nonFaceCounselListTr = document.querySelectorAll(".nonFaceCounselListTr");
 
 counselListTr.forEach(counsel => {
 	counsel.addEventListener("click",function(){
+		if(this.children[4].innerHTML == '승인완료' || this.children[4].innerHTML == '반려' ){
+			var pwidth = 800;
+			var pheight = 1200;
+			var pleft = (window.screen.width/2) - (pwidth/2);
+			var ptop = (window.screen.height/2) - (pheight/2);
+			
+			window.open("/counsel/studentside/answerNote?cnslCd="+this.children[0].dataset.value,"상담기록서",'width='+ pwidth +',height='+ pheight +',top='+ ptop +',left='+ pleft);
+			return;
+		} else {
+			 $("#modifyCounsel").modal("show");
+		}
+		$("#modifyCnslRplArea").hide();
+		$("#modifyCnslDt").removeAttr("disabled");
+		$("#modifyCnslTtl").removeAttr("disabled");
 		data.cnslCd = this.children[0].dataset.value;
 		$.ajax({
 			url:"/counsel/studentside/applyDetail",
@@ -534,10 +554,12 @@ counselListTr.forEach(counsel => {
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
+				  alert(JSON.stringify(result));
 					$("#modifyDtCon").text("상담 예약일");
 					$("#modifyCnslCd").val(result.cnslCd);
 					$("#modifyCnslTtl").val(result.cnslTtl);
 					$("#modifyCnslCon").hide();
+					$("#modifyCnslType").val(result.cnslType);
 // 					$("#modifyCnslCon").val(result.cnslCon);
 					$("#modifyCnslDt").val(result.cnslDt);
 					$("#modifyCnslDt").show();
@@ -549,7 +571,13 @@ counselListTr.forEach(counsel => {
 
 nonFaceCounselListTr.forEach(nCounsel =>{
 	nCounsel.addEventListener("click",function(){
+		$("#modifyCnslRplArea").hide();
+		$("#modifyCnslCon").show();
+		$("#modifyCnslDt").hide();
 		data.cnslCd = this.children[0].dataset.value;
+		if(this.children[3].innerHTML == '승인완료' || this.children[3].innerHTML == '반려'){
+		$("#modifyCnslRplArea").show();
+		}
 		$.ajax({
 			url:"/counsel/studentside/applyDetail",
 			type:'POST',
@@ -560,13 +588,13 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
+			    alert(JSON.stringify(result))
 				$("#modifyDtCon").text("사유");
+			    $("#modifyCnslRpl").val(result.cnslRpl);
 				$("#modifyCnslCd").val(result.cnslCd);
 				$("#modifyCnslTtl").val(result.cnslTtl);
-				$("#modifyCnslCon").show();
 				$("#modifyCnslCon").val(result.cnslCon);
-// 				$("#modifyCnslDt").val(result.cnslDt);
-				$("#modifyCnslDt").hide();
+				$("#modifyCnslType").val(result.cnslType);
 				$("#modifyCnslCate").val(result.cnslCate);
 			}
 		});
