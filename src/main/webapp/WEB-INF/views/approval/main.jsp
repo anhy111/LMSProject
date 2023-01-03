@@ -3,8 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/schRcmd.css">
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 
 <div class="row">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm text-center">
@@ -103,22 +101,14 @@
 								<div class="hls ps20"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 161.60mm; height: 4.23mm; width: 170mm;">
 									<span class="hrt cs10">학과장 : &nbsp;</span>
-									<span class="hrt cs10" id="deanNm"> </span> 
+									<span class="hrt cs10" id="deanNm"></span> 
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-									<img alt="" src="/resources/upload/img/교수도장ys.jpg">
+									<img alt="" src="/resources/upload/img/교수도장sh.jpg">
 									<span class="hrt cs10">(인)</span>
 								</div>
 								<div class="hls ps20"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 168.37mm; height: 4.23mm; width: 170mm;"></div>
-								<div class="hls ps20"
-									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 175.15mm; height: 4.23mm; width: 170mm;">
-									<span class="hrt cs10">관리자 : &nbsp;</span>
-									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-									<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-									<span class="hrt cs10">(인)</span>
-								</div>
 								<div class="hls ps19"
 									style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 181.92mm; height: 4.23mm; width: 170mm;"></div>
 								<div class="hls ps19"
@@ -154,11 +144,11 @@
 			</div>
 			<div class="modal-footer justify-content-align">
 				<div id="apprBtn1" style="display: none">
-					<button type="button" class="btn btn-outline-warning" id="approve">승인</button>
+					<button type="button" class="btn btn-outline-warning" id="approve">지급</button>
 					<button type="button" id="loadReferModal" class="btn btn-outline-danger">반려</button>
 				</div>
 				<div id="apprBtn2" style="display: none">
-					<button type="button" id="cancelApprove" class="btn btn-outline-danger">승인취소</button>
+					<button type="button" id="cancelApprove" class="btn btn-outline-danger">지급취소</button>
 				</div>
 				<div id="apprBtn3" style="display: none">
 					<button type="button" class="btn btn-outline-secondary" id="cancelMsg">반려 사유</button>
@@ -167,7 +157,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="referModal" style="display:none; z-index:1041" aria-hidden="true">
+	<div class="modal fade" id="referReasonWrite" style="display:none; z-index:1041" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -180,7 +170,7 @@
 				<div class="modal-body">
 					<div class="mb-3">
 						<label for="recRej" class="col-form-label">반려 사유를 입력해주세요.</label>
-						<textarea class="form-control recRej" rows="7"></textarea>
+						<textarea class="form-control" id="reasonWrite" rows="7"></textarea>
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
@@ -189,7 +179,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="referReason" style="display:none;z-index:1041" aria-hidden="true">
+	<div class="modal fade" id="referReasonRead" style="display:none;z-index:1041" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -201,7 +191,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="mb-3">
-						<textarea class="form-control" id="message" rows="7" readonly></textarea>
+						<textarea class="form-control" id="reasonRead" rows="7" readonly></textarea>
 					</div>
 				</div>
 			</div>
@@ -211,6 +201,11 @@
 <script type="text/javascript">
 
 	var $approvalList;
+	var apprTagCd = "";
+	var apprYn = "";
+	var apprRsn = "";
+	var header = "${_csrf.headerName}";
+	var token = "${_csrf.token}";
 
 	$(function(){
 		
@@ -226,49 +221,97 @@
 		
 		// 장학금추천 모달
 		$(document).on("click",".scholarship",function(){
+			loadsclhDetail(this.value);
 			$("#modal-lg").modal();
 		});
 		
+		//승인
 		$("#approve").on("click",function(){
-			$("#apprBtn1").hide();
-			$("#apprBtn2").show();
-			$("#apprBtn3").hide();
+			approveMode();
+			
+			requestApprove('AP001');
 		});
 		
+		// 반려사유작성
 		$("#loadReferModal").on("click",function(){
-			$("#referModal").modal('show');
-
+			$("#referReasonWrite").modal('show');
+			$("#reasonWrite").val("");
 		});
 		
+		//반려
 		$("#refer").on("click",function(){
-			$("#referModal").modal('hide');
-			$("#apprBtn1").hide();
-			$("#apprBtn2").hide();
-			$("#apprBtn3").show();
-		})
+			referMode();
+			apprRsn = $("#reasonWrite").val();
+			requestApprove('AP003', apprRsn);
+		});
 		
+		//승인취소
 		$("#cancelApprove").on("click",function(){
-			$("#apprBtn1").show();
-			$("#apprBtn2").hide();
-			$("#apprBtn3").hide();
-		})
+			pendingApproveMode();
+			requestApprove('AP002');
+		});
 		
+		//반려취소
 		$("#cancelRefer").on("click",function(){
-			$("#apprBtn1").show();
-			$("#apprBtn2").hide();
-			$("#apprBtn3").hide();
-		})
+			pendingApproveMode();
+			requestApprove('AP002');
+		});
+		
+		//반려사유보기
+		$("#cancelMsg").on("click",function(){
+			$("#referReasonRead").modal('show');
+			$("#reasonRead").val(apprRsn);
+		});
+		
 	});
 	
-	function approvalList(){
+	function approveMode(){
+		$("#apprBtn1").hide();
+		$("#apprBtn2").show();
+		$("#apprBtn3").hide();
+	}
+	
+	function pendingApproveMode(){
+		$("#apprBtn1").show();
+		$("#apprBtn2").hide();
+		$("#apprBtn3").hide();
+	} 
+	
+	function referMode(){
+		$("#referReasonWrite").modal('hide');
+		$("#apprBtn1").hide();
+		$("#apprBtn2").hide();
+		$("#apprBtn3").show();
+	}
+	
+	function requestApprove(p_code,reason){
 		let data = {
-			
-		};
+			apprYn : p_code,
+			apprRsn : typeof reason == "undefined" ? "" : reason,
+			apprCate : 'APC002',
+			apprTagCd : apprTagCd
+		}
+		
+		console.log("data : ", data);
+		$.ajax({
+			url : "/approval/updateApproval",
+			type : "post",
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=UTF-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result){
+				console.log(result);
+			}
+		})
+	}
+	
+	function approvalList(){
 		
 		$.ajax({
 			url : "/approval/list",
 			type : "get",
-// 			data : data,
 			success : function(result){
 				$approvalList.html("");
 				let str = "";
@@ -322,6 +365,46 @@
 				
 			}
 		})
+	}
+	
+	function loadsclhDetail(apprTagCd){
+		let data = {
+			apprTagCd : apprTagCd
+		}
+		$.ajax({
+			url : "/approval/schStuDetail",
+			type : "get",
+			data : data,
+			success : function(result){
+				fn_add(result);
+				if(apprYn == 'AP002'){
+					pendingApproveMode();
+				}else if (apprYn == 'AP001') {
+					approveMode();
+				}else if (apprYn == 'AP003') {
+					referMode();
+				}
+			}
+		})
+	}
+	
+	function fn_add(data){
+		
+		$(".stuNo").html(data.stuNo);
+		$(".stuNm").html(data.stuNm);
+		$('.depNm').html(data.depNm);
+		$("#proNo").attr("value", data.proNo);
+		$("#empNm").html(data.empNm);
+		$("#sclhRcmd").html(data.sclHistory.sclhRcmd);
+		$(".sclhDt").html(data.sclHistory.sclhDt);
+		$("#deanNm").html(data.deanNm);
+		apprYn = data.sclHistory.approval.apprYn;
+		apprRsn = data.sclHistory.approval.apprRsn;
+		apprTagCd = data.sclHistory.approval.apprTagCd;
+		
+		console.log("apprYn : " + apprYn);
+		console.log("apprRsn : " + apprRsn);
+		console.log("apprTagCd : " + apprTagCd);
 	}
 	
 	function dateFormat(p_date){

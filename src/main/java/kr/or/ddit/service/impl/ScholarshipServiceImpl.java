@@ -51,4 +51,8 @@ public class ScholarshipServiceImpl implements ScholarshipService {
 	public HashMap<String, Object> scholarshipBenefitCertificate(int sclhCd) {
 		return this.scholarshipMapper.scholarshipBenefitCertificate(sclhCd);
 	}
+	@Override
+	public int approveSclh(SclHistory sclHistory) {
+		return this.scholarshipMapper.approveSclh(sclHistory);
+	}
 }

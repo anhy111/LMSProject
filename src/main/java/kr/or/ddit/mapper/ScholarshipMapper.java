@@ -28,4 +28,7 @@ public interface ScholarshipMapper {
 	
 	//학생 장학금 수혜 증명서
 	public HashMap<String, Object> scholarshipBenefitCertificate(int sclhCd);
+	
+	// 결재시 지급여부
+	public int approveSclh(SclHistory sclHistory);
 }

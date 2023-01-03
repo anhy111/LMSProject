@@ -50,4 +50,6 @@ public class SclHistory {
 	private double slScore;		//강의당 최종 성적
   
   private String empNm;	//추천인 명
+  
+  	private Approval approval; // 결재 vo
 }

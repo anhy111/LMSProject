@@ -11,11 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
+import kr.or.ddit.domain.SclHistory;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.mapper.ApprovalMapper;
 import kr.or.ddit.service.AllocationService;
 import kr.or.ddit.service.ApprovalService;
 import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.LectureService;
+import kr.or.ddit.service.ScholarshipService;
 import lombok.extern.slf4j.Slf4j;
 import sun.util.logging.resources.logging;
 
@@ -32,6 +35,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 	LectureService lectureService;
 	@Autowired
 	AllocationService allocationService;
+	@Autowired
+	ScholarshipService scholarshipService;
 	
 	//결재 요청 목록
 	@Override
@@ -57,26 +62,43 @@ public class ApprovalServiceImpl implements ApprovalService{
 			new RuntimeException();
 		}
 		
-		Lecture lecture = new Lecture();
-		lecture.setLecaCd(approval.getApprTagCd());
-		lecture.setLecaYn(getLecaYn(approval.getApprYn()));
-		lecture.setLecYn(getLecYn(approval.getApprYn()));
-		int resultLecture = this.lectureService.approveLecture(lecture);
-		if(resultLecture <= 0) {
-			new RuntimeException();
-		}
-		
 		int result = 0;
-		if(approval.getApprYn().equals("AP001")) {
-			result = this.allocationService.insertTimeTable(approval.getAllocationList());
-		}else {
-			result = this.allocationService.deleteTimeTable(approval.getApprTagCd());
-		}
-		log.info("result : " + result);
-		if(result < 0) {
-			new RuntimeException();
+		// 강의계획서 결재
+		if(approval.getApprCate().equals("APC001")) {
+			Lecture lecture = new Lecture();
+			lecture.setLecaCd(approval.getApprTagCd());
+			lecture.setLecaYn(getLecaYn(approval.getApprYn()));
+			lecture.setLecYn(getLecYn(approval.getApprYn()));
+			int resultLecture = this.lectureService.approveLecture(lecture);
+			if(resultLecture <= 0) {
+				new RuntimeException();
+			}
+			
+			if(approval.getApprYn().equals("AP001")) {  // 결재 승인시
+				result = this.allocationService.insertTimeTable(approval.getAllocationList());
+			}else {										// 승인취소, 반려시
+				result = this.allocationService.deleteTimeTable(approval.getApprTagCd());
+			}
+			if(result <= 0) {
+				new RuntimeException();
+			}
+			
+		}else { // 장학생 추천 결재
+			SclHistory sclHistory = new SclHistory();
+			sclHistory.setSclhCd(approval.getApprTagCd());
+			sclHistory.setSclhPayYn(getSclhPayYn(approval.getApprYn()));
+			result = this.scholarshipService.approveSclh(sclHistory);
+			
+			if(result <= 0) {
+				new RuntimeException();
+			}
 		}
 		return result;
+	}
+	
+	@Override
+	public Student schStuDetail(Approval approval) {
+		return this.approvalMapper.schStuDetail(approval);
 	}
 	
 	// 공통코드를 숫자로 치환해주는 함수
@@ -95,5 +117,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 			return "Y";
 		}
 		return "N";
+	}
+	
+	// 공통 코드를 지급여부 공통코드로 변환
+	private String getSclhPayYn(String apprYn) {
+		if(apprYn.equals("AP001")) {
+			return "PVD001";
+		}
+		return "PVD002";
 	}
 }

@@ -22,4 +22,6 @@ public interface ScholarshipService {
 
 	public HashMap<String, Object> scholarshipBenefitCertificate(int sclhCd);
 
+	// 결재시 지급여부
+	public int approveSclh(SclHistory sclHistory);
 }
