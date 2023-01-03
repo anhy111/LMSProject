@@ -52,7 +52,7 @@
 	<select id="list" parameterType="hashMap" resultType="lecApply">
 		SELECT  U.LECA_CD,
 		        U.PRO_NO,
-		        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
+		        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
 		        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
 		        NVL(U.LECA_TRG, 0) LECA_TRG,
 		        U.SUB_CD,
@@ -100,7 +100,7 @@
 		AND     E.EMP_NO = #{proNo}
 	</select>
 	
-	<select id="inquiryFormProInfoStudentApply" parameterType="int" resultType="professor"> 
+	<select id="proInfoByLecaCd" parameterType="int" resultType="professor"> 
 	
 		SELECT  P.PRO_NO,
 				E.EMP_NM,
@@ -180,7 +180,7 @@
 		) VALUES (
 		    #{lecaCd}
 		    , #{subCd}
-		    , 3
+		    , ${lecaYn}
 		)
 	</insert>
 	
@@ -207,7 +207,7 @@
 		            , LECA_AP
 		            , PRO_NO
 		) VALUES (
-		    (select max(LECA_CD) from lecture)
+		    ${lecaCd}
 		    , #{lecaYr}
 		    , #{lecaSem}
 		    , #{lecaNm}
@@ -307,7 +307,7 @@
 	
 	<select id="tempList" parameterType="int" resultType="lecApply">
 		SELECT  U.LECA_CD,
-	        U.LECA_YR || '/' || U.LECA_SEM LECA_YS,
+	        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
 	        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
 	        NVL(U.LECA_TRG, 0) LECA_TRG,
 	        U.SUB_CD,
@@ -455,6 +455,31 @@
 		DELETE WEEKPLAN WHERE LECA_CD = #{lecaCd}
 	</delete>
 	
+	<select id="alreadyTimeTableList" parameterType="lecApply" resultType="lecApply">
+		SELECT DECODE(L.LECA_YN
+		                ,0,'승인대기'
+		                ,1,'승인'
+		        )LECA_APPROVAL
+		     , LA.LECA_TT
+		FROM LEC_APPLY LA, LECTURE L
+		WHERE LA.LECA_CD = L.LECA_CD
+		AND L.LECA_YN IN(0,1)
+		AND LA.LECA_YR = #{lecaYr}
+		AND LA.LECA_SEM = #{lecaSem}
+	</select>
+	
+	<select id="getLecaApproval" parameterType="int" resultType="approval">
+		SELECT DECODE(L.LECA_YN
+		                ,0,'승인대기'
+				        ,1,'승인'
+		                ,2,'반려'
+		             ) APPR_YN
+		     , A.APPR_RSN
+		FROM LECTURE L, APPROVAL A 
+		WHERE L.LECA_CD = A.APPR_TAG_CD
+		AND A.APPR_CATE = 'APC001' 
+		AND L.LECA_CD = #{lecaCd}
+	</select>
 </mapper>
 
 

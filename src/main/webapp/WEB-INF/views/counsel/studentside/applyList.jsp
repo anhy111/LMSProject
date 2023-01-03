@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -10,6 +10,8 @@
 	String name = String.valueOf(session.getAttribute("name"));
 %>
 <style>
+
+
 tr.recordTr {
 	opacity: 1;
 	background-color: white;
@@ -35,34 +37,14 @@ background-color:gray;
 transition: opacity 1s, color 1s, background-color 1;
 cursor:pointer;
 }
-.contHoverTd {
-	position: relative;
-}
 
-.contHover {
-	display: none;
-}
 
-.contHoverTd:hover .contHover {
-	position: absolute;
-	top: -5px;
-	right: 0px;
-	opacity: 1;
-	width: 175px;
-	height: 50px;
-	display: block;
-	text-align: center;
-	line-height: 50px;
-	opacity: 0.8;
-}
 </style>
 
 <div class="row">
-
 	<div class="form-group col-12">
-
 			<div class="card-header d-flex p-0">
-				<h3 class="card-title p-3"><b>상담내역</b></h3>
+<!-- 				<h3 class="card-title p-3"><b>상담내역</b></h3> -->
 				<ul class="nav nav-pills ml-auto p-2">
 					<li class="nav-item"><a class="nav-link active" href="#tab_1"
 						data-toggle="tab">대면</a></li>
@@ -85,11 +67,11 @@ cursor:pointer;
 					<div class="tab-pane active" id="tab_1">			<table
 				class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 				<thead>
-					<tr class="text-center counselListTr">
+					<tr class="text-center">
 						<th width="4%">No</th>
 						<th width="8%">구분</th>
 						<th width="18%">제목</th>
-						<th width="12%">신청일자</th>
+						<th width="12%">신청일</th>
 						<th width="12%">상담예약일</th>
 						<th width="6%">상담기록</th>
 						<th width="4%">담당교수</th>
@@ -97,28 +79,22 @@ cursor:pointer;
 				</thead>
 				<tbody id="notSaveLecture">
 					<c:forEach var="counselList" items="${counselList}" varStatus="status" end="${counselList.size()}">
-						<tr class="text-center">
+						<tr class="text-center counselListTr" data-toggle="modal" data-target="#modifyCounsel">
 							<td data-value="${counselList.cnslCd}">${status.end-status.index }</td>
-							<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
 							<td>${counselList.cnslCate }</td>
 
-							<c:if test="${counselList.cnslRpl == null }">
-								<td class="contHoverTd">${fn:substring(counselList.cnslTtl,0,5) }<a
-									class="contHover"
-									style="color: white; background-color: green;"
-									data-value="${counselList.cnslCd}">내용수정</a>
-								</td>
+							<c:if test="${counselList.cnslRpl == null }"><!-- 답변이 없으면 내용 수정 가능-->
+								<td  >${fn:substring(counselList.cnslTtl,0,8) }</td>
 							</c:if>
-							<c:if test="${counselList.cnslRpl != null }">
-								<td>${fn:substring(counselList.cnslTtl,0,5) }</td>
+							<c:if test="${counselList.cnslRpl != null }"><!-- 답변이 있음-->
+								<td>${fn:substring(counselList.cnslTtl,0,8) }</td>
 							</c:if>
 							<td><fmt:formatDate value="${counselList.cnslReg }"
 									pattern="yy/MM/dd" /></td>
 							<td><fmt:formatDate value="${counselList.cnslDt }"
 									pattern="yy/MM/dd" /></td>
 							<c:if test="${counselList.cnslRpl != null }">
-								<td><button class="checkAnswerNote btn btn-sm btn-success"
-										value="${counselList.cnslCd }">상담 기록 확인</button></td>
+								<td class="waitAnswer">대기<a class="checkAnswerNote" style="color:blue;display:none;"data-value="${counselList.cnslCd }">상담확인</a></td>
 							</c:if>
 							<c:if test="${counselList.cnslRpl == null }">
 								<td><span style="color: blue;">대기</span></td>
@@ -131,11 +107,11 @@ cursor:pointer;
 					<div class="tab-pane" id="tab_2"><table
 				class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 				<thead>
-					<tr class="text-center">
+					<tr class="text-center" >
 						<th width="4%">No</th>
 						<th width="8%">구분</th>
 						<th width="18%">제목</th>
-						<th width="12%">신청일자</th>
+						<th width="12%">신청일</th>
 						<th width="6%">답변상태</th>
 						<th width="12%">답변등록일</th>
 						<th width="4%">담당교수</th>
@@ -143,31 +119,28 @@ cursor:pointer;
 				</thead>
 				<tbody>
 					<c:forEach var="nonFaceCounselList" items="${nonFaceCounselList}" varStatus="status" end="${nonFaceCounselList.size() }">
-						<tr class="text-center">
+						<tr class="text-center nonFaceCounselListTr" data-toggle="modal" data-target="#modifyCounsel">
 							<td data-value="${nonFaceCounselList.cnslCd}">${status.end-status.index }</td>
 							<!-- 클릭시 결재요청한 서류를 모달창으로 출력 -->
 							<td>${nonFaceCounselList.cnslCate }</td>
 							<c:if test="${nonFaceCounselList.cnslRpl == null}">
-								<td class="contHoverTd">${fn:substring(nonFaceCounselList.cnslTtl,0,5) }<a
-									class="contHover"
-									style="color: white; background-color: green;"
-									data-value="${nonFaceCounselList.cnslCd}">내용수정</a></td>
+								<td  >${fn:substring(nonFaceCounselList.cnslTtl,0,8) }내용수정</td>
 							</c:if>
 							<c:if test="${nonFaceCounselList.cnslRpl != null}">
-								<td>${fn:substring(nonFaceCounselList.cnslTtl,0,5) }</td>
+								<td>${fn:substring(nonFaceCounselList.cnslTtl,0,8) }</td>
 							</c:if>
 							<td><fmt:formatDate value="${nonFaceCounselList.cnslReg }"
 									pattern="yy/MM/dd" /></td>
-							<td><c:if test="${nonFaceCounselList.cnslRpl == null}">
+							<td class="checkAnswer"><c:if test="${nonFaceCounselList.cnslRpl == null}">
 									<span style="color: blue;">대기</span>
 								</c:if> <c:if
 									test="${nonFaceCounselList.cnslType == '반려' and nonFaceCounselList.cnslRpl != null and nonFaceCounselList.cnslRpl != ''}">
-									<button class="rejectLink btn btn-sm btn-danger"
-										data-value="${nonFaceCounselList.cnslCd}">반려</button>
+									<a class="rejectLink" style="color:red;"
+										data-value="${nonFaceCounselList.cnslCd}">반려</a>
 								</c:if> <c:if
 									test="${nonFaceCounselList.cnslType == '비대면' and nonFaceCounselList.cnslRpl != null and nonFaceCounselList.cnslRpl != ''}">
-									<button class="answerLink btn btn-sm btn-success"
-										data-value="${nonFaceCounselList.cnslCd}">답변확인</button>
+									<a class="answerLink" style="color:black;"
+										data-value="${nonFaceCounselList.cnslCd}">답변확인</a><i class="fa-solid fa-envelopes"></i>
 								</c:if></td>
 							<td><fmt:formatDate value="${nonFaceCounselList.cnslDt }"
 									pattern="yy/MM/dd" /></td>
@@ -175,7 +148,8 @@ cursor:pointer;
 						</tr>
 					</c:forEach>
 				</tbody>
-			</table> </div>
+			</table>
+			 </div>
 				</div>
 			</div>
 	</div>
@@ -192,9 +166,9 @@ cursor:pointer;
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="top:100px;">
+		<div class="modal-content" style="top:50px;">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
-				<h5 class="modal-title">학적변동 신청서 작성</h5>
+				<h5 class="modal-title">상담 신청서 작성</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true"style="color:white;">×</span>
@@ -206,28 +180,28 @@ cursor:pointer;
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee; width: 100%;">
 						<p>
 							<strong>※ 안내 사항</strong> <br>
-							<br> (1)&nbsp;<strong>기간/사유</strong>외에는 수정 할 수 없습니다<br>
-							<br> (2)&nbsp;수정할 수 없는 값이 입력되었다면 <strong style="color:red">삭제</strong>후 재 신청 바랍니다<br>
-							<br> (3)&nbsp;<strong style="color:blue">졸업</strong>&nbsp;및&nbsp;<strong style="color:blue">복학</strong>&nbsp;신청은&nbsp;수정 할 수 없습니다.<br>
+							<br> (1)&nbsp;<strong>대면/비대면</strong>상담을 선택할 수 있습니다.<br>
+							<br> (2)&nbsp;<strong>학적 변동</strong> 신청 내역을 조회하여 상담을 연결할 수 있습니다.<br>
+							<br> (3)&nbsp;관련된 <strong>담당 교수</strong>를 선택하여 상담을 신청 할 수 있습니다.<br>
+							<br> (4) *는 필수 선택/입력 정보입니다.
 						</p>
 					</div>
-				<form id="form" action="/counsel/studentside/applyInsert"
-			method="post" onsubmit="return checkInsertData()">
+<!-- 				<form id="form" action="/counsel/studentside/applyInsert" method="post" onsubmit="return checkInsertData()"> -->
 			<input type="hidden" name="stuNo" value="<%=stuNo%>">
 			<input type="hidden" id="recCd" name="recCd" value="0" />
 			<div class="row">
-				<div class="col-12 segmented-control">
+				<div class="col-12 segmented-control2">
 					<input type="radio" value="대면" id="tab-1" class="counselTypeFace"
 						name="cnslType" checked /> <label for="tab-1"
-						class="segmented-control__1">
+						class="col-4 segmented-control__1">
 						<p>대면</p>
 					</label> <input type="radio" id="tab-2" class="counselTypeNonFace"
 						name="cnslType" value="비대면" /> <label for="tab-2"
-						class="segmented-control__2">
+						class="col-4 segmented-control__2">
 						<p>비대면</p>
 					</label>
 						<button type="button"
-						class="col-6 recordList segmented-control__1" data-toggle="modal"
+						class="col-4 recordList segmented-control__1" data-toggle="modal"
 						data-target="#modal-lg">
 						학적 조회
 					</button>
@@ -235,31 +209,31 @@ cursor:pointer;
 				</div>
 				<div class="col-12 segmented-control2">
 
-					<input type="radio" name="cnslCate" value="휴학" id="tab-3" checked />
+					<input type="radio" name="cnslCate" value="RCD001" id="tab-3" checked />
 					<label for="tab-3" class="segmented-control__3">
-						<p>휴학</p>
-					</label> <input type="radio" name="cnslCate" value="자퇴" id="tab-4" /> <label
+						휴학
+					</label> <input type="radio" name="cnslCate" value="RCD004" id="tab-4" /> <label
 						for="tab-4" class="segmented-control__4">
-						<p>자퇴</p>
-					</label> <input type="radio" name="cnslCate" value="졸업" id="tab-5" /> <label
+						자퇴
+					</label> <input type="radio" name="cnslCate" value="RCD005" id="tab-5" /> <label
 						for="tab-5" class="segmented-control__5">
-						<p>졸업</p>
-					</label> <input type="radio" name="cnslCate" value="시험" id="tab-6" /> <label
+						졸업
+					</label> <input type="radio" name="cnslCate" value="RCD006" id="tab-6" /> <label
 						for="tab-6" class="segmented-control__6">
-						<p>시험</p>
-					</label> <input type="radio" name="cnslCate" value="과제" id="tab-7" /> <label
+						시험
+					</label> <input type="radio" name="cnslCate" value="RCD007" id="tab-7" /> <label
 						for="tab-7" class="segmented-control__7">
-						<p>과제</p>
-					</label> <input type="radio" name="cnslCate" value="출결" id="tab-8" /> <label
+						과제
+					</label> <input type="radio" name="cnslCate" value="RCD008" id="tab-8" /> <label
 						for="tab-8" class="segmented-control__8">
-						<p>출결</p>
+						출결
 					</label>
 
 					<div class="segmented-control__color2"></div>
 				</div>
 				<div class="form-group col-12" style="padding-top: 20px;">
 					<div class="col-sm-4">
-						<label>담당 교수</label>
+						<label>담당 교수*</label>
 					</div>
 						<select name="proNo" class="col-6 custom-select rounded-0">
 							<c:forEach var="professorList" items="${professorList }">
@@ -269,7 +243,7 @@ cursor:pointer;
 				</div>
 				<div class="form-group col-12" style="padding-top: 20px;" id="cnslTitleTextBox">
 						<div class="col-sm-4">
-							<label>제목</label>
+							<label>제목*</label>
 						</div>
 							<input type="text"name="cnslTtl" class="col-6 form-control form-control-border-rounded-0" required />
 				</div>
@@ -277,7 +251,7 @@ cursor:pointer;
 					<div class="form-group col-12" id="cnslReservationDt"
 						style="padding-left: 0px;">
 						<div class="col-sm-2">
-							<label>예약일</label>
+							<label>예약일*</label>
 						</div>
 						<div class="form-group col-12" style="display: -webkit-inline-box;">
 							<div class="alert alert-info">
@@ -291,7 +265,7 @@ cursor:pointer;
 				<div class="form-group col-12" id="cnslConTextArea">
 					<div>
 						<div class="col-sm-4">
-							<label>상담 할 내용</label>
+							<label>상담 할 내용*</label>
 						</div>
 					</div>
 					<div class="row">
@@ -302,13 +276,13 @@ cursor:pointer;
 				</div>
 				 
 			</div>
-			<sec:csrfInput />
-		</form>
+<%-- 			<sec:csrfInput /> --%>
+<!-- 		</form> -->
 
 				<!-- 모달바디 -->
 			</div>
 			<div class="modal-footer justify-content-align">
-				<button type="submit" form="form" class="btn btn-outline-primary">등록</button>
+				<button onclick="checkInsertData()" type="button"  class="btn btn-outline-primary">등록</button>
 				<a onclick="dataReset()" class="btn btn-outline-secondary">취소</a>
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
@@ -323,7 +297,7 @@ cursor:pointer;
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">신청한 상담 상세</h4>
+					<h4 class="modal-title">학적 신청 목록</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -333,10 +307,9 @@ cursor:pointer;
 				<div class="alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee; width: 100%;">
 						<p>
-							<strong>※ 수정시 안내 및 주의 사항</strong> <br>
-							<br> (1)&nbsp;<strong>기간/사유</strong>외에는 수정 할 수 없습니다<br>
-							<br> (2)&nbsp;수정할 수 없는 값이 입력되었다면 <strong style="color:red">삭제</strong>후 재 신청 바랍니다<br>
-							<br> (3)&nbsp;<strong style="color:blue">졸업</strong>&nbsp;및&nbsp;<strong style="color:blue">복학</strong>&nbsp;신청은&nbsp;수정 할 수 없습니다.<br>
+							<strong>※ 상담받을 항목을 선택하세요 </strong> <br>
+							<br> (1)&nbsp;<strong>신청된 학적</strong>이 잘못입력 되었다면 학적관리에서 수정후 재 신청 바랍니다.<br>
+							<br> (2)&nbsp;항목을 클릭하면 <strong style="color:blue">상담 구분</strong>이 자동 선택 됩니다.
 						</p>
 					</div>
 					<div class="card-body table-responsive col-11 p-0"
@@ -357,20 +330,18 @@ cursor:pointer;
 							<tbody>
 								<c:forEach var="recordList" items="${recordList}" varStatus="status" end="${recordList.size() }">
 									<tr class="recordTr">
-										<td data-value="${recordList.recCd}">${status.end-status.index }</td>
-										<td >${recordList.rgbCd}</td>
-										<td>${recordList.recYr}년도</td>
-										<td>${recordList.recSem}학기</td>
-										<td>${recordList.recPer}년</td>
-										<td><fmt:formatDate value="${recordList.recDt }"
+										<td class="text-center" data-value="${recordList.recCd}">${status.end-status.index }</td>
+										<td class="text-center"  >${recordList.rgbCd}</td>
+										<td class="text-center" >${recordList.recYr}년도</td>
+										<td class="text-center" >${recordList.recSem}학기</td>
+										<td class="text-center" >${recordList.recPer}년</td>
+										<td class="text-center" ><fmt:formatDate value="${recordList.recDt }"
 												pattern="yy/MM/dd" /></td>
-										<td><c:if test="${recordList.recYn eq '반려'}">
-												<span style="color: red;">${recordList.recYn }</span>
-											</c:if> <c:if test="${recordList.recYn eq '승인대기'}">
-												<span style="color: black;">${recordList.recYn }</span>
-											</c:if> <c:if test="${recordList.recYn eq '승인'}">
-												<span style="color: blue;">${recordList.recYn }</span>
-											</c:if></td>
+										<td class="text-center" >
+<%-- 										<c:if test="${recordList.recYn eq '반려'}"><span style="color: red;">${recordList.recYn }</span></c:if>  --%>
+											<c:if test="${recordList.recYn eq '승인대기'}"><span style="color: black;">${recordList.recYn }</span></c:if> 
+											<c:if test="${recordList.recYn eq '승인'}"><span style="color: blue;">${recordList.recYn }</span></c:if>
+											</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -392,7 +363,7 @@ cursor:pointer;
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="top:100px;">
+		<div class="modal-content" style="top:50px;">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
 				<h5 class="modal-title">상담 상세</h5>
 				<button type="button" class="close" data-dismiss="modal"
@@ -401,31 +372,49 @@ cursor:pointer;
 				</button>
 			</div>
 			<div class="modal-body">
+				<div class="alert alert-light" role="alert"
+						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee; width: 100%;">
+						<p>
+							<strong>※ 수정시 안내 및 주의 사항</strong> <br>
+							<br> (1)&nbsp;<strong>기간/사유</strong>외에는 수정 할 수 없습니다<br>
+							<br> (2)&nbsp;수정할 수 없는 값이 입력되었다면 <strong style="color:red">삭제</strong>후 재 신청 바랍니다<br>
+							<br> (3)&nbsp;<strong style="color:blue">졸업</strong>&nbsp;및&nbsp;<strong style="color:blue">복학</strong>&nbsp;신청은&nbsp;수정 할 수 없습니다.<br>
+						</p>
+					</div>
 				<!-- 모달바디 -->
 					<div class="form-group col-12" >
-					<input type="hidden" id="modifyCnslCd" value="${answerDetail.modifyCnslCd }"> 
+					<input type="hidden" id="modifyCnslCd" > 
 					</div>
-					<div class="form-group col-12" style="margin:0px;">
+					<div class="form-group col-12" >
+					<div class="col-sm-4">
+						<label >구분*</label> 
+						</div>
+						<input type="text" id="modifyCnslCate" disabled="disabled"
+							class="col-6 form-control form-control-border"
+							id="exampleInputBorder">
+					</div>
+					<div class="form-group col-12" >
 					<div class="col-sm-4">
 						<label >제목*</label> 
 						</div>
-						<input type="text"
-							class="col-6 form-control form-control-border"
-							id="exampleInputBorder" value="${answerDetail.modifyCnslTtl }">
+						<input type="text" id="modifyCnslTtl"
+							class="col-6 form-control form-control-border-rounded-0"
+							id="exampleInputBorder">
 					</div>
-					<div class="form-group col-12" style="margin:0px;">
+					<div class="form-group col-12" >
 					<div class="col-sm-4">
-						<label >사유</label>
+						<label id="modifyDtCon">사유</label>
 						</div>
 						<div class="row">
-							<textarea class="col-11 form-control" rows="3" id="modifyCnslCon" ></textarea>
+						<input style="height: 50px; border: 1px solid aliceblue;padding-left: 30px;" type="date" id="modifyCnslDt" required />
+						<textarea class="col-10 ml-2 form-control" rows="3" id="modifyCnslCon" ></textarea>
 						</div>
 					</div>
 
 				<!-- 모달바디 -->
 			</div>
 			<div class="modal-footer justify-content-align">
-				<button onclick="modifyCont()" type="button" class="btn btn-outline-primary">수정하기</button>
+				<button onclick="modifyApply()" type="button" class="btn btn-outline-primary">수정하기</button>
 				<button onclick="deleteApply()" type="button" class="btn btn-outline-danger">삭제</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
@@ -435,14 +424,32 @@ cursor:pointer;
 <!-- 수정삭제모달 -->
 
 <script type="text/javascript">
-let modifyCnslCon,modifyCnslCd,applyCounsel = "";
+let modifyCnslCon,modifyCnslCd,applyCounsel,counselListTr,nonFaceCounselListTr = "";
 let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
-let data = {modifyCnslCd : "",modifyCnslCon : ""};	
+let data = {cnslCd : "", cnslTtl : "" ,cnslCon : "", cnslCate : "", cnslType : "" , proNo: "" , cnslDt : "" , stuNo : "", recCd : "" };	
 
-function modifyCont(){
-	data.modifyCnslCd = $("#modifyCnslCd").val();
-	data.modifyCnslCon = $("#modifyCnslCon").val();
+$('td.waitAnswer').mouseenter(function() {
+	  $(this).find('a.checkAnswerNote').css('display', 'block');
+// 	  $(this).text('');
+	});
+
+	$('td.waitAnswer').mouseleave(function() {
+	  $(this).find('a.checkAnswerNote').css('display', 'none');
+// 	  $(this).text('대기');
+	});
+function modifyApply(){
+	data.cnslCd = $("#modifyCnslCd").val();
+	data.cnslTtl = $("#modifyCnslTtl").val();
+	data.cnslCon = $("#modifyCnslCon").val();
+	
+	if($("#modifyCnslTtl").val().length < 1){
+		Swal.fire({
+			  icon: 'error',
+			  title: '제목을 작성해 주세요',
+			})
+		return;
+		}
 	
 	if(!($("#modifyCnslCon").val().length >= 10)){
 		Swal.fire({
@@ -509,69 +516,84 @@ function deleteApply(){
 });
 	return;
 }
-	
-// 	const contHovers = document.querySelectorAll('.contHover');
-// 	const answerLinks = document.querySelectorAll('.answerLink');
-// 	const answerHovers = document.querySelectorAll('.answerHover');
-// 	const checkAnswerNotes = document.querySelectorAll(".checkAnswerNote");
-// 	const rejectLinks = document.querySelectorAll(".rejectLink");
-	
 
-// 	contHovers.forEach((link, index)=>{
-		
-// 	 //제목 클릭시 내용 수정
-// 	  link.addEventListener('click', function() {
-// 		  const value = this.dataset.value;
-// 		  window.open("/counsel/studentside/applyModify?cnslCd="+ value, "applyModify","width=1000, height=800, left=100, top=50");
-// 		  //alert(value);
-// 		});
-// 	});
+counselListTr = document.querySelectorAll(".counselListTr");
+nonFaceCounselListTr = document.querySelectorAll(".nonFaceCounselListTr");
+
+
+counselListTr.forEach(counsel => {
+	counsel.addEventListener("click",function(){
+		data.cnslCd = this.children[0].dataset.value;
+		$.ajax({
+			url:"/counsel/studentside/applyDetail",
+			type:'POST',
+			data: JSON.stringify(data),
+			datatype:'JSON',
+			contentType: 'application/json; charset=utf-8',
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success:function(result){
+					$("#modifyDtCon").text("상담 예약일");
+					$("#modifyCnslCd").val(result.cnslCd);
+					$("#modifyCnslTtl").val(result.cnslTtl);
+					$("#modifyCnslCon").hide();
+// 					$("#modifyCnslCon").val(result.cnslCon);
+					$("#modifyCnslDt").val(result.cnslDt);
+					$("#modifyCnslDt").show();
+					$("#modifyCnslCate").val(result.cnslCate);
+			}
+		});
+	})
+});
+
+nonFaceCounselListTr.forEach(nCounsel =>{
+	nCounsel.addEventListener("click",function(){
+		data.cnslCd = this.children[0].dataset.value;
+		$.ajax({
+			url:"/counsel/studentside/applyDetail",
+			type:'POST',
+			data: JSON.stringify(data),
+			datatype:'JSON',
+			contentType: 'application/json; charset=utf-8',
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success:function(result){
+				$("#modifyDtCon").text("사유");
+				$("#modifyCnslCd").val(result.cnslCd);
+				$("#modifyCnslTtl").val(result.cnslTtl);
+				$("#modifyCnslCon").show();
+				$("#modifyCnslCon").val(result.cnslCon);
+// 				$("#modifyCnslDt").val(result.cnslDt);
+				$("#modifyCnslDt").hide();
+				$("#modifyCnslCate").val(result.cnslCate);
+			}
+		});
+	})
+});
 	
-// 	answerLinks.forEach((link,index)=>{
-// 	  //제목 클릭시 답변 확인
-// 	  link.addEventListener('click', function() {
-// 		  const value = this.dataset.value;
-// 		  window.open("/counsel/studentside/checkAnswer?cnslCd="+ value, "checkAnswer","width=1000, height=800, left=100, top=50");
-// 		  //alert(value);
-// 		});
-// 	});
-	
-// 	rejectLinks.forEach((link, index)=>{
-// 		//제목 클릭시 반려 사유 확인
-// 		link.addEventListener("click",function(){
-// 			const value= this.dataset.value;
-// 			window.open("/counsel/studentside/checkReject?cnslCd="+ value, "checkAnswer","width=1000, height=800, left=100, top=50");
-// 		})
-// 	})
-// 	// 클릭시 교수가 작성한 상담 기록서 확인 및 다운
-// 	checkAnswerNotes.forEach((note, index)=>	{
-// 		note.addEventListener('click',function(){
-// 			const value = this.value
-// 		  window.open("/counsel/studentside/answerNote?cnslCd="+ value, "checkAnswerNote","width=1000, height=800, left=100, top=50");
-// 		})
-// 	});
-	
-	$.fn.clearForm = function () {
-	  return this.each(function () {
-	    var type = this.type,
-	      tag = this.tagName.toLowerCase();
-	    if (tag === 'form') {
-	      return $(':input', this).clearForm();
-	    }
-	    if (
-		      type === 'text' ||
-//		      type === 'password' ||
-//		      type === 'hidden' ||
-	      tag === 'textarea'
-	    ) {
-	      this.value = '';
-//		    } else if (type === 'checkbox' || type === 'radio') {
-//		      this.checkedIndex = 0;
-	    } else if (tag === 'select') {
-	      this.selectedIndex = 0;
-	    }
-	  });
-	};
+// 	$.fn.clearForm = function () {
+// 	  return this.each(function () {
+// 	    var type = this.type,
+// 	      tag = this.tagName.toLowerCase();
+// 	    if (tag === 'form') {
+// 	      return $(':input', this).clearForm();
+// 	    }
+// 	    if (
+// 		      type === 'text' ||
+// //		      type === 'password' ||
+// //		      type === 'hidden' ||
+// 	     	 tag === 'textarea'
+// 	    ) {
+// 	      this.value = '';
+// 		    } else if (type === 'checkbox' || type === 'radio') {
+// 		      this.checkedIndex = 0;
+// 	    } else if (tag === 'select') {
+// 	      this.selectedIndex = 0;
+// 	    }
+// 	  });
+// 	};
 	
 	function dataReset(){
 		Swal.fire({
@@ -590,25 +612,112 @@ function deleteApply(){
 			      '작성 내용 모두 삭제 되었습니다',
 			      'success',
 			    )
-			      $("#cnslCon").html("");
-			      $("#form").clearForm();
+			      $("#cnslCon").val("");
+			    $("input[type='date']").val("");
+			    $("input[name='cnslTtl']").val("");
+			    $("#target").text("상담 예약일");
+			      var radioButtons  = document.querySelectorAll('input[type="radio"][name="cnslCate"]');
+			      for (let i = 0; i < radioButtons.length; i++) {
+			    	  ableRadioButtons(radioButtons[i]);
+			      }
 			  }
 			});
 			  return;
 	}
 	
 	var recordTrElements,tdValues,radioButtons,tdRecordValue = "";
-	function checkInsertData(){
+	function checkInsertData(){ 
+		data.stuNo = $("input[name='stuNo']").val();
+		if(!($("input[name='recCd']").val() == "null" || $("input[name='recCd']").val() == "" || $("input[name='recCd']").val() == 0)){
+			data.recCd = $("input[name='recCd']").val();
+		}
 		 if ($(".counselTypeNonFace").is(":checked")) {
+			 	if($("input[name='cnslTtl']").val() == null || $("input[name='cnslTtl']").val() == ""){
+			 		Swal.fire({
+						  icon: 'error',
+						  title: '제목을 입력해주세요',
+						})
+					return;
+			 	}
 				if($("#cnslCon").val() == null || $("#cnslCon").val() == ""){
-					alert("내용을 적어주세요");
-					return false;
-				} else {
-					return true;
-				}
-		 }else if($(".counselTypeFace").is(":checked")) {
-			 return true;
-		 }
+					Swal.fire({
+						  icon: 'error',
+						  title: '내용을 입력해주세요',
+						})
+					return;
+				} 
+				$("input[type='date']").val("");
+				data.cnslType = $("input[type='radio'][name='cnslType']:checked").val();
+				data.cnslCate = $("input[type='radio'][name='cnslCate']:checked").val();
+				data.proNo = $("select[name='proNo']").val();
+				data.cnslTtl = $("input[name='cnslTtl']").val();
+				data.cnslDt = $("input[type='date']").val();
+				data.cnslCon = $("#cnslCon").val();
+				alert(JSON.stringify(data));	
+				$.ajax({
+					url:"/counsel/studentside/applyInsert",
+					type:'POST',
+					data: JSON.stringify(data),
+					datatype:'JSON',
+					contentType: 'application/json; charset=utf-8',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success:function(result){
+						Swal.fire(
+			                    '등록 완료',
+			                    '비대면 상담 신청이 완료되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
+					}
+				})
+				
+		}
+		if($(".counselTypeFace").is(":checked")){
+			if($("input[name='cnslTtl']").val() == null || $("input[name='cnslTtl']").val() == ""){
+				Swal.fire({
+					  icon: 'error',
+					  title: '제목을 선택해주세요',
+					})
+				return;
+		 	}
+			if($("input[type='date']").val() == "" || $("input[type='date']").val() == null){
+				Swal.fire({
+					  icon: 'error',
+					  title: '상담 예약일을 선택해주세요',
+					})
+				return;
+			}
+			$("#cnslCon").val("");
+				data.cnslType = $("input[type='radio'][name='cnslType']:checked").val();
+				data.cnslCate = $("input[type='radio'][name='cnslCate']:checked").val();
+				data.proNo = $("select[name='proNo']").val();
+				data.cnslTtl = $("input[name='cnslTtl']").val();
+				data.cnslDt = $("input[type='date']").val();
+				data.cnslCon = $("#cnslCon").val();
+				alert(JSON.stringify(data));	
+				$.ajax({
+					url:"/counsel/studentside/applyInsert",
+					type:'POST',
+					data: JSON.stringify(data),
+					datatype:'JSON',
+					contentType: 'application/json; charset=utf-8',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					success:function(result){
+						Swal.fire(
+			                    '등록 완료',
+			                    '대면 상담 신청이 완료되었습니다.',
+			                    'success'
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
+					}
+				})
+		}
 	}
 	
 		$("input[type='date'][name='cnslDt']").change(function() {
@@ -625,13 +734,26 @@ function deleteApply(){
 		}	
 
 	
+	function ableRadioButtons(clickedButton) {
+		  radioButtons.forEach(button => {
+		    if (button !== clickedButton) {
+		      button.disabled = false;
+		    }
+		  });
+		}	
+
+	
 $("#applyBtn").on("click",function(){
 	radioButtons  = document.querySelectorAll('input[type="radio"][name="cnslCate"]');
 	recordTrElements  = document.querySelectorAll('.recordTr');
 	recordTrElements.forEach(element => {
 	  element.addEventListener('click', function() {
 		  for (let i = 0; i < radioButtons.length; i++) {
-			  if(this.children[1].innerHTML == radioButtons[i].value){ 
+// 			  console.log("라디오밸류:"+ radioButtons[i].value);
+// 			  console.log("라됴밸류:"+radioButtons[i].innerHTML);
+  			var labelElement = radioButtons[i].nextElementSibling;
+  			var labelText = labelElement.innerText;
+			  if(this.children[1].innerHTML == labelText){ 
 				  radioButtons[i].checked = true;
 				  disableRadioButtons(radioButtons[i]);
 				  $("#recCd").val(this.children[0].dataset.value);

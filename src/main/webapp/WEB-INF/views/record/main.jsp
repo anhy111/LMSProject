@@ -99,7 +99,7 @@ cursor:pointer;
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="height: 900px;">
+		<div class="modal-content" style="top:100px;">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
 				<h5 class="modal-title">학적변동 신청서 작성</h5>
 				<button type="button" class="close" data-dismiss="modal"
@@ -195,7 +195,7 @@ cursor:pointer;
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="height: 900px;">
+		<div class="modal-content" style="top:100px;">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
 				<h5 class="modal-title">학적변동 신청서 수정</h5>
 				<button type="button" class="close" data-dismiss="modal"
@@ -216,15 +216,19 @@ cursor:pointer;
 							<br> (3)&nbsp;<strong style="color:blue">졸업</strong>&nbsp;및&nbsp;<strong style="color:blue">복학</strong>&nbsp;신청은&nbsp;수정 할 수 없습니다.<br>
 						</p>
 					</div>
+					<div class="col-sm-4">
 					<label>구분*</label>
+					</div>
 					<div class="form-group col-12">
 						<input type="text"class="col-4 form-control form-control-border"id="modifyRgbCd" readonly />
 					</div>
-					<label>년도*</label>
+					<div class="col-sm-4">
+					<label>년도*</label></div>
 					<div class="form-group col-12" >
 						<input type="text"class="col-4 form-control form-control-border"id="modifyRecYr" readonly /> 
 					</div>
-					<label>학기*</label>
+					<div class="col-sm-4">
+					<label>학기*</label></div>
 					<div class="form-group col-12" >
 						<input type="text"class="col-4 form-control form-control-border"id="modifyRecSem" readonly /> 
 					</div>
@@ -298,8 +302,8 @@ cursor:pointer;
 		$(document).ready(function(){
 			year = date.getFullYear(); //년도 recYr
 			month = date.getMonth()+1;
-		    if (month == '3' || month == '4' || month == '5' || month == '6' || month == '7' || month == '8') currentSemester = 1;
-			else if (month == '9' || month == '10' || month == '11' || month == '12' || month == '1' || month == '2') currentSemester = 2;
+		    if (month == '1' || month == '2' || month == '3' || month == '4' || month == '5' || month == '6') currentSemester = 1;
+			else if (month == '7' || month == '8' || month == '9' || month == '10' || month == '11' || month == '12') currentSemester = 2;
 		    setRecYr();//현재년도가 2학기일경우 현재년도 + 다음년도
 		    applyState = document.querySelectorAll(".applyState");
 		    applyState.forEach(apply=>{
@@ -329,8 +333,8 @@ cursor:pointer;
 		    	    	 			('0'+confirmedRegDateToDate.getDate()).slice(-2)].join('-');
 		    	     
 		    	     var confirmedRegDay = new Date(confirmedRegDateToDateSet);
-// 		    	     console.log("신청일 날짜 :"  + confirmedRegDay);
 					var endConfirmedReg = new Date(confirmedRegDay.setFullYear(confirmedRegDay.getFullYear() + confirmedPer));
+// 		    	     console.log("신청일 날짜 :"  + confirmedRegDay);
 // 					var endConfirmedReg = new Date(confirmedRegDay.setMinutes(confirmedRegDay.getMinutes() + 1));//test 1분후
 // 		    	     console.log("신청일로부터 1년후 : " + endConfirmedReg);
 					  

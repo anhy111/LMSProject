@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Subject;
@@ -27,8 +28,8 @@ public class LectureApplyServiceImpl implements LectureApplyService {
     }
     
     @Override
-    public Professor inquiryFormProInfoStudentApply(int lecaCd) {
-    	return this.lectureApplyMapper.inquiryFormProInfoStudentApply(lecaCd);
+    public Professor proInfoByLecaCd(int lecaCd) {
+    	return this.lectureApplyMapper.proInfoByLecaCd(lecaCd);
     }
 
 	@Override
@@ -133,5 +134,13 @@ public class LectureApplyServiceImpl implements LectureApplyService {
 	public int getSubCdList(String subNm) {
 		return this.lectureApplyMapper.getSubCdList(subNm);
 	}
+    @Override
+    public List<LecApply> alreadyTimeTableList(LecApply lecApply) {
+    	return this.lectureApplyMapper.alreadyTimeTableList(lecApply);
+    }
     
+    @Override
+    public Approval getLecaApproval(int lecaCd) {
+    	return this.lectureApplyMapper.getLecaApproval(lecaCd);
+    }
 }

@@ -1,6 +1,7 @@
 package kr.or.ddit.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class Approval {
 	private String empNm; // 결재자 이름
 	private int apprTagCd;// 결재대상코드(강의계획서코드, 교수추천장학생코드)
 	
+	private List<Allocation> allocationList; // 결재시에 강의실도 함께 배정한다.
 	
 }

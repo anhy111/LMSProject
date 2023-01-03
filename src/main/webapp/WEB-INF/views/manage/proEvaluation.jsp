@@ -77,13 +77,24 @@ $(function(){
 		text-align: left;
 	}
 </style>
+
+<div class="row">
+	<div class="alert alert-light col" role="alert">
+		<!-- 게시판 안내사항 -->
+		<p>
+			<strong>
+			학생들이 각 강의에 대해 평가한 강의 내역을 확인할 수 있습니다.
+			</strong>
+		</p>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col-sm-12">
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="10%">번호</th>
-					<th width="10%">강의번호</th>
+					<th width="3%">No</th>
 					<th width="10%">강의명</th>
 					<th width="10%">단과대명</th>
 					<th width="10%">학과명</th>
@@ -93,11 +104,10 @@ $(function(){
 					<th width="10%">상세</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="text-center">
 				<c:forEach var="evaluationList" items="${evaluationList}" varStatus="stat">
 					<tr>
 						<td>${stat.count}</td>
-						<td>${evaluationList.lecaCd}</td>
 						<td>${evaluationList.lecaNm}</td>
 						<td>${evaluationList.colNm}</td>
 						<td>${evaluationList.depNm}</td>
@@ -105,7 +115,7 @@ $(function(){
 						<td>${evaluationList.lecaCate}</td>
 						<td>${evaluationList.evlScore}</td>
 						<td>
-							<button class="btn btn-block btn-outline-info btn-sm btnDetail" 
+							<button class="btn btn-block btn-outline-secondary btn-sm btnDetail" 
 								value="${evaluationList.lecaCd}" data-toggle="modal" data-target="#modal-lg">상세</button>
 						</td>
 					</tr>
@@ -118,7 +128,7 @@ $(function(){
 <!-- 모달 -->
 <!-- 상세정보확인 -->
 <div class="modal fade" id="modal-lg" style="display:none;" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">강의 평가 상세</h4>
@@ -138,6 +148,11 @@ $(function(){
 											<label for="lecaNm" class="form-label">강의명</label> 
 											<input type="text" class="form-control stu" id="lecaNm"
 												name="lecaNm" readonly />
+										</div>
+										<div class="col-4">
+											<label for="evlScore" class="form-label">평가 점수</label> 
+											<input type="text" class="form-control stu" id="evlScore"
+												name="evlScore" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
@@ -174,23 +189,18 @@ $(function(){
 												name="lecHcnt" readonly />
 										</div>
 									</div>
-									<div class="row mb-2">
-										<div class="col-4">
-											<label for="count" class="form-label">응답자 수</label> 
-											<input type="text" class="form-control stu" id="count"
-												name="count" readonly />
-										</div>
-										<div class="col-4">
-											<label for="recYn" class="form-label">응답 비율</label> 
-											<input type="text" class="form-control stu" id="recYn"
-												name="recYn" readonly />
-										</div>
-										<div class="col-4">
-											<label for="evlScore" class="form-label">평가 점수</label> 
-											<input type="text" class="form-control stu" id="evlScore"
-												name="evlScore" readonly />
-										</div>
-									</div>
+<!-- 									<div class="row mb-2"> -->
+<!-- 										<div class="col-4"> -->
+<!-- 											<label for="count" class="form-label">응답자 수</label>  -->
+<!-- 											<input type="text" class="form-control stu" id="count" -->
+<!-- 												name="count" readonly /> -->
+<!-- 										</div> -->
+<!-- 										<div class="col-4"> -->
+<!-- 											<label for="recYn" class="form-label">응답 비율</label>  -->
+<!-- 											<input type="text" class="form-control stu" id="recYn" -->
+<!-- 												name="recYn" readonly /> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 								</div>
 							</div>
 						</div>

@@ -74,8 +74,8 @@
 	    		<td>
 	    			<select id="lecaSem">
 	    				<option value="">선택</option>
-	    				<option value="1학기">1학기</option>
-	    				<option value="2학기">2학기</option>
+	    				<option value="1">1학기</option>
+	    				<option value="2">2학기</option>
 	    			</select>
 	    		</td>
 	    	</tr>
@@ -167,13 +167,15 @@
 	    		<td style="width:116px; font-weight:bold; text-align:center;">출결</td>
 	    	</tr>
 	    	<tr>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaMp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaFp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaTp" size=5>&nbsp;%</td>
-	    		<td style="width:116px; text-align:center;"><input type="text" id="lecaAp" size=5>&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="number" id="lecaMp" min="1" max="999">&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="number" id="lecaFp"  min="1" max="999">&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="number" id="lecaTp"  min="1" max="999">&nbsp;%</td>
+	    		<td style="width:116px; text-align:center;"><input type="number" id="lecaAp"  min="1" max="999">&nbsp;%</td>
 	    	</tr>
     	</table>
-    	
+    	<div class="row">
+    		<span id="evaluationText" class="col-12 text-center">&nbsp;</span>
+    	</div>
     	<br><br>
 	    
 	    <p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;강의 계획</p>
@@ -231,14 +233,28 @@
    				<tr><th>8교시</th><td></td><td></td><td></td><td></td><td></td></tr>
    				<tr><th>9교시</th><td></td><td></td><td></td><td></td><td></td></tr>
     		</table>
+    		<div class="row mb-2">
+    			<div class="col-3 offset-1 text-right">
+    				<span style=" height:13px; background-color: red; border: 1px solid black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    				<span style="font-size: 13px;">&nbsp;: 승인</span>
+    			</div>	
+    			<div class="col-3">
+    				<span style="height:13px; background-color: yellow; border: 1px solid black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    				<span style="font-size: 13px;">&nbsp;: 승인대기</span>
+    			</div>	
+    			<div class="col-3" >
+    				<span style="height:13px; background-color: #001f3f; border: 1px solid black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    				<span style="font-size: 13px;">&nbsp;: 희망시간</span>
+    			</div>	
+    		</div>
 		    <button type="button" id="timeTableBtn" class="btn btn-primary" style="width:250px; margin : 10px 65px;">시간 선택하기</button>
     	</div>
     	<div id="blockNum3Time" style="width : 400px; height : 300px;">
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;희망 시간</p>
     		<textarea id="textArea4time" rows="5" cols="45" disabled>시간 선택하기 버튼을 누르면 자동으로 채워집니다.</textarea>
-    		
-    		<br><br>
-    		
+    		<div class="form-group text-right p-0 m-0">
+    		<button type="button" id="dataInit" class="btn btn-secondary btn-sm mr-5">초기화</button>
+    		</div>
     		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;비고</p>
     		<textarea id="lecaNote" rows="9" cols="45"></textarea>
     	</div>
@@ -261,11 +277,262 @@
 	let token = "${_csrf.token}";
 	
 	console.log("header : " + header + ", token : " + token);
-	var roomTime = "";
 	
+	var lecTimeTable = [];
+	var alreadyLecApplyList;
+	var evlValidation = false;
+	
+	// 강의계획서 제출 또는 임시저장시 유효성 검사
+	function validation(){
+		
+		if( $('#lecaYr').val() == "" ||  $('#lecaSem').val() == ""){
+			alert("연도와 학기를 선택해주세요.");
+			return false;
+		}else if( $('#lecaTrg').val() == ""){
+			alert("대상 학년을 선택해주세요.");
+			return false;
+		}else if( $('#lecaCrd').val() == ""){
+			alert("학점을 선택해주세요.");
+			return false;
+		}else if( $('#lecaNm').val() == ""){
+			alert("강의명을 입력해주세요.");
+			return false;
+		}else if( $('#lecaCate').val() == ""){
+			alert("이수구분을 선택해주세요.");
+			return false;
+		}else if( $('#subCd').val() == ""){
+			alert("과목을 선택해주세요.");
+			return false;
+		}else if( $('#lecaCon').val() == ""){
+			alert("수업 개요를 입력해주세요.");
+			return false;
+		}else if( $('#lecaBook').val() == ""){
+			alert("교재 및 참고문헌을 입력해주세요.");
+			return false;
+		}else if( $('#lecaGrade').val() == ""){
+			alert("평가방식을 선택해주세요.");
+			return false;
+		}else if( $('#lecaCap').val() <= 0 || $('#lecaCap').val() == ""){
+			alert("올바른 수강인원을 입력해주세요.");
+			return false;
+		}else if( lecTimeTable.length != $('#lecaCrd').val()){
+			alert("학점만큼 시간을 선택해주세요");
+			return false;
+		}else if(!evlValidation){
+			alert("평가방법 비율이 올바르지 않습니다.");
+			return false;
+		}
+		
+		for(let i=1; i<=16; i++){
+			if($('#weekPlan'+i).val() == ""){
+				alert("주차계획을 입력해주세요");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	// 강의계획서 평가비율 합산 유효성검사
+	function evaluationStandardValidation(){
+		let lecaMp = $('#lecaMp').val() == "" ? 0 : $('#lecaMp').val()*1;
+		let lecaFp = $('#lecaFp').val() == "" ? 0 : $('#lecaFp').val()*1;
+		let lecaTp = $('#lecaTp').val() == "" ? 0 : $('#lecaTp').val()*1;
+		let lecaAp = $('#lecaAp').val() == "" ? 0 : $('#lecaAp').val()*1;
+		let sum = lecaMp + lecaFp + lecaTp + lecaAp;
+		if(sum != 100){
+			$("#evaluationText").text("과제비율은 합산 100%로 입력해주세요")
+								.css("color","red");
+			evlValidation = false;
+		}else{
+			$("#evaluationText").text("과제비율이 합산 100%입니다.")
+								.css("color","blue");
+			evlValidation = true;
+		}
+	}
+	
+	// 시간표 배열을 매개변수로 받아서 클래스를 입혀 색을 칠해줌
+	function displayTimeTable(p_timeTable, p_class){
+		let room = $("#room").val();
+		let timeTable = $('#timeTableChoice');
+		
+		for(let i=0; i<p_timeTable.length; i++){
+			if(room == p_timeTable[i].roomCd){
+				let x;
+				switch(p_timeTable[i].wk){
+				case "월":
+					x = 0;
+					break;
+				case "화":
+					x = 1;
+					break;
+				case "수":
+					x = 2;
+					break;
+				case "목":
+					x = 3;
+					break;
+				case "금":
+					x = 4;
+					break;
+				}
+				timeTable.find("tr").eq(p_timeTable[i].time).find("td").eq(x).toggleClass(p_class);
+			}
+		}
+	}
+	
+	// 이미 존재하는 시간표를 ajax로 불러옴
+	function loadAlreadyTimeTable(){
+		let lecaSem = $("#lecaSem").val();
+		let lecaYr = $("#lecaYr").val();
+		if( lecaSem == "" || lecaYr == "" ){
+			return;
+		}
+		
+		let data = {
+			lecaSem : lecaSem,
+			lecaYr : lecaYr
+		}
+		
+		$.ajax({
+			url : "/professor/lecApplyForm/alreadyTimeTableList",
+			type : "get",
+			data : data,
+			success : function(result){
+				alreadyLecApplyList = result;
+				$("#room").trigger("change");
+			}
+		})
+	}
+	
+	// 시간 선택시
+	function roomSelectEvent(){
+		if($("#building").val() == 0){
+			alert("건물을 선택해주세요");
+			return;
+		}
+		if($("#room").val() == 0){
+			alert("강의실을 선택해주세요");
+			return;
+		}
+		
+		let timeTable = $('#timeTableChoice');
+		
+		let str = '';
+		let room = $("#room").val();
+		let building = $("#building").val();
+		let buildingText = $("#building option:selected").text();
+		let roomText = $("#room option:selected").text();
+		let data = [];	// json형식으로 시간표 저장
+		for(let j = 0; j <= 4; j++) {
+			for(let i = 1; i <= 9; i++) {
+				let cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
+				
+				if(cellObj.hasClass("highlighted")) {
+					
+					switch(j) {
+					case 0:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "월", time : i + ""}); 
+						break;
+					case 1:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "화", time : i + ""}); 
+						break;
+					case 2:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "수", time : i + ""}); 
+						break;
+					case 3:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "목", time : i + ""}); 
+						break;
+					case 4:
+						data.push({ roomCd : room, roomNo : roomText, bldCd : building, bldNm : buildingText, wk : "금", time : i + ""}); 
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
+		
+		// 이미 저장되어있는 같은 강의실의 시간표가 있더라도 버튼을 누르면 그 시간표로 덮어쓰기
+		for(let i=lecTimeTable.length-1; i >= 0; i--){
+			if(room == lecTimeTable[i].roomCd){
+				lecTimeTable.splice(i,1);
+			}
+		}
+		
+		// 학점 선택했는지 유효성검사
+		if($("#lecaCrd").val() == ""){
+			alert("학점을 선택해주세요.");
+			timeTableInit();
+			return;
+		}
+		
+		// 학점만큼 시간을 선택했는지 유효성검사
+		if(lecTimeTable.length + data.length > $("#lecaCrd").val()){
+			alert("학점만큼 시간을 선택해주세요");
+			timeTableInit();
+			return;
+		}
+		
+		// 시간이 겹치면 데이터를 넣지 않는다
+		for(let i=0; i<data.length; i++){
+			let check = false;
+			for(let j=0; j<lecTimeTable.length; j++){
+				if(lecTimeTable[j].roomCd == data[i].roomCd
+					&& lecTimeTable[j].wk == data[i].wk
+					&& lecTimeTable[j].time == data[i].time){
+					check = true;
+					break;
+				}
+			}
+			if(!check){
+				lecTimeTable.push(data[i]);
+			}
+		}
+		
+		// "시간 선택하기" 알림 텍스트시에는 초기화하고 텍스트 넣어주기
+		if($('#textArea4time').html().substr(0,1) == '시'){
+			$('#textArea4time').html("");
+		}
+		$('#textArea4time').html(lecTimeTableToText(lecTimeTable));
+		
+	}
+	
+	// 사용자에게 보여줄 희망시간 포맷함수
+	function lecTimeTableToText(p_timeTable){
+		let str = "";
+		for(let i=0; i<p_timeTable.length; i++){
+			str += p_timeTable[i].bldNm + " " + p_timeTable[i].roomNo + " " + p_timeTable[i].wk + " " + p_timeTable[i].time + "교시\n";
+		}
+		return str;
+	}
+	
+	// 강의실 변경시 테이블 비워주고, 입력 또는 이미 존재하는 시간표 표시하기
+	function timeTableInit(){
+		$('#timeTableChoice td').removeClass("highlighted")
+								.removeClass("approve")
+								.removeClass("pendingApprove");
+		
+		// 기존에 선택된 교시는 색칠해주기
+		displayTimeTable(lecTimeTable,"highlighted");
+		$.each(alreadyLecApplyList,function(p_inx, lecApply){
+			if(lecApply.lecaApproval == '승인대기'){
+				displayTimeTable(JSON.parse(lecApply.lecaTt),"pendingApprove");
+			}else if(lecApply.lecaApproval == '승인'){
+				displayTimeTable(JSON.parse(lecApply.lecaTt),"approve");
+			}
+		})
+	}
+	
+	// 초기화버튼 클릭시 저장시간표와 표시되는 시간표 초기화
+	function lecTimeTableInit(){
+		lecTimeTable.splice(0);
+		$('#textArea4time').html("");
+	}
+	
+	// 자동 채우기
 	function insertData() {
-		$('#lecaYr').val('2022');
-		$('#lecaSem').val('2학기');
+		$('#lecaYr').val('2023');
+		$('#lecaSem').val('2');
 		$('#lecaNm').val('고급 JAVA 프로그래밍');
 		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
 		$('#lecaTrg').val('3');
@@ -279,7 +546,7 @@
 		$('#lecaMp').val('30');
 		$('#lecaFp').val('30');
 		$('#lecaTp').val('10');
-		$('#lecaAp').val('20');
+		$('#lecaAp').val('30').trigger("change");
 		$('#weekPlan1').val('자바에 대한 동기 유발');
 		$('#weekPlan2').val('Java 개발 환경 이해');
 		$('#weekPlan3').val('반복문과 배열 그리고 예외처리');
@@ -307,6 +574,10 @@ window.onload = function() {
 		theme : 'bootstrap4'
 	});
 	
+	$("#dataInit").on("click",function(){
+		lecTimeTableInit();
+	});
+	
 	var date = new Date();
 	let year = date.getFullYear();
 	
@@ -315,6 +586,16 @@ window.onload = function() {
 	str = '<option value="'+ year + '">' + year + '년</option>';
 	
 	$("#lecaYr").append(str);
+	
+	$("#lecaMp").on("keyup",evaluationStandardValidation);
+	$("#lecaFp").on("keyup",evaluationStandardValidation);
+	$("#lecaTp").on("keyup",evaluationStandardValidation);
+	$("#lecaAp").on("keyup",evaluationStandardValidation);
+	
+	$("#lecaMp").on("change",evaluationStandardValidation);
+	$("#lecaFp").on("change",evaluationStandardValidation);
+	$("#lecaTp").on("change",evaluationStandardValidation);
+	$("#lecaAp").on("change",evaluationStandardValidation);
 	
 	//검색어 자동완성 이벤트///////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -388,9 +669,12 @@ window.onload = function() {
 	$('#timeTableChoice td')
 	.mousedown(function() {
 		isMouseDown = true;
+		if( $(this).hasClass("approve") || $(this).hasClass("pendingApprove") ){
+			return false;
+		}
 		$(this).toggleClass("highlighted");
 		
-		isHighlighted = $(this).hasClass("highlighted")
+		isHighlighted = $(this).hasClass("highlighted");
 		
 		return false;
 	})
@@ -484,7 +768,7 @@ window.onload = function() {
 				} else{
 					str += "<option value='0'>강의실</option>";
 					$.each(result,function(p_inx, p_val){
-						str += `<option value='\${p_val.roomNo}'>\${p_val.roomNo}호</option>`;
+						str += `<option value='\${p_val.roomCd}'>\${p_val.roomNo}</option>`;
 					});
 				}
 				$("#room").html(str);
@@ -494,84 +778,23 @@ window.onload = function() {
 	});
 	
 	// 시간표 강의실 선택시 존재하는 강의는 선택불가
-	$("#room").on("change",function(){
-		let data = {
-			roomCd : this.value
-		};
-		
-		$.ajax({
-			url : "/professor/lecApplyForm/timeTableByRoomList",
-			type : "get",
-			data : data,
-			success : function(result){
-				timeTableInit();
-			}
-		});
-		
-	});
+	$("#room").on("change", timeTableInit);
+	
+	// 연도와 학기가 선택되면 다른 시간표를 불러온다.
+	$("#lecaSem").on("change", loadAlreadyTimeTable);
+	$("#lecaYr").on("change", loadAlreadyTimeTable);
 	
 	//시간표 작성
 	$('#timeTableBtn').on('click', function() {
-		
-		if($("#building").val() == 0){
-			alert("건물을 선택해주세요");
-			return;
-		}
-		if($("#room").val() == 0){
-			alert("강의실을 선택해주세요");
-			return;
-		}
-		
-		timeTable = $('#timeTableChoice');
-		
-		str = '';
-		buildingText = $("#building option:selected").text() + " ";
-		room = $("#room").val() + " ";
-		roomText = $("#room option:selected").text() + " ";
-		dataStr = "";
-		for(j = 0; j <= 4; j++) {
-			for(i = 1; i <= 9; i++) {
-				cellObj = timeTable.find("tr").eq(i).find("td").eq(j);
-				
-				if(cellObj.hasClass("highlighted")) {
-					
-					switch(j) {
-					case 0:
-						str += buildingText + roomText + "월 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,"; 
-						break;
-					case 1:
-						str += buildingText + roomText + "화 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					case 2:
-						str += buildingText + roomText + "수 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					case 3:
-						str += buildingText + roomText + "목 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					case 4:
-						str += buildingText + roomText + "금 " + i + "교시\n";
-						dataStr += room + "m " + i + "교시,";
-						break;
-					default:
-						break;
-					}
-				}
-			}
-		}
-		//alert(str);
-		if($('#textArea4time').html().substr(0,1) == '시'){
-			$('#textArea4time').html("");
-		}
-		$('#textArea4time').append(str);
-		console.log("dataStr : " + dataStr );
+		roomSelectEvent();
 	});
 	
 	//임시저장 버튼 클릭 시
 	$('#temporarySubmitBtn').on('click', function() {
+		
+		if(!validation()){
+			return;
+		}
 		
 		let u_lecaCd = '${lecApplyList[0].lecaCd}';
 		var weekPlan = [];
@@ -579,6 +802,7 @@ window.onload = function() {
 		for(let i=1; i<=16; i++){
 			weekPlan.push({wpNo : i,lecaCd : u_lecaCd, wpCon : $('#weekPlan'+i).val()})
 		}
+
 		
 		let dataObject = {
 				lecaYr : $('#lecaYr').val(),
@@ -593,7 +817,7 @@ window.onload = function() {
 				lecaBook : $('#lecaBook').val(), 
 				lecaCate : $('#lecaCate').val(),
 				lecaGrade : $('#lecaGrade').val(),
-				lecaTt : $("#textArea4time").val(),
+				lecaTt : JSON.stringify(lecTimeTable),
 				lecaMp : $('#lecaMp').val(),
 				lecaFp : $('#lecaFp').val(),
 				lecaTp : $('#lecaTp').val(),
@@ -627,6 +851,10 @@ window.onload = function() {
 	//제출 버튼 클릭 시
 	$('#realSubmitBtn').on('click', function() {
 		
+		if(!validation()){
+			return;
+		}
+		
 		let u_lecaCd = '${lecApplyList[0].lecaCd}';
 		var weekPlan = [];
 		
@@ -647,7 +875,7 @@ window.onload = function() {
 				lecaBook : $('#lecaBook').val(),
 				lecaCate : $('#lecaCate').val(),
 				lecaGrade : $('#lecaGrade').val(),
-				lecaTt : $("#textArea4time").val(),
+				lecaTt : JSON.stringify(lecTimeTable),
 				lecaMp : $('#lecaMp').val(),
 				lecaFp : $('#lecaFp').val(),
 				lecaTp : $('#lecaTp').val(),
@@ -684,8 +912,5 @@ window.onload = function() {
 	
 }
 
-function timeTableInit(){
-	$('#timeTableChoice td').removeClass("highlighted");
-}
 </script>
 </html>

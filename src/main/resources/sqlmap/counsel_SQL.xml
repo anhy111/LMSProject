@@ -20,7 +20,7 @@ AND P.PRO_NO = E.EMP_NO
 SELECT 
   C.CNSL_CD
 , C.STU_NO 
-, C.CNSL_CATE 
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
 , C.CNSL_TTL
 , C.CNSL_CON
 , C.CNSL_REG 
@@ -30,6 +30,7 @@ SELECT
 , E.EMP_NM
 , S.STU_NM
 , C.CNSL_TYPE
+, C.CNSL_YN
 FROM COUNSEL C, EMPLOYEE E, PROFESSOR P, STUDENT S, DEPARTMENT D
 WHERE 
 C.STU_NO = #{stu_no}
@@ -67,18 +68,40 @@ VALUES(
 <if test="cnslCon != null or cnslCon !='' ">
 , #{cnslCon}
 </if>
-, #{cnslDt,jdbcType=DATE}
+<if test="cnslDt != null or cnslDt !='' ">
+, #{cnslDt}
+</if>
 <if test="recCd != null or recCd !='' ">
 , #{recCd}
 </if>
 
 )
 </insert>
+<!-- 상담 상세 -->
+<select id="applyDetail" parameterType="int" resultType="Counsel">
+SELECT 
+CNSL_CD
+, STU_NO
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_CATE = COMD_CD) AS CNSL_CATE 
+, CNSL_TTL
+, CNSL_CON
+, CNSL_REG
+, CNSL_DT
+, CNSL_RPL
+, PRO_NO
+, CNSL_TYPE
+, REC_CD
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_YN = COMD_CD) AS CNSL_YN
+FROM COUNSEL
+WHERE CNSL_CD = #{cnslCd}
+</select>
 <!-- 상담 수정 -->
 <update id="applyModify" parameterType="Counsel">
 UPDATE COUNSEL 
-SET 
-CNSL_CON = #{cnslCon} 
+<set>
+CNSL_TTL = #{cnslTtl}
+ <if test="cnslCon != null and cnslCon !='' ">,CNSL_CON = #{cnslCon}</if>
+</set>
 WHERE CNSL_CD = #{cnslCd}
 </update>
 <!--  상담 삭제 -->
@@ -105,7 +128,7 @@ WHERE CNSL_CD = #{cnslCd}
 SELECT 
   C.CNSL_CD
 , C.STU_NO
-, C.CNSL_CATE
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
 , C.CNSL_TTL
 , C.CNSL_CON
 , C.CNSL_REG
@@ -130,8 +153,11 @@ SELECT
 ,C.CNSL_TTL
 ,C.CNSL_CON
 ,C.CNSL_RPL 
-,C.CNSL_CATE
-,C.CNSL_TYPE   
+,C.CNSL_DT
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
+,C.CNSL_TYPE 
+,C.REC_CD  
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_YN = COMD_CD) AS CNSL_YN
 FROM COUNSEL C, STUDENT S 
 WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
@@ -140,13 +166,14 @@ AND C.STU_NO = S.STU_NO
 <select id="answerNoteDetail" parameterType="int" resultType="Counsel">
 SELECT
  C.CNSL_CD
-,C.CNSL_CATE
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
 ,S.STU_NM
 ,C.CNSL_DT
 ,C.CNSL_TTL
 ,C.CNSL_CON
 ,C.CNSL_RPL
 ,E.EMP_NM
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_YN = COMD_CD) AS CNSL_YN
 FROM COUNSEL C, STUDENT S, EMPLOYEE E, PROFESSOR P 
 WHERE C.CNSL_CD = #{cnslCd}
 AND C.STU_NO = S.STU_NO
@@ -157,11 +184,11 @@ AND E.EMP_NO = P.PRO_NO
 <!-- 교수의 상담 기록서 작성 및 업데이트 -->
 <update id="answerNoteWriteUpdate" parameterType="Counsel">
 UPDATE COUNSEL
-SET 
+<set>
 CNSL_RPL = #{cnslRpl}
-<if test="cnslCon != null and cnslCon !='' ">
- ,CNSL_CON = #{cnslCon}
- </if>
+<if test="cnslCon != null and cnslCon !='' ">,CNSL_CON = #{cnslCon}</if>
+<if test="cnslYn != null and cnslYn !='' ">,CNSL_YN = #{cnslYn}</if>
+</set>
 WHERE CNSL_CD =  #{cnslCd}
 </update>
 <!-- 상담번호에 따른 학생의 이름 -->

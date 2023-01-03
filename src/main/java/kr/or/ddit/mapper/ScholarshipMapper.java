@@ -1,5 +1,6 @@
 package kr.or.ddit.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.or.ddit.domain.Scholarship;
@@ -21,4 +22,10 @@ public interface ScholarshipMapper {
 	
 	//장학금 수여
 	public int scholarshipConfer(SclHistory sclHistory);
+	
+	//학생 장학수혜내역 리스트
+	public List<SclHistory> stuScholarshipList(int stuNo);
+	
+	//학생 장학금 수혜 증명서
+	public HashMap<String, Object> scholarshipBenefitCertificate(int sclhCd);
 }

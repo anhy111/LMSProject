@@ -13,7 +13,7 @@ public class SclHistory {
 
 	private int sclhCd;			//장학생 신청 코드
 	private int sclCd;			//장학금코드
-	private String sclNm;			//장학금명
+	private String sclNm;		//장학금명
 	private int stuNo;			//수여자번호
 	private int sclhYr;			//연도
 	private int sclhSem;		//학기

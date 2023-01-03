@@ -2,12 +2,14 @@ package kr.or.ddit.mapper;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Manager;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.SclHistory;
 import kr.or.ddit.domain.Student;
 
 public interface MemberMapper  {
@@ -30,5 +32,7 @@ public interface MemberMapper  {
     public int stuUpdate(Student student);
 
     public int updateStuPw(Map<String, String> map);
+    
+    public List<SclHistory> mySclList(int memNo);
 
 }

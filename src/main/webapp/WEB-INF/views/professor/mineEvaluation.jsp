@@ -16,7 +16,7 @@ function fn_add(data){
 	$("#lecaCate").attr("value", data.lecaCate);
 	$("#lecHcnt").attr("value", data.lecHcnt);
 	$("#evlScore").attr("value", data.evlScore);
-	$("#lecaSem").attr("value", data.lecaYr + "년 " + data.lecaSem);
+	$("#lecaSem").attr("value", data.lecaYr + "년 " + data.lecaSem +"학기");
 	$("#count").attr("value", data.count);
 	
 }
@@ -80,6 +80,18 @@ $(function(){
 		text-align: left;
 	}
 </style>
+
+<div class="row">
+	<div class="alert alert-light col" role="alert">
+		<!-- 게시판 안내사항 -->
+		<p>
+			<strong>
+			학생들이 평가한 강의 내역을 확인하실 수 있습니다.
+			</strong>
+		</p>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col-sm-12">
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
@@ -88,6 +100,7 @@ $(function(){
 					<th width="1%">No</th>
 					<th width="10%">강의번호</th>
 					<th width="10%">강의명</th>
+					<th width="10%">개설연도/학기</th>
 					<th width="10%">이수구분</th>
 					<th width="10%">평가점수</th>
 					<th width="10%">상세</th>
@@ -99,6 +112,7 @@ $(function(){
 						<td>${stat.count}</td>
 						<td>${mineEvlList.lecaCd}</td>
 						<td>${mineEvlList.lecaNm}</td>
+						<td>${mineEvlList.lecaYr}년 ${mineEvlList.lecaSem}학기</td>
 						<td>${mineEvlList.lecaCate}</td>
 						<td>${mineEvlList.evlScore}</td>
 						<td>
@@ -115,7 +129,7 @@ $(function(){
 <!-- 모달 -->
 <!-- 상세정보확인 -->
 <div class="modal fade" id="modal-lg" style="display:none;" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">강의 평가 상세</h4>
@@ -133,8 +147,11 @@ $(function(){
 									<div class="row mt-1 mb-2">
 										<div class="col-4">
 											<label for="lecaNm" class="form-label">강의명</label> 
-											<input type="text" class="form-control stu" id="lecaNm"
-												name="lecaNm" readonly />
+											<input type="text" class="form-control stu" id="lecaNm" name="lecaNm" readonly />
+										</div>
+										<div class="col-4">
+											<label for="evlScore" class="form-label">평가 점수</label> 
+											<input type="text" class="form-control stu" id="evlScore" name="evlScore" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
@@ -171,23 +188,18 @@ $(function(){
 												name="lecHcnt" readonly />
 										</div>
 									</div>
-									<div class="row mb-2">
-										<div class="col-4">
-											<label for="count" class="form-label">응답자 수</label> 
-											<input type="text" class="form-control stu" id="count"
-												name="count" readonly />
-										</div>
-										<div class="col-4">
-											<label for="recYn" class="form-label">응답 비율</label> 
-											<input type="text" class="form-control stu" id="recYn"
-												name="recYn" readonly />
-										</div>
-										<div class="col-4">
-											<label for="evlScore" class="form-label">평가 점수</label> 
-											<input type="text" class="form-control stu" id="evlScore"
-												name="evlScore" readonly />
-										</div>
-									</div>
+<!-- 									<div class="row mb-2"> -->
+<!-- 										<div class="col-4"> -->
+<!-- 											<label for="count" class="form-label">응답자 수</label>  -->
+<!-- 											<input type="text" class="form-control stu" id="count" -->
+<!-- 												name="count" readonly /> -->
+<!-- 										</div> -->
+<!-- 										<div class="col-4"> -->
+<!-- 											<label for="recYn" class="form-label">응답 비율</label>  -->
+<!-- 											<input type="text" class="form-control stu" id="recYn" -->
+<!-- 												name="recYn" readonly /> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 								</div>
 							</div>
 						</div>

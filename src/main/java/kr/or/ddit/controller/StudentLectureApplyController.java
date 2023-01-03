@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Allocation;
+import kr.or.ddit.domain.Building;
 import kr.or.ddit.domain.College;
 import kr.or.ddit.domain.Credit;
 import kr.or.ddit.domain.Department;
@@ -28,6 +29,7 @@ import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.AllocationService;
+import kr.or.ddit.service.BuildingService;
 import kr.or.ddit.service.CollegeService;
 import kr.or.ddit.service.CreditService;
 import kr.or.ddit.service.DepartmentService;
@@ -35,7 +37,6 @@ import kr.or.ddit.service.GraduateCreditService;
 import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.LectureService;
 import kr.or.ddit.service.StudentLectureApplyService;
-import kr.or.ddit.util.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/student/lectureApply")
@@ -58,9 +59,9 @@ public class StudentLectureApplyController {
 	@Autowired
 	AllocationService allocationService;
 	@Autowired
-	FileUploadUtil fileUploadUtil;
-	@Autowired
 	LectureApplyService lectureApplyService;
+	@Autowired
+	BuildingService buildingService;
 	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_MANAGER')")
@@ -112,13 +113,15 @@ public class StudentLectureApplyController {
 		
 		log.info("상세 계획서 코드 : " + lecaCd);
 		
-		Professor professor = this.lectureApplyService.inquiryFormProInfoStudentApply(lecaCd);
+		Professor professor = this.lectureApplyService.proInfoByLecaCd(lecaCd);
 		List<LecApply> lecApplyList = this.lectureApplyService.inquiryFormLecApInfo(lecaCd);
 		List<Weekplan> weekPlanList = this.lectureApplyService.inquiryWeekPlan(lecaCd);
+		List<Building> buildingList = this.buildingService.buildingByProfessorList(professor.getProNo());
 		
 		model.addAttribute("professor", professor);
 		model.addAttribute("lecApplyList", lecApplyList);
 		model.addAttribute("weekPlanList", weekPlanList);
+		model.addAttribute("buildingList",buildingList);
 		
 		return "professor/lecApplyForm/inquiryForm";
 	}

@@ -10,21 +10,6 @@
 </script>
 <style>
     /* 기본 틀 잡기 (사이버캠퍼스 / 변동 가능 / suwon.css 파일에 넣었다가 주석 처리함) */
-    .card {
-        min-height: 780px;
-        width: 100%;
-        padding: 2%;
-        border-top: 5px solid #112a63;
-        border-radius: 10px 10px 0 0;
-        max-width: 1400px;
-        min-width: 1090px;
-        margin: 0 auto;
-    }
-
-    .card-body {
-        width: 100%;
-    }
-
     .table-responsive-sm {
         margin-bottom: 40px;
         min-height: 500px;
@@ -73,6 +58,19 @@
         vertical-align: middle;
         color: #3364c4;
     }
+
+    .p-0 {
+        padding: 0 !important;
+    }
+
+    .row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -7.5px;
+        margin-left: -7.5px;
+    }
 </style>
 
 <%
@@ -85,30 +83,42 @@
 
 <div class="quizWrapper">
     <div class="col-lg-12">
-        <div class="card" style="min-height: 700px;">
-            <div class="card-body">
-                <p class="current-page">공사사항</p>
-                <div class="alert alert-light" role="alert"
-                     style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
-                </div>
-                <a href="/notice/noticeForm" class="btn btn-sm btn-primary" style="float: right;">등록</a>
-                <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span
-                        style="color:red;">${totalRow }</span>건의 게시물이 있습니다</p>
-                <div class="tab-content">
-                    <div class="tab-pane show active" id="hoverable-rows-preview">
-                        <div class="table-responsive-sm">
-                            <table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
-                                <thead class="table-light">
-                                <tr style="border-top: 2px solid #112a63">
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="noticeBasic" items="${noticeBasicList }" varStatus="status">
-                                    <fmt:formatDate var="noticeRegDate" value="${noticeBasic.noticeReg }"
-                                                    pattern="yyyy/MM/dd"/>
-                                    <tr>
-                                        <td class="col-title">
-                                            <a href="/notice/list/${noticeBasic.noticeCd}/detail">
+        <h4 class="row p-0">공사사항</h4>
+        <div class="alert alert-light" role="alert"
+             style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
+        </div>
+        <a href="/notice/noticeForm" class="btn btn-sm btn-primary" style="float: right;">등록</a>
+<%--        <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span--%>
+<%--                style="color:red;">${totalRow }</span>건의 게시물이 있습니다</p>--%>
+        <div class="tab-content">
+            <div class="tab-pane show active" id="hoverable-rows-preview">
+                <div class="table-responsive-sm">
+                    <table class="table mb-0" style="border-bottom: 1px solid #eef2f7">
+                        <thead class="table-light">
+                        <tr style="border-top: 2px solid #112a63">
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <form action="searchKeyword" method="post" name="searchForm">
+                            <sec:csrfInput/>
+                            <div class="search-wrap">
+                                <select name="searchOption">
+                                    <option value="0">선택</option>
+                                    <option value="1">제목</option>
+                                    <option value="2">내용</option>
+                                </select>
+                                <input type="text" name="keyword" placeholder="검색어 입력"/>
+                                <button type="submit">검색</button>
+                                <br>
+                            </div>
+                        </form>
+
+                        <c:forEach var="noticeBasic" items="${noticeBasicList }" varStatus="status">
+                            <fmt:formatDate var="noticeRegDate" value="${noticeBasic.noticeReg }"
+                                            pattern="yyyy/MM/dd"/>
+                            <tr>
+                                <td class="col-title">
+                                    <a href="/notice/list/${noticeBasic.noticeCd}/detail">
                                                     <span class="txt">
                                                         <c:out value="${noticeBasic.noticeTtl }"/>
                                                            <c:if test="${ date <= noticeRegDate }">
@@ -119,36 +129,32 @@
                                                                 <img src="../../../resources/image/file.png" alt="file"
                                                                      class="icon-file">
 <%--                                                            </c:if>--%>
-
                                                     </span>
-                                            </a>
-                                        </td>
-                                            <%--                                        <td style="text-align: center;">${noticeBasic.noticeHit}</td>--%>
-                                        <td style="text-align: center;">${noticeRegDate }</td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div id="pageBarBtn" style="text-align:center;">
-                    <button type="button" class="btn btn-light" disabled="" onclick="#"><i
-                            class="uil-angle-double-left"></i></button>
-                    <button type="button" class="btn btn-light" disabled="" onclick="#"><i
-                            class="uil uil-angle-left"></i></button>
-
-
-<%--                    페이지--%>
-                    <c:forEach var="pageNumber" begin="1" end="${totalPage}">
-                        <a href="list?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
-                    </c:forEach>
-
-                    <button type="button" class="btn btn-light" onclick="#"><i class="uil uil-angle-right"></i></button>
-                    <button type="button" class="btn btn-light" disabled="" onclick="#"><i
-                            class="uil-angle-double-right"></i></button>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;">${noticeRegDate }</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+        <div id="pageBarBtn" style="text-align:center;">
+            <button type="button" class="btn btn-light" disabled="" onclick="#"><i
+                    class="uil-angle-double-left"></i></button>
+            <button type="button" class="btn btn-light" disabled="" onclick="#"><i
+                    class="uil uil-angle-left"></i></button>
+
+
+            <%--                    페이지--%>
+            <c:forEach var="pageNumber" begin="1" end="${totalPage}">
+                <a href="list?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
+            </c:forEach>
+
+            <button type="button" class="btn btn-light" onclick="#"><i class="uil uil-angle-right"></i></button>
+            <button type="button" class="btn btn-light" disabled="" onclick="#"><i
+                    class="uil-angle-double-right"></i></button>
         </div>
     </div>
 </div>

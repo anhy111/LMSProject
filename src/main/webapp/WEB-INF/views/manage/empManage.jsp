@@ -296,11 +296,23 @@ $(function(){
 
 
 </script>
+
+<div class="row">
+	<div class="alert alert-light col" role="alert">
+		<!-- 게시판 안내사항 -->
+		<p>
+			<strong>
+			교직원들의 상세 내역을 볼 수 있습니다.
+			</strong>
+		</p>
+	</div>
+</div>
+
 <div style="text-align:center;">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 	<thead>
 		<tr>
-			<th width="10%">번호</th>
+			<th width="3%">No</th>
 			<th width="10%">교번</th>
 			<th width="10%">이름</th>
 			<th width="10%">부서</th>
@@ -322,13 +334,24 @@ $(function(){
 				<td>${employeeList.empDiv}</td>
 				<td>${employeeList.empPos}</td>
 				<td>
-					<button class="btn btn-block btn-outline-info btn-sm btnDetail" 
-						value="${employeeList.empNo}" data-toggle="modal" data-target="#modal-lg">상세</button>
+					<button class="btn btn-block btn-outline-secondary btn-sm btnDetail" 
+						value="${employeeList.empNo}" data-toggle="modal" data-target="#modal-lg">교직원 상세</button>
 				</td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
+</div>
+
+<div style="text-align:center;">
+	<c:forEach var="pageNumber" begin="1" end="${totalPage}">
+		<c:if test="${param.viewPage==pageNumber}">
+			<a href="/manage/empManage?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
+		</c:if>
+		<c:if test="${param.viewPage!=pageNumber}">
+			<a href="/manage/empManage?viewPage=${pageNumber}" class="btn btn-outline-primary">${pageNumber}</a>
+		</c:if>
+	</c:forEach>
 </div>
 
 <!-- 모달 -->

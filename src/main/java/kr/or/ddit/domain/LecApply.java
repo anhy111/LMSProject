@@ -45,6 +45,11 @@ public class LecApply {
     private int lecaRoom;
 
     private List<Weekplan> weekPlanList;	//주차계획
+
     
     private String proNm; //교수명
+
+
+    private int lecaYn;			// 승인구분
+
 }

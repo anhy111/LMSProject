@@ -11,8 +11,7 @@
 		     , B.BLD_SNM
 		     , R.ROOM_NO
 		     , A.ALT_DT
-		     , A.ALT_ST
-		     , A.ALT_EN
+		     , A.ALT_TT
 		FROM  ALLOCATION A, LECTURE L, LEC_APPLY LA, ROOM R, BUILDING B, STU_LEC SL
 		WHERE A.LECA_CD = L.LECA_CD
 		AND LA.LECA_CD = L.LECA_CD
@@ -27,8 +26,7 @@
 		     , B.BLD_SNM
 		     , R.ROOM_NO
 		     , A.ALT_DT
-		     , A.ALT_ST
-		     , A.ALT_EN
+		     , A.ALT_TT
 		FROM  ALLOCATION A, LECTURE L, LEC_APPLY LA, ROOM R, BUILDING B, WISH W
 		WHERE A.LECA_CD = L.LECA_CD
 		AND LA.LECA_CD = L.LECA_CD
@@ -38,14 +36,17 @@
 		AND W.STU_NO = #{stuNo}
 	</select>
 	
-	<select id="allocationByRoomList" parameterType="int" resultType="allocation">
-		SELECT ROOM_CD
-		     , LECA_CD
-		     , ALT_DT
-		     , ALT_ST
-		     , ALT_EN
-		FROM ALLOCATION
-		WHERE ROOM_CD = ${roomNo}
-	</select>
+	<update id="insertTimeTable" parameterType="java.util.List">
+		<foreach collection="list" item="allocation"
+			open="INSERT ALL " index="index" close="SELECT * FROM DUAL" separator=" ">
+			INTO ALLOCATION(ROOM_CD, LECA_CD, ALT_DT, ALT_TT)
+   				 VALUES(#{allocation.roomCd},#{allocation.lecaCd},#{allocation.altDt},#{allocation.altTt})
+		</foreach>
+	</update>
+	
+	<delete id="deledeleteTimeTable">
+		DELETE FROM ALLOCATION
+		WHERE LECA_CD = #{lecaCd}
+	</delete>
 </mapper>
 

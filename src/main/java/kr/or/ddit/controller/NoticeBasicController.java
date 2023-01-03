@@ -1,7 +1,6 @@
 package kr.or.ddit.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -34,23 +34,84 @@ public class NoticeBasicController {
 
     private final FileUploadUtil fileUploadUtil;
 
-    private static final String HOME = "redirect:/notice/list";
+    private static final String VIEWS_NOTICE_MAIN = "notice/test";
+
+    private static final String VIEWS_NOTICE_DETAIL = "notice/detail";
+
+    private static final String VIEWS_NOTICE_SEARCH = "notice/searchList";
+
+    private static final String REDIRECT_MAIN = "redirect:/notice/list";
+
 
     //공지사항 리스트
     @GetMapping("/list")
-    public String testHome(Model model, @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
+    public String testHome(Model model,
+                           @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage) {
 
         //총 행의 수
-        int totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
+        int totalRow = noticeBasicService.getNoticeBasicTotalRow();
+
+        //총 페이지의 수 계산
         int totalPage = (int) Math.ceil((double) totalRow / 10);
 
-        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicList(viewPage);
+        List<NoticeBasic> noticeBasicList = noticeBasicService.noticeBasicList(viewPage);
 
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
         model.addAttribute("totalPage", totalPage);
 
-        return "notice/test";
+        return VIEWS_NOTICE_MAIN;
+    }
+
+    @PostMapping("/searchKeyword")
+    public String searchKeyword(Model model,
+                                @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage,
+                                @RequestParam int searchOption,
+                                @RequestParam String keyword) {
+
+        // 정규화 완료 Why? Query Injection을 통해서 DB접근 가능성 차단
+        String sanitizedKeyword = keyword.replaceAll("[^a-zA-Z0-9]", "");
+
+        //총 행의 수
+        int totalRow = 0;
+
+        //총 페이지의 수 계산
+        int totalPage = 0;
+
+        List<NoticeBasic> noticeBasicList = null;
+
+        // searchOption을 매개변수로 보내어 통합 가능.
+        switch (searchOption) {
+            case 1:
+                //총 행의 수 계산
+                totalRow = noticeBasicService.getNoticeBasicTotalRowTitle(sanitizedKeyword);
+                // 제목 검색 코드
+                noticeBasicList = noticeBasicService.noticeBasicSearchTitle(sanitizedKeyword);
+                break;
+
+            case 2:
+                //총 행의 수 계산
+                totalRow = noticeBasicService.getNoticeBasicTotalRowContent(sanitizedKeyword);
+                // 내용 검색 코드
+                noticeBasicList = noticeBasicService.noticeBasicSearchContent(sanitizedKeyword);
+                break;
+
+            default:
+                //총 행의 수
+                totalRow = noticeBasicService.getNoticeBasicTotalRow();
+                // 전체 게시글 조회 코드
+                noticeBasicList = noticeBasicService.noticeBasicList(viewPage);
+                break;
+        }
+
+        //총 페이지의 수 계산
+        totalPage = (int) Math.ceil((double) totalRow / 10);
+
+        model.addAttribute("noticeBasicList", noticeBasicList);
+        model.addAttribute("totalRow", totalRow);
+        model.addAttribute("totalPage", totalPage);
+
+        return VIEWS_NOTICE_SEARCH;
     }
 
     //공지사항 등록 폼
@@ -66,34 +127,41 @@ public class NoticeBasicController {
     //공지사항 등록(Save)
     @PostMapping("/noticeForm")
     public String createNotice(NoticeForm form,
-                               @RequestParam MultipartFile[] files2
-    ) {
+                               @RequestParam MultipartFile[] files2) {
 
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
-        noticeBasicService.noticeBasicSave(noticeBasic);
         if (files2[0].getSize() > 0) {
             fileUploadUtil.fileUploadAction(files2);
+            this.noticeBasicService.noticeBasicSaveWithAttach(noticeBasic);
+        } else {
+            this.noticeBasicService.noticeBasicSave(noticeBasic);
         }
 
-        return HOME;
+        return REDIRECT_MAIN;
     }
 
     //공지사항 상세페이지
     @GetMapping("/list/{noticeBasic.noticeCd}/detail")
     public String detail(@PathVariable("noticeBasic.noticeCd") Long noticeCd, Model model) {
 
+        // 조회수 증가
         noticeBasicService.updateViewCount(noticeCd);
 
+
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
+        NoticeBasic noticeBasicPre = noticeBasicService.findOne(noticeCd - 1);
         NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
+        NoticeBasic noticeBasicNext = noticeBasicService.findOne(noticeCd + 1);
 
         // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
+        model.addAttribute("formPre", noticeBasicPre);
         model.addAttribute("form", noticeBasic);
+        model.addAttribute("formNext", noticeBasicNext);
 
-        return "notice/detail";
+        return VIEWS_NOTICE_DETAIL;
     }
 
     //공지사항 수정페이지
@@ -108,11 +176,12 @@ public class NoticeBasicController {
     }
 
     @PostMapping("/update/{form.noticeCd}")
-    public String updateNotice(@ModelAttribute("form") NoticeBasic form) {
+    public String updateNotice(@ModelAttribute("form") NoticeBasic form, RedirectAttributes redirectAttributes) {
 
         noticeBasicService.noticeBasicUpdate(form);
+        redirectAttributes.addAttribute("status", true);
 
-        return HOME;
+        return REDIRECT_MAIN;
     }
 
     //공지사항 삭제
@@ -121,10 +190,7 @@ public class NoticeBasicController {
 
         noticeBasicService.delete(noticeCd);
 
-        return HOME;
+        return REDIRECT_MAIN;
     }
-
-    //공지사항 등록
-
 
 }

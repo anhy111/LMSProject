@@ -56,6 +56,9 @@ public interface LectureService {
 
 	// 수강편람 강의 조회
 	public List<Lecture> searchList(StudentLecture studentLecture);
+	
+	// 결재 시 강의 테이블 승인상태 변경
+	public int approveLecture(Lecture lecture);
 
     List<StudentLectureForm> studentLectureSearchAll(String studentId);
 }

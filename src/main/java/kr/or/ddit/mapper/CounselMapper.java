@@ -12,6 +12,8 @@ public interface CounselMapper {
 	public int applyInsert(Counsel counsel);
 	//학생의 담당교수 목록
 	public List<Counsel> listOfProfessor(int stuNo);
+	//학생의 상담 상세
+	public Counsel applyDetail(int cnslCd);
 	//학생의 비대면 상담 내용 수정
 	public int applyModify(Counsel counsel);
 	//학생의 상담 삭제

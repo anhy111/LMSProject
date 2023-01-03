@@ -12,4 +12,8 @@ public interface AllocationMapper {
     
     // 학생 장바구니의 강의시간표
     List<Allocation> studentSaveTimeTable(StudentLecture studentLecture);
+    
+    int insertTimeTable(List<Allocation> allocationList);
+
+	int deledeleteTimeTable(int lecaCd);
 }

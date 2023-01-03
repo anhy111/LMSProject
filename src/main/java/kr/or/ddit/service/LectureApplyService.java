@@ -3,6 +3,7 @@ package kr.or.ddit.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Professor;
 import kr.or.ddit.domain.Subject;
@@ -21,7 +22,7 @@ public interface LectureApplyService {
 	public Professor inquiryFormProInfo(int proNo);
 	
 	// 수강신청시 교수정보 불러오기
-	public Professor inquiryFormProInfoStudentApply(int lecaCd);
+	public Professor proInfoByLecaCd(int lecaCd);
 
 	public List<LecApply> inquiryFormLecApInfo(int lecaCd);
 
@@ -53,9 +54,9 @@ public interface LectureApplyService {
 
 	public int getSubCdList(String subNm);
 
+	public List<LecApply> alreadyTimeTableList(LecApply lecApply);
 
-
-
+	public Approval getLecaApproval(int lecaCd);
 
 
 

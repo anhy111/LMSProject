@@ -1,5 +1,6 @@
 package kr.or.ddit.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,16 +35,13 @@ public class CounselController {
 	/*
 	 *  학생 컨트롤러
 	 */
-	
 	@GetMapping("/studentside/applyList")
 	public String studentCounselApplyList(Model model, int stuNo) {
 	List<Counsel> professorList = this.counselService.listOfProfessor(stuNo);
-		model.addAttribute("professorList", professorList);
 		List<Counsel> allList = this.counselService.studentApplyList(stuNo);
 		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
 		List<Counsel> counselList = new ArrayList<Counsel>();
 		List<Record> recordList = this.recordService.RecordList(stuNo);
-		model.addAttribute("recordList", recordList);
 		for (Counsel counsel : allList) {
 			log.info("리스트보자 : " + counsel.toString());
 			if(counsel.getCnslType().equals("비대면") || counsel.getCnslType().equals("반려")) {
@@ -54,76 +52,62 @@ public class CounselController {
 				model.addAttribute("counselList", counselList);
 			}
 		}
-		model.addAttribute("bodyTitile","상담내역조회");
-//		log.info(nonFaceCounselList.toString())	;
+		model.addAttribute("recordList", recordList);
+		model.addAttribute("professorList", professorList);
+		model.addAttribute("bodyTitle","상담 내역");
 		//forwarding
 		return "counsel/studentside/applyList";
 	}
-	
-	@GetMapping("/studentside/applyInsert")
-	public String studentCounselApplyInsert(Model model,  int stuNo) {
-	
-		//forwarding
-		return "counsel/studentside/applyInsert";
-	}
-	
+	@ResponseBody
 	@PostMapping("/studentside/applyInsert")
-	public String studentCounselApplyInsertPost(@ModelAttribute Counsel counsel) {
+	public int studentCounselApplyInsertPost(@RequestBody Counsel counsel) {
 		log.info("어떻게들어왔는지 함보자 : " + counsel.toString());
-		this.counselService.applyInsert(counsel);
-		
+		int result = this.counselService.applyInsert(counsel);
 		//forwarding
-		return "redirect:/counsel/studentside/applyList?stuNo="+counsel.getStuNo();
+		return result;
 	}
 	
-	@GetMapping("/studentside/applyModify")
-		public String studentApplyModify(int cnslCd, Model model) {
-//		log.info("글번호 : " + cnslCd);
-		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-//		log.info("함보자 : ", answerDetail.getCnslRpl());
-		model.addAttribute("answerDetail", answerDetail);
-		return "counsel/studentside/applyModify";
+	@ResponseBody
+	@PostMapping("/studentside/applyDetail")
+	public Counsel studentCounselApplyDetail(@RequestBody Counsel counsel) {
+		 Counsel counselDetail = this.counselService.applyDetail(counsel.getCnslCd());
+		return counselDetail;
 	}
 	
 	@ResponseBody
 	@PostMapping("/studentside/applyModify")
-	public int studentApplyModifyPost(@RequestBody Counsel counsel) {
-		log.info("아작스고고" + counsel.toString());
+	public int studentCounselApplyModify(@RequestBody Counsel counsel) {
 		int result = this.counselService.applyModify(counsel);
-		log.info("result " + result);
-		if(result < 0) {
-			log.info("실패ㅜ");
+		if(result == 0) {
+			log.info("업데이트 실패");
 			return 0;
-		} else {
-			log.info("성공!");
-			return 1;
+		} else { 
+			log.info("업데이트 실패");
+			return result;
 		}
 	}
 	
-	
-	@GetMapping("/studentside/checkAnswer")
-	public String studentCheckAnswer(int cnslCd, Model model) {
-//		log.info("글번호 : " + cnslCd);
-		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-//		log.info("함보자 : ", answerDetail.getCnslRpl());
-		model.addAttribute("answerDetail", answerDetail);
-			return "counsel/studentside/checkAnswer";
-	}
-	
-	@GetMapping("/studentside/checkReject")
-	public String studentCheckrReject(int cnslCd, Model model) {
-		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-		model.addAttribute("answerDetail", answerDetail);
-			return "counsel/studentside/checkReject";
-	}
-	
-	@GetMapping("/studentside/answerNote")
-	public String studentCheckAnswerNote(int cnslCd, Model model) {
-		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
-		log.info("답변내용 : " + answerDetail.toString());
-		model.addAttribute("answerDetail",answerDetail);
-		return "counsel/studentside/answerNote";
-	}
+//	@GetMapping("/studentside/checkAnswer")
+//	public String studentCheckAnswer(int cnslCd, Model model) {
+//		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
+//		model.addAttribute("answerDetail", answerDetail);
+//			return "counsel/studentside/checkAnswer";
+//	}
+//	
+//	@GetMapping("/studentside/checkReject")
+//	public String studentCheckrReject(int cnslCd, Model model) {
+//		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
+//		model.addAttribute("answerDetail", answerDetail);
+//			return "counsel/studentside/checkReject";
+//	}
+//	
+//	@GetMapping("/studentside/answerNote")
+//	public String studentCheckAnswerNote(int cnslCd, Model model) {
+//		Counsel answerDetail = this.counselService.answerNoteDetail(cnslCd);
+//		log.info("답변내용 : " + answerDetail.toString());
+//		model.addAttribute("answerDetail",answerDetail);
+//		return "counsel/studentside/answerNote";
+//	}
 	
 	@ResponseBody
 	@PostMapping("/studentside/deleteApply")
@@ -132,23 +116,13 @@ public class CounselController {
 		return result;
 	}
 	
-//	@ResponseBody
-//	@PostMapping("/studentside/selectRecord")
-//	public List<Record> searchRecordList(@RequestBody int stuNo){
-//		log.info("왓니");
-//		List<Record> recordsList = this.recordService.RecordList(stuNo);
-//		
-//		return recordsList;
-//	}
 	/*
 	 *  교수 컨트롤러
 	 */
 	@GetMapping("/professorside/counselList")
-	public String professorCounselList(Model model, HttpServletRequest request) {
+	public String professorCounselList(Model model, int proNo) {
 		String stuNm = "";
-		HttpSession session = request.getSession();
 		
-		int proNo = (int)session.getAttribute("no");
 		List<Counsel> allList = this.counselService.professorCounselList(proNo);
 		List<Counsel> nonFaceCounselList = new ArrayList<Counsel>();
 		List<Counsel> counselList = new ArrayList<Counsel>();
@@ -164,60 +138,39 @@ public class CounselController {
 				model.addAttribute("counselList", counselList);
 			}
 		}
+		model.addAttribute("bodyTitle","상담 내역");
 		//forwarding
 		return "counsel/professorside/counselList";
 	}
-	@GetMapping("/professorside/answer")
-	public String professorCounselAnswer(int cnslCd, Model model) {
-//		log.info("글번호 : " + cnslCd);
-		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-//		log.info("함보자 : ", answerDetail.getCnslRpl());
-		model.addAttribute("answerDetail", answerDetail);
-		return "counsel/professorside/answer";
-	}
-	
-	@GetMapping("/professorside/answerModify")
-	public String professorCounselAnswerModify(int cnslCd, Model model) {
-//		log.info("글번호 : " + cnslCd);
-		Counsel answerDetail = this.counselService.answerDetail(cnslCd);
-//		log.info("함보자 : ", answerDetail.getCnslRpl());
-		model.addAttribute("answerDetail", answerDetail);
-		return "counsel/professorside/answerModify";
-		
-	}
 	@ResponseBody
 	@PostMapping("/professorside/answer")
-	public int professorCounselAnswerPost(@RequestBody Counsel counsel, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int proNo = (int)session.getAttribute("no");
-		counsel.setProNo(proNo);
-		log.info("답변 세팅 어케됐누?: " + counsel.toString());
-		int result = this.counselService.applyAnswerUpdate(counsel);
-		if(result > 0) {
-			return result;
-		} else {
-			return 0;
-		}
+	public Counsel professorCounselAnswer(@RequestBody Counsel counsel) {
+		Counsel answerDetail = this.counselService.answerDetail(counsel.getCnslCd());
+		return answerDetail;
 	}
 	
-	@GetMapping("/professorside/answerNoteWriteUpdate")
-	public String prefessorCounselAnswerNote(Model model, int cnslCd) {
-		Counsel answerNoteDetail = this.counselService.answerNoteDetail(cnslCd);
+	@ResponseBody
+	@PostMapping("/professorside/answerModify")
+	public Counsel professorCounselAnswerModify(@RequestBody Counsel counsel) {
+		Counsel answerDetail = this.counselService.answerDetail(counsel.getCnslCd());
+		return answerDetail;
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/professorside/answerNoteWrite")
+	public Counsel prefessorCounselAnswerNote(@RequestBody Counsel counsel) {
+		Counsel answerNoteDetail = this.counselService.answerNoteDetail(counsel.getCnslCd());
 		log.info("교수의 대면 상담 상세 : " + answerNoteDetail.toString());
-		model.addAttribute("answerNoteDetail", answerNoteDetail);
-		return "counsel/professorside/answerNoteWriteUpdate";
+		return answerNoteDetail;
 	}
 	
 	@ResponseBody	
 	@PostMapping("/professorside/answerNoteWriteUpdate")
-	public int prefessorCounselAnswerNotePost(@RequestBody Counsel counsel) {
+	public Counsel prefessorCounselAnswerNotePost(@RequestBody Counsel counsel) {
 		log.info("들어온값 확인 : " + counsel.toString());
-		int result = this.counselService.answerNoteWriteUpdate(counsel);
-		if(result > 0) {
-			return result;
-		} else {
-			log.info("실패");
-			return 0;
-		}
+		this.counselService.answerNoteWriteUpdate(counsel);
+		Counsel answerNoteDetail = this.counselService.answerNoteDetail(counsel.getCnslCd());
+		return answerNoteDetail;
 	}
 }

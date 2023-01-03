@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.ddit.domain.Approval;
 import kr.or.ddit.domain.SclHistory;
@@ -47,8 +48,8 @@ public class StuManageOfProServiceImpl implements StuManageOfProService{
 	}
 	
 	@Override
-	public List<SclHistory> schStuList(String depCd){
-		return this.stuManageOfProMapper.schStuList(depCd);
+	public List<SclHistory> schStuList(Map<String, String> map){
+		return this.stuManageOfProMapper.schStuList(map);
 	}
 	
 	@Override
@@ -56,22 +57,35 @@ public class StuManageOfProServiceImpl implements StuManageOfProService{
 		return this.stuManageOfProMapper.schStuRcmd(map);
 	}
 	
+	@Transactional
 	@Override
 	public int deanRecommendation(Map<String, String> map, HttpServletRequest req) {
+		
+		int deanRecommendation = this.stuManageOfProMapper.deanRecommendation(map);
+		
+		if(deanRecommendation <= 0 ) {
+			new RuntimeException();
+		}
 		
 		int proNo = (int) req.getSession().getAttribute("no");
 		int sclhCd = Integer.parseInt(map.get("sclhCd"));
 
-//		Approval approval = new Approval();
-//		approval.setProNo(proNo);
-//		approval.setApprTagCd(sclhCd);
-//		approval.setApprCate("APC002");
-//		int approvalResult = this.approvalService.insertApproval(approval);
-//		if (approvalResult <= 0) {
-//			log.info("approval실패");
-//			return 0;
-//		}
+		Approval approval = new Approval();
+		approval.setProNo(proNo);
+		approval.setApprTagCd(sclhCd);
+		approval.setApprCate("APC002");
+		int approvalResult = this.approvalService.insertApproval(approval);
+		if (approvalResult <= 0) {
+			log.info("approval실패");
+			new RuntimeException();
+		}
 		
-		return this.stuManageOfProMapper.deanRecommendation(map);
+		return approvalResult;
 	}
+	
+	@Override
+	public int rejectRcmd(Map<String, String> map) {
+		return this.stuManageOfProMapper.rejectRcmd(map);
+	}
+	
 }

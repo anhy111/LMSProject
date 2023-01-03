@@ -21,7 +21,7 @@ public class TemplateController {
 	@GetMapping("/board")
 	public String boardTemplate(Model model) {
 		model.addAttribute("bodyTitle","템플릿 타이틀");
-		List<Student> list = manageService.studentList();
+		List<Student> list = manageService.studentList(1);
 		model.addAttribute("list",list);
 		return "customTemplates 복붙해서 쓰세요/boardTemplate";
 	}
@@ -29,7 +29,7 @@ public class TemplateController {
 	@GetMapping("/dataTable")
 	public String dataTableTemplate(Model model) {
 		model.addAttribute("bodyTitle","데이터 테이블 템플릿 타이틀");
-		List<Student> list = manageService.studentList();
+		List<Student> list = manageService.studentList(1);
 		model.addAttribute("list",list);
 		return "customTemplates 복붙해서 쓰세요/dataTableTemplate";
 	}
