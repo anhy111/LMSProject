@@ -472,7 +472,6 @@ $(function(){
 								</tbody>
 							</table>
 						</div>
-
 					</div>
 					
 					<div id="stuBtn" align="right">
@@ -588,16 +587,6 @@ $(function(){
 									<div class="hls ps20"
 										style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 161.60mm; height: 4.23mm; width: 170mm;">
 										<span class="hrt cs10">학과장 : &nbsp;</span>
-										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
-										<span class="hrt cs10">(인)</span>
-									</div>
-									<div class="hls ps20"
-										style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 168.37mm; height: 4.23mm; width: 170mm;"></div>
-									<div class="hls ps20"
-										style="line-height: 3.43mm; white-space: nowrap; left: 0mm; top: 175.15mm; height: 4.23mm; width: 170mm;">
-										<span class="hrt cs10">관리자 : &nbsp;</span>
 										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>
 										<span class="htC" style="left: 1.06mm; width: 11.99mm; height: 100%;"></span>

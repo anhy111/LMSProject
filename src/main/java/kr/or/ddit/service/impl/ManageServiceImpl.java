@@ -24,8 +24,8 @@ public class ManageServiceImpl implements ManageService{
 	FileUploadUtil fileUploadUtil;
 	
 	@Override
-	public List<Student> studentList() {
-		return this.manageMapper.studentList();
+	public List<Student> studentList(int viewPage) {
+		return this.manageMapper.studentList(viewPage);
 	}
 	
 	@Override
@@ -89,8 +89,8 @@ public class ManageServiceImpl implements ManageService{
 	}
 	
 	@Override
-	public List<Employee> employeeList(){
-		return this.manageMapper.employeeList();
+	public List<Employee> employeeList(int viewPage){
+		return this.manageMapper.employeeList(viewPage);
 	}
 	
 	@Override
@@ -131,5 +131,15 @@ public class ManageServiceImpl implements ManageService{
 	@Override
 	public List<Evaluation> mineEvlList(String no){
 		return this.manageMapper.mineEvlList(no);
+	}
+	
+	@Override
+	public int stuPaging() {
+		return this.manageMapper.stuPaging();
+	}
+	
+	@Override
+	public int empPaging() {
+		return this.manageMapper.empPaging();
 	}
 }

@@ -21,7 +21,12 @@ function fn_add(data){
 	$("#stuNo").attr("value", data.stuNo);
 	$("#stuNm").attr("value", data.stuNm);
 	$("#stuTel").attr("value", data.stuTel);
+	$(".approval").attr("value", data.recCd);
 	$("#recRsn").html(data.recRsn);
+	$("#cnslYn").attr("value", data.cnslYn);
+	$("#cnslTtl").attr("value", data.cnslTtl);
+	$("#cnslCon").text(data.cnslCon);
+	$("#cnslRpl").text(data.cnslRpl);
 	
 }
 
@@ -29,7 +34,7 @@ function fn_add(data){
 function loadSearchList(){
 	
 	let record = $("#record").val();
-	let approval = $("#approval").val();
+	let approvalSearch = $("#approvalSearch").val();
 	let yr = $("#yr").val();
 	let sem = $("#sem").val();
 	let name = $("#name").val();
@@ -37,7 +42,7 @@ function loadSearchList(){
 	
 	let data = {
 		rgbCd : record,
-		recYn : approval,
+		recYn : approvalSearch,
 		recYr : yr,
 		recSem : sem,
 		stuNm : name
@@ -78,7 +83,7 @@ function loadSearchList(){
 							</div>
 						</td>
 						<td>\${student.rgbCd}</td>
-						<td>상담여부?</td>
+						<td id="cnslYn\${index}">\${student.cnslYn}</td>
 						<td id="YOrN\${index}">\${student.recYn}</td>
 						<td><button alt="\${student.recYn}"
 								class="btn btn-block btn-outline-secondary btn-sm btnDetail"
@@ -93,6 +98,14 @@ function loadSearchList(){
 					$("#YOrN"+i).css("color", "blue");
 				}else if($("#YOrN"+i).html()=="반려"){
 					$("#YOrN"+i).css("color", "red");
+				}
+			}
+			
+			for(let i=0;i<result.length; i++){
+				if($("#cnslYn"+i).html()=="승인"){
+					$("#cnslYn"+i).css("color", "blue");
+				}else if($("#cnslYn"+i).html()=="반려"){
+					$("#cnslYn"+i).css("color", "red");
 				}
 			}
 		}
@@ -149,17 +162,19 @@ $(function(){
 		
 	});
 	
-	$("#Approval").on("click", function(){
+	$(document).on("click", "#approval", function(){
 		
-		let Yn = $(this).val();
-		let stuNo = $("#stuNo").val();
-		let recRej = ""
+// 		alert("이거맞지?");
+		
+		let Yn = 'AP001';
+		let recCd = $(".approval").val();
+		let recRej = "";
 		let data = {
 				"Yn":Yn,
-				"stuNo":stuNo,
+				"recCd":recCd,
 				"recRej":recRej
 		}
-		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " recCd는 ?? " + recCd + " data 가져왓 " + JSON.stringify(data));
 		
 		
 		 Swal.fire({
@@ -187,14 +202,14 @@ $(function(){
 				                    '승인 완료',
 				                    '정상적으로 승인 되었습니다.',
 				                    'success'
-				                )
+		                ).then(function(){
+				        	window.location.reload(true);			        	
+				        });
 						
 						fn_add(data);
 						
 						$("#stuBtn1").css("display", "none");
 						$("#stuBtn2").css("display", "block");
-						
-						fn_list();
 						
 					},
 					error:function(request, status, error){
@@ -209,19 +224,19 @@ $(function(){
 		
 	});
 	
-	$("#reject").on("click", function(){
+	$(document).on("click", "#reject", function(){
 		
-		let Yn = $(this).val();
-		let stuNo = $("#stuNo").val();
+		let Yn = 'AP003'
+		let recCd = $(".approval").val();
 		let recRej = $(".recRej").val();
 		console.log("반려사유 들어와주라  " + recRej);
 		
 		let data = {
 				"Yn":Yn,
-				"stuNo":stuNo,
+				"recCd":recCd,
 				"recRej":recRej
 		}
-		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " recCd는 ?? " + recCd + " data 가져왓 " + JSON.stringify(data));
 		
 		$.ajax({
 			type: 'post',
@@ -238,14 +253,15 @@ $(function(){
 	                    '반려 완료',
 	                    '정상적으로 반려 되었습니다.',
 	                    'success'
-	                )
+	                ).then(function(){
+			        	window.location.reload(true);			        	
+			        });
 				
 				fn_add(data);
 				
 				$("#stuBtn1").css("display", "none");
 				$("#stuBtn3").css("display", "block");
 				
-				fn_list();
 				$(".recRej").val("");
 				$(".close").click();
 				
@@ -258,17 +274,17 @@ $(function(){
 		
 	});
 	
-	$(".cancel").on("click", function(){
+	$(document).on("click", ".cancel", function(){
 		
-		let Yn = $(this).val();
-		let stuNo = $("#stuNo").val();
+		let Yn = 'AP002';
+		let recCd = $(".approval").val();
 		let recRej = ""
 		let data = {
 				"Yn":Yn,
-				"stuNo":stuNo,
+				"recCd":recCd,
 				"recRej":recRej
 		}
-		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " stuNo는 ?? " + stuNo + " data 가져왓 " + JSON.stringify(data));
+		console.log("예스or노?? 1이면승인 3면반려 2면승인대기=> " + Yn + " recCd는 ?? " + recCd + " data 가져왓 " + JSON.stringify(data));
 		
 		 Swal.fire({
 	            title: '취소 하시겠습니까?',
@@ -296,15 +312,15 @@ $(function(){
 				                    '취소 완료',
 				                    '정상적으로 취소 되었습니다.',
 				                    'success'
-				                )
+			                ).then(function(){
+					        	window.location.reload(true);			        	
+					        });
 						
 						fn_add(data);
 						
 						$("#stuBtn1").css("display", "block");
 						$("#stuBtn3").css("display", "none");
 						$("#stuBtn2").css("display", "none");
-						
-						fn_list();
 						
 					},
 					error:function(request, status, error){
@@ -319,7 +335,7 @@ $(function(){
 		
 	});
 	
-	$("#msg").on("click", function(){
+	$(document).on("click", "#msg", function(){
 		
 		let stuNo = $("#stuNo").val();
 		let data = {"stuNo":stuNo}
@@ -364,7 +380,7 @@ $(function(){
 		</select>
 	</div>
 	<div class="form-group col-2">
-		<select id="approval" class="form-control" style="width: 100%;">
+		<select id="approvalSearch" class="form-control" style="width: 100%;">
 			<option value="">승인 여부</option>
 			<option value="AP001">승인</option>
 			<option value="AP002">승인대기</option>
@@ -374,6 +390,7 @@ $(function(){
 	<div class="form-group col-2 ">
 		<select id="yr" class="form-control" style="width: 100%;">
 			<option value="">신청연도</option>
+			<option value="2023">2023</option>
 			<option value="2022">2022</option>
 			<option value="2021">2021</option>
 			<option value="2020">2020</option>
@@ -430,93 +447,89 @@ $(function(){
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="col-md-11">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-md-11 offset-1">
-								<div class="container">
-									<div class="row mt-1 mb-2">
-										<div class="col-5">
-											<label for="recYn" class="form-label">승인여부</label> <input
-												type="text" class="form-control stu" id="recYn"
-												name="recYn" readonly />
-										</div>
-									</div>
-									<div class="row mb-2">
-										<div class="col-5">
-											<label for="rgbCd" class="form-label">신청구분</label> <input
-												type="text" class="form-control" id="rgbCd" name="rgbCd"
-												readonly />
-										</div>
-										<div class="col-5 offset-1">
-											<label for="recPer" class="form-label">신청기간</label> <input
-												type="text" class="form-control stu" id="recPer"
-												name="recPer" readonly />
-										</div>
-									</div>
-									<div class="row mb-2">
-										<div class="col-5">
-											<label for="recDt" class="form-label">신청일자</label> <input
-												type="text" class="form-control" id="recDt" name="recDt"
-												readonly />
-										</div>
-										<div class="col-5 offset-1">
-											<label for="recYr" class="form-label">신청 연도/학기</label> <input
-												type="text" class="form-control stu" id="recYr"
-												name="recYr" readonly />
-										</div>
-									</div>
-									<div class="row mb-2">
-										<div class="col-5">
-											<label for="depNm" class="form-label">학과</label> <input
-												type="text" class="form-control stu" id="depNm"
-												name="depNm" readonly />
-										</div>
-										<div class="col-5 offset-1">
-											<label for="stuNo" class="form-label">학번</label> <input
-												type="text" class="form-control stu" id="stuNo"
-												name="stuNo" readonly />
-										</div>
-									</div>
-									<div class="row mb-2">
-										<div class="col-5">
-											<label for="stuNm" class="form-label">이름</label> <input
-												type="text" class="form-control stu" id="stuNm"
-												name="stuNm" readonly />
-										</div>
-										<div class="col-5 offset-1">
-											<label for="stuTel" class="form-label">연락처</label> <input
-												type="text" class="form-control stu" id="stuTel"
-												name="stuTel" readonly />
-										</div>
-									</div>
-									<div class="row mb-2">
-										<div class="col-11">
-											<label for="recRsn" class="form-label">신청사유</label>
-											<textarea id="recRsn" name="recRsn" class="form-control stu" rows="7" readonly></textarea>
-										</div>
-									</div>
+				<div class="row">
+					<div class="col-md-11 offset-1">
+						<div class="container">
+							<div class="row mt-1 mb-2">
+								<div class="col-5">
+									<label for="recYn" class="form-label">학적승인여부</label> <input
+										type="text" class="form-control stu" id="recYn"
+										name="recYn" readonly />
+								</div>
+							</div>
+							<div class="row mb-2">
+								<div class="col-5">
+									<label for="rgbCd" class="form-label">신청구분</label> <input
+										type="text" class="form-control" id="rgbCd" name="rgbCd"
+										readonly />
+								</div>
+								<div class="col-5 offset-1">
+									<label for="recPer" class="form-label">신청기간</label> <input
+										type="text" class="form-control stu" id="recPer"
+										name="recPer" readonly />
+								</div>
+							</div>
+							<div class="row mb-2">
+								<div class="col-5">
+									<label for="recDt" class="form-label">신청일자</label> <input
+										type="text" class="form-control" id="recDt" name="recDt"
+										readonly />
+								</div>
+								<div class="col-5 offset-1">
+									<label for="recYr" class="form-label">신청 연도/학기</label> <input
+										type="text" class="form-control stu" id="recYr"
+										name="recYr" readonly />
+								</div>
+							</div>
+							<div class="row mb-2">
+								<div class="col-5">
+									<label for="depNm" class="form-label">학과</label> <input
+										type="text" class="form-control stu" id="depNm"
+										name="depNm" readonly />
+								</div>
+								<div class="col-5 offset-1">
+									<label for="stuNo" class="form-label">학번</label> <input
+										type="text" class="form-control stu" id="stuNo"
+										name="stuNo" readonly />
+								</div>
+							</div>
+							<div class="row mb-2">
+								<div class="col-5">
+									<label for="stuNm" class="form-label">이름</label> <input
+										type="text" class="form-control stu" id="stuNm"
+										name="stuNm" readonly />
+								</div>
+								<div class="col-5 offset-1">
+									<label for="stuTel" class="form-label">연락처</label> <input
+										type="text" class="form-control stu" id="stuTel"
+										name="stuTel" readonly />
+								</div>
+							</div>
+							<div class="row mb-2">
+								<div class="col-11">
+									<label for="recRsn" class="form-label">신청사유</label>
+									<textarea id="recRsn" name="recRsn" class="form-control stu" rows="7" readonly></textarea>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer justify-content-align">
-					<div id="stuBtn1" align="right" style="display: none">
-						<button type="button" id="Approval" value="AP001"
-							class="btn btn-outline-warning">승인</button>
-						<button type="button" class="btn btn-outline-danger"
-							data-toggle="modal" data-target="#modal-default">반려</button>
+			<div class="modal-footer justify-content-between">
+				<button type="button" id="counsel" class="btn btn-outline-warning" data-toggle="modal" data-target="#modal-default3">상담내역</button>
+				<div id="stuBtn1" style="display: none">
+					<div align="right">
+						<button type="button" id="approval" class="btn btn-outline-warning approval">승인</button>
+						<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-default">반려</button>
 					</div>
-					<div id="stuBtn2" align="right" style="display: none">
-						<button type="button" value="AP002"
-							class="btn btn-outline-danger cancel">승인 취소</button>
-					</div>
-					<div id="stuBtn3" align="right" style="display: none">
-						<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-default2" id="msg">반려 사유</button>
-						<button type="button" value="AP002" class="btn btn-outline-danger cancel">반려 취소</button>
-					</div>
+				</div>
+				<div id="stuBtn2" align="right" style="display: none">
+					<button type="button" class="btn btn-outline-danger cancel approval">승인 취소</button>
+				</div>
+				<div id="stuBtn3" align="right" style="display: none">
+					<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modal-default2" id="msg">반려 사유</button>
+					<button type="button" class="btn btn-outline-danger cancel approval">반려 취소</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -526,8 +539,7 @@ $(function(){
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">반려</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
@@ -538,7 +550,7 @@ $(function(){
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
-					<button type="button" id="reject" value="AP003" class="btn btn-block btn-danger">반려</button>
+					<button type="button" id="reject" class="btn btn-block btn-danger approval">반려</button>
 				</div>
 			</div>
 		</div>
@@ -558,6 +570,46 @@ $(function(){
 				<div class="modal-body">
 					<div class="mb-3">
 						<textarea class="form-control" id="message" rows="7" readonly></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="modal-default3" style="display:none;z-index:1041" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">상담 내역</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-5">
+						<div class="row">
+							<div class="col-5 offset-1">
+								<label for="cnslYn" class="form-label">상담여부</label> 
+								<input type="text" class="form-control" id="cnslYn" name="cnslYn" readonly />
+							</div>
+							<div class="col-5">
+								<label for="cnslTtl" class="form-label">상담제목</label> 
+								<input type="text" class="form-control" id="cnslTtl" name="cnslTtl" readonly />
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-10 offset-1">
+								<label for="cnslCon" class="form-label">상담내용</label> 
+								<textarea class="form-control" id="cnslCon" name="cnslCon" rows="7" readonly> </textarea>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-10 offset-1">
+								<label for="cnslRpl" class="form-label">교수답변</label> 
+								<textarea class="form-control" id="cnslRpl" name="cnslRpl" rows="7" readonly></textarea>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

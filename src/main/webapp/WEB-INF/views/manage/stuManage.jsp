@@ -94,7 +94,7 @@ $(function(){
 		
 	});
 	
-	$().ready(function () {
+	$(document).ready(function () {
 		$("#delete").on("click", function(){
 			
 			let stuNo = $("#stuNo").val();
@@ -314,6 +314,7 @@ $(function(){
 	<div class="form-group col-2 ">
 		<select id="yr" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
 			<option value="">입학 연도</option>
+			<option value="2023">2023</option>
 			<option value="2022">2022</option>
 			<option value="2021">2021</option>
 			<option value="2020">2020</option>
@@ -368,6 +369,18 @@ $(function(){
 	</table>
 </div>
 
+<div style="text-align:center;">
+	<c:forEach var="pageNumber" begin="1" end="${totalPage}">
+		<c:if test="${param.viewPage==pageNumber}">
+			<a href="/manage/stuManage?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
+		</c:if>
+		<c:if test="${param.viewPage!=pageNumber}">
+			<a href="/manage/stuManage?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
+		</c:if>
+	</c:forEach>
+</div>
+
+<!-- 모달 -->
 <div class="modal fade" id="modal-lg" style="display: none;"aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">

@@ -2,33 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.ManageMapper">
 	
-	<select id="studentList" resultType="student"> 
-		SELECT 	S.STU_NO
-				, S.DEP_CD
-				, S.STU_YR
-				, S.STU_SEM
-				, S.STU_NM
-				, S.STU_NME
-				, S.STU_TEL
-				, S.STU_ZIP
-				, S.STU_ADDR1
-				, S.STU_ADDR2
-				, S.STU_REG
-				, S.STU_BANK_CD
-				, S.STU_DEPO
-				, S.STU_ACT
-				, S.STU_PIC
-				, S.STU_BIR
-				, S.PRO_NO
-				, D.DEP_CD
-				, D.DEP_NM
-				, C.COL_CD
-				, C.COL_NM
-				, E.EMP_NM
-		FROM STUDENT S, DEPARTMENT D, COLLEGE C, EMPLOYEE E
-		WHERE S.DEP_CD = D.DEP_CD
-		AND D.COL_CD = C.COL_CD
-		AND S.PRO_NO = E.EMP_NO
+	<select id="studentList" parameterType="int" resultType="student"> 
+		WITH T AS(
+			SELECT 	ROWNUM-1 ROWNO
+			        , S.STU_NO
+			        , S.STU_YR
+			        , S.STU_SEM
+			        , S.STU_NM
+			        , S.STU_NME
+			        , S.STU_TEL
+			        , S.STU_ZIP
+			        , S.STU_ADDR1
+			        , S.STU_ADDR2
+			        , S.STU_REG
+			        , S.STU_BANK_CD
+			        , S.STU_DEPO
+			        , S.STU_ACT
+			        , S.STU_PIC
+			        , S.STU_BIR
+			        , S.PRO_NO
+			        , D.DEP_CD
+			        , D.DEP_NM
+			        , C.COL_CD
+			        , C.COL_NM
+			        , (SELECT E.EMP_NM FROM EMPLOYEE E WHERE E.EMP_NO = S.PRO_NO) EMP_NM
+			FROM COLLEGE C, DEPARTMENT D, STUDENT S
+			WHERE D.COL_CD = C.COL_CD
+			AND S.DEP_CD = D.DEP_CD
+			)
+			SELECT *
+			FROM T
+			WHERE ROWNO
+			BETWEEN (10 * (#{viewPage}-1)) AND ((10*#{viewPage})-1)
+			ORDER BY ROWNO ASC
 	</select>
 	
 	<select id="stuSearch" parameterType="map" resultType="student">
@@ -144,8 +150,11 @@
 		        , R.REC_PER
 		        , R.REC_RSN
 		        , R.REC_DT
+		        , C.CNSL_TTL
+       			, C.CNSL_CON
 		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
-		        , C.CNSL_DT 
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = C.CNSL_YN) AS CNSL_YN
+		        , C.CNSL_RPL
 		FROM STUDENT S, DEPARTMENT D, RECORD R, COUNSEL C
 		WHERE S.DEP_CD = D.DEP_CD
 		AND S.STU_NO = R.STU_NO
@@ -198,17 +207,23 @@
 		        , R.REC_DT
 		        , R.REC_REJ
 		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
-		FROM STUDENT S, DEPARTMENT D, RECORD R
+		        , C.CNSL_TTL
+       			, C.CNSL_CON
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = R.REC_YN) AS REC_YN
+		        , (SELECT C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = C.CNSL_YN) AS CNSL_YN
+		        , C.CNSL_RPL
+		FROM STUDENT S, DEPARTMENT D, RECORD R, COUNSEL C
 		WHERE S.DEP_CD = D.DEP_CD
 		AND S.STU_NO = R.STU_NO
+		AND R.REC_CD = C.REC_CD
 		AND R.REC_CD = #{recCd}
 	</select>
 	
 	<update id="yesOrNo" parameterType="map"> 
 		UPDATE RECORD R
 		SET R.REC_YN = #{Yn}
-			,R.REC_REJ = #{recRej}
-		WHERE R.STU_NO = #{stuNo}
+			, R.REC_REJ = #{recRej}
+		WHERE R.REC_CD = #{recCd}
 	</update>
 	
 	<select id="createEmpId" resultType="member"> 
@@ -264,25 +279,33 @@
 		VALUES (#{empNo}, #{depCd}, #{proPos})
 	</insert>
 	
-	<select id="employeeList" resultType="employee"> 
-		SELECT  E.EMP_NO
-		        , E.EMP_NM
-		        , E.EMP_NME
-		        , E.EMP_TEL
-		        , E.EMP_TEL2
-		        , E.EMP_ZIP
-		        , E.EMP_ADDR1
-		        , E.EMP_ADDR2
-		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_BANK_CD) AS EMP_BANK_CD
-		        , E.EMP_DEPO
-		        , E.EMP_ACT
-		        , E.EMP_PIC
-		        , E.EMP_JOIN
-		        , E.EMP_RET
-		        , E.EMP_BIR
-		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_DIV) AS EMP_DIV
-		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E.EMP_POS) AS EMP_POS
-		FROM EMPLOYEE E
+	<select id="employeeList" parameterType="int" resultType="employee"> 
+		WITH T AS (
+		    SELECT   ROWNUM-1 ROWNO
+		            , E1.EMP_NO
+		            , E1.EMP_NM
+		            , E1.EMP_NME
+		            , E1.EMP_TEL
+		            , E1.EMP_TEL2
+		            , E1.EMP_ZIP
+		            , E1.EMP_ADDR1
+		            , E1.EMP_ADDR2
+		            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_BANK_CD) AS EMP_BANK_CD
+		            , E1.EMP_DEPO
+		            , E1.EMP_ACT
+		            , E1.EMP_PIC
+		            , E1.EMP_JOIN
+		            , E1.EMP_RET
+		            , E1.EMP_BIR
+		            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_DIV) AS EMP_DIV
+		            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_POS) AS EMP_POS
+		    FROM EMPLOYEE E1
+		    ORDER BY E1.EMP_NO ASC
+		) 
+		SELECT *
+		FROM T
+		WHERE T.ROWNO
+		BETWEEN (10 * (#{viewPage}-1)) AND ((10*#{viewPage})-1)
 	</select>
 	
 	<select id="detailEmp" parameterType="map" resultType="employee">
@@ -473,6 +496,14 @@
 		        , C.COL_NM 
 		        , A.LECA_YR 
 		        , A.LECA_SEM
+	</select>
+	
+	<select id="stuPaging" resultType="int">
+		SELECT COUNT(*) FROM STUDENT
+	</select>
+	
+	<select id="empPaging" resultType="int">
+		SELECT COUNT(*) FROM EMPLOYEE
 	</select>
 	
 </mapper>

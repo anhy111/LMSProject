@@ -343,6 +343,17 @@ $(function(){
 </table>
 </div>
 
+<div style="text-align:center;">
+	<c:forEach var="pageNumber" begin="1" end="${totalPage}">
+		<c:if test="${param.viewPage==pageNumber}">
+			<a href="/manage/empManage?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
+		</c:if>
+		<c:if test="${param.viewPage!=pageNumber}">
+			<a href="/manage/empManage?viewPage=${pageNumber}" class="btn btn-outline-primary">${pageNumber}</a>
+		</c:if>
+	</c:forEach>
+</div>
+
 <!-- 모달 -->
 <div class="modal fade" id="modal-lg" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog modal-lg">

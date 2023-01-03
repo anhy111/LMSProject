@@ -58,9 +58,13 @@ public class ManageController {
 	DepartmentService departmentService;
 
 	@GetMapping("/manage/stuManage")
-	public String stuManage(Model model) {
+	public String stuManage(Model model, @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
+		
+		int stuPaging = this.manageService.stuPaging();
+		int totalPage = (int) Math.ceil((double)stuPaging/10);
+		model.addAttribute("totalPage", totalPage);
 
-		List<Student> studentList = this.manageService.studentList();
+		List<Student> studentList = this.manageService.studentList(viewPage);
 		List<CommonDetail> commonDetailList = this.commonDetailService.commonDetailList("BANK");
 		log.info("list 잘 들어오나 ?! " + studentList);
 		List<College> collegeList = this.collegeService.CollegeList();
@@ -69,17 +73,21 @@ public class ManageController {
 		model.addAttribute("commonDetailList", commonDetailList);
 		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("bodyTitle", "학생 목록 조회");
-
+		
 		return "manage/stuManage";
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_PROFESSOR')")
 	@PostMapping("/manage/stuSearch")
 	@ResponseBody
-	public List<Student> stuSearch(@RequestBody Map<String, String> map) {
+	public List<Student> stuSearch(@RequestBody Map<String, String> map, Model model) {
 		
 		List<Student> stuSearch = this.manageService.stuSearch(map);
 		log.info("휴 어떻게 온담" + stuSearch);
+		
+		int stuPaging = this.manageService.stuPaging();
+		int totalPage = (int) Math.ceil((double)stuPaging/10);
+		model.addAttribute("totalPage", totalPage);
 		
 		return stuSearch;
 		
@@ -228,14 +236,21 @@ public class ManageController {
 	}
 	
 	@GetMapping("/manage/empManage")
-	public String empManage(Model model) {
+	public String empManage(Model model, @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
 		
-		List<Employee> employeeList = this.manageService.employeeList();
+		int empPaging = this.manageService.empPaging();
+		int totalPage = (int) Math.ceil((double)empPaging/10);
+		model.addAttribute("totalPage", totalPage);
+		
+		List<Employee> employeeList = this.manageService.employeeList(viewPage);
 		List<CommonDetail> bank = this.commonDetailService.commonDetailList("BANK");
 		List<CommonDetail> division =this.commonDetailService.commonDetailList("DIVISION");
 		List<CommonDetail> ePosition =this.commonDetailService.commonDetailList("E_POSITION");
 		List<CommonDetail> pPosition =this.commonDetailService.commonDetailList("P_POSITION");
 		List<College> collegeList = this.collegeService.CollegeList();
+		
+		log.info("employeeList?? " + employeeList);
+		log.info("viewPage?? " + viewPage);
 		
 		model.addAttribute("employeeList", employeeList);
 		model.addAttribute("bank", bank);
