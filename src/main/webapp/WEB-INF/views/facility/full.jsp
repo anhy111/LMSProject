@@ -5,7 +5,6 @@
     request.setCharacterEncoding("utf-8");
     String sessionId = (String) (session.getAttribute("memNo"));
 %>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,9 +15,13 @@
     <script src="/resources/fullcalendar-5.11.3/lib/main.js"></script>
     <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 
+    <style>
+        #d1 {
+            margin-left: 17%; /* add 20 pixels of space to the left side */
+        }
+    </style>
     <div id="d1" data-code="${memberNumber}">
-        <label for="facility"></label>
-        <select class="custom-select ntcCateLeft" id="facility">
+        <select class="custom-select ntcCateLeft" id="facility" style="width: 80%;">
             <c:forEach var="item" items="${facility }">
                 <option value="${item.facCd}">${item.facNm}</option>
             </c:forEach>

@@ -80,7 +80,7 @@
     </filter>
     <filter-mapping>
         <filter-name>logFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/qna/*</url-pattern>
     </filter-mapping>
 
 
