@@ -93,51 +93,42 @@
 </style>
 </head>
 <script type="text/javascript" defer="defer">
-
-	var memFnm;
+let header = "${_csrf.headerName}";
+let token = "${_csrf.token}";
 
 	window.onload = function() {
 		
-		//로딩중 화면 띄우기
-		loadingWithMask();
-		setTimeout(closeLoadingWithMask, 700);
 		
 		//개인정보 가져오기
 		$.ajax({
-			url : "/tgrade/getInfo",
+			url : "/totalScore/getInfo",
 			type : "POST",
 			dataType : "JSON",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
 			success : function(res) {
-				//학번(memCd), 이름(memNm), 생년월일(memReg1), 연락처(memTel),
+				//학번(memCd), 이름(memNm), 생년월일(stuBir), 연락처(stuTel),
 				//단과대학/전공(memNme), 입학정보(memAddr1), 변동(memAddr2), 수강신청학년(memMl)
-				$('#stuCd').val(res.memCd);
-				$('#memName').val(res.memNm);
-				$('#memReg1').val(res.memReg1);
-				$('#memTel').val(res.memTel);
-				$('#college').val(res.memNme);
-				$('#admission').val(res.memAddr1);
-				$('#admChange').val(res.memAddr2);
-				$('#yrNsem').val(res.memMl);
+				$('#stuNo').val(res.stuNo);
+				$('#stuNm').val(res.stuNm);
+				$('#stuBir').val(res.stuBir);
+				$('#stuTel').val(res.stuTel);
+				$('#depNm').val(res.depNm);
+				$('#stuRgb').val(res.stuRgb);
+				$('#stuSem').val(res.stuSem);
+				$('#yrNsem').val(res.stuYr);
 				
-				memFnm = res.memFnm;
-			}
-		});
-		
-		//년도 및 학기 불러오기
-		$.ajax({
-			url : "/tgrade/getNow",
-			type : "GET",
-			dataType : "JSON",
-			success : function(res) {
-				$("#tgradePreYear").val(res.YEAR);
-				$("#tgradePreSemester").val(res.SEMESTER);
 			}
 		});
 		
 		$.ajax({
-			url : "/tgrade/getPreCnt",
+			url : "/totalScore/getPreCnt",
 			type : "POST",
 			dataType : "JSON",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
 			success : function(res) {
 				
 				$("#tgradePreSub").text(res);
@@ -146,9 +137,12 @@
 		
 		//전체 성적 불러오기
 		$.ajax({
-			url : "/tgrade/getPreList",
+			url : "/totalScore/getPreList",
 			type : "POST",
 			dataType : "JSON",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
 			success : function(res) {
 				
 				grid = new tui.Grid({
@@ -156,10 +150,10 @@
 					data : res,
 					scrollX : true,
 					scrollY : true,
-					bodyHeight : 400,
+					bodyHeight : 250,
 					columns : [
 						{header : '년도/학기', filter : 'select', name : 'lecaCon', align : 'center'},
-						{header : '과목번호', filter : 'select', name : 'subCd', align : 'center'},
+						{header : '과목번호', filter : 'select', name : 'lecaCd', align : 'center'},
 						{header : '교과목명', filter : 'select', name : 'lecaNm'},
 						{header : '이수구분', filter : 'select', name : 'lecaCate', align : 'center'},
 						{header : '학점', filter : 'select', name : 'lecaCrd', align : 'center'},
@@ -173,31 +167,6 @@
 				});
 			}
 		});
-		
-		//백분율환산기준표 띄우기
-		$('#percentageTable').on('click', function() {
-			window.open("/tgrade/crdStandardPdf");
-		});
-		
-		//사진 띄우기
-		$('#photoBtn').on('click', function() {
-			
-			//memFnm : 이미지 이름.확장자
-			if(memFnm == null) {
-				alert("등록된 사진이 없습니다.");
-			}else {
-				
-				const img = new Image();
-				img.src = "/resources/profileImg/" + memFnm;
-				console.log("width : " + img.width + ", height : " + img.height);
-				
-				window.open(
-						"/tgrade/getPhoto?memFnm=" + memFnm,
-						"photo",
-						"width = 175, height = 210, left = 300, top = 150, history = no, resizable = no, status = no, scrollbars = yes, menubar = no"
-				);
-			}
-		});
 	}
 </script>
 <body>
@@ -207,53 +176,67 @@
   	</div>
 
 	<div id = "personalGradeInfo">
-		<div class="round">
-			<label>학번</label>
-			<input type="text" name="stuCd" id="stuCd" readonly="readonly">
-			<button type="button" class="btn btn-secondary" id="photoBtn">사진</button>
-		</div>
-		<div class="round">
-			<label>이름</label>
-			<input type="text" name="memName" id="memName" readonly="readonly">
-		</div>
-		<br>
-		<div class="round">
-			<label>생년월일(성별)</label>
-			<input type="text" name="memReg1" id="memReg1" readonly="readonly">
-		</div>
-		<div class="round">
-			<label>연락처</label>
-			<input type="text" name="memTel" id="memTel" readonly="readonly">
-		</div>
-		<div class="round">
-			<label>단과대학/전공</label>
-			<input type="text" name="college" id="college" readonly="readonly">
-		</div>
-		<div class="round">
-			<label>입학정보</label>
-			<input type="text" name="admission" id="admission" readonly="readonly">
-		</div>
-		<div class="round">
-			<label>변동</label>
-			<input type="text" name="admChange" id="admChange" readonly="readonly">
-		</div>
-		<div class="round">
-			<label>수강신청학년(학기)</label>
-			<input type="text" name="yrNsem" id="yrNsem" readonly="readonly">
-		</div>
+		<table id="stuInfoTable">
+  		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
+		<tr>
+			<th>학번</th>
+			<td>
+				<input type="text" class="infoText" name="stuNo" id="stuNo" readonly="readonly" style="width:50%;">
+			</td>
+			<th>성명</th>
+			<td>
+				<input type="text" class="infoText" name="stuNm" id="stuNm" readonly="readonly">
+			</td>
+			<th>학적</th>
+			<td>
+				<input type="text" class="infoText" name="stuRgb" id="stuRgb" readonly="readonly">
+			</td>
+			<th>연락처</th>
+			<td>
+				<input type="text" class="infoText" name="stuTel" id="stuTel" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 5px;"></td>
+		</tr>
+		<tr>
+			<th>소속</th>
+			<td>
+				<input type="text" class="infoText" name="depNm" id="depNm" readonly="readonly">
+			</td>
+			<th>학년</th>
+			<td>
+				<input type="text" class="infoText" name="yrNsem" id="yrNsem" readonly="readonly">
+			</td>
+			<th>학기</th>
+			<td>
+				<input type="text" class="infoText" name="stuSem" id="stuSem" readonly="readonly">
+			</td>
+			<th>생년월일</th>
+			<td>
+				<input type="text" class="infoText" name="stuBir" id="stuBir" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
+  	</table>
 	</div>
 	
 	<br><br>
 	
 	<p class="tgradePreListSelect"><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;취득성적</p>
-	<button type="button" class="btn btn-secondary" id="percentageTable">백분율환산기준표</button>
 	&nbsp;&nbsp;총 <span class="tgradePreCnt" id="tgradePreSub" style="color:red;"></span>건
 	<div id="tgradeYellowBox" style="height:47px;">
+			<input type="text" name="yrNsem" id="tgradePreYear" readonly="readonly" value="${now.YEAR}">
 		<label>년도
-			<input type="text" name="yrNsem" id="tgradePreYear" readonly="readonly">
 		</label>
+			<input type="text" name="yrNsem" id="tgradePreSemester" readonly="readonly" value="${now.SEMESTER}">
 		<label>학기
-			<input type="text" name="yrNsem" id="tgradePreSemester" readonly="readonly">
 		</label>
 		<span id="tgradeGreenText">&emsp;<i class="mdi mdi-square-medium"></i>&nbsp;증명 마감된 과목에 한해 성적이 표기됩니다.</span>
 	</div>
@@ -266,8 +249,8 @@
 	<table id="tgradeTable" border="1">
 		<tr>
 			<th colspan="2"></th>
-			<th colspan="5">교양영역</th>
-			<th colspan="5">전공영역</th>
+			<th colspan="4">교양영역</th>
+			<th colspan="4">전공영역</th>
 		</tr>
 		<tr>
 			<td>신청학점</td>
@@ -275,27 +258,23 @@
 			<td>교필</td>
 			<td>교선</td>
 			<td>소계</td>
-			<td>평점 계</td>
 			<td>평균 평점</td>
 			<td>전필</td>
 			<td>전선</td>
 			<td>소계</td>
-			<td>평점 계</td>
 			<td>평균 평점</td>
 		</tr>
 		<tr>
-			<td>${totalCnt}</td>
-			<td>${tgrade.GP + tgrade.GS + tgrade.JP + tgrade.JS}</td>
-			<td>${tgrade.GP}</td>
-			<td>${tgrade.GS}</td>
-			<td>${tgrade.GCNT}</td>
-			<td>${tgrade.GSUM}</td>
-			<td>${tgrade.GDIV}</td>
-			<td>${tgrade.JP}</td>
-			<td>${tgrade.JS}</td>
-			<td>${tgrade.JCNT}</td>
-			<td>${tgrade.JSUM}</td>
-			<td>${tgrade.JDIV}</td>
+			<td>${info.JP + info.JS + info.KP + info.KS}</td>
+			<td>${info.JP + info.JS + info.KP + info.KS}</td>
+			<td>${info.KP}</td>
+			<td>${info.KS}</td>
+			<td>${info.KSUM}</td>
+			<td>${info.KAV}</td>
+			<td>${info.JP}</td>
+			<td>${info.JS}</td>
+			<td>${info.JSUM}</td>
+			<td>${info.JAV}</td>
 		</tr>
 	</table>
 </div>
