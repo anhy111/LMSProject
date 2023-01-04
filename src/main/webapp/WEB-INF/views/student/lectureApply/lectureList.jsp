@@ -285,11 +285,13 @@
 <script src="/resources/adminlte/dist/js/demo.js"></script>
 <script>
 	var stuNo = "${stuNo}";
-	
+	var stuRgb = "${stuRgb}";
 	var header = "${_csrf.headerName}";
 	var token = "${_csrf.token}";
 	
 	$(function() {
+		
+		
 		//Initialize Select2 Elements
 		$('.select2').select2();
 
@@ -297,6 +299,12 @@
 		$('.select2bs4').select2({
 			theme : 'bootstrap4'
 		});
+		console.log("stuRgb : " + stuRgb);
+		if(stuRgb != 'RCD002'){
+			alert("재학중인 학생만 수강신청이 가능합니다.");
+			location.href = "/";
+			return;
+		}
 		
 		$("#search").on("click",function(){
 			loadNotYetApplyLecture();

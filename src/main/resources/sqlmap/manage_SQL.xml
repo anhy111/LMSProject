@@ -101,6 +101,7 @@
 				, C.COL_CD
 				, C.COL_NM
 				, E.EMP_NM
+				, S.STU_RGB
 		FROM STUDENT S, DEPARTMENT D, COLLEGE C, EMPLOYEE E
 		WHERE S.DEP_CD = D.DEP_CD
 		AND D.COL_CD = C.COL_CD
@@ -224,6 +225,12 @@
 		SET R.REC_YN = #{Yn}
 			, R.REC_REJ = #{recRej}
 		WHERE R.REC_CD = #{recCd}
+	</update>
+	
+	<update id="updateStudentRecord" parameterType="map">
+	update student
+	set stu_rgb = (select comd_cd from common_detail where comd_nm = #{rgbCd})
+	where stu_no = #{stuNo}
 	</update>
 	
 	<select id="createEmpId" resultType="member"> 

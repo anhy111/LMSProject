@@ -469,11 +469,6 @@ $(function(){
 						<span>임시 비밀번호 발급</span>
 					</button>
 				</li>
-				<li>
-					<a href="#" target="_blank" title="새 탭 열림">
-						<span>로그인 도움말</span>
-					</a>
-				</li>
 			</ul>
 		</div>
 	</div>

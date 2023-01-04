@@ -49,6 +49,7 @@ public class Student {
 	private int colCd;
 
 	private String empNm;
+	private String deanNm; // 학과장 이름
 	
 	private List<SclHistory> stuSclList; //장학금 내역 조회
 	private SclHistory sclHistory; //추천 장학생 상세 조회

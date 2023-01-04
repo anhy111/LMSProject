@@ -1,8 +1,13 @@
 package kr.or.ddit.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +31,7 @@ import kr.or.ddit.domain.GraduateCredit;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Lecture;
 import kr.or.ddit.domain.Professor;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.Weekplan;
 import kr.or.ddit.service.AllocationService;
@@ -36,6 +42,7 @@ import kr.or.ddit.service.DepartmentService;
 import kr.or.ddit.service.GraduateCreditService;
 import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.LectureService;
+import kr.or.ddit.service.ManageService;
 import kr.or.ddit.service.StudentLectureApplyService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,24 +70,33 @@ public class StudentLectureApplyController {
 	@Autowired
 	BuildingService buildingService;
 	
+	@Autowired
+	ManageService manageService;
+	
 	
 	@PreAuthorize("hasAnyRole('ROLE_STUDENT','ROLE_MANAGER')")
 	@GetMapping("/list")
-	public String lectureList(Model model, HttpServletRequest req) {
+	public String lectureList(Model model, HttpServletRequest req, HttpServletResponse resp) {
 		
 		Integer stuNo = (Integer)req.getSession().getAttribute("no");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("detailStu", stuNo.toString());
 		
 		StudentLecture studentLecture = new StudentLecture();
 		studentLecture.setStuNo(stuNo);
 		GraduateCredit graduateCredit = this.graduateCreditService.studentApplyMaxCredit(stuNo.toString());
 		List<College> collegeList = this.collegeService.CollegeList();
 		Credit studentCurrentCredit = this.creditService.studentCurrentCredit(studentLecture);
+		Student student = this.manageService.detailStu(map);
+		
+		String stuRgb = student.getStuRgb();
 		
 		model.addAttribute("bodyTitle","수강신청");
 		model.addAttribute("collegeList",collegeList);
 		model.addAttribute("stuNo",stuNo.toString());
 		model.addAttribute("graduateCredit",graduateCredit);
 		model.addAttribute("studentCurrentCredit",studentCurrentCredit);
+		model.addAttribute("stuRgb",stuRgb);
 		
 		return "student/lectureApply/lectureList";
 	}

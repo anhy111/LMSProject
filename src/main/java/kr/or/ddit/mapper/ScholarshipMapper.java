@@ -27,4 +27,7 @@ public interface ScholarshipMapper {
 	
 	//학생 장학금 수혜 증명서
 	public List<SclHistory> scholarshipBenefitCertificate(int stuNo);
+  
+	// 결재시 지급여부
+	public int approveSclh(SclHistory sclHistory);
 }

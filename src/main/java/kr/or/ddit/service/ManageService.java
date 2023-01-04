@@ -60,6 +60,8 @@ public interface ManageService {
 	public int stuPaging();
 
 	public int empPaging();
+	
+	public int updateStudentRecord(Map<String, String> map);
 
 	
 
