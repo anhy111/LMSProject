@@ -16,7 +16,7 @@
 <script type="text/javascript">
 let logoutTid;
 let logoutTime = parseInt(<%=session.getMaxInactiveInterval()%> -5); //초기값(초단위)
-// var socket = null;
+
 
 function counter_init(){
 	logoutTid =setInterval("counter_run()", 990);
@@ -31,6 +31,7 @@ function counter_run(){
 	}
 	
 	if(logoutTime < 0){
+		alert("세션이 종료되어 로그아웃 됩니다.")
 		clearInterval(logoutTid);
 		$("#logoutFrm").submit();
 	}
@@ -68,19 +69,35 @@ function time_format(s) {
 //     $('.toast').toast('show');
 // };	
 
-$(function(){
-
-	counter_init();
-// 	socket = new SockJS("<c:url value="/echo-ws"/>");
-//     // 데이터를 전달 받았을때 
-//     socket.onmessage = onMessage; // toast 생성)
 	
+$(function(){
+	let header = "${_csrf.headerName}";
+	let token = "${_csrf.token}";
+	
+	counter_init();
+
 	$("#refresh").on("click", function(){
 		
-		window.location.reload(true);
+		$.ajax({
+			type: 'get',
+			url: '/sessionPlus',
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success :function(data){
+				console.log("성공이라해주라 ", data);
+				
+				logoutTime = 1800;
+				
+			},
+			error:function(request, status, error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+			
+		});
+		
 		
 	});
-
 });
 </script>
 <style>
