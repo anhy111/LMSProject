@@ -36,7 +36,7 @@
 </style>
 
 <div class="container-fluid">
-    <h4 class="row p-0">공사사항</h4>
+    <h4 class="row p-0">문의게시판</h4>
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="row">

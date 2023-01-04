@@ -6,6 +6,7 @@ import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.service.NoticeBasicService;
 import kr.or.ddit.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/notice")
 @RequiredArgsConstructor // 어노테이션이 궁금하면 생성자 주입과 관련해서 찾아보시길..!
+@PreAuthorize("hasRole('ROLE_PROFESSOR') or hasRole('ROLE_STUDENT') or hasRole('ROLE_MANAGER')")
 public class NoticeBasicController {
 
     /**
@@ -67,9 +69,9 @@ public class NoticeBasicController {
     public String searchKeyword(Model model,
                                 @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage,
                                 @RequestParam int searchOption,
-                                @RequestParam String keyword) {
+                                @RequestParam String keyword) { //@RequestParam 생략가능하나, 가시적으로 표현함으로써 읽기 편해짐.
 
-        // 정규화 완료 Why? Query Injection을 통해서 DB접근 가능성 차단
+        // 정규화 완료 Why? QueryInjection 통해서 DB 접근 가능성 차단
         String sanitizedKeyword = keyword.replaceAll("[^a-zA-Z0-9]", "");
 
         //총 행의 수
