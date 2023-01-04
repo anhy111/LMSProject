@@ -7,11 +7,11 @@
 %>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:0.9;">
+       style="background-color: #001F3F;opacity:1;">
 
     <a href="/test/home" class="brand-link bg-navy" style="text-align:left;">
         <img src="/upload/연수대학교흰로고.png" alt="AdminLTE Logo"
-             class="brand-image img-circle elevation-3" style="opacity: .8">
+             class="brand-image img-circle elevation-3" style="opacity:1">
         <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span>
     </a>
 
@@ -80,6 +80,11 @@
                         </p>
                     </a>
                     </li>
+                       <li class="nav-item"><a
+                            href="/counsel/studentside/applyList?stuNo=<%=no%>"
+                            class="nav-link">
+                        <p>상담</p>
+                    </a></li>
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
                             성적 <i class="right fas fa-angle-left"></i>
@@ -115,11 +120,6 @@
                         </ul>
                     </li>
                     <li class="nav-item"><a
-                            href="/counsel/studentside/applyList?stuNo=<%=no%>"
-                            class="nav-link">
-                        <p>상담</p>
-                    </a></li>
-                    <li class="nav-item"><a
                             href="/notice/list"
                             class="nav-link">
                         <p>공지사항</p>
@@ -133,11 +133,6 @@
                             href="/facility/full"
                             class="nav-link">
                         <p>시설예약(로그인 필)</p>
-                    </a></li>
-                    <li class="nav-item"><a
-                            href="/bambooBoard/main"
-                            class="nav-link">
-                        <p>대나무숲</p>
                     </a></li>
 <!--                     <li class="nav-item"><a -->
 <!--                             href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link"> -->

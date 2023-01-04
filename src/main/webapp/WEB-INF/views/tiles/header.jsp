@@ -174,7 +174,7 @@ $(function(){
 	}
 </style>
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 0.9);">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 1);">
 
 	<!-- Right navbar links -->
 	<ul class="navbar-nav ml-auto">
