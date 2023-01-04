@@ -6,6 +6,7 @@
     String sessionId = (String) (session.getAttribute("memNo"));
 %>
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -19,13 +20,18 @@
         #d1 {
             margin-left: 17%; /* add 20 pixels of space to the left side */
         }
+        
     </style>
     <div id="d1" data-code="${memberNumber}">
-        <select class="custom-select ntcCateLeft" id="facility" style="width: 80%;">
-            <c:forEach var="item" items="${facility }">
-                <option value="${item.facCd}">${item.facNm}</option>
-            </c:forEach>
-        </select>
+    
+      <c:forEach var="item" items="${facility }" varStatus="status" end="${facility.size() }">
+      <label class="btn btn-default" for="facility${status.end-status.index }">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label> 
+       </c:forEach>
+<!--         <select class="custom-select ntcCateLeft" id="facility" style="width: 80%;"> -->
+<%--             <c:forEach var="item" items="${facility }"> --%>
+<%--                 <option value="${item.facCd}">${item.facNm}</option> --%>
+<%--             </c:forEach> --%>
+<!--         </select> -->
     </div>
 
     <script>
@@ -128,9 +134,10 @@
 
     <!-- 시설선택 후 출력  -->
     <script>
-        $('#facility').on('change', () => {
-            let facilityCode = $('#facility').val();
-
+        $('.facility').on('change', () => {
+//         	alert("라디오바뀌었다")
+            let facilityCode = $("input:radio[name='facility']:checked").val();
+// 			alert("라디오값 : " + facilityCode);
             let header = "${_csrf.headerName}";
             let token = "${_csrf.token}";
 
@@ -165,7 +172,7 @@
 
             request.done(function (data) {
 
-                let facilityCode = $('#facility').val();
+                let facilityCode = $('.facility').val();
 
                     let calendarEl = document.querySelector("#calendar");
 
