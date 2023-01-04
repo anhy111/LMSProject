@@ -67,19 +67,57 @@
 		        WHERE GC.DEP_CD = D.DEP_CD
 		        AND S.DEP_CD = D.DEP_CD
 		        AND S.STU_NO = #{stuNo}
+                AND GC.RDC_YR = TO_CHAR(SYSDATE,'YYYY')
 		        ) <![CDATA[>]]> (
-		                SELECT LECA_CRD + (
-		                                    SELECT NVL(SUM(LA.LECA_CRD),0)
-		                                    FROM STU_LEC SL, LECTURE L, LEC_APPLY LA
-		                                    WHERE SL.LECA_CD = L.LECA_CD
-		                                    AND L.LECA_CD = LA.LECA_CD
-		                                    AND SL.STU_NO = #{stuNo}
-		                                )
-		                FROM LEC_APPLY
-		                WHERE LECA_CD = #{lecaCd}
-		             )
+					                SELECT LECA_CRD + (
+					                                    SELECT NVL(SUM(LA.LECA_CRD),0)
+					                                    FROM LECTURE L, LEC_APPLY LA
+					                                    <if test="category == 'stuLec'">
+									                    , STU_LEC SL
+									                    </if>
+									                    <if test="category == 'wish'">
+									                    , WISH SL
+									                    </if>
+					                                    WHERE SL.LECA_CD = L.LECA_CD
+					                                    AND L.LECA_CD = LA.LECA_CD
+			                                            AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+					                                    AND SL.STU_NO = #{stuNo}
+					                                )
+					                FROM LEC_APPLY
+					                WHERE LECA_CD = #{lecaCd}
+					         	)
 	</select>
-	
+	 
+	<select id="duplicateCheckLectureTime" parameterType="studentLecture" resultType="int">
+		SELECT SUM(U.DUPLICATE) DUPLICATE
+		FROM(
+		        SELECT A.ROOM_CD
+		             , A.LECA_CD
+		             , A.ALT_DT
+		             , A.ALT_TT
+		             , (
+		                    SELECT COUNT(SA.LECA_CD) 
+		                    FROM LEC_APPLY SLA, ALLOCATION SA
+		                    <if test="category == 'stuLec'">
+		                    , STU_LEC SSL
+		                    </if>
+		                    <if test="category == 'wish'">
+		                    , WISH SSL
+		                    </if>
+		                    WHERE SLA.LECA_CD = SA.LECA_CD
+		                    AND SSL.LECA_CD = SLA.LECA_CD
+		                    AND SSL.STU_NO = #{stuNo}
+		                    AND SLA.LECA_YR = LA.LECA_YR
+		                    AND SLA.LECA_SEM = LA.LECA_SEM
+		                    AND SA.ALT_DT = A.ALT_DT
+		                    AND SA.ALT_TT = A.ALT_TT
+		                ) DUPLICATE
+		        FROM ALLOCATION A, LEC_APPLY LA
+		        WHERE LA.LECA_CD = A.LECA_CD
+		        AND A.LECA_CD = #{lecaCd}
+		) U
+	</select>
+
 	
 </mapper>
 

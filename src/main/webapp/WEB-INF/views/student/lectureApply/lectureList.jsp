@@ -301,9 +301,14 @@
 		});
 		console.log("stuRgb : " + stuRgb);
 		if(stuRgb != 'RCD002'){
-			alert("재학중인 학생만 수강신청이 가능합니다.");
-			location.href = "/";
-			return;
+			Swal.fire({
+				icon: 'error',
+				title:'실패',
+				text : '중복되는 시간이 있습니다.'
+			}).then(function(){
+				location.href = "/";
+				return;
+			});
 		}
 		
 		$("#search").on("click",function(){
@@ -361,10 +366,25 @@
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(result) {
-					if(result == "maxCredit"){
-						alert("신청 가능한 학점을 초과했습니다.");
+					
+					if(result == "duplicate"){
+						Swal.fire({
+							icon: 'error',
+							title:'실패',
+							text : '중복되는 시간이 있습니다.'
+						});
+					} else if(result == "maxCredit"){
+						Swal.fire({
+							icon: 'error',
+							title:'실패',
+							text:'신청 가능한 학점을 초과했습니다.'
+						});
 					} else if(result == "maxHeadcount"){
-						alert("인원이 초과되었습니다.");
+						Swal.fire({
+							icon: 'error',
+							title:'실패',
+							text : "인원이 초과되었습니다."
+						});
 					}
 					loadCompleteApplyLecture();
 					loadNotYetApplyLecture();
@@ -625,7 +645,6 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(result) {
-				console.log("result : ", result);
 				
 				let wk = ["m","t","w","h","f"];
 				
@@ -638,40 +657,55 @@
 					}
 				}
 				
-				$.each(result, function(p_inx, lecture){
-					
-					let dayWeek = "";
-					switch (lecture.altDt) {
-					case '월':
-						dayWeek = "m";
-						break;
-					case '화':
-						dayWeek = "t";
-						break;
-					case '수':
-						dayWeek = "w";
-						break;
-					case '목':
-						dayWeek = "h";
-						break;
-					case '금':
-						dayWeek = "f";
-						break;
+				const time = {};
+				const lecaCdArr = [];
+				const color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
+				
+				$.each(result,function(p_inx, allocation){
+					if(typeof time[allocation.lecaCd] == "undefined"){
+						time[allocation.lecaCd] = new Array(allocation);
+						lecaCdArr.push(allocation.lecaCd);
+					} else{
+						time[allocation.lecaCd].push(allocation);
 					}
-					let color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
-					for(let i=lecture.altSt; i<=lecture.altEn; i++){
-						if( i == lecture.altSt){
-							$("#a"+dayWeek+i).css("backgroundColor",color[p_inx])
-										.css("color","white")
-										.css("border","none")
-										.html(lecture.lecaNm + "\n" + lecture.bldSnm + lecture.roomNo);
-						} else{
-							$("#a"+dayWeek+i).css("backgroundColor",color[p_inx])
-										.css("color","white")
-										.css("border","none");
-						}
+				});
+				
+				$.each(time, function(p_inx, lecture){
+					$.each(lecture, function(p_inx, allocation){
 						
-					}
+						let dayWeek = "";
+						switch (allocation.altDt) {
+						case '월':
+							dayWeek = "m";
+							break;
+						case '화':
+							dayWeek = "t";
+							break;
+						case '수':
+							dayWeek = "w";
+							break;
+						case '목':
+							dayWeek = "h";
+							
+							break;
+						case '금':
+							dayWeek = "f";
+							break;
+						}
+						if( $("#a"+dayWeek+(allocation.altTt-1)).val() != allocation.lecaCd){
+							$("#a"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
+										.css("color","white")
+										.css("borderBottom","none")
+										.html(allocation.lecaNm + "\n" + allocation.bldSnm + allocation.roomNo)
+										.val(allocation.lecaCd);
+						} else{
+							$("#a"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
+										.css("color","white")
+										.css("borderTop","none")
+										.val(allocation.lecaCd);
+						}
+							
+					}); // end for
 					
 				});//end for
 			}// end success

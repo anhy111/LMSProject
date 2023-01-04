@@ -19,4 +19,5 @@ public interface StudentLectureApplyMapper {
 	int decreaseHeadcount(StudentLecture studentLecture);
 	// 학생의 그동안 신청한 강의 + 현재 신청한 강의 < 졸업학점 일때만 수강신청 가능
     int maxCredit(StudentLecture studentLecture);
+	int duplicateCheckLectureTime(StudentLecture studentLecture);
 }
