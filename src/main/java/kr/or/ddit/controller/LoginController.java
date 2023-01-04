@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -105,6 +106,15 @@ public class LoginController {
 		
 		return map.get("tel");
 		
+	}
+	
+	@GetMapping("/sessionPlus")
+	@ResponseBody
+	public int sessionPlus(HttpSession session) {
+		
+		session.setMaxInactiveInterval(30); // 세션 만료시간
+		
+		return 1;
 	}
 	
 }
