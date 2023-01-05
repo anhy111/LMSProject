@@ -1,5 +1,7 @@
 package kr.or.ddit.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,10 @@ public class AScheduleServiceImpl implements AScheduleService {
 	@Override
 	public int register(ASchedule aSchedule) {
 		return this.aScheduleMapper.register(aSchedule);
+	}
+	
+	@Override
+	public List<ASchedule> loadScheduleForMonth(ASchedule aSchedule) {
+		return this.aScheduleMapper.loadScheduleForMonth(aSchedule);
 	}
 }

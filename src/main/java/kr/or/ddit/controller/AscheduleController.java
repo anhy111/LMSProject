@@ -1,5 +1,8 @@
 package kr.or.ddit.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -43,6 +46,24 @@ public class AscheduleController {
 			return null;
 		}
 		return aSchedule;
+	}
+	
+	@ResponseBody
+	@PostMapping("/loadSchedule")
+	public List<ASchedule> loadSchedule(@RequestBody ASchedule aSchedule){
+		
+		log.info("AscheduleController.loadSchedule.aSchedule : " + aSchedule);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		aSchedule.setFormatAschSt(format.format(aSchedule.getAschSt()));
+		aSchedule.setFormatAschEn(format.format(aSchedule.getAschEn()));
+		
+		List<ASchedule> aScheduleList = this.aScheduleService.loadScheduleForMonth(aSchedule);
+		
+		
+		
+		log.info("AscheduleController.loadSchedule.aScheduleList : " + aScheduleList);
+		
+		return aScheduleList;
 	}
 	
 }

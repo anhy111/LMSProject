@@ -10,4 +10,7 @@ public interface AScheduleService {
 	
 	// 일정 등록
 	public int register(ASchedule aSchedule);
+	
+	// 일정 조회
+	public List<ASchedule> loadScheduleForMonth(ASchedule aSchedule);
 }

@@ -162,6 +162,7 @@
 	var todayStr = dateFormat(today,"-");
 	var calendarData;
 
+	// date객체와 구분자를 받아서 문자형식으로 변환
 	function dateFormat(p_date,p_separator){
 		if(p_date == "" || p_date == null){
 			return "";
@@ -171,6 +172,18 @@
 					+ (date.getMonth()+1 < 10 ? "0" + (date.getMonth()+1) :  date.getMonth()+1) + p_separator
 							+ (date.getDate() < 10 ? "0" + date.getDate() : date.getDate());
 		return str;
+	}
+	
+	// 마지막 일자가 +1일로 나와서 -1을 해줌 연, 월이 바뀔수 있으므로 -1한값을 생성자에 넣어주면 맞춰서 연도와 월을 바꿔서 반환해준다
+	function endDateFormat(p_date, p_separator){
+		if(typeof p_separator == "undefined"){
+			alert("구분자를 넣어주세요");
+			return;
+		}
+		let date = new Date(p_date);
+		date = new Date(date.getFullYear(),date.getMonth(),date.getDate()-1);
+		
+		return dateFormat(date,p_separator);
 	}
 
 	function editMode(){
@@ -203,7 +216,7 @@
 		$("#aschEn").attr("readonly",true);
 	}
 	
-	// 처음 학사일정
+	// 페이지 첫 로딩할때 처음 학사일정
 	function initFullCalendar(){
 		let calendarArg = document.querySelector("#calendar");
 
@@ -248,46 +261,58 @@
 			dayMaxEvents : true
 		});// end calendar
 		
-		calendar.addEvent(loadEvent());
-		calendar.render();
+		loadEvent();
 	}
 	
-	// 기존의 학사일정 불러오기
+	// 현재 뷰의 학사일정 불러오기 1~31일 데이터만 가져오기
 	function loadEvent() {
 
-        let header = "${_csrf.headerName}";
-        let token = "${_csrf.token}";
-		
-//         console.log(calendar.getStart());
+        console.log("calendar.view.currentEnd : " + calendar.view.currentEnd);
+        console.log("calendar.view.currentStart : " + calendar.view.currentStart);
         
+        let start = calendar.view.currentStart;
+        let end = endDateFormat(calendar.view.currentEnd,"-");
         
+        let data = {
+        		aschSt : new Date(start),
+        		aschEn : new Date(end)
+        };
+        console.log(data);
         let arr = [];
         $.ajax({
             type: "post",
-            url: "/aschedule",
-            data: {
-                facCd: 1
-            },
+            url: "/aschedule/loadSchedule",
+            data: JSON.stringify(data),
+            contentType:"application/json; charset=utf-8",
             dataType: "JSON",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
             },
-            async: false,
             success: function (list) {
+            	console.log(list);
+            	if(list == null || list.length == 0){
+            		calendar.render();
+            		return;
+            	}
                 for (var i = 0; i < list.length; i++) {
-                    arr.push({
-                        title: list[i]['memNo'],
-                        rsvCd: list[i]['rsvCd'],
-                        facCd: list[i]['facCd'],
-                        memNo: list[i]['memNo'],
+                	calendar.addEvent({
+                        title: list[i]['aschTtl'],
+                        content: list[i]['aschCon'],
+                        aschCd: list[i]['aschCd'],
+                        empNo: list[i]['empNo'],
+                        empNm: list[i]['empNm'],
                         start: list[i]['aschSt'],
                         end: list[i]['aschEn'],
-                        backgroundColor: list[i]['backgroundColor']
+                        backgroundColor : "#e74a3b"
                     })
                 }
+                
+                calendar.render();
+            },
+            error : function(){
+            	calendar.render();
             }
-        })
-        return arr;
+        });
     }
 	
 	// 일정등록 모달
@@ -313,13 +338,15 @@
 
             //신규 이벤트
         } else {
-        	let newDate = new Date(calendarData.end.getFullYear(),calendarData.end.getMonth(),calendarData.end.getDate()-1);
             $('#aschStDay').val(calendarData.startStr);
-            $('#aschEnDay').val(dateFormat(newDate,"-"));
+            $('#aschEnDay').val(endDateFormat(calendarData.endStr,"-"));
+            $("#aschTtl").val("");
+            $("#aschCon").val("");
         }
         //모달창 show
         $('.insertModal').modal('show');
     }
+	
 
 	//시작일자 변경 시 종료일자는 +30분으로 설정---------------------------------------------------------------------------
 	function startChange() {
@@ -334,7 +361,7 @@
     }
 	
 	//모달초기화-------------------------------------------------------------------------------------------------
-	function initModal(modal, arg) {
+	function initModal() {
         $('#aschCd').val('');
         $('#aschStDay').val(todayStr);
         $('#aschStTime').val('09:00');
@@ -344,16 +371,19 @@
         calendarData = null;
     }
 	
-
 	
 	//일정등록-------------------------------------------------------------------------------------------------
     function insertSch(arg) {
 		
 		console.log(arg);
+		if($("#aschTtl").val() == ""){
+			alert("제목을 입력해주세요.");
+			return;
+		}else if( $("#aschCon").val() == ""){
+			alert("내용을 입력해주세요.");
+			return;
+		}
 		
-		let inputDate = $("#aschStDay").val() + " " +  $("#aschStTime").val();
-		console.log("inputDate : " + inputDate);
-        // 등록
         if (typeof arg.event != "undefined"){
         	alert("이번트 선택 안됨");
         	return;
@@ -366,7 +396,6 @@
 //                 return;
             
 //         }
-
         data = {
             empNo: empNo,
             aschSt: new Date($("#aschStDay").val() + " " +  $("#aschStTime").val()),
@@ -402,7 +431,7 @@
                     empNo: empNo
                 });
 
-                initModal(modal, arg);
+                initModal();
             },
             error: function (xhr, status, error) {
                 alert('일정 등록 실패\n새로고침 후 재시도 해주세요');
