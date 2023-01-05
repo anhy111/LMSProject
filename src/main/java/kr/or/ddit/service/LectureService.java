@@ -35,6 +35,8 @@ public interface LectureService {
 	public int deleteTask(String lecaCd,String taskCd); 
 	//과제 제출 목록
 	public List<Task> taskSubmitList(String tsubCd);
+	//학생이 과제 제출 했는지 체크
+	public TaskSubmit stuSubmitCheck(TaskSubmit taskSubmit);
 	//과제 제출
 	public int insertTaskSubmit1(TaskSubmit taskSubmit);
 	public int insertTaskSubmit2(TaskSubmit taskSubmit);

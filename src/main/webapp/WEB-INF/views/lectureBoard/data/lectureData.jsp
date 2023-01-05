@@ -1,6 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page session="false"%>
 <html>
 <head>
@@ -101,7 +103,9 @@ table {
 					<!-- board list area -->
 					<div id="board-list">
 						<div class="container" align="right" style="align-content: center">
+						<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 							<a class="btn btn-secondary" href="/lectureBoard/data/dataInsert?lecaCd=${param.lecaCd}">글쓰기</a>
+						</sec:authorize>
 							<br> <br>
 							<table class="board-table">
 								<thead>

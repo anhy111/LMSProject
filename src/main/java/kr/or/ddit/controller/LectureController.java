@@ -174,13 +174,23 @@ public class LectureController {
 	// 과제 제출
 	// 목록============================================================================================================================
 	@GetMapping("/lectureBoard/task/taskSubmitList")
-	public ModelAndView taskSubmitList(ModelAndView mav, @RequestParam String taskCd) {
+	public ModelAndView taskSubmitList(Principal principal, ModelAndView mav, @RequestParam String taskCd,@RequestParam String lecaCd) {
+		String stuNo = principal.getName();
 		List<Task> list = this.lectureservice.taskSubmitList(taskCd);
 		log.info("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + list);
+		TaskSubmit taskSubmit = new TaskSubmit();
+		taskSubmit.setLecaCd(Integer.parseInt(lecaCd));
+		taskSubmit.setStuNo(Integer.parseInt(stuNo));
+		taskSubmit.setTaskCd(Integer.parseInt(taskCd));
+		TaskSubmit ts =  this.lectureservice.stuSubmitCheck(taskSubmit);
 		mav.addObject("list", list);
+		mav.addObject("stuNo", stuNo);
+		mav.addObject("ts", ts);
 		mav.setViewName("lectureBoard/task/taskSubmitList");
 		return mav;
 	}
+	
+	
 
 	@GetMapping("/lectureBoard/task/submitTask")
 	public ModelAndView submitTask(ModelAndView mav, @RequestParam String lecaCd, @RequestParam String taskCd) {

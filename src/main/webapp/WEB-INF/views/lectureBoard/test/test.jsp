@@ -100,7 +100,6 @@
 										<th style="width: 15%;text-align: center;">시험 시작</th>
 										<th style="width: 15%;text-align: center;">시험 종료</th>
 										<th style="width: 15%;text-align: center;">등록일</th>
-										<th style="width: 10%;text-align: center;">제출 목록</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -132,7 +131,6 @@
 												<fmt:formatDate value="${list.testEdt }" pattern="MM.dd HH:mm" />
 											</td>
 											<td style="text-align: center;">${testReg }</td>
-											<td style="text-align: center;"><button class="btn btn-block btn-outline-secondary btn-sm">목록</button> </td>
 										</tr>
 									</c:forEach>
 									</c:if>
