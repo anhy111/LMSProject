@@ -10,7 +10,7 @@ public class StudentLecture {
 	private float slScore;
 	private int wsSn;	//장바구니 정렬 순서
 	private int slSn;	//수강신청 정렬 순서
-
+	
 	
 	// 키워드검색
 	private int colCd;
@@ -19,4 +19,7 @@ public class StudentLecture {
 	private String lecaTrg;
 	private String lecaCate;
 	private String lecaNm;
+	
+	// 장바구니, 수강강의 구분
+	private String category;
 }

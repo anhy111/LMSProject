@@ -5,14 +5,22 @@
 <%
     String no = String.valueOf(session.getAttribute("no"));
 %>
+<style>
+.brand-image:hover{
+border: 5px dotted white;
+opacity:0.9;
+transition: border 2s opacity 2s;
+}
+</style>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:0.9;">
+       style="background-color: #001F3F;opacity:1;top: 30px;">
 
     <a href="/test/home" class="brand-link bg-navy" style="text-align:left;">
-        <img src="/upload/연수대학교흰로고.png" alt="AdminLTE Logo"
-             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span>
+    <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
+<!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
+<!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
+<!--         <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span> -->
     </a>
 
     <!-- Sidebar -->
@@ -41,7 +49,7 @@
                 <!-- 수강관리 -->
                 <sec:authorize access="hasRole('ROLE_STUDENT')">
                 
-                    <li class="nav-header">학생 어사이드</li>
+<!--                     <li class="nav-header">학생 어사이드</li> -->
                     <li class="nav-item"><a href="#" class="nav-link">
 
                         <p>
@@ -80,6 +88,11 @@
                         </p>
                     </a>
                     </li>
+                       <li class="nav-item"><a
+                            href="/counsel/studentside/applyList?stuNo=<%=no%>"
+                            class="nav-link">
+                        <p>상담</p>
+                    </a></li>
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
                             성적 <i class="right fas fa-angle-left"></i>
@@ -114,31 +127,7 @@
                             </a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a
-                            href="/counsel/studentside/applyList?stuNo=<%=no%>"
-                            class="nav-link">
-                        <p>상담</p>
-                    </a></li>
-                    <li class="nav-item"><a
-                            href="/notice/list"
-                            class="nav-link">
-                        <p>공지사항</p>
-                    </a></li>
-                    <li class="nav-item"><a
-                            href="/qna/main"
-                            class="nav-link">
-                        <p>문의게시판</p>
-                    </a></li>
-                    <li class="nav-item"><a
-                            href="/facility/full"
-                            class="nav-link">
-                        <p>시설예약(로그인 필)</p>
-                    </a></li>
-                    <li class="nav-item"><a
-                            href="/bambooBoard/main"
-                            class="nav-link">
-                        <p>대나무숲</p>
-                    </a></li>
+                   
 <!--                     <li class="nav-item"><a -->
 <!--                             href="/lectureBoard/test/studentTest?lecaCd=1" class="nav-link"> -->
 <!--                         <p>내가 듣는 강의 (임시. 지우지 마시오)</p> -->
@@ -147,7 +136,6 @@
                 
                 <!-- 교수 어사이드 -->
                 <sec:authorize access="hasRole('ROLE_PROFESSOR')">
-                    <li class="nav-header">교수 어사이드</li>
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
                             강의 <i class="right fas fa-angle-left"></i>
@@ -167,15 +155,6 @@
                                                     class="nav-link">
                                 <p>담당 강의 조회</p>
                             </a></li>
-                        </ul>
-                    </li>
-                    <!-- 학적관리 -->
-                    <li class="nav-item"><a href="#" class="nav-link">
-                        <p>
-                            	평가 <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                        <ul class="nav nav-treeview">
                             <li class="nav-item"><a href="/professor/mineEvaluation"
                                                     class="nav-link">
 
@@ -183,12 +162,7 @@
                             </a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">
-                        <p>공지사항</p>
-                    </a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">
-                        <p>결재</p>
-                    </a></li>
+                    <!-- 학적관리 -->
                     <li class="nav-item"><a href="#" class="nav-link">
                         <p>
                             학생 관리 <i class="right fas fa-angle-left"></i>
@@ -221,7 +195,6 @@
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_MANAGER')">
                     <!-- 학사관리자 어사이드 -->
-                    <li class="nav-header">관리자 어사이드</li>
                     <li class="nav-item"><a href="/approval/main" class="nav-link">
                         <p>
                             결재

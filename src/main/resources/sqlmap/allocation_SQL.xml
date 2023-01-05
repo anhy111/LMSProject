@@ -8,6 +8,7 @@
 
 	<select id="studentApplyTimeTable" parameterType="studentLecture" resultType="allocation">
 		SELECT LA.LECA_NM
+			 , LA.LECA_CD
 		     , B.BLD_SNM
 		     , R.ROOM_NO
 		     , A.ALT_DT
@@ -18,11 +19,15 @@
 		AND R.ROOM_CD = A.ROOM_CD
 		AND R.BLD_CD = B.BLD_CD
 		AND SL.LECA_CD = L.LECA_CD
+		AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+		AND LA.LECA_SEM =
+		DECODE(TO_CHAR(SYSDATE,'MM'),'12',1,'01',1,'02',1,'03',1,'04',1,'05',1,2)
 		AND SL.STU_NO = #{stuNo}
 	</select>
 	
 	<select id="studentSaveTimeTable" parameterType="studentLecture" resultType="allocation">
 		SELECT LA.LECA_NM
+			 , LA.LECA_CD
 		     , B.BLD_SNM
 		     , R.ROOM_NO
 		     , A.ALT_DT
@@ -33,6 +38,9 @@
 		AND R.ROOM_CD = A.ROOM_CD
 		AND R.BLD_CD = B.BLD_CD
 		AND W.LECA_CD = L.LECA_CD
+		AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+		AND LA.LECA_SEM =
+		DECODE(TO_CHAR(SYSDATE,'MM'),'12',1,'01',1,'02',1,'03',1,'04',1,'05',1,2)
 		AND W.STU_NO = #{stuNo}
 	</select>
 	

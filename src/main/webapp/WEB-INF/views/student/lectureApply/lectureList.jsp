@@ -4,38 +4,97 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
+<link rel="stylesheet" href="/resources/css/topTable.css" type="text/css">
+<style type="text/css">
+#tgradeTable {
+	width : 100%;
+	height : 70px;
+	border : 1px solid lightgray;
+	border-collapse: collapse;
+	text-align : center;
+	background-color: white;
+}
+#tgradeTable td, #tgradeTable th{
+	padding-top : 5px;
+	padding-bottom : 5px;
+}
+#tgradeTable tr:first-child, #tgradeTable tr:nth-child(2){
+	background : rgb(244,247,253);
+	color : black;
+}
+#tgradeListRound{
+	width : 100%;
+}
+#tgradeListSelect{
+	display:inline-block;
+	margin-left : 2%;
+}
+</style>
 <div class="row">
-	<table class="table table-sm text-center col p-0 myinfo">
-		<tbody>
-			<tr>
-				<th width="12.5%">재학학기</th>
-				<td width="12.5%">${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기</td>
-				<th width="12.5%">학과</th>
-				<td width="12.5%">${graduateCredit.depNm}</td>
-				<th width="12.5%">총학점</th>
-				<td width="12.5%">${studentCurrentCredit.crdAc}</td>
-				<th width="12.5%">최대신청가능학점</th>
-				<td width="12.5%"><b id="maxCredit">${graduateCredit.rdcReqCrd}</b></td>
-			</tr>
-			<tr>
-				<th>전공필수</th>
-				<td>${studentCurrentCredit.crdMrc}</td>
-				<th>전공선택</th>
-				<td>${studentCurrentCredit.crdMoc}</td>
-				<th>교양필수</th>
-				<td>${studentCurrentCredit.crdCrc}</td>
-				<th>교양선택</th>
-				<td>${studentCurrentCredit.crdCoc}</td>
-			</tr>
-			<tr>
-				<th>현재신청학점</th>
-				<td id="creditState"></td>
-				<th>남은학점</th>
-				<td id="creditRemainder"></td>
-				<td colspan="4"></td>
-			</tr>
-		</tbody>
+	<table id="stuInfoTable">
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
+		<tr>
+			<th>재학학기</th>
+			<td>
+				<input type="text" class="infoText" value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기" readonly="readonly">
+			</td>
+			<th>학과</th>
+			<td>
+				<input type="text" class="infoText" value="${graduateCredit.depNm}" readonly="readonly">
+			</td>
+			<th>총학점</th>
+			<td>
+				<input type="text" class="infoText" value="${studentCurrentCredit.crdAc}" readonly="readonly">
+			</td>
+			<th>신청가능학점</th>
+			<td>
+				<input type="text" class="infoText" id="maxCredit" value="${graduateCredit.rdcReqCrd}" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 5px;"></td>
+		</tr>
+		<tr>
+			<th>전공필수</th>
+			<td>
+				<input type="text" class="infoText" name="depNm" id="depNm" value="${studentCurrentCredit.crdMrc}" readonly="readonly">
+			</td>
+			<th>전공선택</th>
+			<td>
+				<input type="text" class="infoText" name="yrNsem" id="yrNsem" value="${studentCurrentCredit.crdMoc}" readonly="readonly">
+			</td>
+			<th>교양필수</th>
+			<td>
+				<input type="text" class="infoText" name="stuSem" id="stuSem" value="${studentCurrentCredit.crdCrc}" readonly="readonly">
+			</td>
+			<th>교양선택</th>
+			<td>
+				<input type="text" class="infoText" name="stuBir" id="stuBir" value="${studentCurrentCredit.crdCoc}" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 5px;"></td>
+		</tr>
+		<tr>
+			<th>현재신청학점</th>
+			<td>
+				<input type="text" class="infoText" id="creditState" readonly="readonly">
+			</td>
+			<th>남은학점</th>
+			<td >
+				<input type="text" class="infoText" id="creditRemainder" readonly="readonly">
+			</td>
+			<th colspan="5"></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
 	</table>
+	
 </div>
 <div class="row mt-5">
 	<h4 class="col-3 pl-0 pr-0">수강신청된 강의목록</h4>
@@ -301,9 +360,14 @@
 		});
 		console.log("stuRgb : " + stuRgb);
 		if(stuRgb != 'RCD002'){
-			alert("재학중인 학생만 수강신청이 가능합니다.");
-			location.href = "/";
-			return;
+			Swal.fire({
+				icon: 'error',
+				title:'실패',
+				text : '중복되는 시간이 있습니다.'
+			}).then(function(){
+				location.href = "/";
+				return;
+			});
 		}
 		
 		$("#search").on("click",function(){
@@ -361,10 +425,25 @@
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(result) {
-					if(result == "maxCredit"){
-						alert("신청 가능한 학점을 초과했습니다.");
+					
+					if(result == "duplicate"){
+						Swal.fire({
+							icon: 'error',
+							title:'실패',
+							text : '중복되는 시간이 있습니다.'
+						});
+					} else if(result == "maxCredit"){
+						Swal.fire({
+							icon: 'error',
+							title:'실패',
+							text:'신청 가능한 학점을 초과했습니다.'
+						});
 					} else if(result == "maxHeadcount"){
-						alert("인원이 초과되었습니다.");
+						Swal.fire({
+							icon: 'error',
+							title:'실패',
+							text : "인원이 초과되었습니다."
+						});
 					}
 					loadCompleteApplyLecture();
 					loadNotYetApplyLecture();
@@ -389,6 +468,7 @@
 					xhr.setRequestHeader(header, token);
 				},
 				success : function(result) {
+					console.log(result);
 					loadCompleteApplyLecture();
 					loadNotYetApplyLecture();
 					loadNotApplySaveLecture();
@@ -505,8 +585,11 @@
 					str = "<tr class='text-center p-0'>";
 					str += "<td colspan='11'>신청된 강의가 없습니다.</td>";
 					str += "</tr>";
-					$("#completeApplyLecture").html(str);
-					return;
+					$("#completeApplyLecture").html(function(){
+						return str;
+					});
+					$("#creditState").val(credit);
+					$("#creditRemainder").val($("#maxCredit").val() - credit);
 				}
 				$.each(result,function(p_inx, lecture){
 					credit += lecture.lecApply.lecaCrd;
@@ -537,8 +620,8 @@
 							</tr>`
 				});
 				$("#completeApplyLecture").append(str);
-				$("#creditState").html(credit);
-				$("#creditRemainder").html($("#maxCredit").html() - credit);
+				$("#creditState").val(credit);
+				$("#creditRemainder").val($("#maxCredit").val() - credit);
 				
 				
 			}
@@ -625,7 +708,6 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(result) {
-				console.log("result : ", result);
 				
 				let wk = ["m","t","w","h","f"];
 				
@@ -638,40 +720,55 @@
 					}
 				}
 				
-				$.each(result, function(p_inx, lecture){
-					
-					let dayWeek = "";
-					switch (lecture.altDt) {
-					case '월':
-						dayWeek = "m";
-						break;
-					case '화':
-						dayWeek = "t";
-						break;
-					case '수':
-						dayWeek = "w";
-						break;
-					case '목':
-						dayWeek = "h";
-						break;
-					case '금':
-						dayWeek = "f";
-						break;
+				const time = {};
+				const lecaCdArr = [];
+				const color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
+				
+				$.each(result,function(p_inx, allocation){
+					if(typeof time[allocation.lecaCd] == "undefined"){
+						time[allocation.lecaCd] = new Array(allocation);
+						lecaCdArr.push(allocation.lecaCd);
+					} else{
+						time[allocation.lecaCd].push(allocation);
 					}
-					let color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
-					for(let i=lecture.altSt; i<=lecture.altEn; i++){
-						if( i == lecture.altSt){
-							$("#a"+dayWeek+i).css("backgroundColor",color[p_inx])
-										.css("color","white")
-										.css("border","none")
-										.html(lecture.lecaNm + "\n" + lecture.bldSnm + lecture.roomNo);
-						} else{
-							$("#a"+dayWeek+i).css("backgroundColor",color[p_inx])
-										.css("color","white")
-										.css("border","none");
-						}
+				});
+				
+				$.each(time, function(p_inx, lecture){
+					$.each(lecture, function(p_inx, allocation){
 						
-					}
+						let dayWeek = "";
+						switch (allocation.altDt) {
+						case '월':
+							dayWeek = "m";
+							break;
+						case '화':
+							dayWeek = "t";
+							break;
+						case '수':
+							dayWeek = "w";
+							break;
+						case '목':
+							dayWeek = "h";
+							
+							break;
+						case '금':
+							dayWeek = "f";
+							break;
+						}
+						if( $("#a"+dayWeek+(allocation.altTt-1)).val() != allocation.lecaCd){
+							$("#a"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
+										.css("color","white")
+										.css("borderBottom","none")
+										.html(allocation.lecaNm + "\n" + allocation.bldSnm + allocation.roomNo)
+										.val(allocation.lecaCd);
+						} else{
+							$("#a"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
+										.css("color","white")
+										.css("borderTop","none")
+										.val(allocation.lecaCd);
+						}
+							
+					}); // end for
 					
 				});//end for
 			}// end success

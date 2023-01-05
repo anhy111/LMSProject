@@ -168,12 +168,28 @@ $(function(){
 	a:hover + p.arrow_box2 {
 	  display: block;
 	}
+	
+	.categorybar .navbar-brand:hover{
+		opacity:0.7;
+		color:blue;
+		border-bottom : 5px solid orange;
+		transition:opacity 2s  color 2s border-bottom 2s;
+	}
 </style>
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 0.9);">
-
+<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 1);height:94px;">
+	    <ul class="navbar-nav mr-auto">
+	    
+	      <li class="nav-item categorybar active">
+	        <a class="navbar-brand" style="color:white;margin-left: 50px;margin-right: 50px;" href="#">사이버캠퍼스</a>
+	        <a class="navbar-brand" style="color:white;margin-right: 50px;"href="/notice/list">공지사항</a>
+	        <a class="navbar-brand" style="color:white;margin-right: 50px;"href="/qna/main">문의게시판</a>
+	        <a class="navbar-brand" style="color:white;margin-right: 50px;" href="/facility/full">시설예약</a>
+	      </li>
+	    </ul>
 	<!-- Right navbar links -->
 	<ul class="navbar-nav ml-auto">
+	
 		<!-- 로그인 하지 않은 경우 -->
 		<sec:authorize access="isAnonymous()">
 		<div class="user-panel d-flex">
@@ -188,6 +204,8 @@ $(function(){
 		</sec:authorize>
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
+			<!-- Notifications Dropdown Menu -->
+	
 			<div class="nav-link" style="color:white;">
 				<div class="row">
 					<span id="counter" style="padding-right:7px;"></span>
@@ -197,77 +215,7 @@ $(function(){
 					</div>
 				</div>
 			</div>
-			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
-				<sec:csrfInput/>
-			</form>
-			<a href="/mypage/mypage" class="d-block">
-				<div class="user-panel d-flex">
-					<div class="image">
-						<img src="/upload<%=pic%>"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info" style="color:white;">
-						<%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=department %> 
-					</div>
-				</div>
-			</a>
-			<p class="arrow_box2">마이페이지</p>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-			<div class="nav-link" style="color:white;">
-				<div class="row">
-					<span id="counter" style="padding-right:7px;"></span>
-					<div class="text-center" style="width:15px;">
-						<span class="fas fa-sync-alt" id="refresh"></span>
-						<p class="arrow_box1">시간 연장</p>
-					</div>
-				</div>
-			</div>
-			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
-				<sec:csrfInput/>
-			</form>
-			<a href="/mypage/mypage" class="d-block">
-				<div class="user-panel d-flex">
-					<div class="image">
-						<img src="/upload<%=pic%>"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info" style="color:white;">
-						<%=name %> 교수 &nbsp;&nbsp; | &nbsp;&nbsp;<%=position %> 
-					</div>
-				</div>
-			</a>
-			<p class="arrow_box2">마이페이지</p>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_MANAGER')">
-			<div class="nav-link" style="color:white;">
-				<div class="row">
-					<span id="counter" style="padding-right:7px;"></span>
-					<div class="text-center" style="width:15px;">
-						<span class="fas fa-sync-alt" id="refresh"></span>
-						<p class="arrow_box1">시간 연장</p>
-					</div>
-				</div>
-			</div>
-			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
-				<sec:csrfInput/>
-			</form>
-			<a href="/mypage/mypage" class="d-block">
-				<div class="user-panel d-flex">
-					<div class="image">
-						<img src="/upload<%=pic%>"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info" style="color:white;">
-						 <%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=division %>&nbsp;&nbsp; | &nbsp;&nbsp;<%=position %>  
-					</div>
-				</div>
-			</a>
-			<p class="arrow_box2">마이페이지</p>
-		</sec:authorize>
-
-		<!-- Notifications Dropdown Menu -->
-		<li class="nav-item dropdown">
+				<li class="nav-item dropdown">
 			<a class="nav-link" style="color: white;" data-toggle="dropdown" href="#"> 
 				<i class="far fa-bell"></i> 
 				<span id="notificationBadge" class="badge badge-warning navbar-badge">0</span>
@@ -295,9 +243,79 @@ $(function(){
 				<a href="#" class="dropdown-item dropdown-footer btn btn-outline-secondary">펼쳐보기</a>
 			</div>
 		</li>
+			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
+				<sec:csrfInput/>
+			</form>
+			<a href="/mypage/mypage" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/upload<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info" style="color:white;">
+						<%=name %> &nbsp;&nbsp;&nbsp;&nbsp;<%=department %> 
+					</div>
+				</div>
+			</a>
+			<p class="arrow_box2">마이페이지</p>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_PROFESSOR')">
+			<div class="nav-link" style="color:white;">
+				<div class="row">
+					<span id="counter" style="padding-right:7px;"></span>
+					<div class="text-center" style="width:15px;">
+						<span class="fas fa-sync-alt" id="refresh"></span>
+						<p class="arrow_box1">시간 연장</p>
+					</div>
+				</div>
+			</div>
+			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
+				<sec:csrfInput/>
+			</form>
+			<a href="/mypage/mypage" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/upload<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info" style="color:white;">
+						<%=name %> 교수 &nbsp;&nbsp;&nbsp;&nbsp;<%=position %> 
+					</div>
+				</div>
+			</a>
+			<p class="arrow_box2">마이페이지</p>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_MANAGER')">
+			<div class="nav-link" style="color:white;">
+				<div class="row">
+					<span id="counter" style="padding-right:7px;"></span>
+					<div class="text-center" style="width:15px;">
+						<span class="fas fa-sync-alt" id="refresh"></span>
+						<p class="arrow_box1">시간 연장</p>
+					</div>
+				</div>
+			</div>
+			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
+				<sec:csrfInput/>
+			</form>
+			<a href="/mypage/mypage" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/upload<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info" style="color:white;">
+						 <%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=division %>&nbsp;&nbsp;&nbsp;&nbsp;<%=position %>  
+					</div>
+				</div>
+			</a>
+			<p class="arrow_box2">마이페이지</p>
+		</sec:authorize>
+
+	
 		<div style="margin:5px;">
 			<form action="/logout" method="post">
-				<button type="submit" class="btn btn-light btn-sm"><b>로그아웃</b></button>
+				<button style="background-color:#001F3F;color:white;border:0;" type="submit" class="btn btn-default btn-sm">로그아웃</button>
 				<sec:csrfInput />
 			</form>
 		</div>

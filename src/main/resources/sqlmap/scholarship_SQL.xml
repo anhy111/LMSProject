@@ -126,17 +126,23 @@
 	
 	<!-- 장학금 수여자 확인 -->
 	<select id="scholarshipCheck" parameterType="int" resultType="int">
+		<![CDATA[
 		SELECT COUNT(SCLH_CD)
 		FROM SCL_HISTORY
 		WHERE STU_NO = #{stuNo}
 		AND
 		    SCLH_SEM =
 		    CASE
-		        WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM')) = 3 THEN 1
-		        WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM')) = 8 THEN 2
-		        ELSE 1
+		        WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM')) >=3
+		        AND TO_NUMBER(TO_CHAR(SYSDATE,'MM')) <=8 THEN 1
+		        ELSE 2
 		    END
-		AND TO_CHAR(SCLH_YR) = TO_CHAR(SYSDATE,'YYYY')
+		AND TO_CHAR(SCLH_YR) = 
+		    CASE
+		        WHEN SCLH_SEM = 2 THEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) -1
+		        ELSE TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		    END
+		]]>
 	</select>
 	
 	<!-- 장학금 수여학생 정보 -->
