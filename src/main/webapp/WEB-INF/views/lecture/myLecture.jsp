@@ -14,11 +14,12 @@
 <script type="text/javascript">
 	var date = new Date();
 	let year = date.getFullYear();
-	let month = date.getMonth();
+	let month = date.getMonth()+1;
 	var semester;
+	console.log(month)
 // 	var color = [ 'primary', 'info', 'danger', 'warning', 'secondary', 'dark' ];
 
-	if (month == '3' || month == '4' || month == '5' || month == '6')
+	if (month == '1' ||month == '2' ||month == '3' || month == '4' || month == '5' || month == '6')
 		semester = 1;
 	else if (month == '9' || month == '10' || month == '11' || month == '12')
 		semester = 2;

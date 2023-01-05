@@ -45,6 +45,12 @@ public class LectureBoardController {
 	@Autowired
 	FileUploadUtil fileUploadUtil;
 
+	//강의 계획서
+	@GetMapping("lecPlan")
+	public String lecPlan(String lecaCd) {
+		return "lectureBoard/lecPlan";
+	}
+	
 	//게시판 리스트
 	@GetMapping("/data/lectureData")
 	public ModelAndView dataList(ModelAndView mav, String keyWord, String category, String lecaCd) {

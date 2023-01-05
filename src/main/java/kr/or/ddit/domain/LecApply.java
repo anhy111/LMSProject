@@ -42,7 +42,7 @@ public class LecApply {
     private String lecaApproval; //승인여부
     private String subNm;		//과목명
     private int depCd;			//학과명
-    private int lecaRoom;
+    private Double lecaRoom;
 
     private List<Weekplan> weekPlanList;	//주차계획
 

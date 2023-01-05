@@ -37,6 +37,7 @@
 	display:inline-block;
 	margin-left : 2%;
 }
+
 </style>
 </head>
 <script type="text/javascript" defer="defer">
@@ -45,10 +46,17 @@ let token = "${_csrf.token}";
 
 	//성적 건수 가져오기
 	function getCnt(yrNsem) {
-		
+		var lecaYr;
+		var lecaSem;
 		yrNsem = new String($(yrNsem).val());
-		var lecaYr = yrNsem.substr(0,4);
-		var lecaSem = yrNsem.substr(4);
+		console.log(yrNsem);
+		if(yrNsem.length == 9){
+			lecaYr ='';
+			lecaSem='';
+		}else{
+		 lecaYr = yrNsem.substr(0,4);
+		 lecaSem = yrNsem.substr(4);
+		}
 		console.log(lecaYr,"년");
 		console.log(lecaSem,"학기");
 		let dataObject = {
@@ -266,7 +274,7 @@ let token = "${_csrf.token}";
 	<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;취득성적
 	
 	<p id="tellCnt">
-		[총 <span id="cntSpan"></span>건]
+		[총 <b><span id="cntSpan" style="color:red"></span></b>건]
 	</p>
 	
 	<br><br>

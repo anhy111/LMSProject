@@ -242,7 +242,7 @@ let token = "${_csrf.token}";
 				$('#atenLate').val(atl);
 				$('#atenAbsent').val(ata);
 				$('#atenEarly').val(result.attendence.atenEarly);
-				$('#atenOfiAbsent').val(atoa);
+				$('#atenOffically').val(atoa);
 				$('.totat').val(totat);
 				
 				// 총결석일
@@ -389,7 +389,7 @@ let token = "${_csrf.token}";
 						<div class="informDetailTop">
 							<table class="mb-2" border="1">
 								<tr>
-									<td colspan="8" style="text-align: center;height: 40px;font-weight: 700;font-size: 1.1em;">출결</td>
+									<td colspan="10" style="text-align: center;height: 40px;font-weight: 700;font-size: 1.1em;">출결</td>
 								</tr>
 								<tr>
 									<td>출석</td>

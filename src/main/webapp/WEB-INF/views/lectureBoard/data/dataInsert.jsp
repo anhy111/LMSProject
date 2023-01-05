@@ -9,7 +9,6 @@
 	<div class="col-sm-1" ></div>
 	<div class="col-sm-10" >
 		<form action="/lectureBoard/data/dataInsert" id="frm" method="post" enctype="multipart/form-data" >
-			<div class="card card-outline card-primary">
 				<div class="card-header">
 					<div class="form-group">
 							<label class="modifyDisplay">제목</label>
@@ -20,7 +19,6 @@
 				<div class="card-body">
 					<div class="col-sm-12">
 						<section class="content">
-								<div class="card card-danger">
 										<div class="card-body"  >
 											<div>
 												<textarea id="ldtCon" name="ldtCon" class="form-control" cols="15" rows="15"></textarea>
@@ -35,7 +33,6 @@
 												</div>
 										</div>
 								</div>
-							</div>
 						</section>
 					</div>
 			
@@ -50,7 +47,6 @@
 					</div>
 				</div>
 			</div>
- 	</div>
 <sec:csrfInput/>
 </form>
 </div>
