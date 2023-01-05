@@ -6,17 +6,18 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
        style="background-color: #001F3F;opacity:1;">
 	<!-- Brand Logo -->
-	<a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
-        <img src="/upload/연수대학교흰로고.png" alt="AdminLTE Logo"
-             class="brand-image img-circle elevation-3" style="opacity: 1">
-        <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span>
+    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
+    <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
+<!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
+<!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
+<!--         <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span> -->
     </a>
 
 	<!-- Sidebar -->
 	<div class="sidebar">
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column"
+			<ul class="pt-3 nav nav-pills nav-sidebar flex-column"
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
