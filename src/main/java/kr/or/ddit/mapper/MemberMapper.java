@@ -34,5 +34,9 @@ public interface MemberMapper  {
     public int updateStuPw(Map<String, String> map);
     
     public List<SclHistory> mySclList(int memNo);
+    
+    public int empUpdate(Employee employee);
+    
+    public int inMypage(Member member);
 
 }

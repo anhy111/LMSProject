@@ -26,10 +26,6 @@ function counter_run(){
 	document.all.counter.innerText = time_format(logoutTime);
 	logoutTime--;
 	
-	if(logoutTime < 5){
-		$("#session").css("display", "block");
-	}
-	
 	if(logoutTime < 0){
 		alert("세션이 종료되어 로그아웃 됩니다.")
 		clearInterval(logoutTid);
@@ -87,7 +83,7 @@ $(function(){
 			success :function(data){
 				console.log("성공이라해주라 ", data);
 				
-				logoutTime = 1800;
+				logoutTime = 1800; 
 				
 			},
 			error:function(request, status, error){
@@ -204,7 +200,7 @@ $(function(){
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
-			<a href="/mypage/mypage?memNo=<%=no%>" class="d-block">
+			<a href="/mypage/mypage" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
 						<img src="/upload<%=pic%>"
@@ -230,7 +226,7 @@ $(function(){
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
-			<a href="#" class="d-block"> 
+			<a href="/mypage/mypage" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
 						<img src="/upload<%=pic%>"
@@ -241,6 +237,7 @@ $(function(){
 					</div>
 				</div>
 			</a>
+			<p class="arrow_box2">마이페이지</p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
 			<div class="nav-link" style="color:white;">
@@ -255,7 +252,7 @@ $(function(){
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
-			<a href="#" class="d-block">
+			<a href="/mypage/mypage" class="d-block">
 				<div class="user-panel d-flex">
 					<div class="image">
 						<img src="/upload<%=pic%>"
@@ -266,6 +263,7 @@ $(function(){
 					</div>
 				</div>
 			</a>
+			<p class="arrow_box2">마이페이지</p>
 		</sec:authorize>
 
 		<!-- Notifications Dropdown Menu -->

@@ -93,41 +93,28 @@ h1{margin:0;}
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/jquery-1.11.3/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/lodash/lodash-3.8.0-compat.min.js"></script>
-<script type="text/javascript" src="http://alangunning.github.io/gridstack.js/gridstack.js"></script>
+<script type="text/javascript" src="/resources/js/gridstack.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/js/multiple-grids.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/touch-punch-0.2.3/jquery.ui.touch-punch.min.js"></script>
 <script type="text/javascript">
 var serialized_data = [];
 
 $(function() {
-    var options1 = {
-        width: 3,//2칸
-        float: false,
-        acceptWidgets: '.grid-stack-item'
-    };
-    
-    $('#grid1').gridstack(options1);
     
 	serialized_data = [
 		  { id: 1, name: "성적 조회", x: 0, y: 0, width: 1, height: 3, active: true },
 		  { id: 2, name: "당학기 강의 조회", x: 1, y: 0, width: 2, height: 3, active: true },
-		  { id: 3, name: "상담현황", x: 3, y: 0, width: 1, height: 3, active: false },
+		  { id: 3, name: "상담현황", x: 3, y: 0, width: 1, height: 3, active: true },
 		  { id: 4, name: "학사일정", x: 0, y: 3, width: 1, height: 1, active: false },
 		  { id: 5, name: "공지사항", x: 1, y: 4, width: 3, height: 1, active: false },
 		  { id: 6, name: "강의시간표", x: 0, y: 4, width: 1, height: 2, active: false },
 		  { id: 7, name: "Widget 7", x: 1, y: 4, width: 1, height: 2, active: false },
 		  { id: 8, name: "Widget 8", x: 2, y: 5, width: 1, height: 2, active: false },
-		  { id: 9, name: "Widget 9", x: 0, y: 0, width: 1, height: 2, active: false },
+		  { id: 9, name: "Widget 9", x: 0, y: 0, width: 1, height: 3, active: false },
 		  { id: 10, name: "Widget 10", x: 1, y: 0, width: 1, height: 1, active: false },
 		  { id: 11, name: "Widget 11", x: 1, y: 1, width: 1, height: 1, active: false }
 		];
 
-	var grid1 = $("#grid1").data('gridstack');
-	
-	serialized_data.forEach(function (node) {
-        grid1.add_widget($('<div><div class="grid-stack-item-content">'+node.label+'</div></div>'),
-            node.x, node.y, node.width, node.height, false,1,3,1,3,node.id);
-    });
 	
 	$("#showInfo").click(function() {
 		 
@@ -137,7 +124,7 @@ $(function() {
         nodes.forEach(function(item){
             console.log(item);
             if( item.id ) {
-                console.log(item.id +' + '+item.x +' + '+item.y +' + '+item.width +' + '+item.height);
+                console.log(item.id +' '+item.x +' '+item.y +' '+item.width +' '+item.height);
             }
             else {
                 itm = item.el.data();
