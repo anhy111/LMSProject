@@ -5,6 +5,14 @@
 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="kr.or.ddit.mapper.NoticeBasicMapper">
 
+    <!-- 공지사항 상세 조회(첨부파일 포함) -->
+    <select id="noticeBasicFindNotice" parameterType="Long" resultType="NoticeBasic">
+        SELECT *
+        FROM notice_basic B, ATTACH A
+        WHERE B.ATCH_FILE_ID = A.ATCH_FILE_ID (+)
+          AND NOTICE_CD = #{noticeCd}
+    </select>
+
     <!-- 공지사항 등록 -->
     <insert id="noticeBasicSave" parameterType="NoticeBasic">
 

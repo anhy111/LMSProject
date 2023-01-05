@@ -89,7 +89,7 @@
 
 <div class="quizWrapper">
     <div class="col-lg-12">
-        <h4 class="row p-0">문의 게시판</h4>
+        <h4 class="row p-0">문의게시판</h4>
         <div class="alert alert-light" role="alert"
              style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
             <p>
@@ -103,9 +103,11 @@
                 &emsp;- <strong>정답 란에는 1~4까지의 숫자</strong>만 입력이 가능합니다.<br>
             </p>
         </div>
+
         <a href="/qna/qnaWrite" class="btn btn-sm btn-primary" style="float: right;">등록</a>
+
         <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span
-                style="color:red;">${totalRow }</span>건의 게시물이 있습니다</p>
+                style="color:red; font-weight: bold;" >${totalRow }</span>건의 게시물이 있습니다</p>
         <div class="tab-content">
             <div class="tab-pane show active" id="hoverable-rows-preview">
                 <div class="table-responsive-sm">

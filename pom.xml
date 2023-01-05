@@ -126,13 +126,19 @@
             <version>1.2</version>
         </dependency>
 
-        <!-- Test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.7</version>
-            <scope>test</scope>
-        </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>5.3.5</version>
+                <scope>test</scope>
+            </dependency>
+
         <!-- Database 라이브러리 시작 -->
         <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
         <!-- XML로 쿼리를 작성하게 해주는 라이브러리 -->
