@@ -32,5 +32,20 @@
         )
 	</insert>
 
+	<select id="loadScheduleForMonth" parameterType="aSchedule" resultType="aSchedule">
+		SELECT SC.ASCH_CD
+		     , SC.ASCH_TTL
+		     , SC.ASCH_CON
+		     , SC.ASCH_ST
+		     , SC.ASCH_EN
+		     , SC.ASCH_REG_DT
+		     , SC.EMP_NO
+		     , (SELECT E.EMP_NM FROM EMPLOYEE E WHERE E.EMP_NO = SC.EMP_NO) EMP_NM
+		FROM A_SCHEDULE SC
+		WHERE SC.ASCH_ST BETWEEN TO_DATE(#{formatAschSt},'YYYY-MM-DD')
+		                AND TO_DATE(#{formatAschEn},'YYYY-MM-DD')
+		OR SC.ASCH_EN BETWEEN TO_DATE(#{formatAschSt},'YYYY-MM-DD')
+		                AND TO_DATE(#{formatAschEn},'YYYY-MM-DD')
+	</select>
 </mapper>
 
