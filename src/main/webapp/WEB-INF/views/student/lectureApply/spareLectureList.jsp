@@ -5,38 +5,68 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <div class="row">
-	<table class="table table-sm text-center col p-0 myinfo">
-		<tbody>
-			<tr>
-				<th width="12.5%">재학학기</th>
-				<td width="12.5%">${graduateCredit.stuYr}학년${graduateCredit.stuSem}학기</td>
-				<th width="12.5%">학과</th>
-				<td width="12.5%">${graduateCredit.depNm}</td>
-				<th width="12.5%">총학점</th>
-				<td width="12.5%">${studentCurrentCredit.crdAc}</td>
-				<th width="12.5%">최대신청가능학점</th>
-				<td width="12.5%">
-					<b id="maxCredit">${graduateCredit.rdcReqCrd}</b>
-				</td>
-			</tr>
-			<tr>
-				<th>전공필수</th>
-				<td>${studentCurrentCredit.crdMrc}</td>
-				<th>전공선택</th>
-				<td>${studentCurrentCredit.crdMoc}</td>
-				<th>교양필수</th>
-				<td>${studentCurrentCredit.crdCrc}</td>
-				<th>교양선택</th>
-				<td>${studentCurrentCredit.crdCoc}</td>
-			</tr>
-			<tr>
-				<th>현재신청학점</th>
-				<td id="creditState">0</td>
-				<th>남은학점</th>
-				<td id="creditRemainder">${graduateCredit.rdcReqCrd}</td>
-				<td colspan="4"> </td>
-			</tr>
-		</tbody>
+	<table id="stuInfoTable">
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
+		<tr>
+			<th>재학학기</th>
+			<td>
+				<input type="text" class="infoText" value="${graduateCredit.stuYr}학년  ${graduateCredit.stuSem}학기" readonly="readonly">
+			</td>
+			<th>학과</th>
+			<td>
+				<input type="text" class="infoText" value="${graduateCredit.depNm}" readonly="readonly">
+			</td>
+			<th>총학점</th>
+			<td>
+				<input type="text" class="infoText" value="${studentCurrentCredit.crdAc}" readonly="readonly">
+			</td>
+			<th>신청가능학점</th>
+			<td>
+				<input type="text" class="infoText" id="maxCredit" value="${graduateCredit.rdcReqCrd}" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 5px;"></td>
+		</tr>
+		<tr>
+			<th>전공필수</th>
+			<td>
+				<input type="text" class="infoText" name="depNm" id="depNm" value="${studentCurrentCredit.crdMrc}" readonly="readonly">
+			</td>
+			<th>전공선택</th>
+			<td>
+				<input type="text" class="infoText" name="yrNsem" id="yrNsem" value="${studentCurrentCredit.crdMoc}" readonly="readonly">
+			</td>
+			<th>교양필수</th>
+			<td>
+				<input type="text" class="infoText" name="stuSem" id="stuSem" value="${studentCurrentCredit.crdCrc}" readonly="readonly">
+			</td>
+			<th>교양선택</th>
+			<td>
+				<input type="text" class="infoText" name="stuBir" id="stuBir" value="${studentCurrentCredit.crdCoc}" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 5px;"></td>
+		</tr>
+		<tr>
+			<th>현재신청학점</th>
+			<td>
+				<input type="text" class="infoText" id="creditState" readonly="readonly">
+			</td>
+			<th>남은학점</th>
+			<td >
+				<input type="text" class="infoText" id="creditRemainder" readonly="readonly">
+			</td>
+			<th colspan="5"></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
 	</table>
 </div>
 <div class="row pb-3 mt-5">
@@ -460,8 +490,8 @@
 					$("#completeSaveLecture").html(function(){
 						return str;
 					});
-					$("#creditState").html(credit);
-					$("#creditRemainder").html($("#maxCredit").html() - credit);
+					$("#creditState").val(credit);
+					$("#creditRemainder").val($("#maxCredit").val() - credit);
 					return;
 				}
 				$.each(result,function(p_inx, lecture){
@@ -484,8 +514,8 @@
 							</tr>`
 				});
 				$("#completeSaveLecture").append(str);
-				$("#creditState").html(credit);
-				$("#creditRemainder").html($("#maxCredit").html() - credit);
+				$("#creditState").val(credit);
+				$("#creditRemainder").val($("#maxCredit").val() - credit);
 			}
 		}); // end ajax
 	} // end function
