@@ -19,12 +19,12 @@ public class S3Config {
     private String secretKey;
 
     @Bean
-    public AmazonS3 s3client() {
+    public AmazonS3 s3Client() {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+
+        return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                 .withRegion(Regions.US_EAST_1)
                 .build();
-        return s3Client;
     }
 }

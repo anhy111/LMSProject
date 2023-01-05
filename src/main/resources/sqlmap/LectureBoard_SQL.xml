@@ -152,7 +152,6 @@
 		FROM LEC_DATA ld, ATTACH A
 		WHERE LD.ATCH_FILE_ID = A.ATCH_FILE_ID (+)
 		AND LDT_CD = #{ldtCd}
-	
 	</select>
 	
 	<!-- 과제 수정 -->

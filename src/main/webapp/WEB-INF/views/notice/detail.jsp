@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 <style>
     .date {
@@ -175,17 +177,17 @@
     }
 
     .p-0 {
-        padding: 0!important;
+        padding: 0 !important;
     }
 
     .row {
-         display: -ms-flexbox;
-         display: flex;
-         -ms-flex-wrap: wrap;
-         flex-wrap: wrap;
-         margin-right: -7.5px;
-         margin-left: -7.5px;
-     }
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -7.5px;
+        margin-left: -7.5px;
+    }
 </style>
 
 <!-- 게시판상세 -->
@@ -197,25 +199,41 @@
     <!-- 111111 -->
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <h4 class="row p-0">공사사항</h4>
-                <header class="header">
-                    <h3 class="title">${form.noticeTtl}</h3>
-                    <p class="date">
-                        <fmt:formatDate value="${form.noticeReg}" pattern="yyyy/MM/dd"/>
-                    </p>
-                </header>
-                <input type="hidden" name="noticeCd" value="${form.noticeCd}"/>
-                <p>
-                    ${form.noticeCon}
+            <header class="header">
+                <h3 class="title">${form.noticeTtl}</h3>
+                <p class="date">
+                    <fmt:formatDate value="${form.noticeReg}" pattern="yyyy/MM/dd"/>
                 </p>
-                <div class="download">
-                    <a href="#">2023정시_모집인원_변경안내.pdf(636 KB)</a>
+            </header>
+            <input type="hidden" name="noticeCd" value="${form.noticeCd}"/>
+            <p>
+                ${form.noticeCon}
+            </p>
+
+            <c:if test="${form.atchFileId != -1}">
+            <div class="download">
+                <div class="taskData">
+                    <label>첨부파일</label> <br>
+                    <c:forEach var="attach" items="${form.attachList}">일
+                        <!-- 파일 업로드 경로 문제 해결 안됐음************************************************************************************************************** -->
+                        <a href="/resources/upload${attach.streFileNm}" download
+                           class="btn btn-outline-primary">${attach.orignlFileNm}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-download" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                        </a>
+                    </c:forEach>
                 </div>
-                <div>
-                    <footer class="footer">
-                        <c:set var="standardNoticeCd" value="${form.noticeCd}"/>
-                        <c:if test="${not empty formPre.noticeTtl}">
-                        <a href="/notice/list/${standardNoticeCd - 1}/detail" class="btn next">
+                </c:if>
+            </div>
+
+            <div>
+                <footer class="footer">
+                    <c:set var="standardNoticeCd" value="${form.noticeCd}"/>
+                    <c:if test="${not empty formPre.noticeTtl}">
+                    <a href="/notice/list/${standardNoticeCd - 1}/detail" class="btn next">
                         <span class="title">
                             <p class="btn prev">
                                 <span class="clip">${formPre.noticeTtl}</span>
@@ -227,9 +245,9 @@
                                 <span class="arrow prev">이전글</span>
                             </c:if>
                         </span>
-                        </a>
-                        <a href="/notice/list" class="btn-list">목록보기</a>
-                        <c:if test="${not empty formNext.noticeTtl}">
+                    </a>
+                    <a href="/notice/list" class="btn-list">목록보기</a>
+                    <c:if test="${not empty formNext.noticeTtl}">
                         <a href="/notice/list/${standardNoticeCd + 1}/detail" class="btn next">
                             <span class="title">
                             <c:if test="${not empty formNext.noticeTtl}">
@@ -238,28 +256,28 @@
                             </c:if>
                             </span>
                         </a>
-                        </c:if>
-                        <c:if test="${empty formNext.noticeTtl}">
+                    </c:if>
+                    <c:if test="${empty formNext.noticeTtl}">
                             <span class="btn next">
                             <span class="clip" readonly="true">없음</span>
                             <span class="arrow next" readonly="true">다음글</span>
                             </span>
-                        </c:if>
-                    </footer>
-                </div>
+                    </c:if>
+                </footer>
+            </div>
         </div>
     </div>
 
-    <div class="row justify-content-end mt-3">
-        <button class="btn btn-outline-primary m-1" type="button"
-                onclick="location.href='/notice/update/${form.noticeCd}'">수정
-        </button>
-        <button class="btn btn-outline-danger m-1" type="button"
-                onclick="location.href='/notice/delete/${form.noticeCd}'">삭제
-        </button>
-        <button class="btn btn-primary m-1" type="button" onclick="location.href='/notice/list'">목록
-        </button>
-    </div>
+    <sec:authorize access="hasRole('ROLE_MANAGER')">
+    <button class="btn btn-outline-primary m-1" type="button"
+            onclick="location.href='/notice/update/${form.noticeCd}'">수정
+    </button>
+    <button class="btn btn-outline-danger m-1" type="button"
+            onclick="location.href='/notice/delete/${form.noticeCd}'">삭제
+    </button>
+    <button class="btn btn-primary m-1" type="button" onclick="location.href='/notice/list'">목록
+    </button>
+    </sec:authorize>
 
     <script>
         function f_alert() {

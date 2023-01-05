@@ -44,7 +44,7 @@
 											<c:if test="${lecData.atchFileId != -1}">
 											<div  class="taskData">
 												<label>첨부파일</label> <br>
-												<c:forEach var="attach" items="${lecData.attachList}"  >
+												<c:forEach var="attach" items="${lecData.attachList}"  >일
 												<!-- 파일 업로드 경로 문제 해결 안됐음************************************************************************************************************** -->
 												<a href="/resources/upload${attach.streFileNm}" download class="btn btn-outline-primary">${attach.orignlFileNm}
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
