@@ -27,8 +27,6 @@ _
 /src/main/webapp/WEB-INF/spring/root-context.xml,5\2\528c08e315052712c6de729d808bc541b1c5b506
 ^
 .src/main/java/kr/or/ddit/domain/qna/QnaVO.java,6\b\6b4ffe53ae8c63d0157770e3796e1a6cfcd30263
-e
-5src/main/webapp/WEB-INF/mybatisAlias/mybatisAlias.xml,0\2\02e38ac296a17323bde8602b819a5c8eae112772
 \
 ,src/main/java/kr/or/ddit/domain/qna/Qna.java,1/c/1c9b80a4667dd7067f0d356071eed1b662c90253
 i
@@ -85,14 +83,10 @@ v
 Fsrc/main/java/kr/or/ddit/controller/StudentLectureApplyController.java,2/6/26f21a7d1026d9434a94184a3dcd21f135a45c09
 \
 ,src/main/java/kr/or/ddit/domain/Lecture.java,3/d/3dfcc511bf0e710d44c3651930f8bd294861cdc0
-f
-6src/main/java/kr/or/ddit/mapper/NoticeBasicMapper.java,7/c/7c516eac80481d808ba0a996013ced35c3dc26ea
 ]
 -src/main/java/kr/or/ddit/domain/LecApply.java,b/0/b04768642591fdd818d3298683cc0836b7649119
 e
 5src/main/java/kr/or/ddit/domain/notice/NoticeAPI.java,c/0/c0b5995619be3285e4a49076d43d78db08fdbe1a
-g
-7src/main/java/kr/or/ddit/domain/notice/NoticeBasic.java,7/d/7d60b87ba6bf72c7688d1d4030026b5fce218f53
 m
 =src/main/webapp/WEB-INF/views/student/lecture/lectureList.jsp,a/5/a5b6717a1acb5b5abd4cf8bd16059f3836f6a7b0
 ^
