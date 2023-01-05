@@ -3,6 +3,32 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<link rel="stylesheet" href="/resources/css/topTable.css" type="text/css">
+<style type="text/css">
+#tgradeTable {
+	width : 100%;
+	height : 70px;
+	border : 1px solid lightgray;
+	border-collapse: collapse;
+	text-align : center;
+	background-color: white;
+}
+#tgradeTable td, #tgradeTable th{
+	padding-top : 5px;
+	padding-bottom : 5px;
+}
+#tgradeTable tr:first-child, #tgradeTable tr:nth-child(2){
+	background : rgb(244,247,253);
+	color : black;
+}
+#tgradeListRound{
+	width : 100%;
+}
+#tgradeListSelect{
+	display:inline-block;
+	margin-left : 2%;
+}
+</style>
 
 <div class="row">
 	<table id="stuInfoTable">

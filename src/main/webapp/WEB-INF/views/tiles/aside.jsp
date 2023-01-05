@@ -205,7 +205,7 @@ transition: border 2s opacity 2s;
                             공지사항 관리
                         </p>
                     </a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item"><a href="/aschedule/calendar" class="nav-link">
                         <p>학사일정 관리</p>
                     </a></li>
                     <li class="nav-item"><a href="#" class="nav-link">

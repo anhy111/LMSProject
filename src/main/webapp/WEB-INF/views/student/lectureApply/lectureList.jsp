@@ -150,7 +150,7 @@
 					<th>교수명</th>
 					<th>강의계획서</th>
 					<th>신청</th>
-				</tr>획
+				</tr>
 			</thead>
 			<tbody id="notApplySaveLecture">
 
