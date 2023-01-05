@@ -230,7 +230,7 @@ let token = "${_csrf.token}";
 	<br><br>
 	
 	<p class="tgradePreListSelect"><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;취득성적</p>
-	&nbsp;&nbsp;총 <span class="tgradePreCnt" id="tgradePreSub" style="color:red;"></span>건
+	&nbsp;&nbsp;총 <b><span class="tgradePreCnt" id="tgradePreSub" style="color:red;"></span></b>건
 	<div id="tgradeYellowBox" style="height:47px;">
 			<input type="text" name="yrNsem" id="tgradePreYear" readonly="readonly" value="${now.YEAR}">
 		<label>년도
