@@ -255,7 +255,6 @@ $(function(){
 					<span id="counter" style="padding-right:7px;"></span>
 					<div class="text-center" style="width:15px;">
 						<span class="fas fa-sync-alt" id="refresh"></span>
-<!-- 						<p class="arrow_box1">시간 연장</p> -->
 					</div>
 				</div>
 			</div>
@@ -292,18 +291,7 @@ $(function(){
 			</form>
 			<div style="margin:5px;">
 			<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
-					<%=department %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님				
-			<a href="/mypage/mypage" class="d-block">
-				<div class="user-panel d-flex">
-					<div class="image">
-						<img src="/upload<%=pic%>"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info" style="color:white;">
-						<%=name %> &nbsp;&nbsp;&nbsp;&nbsp;<%=department %> 
-					</div>
-				</div>
-			</a>
+					<%=department %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님</a>		
 			<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
 				<div class="card-body box-profile">
 				<div class="text-center">
@@ -314,7 +302,7 @@ $(function(){
 				<ul class="list-group list-group-unbordered mb-3">
 				</ul>
 				
-				<a href="/mypage/mypage?memNo=<%=no%>" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
+				<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
 				</div>
 				
 				</div>
@@ -326,11 +314,9 @@ $(function(){
 					<span id="counter" style="padding-right:7px;"></span>
 					<div class="text-center" style="width:15px;">
 						<span class="fas fa-sync-alt" id="refresh"></span>
-<!-- 						<p class="arrow_box1">시간 연장</p> -->
 					</div>
 				</div>
 			</div>
-<%-- 			//	<%=name %> 교수 &nbsp;&nbsp;&nbsp;&nbsp;<%=position %>  --%>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
@@ -349,24 +335,13 @@ $(function(){
 				<ul class="list-group list-group-unbordered mb-3">
 				</ul>
 				
-				<a href="/mypage/mypage?empNo=<%=no%>" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
+				<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
 				</div>
 				
 				</div>
 					
 				</div>
-			<a href="/mypage/mypage" class="d-block">
-				<div class="user-panel d-flex">
-					<div class="image">
-						<img src="/upload<%=pic%>"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info" style="color:white;">
-						<%=name %> 교수 &nbsp;&nbsp;&nbsp;&nbsp;<%=position %> 
-					</div>
-				</div>
-			</a>
-			<p class="arrow_box2">마이페이지</p>
+<!-- 			<p class="arrow_box2">마이페이지</p> -->
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
 			<div class="nav-link" style="color:white;">
@@ -374,19 +349,15 @@ $(function(){
 					<span id="counter" style="padding-right:7px;"></span>
 					<div class="text-center" style="width:15px;">
 						<span class="fas fa-sync-alt" id="refresh"></span>
-<!-- 						<p class="arrow_box1">시간 연장</p> -->
 					</div>
 				</div>
 			</div>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
-<%-- 						 <%=name %> &nbsp;&nbsp;&nbsp;&nbsp;<%=division %>&nbsp;&nbsp;&nbsp;&nbsp;<%=position %>   --%>
 				<div style="margin:5px;">
-				
 							<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
 					<%=division %>&nbsp;&nbsp;<%=position %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님
-				
 			</a>
 			<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
 				<div class="card-body box-profile">
@@ -398,24 +369,13 @@ $(function(){
 				<ul class="list-group list-group-unbordered mb-3">
 				</ul>
 				
-				<a href="/mypage/mypage?empNo=<%=no%>" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
+				<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
 				</div>
 				
 				</div>
 					
 				</div>
-			<a href="/mypage/mypage" class="d-block">
-				<div class="user-panel d-flex">
-					<div class="image">
-						<img src="/upload<%=pic%>"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info" style="color:white;">
-						 <%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=division %>&nbsp;&nbsp;&nbsp;&nbsp;<%=position %>  
-					</div>
-				</div>
-			</a>
-			<p class="arrow_box2">마이페이지</p>
+<!-- 			<p class="arrow_box2">마이페이지</p> -->
 		</sec:authorize>
 
 	
