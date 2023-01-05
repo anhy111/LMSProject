@@ -2,11 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.PortletMapper">
 
-	<update id="updatePortlet" parameterType="map">
-		UPDATE PORTLET
-		SET PO_CONT = #{poCont}
+	
+	<insert id="updatePortlet" parameterType="map">
+		MERGE INTO PORTLET
+		USING DUAL
+		ON (MEM_NO = #{memNo})
+		WHEN MATCHED THEN
+		UPDATE SET
+		        PO_CONT = #{poCont}
+		    WHERE MEM_NO = #{memNo}
+		WHEN NOT MATCHED THEN
+		INSERT (MEM_NO, PO_CONT)
+		VALUES (#{memNo}, #{poCont})
+	</insert>
+	
+	<select id="memPortlet" parameterType="int" resultType="portlet">
+		SELECT 	MEM_NO
+				, PO_CONT
+		FROM PORTLET
 		WHERE MEM_NO = #{memNo}
-	</update>
+	</select>
 
 </mapper>
 

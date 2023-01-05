@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.controller.ManageController;
+import kr.or.ddit.domain.Portlet;
 import kr.or.ddit.service.PortletService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +38,13 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) throws ParseException {
+		
+		int memNo = (int)session.getAttribute("no");
+		
+		Portlet memPortlet = this.portletService.memPortlet(memNo);
+		
+		model.addAttribute("memPortlet", memPortlet);
 		
 		return "main/mainPage";
 	}
