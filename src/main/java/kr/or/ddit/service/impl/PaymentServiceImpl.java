@@ -32,6 +32,11 @@ public class PaymentServiceImpl implements PaymentService {
 	public int adminBillCount() {
 		return this.paymentMapper.adminBillCount();
 	}
+	
+	@Override
+	public int insert(Payment payment) {
+		return this.paymentMapper.insert(payment);
+	}
 
 	@Override
 	public Payment sumFee() {
