@@ -61,6 +61,7 @@ public class NoticeBasicController {
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
         model.addAttribute("totalPage", totalPage);
+        model.addAttribute("bodyTitle","공지사항");
 
         return VIEWS_NOTICE_MAIN;
     }
@@ -108,7 +109,7 @@ public class NoticeBasicController {
 
         //총 페이지의 수 계산
         totalPage = (int) Math.ceil((double) totalRow / 10);
-
+        model.addAttribute("bodyTitle","공지사항");
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
         model.addAttribute("totalPage", totalPage);

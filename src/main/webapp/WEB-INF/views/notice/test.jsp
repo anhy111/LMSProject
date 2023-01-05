@@ -81,14 +81,17 @@
 %>
 <c:set var="date" value="<%= simDate %>"/>
 
-<div class="quizWrapper">
-    <div class="col-lg-12">
-        <h4 class="row p-0">공사사항</h4>
-        <div class="alert alert-light" role="alert"
-             style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
+        <div class="row alert alert-light" role="alert" style="font-size: 0.9em;padding: 1em;border: 1px solid #eee;">
+        				<p>
+							<strong><b>※ 안내사항</b></strong> <br>
+							<br> (1)&nbsp;상단탭의&nbsp;<strong style="color:blue">대면/비대면</strong>을 클릭하면 구분하여 확인 할 수 있습니다.<br>
+							<br> (2)&nbsp;<strong>승인대기</strong>시에는 수정, 삭제 할 수 있으며<br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>승인 및 반려</strong>처리가 되면 수정, 삭제할 수 없습니다.<br> 
+							<br> (3)&nbsp;하단의 <strong>신청</strong> 버튼을 눌러 신청 할 수 있습니다.<br>
+							<br> (4)&nbsp;<strong>기록 및 답변</strong>이 등록되면 확인/출력 할 수 있습니다.
+						</p>
         </div>
         <sec:authorize access="hasRole('ROLE_MANAGER')">
-        <a href="/notice/noticeForm" class="btn btn-sm btn-primary" style="float: right;">등록</a>
+    
         </sec:authorize>
         <div class="tab-content">
             <div class="tab-pane show active" id="hoverable-rows-preview">
@@ -101,14 +104,15 @@
                         <tbody>
                         <form action="searchKeyword" method="post" name="searchForm">
                             <sec:csrfInput/>
-                            <div class="search-wrap">
-                                <select name="searchOption">
+                            <div class="row search-wrap">
+                                <select class="col-1 form-control" name="searchOption">
                                     <option value="0">선택</option>
                                     <option value="1">제목</option>
                                     <option value="2">내용</option>
                                 </select>
-                                <input type="text" name="keyword" placeholder="검색어 입력"/>
-                                <button type="submit">검색</button>
+                                <input type="text" name="keyword" class="form-control col-2" placeholder="검색어 입력"/>
+                                <button type="submit" class="btn btn-default">검색</button>
+                           	    <a href="/notice/noticeForm" class="ml-auto btn btn-primary" style="text-align: end;">등록</a>
                                 <br>
                             </div>
                         </form>
@@ -156,5 +160,3 @@
             <button type="button" class="btn btn-light" disabled="" onclick="#"><i
                     class="uil-angle-double-right"></i></button>
         </div>
-    </div>
-</div>

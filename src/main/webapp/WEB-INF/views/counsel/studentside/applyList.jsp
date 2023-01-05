@@ -239,8 +239,8 @@ cursor:pointer;
 							<label>상담 할 내용*</label>
 						</div>
 					</div>
-					<div class="row">
-						<textarea id="cnslCon"name="cnslCon" rows="3" class="col-10 ml-2 form-control"></textarea>
+					<div class="row" style="height:300px;max-height:400px;">
+						<textarea id="cnslCon"name="cnslCon" rows="3" class="col-10 ml-2 h-100 form-control"></textarea>
 					</div>
 				</div>
 				<div class="col-4" style="display: inherit; padding-top: 20px;">
