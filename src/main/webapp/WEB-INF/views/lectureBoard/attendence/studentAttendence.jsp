@@ -302,7 +302,7 @@ let token = "${_csrf.token}";
 									<p style="display: block;text-align: center; font-size: 1.1em;">&#8251; 전자출결시스템 안내</p>
 									<hr>
 									<p>(1) 출결 표시 방법 안내.</p>
-									&emsp;-&nbsp;<strong>출석&nbsp;:&nbsp;○&emsp;|&emsp;지각&nbsp;:&nbsp;△&emsp;|&emsp;결석&nbsp;:&nbsp;⨉&emsp;|&emsp;공결&nbsp;:&nbsp;◎</strong><br><br>
+									&emsp;-&nbsp;<strong>출석&nbsp;:&nbsp;○&emsp;|&emsp;지각&nbsp;:&nbsp;△&emsp;|&emsp;결석&nbsp;:&nbsp;⨉&emsp;|&emsp;조퇴&nbsp;:&nbsp;☆&emsp;|&emsp;공결&nbsp;:&nbsp;◎</strong><br><br>
 									<p>(2) 출결표는 주차와 차시로 구분됩니다.</p>
 									<p>(3) 지각/조퇴 3회는 결석 1회로 산정됩니다.</p>
 							</div>
@@ -311,7 +311,7 @@ let token = "${_csrf.token}";
 							<span style="float: right;">
 								<span class="badge badge-outline-danger">총 결석일</span>
 								&emsp;
-								<span id="totalAbsent">-</span>&nbsp;일
+								<B style="color:red"><span id="totalAbsent">-</span></B>&nbsp;일
 							</span>
 							<br>
 						</p>

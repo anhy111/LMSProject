@@ -154,9 +154,15 @@ public class NoticeBasicController {
 
 
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
+
         NoticeBasic noticeBasicPre = noticeBasicService.findOne(noticeCd - 1);
+        log.info("                  Pre "+ noticeBasicPre.toString());
+
         NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
+        log.info("                   Basic"+ noticeBasic.toString());
+
         NoticeBasic noticeBasicNext = noticeBasicService.findOne(noticeCd + 1);
+
 
         // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
         model.addAttribute("formPre", noticeBasicPre);

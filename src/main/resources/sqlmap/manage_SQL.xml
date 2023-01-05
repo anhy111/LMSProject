@@ -4,7 +4,7 @@
 	
 	<select id="studentList" parameterType="int" resultType="student"> 
 		WITH T AS(
-			SELECT 	ROWNUM-1 ROWNO
+			SELECT 	ROW_NUMBER() OVER(ORDER BY S.STU_NO)-1 ROWNO
 			        , S.STU_NO
 			        , S.STU_YR
 			        , S.STU_SEM
@@ -288,31 +288,32 @@
 	
 	<select id="employeeList" parameterType="int" resultType="employee"> 
 		WITH T AS (
-		    SELECT   ROWNUM-1 ROWNO
-		            , E1.EMP_NO
-		            , E1.EMP_NM
-		            , E1.EMP_NME
-		            , E1.EMP_TEL
-		            , E1.EMP_TEL2
-		            , E1.EMP_ZIP
-		            , E1.EMP_ADDR1
-		            , E1.EMP_ADDR2
-		            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_BANK_CD) AS EMP_BANK_CD
-		            , E1.EMP_DEPO
-		            , E1.EMP_ACT
-		            , E1.EMP_PIC
-		            , E1.EMP_JOIN
-		            , E1.EMP_RET
-		            , E1.EMP_BIR
-		            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_DIV) AS EMP_DIV
-		            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_POS) AS EMP_POS
-		    FROM EMPLOYEE E1
-		    ORDER BY E1.EMP_NO ASC
-		) 
-		SELECT *
-		FROM T
-		WHERE T.ROWNO
-		BETWEEN (10 * (#{viewPage}-1)) AND ((10*#{viewPage})-1)
+			    SELECT   ROW_NUMBER() OVER(ORDER BY E1.EMP_NO)-1 ROWNO
+			            , E1.EMP_NO
+			            , E1.EMP_NM
+			            , E1.EMP_NME
+			            , E1.EMP_TEL
+			            , E1.EMP_TEL2
+			            , E1.EMP_ZIP
+			            , E1.EMP_ADDR1
+			            , E1.EMP_ADDR2
+			            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_BANK_CD) AS EMP_BANK_CD
+			            , E1.EMP_DEPO
+			            , E1.EMP_ACT
+			            , E1.EMP_PIC
+			            , E1.EMP_JOIN
+			            , E1.EMP_RET
+			            , E1.EMP_BIR
+			            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_DIV) AS EMP_DIV
+			            , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = E1.EMP_POS) AS EMP_POS
+			    FROM EMPLOYEE E1
+			    ORDER BY E1.EMP_NO ASC
+			) 
+			SELECT *
+			FROM T
+			WHERE T.ROWNO
+			BETWEEN (10 * (#{viewPage}-1)) AND ((10*#{viewPage})-1)
+			ORDER BY ROWNO ASC
 	</select>
 	
 	<select id="detailEmp" parameterType="map" resultType="employee">

@@ -17,27 +17,13 @@ $(function(){
 			}
 		}).open();
 	});
-});
-
-function onSubmit(){
-	Swal.fire(
-            '수정 완료',
-            '정상적으로 수정 되었습니다.',
-            'success'
-        ).then(function(){
-			$("#mysub").submit();
-    });
 	
-	
-}
-</script>
-<script type="text/javascript">
-$(function(){
+	$("select[id=stuBankCd] option:contains('${student.stuBankCd}')").attr("selected","selected");
 	
 	let $newPw = $("#newPw");
 	let $newPwCheck = $("#newPwCheck");
 	let $oldPw = $("#oldPw");
-	let $stuNo = $("#stuNo");
+	let $memNo = $("#memNo");
 	
 	$("#newPwCheck").on("keyup", function() {
 // 		alert("오나요??");
@@ -60,7 +46,7 @@ $(function(){
 		
 		console.log("newPw : " + $newPw.val());
 		
-		let data = {"oldPw": $oldPw.val(), "newPw":$newPw.val(), "stuNo":$stuNo.val() }
+		let data = {"oldPw": $oldPw.val(), "newPw":$newPw.val(), "memNo":$memNo.val() }
 		let header = "${_csrf.headerName}";
 		let token = "${_csrf.token}";
 		
@@ -105,34 +91,19 @@ $(function(){
 		});
 		
 	});
-	
-	
 });
 
-google.charts.load("current", {packages:["corechart"]});
-google.charts.setOnLoadCallback(drawChart);
-
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-    ['Task', 'Hours per Day'],
-    ['Work',     11],
-    ['Eat',      2],
-    ['Commute',  2],
-    ['Watch TV', 2],
-    ['Sleep',    7]
-  ]);
-
-  var options = {
-    title: '나의 전체 성적',
-    pieHole: 0.4,
-    width:600,
-    height:600
-  };
-
-  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-  chart.draw(data, options);
+function onSubmit(){
+	Swal.fire(
+            '수정 완료',
+            '정상적으로 수정 되었습니다.',
+            'success'
+        ).then(function(){
+			$("#mysub").submit();
+    });
+	
+	
 }
-
 </script>
 
 <style>
@@ -151,12 +122,6 @@ function drawChart() {
 			id="custom-content-below-home-tab" data-toggle="pill"
 			href="#custom-content-below-home" role="tab"
 			aria-controls="custom-content-below-home" aria-selected="true">내 정보</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link"
-			id="custom-content-below-profile-tab" data-toggle="pill"
-			href="#custom-content-below-profile" role="tab"
-			aria-controls="custom-content-below-profile" aria-selected="false">학사 정보</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link"
@@ -183,9 +148,16 @@ function drawChart() {
 											<label for="memNo" class="form-label">학번</label> 
 											<input type="text" class="form-control" id="memNo" name="stuNo" value="${student.stuNo}" readonly />
 										</div>
+									</div>
+									<div class="row mb-2">
 										<div class="col-3">
 											<label for="memNm" class="form-label">이름</label> 
 											<input type="text" class="form-control" id="memNm" name="stuNm" value="${student.stuNm}" readonly />
+										</div>
+										<div class="col-3">
+											<label for="stuRgb" class="form-label">학적상태</label> <input
+												type="text" class="form-control" id="stuRgb" name="stuRgb"
+												value="${student.stuRgb}" readonly />
 										</div>
 										<div class="col-3">
 											<label for="stuBir" class="form-label">생년월일</label> <input
@@ -221,7 +193,6 @@ function drawChart() {
 											<div class="form-group">
 												<label>은행</label> 
 												<select class="form-control" id="stuBankCd" name="stuBankCd">
-													<option><c:out value="${student.stuBankCd}"></c:out></option>
 													<option value="BANK003">KEB하나은행</option>
 													<option value="BANK004">SC제일은행</option>
 													<option value="BANK005">국민은행</option>
@@ -280,84 +251,12 @@ function drawChart() {
 				</form>
 			</div>
 		</div>
-		<div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-			<div class="row m-3">
-				<div class="card collapsed-card mycard col-6">
-					<div class="card-header">
-						<h3 class="card-title">나의 장학 내역</h3>
-						<div class="card-tools">
-							<button type="button" class="btn btn-tool"
-								data-card-widget="collapse">
-								<i class="fas fa-plus"></i>
-							</button>
-						</div>
-					</div>
-
-					<div class="card-body table-responsive p-0" style="height: 230px;">
-						<table class="table table-head-fixed text-nowrap">
-							<thead>
-								<tr>
-									<th>no</th>
-									<th>장학금 명</th>
-									<th>수혜학기</th>
-									<th>지급액</th>
-									<th>추천인</th>
-								</tr>
-							</thead>
-							<tbody id="sclList">
-								<c:forEach var="list" items="${mySclList}" varStatus="stat">
-									<tr>
-										<td>${stat.count}</td>
-										<td>${list.sclNm}</td>
-										<td>${list.sclhYr}년 >${list.sclhSem}학기</td>
-										<td>${list.sclhAmt}</td>
-										<td>${list.empNm}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="col-6">
-				</div>
-				<div class="card collapsed-card mycard col-6">
-					<div class="card-header">
-						<h3 class="card-title">나의 상담 내역</h3>
-						<div class="card-tools">
-							<button type="button" class="btn btn-tool" data-card-widget="collapse">
-								<i class="fas fa-plus"></i>
-							</button>
-						</div>
-					</div>
-
-					<div class="card-body table-responsive p-0" style="height: 230px;">
-						<table class="table table-head-fixed text-nowrap">
-							<thead>
-								<tr>
-									<th>no</th>
-									<th>상담구분</th>
-									<th>상담제목</th>
-									<th>상담일자</th>
-									<th>답변자</th>
-								</tr>
-							</thead>
-							<tbody id="sclList">
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="col-6"></div>
-			</div>
-			<div class="row">
-				<div id="donutchart" style="width: 900px; height: 500px;"></div>
-			</div>
-		</div>
 		
 		<div class="tab-pane fade" id="custom-content-below-messages"
 			role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
 			<div class="row mt-5 mb-2">
 				<div class="col-4 offset-4">
-					<input type="hidden" id="stuNo" value="<%=no%>" /> <label
+					<input type="hidden" id="memNo" value="<%=no%>" /> <label
 						for="oldPw" class="form-label">현재 비밀번호</label> <input
 						type="password" class="form-control" id="oldPw" name="oldPw"
 						required />

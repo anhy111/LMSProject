@@ -2,9 +2,15 @@ package kr.or.ddit.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.domain.Employee;
 import kr.or.ddit.domain.Member;
 import kr.or.ddit.domain.SclHistory;
 import kr.or.ddit.domain.Student;
+import kr.or.ddit.security.Sha256;
 import kr.or.ddit.service.MemberService;
 import kr.or.ddit.service.StuManageOfProService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,19 +37,42 @@ public class MypageController {
 	MemberService memberService;
 	
 	@GetMapping("/mypage/mypage")
-	public String mypage(int memNo, Model model) {
+	public String mypage(Model model, HttpSession session) {
 		
-		log.info("memNo는?? " + memNo);
+		return "mypage/pwConfirm";
+	}
+	@PostMapping("/mypage/mypagePost")
+	public String mypagePost(Model model, HttpSession session, Member member, HttpServletRequest req) {
 		
-		Student student = this.memberService.readStudent(memNo);
-		List<SclHistory> mySclList = this.memberService.mySclList(memNo);
-		log.info("학생이 받은 장학 내역은 ? " + mySclList);
+		int memNo = (int)session.getAttribute("no");
+		String memPass = member.getMemPass();
+		String memPassSha = Sha256.testSHA256(memPass);
+		log.info("멤버정보 : " + member.getMemPass() + " 암호화 적용! : " + memPassSha);
+		member.setMemPass(memPassSha);
 		
-		model.addAttribute("student", student);
-		model.addAttribute("mySclList", mySclList);
-		model.addAttribute("bodyTitle", "마이페이지");
+		int inMypage = this.memberService.inMypage(member);
+		log.info("inMypage : " + inMypage);
 		
-		return "mypage/mypage";
+		if(inMypage == 1) {
+			boolean userInRole = req.isUserInRole("ROLE_STUDENT");
+			log.info("권한은??? " + userInRole);
+			if(userInRole) {
+				Student student = this.memberService.readStudent(memNo);
+				model.addAttribute("student", student);
+				model.addAttribute("bodyTitle", "마이페이지");
+				
+				return "mypage/mypage";
+			}else {
+				Employee employee = this.memberService.readEmployee(memNo);
+				model.addAttribute("employee", employee);
+				model.addAttribute("bodyTitle", "마이페이지");
+				return "mypage/empMypage";
+			}
+			
+		}else{
+			return "redirect:/mypage/mypage";
+		}
+		
 	}
 	
 	@PostMapping("/mypage/stuUpdate")
@@ -54,7 +85,20 @@ public class MypageController {
 		this.memberService.stuUpdate(student);
 		log.info("리다이렉트가 안되는겨??");
 		
-		return "redirect:/mypage/mypage?memNo="+stuNo;
+		return "redirect:/mypage/mypage";
+	}
+	
+	@PostMapping("/mypage/empUpdate")
+	public String empUpdate(@ModelAttribute Employee employee) {
+		
+		log.info("employee 정보 " + employee.toString());
+		
+		int empNo = employee.getEmpNo();
+		
+		this.memberService.empUpdate(employee);
+		log.info("리다이렉트가 안되는겨??");
+		
+		return "redirect:/mypage/empMypage";
 	}
 	
 	@PostMapping("/mypage/changeStuPwPost")

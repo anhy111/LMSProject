@@ -104,7 +104,7 @@
 							<td>\${data[i].stuNm}</td>
 							<td>\${data[i].totalAvg}</td>
 							<td>\${data[i].ranking}</td>
-							<td>\${numWithCommas}</td>
+							<td style="text-align:right">\${numWithCommas}</td>
 						</tr>
 					`
 				}

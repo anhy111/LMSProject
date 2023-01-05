@@ -4,34 +4,20 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:0.9;">
+       style="background-color: #001F3F;opacity:1;">
 	<!-- Brand Logo -->
-	<a href="/test/home" class="brand-link bg-navy" style="text-align:left;">
-        <img src="/upload/연수대학교흰로고.png" alt="AdminLTE Logo"
-             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span>
+    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
+    <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
+<!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
+<!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
+<!--         <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span> -->
     </a>
 
 	<!-- Sidebar -->
 	<div class="sidebar">
-		<!-- Sidebar user panel (optional) -->
-
-		<!-- SidebarSearch Form -->
-		<div class="form-inline">
-			<div class="input-group" data-widget="sidebar-search">
-				<input class="form-control form-control-sidebar" type="search"
-					placeholder="Search" aria-label="Search">
-				<div class="input-group-append">
-					<button class="btn btn-sidebar">
-						<i class="fas fa-search fa-fw"></i>
-					</button>
-				</div>
-			</div>
-		</div>
-
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column"
+			<ul class="pt-3 nav nav-pills nav-sidebar flex-column"
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -39,293 +25,75 @@
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
 							<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
-						<a href="/student/lectureApply/inquiryForm?lecaCd=${param.lecaCd}" class="nav-link">
-							<i class="nav-icon fas fa-book"></i>
-							<p>
-								강의 계획서</i>
-							</p>
+						<a href="/lectureBoard/lecPlan?lecaCd=${param.lecaCd}" class="nav-link">
+							강의 계획서
 						</a>
 					</li>
-					<!-- 학적관리 -->
-<!-- 					<li class="nav-item"> -->
-<!-- 						<a href="#" class="nav-link">  -->
-<!-- 							<i class="nav-icon fas fa-copy"></i> -->
-<!-- 							<p> -->
-<!-- 								공지사항 </i> -->
-<!-- 							</p> -->
-<!-- 						</a> -->
-<!-- 					</li> -->
-					<li class="nav-item"><a href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}" class="nav-link"> <i
-							class="nav-icon fas fa-chart-pie"></i>
-							<p>강의 자료실</p>
-					</a></li>
-					<li class="nav-item"><a href="/lectureBoard/task/subjectList?lecaCd=${param.lecaCd}" class="nav-link"> <i
-							class="nav-icon fas fa-edit"></i>
-							<p>과제 및 평가</p>
-					</a></li>
+					<li class="nav-item">
+						<a href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}" class="nav-link"> 
+								강의 자료실
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/lectureBoard/task/subjectList?lecaCd=${param.lecaCd}" class="nav-link"> 
+								과제 및 평가
+						</a>
+					</li>
 					<li class="nav-item">
 						<a href="/lectureBoard/test/studentTest?lecaCd=${param.lecaCd}" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								시험 </i>
-							</p>
-						</a>
-					</li><li class="nav-item">
-						<a href="/lectureBoard/score/stuLecScore?lecaCd=${param.lecaCd}" class="nav-link">
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								성적 </i>
-							</p>
-						</a>
-					</li><li class="nav-item">
-						<a href="/lectureBoard/attendence/studentAttendence?lecaCd=${param.lecaCd}" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								출결 </i>
-							</p>
+							시험
 						</a>
 					</li>
-<!-- 					<li class="nav-item"> -->
-<!-- 						<a href="#" class="nav-link">  -->
-<!-- 							<i class="nav-icon fas fa-copy"></i> -->
-<!-- 							<p> -->
-<!-- 								질문게시판 </i> -->
-<!-- 							</p> -->
-<!-- 						</a> -->
-<!-- 					</li> -->
 					<li class="nav-item">
-						<a href="/student/lecture/studentList?lecaCd=${param.lecaCd}" class="nav-link">
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								수강생 목록</i>
-							</p>
+						<a href="/lectureBoard/score/stuLecScore?lecaCd=${param.lecaCd}" class="nav-link">
+							성적
 						</a>
 					</li>
-<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 							class="nav-icon fas fa-book"></i> -->
-<!-- 							<p> -->
-<!-- 								수강관리 <i class="right fas fa-angle-left"></i> -->
-<!-- 							</p> -->
-<!-- 					</a> -->
-<!-- 						<ul class="nav nav-treeview"> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>수강 편람</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>수강평가</p> -->
-<!-- 							</a></li> -->
-<!-- 						</ul></li> -->
-<!-- 					학적관리 -->
-<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 							class="nav-icon fas fa-copy"></i> -->
-<!-- 							<p> -->
-<!-- 								학적관리 <i class="right fas fa-angle-left"></i> -->
-<!-- 							</p> -->
-<!-- 					</a> -->
-<!-- 						<ul class="nav nav-treeview"> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>휴학 신청</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>복학 신청</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>자퇴 신청</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>졸업</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>학적 변동 현황</p> -->
-<!-- 							</a></li> -->
-<!-- 						</ul></li> -->
-<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 							class="nav-icon fas fa-chart-pie"></i> -->
-<!-- 							<p> -->
-<!-- 								성적 <i class="right fas fa-angle-left"></i> -->
-<!-- 							</p> -->
-<!-- 					</a> -->
-<!-- 						<ul class="nav nav-treeview"> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>전체 성적 조회</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>전체 학기 성적 조회</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>성적 이의 신청</p> -->
-<!-- 							</a></li> -->
-<!-- 						</ul></li> -->
-<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 							class="nav-icon fas fa-edit"></i> -->
-<!-- 							<p> -->
-<!-- 								등록/장학 <i class="right fas fa-angle-left"></i> -->
-<!-- 							</p> -->
-<!-- 					</a> -->
-<!-- 						<ul class="nav nav-treeview"> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>등록금 납부 내역</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>등록금 고지서</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>장학 내역 조회</p> -->
-<!-- 							</a></li> -->
-<!-- 						</ul></li> -->
-<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 							class="nav-icon far fa-envelope"></i> -->
-<!-- 							<p>상담</p> -->
-<!-- 					</a></li> -->
+					<li class="nav-item">
+						<a href="/lectureBoard/attendence/studentAttendence?lecaCd=${param.lecaCd}" class="nav-link"> 
+							출결
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/student/lecture/studentList?lecaCd=${param.lecaCd}" class="nav-link">수강생 목록</a>
+					</li>
 				</sec:authorize>
 				<!-- 교수 어사이드 수강관리 ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
 					<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
-						<a href="/student/lectureApply/inquiryForm?lecaCd=${param.lecaCd}" class="nav-link">
-							<i class="nav-icon fas fa-book"></i>
-							<p>
-								강의 계획서</i>
-							</p>
+						<a href="/lectureBoard/lecPlan?lecaCd=${param.lecaCd}" class="nav-link">
+							강의 계획서
 						</a>
 					</li>
-					<!-- 학적관리 -->
-<!-- 					<li class="nav-item"> -->
-<!-- 						<a href="#" class="nav-link">  -->
-<!-- 							<i class="nav-icon fas fa-copy"></i> -->
-<!-- 							<p> -->
-<!-- 								공지사항 </i> -->
-<!-- 							</p> -->
-<!-- 						</a> -->
-<!-- 					</li> -->
-					<li class="nav-item"><a href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}" class="nav-link"> <i
-							class="nav-icon fas fa-chart-pie"></i>
-							<p>강의 자료실</p>
-					</a></li>
-					<li class="nav-item"><a href="/lectureBoard/task/subjectList?lecaCd=${param.lecaCd}" class="nav-link"> <i
-							class="nav-icon fas fa-edit"></i>
-							<p>과제 및 평가</p>
-					</a></li>
+					<li class="nav-item">
+						<a href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}" class="nav-link">
+							강의 자료실
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/lectureBoard/task/subjectList?lecaCd=${param.lecaCd}" class="nav-link">
+							과제 및 평가
+						</a>
+					</li>
 					<li class="nav-item">
 						<a href="/lectureBoard/test/test?lecaCd=${param.lecaCd}" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								시험 </i>
-							</p>
+							시험
 						</a>
-					</li><li class="nav-item">
-						<a href="/lectureBoard/score/totalScore?lecaCd=${param.lecaCd}" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								성적 </i>
-							</p>
-						</a>
-					</li><li class="nav-item">
-						<a href="/lectureBoard/attendence/attendence?lecaCd=${param.lecaCd}" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								출결 </i>
-							</p>
-						</a>
-					</li><li class="nav-item">
-						<a href="#" class="nav-link"> 
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								질문게시판 </i>
-							</p>
-						</a>
-					</li><li class="nav-item">
-						<a href="/lectureBoard/score/studentList?lecaCd=${param.lecaCd}" class="nav-link">
 					</li>
-<!-- 					<li class="nav-item"> -->
-<!-- 						<a href="#" class="nav-link">  -->
-<!-- 							<i class="nav-icon fas fa-copy"></i> -->
-<!-- 							<p> -->
-<!-- 								질문게시판 </i> -->
-<!-- 							</p> -->
-<!-- 						</a> -->
-<!-- 					</li> -->
 					<li class="nav-item">
-						<a href="#" class="nav-link">
-							<i class="nav-icon fas fa-copy"></i>
-							<p>
-								수강생 목록</i>
-							</p>
+						<a href="/lectureBoard/score/totalScore?lecaCd=${param.lecaCd}" class="nav-link"> 
+							성적
 						</a>
 					</li>
-<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 							class="nav-icon fas fa-book"></i> -->
-<!-- 							<p> -->
-<!-- 								학생 관리 <i class="right fas fa-angle-left"></i> -->
-<!-- 							</p> -->
-<!-- 					</a> -->
-<!-- 						<ul class="nav nav-treeview"> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>학생 목록</p> -->
-<!-- 							</a></li> -->
-<!-- 							<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 									class="far fa-circle nav-icon"></i> -->
-<!-- 									<p>장학생 추천</p> -->
-<!-- 							</a></li> -->
-<!-- 						</ul></li> -->
-<!-- 					<li class="nav-item"><a href="#" class="nav-link"> <i -->
-<!-- 							class="nav-icon fas fa-book"></i> -->
-<!-- 							<p>상담</p> -->
-<!-- 					</a></li> -->
-				</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_MANAGER')">
-					<!-- 학사관리자 어사이드 -->
-					<li class="nav-header">관리자 어사이드</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>
-								결재 <i class="right fas fa-angle-left"></i>
-							</p>
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-copy"></i>
-							<p>
-								공지사항 관리 <i class="right fas fa-angle-left"></i>
-							</p>
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-chart-pie"></i>
-							<p>학사일정 관리</p>
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-edit"></i>
-							<p>강의</p>
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>등록/장학</p>
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>학생 관리</p>
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>교수 관리</p>
-					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-book"></i>
-							<p>중점 지표</p>
-					</a></li>
+					<li class="nav-item">
+						<a href="/lectureBoard/attendence/attendence?lecaCd=${param.lecaCd}" class="nav-link"> 
+							출결
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="/lectureBoard/score/studentList?lecaCd=${param.lecaCd}" class="nav-link">수강생 목록</a>
+					</li>
 				</sec:authorize>
 			</ul>
 		</nav>

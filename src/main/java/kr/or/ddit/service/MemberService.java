@@ -33,4 +33,8 @@ public interface MemberService {
 
 	public List<SclHistory> mySclList(int memNo);
 
+	public int empUpdate(Employee employee);
+
+	public int inMypage(Member member);
+
 }

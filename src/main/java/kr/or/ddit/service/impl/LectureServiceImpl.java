@@ -118,6 +118,10 @@ public class LectureServiceImpl implements LectureService{
 	public int insertTaskSubmit2(TaskSubmit taskSubmit) {
 		return this.lectureMapper.insertTaskSubmit2(taskSubmit);
 	}
+	//학생이 과제 제출 했는지 체크
+	public TaskSubmit stuSubmitCheck(TaskSubmit taskSubmit) {
+		return this.lectureMapper.stuSubmitCheck(taskSubmit);
+	}
 	//제출 과제 디테일
 	@Override
 	public Task submitDetail(HashMap<String, Object> map) {

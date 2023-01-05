@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import kr.or.ddit.domain.Attendence;
 import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.LecData;
@@ -16,7 +14,6 @@ import kr.or.ddit.domain.StudentLecture;
 import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
-import kr.or.ddit.domain.TestQ;
 
 public interface LectureBoardService {
 

@@ -52,7 +52,6 @@
 </style>
 
 <div class="col-lg-12">
-	<div class="card" style="min-height: 700px;">
 		<div class="card-body">
 			<div class="quizWrapper">
 				<h1 class="header-title mb-3"></h1>
@@ -237,7 +236,6 @@
 				
 			</div>
 		</div>
-	</div>
 </div>
 
 

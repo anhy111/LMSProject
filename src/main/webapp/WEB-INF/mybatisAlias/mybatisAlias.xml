@@ -53,6 +53,7 @@
 		<typeAlias type="kr.or.ddit.domain.Room" alias="room"/>
 		<typeAlias type="kr.or.ddit.domain.Objection" alias="objection"/>
 		<typeAlias type="kr.or.ddit.domain.ASchedule" alias="aSchedule"/>
+		<typeAlias type="kr.or.ddit.domain.Portlet" alias="portlet"/>
 
 		<typeAlias type="kr.or.ddit.domain.Attendence" alias="attendence"/>
 

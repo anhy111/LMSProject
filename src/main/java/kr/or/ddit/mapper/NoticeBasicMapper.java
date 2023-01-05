@@ -19,7 +19,6 @@ public interface NoticeBasicMapper {
     List<NoticeBasic> noticeBasicList(int page);
 
     //공지사항 상세 조회
-    @Select( "SELECT * FROM notice_basic WHERE notice_cd = #{noticeCd}")
     NoticeBasic noticeBasicFindNotice(@Param("noticeCd")Long noticeCd);
 
     //공지사항 저장

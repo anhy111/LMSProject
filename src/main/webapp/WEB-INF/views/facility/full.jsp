@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 
 <html lang="ko">
+<link rel="stylesheet" type="text/css"
+	href="/resources/css/inputModalTemplate.css">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
@@ -22,11 +24,11 @@
         }
         
     </style>
-    <div id="d1" data-code="${memberNumber}">
-    
-      <c:forEach var="item" items="${facility }" varStatus="status" end="${facility.size() }">
-      <label class="btn btn-default" for="facility${status.end-status.index }">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label> 
-       </c:forEach>
+    <div class="row" >
+ 
+<%--       <c:forEach var="item" items="${facility }" varStatus="status" end="${facility.size() }"> --%>
+<%--       <label class="btn btn-default" for="facility${status.end-status.index }">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label>  --%>
+<%--        </c:forEach> --%>
 <!--         <select class="custom-select ntcCateLeft" id="facility" style="width: 80%;"> -->
 <%--             <c:forEach var="item" items="${facility }"> --%>
 <%--                 <option value="${item.facCd}">${item.facNm}</option> --%>
@@ -134,6 +136,8 @@
 
     <!-- 시설선택 후 출력  -->
     <script>
+    $(function(){
+
         $('.facility').on('change', () => {
 //         	alert("라디오바뀌었다")
             let facilityCode = $("input:radio[name='facility']:checked").val();
@@ -219,13 +223,71 @@
                     calendar.render();
             });
         })
-
+    })
     </script>
     <title>시설 예약</title>
 </head>
 <body>
 <div class="row">
-    <div class="col-md-2"></div>
+    <div class="col-md-4" data-code="${memberNumber}">
+    	   <div class="mt-3 col-12 segmented-control2">
+  <c:forEach var="item" items="${facility }" varStatus="status" end="${facility.size() }">
+      <label class="segmented-control__${3 + status.end-status.index }" for="facility${status.end-status.index }">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label> 
+       </c:forEach>
+	
+					<div class="segmented-control__color2"></div>
+		</div>
+    
+    
+			<div class="row alert alert-light basketballCourt" role="alert"style="display:none;font-size: 0.9em; padding: 1em; border: 1px solid #eee;margin-top: 25px;">
+				<p>
+					<strong><b>※농구장 시설 안내</b></strong> <br>
+					<br> (1)&nbsp;<strong style="color:black;"><b>위치</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;실외 - 별관 앞, 실내 - 체육관<br>
+					<br> (2)&nbsp;<strong style="color:black;"><b>최대수용인원</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;10명<br> 
+					<br> (3)&nbsp;<strong style="color:black;"><b>개방여부</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;방학기간 - <strong style="color:red;"><b>실내</b></strong> 이용불가, <strong style="color:blue;"><b>실외</b></strong> - 이용가능<br>
+					<br> (4)&nbsp;<strong style="color:black;"><b>이용시간</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;최대&nbsp;<strong style="color:red;"><b>3</b></strong>시간
+				</p>
+			</div>
+			<div class="row alert alert-light tenisCourt" role="alert"style="display:none;font-size: 0.9em; padding: 1em; border: 1px solid #eee;margin-top: 25px;">
+				<p>
+					<strong><b>※테니스장 시설 안내</b></strong> <br>
+					<br> (1)&nbsp;<strong style="color:black;"><b>위치</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;상경대 본관 앞<br>
+					<br> (2)&nbsp;<strong style="color:black;"><b>최대수용인원</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;4명<br> 
+					<br> (3)&nbsp;<strong style="color:black;"><b>개방여부</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;<strong style="color:red;"><b>실외</b></strong> - 이용 가능<br>
+					<br> (4)&nbsp;<strong style="color:black;"><b>이용시간</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;최대&nbsp;<strong style="color:red;"><b>3</b></strong>시간
+				</p>
+			</div>
+			<div class="row alert alert-light studyRoom1" role="alert"style="display:none;font-size: 0.9em; padding: 1em; border: 1px solid #eee;margin-top: 25px;">
+				<p>
+					<strong><b>※스터디룸1 시설 안내</b></strong> <br>
+					<br> (1)&nbsp;<strong style="color:black;"><b>위치</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;연수관 3층 복도 끝<br>
+					<br> (2)&nbsp;<strong style="color:black;"><b>최대수용인원</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;6명<br> 
+					<br> (3)&nbsp;<strong style="color:black;"><b>개방여부</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;항시 운영<br>
+					<br> (4)&nbsp;<strong style="color:black;"><b>이용시간</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;최대&nbsp;<strong style="color:red;"><b>4</b></strong>시간
+				</p>
+			</div>
+			<div class="row alert alert-light studyRoom2" role="alert"style="display:none;font-size: 0.9em; padding: 1em; border: 1px solid #eee;margin-top: 25px;">
+				<p>
+					<strong><b>※스터디룸2 시설 안내</b></strong> <br>
+					<br> (1)&nbsp;<strong style="color:black;"><b>위치</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;연수관 4층 복도 끝<br>
+					<br> (2)&nbsp;<strong style="color:black;"><b>최대수용인원</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;6명<br> 
+					<br> (3)&nbsp;<strong style="color:black;"><b>개방여부</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;항시 운영<br>
+					<br> (4)&nbsp;<strong style="color:black;"><b>이용시간</b></strong>&nbsp;&nbsp;:&nbsp;&nbsp;최대&nbsp;<strong style="color:red;"><b>4</b></strong>시간
+				</p>
+			</div>
+		<div class="row" id="basketballCourt" style="display:none;">
+			<img style="width:480px;height:250px;"src="https://media.angi.com/s3fs-public/indoor-basketball-court.jpg">
+		</div>
+    	<div class="row" id="tenisCourt" style="display:none;">
+			<img style="width:480px;height:250px;"src="https://www.auc.or.kr/storage/ck/2021/01/Dcyo5PEPTX87gFEXGqZ4.jpg">
+		</div>
+    	<div class="row" id="studyRoom1" style="display:none;">
+			<img style="width:480px;height:250px;"src="https://regainstudy.com/theme/basic/img/sub/sub3-1_img_01.jpg">
+		</div>
+    	<div class="row" id="studyRoom2" style="display:none;">
+			<img style="width:480px;height:250px;"src="http://ojsfile.ohmynews.com/STD_IMG_FILE/2018/0116/IE002271776_STD.jpg">
+		</div>
+    </div>
     <div class="col-md-8">
         <div id="calendar"></div>
         <div id="calendar1"></div>
@@ -337,6 +399,19 @@
 </div>
 
 <script type="text/javascript">
+let segcon7 = document.querySelector(".segmented-control__7");
+segcon7.addEventListener('mouseover', () => {$("#basketballCourt").show();$(".basketballCourt").show();});
+segcon7.addEventListener('mouseout', () => {$("#basketballCourt").hide();$(".basketballCourt").hide();});
+let segcon6 = document.querySelector(".segmented-control__6");
+segcon6.addEventListener('mouseover', () => {$("#tenisCourt").show();$(".tenisCourt").show();});
+segcon6.addEventListener('mouseout', () => {$("#tenisCourt").hide();$(".tenisCourt").hide();});
+let segcon5 = document.querySelector(".segmented-control__5");
+segcon5.addEventListener('mouseover', () => {$("#studyRoom1").show();$(".studyRoom1").show();});
+segcon5.addEventListener('mouseout', () => {$("#studyRoom1").hide();$(".studyRoom1").hide();});
+let segcon4 = document.querySelector(".segmented-control__4");
+segcon4.addEventListener('mouseover', () => {$("#studyRoom2").show();$(".studyRoom2").show();});
+segcon4.addEventListener('mouseout', () => {$("#studyRoom2").hide();$(".studyRoom2").hide();});
+
     function fn_backgroundColor(event) {
         $("#backgroundColor").val($(event).attr('value'));
     }

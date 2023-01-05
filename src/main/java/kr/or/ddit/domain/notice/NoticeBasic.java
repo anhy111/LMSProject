@@ -1,10 +1,12 @@
 package kr.or.ddit.domain.notice;
 
 
+import kr.or.ddit.domain.Attach;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 public class NoticeBasic {
@@ -16,6 +18,11 @@ public class NoticeBasic {
     private Date noticeUpd; //수정일자
 
     private Long noticeHit; // 조회수
+
+    private int atchFileId; //첨부파일 아이디
+
+    private List<Attach> attachList; //첨부파일 리스트
+
 
     public NoticeBasic() {
     }

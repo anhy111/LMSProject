@@ -236,7 +236,7 @@ let token = "${_csrf.token}";
 		<div class="divDiv" style="margin-right : 3%;">
 			<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;취득성적
 			<p id="tellCnt">
-				[총 <span id="cntSpan"></span>건]
+				[총 <b><span id="cntSpan" style="color:red;"></span></b>건]
 			</p>
 			
 			<div id="grid"></div>

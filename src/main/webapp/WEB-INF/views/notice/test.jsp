@@ -87,9 +87,9 @@
         <div class="alert alert-light" role="alert"
              style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
         </div>
+        <sec:authorize access="hasRole('ROLE_MANAGER')">
         <a href="/notice/noticeForm" class="btn btn-sm btn-primary" style="float: right;">등록</a>
-<%--        <p style="display: inline-block;margin-top:15px;margin-left: 30px;">총&nbsp;<span--%>
-<%--                style="color:red;">${totalRow }</span>건의 게시물이 있습니다</p>--%>
+        </sec:authorize>
         <div class="tab-content">
             <div class="tab-pane show active" id="hoverable-rows-preview">
                 <div class="table-responsive-sm">
