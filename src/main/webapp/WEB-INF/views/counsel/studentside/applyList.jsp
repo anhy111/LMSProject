@@ -45,7 +45,7 @@ cursor:pointer;
 	<div class="form-group col-12">
 			<div class="card-header d-flex p-0">
 <!-- 				<h3 class="card-title p-3"><b>상담내역</b></h3> -->
-				<ul class="nav nav-pills ml-auto p-2">
+				<ul class="nav nav-pills mr-auto p-2">
 					<li class="nav-item"><a class="nav-link active" href="#tab_1"
 						data-toggle="tab">대면</a></li>
 					<li class="nav-item"><a class="nav-link" href="#tab_2"
@@ -409,6 +409,10 @@ let header = "${_csrf.headerName}";
 let token = "${_csrf.token}";
 let data = {cnslCd : "", cnslTtl : "" ,cnslCon : "", cnslCate : "", cnslType : "" , proNo: "" , cnslDt : "" , stuNo : "", recCd : "" };	
 
+var today = new Date();
+var input = document.querySelector('input[type="date"]');
+input.min = today.toISOString().split("T")[0];
+
 acceptHover = document.querySelectorAll(".acceptHover");
 acceptHovered = document.querySelectorAll('.acceptHovered');
 rejectHover = document.querySelectorAll('.rejectHover');
@@ -554,7 +558,7 @@ counselListTr.forEach(counsel => {
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
-				  alert(JSON.stringify(result));
+// 				  alert(JSON.stringify(result));
 					$("#modifyDtCon").text("상담 예약일");
 					$("#modifyCnslCd").val(result.cnslCd);
 					$("#modifyCnslTtl").val(result.cnslTtl);
@@ -588,7 +592,7 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
-			    alert(JSON.stringify(result))
+// 			    alert(JSON.stringify(result))
 				$("#modifyDtCon").text("사유");
 			    $("#modifyCnslRpl").val(result.cnslRpl);
 				$("#modifyCnslCd").val(result.cnslCd);
@@ -659,7 +663,7 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 				data.cnslTtl = $("input[name='cnslTtl']").val();
 				data.cnslDt = $("input[type='date']").val();
 				data.cnslCon = $("#cnslCon").val();
-				alert(JSON.stringify(data));	
+// 				alert(JSON.stringify(data));	
 				$.ajax({
 					url:"/counsel/studentside/applyInsert",
 					type:'POST',
@@ -703,7 +707,7 @@ nonFaceCounselListTr.forEach(nCounsel =>{
 				data.cnslTtl = $("input[name='cnslTtl']").val();
 				data.cnslDt = $("input[type='date']").val();
 				data.cnslCon = $("#cnslCon").val();
-				alert(JSON.stringify(data));	
+// 				alert(JSON.stringify(data));	
 				$.ajax({
 					url:"/counsel/studentside/applyInsert",
 					type:'POST',
