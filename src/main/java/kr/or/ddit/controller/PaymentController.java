@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.Department;
+import kr.or.ddit.domain.LecApply;
 import kr.or.ddit.domain.Payment;
 import kr.or.ddit.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +71,16 @@ public class PaymentController {
 		log.info("등록금 고지 리스트 개수 : " + result);
 
 		return result;
+	}
+	
+	// 등록금 고지 관리 고지서 발송
+	@ResponseBody
+	@PostMapping("/admin/insert")
+	public int insert(@RequestBody Payment payment) {
+		
+		int cnt = this.paymentService.insert(payment);
+		
+		return cnt;
 	}
 
 	// 등록금 납부 관리

@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
 <div class="card-header" style="padding-right:0px;">
 	<p style="float: left; margin-right: 6px;"id="stuPaymentListSelect"><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;등록금납부이력</p>
-	<p style="float: right;">[총 <span style="color : #001353; font-weight: bold;" id="cntSpan"></span>건]</p>
+	<p style="float: right;">[총 <span style="color : red; font-weight: bold;" id="cntSpan"></span>건]</p>
 </div>
 <table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 	<thead>
@@ -83,9 +83,9 @@
 					str += `
 						<tr class='paymentForm' style='cursor:pointer'>
 						<td class='checkpayCd' value='\${data[i].payCd}'>\${data[i].payDate}</td>
-						<td>\${numWithCommas1}</td>
-						<td>\${numWithCommas2}</td>
-						<td>\${numWithCommas3}</td>
+						<td style="text-align:right">\${numWithCommas1}</td>
+						<td style="text-align:right">\${numWithCommas2}</td>
+						<td style="text-align:right">\${numWithCommas3}</td>
 						<td class='checklecaAp' value='\${data[i].payYn }'>\${data[i].payYn}</td>
 						</tr>
 					`

@@ -9,24 +9,10 @@
 		</div>
 		<div class="hcD" style="left: 0mm; top: 2.12mm;">
 			<div class="hcI">
-				<div class="hls ps4"
-					style="line-height: 3.98mm; white-space: nowrap; left: 12.22mm; top: 0mm; height: 4.82mm; width: 197.85mm;"></div>
-				<div class="hls ps0"
-					style="line-height: 3.76mm; white-space: nowrap; left: 0mm; top: 4.82mm; height: 4.59mm; width: 210.07mm;"></div>
 				<div class="hls ps5"
 					style="line-height: 10.44mm; white-space: nowrap; left: 48.68mm; top: 12.87mm; height: 10.56mm; width: 161.39mm;">
 					<span class="hrt cs2">&nbsp;&nbsp;장 학 금 수 혜 증 명 서</span>
 				</div>
-				<div class="hls ps5"
-					style="line-height: 10.44mm; white-space: nowrap; left: 48.68mm; top: 26.88mm; height: 10.56mm; width: 161.39mm;"></div>
-				<div class="hls ps0"
-					style="line-height: 3.76mm; white-space: nowrap; left: 0mm; top: 37.43mm; height: 4.59mm; width: 210.07mm;"></div>
-				<div class="hls ps3"
-					style="line-height: 3.98mm; white-space: nowrap; left: 0mm; top: 42.04mm; height: 4.82mm; width: 210.07mm;"></div>
-				<div class="hls ps3"
-					style="line-height: 3.98mm; white-space: nowrap; left: 0mm; top: 46.88mm; height: 4.82mm; width: 210.07mm;"></div>
-				<div class="hls ps3"
-					style="line-height: 3.98mm; white-space: nowrap; left: 0mm; top: 51.71mm; height: 4.82mm; width: 210.07mm;"></div>
 			</div>
 			<div class="hcI" style="top: 60.53mm;">
 				<div class="hls ps6"
@@ -35,124 +21,75 @@
 				</div>
 				<div class="hls ps7"
 					style="line-height: 3.98mm; white-space: nowrap; left: 42.76mm; top: 8.35mm; height: 4.82mm; width: 26.75mm;">
-					<span class="hrt cs6">주민등록번호&nbsp;</span>
+					<span class="hrt cs6" style="letter-spacing: 0.5px;">주민등록번호</span>
 				</div>
 				<div class="hls ps7"
 					style="line-height: 3.98mm; white-space: nowrap; left: 42.76mm; top: 15.48mm; height: 4.82mm; width: 26.75mm;">
-					<span class="hrt cs6">대
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="hrt cs9">학</span>
+					<span class="hrt cs6" style="letter-spacing: 62px;">대학</span>
 				</div>
 				<div class="hls ps8"
 					style="line-height: 3.98mm; white-space: nowrap; left: 42.76mm; top: 22.61mm; height: 4.82mm; width: 26.75mm;">
-					<span class="hrt cs6">소
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="hrt cs9">속</span>
+					<span class="hrt cs6" style="letter-spacing: 62px;">소속</span>
 				</div>
 				<div class="hls ps9"
 					style="line-height: 3.98mm; white-space: nowrap; left: 42.76mm; top: 29.65mm; height: 4.82mm; width: 26.75mm;">
-					<span class="hrt cs6">학
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;년</span>
+					<span class="hrt cs6" style="letter-spacing: 62px;">학년</span>
 				</div>
 				<div class="hls ps10"
 					style="line-height: 3.98mm; white-space: nowrap; left: 42.76mm; top: 36.80mm; height: 4.82mm; width: 26.75mm;">
-					<span class="hrt cs6">주
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</span>
+					<span class="hrt cs6" style="letter-spacing: 62px;">주소</span>
 				</div>
 			</div>
 			<div class="hcI" style="left: 70.21mm; top: 60.53mm;">
 				<div class="hls ps11"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 1.22mm; height: 4.82mm; width: 120.30mm;">
-					<span class="hrt cs6">박 관 우</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">박관우</span>
 				</div>
 				<div class="hls ps34"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 8.35mm; height: 4.82mm; width: 42.52mm;">
-					<span class="hrt cs6">9</span><span class="hrt cs12">&nbsp;</span><span
-						class="hrt cs6">5</span><span class="hrt cs12">&nbsp;</span><span
-						class="hrt cs6">0</span><span class="hrt cs12">&nbsp;</span><span
-						class="hrt cs6">8</span><span class="hrt cs12">&nbsp;</span><span
-						class="hrt cs6">2</span><span class="hrt cs12">&nbsp;</span><span
-						class="hrt cs6">1</span><span class="hrt cs13">&nbsp;</span><span
-						class="hrt cs6">-</span><span class="hrt cs14">&nbsp;</span><span
-						class="hrt cs6">1</span><span class="hrt cs12">&nbsp;</span><span
-						class="hrt cs6">*</span><span class="hrt cs11">&nbsp;</span><span
-						class="hrt cs6">*</span><span class="hrt cs11">&nbsp;</span><span
-						class="hrt cs6">*</span><span class="hrt cs11">&nbsp;</span><span
-						class="hrt cs6">*</span><span class="hrt cs15">&nbsp;</span><span
-						class="hrt cs6">*</span><span class="hrt cs15">&nbsp;</span><span
-						class="hrt cs6">*&nbsp;</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">950821-1******</span>
 				</div>
 				<div class="hls ps34"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 15.48mm; height: 4.82mm; width: 42.52mm;">
-					<span class="hrt cs6">법</span><span class="hrt cs10">&nbsp;</span><span
-						class="hrt cs6">정</span><span class="hrt cs11">&nbsp;</span><span
-						class="hrt cs6">대</span><span class="hrt cs10">&nbsp;</span><span
-						class="hrt cs6">학</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">법정대학</span>
 				</div>
 				<div class="hls ps35"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 22.61mm; height: 4.82mm; width: 38.99mm;">
-					<span class="hrt cs6" style="letter-spacing: 10px;">정치언론국방학과</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">정치언론국방학과</span>
 				</div>
 				<div class="hls ps35"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 29.75mm; height: 4.82mm; width: 38.99mm;">
-					<span class="hrt cs6">제 4 학</span><span class="hrt cs17">&nbsp;</span><span
-						class="hrt cs6">년</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">제4학년</span>
 				</div>
 				<div class="hls ps12"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 36.88mm; height: 4.82mm; width: 120.30mm;">
-					<span class="hrt cs6">대 전 광 역 시</span><span class="hrt cs18">&nbsp;</span><span
-						class="hrt cs6">동 구</span><span class="hrt cs18">&nbsp;</span><span
-						class="hrt cs6">성 남 로</span><span class="hrt cs18">&nbsp;</span><span
-						class="hrt cs6">1 5</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">대전광역시 동구 성남로 15</span>
 				</div>
 				<div class="hls ps13"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 43.90mm; height: 4.82mm; width: 120.30mm;">
-					<span class="hrt cs6">1 0 8 동</span><span class="hrt cs18">&nbsp;</span><span
-						class="hrt cs6">1 6 0</span><span class="hrt cs19">&nbsp;</span><span
-						class="hrt cs6">2 호</span><span class="hrt cs18">&nbsp;</span><span
-						class="hrt cs6">( 성 남 동 , 스 마 트 뷰 )</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">108동 1602호 (성남동,스마트뷰)</span>
 				</div>
 			</div>
 			<div class="hcI" style="top: 113.25mm;">
-				<div class="hls ps14"
-					style="line-height: 4.89mm; white-space: nowrap; left: 0mm; top: 0.21mm; height: 5.74mm; width: 210.07mm;"></div>
 				<div class="hls ps15"
 					style="line-height: 6.09mm; white-space: nowrap; left: 69.89mm; top: 7.02mm; height: 6.88mm; width: 140.19mm;">
 					<span class="hrt cs21">&nbsp;&nbsp;&nbsp;장 학 금 수 혜 내 역</span><span
 						class="htC" style="left: 1.32mm; width: 17.03mm; height: 100%;"></span><span
 						class="hrt cs21">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
-						class="hrt cs22">(</span><span class="hrt cs21">&nbsp;</span><span
-						class="hrt cs23">단위</span><span class="hrt cs24">&nbsp;</span><span
-						class="hrt cs22">:</span><span class="hrt cs25">&nbsp;</span><span
-						class="hrt cs23">원)</span>
+						class="hrt cs22" style="letter-spacing: 5px;">&nbsp;(단위:원)</span>
 				</div>
-				<div class="hls ps16"
-					style="line-height: 0.66mm; white-space: nowrap; left: 0mm; top: 14.08mm; height: 0.92mm; width: 210.07mm;"></div>
 				<div class="hls ps31"
 					style="line-height: 6.09mm; white-space: nowrap; left: 0mm; top: 77.93mm; height: 6.88mm; width: 209.54mm;">
-					<span class="hrt cs21">위의 &nbsp;사실을 &nbsp;증</span><span
-						class="hrt cs30">&nbsp;</span><span class="hrt cs21">명</span><span
-						class="hrt cs30">&nbsp;</span><span class="hrt cs21">함 .</span>
+					<span class="hrt cs21" style="letter-spacing: 5px;">위의 사실을 증명함.</span>
 				</div>
-				<div class="hls ps3"
-					style="line-height: 4.89mm; white-space: nowrap; left: 0mm; top: 104.83mm; height: 5.74mm; width: 210.07mm;"></div>
 				<div class="hls ps32"
 					style="line-height: 4.89mm; white-space: nowrap; left: 0mm; top: 90.80mm; height: 5.74mm; width: 209.14mm;">
-					<span class="hrt cs31">2023 년 &nbsp;01 월 &nbsp;02 일</span>
+					<span class="hrt cs31" style="letter-spacing: 5px;">2023년 01월 02일</span>
 				</div>
 				<div class="hls ps33"
 					style="line-height: 10.44mm; white-space: nowrap; left: 0mm; top: 105.40mm; height: 10.56mm; width: 208.45mm;">
-					<span class="hrt cs33">연</span><span class="htC"
-						style="left: 2.15mm; width: 7.28mm; height: 100%;"></span><span
-						class="hrt cs33">수</span><span class="htC"
-						style="left: 2.15mm; width: 7.51mm; height: 100%;"></span><span
-						class="hrt cs33">대</span><span class="htC"
-						style="left: 2.15mm; width: 7.41mm; height: 100%;"></span><span
-						class="hrt cs33">학</span><span class="htC"
-						style="left: 2.15mm; width: 7.43mm; height: 100%;"></span><span
-						class="hrt cs33">교</span><span class="htC"
-						style="left: 2.15mm; width: 10.95mm; height: 100%;"></span><span
-						class="hrt cs33">총</span><span class="htC"
-						style="left: 2.15mm; width: 7.43mm; height: 100%;"></span><span
-						class="hrt cs33">장</span>
+					<div class="hrt cs33" style="letter-spacing: 40px;">연수대학교총장<img class="markImg" style="bottom: -34px; left: 385px; height: 28mm; position: absolute;"
+							src="/resources/upload/연수대도장2.png"></div>
 				</div>
 			</div>
 		</div>
@@ -191,7 +128,8 @@
 				<path d="M0,30.41 L181.58,30.41"
 					style="stroke:#000000;stroke-linecap:butt;stroke-width:0.30;"></path>
 				<path d="M0,0 L181.58,0"
-					style="stroke:#000000;stroke-linecap:butt;stroke-width:0.30;"></path></svg>
+					style="stroke:#000000;stroke-linecap:butt;stroke-width:0.30;"></path>
+			</svg>
 			<div class="hce"
 				style="left: 0mm; top: 0mm; width: 34.89mm; height: 6.98mm;">
 				<div class="hcD" style="left: 0mm; top: 0mm;">
