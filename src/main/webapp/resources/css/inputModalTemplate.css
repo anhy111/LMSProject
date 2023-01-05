@@ -85,7 +85,7 @@ p{
     color: var( --white);
    background-color: var(--darkgray);
 }
-.segmented-control__1, .segmented-control__2, .segmented-control__3, .segmented-control__4, .segmented-control__5, .segmented-control__6, .segmented-control__7, .segmented-control__8 {
+.segmented-control__1, .segmented-control__2, .segmented-control__3, .segmented-control__4, .segmented-control__5, .segmented-control__6, .segmented-control__7, .segmented-control__8, .segmented-control__9, .segmented-control__10 {
   border:1px solid gainsboro;
   width: 6.8rem;
   margin-bottom :0px;
@@ -98,7 +98,7 @@ p{
   color: black;
   transition: all .5s ease;
 }
-.segmented-control__1:hover, .segmented-control__2:hover, .segmented-control__3:hover, .segmented-control__4:hover, .segmented-control__5:hover, .segmented-control__6:hover, .segmented-control__7:hover, .segmented-control__8:hover {
+.segmented-control__1:hover, .segmented-control__2:hover, .segmented-control__3:hover, .segmented-control__4:hover, .segmented-control__5:hover, .segmented-control__6:hover, .segmented-control__7:hover, .segmented-control__8:hover, .segmented-control__9:hover, .segmented-control__10:hover {
   background-color: var(--darkgray);
   color: var( --white);
   transition: all .5s ease;

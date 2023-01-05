@@ -6,7 +6,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
        style="background-color: #001F3F;opacity:0.9;">
 	<!-- Brand Logo -->
-	<a href="/test/home" class="brand-link bg-navy" style="text-align:left;">
+	<a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
         <img src="/upload/연수대학교흰로고.png" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span>

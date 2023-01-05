@@ -5,18 +5,11 @@
 <%
     String no = String.valueOf(session.getAttribute("no"));
 %>
-<style>
-.brand-image:hover{
-border: 5px dotted white;
-opacity:0.9;
-transition: border 2s opacity 2s;
-}
-</style>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:1;top: 30px;">
+       style="background-color: #001F3F;opacity:1;">
 
-    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;">
+    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
     <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 <!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
 <!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
@@ -42,7 +35,7 @@ transition: border 2s opacity 2s;
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent"
+            <ul class="pt-3 nav nav-pills nav-sidebar flex-column nav-child-indent"
                 data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -201,16 +194,11 @@ transition: border 2s opacity 2s;
                         </p>
                     </a></li>
                     <li class="nav-item"><a href="#" class="nav-link">
-                        <p>
-                            공지사항 관리
-                        </p>
-                    </a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">
                         <p>학사일정 관리</p>
                     </a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">
-                        <p>강의</p>
-                    </a></li>
+<!--                     <li class="nav-item"><a href="#" class="nav-link"> -->
+<!--                         <p>강의</p> -->
+<!--                     </a></li> -->
                     <li class="nav-item"><a href="#" class="nav-link">
 
                         <p>
