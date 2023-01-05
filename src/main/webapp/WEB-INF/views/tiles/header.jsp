@@ -26,10 +26,6 @@ function counter_run(){
 	document.all.counter.innerText = time_format(logoutTime);
 	logoutTime--;
 	
-	if(logoutTime < 5){
-		$("#session").css("display", "block");
-	}
-	
 	if(logoutTime < 0){
 		alert("세션이 종료되어 로그아웃 됩니다.")
 		clearInterval(logoutTid);
@@ -87,7 +83,7 @@ $(function(){
 			success :function(data){
 				console.log("성공이라해주라 ", data);
 				
-				logoutTime = 1800;
+				logoutTime = 1800; 
 				
 			},
 			error:function(request, status, error){
@@ -297,6 +293,16 @@ $(function(){
 			<div style="margin:5px;">
 			<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
 					<%=department %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님				
+			<a href="/mypage/mypage" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/upload<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info" style="color:white;">
+						<%=name %> &nbsp;&nbsp;&nbsp;&nbsp;<%=department %> 
+					</div>
+				</div>
 			</a>
 			<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
 				<div class="card-body box-profile">
@@ -349,6 +355,18 @@ $(function(){
 				</div>
 					
 				</div>
+			<a href="/mypage/mypage" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/upload<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info" style="color:white;">
+						<%=name %> 교수 &nbsp;&nbsp;&nbsp;&nbsp;<%=position %> 
+					</div>
+				</div>
+			</a>
+			<p class="arrow_box2">마이페이지</p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
 			<div class="nav-link" style="color:white;">
@@ -386,6 +404,18 @@ $(function(){
 				</div>
 					
 				</div>
+			<a href="/mypage/mypage" class="d-block">
+				<div class="user-panel d-flex">
+					<div class="image">
+						<img src="/upload<%=pic%>"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info" style="color:white;">
+						 <%=name %> &nbsp;&nbsp; | &nbsp;&nbsp;<%=division %>&nbsp;&nbsp;&nbsp;&nbsp;<%=position %>  
+					</div>
+				</div>
+			</a>
+			<p class="arrow_box2">마이페이지</p>
 		</sec:authorize>
 
 	

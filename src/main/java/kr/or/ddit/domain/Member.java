@@ -9,7 +9,7 @@ import java.util.List;
 public class Member implements Serializable {
 
     private int memNo;
-    private String memMl;
+    private String memTel;
     private String memPass;
     private String depCd;
     //1:N
@@ -18,7 +18,7 @@ public class Member implements Serializable {
 
     @Override
     public String toString() {
-        return "MemberVO [memNo=" + memNo + ", memMl=" + memMl + ", memPass=" + memPass + ", memberAuthList="
+        return "MemberVO [memNo=" + memNo + ", memTel=" + memTel + ", memPass=" + memPass + ", memberAuthList="
                 + memberAuthList + "]";
     }
 

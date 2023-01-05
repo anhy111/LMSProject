@@ -223,5 +223,15 @@ public class MemberServiceImpl implements MemberService {
 	 public List<SclHistory> mySclList(int memNo){
 		 return this.memberMapper.mySclList(memNo);
 	 }
+	
+	@Override
+	 public int empUpdate(Employee employee) {
+		 return this.memberMapper.empUpdate(employee);
+	 }
+
+	@Override
+	 public int inMypage(Member member) {
+		 return this.memberMapper.inMypage(member);
+	 }
 
 }
