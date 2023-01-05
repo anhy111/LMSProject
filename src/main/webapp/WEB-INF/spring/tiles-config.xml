@@ -20,13 +20,13 @@
 	</definition>
 	
 	<definition name="mainPage" template="/WEB-INF/views/tiles/mainPage.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/tiles/mainHeader.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
 	
 	<definition name="myPage" template="/WEB-INF/views/tiles/myPage.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/tiles/mainHeader.jsp" />
 		<put-attribute name="body" value="" />
 	</definition>
 	<!--

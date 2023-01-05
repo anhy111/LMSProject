@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.domain.Portlet;
 import kr.or.ddit.mapper.PortletMapper;
 import kr.or.ddit.service.PortletService;
 
@@ -17,6 +18,11 @@ public class PortletServiceImpl implements PortletService{
 	@Override
 	public int updatePortlet(Map<String, String> map) {
 		return this.portletMapper.updatePortlet(map);
+	}
+	
+	@Override
+	public Portlet memPortlet(int memNo) {
+		return this.portletMapper.memPortlet(memNo);
 	}
 	
 }

@@ -206,8 +206,11 @@ $(function(){
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 1);height:70px;">
 	    <ul class="navbar-nav mr-auto">
+			<a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
+				<img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
+			</a>
 	    <sec:authorize access="hasRole('ROLE_STUDENT')">
-	      <li class="nav-item categorybar active">
+	      <li class="nav-item categorybar active" style="margin-left:235px;">
 	        <a class="navbar-link" style="color:white;margin-left: 50px;margin-right: 50px;padding-bottom: 15px;" href="/student/lecture/myLecture">사이버캠퍼스</a>
 	        <a class="navbar-link" style="color:white;margin-right: 50px;padding-bottom: 15px;"href="/notice/list">공지사항</a>
 	        <a class="navbar-link" style="color:white;margin-right: 50px;padding-bottom: 15px;"href="/qna/main">문의게시판</a>
@@ -249,6 +252,7 @@ $(function(){
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
 			<!-- Notifications Dropdown Menu -->
+			
 			<div class="nav-link" style="color:white;">
 				<div class="row">
 					<span id="counter" style="padding-right:7px;"></span>

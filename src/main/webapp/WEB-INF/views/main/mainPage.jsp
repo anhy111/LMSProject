@@ -95,20 +95,30 @@ let token = "${_csrf.token}";
 var serialized_data = [];
 
 $(function() {
-    
-	serialized_data = [
-		  { id: 1, name: "성적 조회", x: 0, y: 0, width: 1, height: 3, active: true },
-		  { id: 2, name: "당학기 강의 조회", x: 1, y: 0, width: 2, height: 3, active: true },
-		  { id: 3, name: "상담현황", x: 3, y: 0, width: 1, height: 3, active: true },
-		  { id: 4, name: "학사일정", x: 0, y: 3, width: 1, height: 1, active: false },
-		  { id: 5, name: "공지사항", x: 1, y: 4, width: 3, height: 1, active: false },
-		  { id: 6, name: "강의시간표", x: 0, y: 4, width: 1, height: 2, active: false },
-		  { id: 7, name: "Widget 7", x: 1, y: 4, width: 1, height: 2, active: false },
-		  { id: 8, name: "Widget 8", x: 2, y: 5, width: 1, height: 2, active: false },
-		  { id: 9, name: "Widget 9", x: 0, y: 0, width: 1, height: 3, active: false },
-		  { id: 10, name: "Widget 10", x: 1, y: 0, width: 1, height: 1, active: false },
-		  { id: 11, name: "Widget 11", x: 1, y: 1, width: 1, height: 1, active: false }
-		];
+	
+	let myPortlet = '${memPortlet}';
+	console.log("첫 포틀릿 오나..?!", myPortlet);
+	
+	if(myPortlet == null || myPortlet == ''){
+		serialized_data = [
+			  { id: 1, name: "성적 조회", x: 0, y: 0, width: 1, height: 3, active: true },
+			  { id: 2, name: "당학기 강의 조회", x: 1, y: 0, width: 2, height: 3, active: true },
+			  { id: 3, name: "상담현황", x: 3, y: 0, width: 1, height: 3, active: true },
+			  { id: 4, name: "학사일정", x: 0, y: 3, width: 1, height: 1, active: false },
+			  { id: 5, name: "공지사항", x: 1, y: 4, width: 3, height: 1, active: false },
+			  { id: 6, name: "강의시간표", x: 0, y: 4, width: 1, height: 2, active: false },
+			  { id: 7, name: "Widget 7", x: 1, y: 4, width: 1, height: 2, active: false },
+			  { id: 8, name: "Widget 8", x: 2, y: 5, width: 1, height: 2, active: false },
+			  { id: 9, name: "Widget 9", x: 0, y: 0, width: 1, height: 3, active: false },
+			  { id: 10, name: "Widget 10", x: 1, y: 0, width: 1, height: 1, active: false },
+			  { id: 11, name: "Widget 11", x: 1, y: 1, width: 1, height: 1, active: false }
+			];
+	}else{
+		let portlet = '${memPortlet.poCont}';
+		serialized_data = JSON.parse(portlet);
+	}
+	
+	
 
 	
 	$("#showInfo").click(function() {
@@ -150,7 +160,16 @@ $(function() {
 				xhr.setRequestHeader(header, token);
 			},
 			success :function(data){
-				console.log("성공이냐 " + data)
+// 				console.log("성공이냐 " + data)
+				
+				Swal.fire({
+		            icon: 'success',                         // Alert 타입
+		            title: '저장 성공',         // Alert 제목
+		            text: '성공적으로 저장되었습니다.',  // Alert 내용
+		        }).then(function(){
+		        	window.location.reload(true);			        	
+		        });
+				
 			},
 			error:function(request, status, error){
 				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
