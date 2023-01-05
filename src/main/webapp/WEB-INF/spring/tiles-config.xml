@@ -24,10 +24,20 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
+	
+	<definition name="myPage" template="/WEB-INF/views/tiles/myPage.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
 	<!--
 	    name 의 */*은 body 의 value 에서 1과 2에 해당
 		controller 에서 forwarding 시 return "1/2";
 	 -->
+	 
+	 <definition name="mypage/pwConfirm" extends="myPage">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/pwConfirm.jsp" />
+	</definition>
+	 
 	<definition name="test/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/test/{1}.jsp" />
 	</definition>

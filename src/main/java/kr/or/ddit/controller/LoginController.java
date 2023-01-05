@@ -112,7 +112,7 @@ public class LoginController {
 	@ResponseBody
 	public int sessionPlus(HttpSession session) {
 		
-		session.setMaxInactiveInterval(30); // 세션 만료시간
+		session.setMaxInactiveInterval(1805); // 세션 만료시간
 		
 		return 1;
 	}
