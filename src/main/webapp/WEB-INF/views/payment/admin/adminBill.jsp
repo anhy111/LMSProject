@@ -10,14 +10,14 @@
 </div>
 
 <div class="row">
-	<div class="align-self-end col-2 mb-2" style="text-align:end;">
+	<div class="align-self-end col-2 mb-2" style="text-align:end;" id="noticeCheck">
 		<label class="m-0" style="float: left;">
 			&ensp;등록금 납부 고지대상
 		</label>
 	</div>
 	<div class="col-10 align-self-end mb-2" style="text-align:end;">
 		<p class="m-0" style="float: right;">
-			[미고지 <span style="color: #001353; font-weight: bold;" id="cntSpan"></span>건]
+			[미고지 <span style="color: red; font-weight: bold;" id="cntSpan"></span>건]
 		</p>
 	</div>
 </div>
@@ -55,21 +55,23 @@
 	//스프링 시큐리티를 위한 토큰 처리(csrf) -> 불토엔 큰 코스로 픽스!
 	let header = "${_csrf.headerName}";
 	let token = "${_csrf.token}";
-	
+
 	console.log("header : " + header + ", token : " + token);
-	
+
 	$.ajax({
-		url:"/payment/admin/adminBillList",
+		url: "/payment/admin/adminBillList",
 		contentType: "application/json;charset=utf-8",
-		dataType:'json',
+		dataType: 'json',
 		type: "POST",
 		beforeSend: function (xhr) {
 			xhr.setRequestHeader(header, token);
 		},
-		success:function(data){
+		success: function (data) {
 			console.log(data);
-			let str ="";
-			for(var i=0;i<data.length;i++){
+			//개수표현
+			$('#cntSpan').text(data.length);
+			let str = "";
+			for (var i = 0; i < data.length; i++) {
 				str += `
 					<tr>
 					<td>\${i+1}</td>
@@ -78,101 +80,65 @@
 					<td>\${data[i].depNm}</td>
 					<td>\${data[i].stuNo}</td>
 					<td>\${data[i].stuYr}</td>
-					<td>\${data[i].paySem}</td>
+					<td>\${data[i].stuSem}</td>
 					<td>\${data[i].stuNm}</td>
 					<td class='checklecaAp'>\${data[i].payYn}</td>
 					</tr>
 				`
-				
-				//완납, 미납 글자색 변경
-				$(function(){
-					for(var i=0; i<data.length;i++){
-						console.log($(".checklecaAp").eq(i).html());
-						if($(".checklecaAp").eq(i).html() == '미납'){
-							$(".checklecaAp").eq(i).css("color","red");
-						}else if($(".checklecaAp").eq(i).html() == '완납'){
-							$(".checklecaAp").eq(i).css("color","blue");
-						}
-					}
-				});
 			}
 			$("#BillList").html(str);
 		}
 	});
 
 	let checkboxAll = "";
-	
-	$(function (){
+
+	$(function () {
 		checkboxAll = document.querySelectorAll(".checkboxAll");
-		$("#checkboxAll").on("click", function() {
+		$("#checkboxAll").on("click", function () {
 			for (var i = 0; i < checkboxAll.length; i++) {
 				checkboxAll[i].checked = true;
 			}
 		});
 	})
-	
-	//count 불러오기
-	$.ajax({
-		url: "/payment/admin/adminBillCount",
-		type: "POST",
-		contentType: "application/json;charset=utf-8",
-		dataType: "JSON",
-		beforeSend: function (xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-		success: function (res) {
-			console.log("개수 : " + res)
-			$("#cntSpan").text(res);
-		}
-	});
-			
-function submit(){
-	var dataSet =[];
-	$.each(test,function(i,v){
-		var tmp = {};
-		var stuCd = v.STU_CD;
-		var depCd = v.DEP_CD;
-		tmp.stuCd = stuCd;
-		tmp.depCd = depCd;
-		dataSet.push(tmp);
-	})
-	 $.ajax({
-	        url : "/payment/admin/insert",
-	        type : "POST",
-	        data : JSON.stringify(dataSet),
-	        contentType: 'application/json',
-	        beforeSend: function (xhr) {
+
+	function submit() {
+		let dataSet = {
+				stuNo : $('#stuNo').val()
+		};
+		$.ajax({
+			url: "/payment/admin/insert",
+			type: "POST",
+			data: JSON.stringify(dataSet),
+			contentType: 'application/json',
+			beforeSend: function (xhr) {
 				xhr.setRequestHeader(header, token);
 			},
-	        success : function(res){
-	        	alert("등록금 요청이 완료되었습니다.")
-	        	$('#grid').empty();
-	        	gridList();
-	        }
-	    });
-}
-$(function(){
-	
-	$.ajax({
- 		url : "/scholarship/insertGradeCheck",
- 		method : "POST",
- 		dataType : "json",
- 		beforeSend: function (xhr) {
-			xhr.setRequestHeader(header, token);
-		},
- 		success : function(result){
-			if(result==0){
- 			$('#btn1').remove();
- 			var str ="<span style='color:red;'>&ensp;&ensp;*성적장학금을 수여하지 않은 상태이므로 등록금을 고지할 수 없습니다.</span>";
- 			$('#noticeCheck').append(str);
+			success: function (res) {
+				alert("등록금 요청이 완료되었습니다.")
+				$('#BillList').empty();
 			}
- 		}
- 	})	
-	
-	gridList();
-	
-	$('#btn1').on('click',function(){
-		submit();
-	})
-});
+		});
+	}	
+	$(function () {
+
+		$.ajax({
+			url: "/scholarship/admin/scholarshipCheck",
+			method: "POST",
+			dataType: "json",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success: function (result) {
+				if (result == 0) {
+					$('#btn1').remove();
+					var str = "<span style='color:red;'>&ensp;&ensp;*성적장학금을 수여하지 않은 상태이므로 등록금을 고지할 수 없습니다.</span>";
+					$('#noticeCheck').append(str);
+				}
+			}
+		})
+
+		$('#btn1').on('click', function () {
+			submit();
+		})
+	});
 </script>

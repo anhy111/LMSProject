@@ -44,7 +44,7 @@
 	</div>
 	<div class="col-10 align-self-end mb-2" style="text-align:end;">
 		<p class="m-0" style="float:right;">
-			[총 <span style="color: #001353; font-weight: bold;" id="cntSpan"></span>건]
+			[총 <span style="color: red; font-weight: bold;" id="cntSpan"></span>건]
 		</p>
 	</div>
 </div>
@@ -110,9 +110,9 @@
 					<td>\${data[i].colNm}</td>
 					<td>\${data[i].stuNo}</td>
 					<td>\${data[i].stuNm}</td>
-					<td>\${numWithCommas1}</td>
-					<td>\${numWithCommas2}</td>
-					<td>\${numWithCommas3}</td>
+					<td style="text-align:right">\${numWithCommas1}</td>
+					<td style="text-align:right">\${numWithCommas2}</td>
+					<td style="text-align:right">\${numWithCommas3}</td>
 					<td>\${data[i].payDt}</td>
 					<td class='checklecaAp'>\${data[i].payYn}</td>
 					</tr>

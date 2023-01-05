@@ -5,9 +5,26 @@
 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="kr.or.ddit.mapper.NoticeBasicMapper">
 
+    <resultMap type="NoticeBasic" id="NoticeBasicMap">
+        <result property="noticeCd" column="NOTICE_CD" />
+        <result property="noticeTtl" column="NOTICE_TTL" />
+        <result property="noticeReg" column="NOTICE_REG" />
+        <result property="noticeCon" column="NOTICE_CON" />
+        <result property="noticeHit" column="NOTICE_HIT" />
+        <result property="atchFileId" column="ATCH_FILE_ID" />
+        <collection property="attachList" resultMap="attachMap"></collection>
+    </resultMap>
+
+    <resultMap  type="attach" id="attachMap">
+        <result property="atchFileId" column="ATCH_FILE_ID" />
+        <result property="streFileNm" column="STRE_FILE_NM" />
+        <result property="orignlFileNm" column="ORIGNL_FILE_NM" />
+    </resultMap>
+
     <!-- 공지사항 상세 조회(첨부파일 포함) -->
-    <select id="noticeBasicFindNotice" parameterType="Long" resultType="NoticeBasic">
-        SELECT *
+    <select id="noticeBasicFindNotice" parameterType="Long" resultMap="NoticeBasicMap">
+        SELECT B.NOTICE_CD, B.NOTICE_TTL, B.NOTICE_REG, B.NOTICE_CON, B.NOTICE_HIT, B.ATCH_FILE_ID
+             , A.STRE_FILE_NM, A.ORIGNL_FILE_NM
         FROM notice_basic B, ATTACH A
         WHERE B.ATCH_FILE_ID = A.ATCH_FILE_ID (+)
           AND NOTICE_CD = #{noticeCd}

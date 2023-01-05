@@ -24,7 +24,7 @@
 	</div>
 	<div class="col-10 align-self-end mb-2" style="text-align:end;">
 		<p class="m-0" style="float: right;">
-			[총 <span style="color: #001353; font-weight: bold;" id="cntSpan"></span>건]
+			[총 <span style="color: red; font-weight: bold;" id="cntSpan"></span>건]
 		</p>
 	</div>
 </div>
@@ -76,7 +76,7 @@
 						<td class='checksclhCd' value='\${data[i].sclhCd}'>\${data[i].sclhYr}</td>
 						<td>\${data[i].sclhSem}학기</td>
 						<td>\${data[i].sclNm}</td>
-						<td>\${numWithCommas}</td>
+						<td style="text-align:right">\${numWithCommas}</td>
 						</tr>
 					`
 				}
@@ -93,7 +93,7 @@
 	//버튼 클릭 시 증명서 띄우긔
 	$('#btn1').on('click', function(){
 		
-		var pwidth = 830;
+		var pwidth = 810;
 		var pheight = 1200;
 		var pleft = (window.screen.width/2) - (pwidth/2);
 		var ptop = (window.screen.height/2) - (pheight/2);
