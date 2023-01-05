@@ -175,7 +175,12 @@
 		    SCLH_SEQ.NEXTVAL
 		    , #{sclCd}
 		    , #{stuNo}
-		    , TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		    , (SELECT 
+		        CASE
+		            WHEN STU_SEM = 2 THEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) -1
+		            ELSE TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		        END
+		     FROM STUDENT WHERE STU_NO = #{stuNo})
        		, (SELECT STU_SEM FROM STUDENT WHERE STU_NO = #{stuNo})
 		    , 'AP001'
 		    , 'PVD001'

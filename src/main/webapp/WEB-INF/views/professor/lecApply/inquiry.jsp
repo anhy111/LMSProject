@@ -8,43 +8,66 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <!-- 공통 css 파일 임포트  -->
-<link rel="stylesheet" type="text/css" href="/resources/css/dataTableTemplate.css">
+<link rel="stylesheet" href="/resources/css/topTable.css" type="text/css">
 
 <div class="row mt-4">
-	<table class="table table-sm text-center col p-0 myinfo">
-		<tbody>
-			<tr>
-				<th width="12.5%">교번</th>
-				<td width="12.5%" id="proNo"></td>
-				<th width="12.5%">성명</th>
-				<td width="12.5%" id="empNm"></td>
-				<th width="12.5%">연락처</th>
-				<td width="12.5%" id="empTel"></td>
-				<th width="12.5%">소속</th>
-				<td width="12.5%" id="depNm"></td>
-			</tr>
-			<tr>
-				<th>직책</th>
-				<td id="proPos"></td>
-				<th>재직상태</th>
-				<td id="empRet"></td>
-				<th>생년월일</th>
-				<td id="empReg"></td>
-			</tr>
-		</tbody>
-	</table>
+	<table id="stuInfoTable">
+  		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
+		<tr>
+			<th>교번</th>
+			<td>
+				<input type="text" class="infoText" name="proNo" id="proNo" readonly="readonly">
+			</td>
+			<th>성명</th>
+			<td>
+				<input type="text" class="infoText" name="empNm" id="empNm" readonly="readonly">
+			</td>
+			<th>연락처</th>
+			<td>
+				<input type="text" class="infoText" name="empTel" id="empTel" readonly="readonly">
+			</td>
+			<th>소속</th>
+			<td>
+				<input type="text" class="infoText" name="depNm" id="depNm" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 5px;"></td>
+		</tr>
+		<tr>
+			<th>직책</th>
+			<td>
+				<input type="text" class="infoText" name="proPos" id="proPos" readonly="readonly">
+			</td>
+			<th>재직상태</th>
+			<td>
+				<input type="text" class="infoText" name="empRet" id="empRet" readonly="readonly">
+			</td>
+			<th>생년월일</th>
+			<td>
+				<input type="text" class="infoText" name="empReg" id="empReg" readonly="readonly">
+			</td>
+			<th colspan="3"></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
+  	</table>
 </div>
 	<br>
 
 <div class="row">
-	<div class="form-group col-2" style="margin-bottom:0.4rem;">
+	<div class="form-group col-2 align-self-end mb-2" style="top:40px; margin-bottom:0.4rem;">
 		<label>연도/학기</label>
 		<select class="form-control" name="cateYrNSem" id="cateYrNSem" onchange="javascript:getListAgain(this);getCnt(this);">
 			<option value="">전체</option>
 		</select>
 	</div>
-	<div id="tellCnt" class="col-10 align-self-end mb-2" style="text-align:end;">
-		[총 <span id="cntSpan"></span>건]
+	<div id="tellCnt" class="col-12 align-self-end mb-2" style="text-align:end;">
+		[총 <span style="color:red; font-weight: bold;" id="cntSpan"></span>건]
 	</div>
 </div>
 	<!-- 계획서 리스트 -->
@@ -193,13 +216,13 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success: function (data) {
-				$('#proNo').html(data.proNo);
-				$('#empNm').html(data.empNm);
-				$('#empTel').html(data.empTel);
-				$('#proPos').html(data.proPos);
-				$('#depNm').html(data.depNm);
-				$('#empRet').html(data.empRet);
-				$('#empReg').html(data.empReg);
+				$('#proNo').val(data.proNo);
+				$('#empNm').val(data.empNm);
+				$('#empTel').val(data.empTel);
+				$('#proPos').val(data.proPos);
+				$('#depNm').val(data.depNm);
+				$('#empRet').val(data.empRet);
+				$('#empReg').val(data.empReg);
 
 			}
 		});

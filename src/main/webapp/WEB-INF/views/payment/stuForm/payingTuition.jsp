@@ -118,7 +118,7 @@ td {
 					<button class="btn btn-secondary btn-sm" id="pay"
 						data-paycd="${map.PAY_CD}">고지서 납부</button>
 				</c:if>
-				<input type="button" class="btn btn-secondary btn-sm" value="pdf저장"
+				<input type="button" class="btn btn-secondary btn-sm" value="PDF저장"
 					id="pdfSave" onclick="savePDF()">
 			</div>
 		</div>

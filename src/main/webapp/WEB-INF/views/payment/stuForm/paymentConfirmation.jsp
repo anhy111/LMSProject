@@ -105,7 +105,7 @@ function savePdf() {
 <body>
 <br>
 <br>
-<button onclick="savePdf()" id="btn1" class="btn btn-secondary btn-sm" style="float:right;margin-right:190px;padding:8px;">pdf저장</button>
+<button onclick="savePdf()" id="btn1" class="btn btn-secondary btn-sm" style="float:right;margin-right:190px;padding:8px;">PDF저장</button>
 <br>
 <br>
 	<div class="card">
