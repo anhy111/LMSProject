@@ -73,8 +73,6 @@ i
 9src/main/java/kr/or/ddit/controller/LecQnaController.java,c/7/c71353c8d7b0139e7492775ef173497e67188c70
 ]
 -src/main/java/kr/or/ddit/security/Sha256.java,2/1/21cdf881d3eaac44b8dc8b53a8a98fffd9292bb0
-Z
-*src/main/webapp/WEB-INF/views/qna/test.jsp,c/9/c97b643267d3010ed63071c795d612af2f75bd56
 l
 <src/main/java/kr/or/ddit/controller/LecNoticeController.java,6/1/61bc566d1fe55a2842b00018a3daee0b7fa89ee4
 ]
@@ -99,3 +97,9 @@ g
 7src/main/java/kr/or/ddit/mapper/LectureApplyMapper.java,3\b\3b44e028dd243be89b78cadcb6af1cb8e4bb37b7
 g
 7src/main/java/kr/or/ddit/mapper/LectureBoardMapper.java,6\5\6543d6d3dfbecda761af5a2437eaadd43d3226e3
+e
+5src/main/webapp/WEB-INF/mybatisAlias/mybatisAlias.xml,0\2\02e38ac296a17323bde8602b819a5c8eae112772
+[
++src/main/java/kr/or/ddit/domain/Attach.java,2\8\28a436f321f5056baad59fddd704ba38dd099a26
+b
+2src/main/java/kr/or/ddit/mapper/LectureMapper.java,c\d\cd3e38ab6dd954ca7810d6129c684bf5512347ad
