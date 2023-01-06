@@ -52,6 +52,17 @@
 </div>
 </div>
 <script type="text/javascript">
+$("input[type='file']").on('change',function(){
+	var str = '';
+	for(var i = 0;i<event.target.files.length;i++){
+		if(event.target.files.length - 1 != i){
+			str += event.target.files[i].name+', ';
+		}else{
+			str += event.target.files[i].name;
+		}
+	}
+    $(this).next('.custom-file-label').html(str);
+});
 CKEDITOR.replace("ldtCon",
 		{
 		width:'100%',

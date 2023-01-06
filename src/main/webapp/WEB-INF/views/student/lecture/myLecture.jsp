@@ -61,7 +61,7 @@
                         <div class="icon" id="book">
                             <i class="ion-ios-book"></i>
                         </div>
-                        <a href="/lectureBoard/board/lectureBoard?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기
+                        <a href="/lectureBoard/lecPlan?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기
                             <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </c:forEach>

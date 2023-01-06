@@ -120,12 +120,12 @@
 						<div class="col-sm-7"></div>
 						<div class="taskData col-sm-5" align="right">
 							<sec:authorize access="hasRole('ROLE_STUDENT')">
-								<button type="button" class="btn btn-danger" id="DeleteButton">삭제</button>
-								<button type="button" class="btn btn-info" id="ModifyButton">수정</button>
+								<button type="button" class="btn btn-outline-danger" id="DeleteButton">삭제</button>
+								<button type="button" class="btn btn-outline-info" id="ModifyButton">수정</button>
 							</sec:authorize>
 							<a
 								href="/lectureBoard/task/taskSubmitList?taskCd=${task.taskCd}&&lecaCd=${task.lecaCd}"
-								class="btn btn-primary">목록</a>
+								class="btn btn-outline-primary">목록</a>
 						</div>
 					</div>
 					<div class="row">

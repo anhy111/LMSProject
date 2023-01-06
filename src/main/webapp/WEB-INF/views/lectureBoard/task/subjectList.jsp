@@ -69,6 +69,11 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:if test="${task.taskNm ==null}">
+								<tr style="border-bottom: 1px solid #112a63">
+									<td colspan="5" style="text-align: center;color: #888;">등록된 과제가 없습니다.</td>
+								</tr>
+				</c:if>
 				<c:if test="${task.taskNm !=null}">
 					<c:forEach var="row" items="${taskList}" varStatus="stat">
 					<c:if test="${stat.count%2 != 0 }">
@@ -88,7 +93,6 @@
 							<td><a
 								href="/lectureBoard/task/taskSubmitList?taskCd=${row.taskCd}&&lecaCd=${row.lecaCd}"
 								class="btn btn-block btn-outline-secondary btn-sm">보기</a></td>
-
 						</tr>
 					</c:forEach>
 				</c:if>

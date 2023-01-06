@@ -163,8 +163,9 @@ let token = "${_csrf.token}";
 <body>
 <div id="tgradePreAppealPage">
 	<div>
-    	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 성적 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">성적 이의 신청</span>
+<!--     	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 성적 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">성적 이의 신청</span> -->
   	</div>
+  	<h4> 성적 이의 신청</h4>
   	
   	<br>
   	

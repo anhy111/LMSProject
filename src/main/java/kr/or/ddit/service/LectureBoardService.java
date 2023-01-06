@@ -27,6 +27,7 @@ public interface LectureBoardService {
 	//자료실 상세
 	public LecData dataDetail(String ldtCd);
 	
+	
 	//자료 수정
 	public int dataUpdate(HashMap<String, Object> map);
 	

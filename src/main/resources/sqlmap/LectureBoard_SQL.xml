@@ -112,6 +112,7 @@
 		<result property="stScore" column="ST_SCORE" />
 		<result property="stYn"    column="ST_YN" />
 	</resultMap>
+	
 	<resultMap type="std"  id="stdMap">
 		<result property="teqCd"     column="TEQ_CD"/>
 		<result property="stCd"     column="ST_CD"/>
@@ -152,8 +153,14 @@
 		FROM LEC_DATA ld, ATTACH A
 		WHERE LD.ATCH_FILE_ID = A.ATCH_FILE_ID (+)
 		AND LDT_CD = #{ldtCd}
-	
 	</select>
+	
+	<!-- 과제 조회수 증가 -->
+	<update id="countPlus" parameterType="String">
+	update lec_data
+	set ldt_count = (select nvl(max(ldt_count),0)+1 from lec_data where ldt_cd = #{ldtCd})
+	where ldt_cd = #{ldtCd}
+	</update>
 	
 	<!-- 과제 수정 -->
 	<update id="dataUpdate" parameterType="hashMap">
