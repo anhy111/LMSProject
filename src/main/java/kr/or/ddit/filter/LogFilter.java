@@ -22,17 +22,13 @@ public class LogFilter implements Filter {
 
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String requestURI = httpRequest.getRequestURI();
+        log.info("log filter request = {} " + requestURI);
 
         String uuid = UUID.randomUUID().toString();
+        log.info("log filter uuid = {} " + uuid);
+        
+        filterChain.doFilter(servletRequest, servletResponse);
 
-        try {
-            log.info("Request [{}][{}]", uuid, requestURI);
-            filterChain.doFilter(servletRequest, servletResponse);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            log.info("Response [{}][{}]", uuid, requestURI);
-        }
     }
 
     @Override
