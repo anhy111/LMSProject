@@ -8,8 +8,7 @@
 <!DOCTYPE html>
 
 <html lang="ko">
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/inputModalTemplate.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/inputModalTemplate.css">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
@@ -230,9 +229,24 @@
 <body>
 <div class="row">
     <div class="col-md-4" data-code="${memberNumber}">
-    	   <div class="mt-3 col-12 segmented-control2">
+    <div class="mt-3 card card-primary" style="border-top:0px;min-width:0px;">
+<div class="card-header" style="background-color:#001F3F;">
+<h2 class="card-title"><b>시설 정보</b></h2>
+<div class="card-tools">
+<button type="button" class="btn btn-tool" data-card-widget="collapse">
+<i class="fas fa-minus"></i>
+</button>
+</div>
+</div>
+<div class="card-body" style="display: block;">
+
+
+
+
+
+    	   <div class="mt-3 row segmented-control2">
   <c:forEach var="item" items="${facility }" varStatus="status" end="${facility.size() }">
-      <label class="segmented-control__${3 + status.end-status.index }" for="facility${status.end-status.index }">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label> 
+      <label class="segmented-control__${3 + status.end-status.index }" for="facility${status.end-status.index }" style="width:25%;">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label> 
        </c:forEach>
 	
 					<div class="segmented-control__color2"></div>
@@ -276,17 +290,19 @@
 				</p>
 			</div>
 		<div class="row" id="basketballCourt" style="display:none;">
-			<img style="width:480px;height:250px;"src="https://media.angi.com/s3fs-public/indoor-basketball-court.jpg">
+			<img style="width:480px;height:220px;"src="https://media.angi.com/s3fs-public/indoor-basketball-court.jpg">
 		</div>
     	<div class="row" id="tenisCourt" style="display:none;">
-			<img style="width:480px;height:250px;"src="https://www.auc.or.kr/storage/ck/2021/01/Dcyo5PEPTX87gFEXGqZ4.jpg">
+			<img style="width:480px;height:220px;"src="https://www.auc.or.kr/storage/ck/2021/01/Dcyo5PEPTX87gFEXGqZ4.jpg">
 		</div>
     	<div class="row" id="studyRoom1" style="display:none;">
-			<img style="width:480px;height:250px;"src="https://regainstudy.com/theme/basic/img/sub/sub3-1_img_01.jpg">
+			<img style="width:480px;height:220px;"src="https://regainstudy.com/theme/basic/img/sub/sub3-1_img_01.jpg">
 		</div>
     	<div class="row" id="studyRoom2" style="display:none;">
-			<img style="width:480px;height:250px;"src="http://ojsfile.ohmynews.com/STD_IMG_FILE/2018/0116/IE002271776_STD.jpg">
+			<img style="width:480px;height:220px;"src="http://ojsfile.ohmynews.com/STD_IMG_FILE/2018/0116/IE002271776_STD.jpg">
 		</div>
+		</div>
+	</div>
     </div>
     <div class="col-md-8">
         <div id="calendar"></div>
@@ -400,18 +416,28 @@
 
 <script type="text/javascript">
 let segcon7 = document.querySelector(".segmented-control__7");
-segcon7.addEventListener('mouseover', () => {$("#basketballCourt").show();$(".basketballCourt").show();});
-segcon7.addEventListener('mouseout', () => {$("#basketballCourt").hide();$(".basketballCourt").hide();});
+segcon7.addEventListener('mouseover', () => {changeSegcon();$("#basketballCourt").show();$(".basketballCourt").show();});
+// segcon7.addEventListener('mouseout', () => {$("#basketballCourt").hide();$(".basketballCourt").hide();});
 let segcon6 = document.querySelector(".segmented-control__6");
-segcon6.addEventListener('mouseover', () => {$("#tenisCourt").show();$(".tenisCourt").show();});
-segcon6.addEventListener('mouseout', () => {$("#tenisCourt").hide();$(".tenisCourt").hide();});
+segcon6.addEventListener('mouseover', () => {changeSegcon();$("#tenisCourt").show();$(".tenisCourt").show();});
+// segcon6.addEventListener('mouseout', () => {$("#tenisCourt").hide();$(".tenisCourt").hide();});
 let segcon5 = document.querySelector(".segmented-control__5");
-segcon5.addEventListener('mouseover', () => {$("#studyRoom1").show();$(".studyRoom1").show();});
-segcon5.addEventListener('mouseout', () => {$("#studyRoom1").hide();$(".studyRoom1").hide();});
+segcon5.addEventListener('mouseover', () => {changeSegcon();$("#studyRoom1").show();$(".studyRoom1").show();});
+// segcon5.addEventListener('mouseout', () => {$("#studyRoom1").hide();$(".studyRoom1").hide();});
 let segcon4 = document.querySelector(".segmented-control__4");
-segcon4.addEventListener('mouseover', () => {$("#studyRoom2").show();$(".studyRoom2").show();});
-segcon4.addEventListener('mouseout', () => {$("#studyRoom2").hide();$(".studyRoom2").hide();});
+segcon4.addEventListener('mouseover', () => {changeSegcon();$("#studyRoom2").show();$(".studyRoom2").show();});
+// segcon4.addEventListener('mouseout', () => {$("#studyRoom2").hide();$(".studyRoom2").hide();});
 
+function changeSegcon(){
+	$("#basketballCourt").hide();$(".basketballCourt").hide();
+	$("#tenisCourt").hide();$(".tenisCourt").hide();
+	$("#studyRoom1").hide();$(".studyRoom1").hide();
+	$("#studyRoom2").hide();$(".studyRoom2").hide();
+}
+$(function(){
+		$(".basketballCourt").show();
+		$("#basketballCourt").show();
+	})
     function fn_backgroundColor(event) {
         $("#backgroundColor").val($(event).attr('value'));
     }
