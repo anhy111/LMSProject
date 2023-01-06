@@ -187,24 +187,39 @@
 					stuNo : tdValues[1],
 					sclhAmt : number,
 			};
-			var submitCheck = confirm("성적장학금을 수여하시겠습니까?");
-			if(submitCheck){
-				$.ajax({
-					url : "/scholarship/admin/scholarshipConfer",
-					type : "POST",
-					data : JSON.stringify(insertScholarship),
-					dataType:'json',
-					beforeSend: function (xhr) {
-	    				xhr.setRequestHeader(header, token);
-	    			},
-					contentType: 'application/json;charset=utf-8',
-					success : function(result){
-		             	if(result>0){
-		             	alert("성적장학금이 수여되었습니다.");
-		             	}
-		             }
+			var submitCheck = Swal.fire({
+				  icon: 'warning',
+				  title: '성적장학금을 수여합니까?',
+				  showDenyButton: true,
+				  showCancelButton: false,
+				  confirmButtonText: '승인',
+				  denyButtonText: `취소`,
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  $.ajax({
+							url : "/scholarship/admin/scholarshipConfer",
+							type : "POST",
+							data : JSON.stringify(insertScholarship),
+							dataType:'json',
+							beforeSend: function (xhr) {
+			    				xhr.setRequestHeader(header, token);
+			    			},
+							contentType: 'application/json;charset=utf-8',
+							success : function(result){
+				             	if(result>0){
+				             		Swal.fire({
+				             			  icon: 'success',
+				             			  title: '성적장학금이 수여되었습니다.',
+				             			}).then((result) => {
+							             	window.location.reload();
+				             			})
+				             	}
+				             }
+						})
+				  } else if (result.isDenied) {
+				    Swal.fire('취소되었습니다.', '', 'info')
+				  }
 				})
-			}
 		});
 		
 	});
