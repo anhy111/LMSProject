@@ -359,6 +359,7 @@ public class LectureApplyController {
 		log.info("수정된 담긴값들은? : " + lecApply);
 		
 		//1. lecture 테이블에 값 넣기
+		lecApply.setLecaYn(3);
 		int lectureResult = this.lectureApplyService.lectureUpdate(lecApply);
 		
 		if (lectureResult < 0) {
@@ -416,6 +417,7 @@ public class LectureApplyController {
 		log.info("수정된 담긴값들은? : " + lecApply);
 		
 		//1. lecture 테이블에 값 넣기
+		lecApply.setLecaYn(0);
 		int lectureResult = this.lectureApplyService.lectureUpdate(lecApply);
 		
 		if (lectureResult < 0) {

@@ -255,8 +255,6 @@
     		<div class="form-group text-right p-0 m-0">
     		<button type="button" id="dataInit" class="btn btn-secondary btn-sm mr-5">초기화</button>
     		</div>
-    		<p><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;비고</p>
-    		<textarea id="lecaNote" rows="9" cols="45"></textarea>
     	</div>
     </div>
     
@@ -286,46 +284,85 @@
 	function validation(){
 		
 		if( $('#lecaYr').val() == "" ||  $('#lecaSem').val() == ""){
-			alert("연도와 학기를 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '연도와 학기를 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaTrg').val() == ""){
-			alert("대상 학년을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '대상 학년을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCrd').val() == ""){
-			alert("학점을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaNm').val() == ""){
-			alert("강의명을 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '강의명을 입력해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCate').val() == ""){
-			alert("이수구분을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '이수구분을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#subCd').val() == ""){
-			alert("과목을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '과목을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCon').val() == ""){
-			alert("수업 개요를 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '수업 개요를 입력해주세요.',
+				})
 			return false;
 		}else if( $('#lecaBook').val() == ""){
-			alert("교재 및 참고문헌을 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '교재 및 참고문헌을 입력해주세요.',
+				})
 			return false;
 		}else if( $('#lecaGrade').val() == ""){
-			alert("평가방식을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '평가방식을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCap').val() <= 0 || $('#lecaCap').val() == ""){
-			alert("올바른 수강인원을 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '올바른 수강인원을 입력해주세요.',
+				})
 			return false;
 		}else if( lecTimeTable.length != $('#lecaCrd').val()){
-			alert("학점만큼 시간을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점만큼 시간을 선택해주세요.',
+				})
 			return false;
 		}else if(!evlValidation){
-			alert("평가방법 비율이 올바르지 않습니다.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '평가방법 비율이 올바르지 않습니다.',
+				})
 			return false;
 		}
 		
 		for(let i=1; i<=16; i++){
 			if($('#weekPlan'+i).val() == ""){
-				alert("주차계획을 입력해주세요");
+				Swal.fire({
+					  icon: 'warning',
+					  title: '주차계획을 입력해주세요.',
+					})
 				return false;
 			}
 		}
@@ -407,11 +444,17 @@
 	// 시간 선택시
 	function roomSelectEvent(){
 		if($("#building").val() == 0){
-			alert("건물을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '건물을 선택해주세요.',
+				})
 			return;
 		}
 		if($("#room").val() == 0){
-			alert("강의실을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '강의실을 선택해주세요.',
+				})
 			return;
 		}
 		
@@ -461,14 +504,20 @@
 		
 		// 학점 선택했는지 유효성검사
 		if($("#lecaCrd").val() == ""){
-			alert("학점을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점을 선택해주세요.',
+				})
 			timeTableInit();
 			return;
 		}
 		
 		// 학점만큼 시간을 선택했는지 유효성검사
 		if(lecTimeTable.length + data.length > $("#lecaCrd").val()){
-			alert("학점만큼 시간을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점만큼 시간을 선택해주세요.',
+				})
 			timeTableInit();
 			return;
 		}
@@ -562,7 +611,6 @@
 		$('#weekPlan14').val('프로젝트');
 		$('#weekPlan15').val('프로젝트');
 		$('#weekPlan16').val('기말고사');
-		$('#lecaNote').val('화요일 오전, 목요일 오전은 타 대학 강의가 있습니다.');
 	}
 	
 window.onload = function() {
@@ -792,10 +840,6 @@ window.onload = function() {
 	//임시저장 버튼 클릭 시
 	$('#temporarySubmitBtn').on('click', function() {
 		
-		if(!validation()){
-			return;
-		}
-		
 		let u_lecaCd = '${lecApplyList[0].lecaCd}';
 		var weekPlan = [];
 		
@@ -823,7 +867,6 @@ window.onload = function() {
 				lecaTp : $('#lecaTp').val(),
 				lecaAp : $('#lecaAp').val(),
 				weekPlanList : weekPlan,
-				lecaNote : $('#lecaNote').val()
 		}
 		
 		$.ajax({
@@ -837,9 +880,15 @@ window.onload = function() {
 			contentType : "application/json;charset=utf-8",
 			success : function(res) {
 				if(res == 1) {
-					alert("임시저장이 완료되었습니다.");
+					Swal.fire({
+						  icon: 'success',
+						  title: '임시저장이 완료되었습니다.',
+						})
 				}else {
-					alert("다시 시도해주세요.");
+					Swal.fire({
+						  icon: 'error',
+						  title: '다시 시도해주세요.',
+						})
 				}
 				
 				opener.parent.location.reload();
@@ -881,7 +930,6 @@ window.onload = function() {
 				lecaTp : $('#lecaTp').val(),
 				lecaAp : $('#lecaAp').val(),
 				weekPlanList : weekPlan,
-				lecaNote : $('#lecaNote').val()
 			}
 	
 			console.log("제출값 담기 : " + JSON.stringify(dataObject));
@@ -899,9 +947,15 @@ window.onload = function() {
 					console.log("제출값 담기 : " + res);
 					
 					if(res > 0) {
-						alert("제출이 완료되었습니다.");
+						Swal.fire({
+							  icon: 'success',
+							  title: '제출이 완료되었습니다.',
+							})
 					}else {
-						alert("다시 시도해주세요.");
+						Swal.fire({
+							  icon: 'error',
+							  title: '다시 시도해주세요.',
+							})
 					}
 					
 					opener.parent.location.reload();

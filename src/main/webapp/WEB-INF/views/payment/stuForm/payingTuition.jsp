@@ -285,12 +285,13 @@ td {
 						"refund": 'payed'
 					}
 					console.log(rsp.merchant_uid);
+					const number = payAmt.replaceAll(",", "");
 					$.ajax({
 						url: '/payment/stuForm/pay',
 						type: 'POST',
 						data: {
 							"payCd": payCd,
-							"payAmt": payAmt
+							"payAmt": number
 						},
 						dataType: 'json',
 						beforeSend: function (xhr) {
