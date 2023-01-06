@@ -137,7 +137,6 @@
 						</div>
 				</div>
 </div>
-<button type=button id=aaa> <b>외 않 되</b></button>
 <script type="text/javascript" defer="defer">
 let count = 1;
 	// 문제 생성
@@ -157,7 +156,11 @@ let count = 1;
 		str += '</td></tr></tbody></table>';
 		
 			if(count == 10) {
-				alert("퀴즈를 생성할 수 있는 최대 문항 수는 10개 입니다.");
+				Swal.fire({
+					  title: '생성 실패!',
+					  text:"퀴즈를 생성할 수 있는 최대 문항 수는 10개 입니다.",
+					  icon:'warning'
+				})
 				return false;
 			}
 			
@@ -182,7 +185,11 @@ let count = 1;
 		}
 		
 		if(count == 1) {
-			alert("최소 한 문제 이상은 있어야 합니다.");
+			Swal.fire({
+				  title: '삭제 실패!',
+				  text:"최소 한 문제 이상은 있어야 합니다.",
+				  icon:'warning'
+			})
 			
 			return false;
 		}
@@ -243,7 +250,5 @@ let count = 1;
 		$("#testEdt").val(testEdt);
 	});
 	
-	$("#aaa").on("click", function(){
-		alert("외 않 되");
-	})
+	
 </script>

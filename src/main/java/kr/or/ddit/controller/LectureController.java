@@ -152,6 +152,7 @@ public class LectureController {
 				map.put("taskNm", task.getTaskNm());
 				map.put("taskCon", task.getTaskCon());
 				map.put("taskEdt", task.getTaskEdt());
+				map.put("taskScore", task.getTaskScore());
 				map.put("taskCd", task.getTaskCd());
 				map.put("lecaCd", task.getLecaCd());
 				this.lectureservice.taskUpdate(map);
@@ -164,6 +165,7 @@ public class LectureController {
 		map.put("taskCon", task.getTaskCon());
 		map.put("taskEdt", task.getTaskEdt());
 		map.put("taskCd", task.getTaskCd());
+		map.put("taskScore", task.getTaskScore());
 		map.put("lecaCd", task.getLecaCd());
 		this.lectureservice.taskUpdate(map);
 

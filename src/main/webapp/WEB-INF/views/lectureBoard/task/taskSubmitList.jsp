@@ -127,7 +127,7 @@
 			</sec:authorize>					
 			
 			<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-					<c:if test="${task.taskNm ==null}">
+					<c:if test="${empty list}">
 						<tr style="border-bottom: 1px solid #112a63">
 							<td colspan="6" style="text-align: center;color: #888;">제출된 과제가 없습니다.</td>
 						</tr>

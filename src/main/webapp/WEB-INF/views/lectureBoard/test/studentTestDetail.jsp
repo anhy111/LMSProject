@@ -70,21 +70,20 @@
 <fmt:formatDate var="testEdt" value="${data.testEdt}" pattern="yyyy-MM-dd HH:mm"/>
 
 <div class="col-lg-12">
-	<div class="card">
 		<div class="card-body">
 			<div class="quizWrapper">
 				<h1 class="header-title mb-3"></h1>
 				<div>
 					<div class="mb-3" style="width:40%;float:left;">
-						<label for="example-disable" class="form-label">퀴즈 제목</label> 
+						<label for="example-disable" class="form-label">시험 제목</label> 
 						<input type="text" class="form-control" id="example-disable" disabled value="${data.testNm }">
 					</div>
 					<div class="mb-3" style="width:20%;float:left;margin:0 10%;'">
-						<label for="example-disable" class="form-label">퀴즈 시작일</label> 
+						<label for="example-disable" class="form-label">시험 시작일</label> 
 						<input type="text" class="form-control" id="example-disable" disabled value="<fmt:formatDate value="${data.testSdt }" pattern="yyyy-MM-dd HH:mm" />">
 					</div>
 					<div class="mb-3" style="width:20%;float:left;">
-						<label for="example-disable" class="form-label">퀴즈 종료일</label> 
+						<label for="example-disable" class="form-label">시험 종료일</label> 
 						<input type="text" class="form-control" id="example-disable" disabled value="<fmt:formatDate value="${data.testEdt }" pattern="yyyy-MM-dd HH:mm" />">
 					</div>
 					
@@ -181,22 +180,25 @@
 			     <input type="hidden" value="${Today}">
 			     <a href="/studentLecture/quiz?lecCd=${data.lecaCd }" class="btn btn-light btn-sm" style="float: left;">목록</a>
 				<c:if test="${Today > testEdt }">
-					<button type="button" class="btn btn-primary btn-sm noSubmit" style="float:right;">퀴즈 제출</button>
+					<button type="button" class="btn btn-primary btn-sm noSubmit" style="float:right;">시험 제출</button>
 				</c:if>
 				<c:if test="${Today <= testEdt }">
-					<button type="button" class="btn btn-primary btn-sm cel" style="float:right;" onClick="CheckAnswer()">퀴즈 제출</button>
+					<button type="button" class="btn btn-primary btn-sm cel" style="float:right;" onClick="CheckAnswer()">시험 제출</button>
 				</c:if>
 				<sec:csrfInput/>
 				</form>
 			</div>
 		</div>
-	</div>
 </div>
 <script type="text/javascript" defer="defer">
 	$(function() {
 		
 		$('.noSubmit').on('click', function() {
-			alert("제출 기한이 지나서 제출할 수 없습니다.")
+			Swal.fire({
+				  title: '제출 실패!',
+				  text:"제출 기한이 지나서 제출할 수 없습니다.",
+				  icon:'warning'
+			})
 			return false;
 		})
 		
@@ -275,7 +277,11 @@
 // 			console.log("Qno : " + number + checking);
 			
 // 			if(checking == ""){
-				alert("아직 풀지 않은 문제가 있습니다. 안 푼 문항 수 : " + (length - checkedLength));
+			Swal.fire({
+						  title: '제출 실패!',
+						  text:"아직 풀지 않은 문제가 있습니다. 안 푼 문항 수 : " + (length - checkedLength),
+						  icon:'warning'
+					})
 // 			}
 			
 			

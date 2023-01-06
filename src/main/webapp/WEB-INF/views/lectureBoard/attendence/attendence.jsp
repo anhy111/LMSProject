@@ -313,7 +313,11 @@ let token = "${_csrf.token}";
 						if ($('#checkOrNo').is(":checked")) {
 				            return false;
 				        }else {
-							alert(name + " 학생의 출결을 등록했습니다.");
+				        	Swal.fire({
+								  title: '성공!',
+								  text: name + " 학생의 출결을 등록했습니다.",
+								  icon:'success'
+							})
 				        }
 						
 					}
@@ -345,7 +349,11 @@ let token = "${_csrf.token}";
 						if ($('#checkOrNo').is(":checked")) {
 				            return false;
 				        }else {
-							alert(name + " 학생의 출결을 수정했습니다.");
+				        	Swal.fire({
+								  title: '성공!',
+								  text: name + " 학생의 출결을 수정했습니다.",
+								  icon:'success'
+							})
 				        }
 					}
 				})

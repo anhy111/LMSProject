@@ -96,6 +96,18 @@
 <!-- 1. 폼 만들어서 수정 데이터 날리고 수정된 페이지로 이동하자 
 	 2. 취소 누르-->
 <script type="text/javascript">
+$("input[type='file']").on('change',function(){
+	var str = '';
+	for(var i = 0;i<event.target.files.length;i++){
+		if(event.target.files.length - 1 != i){
+			str += event.target.files[i].name+',  ';
+		}else{
+			str += event.target.files[i].name;
+		}
+	}
+    $(this).next('.custom-file-label').html(str);
+});
+
 	var editor = CKEDITOR.replace('taskCon', {
 		   readOnly: true,
 		   width:'100%',
@@ -103,14 +115,21 @@
 		});
 	
 	$("#DeleteButton").on("click",function(){
-		var result = confirm('게시물을 삭제하시겠습니까?\n삭제된 게시물은 되돌릴 수 없습니다.');
-		
-		if(result){
-			//yes
-			location.replace('/lectureBoard/task/taskDelete?lecaCd='+ ${task.lecaCd} +'&&taskCd=' + ${task.taskCd} );
-		}else{
-			//no
-		}
+		Swal.fire({
+			  title: '삭제하시겠습니까?',
+			  text: "삭제하시면 다시 복구시킬 수 없습니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소'
+		}).then((result) => {
+			  if (result.value) {
+	              //"삭제" 버튼을 눌렀을 때 작업할 내용을 이곳에 넣어주면 된다. 
+				  location.replace('/lectureBoard/task/taskDelete?lecaCd='+ ${task.lecaCd} +'&&taskCd=' + ${task.taskCd} );
+		   };
+		});
 	});
 	
 	$("#ModifyButton").on("click",function(){

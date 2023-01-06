@@ -297,9 +297,11 @@ $(function() {
 			dataType : 'JSON',
 			success : function(result) {
 				memNm = $('#memNm').val();
-				
-				alert(memNm + " 학생의 성적 부여가 완료되었습니다.");
-				
+				Swal.fire({
+					  title: '성공!',
+					  text: memNm + " 학생의 성적 부여가 완료되었습니다.",
+					  icon:'success'
+				})
 				// 최초 리스트 불러오기
 				getGrid(lecaCd);
 			}
