@@ -75,18 +75,26 @@
 				str += `
 					<tr>
 					<td>\${i+1}</td>
-					<td><input class='checkboxAll' type='checkbox'></td>
+					<td><input class='checkboxAll' type='checkbox' value="\${data[i].stuNo}"></td>
 					<td>\${data[i].colNm}</td>
 					<td>\${data[i].depNm}</td>
 					<td>\${data[i].stuNo}</td>
 					<td>\${data[i].stuYr}</td>
 					<td>\${data[i].stuSem}</td>
 					<td>\${data[i].stuNm}</td>
-					<td class='checklecaAp'>\${data[i].payYn}</td>
+					<td>\${data[i].payYn}</td>
 					</tr>
 				`
 			}
 			$("#BillList").html(str);
+			
+			//체크박스 클릭 시 해당 값 가지고 띄우긔
+// 			$(document).on('click','.paymentForm',function(e){
+// 	        	let eqSeq = $(this).index();
+// 	        	let stuNo = $(".checkpayCd").get(eqSeq).getAttribute('value');
+// 	        	console.log("여기만떠줭 stuNo : " + stuNo);
+	        	
+// 			});
 		}
 	});
 

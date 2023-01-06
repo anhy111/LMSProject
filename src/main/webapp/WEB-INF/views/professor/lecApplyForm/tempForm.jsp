@@ -285,46 +285,85 @@
 	function validation(){
 		
 		if( $('#lecaYr').val() == "" ||  $('#lecaSem').val() == ""){
-			alert("연도와 학기를 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '연도와 학기를 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaTrg').val() == ""){
-			alert("대상 학년을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '대상 학년을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCrd').val() == ""){
-			alert("학점을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaNm').val() == ""){
-			alert("강의명을 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '강의명을 입력해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCate').val() == ""){
-			alert("이수구분을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '이수구분을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#subCd').val() == ""){
-			alert("과목을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '과목을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCon').val() == ""){
-			alert("수업 개요를 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '수업 개요를 입력해주세요.',
+				})
 			return false;
 		}else if( $('#lecaBook').val() == ""){
-			alert("교재 및 참고문헌을 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '교재 및 참고문헌을 입력해주세요.',
+				})
 			return false;
 		}else if( $('#lecaGrade').val() == ""){
-			alert("평가방식을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '평가방식을 선택해주세요.',
+				})
 			return false;
 		}else if( $('#lecaCap').val() <= 0 || $('#lecaCap').val() == ""){
-			alert("올바른 수강인원을 입력해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '올바른 수강인원을 입력해주세요.',
+				})
 			return false;
 		}else if( lecTimeTable.length != $('#lecaCrd').val()){
-			alert("학점만큼 시간을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점만큼 시간을 선택해주세요.',
+				})
 			return false;
 		}else if(!evlValidation){
-			alert("평가방법 비율이 올바르지 않습니다.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '평가방법 비율이 올바르지 않습니다.',
+				})
 			return false;
 		}
 		
 		for(let i=1; i<=16; i++){
 			if($('#weekPlan'+i).val() == ""){
-				alert("주차계획을 입력해주세요");
+				Swal.fire({
+					  icon: 'warning',
+					  title: '주차계획을 입력해주세요.',
+					})
 				return false;
 			}
 		}
@@ -449,11 +488,17 @@
 	// 시간 선택시
 	function roomSelectEvent(){
 		if($("#building").val() == 0){
-			alert("건물을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '건물을 선택해주세요.',
+				})
 			return;
 		}
 		if($("#room").val() == 0){
-			alert("강의실을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '강의실을 선택해주세요.',
+				})
 			return;
 		}
 		
@@ -503,14 +548,20 @@
 		
 		// 학점 선택했는지 유효성검사
 		if($("#lecaCrd").val() == ""){
-			alert("학점을 선택해주세요.");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점을 선택해주세요.',
+				})
 			timeTableInit();
 			return;
 		}
 		
 		// 학점만큼 시간을 선택했는지 유효성검사
 		if(lecTimeTable.length + data.length > $("#lecaCrd").val()){
-			alert("학점만큼 시간을 선택해주세요");
+			Swal.fire({
+				  icon: 'warning',
+				  title: '학점만큼 시간을 선택해주세요.',
+				})
 			timeTableInit();
 			return;
 		}
@@ -818,89 +869,126 @@
 				weekPlan.push({wpNo : i,lecaCd : u_lecaCd, wpCon : $('#weekPlan'+i).val()})
 			}
 			
-			if(!confirm("해당 강의계획서를 수정하시겠습니까?")) {
-				alert("취소되었습니다.");
-			}else {
-				let dataObject = {
-						lecaCd : '${lecApplyList[0].lecaCd}',
-						lecaYr : $('#lecaYr').val(),
-						lecaSem : $('#lecaSem').val(),
-						lecaNm : $('#lecaNm').val(),
-						lecaCon : $('#lecaCon').val(),
-						lecaTrg : $('#lecaTrg').val(),
-						lecaCrd : $('#lecaCrd').val(),
-						subNm : $('#subNm').val(),
-						subCd : $('#subCd').val(),
-						lecaCap : $('#lecaCap').val(),
-						lecaBook : $('#lecaBook').val(),
-						lecaCate : $('#lecaCate').val(),
-						lecaGrade : $('#lecaGrade').val(),
-						lecaTt : JSON.stringify(lecTimeTable),
-						lecaMp : $('#lecaMp').val(),
-						lecaFp : $('#lecaFp').val(),
-						lecaTp : $('#lecaTp').val(),
-						lecaAp : $('#lecaAp').val(),
-						weekPlanList : weekPlan,
-						lecaNote : $('#lecaNote').val()
-				}
-				
-				$.ajax({
-					url : "/professor/lecApplyForm/temporaryUpdate",
-					type : "POST",
-					data : JSON.stringify(dataObject),
-					dataType : "JSON",
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader(header, token);
-					},
-					contentType : "application/json;charset=utf-8",
-					success : function(res) {
-						
-// 						alert(res);
-						
-						if(res > 0) {
-							alert("수정이 완료되었습니다.");
-						}else {
-							alert("다시 시도해주세요.");
+			Swal.fire({
+				title: '해당 강의계획서를 수정하시겠습니까?',
+				icon: 'warning',
+				showCancelButton: true,
+				cancelButtonText: '취소',
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '승인'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						let dataObject = {
+								lecaCd : '${lecApplyList[0].lecaCd}',
+								lecaYr : $('#lecaYr').val(),
+								lecaSem : $('#lecaSem').val(),
+								lecaNm : $('#lecaNm').val(),
+								lecaCon : $('#lecaCon').val(),
+								lecaTrg : $('#lecaTrg').val(),
+								lecaCrd : $('#lecaCrd').val(),
+								subNm : $('#subNm').val(),
+								subCd : $('#subCd').val(),
+								lecaCap : $('#lecaCap').val(),
+								lecaBook : $('#lecaBook').val(),
+								lecaCate : $('#lecaCate').val(),
+								lecaGrade : $('#lecaGrade').val(),
+								lecaTt : JSON.stringify(lecTimeTable),
+								lecaMp : $('#lecaMp').val(),
+								lecaFp : $('#lecaFp').val(),
+								lecaTp : $('#lecaTp').val(),
+								lecaAp : $('#lecaAp').val(),
+								weekPlanList : weekPlan,
+								lecaNote : $('#lecaNote').val()
 						}
-						opener.parent.location.reload();
-						window.close();
+						
+						$.ajax({
+							url : "/professor/lecApplyForm/temporaryUpdate",
+							type : "POST",
+							data : JSON.stringify(dataObject),
+							dataType : "JSON",
+							beforeSend: function (xhr) {
+								xhr.setRequestHeader(header, token);
+							},
+							contentType : "application/json;charset=utf-8",
+							success : function(res) {
+								
+								if(res > 0) {
+									Swal.fire({
+										  icon: 'success',
+										  title: '수정이 완료되었습니다.',
+										})
+								}else {
+									Swal.fire({
+										  icon: 'error',
+										  title: '다시 시도해주세요.',
+										})
+								}
+								opener.parent.location.reload();
+								window.close();
+							}
+						});//ajax
+					} else {
+						Swal.fire(
+							'취소되었습니다.',
+							'',
+							'success',
+							)
 					}
-				});//ajax
-			}//else
+				})
 		});//버튼 클릭 이벤트
 		
 		//삭제하기 버튼 클릭 시 
 		$('#tempDeleteBtn').on('click', function() {
 			
-			if(!confirm("해당 강의계획서를 삭제하시겠습니까?")) {
-				alert("취소되었습니다.");
-			}else {
-				
-				let delObject = {
-						lecaCd : '${lecApplyList[0].lecaCd}'
-				};
-				
-				console.log("데이타 코드 제발 와랑툐~ : " + JSON.stringify(delObject));
-				
-				$.ajax({
-					url : "/professor/lecApplyForm/temporaryDelete",
-					type : "POST",
-					data : delObject,
-					dataType : "JSON",
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader(header, token);
-					},
-					success : function(res) {
-						if(res > 0) {
-							alert("삭제가 완료되었습니다.");
-						}else {
-							alert("다시 시도해주세요.");
-						}
-						opener.parent.location.reload();
-						window.close();
+			Swal.fire({
+				title: '해당 강의계획서를 삭제하시겠습니까?',
+				icon: 'warning',
+				showCancelButton: true,
+				cancelButtonText: '취소',
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '승인'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						let delObject = {
+								lecaCd : '${lecApplyList[0].lecaCd}'
+						};
+						
+						console.log("데이타 코드 제발 와랑툐~ : " + JSON.stringify(delObject));
+						
+						$.ajax({
+							url : "/professor/lecApplyForm/temporaryDelete",
+							type : "POST",
+							data : delObject,
+							dataType : "JSON",
+							beforeSend: function (xhr) {
+								xhr.setRequestHeader(header, token);
+							},
+							success : function(res) {
+								if(res > 0) {
+									Swal.fire({
+										icon: 'success',
+										title: '삭제가 완료되었습니다.',
+										})
+								}else {
+									Swal.fire({
+										icon: 'error',
+										title: '다시 시도해주세요.',
+										})
+								}
+								opener.parent.location.reload();
+								window.close();
+							}
+						});
+					} else {
+						Swal.fire(
+									'취소되었습니다.',
+									'',
+									'success',
+									)
 					}
-				});
-			}
+				})
 		});
 		
 		//제출하기 버튼 클릭 시
@@ -917,10 +1005,17 @@
 				weekPlan.push({wpNo : i,lecaCd : u_lecaCd, wpCon : $('#weekPlan'+i).val()})
 			}
 			
-			if(!confirm("해당 강의계획서를 제출하시겠습니까?")) {
-				alert("취소되었습니다.");
-			}else {
-				let dataObject = {
+			Swal.fire({
+				title: '해당 강의계획서를 제출하시겠습니까?',
+				icon: 'warning',
+				showCancelButton: true,
+				cancelButtonText: '취소',
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '승인'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						let dataObject = {
 						lecaCd : '${lecApplyList[0].lecaCd}',
 						lecaYr : $('#lecaYr').val(),
 						lecaSem : $('#lecaSem').val(),
@@ -941,29 +1036,42 @@
 						lecaAp : $('#lecaAp').val(),
 						weekPlanList : weekPlan,
 						lecaNote : $('#lecaNote').val()
-					}
-					
-					$.ajax({
-						url : "/professor/lecApplyForm/tempLecApplySubmit",
-						type : "POST",
-						data : JSON.stringify(dataObject),
-						dataType : "JSON",
-						beforeSend: function (xhr) {
-							xhr.setRequestHeader(header, token);
-						},
-						contentType : "application/json;charset=utf-8",
-						success : function(res) {
-							
-							if(res > -5) {
-								alert("제출이 완료되었습니다.");
-							}else {
-								alert("다시 시도해주세요.");
-							}
-							opener.parent.location.reload();
-							window.close();
 						}
-					});//ajax
-			}
+					
+						$.ajax({
+							url : "/professor/lecApplyForm/tempLecApplySubmit",
+							type : "POST",
+							data : JSON.stringify(dataObject),
+							dataType : "JSON",
+							beforeSend: function (xhr) {
+								xhr.setRequestHeader(header, token);
+							},
+							contentType : "application/json;charset=utf-8",
+							success : function(res) {
+								
+								if(res > -5) {
+									Swal.fire({
+										icon: 'success',
+										title: '제출이 완료되었습니다.',
+										})
+								}else {
+									Swal.fire({
+										icon: 'error',
+										title: '다시 시도해주세요.',
+										})
+								}
+								opener.parent.location.reload();
+								window.close();
+							}
+						});//ajax
+					} else {
+						Swal.fire(
+									'취소되었습니다.',
+									'',
+									'success',
+									)
+					}
+				})
 		}); // end function
 		
 		$("#textArea4time").html(lecTimeTableToText(lecTimeTable));

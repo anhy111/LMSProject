@@ -175,11 +175,15 @@
 		</selectKey>
 		INSERT INTO LECTURE (
 		             LECA_CD
+		             <if test="subCd != 0">
 		            , SUB_CD
+		            </if>
 		            , LECA_YN
 		) VALUES (
 		    #{lecaCd}
+		    <if test="subCd != 0">
 		    , #{subCd}
+		    </if>
 		    , ${lecaYn}
 		)
 	</insert>
@@ -197,7 +201,6 @@
 		            , LECA_CAP
 		            , LECA_TT
 		            , LECA_BOOK
-		            , LECA_NOTE
 		            , LECA_DT
 		            , LECA_GRADE
 		            , LECA_CATE
@@ -218,7 +221,6 @@
 		    , #{lecaCap}
 		    , #{lecaTt}
 		    , #{lecaBook}
-		    , #{lecaNote}
 		    , SYSDATE
 		    , #{lecaGrade}
 		    , #{lecaCate}
@@ -254,7 +256,6 @@
 		            , LECA_CAP
 		            , LECA_TT
 		            , LECA_BOOK
-		            , LECA_NOTE
 		            , LECA_DT
 		            , LECA_GRADE
 <!-- 		            , LECA_IMSI_YN -->
@@ -276,7 +277,6 @@
 		    , #{lecaCap}
 		    , #{lecaTt}
 		    , #{lecaBook}
-		    , #{lecaNote}
 		    , SYSDATE
 		    , #{lecaGrade}
 <!-- 		    , 1 -->
@@ -379,7 +379,7 @@
 	<update id="lectureUpdate" parameterType="lecApply">
 		UPDATE  LECTURE
 		SET     SUB_CD = #{subCd}
-				, LECA_YN = 0
+				, LECA_YN = #{lecaYn}
 		WHERE   LECA_CD = #{lecaCd}
 	</update>
 	

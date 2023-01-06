@@ -218,8 +218,28 @@ transition: border 2s opacity 2s;
                         </p>
                     </a>
                         <ul class="nav nav-treeview" style="display: none;">
-                            <li class="nav-item"><a href="#" class="nav-link">
+                        <li class="nav-item"><a href="#" class="nav-link">
+                                <p>
+                                    장학 <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item"><a
+                                            href="#" class="nav-link">
+                                        <p>장학금 목록</p>
+                                    </a></li>
+                                    <li class="nav-item"><a
+                                            href="/scholarship/admin/scholarshipAward" class="nav-link">
+                                        <p>장학금 수여</p>
+                                    </a></li>
+                                    <li class="nav-item"><a
+                                            href="#" class="nav-link">
 
+                                        <p>장학생 조회</p>
+                                    </a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a href="#" class="nav-link">
                                 <p>
                                     등록 <i class="fas fa-angle-left right"></i>
                                 </p>
@@ -239,27 +259,6 @@ transition: border 2s opacity 2s;
                                                             class="nav-link">
 
                                         <p>등록금 납부 관리</p>
-                                    </a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item"><a href="#" class="nav-link">
-                                <p>
-                                    장학 <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item"><a
-                                            href="#" class="nav-link">
-                                        <p>장학금 목록</p>
-                                    </a></li>
-                                    <li class="nav-item"><a
-                                            href="/scholarship/admin/scholarshipAward" class="nav-link">
-                                        <p>장학금 수여</p>
-                                    </a></li>
-                                    <li class="nav-item"><a
-                                            href="#" class="nav-link">
-
-                                        <p>장학생 조회</p>
                                     </a></li>
                                 </ul>
                             </li>

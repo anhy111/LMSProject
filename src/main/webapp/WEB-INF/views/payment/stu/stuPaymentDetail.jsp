@@ -14,7 +14,7 @@
 <table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 	<thead>
 		<tr class="text-center">
-			<th width="10%">년도</th>
+			<th width="10%">연도</th>
 			<th width="10%">등록금</th>
 			<th width="10%">장학금</th>
 			<th width="10%">실납부액</th>
@@ -82,11 +82,11 @@
 					
 					str += `
 						<tr class='paymentForm' style='cursor:pointer'>
-						<td class='checkpayCd' value='\${data[i].payCd}'>\${data[i].payDate}</td>
+						<td class='checkpayCd' value='\${data[i].payCd}' style='text-align:center;'>\${data[i].payDate}</td>
 						<td style="text-align:right">\${numWithCommas1}</td>
 						<td style="text-align:right">\${numWithCommas2}</td>
 						<td style="text-align:right">\${numWithCommas3}</td>
-						<td class='checklecaAp' value='\${data[i].payYn }'>\${data[i].payYn}</td>
+						<td class='checklecaAp' value='\${data[i].payYn }' style='text-align:center;'>\${data[i].payYn}</td>
 						</tr>
 					`
 				}
@@ -126,7 +126,10 @@
 						window.open('/payment/stuForm/paymentConfirmation?payCd='+payCd,'paymentForm','width='+ pwidth +',height='+ pheight +',top='+ ptop +',left='+ pleft);
 
 					}else{
-						alert("현재 등록금 미납 상태 이므로 수납서를 확인할 수 없습니다.");
+						Swal.fire({
+							  icon: 'error',
+							  title: '현재 등록금 미납 상태 입니다.',
+							})
 					}
 				});
 			}

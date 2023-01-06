@@ -34,6 +34,7 @@
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
+					<th width="5%">No</th>
 					<th width="5%">년도</th>
 					<th width="5%">학기</th>
 					<th width="10%">장학명</th>
@@ -73,6 +74,7 @@
 					
 					str += `
 						<tr>
+						<td>\${i+1}</td>
 						<td class='checksclhCd' value='\${data[i].sclhCd}'>\${data[i].sclhYr}</td>
 						<td>\${data[i].sclhSem}학기</td>
 						<td>\${data[i].sclNm}</td>
