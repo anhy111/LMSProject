@@ -14,6 +14,8 @@ public class Qna {
 
     private Long qnaCd;
     private Long memNo;
+
+    private String stuNm; // 학생이름
     private String qnaTtl;
     private String qnaCon;
     @DateTimeFormat(pattern = "yyyymmdd")

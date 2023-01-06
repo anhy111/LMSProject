@@ -17,7 +17,10 @@ public interface QnaMapper {
     //문의게시판/검색결과 리스트 출력
     List<Qna> showList();
 
-    @Select("SELECT * FROM qna WHERE qna_cd = #{qnaCd}")
+    @Select("SELECT q.QNA_CD, q.MEM_NO, q.QNA_TTL, q.QNA_CON, q.QNA_DT, q.QNA_YN, q.QNA_UPDATE, q.QNA_HIT, " +
+            " (select stu_nm from student s where q.mem_no = s.stu_no) stu_nm " +
+            " FROM qna q" +
+            " WHERE qna_cd = #{qnaCd}")
     Qna findOne(Long qnaCd);
 
     @Select("Delete FROM qna WHERE qna_cd = #{qnaCd}")

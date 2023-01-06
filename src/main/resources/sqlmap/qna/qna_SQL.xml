@@ -11,7 +11,6 @@
 <!--		<result property="" column=""/>-->
 <!--		<result property="" column=""/>-->
 <!--		<collection property="" resultMap=""/>-->
-
 <!--	</resultMap>-->
 
 	<select id="showList" resultType="qna" >
@@ -23,7 +22,8 @@
                q.QNA_YN,
                q.QNA_UPDATE,
                q.QNA_HIT,
-               (select nvl(count(r.qna_cd), 0) from qna_reply r where r.qna_cd = q.qna_cd) qna_reply_count
+               (select nvl(count(r.qna_cd), 0) from qna_reply r where r.qna_cd = q.qna_cd) qna_reply_count,
+               (select stu_nm from student s where q.mem_no = s.stu_no) stu_nm
         FROM qna q
         ORDER BY q.QNA_DT DESC
     </select>

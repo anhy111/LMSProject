@@ -51,7 +51,7 @@
                     </tr>
                     <tr>
                         <th style="width:5%; text-align:center" align="center">작성자</th>
-                        <td style="width:5%" class="table-title" align="center" >${form.memNo}</td>
+                        <td style="width:5%" class="table-title" align="center" >${form.stuNm}</td>
                         <th style="width:5%; text-align:center" align="center">문의일자</th>
                         <td style="width:5%" align="center" class="table-title">
                             <fmt:formatDate value="${form.qnaDt}" pattern="yyyy/MM/dd HH:mm:ss"/>
@@ -97,12 +97,12 @@
                 <button class="btn btn-outline-primary m-1" type="button"
                         onclick="location.href='/qna/update/${form.qnaCd}'">수정
                 </button>
-                </c:if>
                 <button class="btn btn-outline-danger m-1" type="button"
                         onclick="location.href='/qna/delete/${form.qnaCd}'">삭제
                 </button>
                 <button class="btn btn-primary m-1" type="button" onclick="location.href='/qna/main'">목록
                 </button>
+                </c:if>
             </div>
 
             <!-- ================================================= -->
@@ -115,7 +115,7 @@
                 <c:if test="${not empty qnaReply.qnarCon}">
                     <tr>
                         <td colspan="5" rowspan="3" class="table-title">
-                            <c:out value="${qnaReply.qnarCon}"/>
+                            <h2>Re : </h2><c:out value="${qnaReply.qnarCon}"/>
                         </td>
                     </tr>
                     <br>

@@ -116,7 +116,7 @@
                         <tr style="border-top: 2px solid #112a63">
                             <th style="width: 10%; text-align: center;">No</th>
                             <th style="width: 60%;text-align: center;">제목</th>
-                            <th style="width: 10%;text-align: center;">학번</th>
+                            <th style="width: 10%;text-align: center;">작성자</th>
                             <th style="width: 10%;text-align: center;">작성일</th>
                             <th style="width: 10%;text-align: center;">조회</th>
                         </tr>
@@ -138,7 +138,7 @@
                                         </c:if>
                                     </a>
                                 </td>
-                                <td style="text-align: center;">${qnaList.memNo}</td>
+                                <td style="text-align: center;">${qnaList.stuNm}</td>
                                 <td style="text-align: center;">${qnaRegDate}</td>
                                 <td style="text-align: center;">${qnaList.qnaHit}</td>
                             </tr>

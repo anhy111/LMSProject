@@ -21,7 +21,9 @@ public class QnaController {
 
     private final QnaService qnaService;
 
-    private static final String MAIN = "redirect:/qna/main";
+    private static final String REDIRECT_MAIN = "redirect:/qna/main";
+    private static final String VIEWS_QNA_MAIN = "qna/test";
+    private static final String VIEWS_QNA_DETAIL = "qna/qnaDetail";
 
     //QnA 메인 페이지
     @GetMapping("/main")
@@ -36,7 +38,7 @@ public class QnaController {
         model.addAttribute("qnaList", showList);
         model.addAttribute("totalRow", totalRow);
 
-        return "qna/test";
+        return VIEWS_QNA_MAIN;
     }
 
     @GetMapping("/qnaWrite")
@@ -56,7 +58,7 @@ public class QnaController {
 
         qnaService.qnaSave(qna);
 
-        return MAIN;
+        return REDIRECT_MAIN;
     }
 
     @GetMapping("/qnaDetail/{list.qnaCd}/detail")
@@ -74,7 +76,7 @@ public class QnaController {
         // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
         model.addAttribute("form", qna);
 
-        return "qna/qnaDetail";
+        return VIEWS_QNA_DETAIL;
     }
 
     //공지사항 수정페이지
@@ -93,7 +95,7 @@ public class QnaController {
 
         qnaService.update(form);
 
-        return MAIN;
+        return REDIRECT_MAIN;
     }
 
     //공지사항 삭제
@@ -103,7 +105,7 @@ public class QnaController {
 
         qnaService.delete(qnaCd);
 
-        return MAIN;
+        return REDIRECT_MAIN;
     }
 
     @PostMapping("/qnaDetail/{form.qnaCd}/addReply")
