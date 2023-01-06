@@ -53,14 +53,24 @@ public class LectureBoardController {
 	
 	//게시판 리스트
 	@GetMapping("/data/lectureData")
-	public ModelAndView dataList(ModelAndView mav, String keyWord, String category, String lecaCd) {
-		Lecture lecture = this.lectureBoardService.dataList(keyWord, category, lecaCd);
+	public ModelAndView dataList(ModelAndView mav, String keyWord, String category, String lecaCd,
+								 @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage) {
+
+		//총 행의 수 계산
+		int totalRow = lectureBoardService.getLectureBoardTotalRow(Integer.parseInt(lecaCd));
+		//총 페이지의 수 계산
+		int totalPage = (int) Math.ceil((double) totalRow / 10);
+
+		Lecture lecture = this.lectureBoardService.dataList(keyWord, category, lecaCd, viewPage);
 		
 		try {
 			List<LecData> lecData = lecture.getLecDataList();
 			mav.addObject("lecData", lecData);
 			mav.addObject("lecture", lecture);
+			mav.addObject("totalRow", totalRow);
+			mav.addObject("totalPage", totalPage);
 			mav.setViewName("lectureBoard/data/lectureData");
+
 			
 		}catch (Exception e) {
 			mav.setViewName("lectureBoard/data/lectureData");

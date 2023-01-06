@@ -1,7 +1,6 @@
 package kr.or.ddit.mapper;
 
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +18,15 @@ import kr.or.ddit.domain.StudentTest;
 import kr.or.ddit.domain.StudentTestDetail;
 import kr.or.ddit.domain.Test;
 import kr.or.ddit.domain.TestQ;
+import org.apache.ibatis.annotations.Select;
 
 public interface LectureBoardMapper {
 
 	//자료실 리스트
-	public Lecture dataList(@Param("keyWord") String keyWord,@Param("category") String category,@Param("lecaCd") String lecaCd);
+	public Lecture dataList(@Param("keyWord") String keyWord,
+							@Param("category") String category,
+							@Param("lecaCd") String lecaCd,
+							@Param("viewPage") int viewPage);
 	
 	//자료실 상세
 	public LecData dataDetail(String ldtCd);
@@ -103,8 +106,7 @@ public interface LectureBoardMapper {
 	
 	//학생이 자기 성적 조회(현재 강의)
 	public StudentLecture stuLecScoreSearch(@Param("lecaCd") String lecaCd, @Param("stuNo") String stuNo);
-	
-	
-	
-	
+
+	@Select("SELECT COUNT(*) FROM lec_data where #{lecaCd} = leca_cd")
+	int getLectureBoardTotalRow(int lecaCd);
 }

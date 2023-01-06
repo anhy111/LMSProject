@@ -55,17 +55,9 @@
 			<div class="content container-fluid p-5">
 				<div class="row">
 					<div class="col-lg-12">
-						<div class="card" style="min-height: 700px;">
-							<div class="card-body container-fluid">
-								<h4 class="row p-0">
-									<!-- 게시판 타이틀 -->
-									${bodyTitle}
-								</h4>
-								<!-- body 시작 /.content-header -->
-								<tiles:insertAttribute name="body" />
-								<!-- body 끝 /.content -->
-							</div>
-						</div>
+						<!-- body 시작 /.content-header -->
+						<tiles:insertAttribute name="body" />
+						<!-- body 끝 /.content -->
 					</div>
 				</div>
 			</div>

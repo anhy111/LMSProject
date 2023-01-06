@@ -202,6 +202,12 @@ $(function(){
 		color:blue;
 		transition:opacity 2s  color 2s;
 	}
+	
+	.portlet:hover, .logout:hover{
+		opacity:0.7;
+		color:blue;
+		transition:opacity 2s  color 2s;
+	}
 </style>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 1);height:70px;">
@@ -218,7 +224,7 @@ $(function(){
 	      </li>
 	     </sec:authorize>
 	    <sec:authorize access="hasRole('ROLE_PROFESSOR')">
-	      <li class="nav-item categorybar active">
+	      <li class="nav-item categorybar active" style="margin-left:235px;">
 	        <a class="navbar-link" style="color:white;margin-left: 50px;margin-right: 50px;padding-bottom: 15px;" href="/lecture/myLecture">사이버캠퍼스</a>
 	        <a class="navbar-link" style="color:white;margin-right: 50px;padding-bottom: 15px;"href="/notice/list">공지사항</a>
 	        <a class="navbar-link" style="color:white;margin-right: 50px;padding-bottom: 15px;"href="/qna/main">문의게시판</a>
@@ -226,7 +232,7 @@ $(function(){
 	      </li>
 	     </sec:authorize>
 	    <sec:authorize access="hasRole('ROLE_MANAGER')">
-	      <li class="nav-item categorybar active">
+	      <li class="nav-item categorybar active" style="margin-left:300px;">
 <!-- 	        <a class="navbar-link" style="color:white;margin-left: 50px;margin-right: 50px;padding-bottom: 15px;" href="#">사이버캠퍼스</a> -->
 	        <a class="navbar-link" style="color:white;margin-right: 50px;margin-right: 50px;padding-bottom: 15px;"href="/notice/list">공지사항</a>
 	        <a class="navbar-link" style="color:white;margin-right: 50px;padding-bottom: 15px;"href="/qna/main">문의게시판</a>
@@ -252,7 +258,6 @@ $(function(){
 		<!-- 인증된 사용자인 경우 -->
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
 			<!-- Notifications Dropdown Menu -->
-			
 			<div class="nav-link" style="color:white;">
 				<div class="row">
 					<span id="counter" style="padding-right:7px;"></span>
@@ -261,52 +266,23 @@ $(function(){
 					</div>
 				</div>
 			</div>
-				<li class="nav-item dropdown">
-			<a class="nav-link" style="color: white;" data-toggle="dropdown" href="#"> 
-				<i class="far fa-bell"></i> 
-				<span id="notificationBadge" class="badge badge-warning navbar-badge">0</span>
-			</a>
-			<div class="dropdown-menu dropdown-menu-xl">
-				<span class="dropdown-item dropdown-header">알림내역</span>
-				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item"> 
-					<i class="fas fa-book fa-lg"></i>
-						경제학개론 - 과제게시판
-					<span class="float-right text-muted text-sm">
-						12 시간전
-					</span><br>
-					<span class="text-muted text-sm">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 글이 등록되었습니다.
-					</span>
-				</a>
-				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item"> <i class="fas fa-school mr-1"></i> 개강<span class="float-right text-muted text-sm">12 시간전</span>
-				</a>
-				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item"> <i class="fas fa-won-sign mr-1"></i> 등록금 납부<span class="float-right text-muted text-sm">2 일전</span>
-				</a>
-				<div class="dropdown-divider"></div>
-				<a href="#" class="dropdown-item dropdown-footer btn btn-outline-secondary">펼쳐보기</a>
-			</div>
-		</li>
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
 			<div style="margin:5px;">
-			<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
+				<a style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;" class="btn btn-default btn-sm portlet"> 포틀릿 설정 </a> 
+				<a style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;" class="btn btn-default btn-sm mypage">
 					<%=department %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님</a>		
-			<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
-				<div class="card-body box-profile">
-				<div class="text-center">
-				<img class="profile-user-img img-fluid img-circle" src="/upload<%=pic%>" alt="User profile picture">
-				</div>
-				<h3 class="profile-username text-center"style="margin-top:10px;"><%=name %></h3>
-				<p class="text-muted text-center"><%=department %></p>
-				<ul class="list-group list-group-unbordered mb-3">
-				</ul>
-				
-				<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
-				</div>
+				<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
+					<div class="card-body box-profile">
+						<div class="text-center">
+							<img class="profile-user-img img-fluid img-circle" src="/upload<%=pic%>" alt="User profile picture">
+						</div>
+						<h3 class="profile-username text-center"style="margin-top:10px;"><%=name %></h3>
+						<p class="text-muted text-center"><%=department %></p>
+						<ul class="list-group list-group-unbordered mb-3"></ul>
+						<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
+					</div>
 				
 				</div>
 			</div>
@@ -323,27 +299,23 @@ $(function(){
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
-				<div style="margin:5px;">
-							<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
-					<%=position %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님
-				
-			</a>
-			<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
-				<div class="card-body box-profile">
-				<div class="text-center">
-				<img class="profile-user-img img-fluid img-circle" src="/upload<%=pic%>" alt="User profile picture">
-				</div>
-				<h3 class="profile-username text-center"style="margin-top:10px;"><%=name %></h3>
-				<p class="text-muted text-center"><%=position %></p>
-				<ul class="list-group list-group-unbordered mb-3">
-				</ul>
-				
-				<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
-				</div>
-				
+			<div style="margin:5px;">
+				<a style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;" class="btn btn-default btn-sm portlet"> 포틀릿 설정 </a> 
+				<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
+					<%=position %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님</a>
+				<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
+					<div class="card-body box-profile">
+						<div class="text-center">
+							<img class="profile-user-img img-fluid img-circle" src="/upload<%=pic%>" alt="User profile picture">
+						</div>
+						<h3 class="profile-username text-center"style="margin-top:10px;"><%=name %></h3>
+						<p class="text-muted text-center"><%=position %></p>
+						<ul class="list-group list-group-unbordered mb-3"></ul>
+					<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
+					</div>
 				</div>
 					
-				</div>
+			</div>
 <!-- 			<p class="arrow_box2">마이페이지</p> -->
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_MANAGER')">
@@ -358,26 +330,24 @@ $(function(){
 			<form style="display: none;" id="logoutFrm" action="/logout" method="post">
 				<sec:csrfInput/>
 			</form>
-				<div style="margin:5px;">
-							<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
-					<%=division %>&nbsp;&nbsp;<%=position %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님
-			</a>
-			<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
-				<div class="card-body box-profile">
-				<div class="text-center">
-				<img class="profile-user-img img-fluid img-circle" src="/upload<%=pic%>" alt="User profile picture">
-				</div>
-				<h3 class="profile-username text-center"style="margin-top:10px;"><%=name %></h3>
-				<p class="text-muted text-center"><%=division %>&nbsp;<%=position %></p>
-				<ul class="list-group list-group-unbordered mb-3">
-				</ul>
-				
-				<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
-				</div>
+			<div style="margin:5px;">
+				<a style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;" class="btn btn-default btn-sm portlet"> 포틀릿 설정 </a> 
+				<a  style="background-color:#001F3F;color:white;border:0;padding-bottom: 15px;"  class="btn btn-default btn-sm mypage">
+					<%=division %>&nbsp;&nbsp;<%=position %>&nbsp;&nbsp;|&nbsp;&nbsp;<%=name %>님</a>
+				<div style="padding: 20px;position: absolute;min-width: 250px;max-width: 250px;min-height: 320px;max-height: 320px;display: none;"class="profile card card-primary card-outline">
+					<div class="card-body box-profile">
+						<div class="text-center">
+							<img class="profile-user-img img-fluid img-circle" src="/upload<%=pic%>" alt="User profile picture">
+						</div>
+						<h3 class="profile-username text-center"style="margin-top:10px;"><%=name %></h3>
+						<p class="text-muted text-center"><%=division %>&nbsp;<%=position %></p>
+						<ul class="list-group list-group-unbordered mb-3"></ul>
+						<a href="/mypage/mypage" class="btn btn-primary btn-block"><b>개인정보수정</b></a>
+					</div>
 				
 				</div>
 					
-				</div>
+			</div>
 <!-- 			<p class="arrow_box2">마이페이지</p> -->
 		</sec:authorize>
 
@@ -415,4 +385,14 @@ mypage.addEventListener('mouseover', (event) => {
 	});
 profile.addEventListener('mouseover', () => {$(".profile").show();});
 profile.addEventListener('mouseout', () => {$(".profile").hide();	});
+
+$(function(){
+	
+	$(".portlet").on("click", function(){
+		
+		window.open("/main/portlet", "portlet", "width=1500, height=900, left=100, top=50");
+		
+	});
+	
+});
 </script>

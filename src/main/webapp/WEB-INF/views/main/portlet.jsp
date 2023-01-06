@@ -11,8 +11,11 @@
 <style>
 .grid-stack>.grid-stack-item>.grid-stack-item-content {
   overflow:hidden;
+  border: none;
 }
-
+.grid-stack{
+ 	margin-top: 30px;
+}
 .grid-stack-active {
     border-right: none;
     border-top:  none;
@@ -22,24 +25,41 @@
 
 .grid-stack-inactive {
     border-top: none;
-    background-color: #E2E2E2;
+    background-color: rgba(199, 225, 255, 0.7);
     padding-bottom: 30px;
     min-height: 600px;
 }
 
+.portlet-header{
+	height: 100%;
+	margin: 0;
+	align-items : center;
+	text-align: center;
+/* 	font-size: 1.5em; */
+	background-color: #E8F5FF;
+	border-radius: 5px 5px 5px 5px;
+	line-height: 50px;
+}
+.header{
+	color:navy;
+	font-size: large;
+}
 .na-icon{
 	top: 5px;
     right: 6px;
+}
+.ui-draggable-handle{
+	border:none;
 }
 
 h1{margin:0;}
 
 #dashboard > div.inactive-widgets > div > div > div.grid-stack-item-content.ui-draggable-handle > div.portlet-header {
-  background:grey;
+  background:white;
 }
 
 #dashboard > div.inactive-widgets > div > div > div.grid-stack-item-content.ui-draggable-handle {
-  border: 1px solid grey;
+	border-radius: 5px 5px 5px 5px;
 }
 
 #dashboard > div.inactive-widgets > div > div > div.grid-stack-item-content.ui-draggable-handle > div.portlet-header > span.na-icon.na-icon-triangle-1-s.widget-add {
@@ -48,20 +68,33 @@ h1{margin:0;}
 }
 
 </style>
+
+<nav class="main-header navbar navbar-expand navbar-light bg-navy" style="margin-left:0px;">
+	<ul class="navbar-nav mr-auto">
+		<li class="row nav-item categorybar active">
+			<i class="fas fa-th pl-3" style="padding-top:17px;font-size:x-large;"></i>
+			<p class="pt-3 pl-3" style="font-size: larger;font-weight: bold;">포틀릿 설정</p>
+		</li>
+	</ul>
+</nav>
+
 <input type="hidden" id="memNo" value="<%=no%>"/>
 
+<div><a id="showInfo" class="btn btn-light" href="#">저장하기</a></div>
 <div id="dashboard">
-	<div class="active-widgets" style="width:100%;">
+	<div class="active-widgets">
 		<div class="header-title">
 		</div>
-		<div class="grid-stack" id="grid1"></div>
-	</div>
-
-	<div style="display:none;">
-		<div class="header-title"></div>
-		<div class="inactive-widgets">
-			<div class="grid-stack "></div>
+		<div class="grid-stack" id="grid1">
 		</div>
+	</div>
+	
+	<div class="header-title">
+	  <h1>포틀릿 목록</h1>
+	</div>
+	<div class="inactive-widgets">
+	  <div class="grid-stack ">
+	  </div>
 	</div>
 </div>
 
@@ -71,12 +104,10 @@ h1{margin:0;}
       <div class="portlet-header" style="vertical-align: middle;">
         <span class="header"></span>
       </div>
-      <div class="content">
-        Widget content.
-      </div>
     </div>
   </div>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/jquery-1.11.3/jquery-1.11.3.min.js"></script>
@@ -99,7 +130,7 @@ $(function() {
 	
 	if(myPortlet == null || myPortlet == ''){
 		serialized_data = [
-			 { id: 1, name: "학사 일정", x: 0, y: 0, width: 2, height: 4, active: true },
+			  { id: 1, name: "학사 일정", x: 0, y: 0, width: 2, height: 4, active: true },
 			  { id: 2, name: "수강 내역", x: 0, y: 4, width: 1, height: 2, active: true },
 			  { id: 3, name: "성적", x: 2, y: 4, width: 1, height: 2, active: true },
 			  { id: 4, name: "시설예약", x: 0, y: 3, width: 1, height: 1, active: true },
@@ -111,6 +142,7 @@ $(function() {
 			  { id: 10, name: "뉴스", x: 2, y: 4, width: 1, height: 2, active: false },
 			  { id: 11, name: "오늘의 학식", x: 3, y: 4, width: 1, height: 2, active: true }
 			];
+		
 	}else{
 		let portlet = '${memPortlet.poCont}';
 		serialized_data = JSON.parse(portlet);

@@ -16,7 +16,7 @@ public interface NoticeBasicMapper {
 
     //공지사항 목록 조회
     @Select(" SELECT * FROM notice_basic nb1 WHERE (SELECT COUNT(*) FROM notice_basic nb2 WHERE nb2.notice_reg > nb1.notice_reg) BETWEEN (10 * (#{page} - 1) ) AND (10 * #{page} -1) ORDER BY notice_reg DESC")
-    List<NoticeBasic> noticeBasicList(int page);
+    List<NoticeBasic> noticeBasicSelectAll(int page);
 
     //공지사항 상세 조회
     NoticeBasic noticeBasicFindNotice(@Param("noticeCd")Long noticeCd);

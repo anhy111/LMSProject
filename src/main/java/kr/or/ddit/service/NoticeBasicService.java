@@ -17,7 +17,7 @@ public interface NoticeBasicService {
 
 
     //공지사항 목록 조회
-    List<NoticeBasic> noticeBasicList(int page);
+    List<NoticeBasic> noticeBasicSelectAll(int page);
 
     //공지사항 상제 조회
     NoticeBasic findOne(Long noticeCd);

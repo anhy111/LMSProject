@@ -56,7 +56,7 @@ public class NoticeBasicController {
         //총 페이지의 수 계산
         int totalPage = (int) Math.ceil((double) totalRow / 10);
 
-        List<NoticeBasic> noticeBasicList = noticeBasicService.noticeBasicList(viewPage);
+        List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicSelectAll(viewPage);
 
         model.addAttribute("noticeBasicList", noticeBasicList);
         model.addAttribute("totalRow", totalRow);
@@ -87,23 +87,23 @@ public class NoticeBasicController {
         switch (searchOption) {
             case 1:
                 //총 행의 수 계산
-                totalRow = noticeBasicService.getNoticeBasicTotalRowTitle(sanitizedKeyword);
+                totalRow = this.noticeBasicService.getNoticeBasicTotalRowTitle(sanitizedKeyword);
                 // 제목 검색 코드
-                noticeBasicList = noticeBasicService.noticeBasicSearchTitle(sanitizedKeyword);
+                noticeBasicList = this.noticeBasicService.noticeBasicSearchTitle(sanitizedKeyword);
                 break;
 
             case 2:
                 //총 행의 수 계산
-                totalRow = noticeBasicService.getNoticeBasicTotalRowContent(sanitizedKeyword);
+                totalRow = this.noticeBasicService.getNoticeBasicTotalRowContent(sanitizedKeyword);
                 // 내용 검색 코드
-                noticeBasicList = noticeBasicService.noticeBasicSearchContent(sanitizedKeyword);
+                noticeBasicList = this.noticeBasicService.noticeBasicSearchContent(sanitizedKeyword);
                 break;
 
             default:
                 //총 행의 수
-                totalRow = noticeBasicService.getNoticeBasicTotalRow();
+                totalRow = this.noticeBasicService.getNoticeBasicTotalRow();
                 // 전체 게시글 조회 코드
-                noticeBasicList = noticeBasicService.noticeBasicList(viewPage);
+                noticeBasicList = this.noticeBasicService.noticeBasicSelectAll(viewPage);
                 break;
         }
 
@@ -151,12 +151,12 @@ public class NoticeBasicController {
     public String detail(@PathVariable("noticeBasic.noticeCd") Long noticeCd, Model model) {
 
         // 조회수 증가
-        noticeBasicService.updateViewCount(noticeCd);
+        this.noticeBasicService.updateViewCount(noticeCd);
 
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
-        NoticeBasic noticeBasicPre = noticeBasicService.findOne(noticeCd - 1);
-        NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
-        NoticeBasic noticeBasicNext = noticeBasicService.findOne(noticeCd + 1);
+        NoticeBasic noticeBasicPre = this.noticeBasicService.findOne(noticeCd - 1);
+        NoticeBasic noticeBasic = this.noticeBasicService.findOne(noticeCd);
+        NoticeBasic noticeBasicNext = this.noticeBasicService.findOne(noticeCd + 1);
 
 
         // 조회한 NoticeBasic객체를 'form'이라는 이름으로 객체를 전달한다.
@@ -171,7 +171,7 @@ public class NoticeBasicController {
     @GetMapping("/update/{form.noticeCd}")
     public String updateForm(@PathVariable("form.noticeCd") Long noticeCd, Model model) {
 
-        NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
+        NoticeBasic noticeBasic = this.noticeBasicService.findOne(noticeCd);
 
         model.addAttribute("form", noticeBasic);
 
@@ -181,7 +181,7 @@ public class NoticeBasicController {
     @PostMapping("/update/{form.noticeCd}")
     public String updateNotice(@ModelAttribute("form") NoticeBasic form, RedirectAttributes redirectAttributes) {
 
-        noticeBasicService.noticeBasicUpdate(form);
+        this.noticeBasicService.noticeBasicUpdate(form);
         redirectAttributes.addAttribute("status", true);
 
         return REDIRECT_MAIN;
@@ -191,7 +191,7 @@ public class NoticeBasicController {
     @GetMapping("/delete/{form.noticeCd}")
     public String delete(@PathVariable("form.noticeCd") Long noticeCd) {
 
-        noticeBasicService.delete(noticeCd);
+        this.noticeBasicService.delete(noticeCd);
 
         return REDIRECT_MAIN;
     }

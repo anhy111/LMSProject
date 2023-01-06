@@ -119,24 +119,23 @@
 		<result property="stdAnswer" column="STD_ANSWER"/>
 	</resultMap>
 	
-	
-	
-	
 	<select id="dataList" parameterType="string" resultMap="lectureMap">
 		SELECT
-             la.leca_nm
-			,ld.LDT_CD
-			,ld.LECA_CD
-			,ld.LDT_TTL
-			,ld.LDT_CON
-			,ld.LDT_REG
-			,ld.LDT_WRITER
-			,ld.ATCH_FILE_ID
-			,ld.LDT_COUNT
+		rownum
+		,la.leca_nm
+		,ld.LDT_CD
+		,ld.LECA_CD
+		,ld.LDT_TTL
+		,ld.LDT_CON
+		,ld.LDT_REG
+		,ld.LDT_WRITER
+		,ld.ATCH_FILE_ID
+		,ld.LDT_COUNT
 		FROM LEC_DATA ld,lecture l, lec_Apply la
-        where la.leca_Cd = l.leca_cd
-        and l.leca_cd = ld.leca_cd
-        and l.leca_Cd = #{lecaCd}
+		where la.leca_Cd = l.leca_cd
+		and l.leca_cd = ld.leca_cd
+		and l.leca_Cd = 1
+		and rownum between ((#{viewPage} - 1) * 10 + 1) and (#{viewPage} * 10)
 		<if test="category == 1 and keyWord != null and keyWord !=''">
 			<include refid="where"></include>
 		</if>

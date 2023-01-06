@@ -8,10 +8,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import kr.or.ddit.domain.Attendence;
 import kr.or.ddit.domain.LecApply;
@@ -36,8 +34,8 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	
 	//자료실 리스트
 	@Override
-	public Lecture dataList(String keyWord, String category,String lecaCd){
-		return this.lectureBoardMapper.dataList(keyWord, category, lecaCd);
+	public Lecture dataList(String keyWord, String category,String lecaCd, int viewPage){
+		return this.lectureBoardMapper.dataList(keyWord, category, lecaCd, viewPage);
 	}
 	//자료실 상세
 	@Override
@@ -218,7 +216,10 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	public StudentLecture stuLecScoreSearch(String lecaCd, String stuNo) {
 		return this.lectureBoardMapper.stuLecScoreSearch(lecaCd, stuNo);
 	}
-	
-	
-	
+
+
+	@Override
+	public int getLectureBoardTotalRow(int lecaCd) {
+		return lectureBoardMapper.getLectureBoardTotalRow(lecaCd);
+	}
 }
