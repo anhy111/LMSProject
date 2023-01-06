@@ -5,18 +5,11 @@
 <%
     String no = String.valueOf(session.getAttribute("no"));
 %>
-<style>
-.brand-image:hover{
-border: 5px dotted white;
-opacity:0.9;
-transition: border 2s opacity 2s;
-}
-</style>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:1;top: 30px;">
+       style="background-color: #001F3F;opacity:1;">
 
-    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;">
+    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding:0;">
     <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 <!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
 <!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
@@ -24,7 +17,7 @@ transition: border 2s opacity 2s;
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="mt-2 sidebar">
         <!-- Sidebar user panel (optional) -->
 
         <!-- SidebarSearch Form -->
