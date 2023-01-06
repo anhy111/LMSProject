@@ -616,13 +616,13 @@
 						if( $("#s"+dayWeek+(allocation.altTt-1)).val() != allocation.lecaCd){
 							$("#s"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
 											.css("color","white")
-											.css("border","none")
+											.css("borderBottom","none")
 											.html(allocation.lecaNm + "\n" + allocation.bldSnm + allocation.roomNo)
 											.val(allocation.lecaCd);
 						} else{
 							$("#s"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
 											.css("color","white")
-											.css("border","none")
+											.css("borderTop","none")
 											.val(allocation.lecaCd);
 						}
 							

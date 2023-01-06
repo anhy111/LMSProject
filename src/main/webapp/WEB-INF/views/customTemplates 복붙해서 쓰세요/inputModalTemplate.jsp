@@ -8,6 +8,20 @@
 	int stuNo = (int) session.getAttribute("no");
 	String name = String.valueOf(session.getAttribute("name"));
 %>
+<style>
+	.modal-content{
+		top:60px;
+	}
+	
+	.modal-header{
+		background-color: #001F3F;
+		color:white;
+	}
+
+	.close span{
+		color:white;
+	}
+</style>
 <!-- 
 모달실행 버튼 
 또는 본인이 이벤트를 발생시킬 노드의 attribute를 추가해주면 실행 할 수 있다
@@ -16,20 +30,20 @@ data-toggle="modal" data-target="#모달에 준 아이디"
 <div class="row">
 <div class="col-12 pr-0" style="text-align: end;">
 <button id="" class="btn btn-outline-primary"
-		data-toggle="modal" data-target="#모달 아이디">신청</button>
+		data-toggle="modal" data-target="#modalId">신청</button>
 </div>
 </div>
 <!-- 모달 -->
-<div class="modal fade show" id="모달 아이디"
+<div class="modal fade show" id="modalId"
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="top:100px;">
-			<div class="modal-header" style="background-color: #001F3F;color:white;">
+		<div class="modal-content" >
+			<div class="modal-header">
 				<h5 class="modal-title">학적변동 신청서 작성</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true"style="color:white;">×</span>
+					<span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">

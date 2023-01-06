@@ -5,7 +5,21 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<style>
+    .modal-content{
+		top:100px;
+	}
+	
+	.modal-header{
+		background-color: #001F3F;
+		color:white;
+	}
 
+	.close span{
+		color:white;
+	}
+
+</style>
 <!-- fullcalender -->
 <link href="/resources/fullcalendar-5.11.3/lib/main.css" rel="stylesheet"/>
 <script src="/resources/fullcalendar-5.11.3/lib/main.js"></script>
@@ -18,7 +32,9 @@
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">일정 등록</h4>
-					<button type="button" class="close" onclick="initModal( calendarData)">&times;</button>
+					<button type="button" class="close" onclick="initModal( calendarData)">
+						<span aria-hidden="true">×</span>
+					</button>
 				</div>
 
 				<!-- Modal body -->
@@ -132,10 +148,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-5">
-		 <div id="calendar"></div>
-	</div>
-	<div class="col-md-7 pt-3">
+	<div class="col-md-4 pt-3">
 		<br>
 		<br>
 		<br>
@@ -143,11 +156,15 @@
 			<thead>
 				<th>기간</th>
 				<th>일정명</th>
+				<th>등록자</th>
 			</thead>
-			<tbody>
+			<tbody id="schList">
 				
 			</tbody>
 		</table>
+	</div>
+	<div class="col-md-8">
+		 <div id="calendar"></div>
 	</div>
 </div>
 
@@ -161,7 +178,19 @@
 	var calendar; // 달력변수
 	var todayStr = dateFormat(today,"-");
 	var calendarData;
+	var monthSch = [];
 
+	
+	function timeFormat(p_date){
+		if(p_date == "" || p_date == null){
+			return "";
+		} 
+		let date = new Date(p_date);
+		let str = date.getHours() < 10 ? "0"+ date.getHours() : date.getHours() 
+				+ ":" + date.getMinutes() < 10 ? "0" +date.getMinutes() : date.getMinutes();
+		console.log("str : " + str);
+	}
+	
 	// date객체와 구분자를 받아서 문자형식으로 변환
 	function dateFormat(p_date,p_separator){
 		if(p_date == "" || p_date == null){
@@ -192,8 +221,10 @@
 		$("#spn3").show();
 		$("#aschTtl").attr("readonly",false);
 		$("#aschCon").attr("readonly",false);
-		$("#aschSt").attr("readonly",false);
-		$("#aschEn").attr("readonly",false);
+		$("#aschStDay").attr("readonly",false);
+		$("#aschStTime").attr("readonly",false);
+		$("#aschEnDay").attr("readonly",false);
+		$("#aschEnTime").attr("readonly",false);
 	}
 	
 	function insertMode(){
@@ -202,8 +233,10 @@
 		$("#spn3").hide();
 		$("#aschTtl").attr("readonly",false);
 		$("#aschCon").attr("readonly",false);
-		$("#aschSt").attr("readonly",false);
-		$("#aschEn").attr("readonly",false);
+		$("#aschStDay").attr("readonly",false);
+		$("#aschStTime").attr("readonly",false);
+		$("#aschEnDay").attr("readonly",false);
+		$("#aschEnTime").attr("readonly",false);
 	}
 	
 	function readMode(){
@@ -212,8 +245,29 @@
 		$("#spn3").hide();
 		$("#aschTtl").attr("readonly",true);
 		$("#aschCon").attr("readonly",true);
-		$("#aschSt").attr("readonly",true);
-		$("#aschEn").attr("readonly",true);
+		$("#aschStDay").attr("readonly",true);
+		$("#aschStTime").attr("readonly",true);
+		$("#aschEnDay").attr("readonly",true);
+		$("#aschEnTime").attr("readonly",true);
+	}
+	
+	function dispTable(){
+		let str = "";
+		if(monthSch.length == 0){
+			str += `<tr>
+						<td colspan='3'>일정이 없습니다.</td>
+					</tr>`;
+			$("#schList").html(str);
+			return;
+		}
+		for(let i=0; i<monthSch.length; i++){
+			str += `<tr value='\${monthSch[i].aschCd}' class="read">
+						<td>\${dateFormat(monthSch[i].start,"/")} ~ \${dateFormat(monthSch[i].end,"/")}</td>
+						<td>\${monthSch[i].title}</td>
+						<td>\${monthSch[i].empNm}</td>
+					</tr>`;
+		}
+		$("#schList").html(str);
 	}
 	
 	// 페이지 첫 로딩할때 처음 학사일정
@@ -221,14 +275,14 @@
 		let calendarArg = document.querySelector("#calendar");
 
 		calendar = new FullCalendar.Calendar(calendarArg, {
-			height : 600,
+			height : 800,
 			headerToolbar : {
-				left : 'prev today',
+				left: 'prev,next today',
 				center : 'title',
-				
-				right : "next"
+				right: 'dayGridMonth,timeGridWeek,timeGridDay'
 			},
 			initialView : 'dayGridMonth',
+			fixedWeekCount: false,
 			locale : 'ko',
 			slotMinTime : '09:00',
 			slotMaxTime : '19:00',
@@ -264,12 +318,12 @@
 		loadEvent();
 	}
 	
+	
+	// 컬러색 지정
+	const color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
 	// 현재 뷰의 학사일정 불러오기 1~31일 데이터만 가져오기
 	function loadEvent() {
 
-        console.log("calendar.view.currentEnd : " + calendar.view.currentEnd);
-        console.log("calendar.view.currentStart : " + calendar.view.currentStart);
-        
         let start = calendar.view.currentStart;
         let end = endDateFormat(calendar.view.currentEnd,"-");
         
@@ -278,7 +332,6 @@
         		aschEn : new Date(end)
         };
         console.log(data);
-        let arr = [];
         $.ajax({
             type: "post",
             url: "/aschedule/loadSchedule",
@@ -290,12 +343,16 @@
             },
             success: function (list) {
             	console.log(list);
+            	calendar.removeAllEvents();
             	if(list == null || list.length == 0){
             		calendar.render();
             		return;
             	}
+            	
+            	monthSch = [];
+            	
                 for (var i = 0; i < list.length; i++) {
-                	calendar.addEvent({
+                	let data = {
                         title: list[i]['aschTtl'],
                         content: list[i]['aschCon'],
                         aschCd: list[i]['aschCd'],
@@ -303,10 +360,15 @@
                         empNm: list[i]['empNm'],
                         start: list[i]['aschSt'],
                         end: list[i]['aschEn'],
-                        backgroundColor : "#e74a3b"
-                    })
+                        backgroundColor : color[i % 9],
+                        borderColor : color[i % 9]
+                    }
+                    
+                	calendar.addEvent(data);
+                    monthSch.push(data);
                 }
                 
+                dispTable();
                 calendar.render();
             },
             error : function(){
@@ -317,27 +379,18 @@
 	
 	// 일정등록 모달
 	function modalOpen(arg) {
-		console.log(arg);
 		calendarData = arg;
         //값이 있는경우 세팅
         if (typeof calendarData.event != "undefined") {
+            $('#aschCd').val(calendarData.event.extendedProps.aschCd);
+            $('#aschStDay').val(dateFormat(calendarData.event.start,"-"));
+            $('#aschEnDay').val(endDateFormat(calendarData.event.end,"-"));
+            console.log(timeFormat(calendarData.event.start));
 
-            $('.insertModal #aschCd').val(calendarData.event.extendedProps.aschCd);
-            $('.insertModal #aschSt').val(stringFormat(calendarData.event.start.getHours()) + ':' + stringFormat(calendarData.event.start.getMinutes()));
-            $('.insertModal #aschEn').val(stringFormat(calendarData.event.end.getHours()) + ':' + stringFormat(calendarData.event.end.getMinutes()));
+            readMode();
 
-            //해당 이벤트가 로그인계정이 등록한 이벤트면
-            if (empNo == calendarData.event.extendedProps.memNo) {
-                $('.insertModal .deleteBtn').css('display', 'inline');
-                $('.insertModal .insertBtn').css('display', 'inline');
-                //남의 이벤트면
-            } else {
-                $('.insertModal .deleteBtn').css('display', 'none');
-                $('.insertModal .insertBtn').css('display', 'none');
-            }
-
-            //신규 이벤트
-        } else {
+            
+        } else {	//신규 이벤트
             $('#aschStDay').val(calendarData.startStr);
             $('#aschEnDay').val(endDateFormat(calendarData.endStr,"-"));
             $("#aschTtl").val("");
@@ -424,14 +477,8 @@
 					alert("일정 등록 실패");
 					return;
 				}
-                calendar.addEvent({
-                	aschCd: $('#aschCd').val(),
-                    start: $("#aschStDay") + 'T' + $('#aschStTime').val(),
-                    end: $("#aschEnDay") + 'T' + $('#aschEnTime').val(),
-                    empNo: empNo
-                });
-
                 initModal();
+                loadEvent();
             },
             error: function (xhr, status, error) {
                 alert('일정 등록 실패\n새로고침 후 재시도 해주세요');
@@ -491,11 +538,23 @@
 		})
 		
 		$("#close").on("click",function(){
-			insertSch(calendarData);
+			initModal(calendarData);
 		});
 		
-
+		$(document).on("click",".read",function(){
+			
+		})
 		initFullCalendar();
+		
+		$(document).on("click",'.fc-prev-button',function(){
+			console.log("event : " ,calendar);
+	    	loadEvent();
+		});
+		
+		$(document).on("click",'.fc-next-button',function(){
+			console.log("event : " ,calendar);
+		   	loadEvent();
+		});
 	});
 	// end window.onload
 </script>

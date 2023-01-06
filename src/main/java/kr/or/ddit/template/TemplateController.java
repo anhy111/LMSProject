@@ -36,6 +36,6 @@ public class TemplateController {
 	
 	@GetMapping("/input")
 	public String inputTemplate() {
-		return "customTemplates 복붙해서 쓰세요/inputTemplate";
+		return "customTemplates 복붙해서 쓰세요/inputModalTemplate";
 	}
 }
