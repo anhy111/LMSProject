@@ -45,13 +45,13 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="/lectureBoard/score/stuLecScore?lecaCd=${param.lecaCd}" class="nav-link">
-							성적
+						<a href="/lectureBoard/attendence/studentAttendence?lecaCd=${param.lecaCd}" class="nav-link"> 
+							출결
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="/lectureBoard/attendence/studentAttendence?lecaCd=${param.lecaCd}" class="nav-link"> 
-							출결
+						<a href="/lectureBoard/score/stuLecScore?lecaCd=${param.lecaCd}" class="nav-link">
+							성적
 						</a>
 					</li>
 					<li class="nav-item">
@@ -82,13 +82,13 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="/lectureBoard/score/totalScore?lecaCd=${param.lecaCd}" class="nav-link"> 
-							성적
+						<a href="/lectureBoard/attendence/attendence?lecaCd=${param.lecaCd}" class="nav-link"> 
+							출결
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="/lectureBoard/attendence/attendence?lecaCd=${param.lecaCd}" class="nav-link"> 
-							출결
+						<a href="/lectureBoard/score/totalScore?lecaCd=${param.lecaCd}" class="nav-link"> 
+							성적
 						</a>
 					</li>
 					<li class="nav-item">

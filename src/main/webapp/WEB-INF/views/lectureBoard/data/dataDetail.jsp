@@ -39,8 +39,9 @@
 											<div>
 												<textarea id="ldtCon" name="ldtCon" class="form-control" cols="15" rows="15">${lecData.ldtCon}</textarea>
 											</div>
-											
-											<hr>
+											<div id="ldtCon" name="ldtCon">
+												${lecData.ldtCon}
+											</div>
 											<c:if test="${lecData.atchFileId != -1}">
 											<div  class="taskData">
 												<label>첨부파일</label> <br>
@@ -61,8 +62,7 @@
 												</div>
 										</div>
 							</div>
-						</section>
-					</div>
+											<hr>
 				<div class="row">
 					<div class="col-sm-7">
 					</div>
@@ -84,12 +84,14 @@
 						<button  type="button" class="btn btn-outline-warning modifyDisplay" id="cancle">취소</button>
 					</div>
 				</div>
+						</section>
+					</div>
 </div>
 </div>
 <sec:csrfInput/>
 </form>
 <script type="text/javascript">
-var editor = CKEDITOR.replace('#ldtCon',{
+var editor = CKEDITOR.replace('ldtCon',{
 	  readOnly: true,
 	   width:'100%',
 		height:'500px'

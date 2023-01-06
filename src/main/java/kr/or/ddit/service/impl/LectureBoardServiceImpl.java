@@ -42,8 +42,14 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	//자료실 상세
 	@Override
 	public LecData dataDetail(String ldtCd) {
-		return this.lectureBoardMapper.dataDetail(ldtCd);
+
+		LecData lecData = this.lectureBoardMapper.dataDetail(ldtCd);
+		if(lecData != null) {
+			this.lectureBoardMapper.countPlus(ldtCd);
+		}
+		return lecData;
 	}
+	
 	
 	//자료 수정
 	@Override

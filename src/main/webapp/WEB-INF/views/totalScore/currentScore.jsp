@@ -12,12 +12,15 @@
 <script type="text/javascript" src="/resources/js/tui-grid.js"></script>
 <script type="text/javascript" src="/resources/js/spinner.js"></script>
 <link rel="stylesheet" href="/resources/css/tui-grid.css" type="text/css">
+<link rel="stylesheet" href="/resources/css/topTable.css" type="text/css">
 <style type="text/css">
-	#personalGradeInfo, #tgradeYellowBox {
-		border : 1px solid lightgray;
-		margin : 10px;
-		padding : 10px;
-	}
+/*  	#personalGradeInfo, #tgradeYellowBox {  */
+/*  		border : 1px solid lightgray;  */
+/*  		margin : 10px;  */
+/*  		padding : 10px;  */
+/*  	} */
+
+
 	#tgradeYellowBox {
 		background : lightyellow;
 	}
@@ -55,41 +58,41 @@
 	.tgradePreListSelect{
 		display:inline-block;
 	}
-	#personalGradeInfo{
-		border: 1px solid lightgray;
-		margin: 10px;
-		padding: 10px;
-		background: #f4f7fd;
-		width: 100%;
-		min-width: 1200px;
+	#personalGradeInfo{ 
+/* 		border: 1px solid lightgray;  */
+		margin: 10px; 
+		padding: 10px;*
+		background: #f4f7fd; 
+		width: 100%; 
+		min-width: 1200px; 
 		max-width: 1400px;
-		margin: 0 auto;
-	}
-	#personalGradeInfo div{
-		display : inline-block;
-	}
-	#personalGradeInfo div:nth-child(2){
-		margin-left : 254px;
-	}
-	#personalGradeInfo input{
-		width : 180px;
-	 	height: 33px;
-	 	background: #F2F2F2;
-	 	border: 1px solid gray;
-	 	border-radius : 5px;
- 		padding-left : 5px;
-	}
-	#personalGradeInfo label{
-		text-align : right;
-		width : 130px;
-	}
-	#grid td{
-		background : #f9f9f9;
-	}
-	#percentageTable{
-		float : right;
-		margin-right : 10px;
-	}
+		margin: 0 auto; 
+	} 
+	#personalGradeInfo div{ 
+		display : inline-block; 
+	} 
+	#personalGradeInfo div:nth-child(2){ 
+		margin-left : 254px; 
+	} 
+	#personalGradeInfo input{ 
+		width : 180px; 
+	 	height: 33px; 
+	 	background: #F2F2F2; 
+	 	border: 1px solid gray; 
+	 	border-radius : 5px; 
+ 		padding-left : 5px; 
+	} 
+	#personalGradeInfo label{ 
+		text-align : right; 
+		width : 130px; 
+	} 
+	#grid td{ 
+		background : #f9f9f9; 
+	} 
+	#percentageTable{ 
+		float : right; 
+		margin-right : 10px; 
+	} 
 </style>
 </head>
 <script type="text/javascript" defer="defer">
@@ -226,7 +229,6 @@ let token = "${_csrf.token}";
 		</tr>
   	</table>
 	</div>
-	
 	<br><br>
 	
 	<p class="tgradePreListSelect"><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;취득성적</p>

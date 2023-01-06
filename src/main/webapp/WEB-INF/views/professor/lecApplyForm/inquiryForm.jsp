@@ -11,7 +11,7 @@
 <body>
 	<div id="realFormBody">
 	
-	<span id="lecApplyTitle">강의계획서 상세</span>
+	<span id="lecApplyTitle">${lecApplyList[0].lecaNm } 강의계획서</span>
 	
 <!-- 	<div id="div4btns"> -->
 <!-- 		<button id="close" onclick="fn_close()" type="button" class="btn btn-secondary">닫기</button> -->

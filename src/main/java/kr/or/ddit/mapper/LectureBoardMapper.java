@@ -27,6 +27,8 @@ public interface LectureBoardMapper {
 	
 	//자료실 상세
 	public LecData dataDetail(String ldtCd);
+	//조회수 증가
+	public int countPlus(String ldtCd);
 	
 	//자료 수정
 	public int dataUpdate(HashMap<String, Object> map);

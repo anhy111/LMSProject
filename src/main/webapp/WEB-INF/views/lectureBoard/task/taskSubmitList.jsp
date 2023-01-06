@@ -93,7 +93,12 @@
 					<!-- ************************************************************************ -->
 
 			<sec:authorize access="hasRole('ROLE_STUDENT')">
-					<c:if test="${list !=null}">
+					<c:if test="${empty list}">
+									<tr style="border-bottom: 1px solid #112a63">
+										<td colspan="6" style="text-align: center;color: #888;">제출한 과제가 없습니다.</td>
+									</tr>
+					</c:if>
+					<c:if test="${list != null}">
 						<c:forEach var="row" items="${list}" varStatus="stat">
 							<c:forEach var="list" items="${row.taskSubmitList}"
 								varStatus="stata">
@@ -122,6 +127,11 @@
 			</sec:authorize>					
 			
 			<sec:authorize access="hasRole('ROLE_PROFESSOR')">
+					<c:if test="${task.taskNm ==null}">
+						<tr style="border-bottom: 1px solid #112a63">
+							<td colspan="6" style="text-align: center;color: #888;">제출된 과제가 없습니다.</td>
+						</tr>
+					</c:if>
 					<c:if test="${list !=null}">
 						<c:forEach var="row" items="${list}" varStatus="stat">
 							<c:forEach var="list" items="${row.taskSubmitList}"
