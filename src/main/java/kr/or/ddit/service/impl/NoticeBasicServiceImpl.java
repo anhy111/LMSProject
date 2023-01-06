@@ -35,9 +35,9 @@ public class NoticeBasicServiceImpl implements NoticeBasicService {
 
     //공지사항 목록 조회
     @Override
-    public List<NoticeBasic> noticeBasicList(int page) {
+    public List<NoticeBasic> noticeBasicSelectAll(int page) {
 
-        return this.noticeBasicMapper.noticeBasicList(page);
+        return this.noticeBasicMapper.noticeBasicSelectAll(page);
     }
 
     //공지사항 상세 조회

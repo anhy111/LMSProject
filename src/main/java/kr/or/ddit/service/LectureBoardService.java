@@ -19,7 +19,7 @@ public interface LectureBoardService {
 
 
 	//자료실 리스트
-	public Lecture dataList(String keyWord, String category,String lecaCd);
+	Lecture dataList(String keyWord, String category, String lecaCd, int viewPage);
 	
 	//자료실 상세
 	public LecData dataDetail(String ldtCd);
@@ -93,4 +93,5 @@ public interface LectureBoardService {
 	//학생이 자기 성적 조회(현재 강의)
 	public StudentLecture stuLecScoreSearch(String lecaCd, String stuNo);
 
+	int getLectureBoardTotalRow(int lecaCd);
 }

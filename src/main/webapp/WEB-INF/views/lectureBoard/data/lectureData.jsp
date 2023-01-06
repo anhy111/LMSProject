@@ -160,5 +160,10 @@ table {
 					</div>
 				</section>
 			</div>
+	<%--                    페이지--%>
+	<c:forEach var="pageNumber" begin="1" end="${totalPage}">
+		<a href="lectureData?viewPage=${pageNumber}&&lecaCd=${param.lecaCd}" class="btn btn-primary">${pageNumber}</a>
+	</c:forEach>
+
 </body>
 </html>

@@ -151,10 +151,11 @@
                     class="uil uil-angle-left"></i></button>
 
 
-            <%--                    페이지--%>
+            <%-- 페이징 처리 끝 --%>
             <c:forEach var="pageNumber" begin="1" end="${totalPage}">
                 <a href="list?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
             </c:forEach>
+            <%-- 페이징 처리 끝 --%>
 
             <button type="button" class="btn btn-light" onclick="#"><i class="uil uil-angle-right"></i></button>
             <button type="button" class="btn btn-light" disabled="" onclick="#"><i
