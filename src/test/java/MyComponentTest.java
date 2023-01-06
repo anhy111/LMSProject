@@ -2,11 +2,14 @@ import kr.or.ddit.aws.MyComponent;
 import kr.or.ddit.aws.S3Config;
 import lombok.RequiredArgsConstructor;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.BootstrapWith;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@ComponentScan
+@RunWith(SpringJUnit4ClassRunner.class)
 public class MyComponentTest {
 
     @Autowired

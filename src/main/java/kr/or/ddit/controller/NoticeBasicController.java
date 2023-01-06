@@ -153,15 +153,9 @@ public class NoticeBasicController {
         // 조회수 증가
         noticeBasicService.updateViewCount(noticeCd);
 
-
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
-
         NoticeBasic noticeBasicPre = noticeBasicService.findOne(noticeCd - 1);
-        log.info("                  Pre "+ noticeBasicPre.toString());
-
         NoticeBasic noticeBasic = noticeBasicService.findOne(noticeCd);
-        log.info("                   Basic"+ noticeBasic.toString());
-
         NoticeBasic noticeBasicNext = noticeBasicService.findOne(noticeCd + 1);
 
 
