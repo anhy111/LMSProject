@@ -37,7 +37,6 @@
 	 <definition name="mypage/pwConfirm" extends="myPage">
 		<put-attribute name="body" value="/WEB-INF/views/mypage/pwConfirm.jsp" />
 	</definition>
-	 
 	<definition name="test/*" extends="tiles-layout">
 		<put-attribute name="body" value="/WEB-INF/views/test/{1}.jsp" />
 	</definition>
@@ -130,8 +129,8 @@
 	<put-attribute name="body" value="/WEB-INF/views/approval/{1}.jsp" />
 	</definition>
 
-	<definition name="main/*" extends="mainPage">
-	<put-attribute name="body" value="/WEB-INF/views/main/{1}.jsp" />
+	<definition name="main/mainPage" extends="mainPage">
+	<put-attribute name="body" value="/WEB-INF/views/main/mainPage.jsp" />
 	</definition>
 	<definition name="totalScore/*" extends="tiles-layout">
 	<put-attribute name="body" value="/WEB-INF/views/totalScore/{1}.jsp" />
@@ -209,6 +208,10 @@
 
 	<definition name="scholarship/stuScholarshipForm/*" extends="no-tiles">
 	<put-attribute name="body" value="/WEB-INF/views/scholarship/stuScholarshipForm/{1}.jsp" />
+	</definition>
+	
+	<definition name="main/portlet" extends="no-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/main/portlet.jsp" />
 	</definition>
 
 </tiles-definitions>

@@ -530,7 +530,7 @@ $(function(){
 			<div class="modal-footer justify-content-align">
 				<div id="stuBtn1" style="display: none">
 					<button type="button" class="btn btn-outline-warning" id="edit">수정</button>
-					<button type="button" id="delete" class="btn btn-outline-danger">삭제</button>
+					<button type="button" id="delete" class="btn btn-outline-danger" style="display: none">삭제</button>
 				</div>
 				<div id="stuBtn2" style="display: none">
 					<button type="button" id="updateStu" class="btn btn-outline-success">확인</button>

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,18 @@ public class HomeController {
 		model.addAttribute("memPortlet", memPortlet);
 		
 		return "main/mainPage";
+	}
+	
+	@GetMapping("/main/portlet")
+	public String portlet(Model model, HttpSession session) {
+		
+		int memNo = (int)session.getAttribute("no");
+		
+		Portlet memPortlet = this.portletService.memPortlet(memNo);
+		
+		model.addAttribute("memPortlet", memPortlet);
+		
+		return "main/portlet";
 	}
 	
 	@PostMapping("/updatePortlet")

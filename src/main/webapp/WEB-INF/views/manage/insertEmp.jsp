@@ -113,6 +113,23 @@ $(function(){
 		});
 	}
 	
+	$("#insertBtn").on("click", function(){
+		
+		$('#empPass').attr('value','890116');
+		$('#empNm').attr('value','이제니');
+		$('#empNme').attr('value','Lee Jeni');
+		$('#empTel').attr('value','01078945612');
+		$('#empTel2').attr('value','0101235894');
+		$('#empBir').attr('value','890116');
+		$('#empReg').attr('value','2405987');
+		$('#empJoin').attr('value','2023-01-02');
+		$('#empDepo').attr('value','이제니');
+		$('#empAct').attr('value','123-456-789');
+		$('#empAddr1').attr('value','경기 성남시 분당구 판교로 20');
+		$('#empAddr2').attr('value','판교원마을3단지아파트');
+		$('#empZip').attr('value','13485');
+		
+	});
 	
 });
 
@@ -280,7 +297,8 @@ $(function(){
 				</div>
 			</div>
 			<div class="row mt-5" id="stuBtn" style="float:right">
-				<button type="submit" id="insertStu" class="btn btn-outline-success">등록</button>
+				<button type="submit" id="insertStu" class="btn btn-outline-success m-2">등록</button>
+				<button type="submit" id="insertBtn" class="btn btn-outline-secondary m-2">자동채우기</button>
 			</div>
 		<sec:csrfInput/>
 	</form>
