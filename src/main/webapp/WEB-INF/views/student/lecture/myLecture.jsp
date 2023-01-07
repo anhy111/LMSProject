@@ -56,7 +56,7 @@
                          style="width: 250px; display: inline-block;">
                         <div class="inner">
                             <h4>${row.subNm}</h4>
-                            <p>22년도&nbsp;2학기</p>
+                            <p>23년도&nbsp;1학기</p>
                         </div>
                         <div class="icon" id="book">
                             <i class="ion-ios-book"></i>
