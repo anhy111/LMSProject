@@ -1,9 +1,17 @@
 package kr.or.ddit.service.impl;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +42,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	
 	@Override
-	public int insert(Payment payment) {
-		return this.paymentMapper.insert(payment);
+	public int insert(List<Integer> stuList) {
+		return this.paymentMapper.insert(stuList);
 	}
 
 	@Override
