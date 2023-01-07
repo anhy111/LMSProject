@@ -36,7 +36,7 @@
 					</li>
 					<li class="nav-item">
 						<a href="/lectureBoard/task/subjectList?lecaCd=${param.lecaCd}" class="nav-link"> 
-								과제 및 평가
+								과제
 						</a>
 					</li>
 					<li class="nav-item">
@@ -73,7 +73,7 @@
 					</li>
 					<li class="nav-item">
 						<a href="/lectureBoard/task/subjectList?lecaCd=${param.lecaCd}" class="nav-link">
-							과제 및 평가
+							과제
 						</a>
 					</li>
 					<li class="nav-item">
