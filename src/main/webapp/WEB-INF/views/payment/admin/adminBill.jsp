@@ -56,7 +56,7 @@
 	let header = "${_csrf.headerName}";
 	let token = "${_csrf.token}";
 
-	console.log("header : " + header + ", token : " + token);
+	let dataSet;
 
 	$.ajax({
 		url: "/payment/admin/adminBillList",
@@ -88,13 +88,6 @@
 			}
 			$("#BillList").html(str);
 			
-			//체크박스 클릭 시 해당 값 가지고 띄우긔
-// 			$(document).on('click','.paymentForm',function(e){
-// 	        	let eqSeq = $(this).index();
-// 	        	let stuNo = $(".checkpayCd").get(eqSeq).getAttribute('value');
-// 	        	console.log("여기만떠줭 stuNo : " + stuNo);
-	        	
-// 			});
 		}
 	});
 
@@ -110,9 +103,21 @@
 	})
 
 	function submit() {
-		let dataSet = {
-				stuNo : $('#stuNo').val()
+		
+		let checkedBoxes = document.querySelectorAll('.checkboxAll:checked');
+		
+		let stuNoValues = [];
+		for (let i = 0; i < checkedBoxes.length; i++) {
+		  stuNoValues.push(checkedBoxes[i].value);
+		  console.log("체크값 : " + stuNoValues[i]);
+		}
+		
+		dataSet = {
+				stuList: stuNoValues
 		};
+		
+		console.log("체크값2 : " + JSON.stringify(dataSet));
+		
 		$.ajax({
 			url: "/payment/admin/insert",
 			type: "POST",
@@ -122,8 +127,12 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success: function (res) {
-				alert("등록금 요청이 완료되었습니다.")
-				$('#BillList').empty();
+				Swal.fire({
+					  icon: 'success',
+					  title: '등록금 요청이 완료되었습니다.',
+					}).then((result) => {
+		             	window.location.reload();
+         			})
 			}
 		});
 	}	
@@ -132,6 +141,7 @@
 		$.ajax({
 			url: "/scholarship/admin/scholarshipCheck",
 			method: "POST",
+			data: JSON.stringify(dataSet),
 			dataType: "json",
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader(header, token);
