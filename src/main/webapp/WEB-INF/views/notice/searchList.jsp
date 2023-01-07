@@ -104,7 +104,7 @@
                         </thead>
                         <tbody>
                         <form action="searchKeyword" method="post" name="searchForm">
-                            <sec:csrfInput/>
+                   
                             <div class="row search-wrap">
                                 <select class="col-1 form-control"  name="searchOption">
                                     <option value="0">선택</option>
@@ -113,8 +113,11 @@
                                 </select>
                                 <input type="text" name="keyword"  class="form-control col-2" placeholder="검색어 입력"/>
                                 <button type="submit" class="btn btn-default">검색</button>
+                                 <sec:authorize access="hasRole('ROLE_MANAGER')">
                                 <a href="/notice/noticeForm" class="ml-auto btn btn-primary" style="text-align: end;">등록</a>
+						        </sec:authorize>
                             </div>
+                           <sec:csrfInput/>
                         </form>
 
                         <c:forEach var="noticeBasic" items="${noticeBasicList }" varStatus="status">
