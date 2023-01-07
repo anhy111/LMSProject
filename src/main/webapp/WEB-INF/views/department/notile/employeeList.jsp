@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div class="container-fluid p-3">
 	<div class="row">
-		<div class="input-group col-6">
+		<div class="input-group col-8 offset-2">
 			<input type="text" class="form-control" id="empNm" name="empNm" />
 			<div class="input-group-append">
 				<button type="button" class="btn btn-default" id="btnEmp">
@@ -66,6 +66,13 @@
 				console.log(result);
 				$("#empList").html("");
 				let str = "";
+				if(result == null || result.length == 0){
+					str += `<tr class="text-center">
+								<td colspan='7'>검색결과가 없습니다.</td>
+							</tr>`;
+					$("#empList").append(str);
+					return;
+				}
 				$.each(result, function(p_inx, employee){
 					str += `<tr class="text-center">
 								<td>\${p_inx+1}</td>

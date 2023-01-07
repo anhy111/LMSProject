@@ -58,13 +58,15 @@
 	</div>
 </div>
 <div class="row pb-3">
-	<div class="card-body table-responsive pl-0 pt-0" style="height: 600px;">
-		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-sm">
+	<div class="card-body pl-0 pt-0" style="height: 600px;">
+		<table class="table text-nowrap table-striped table-bordered table-sm">
 			<thead>
 				<tr class="text-center">
 					<th width="4%">순번</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
+					<th width="6%">연도</th>
+					<th width="4%">학기</th>
 					<th width="4%">학년</th>
 					<th width="20%">과목명</th>
 					<th width="4%">학점</th>
@@ -183,9 +185,11 @@
 					str += `<tr class="text-center">
 								<td>\${p_inx+1}</td>
 								<td>\${lecture.lecApply.lecaCate}</td>
-								<td>\${lecture.department.depNm}</td>
+								<td class="text-left">\${lecture.department.depNm}</td>
+								<td>\${lecture.lecApply.lecaYr}</td>
+								<td>\${lecture.lecApply.lecaSem}</td>
 								<td>\${lecture.lecApply.lecaTrg}</td>
-								<td>\${lecture.lecApply.lecaNm}</td>
+								<td class="text-left">\${lecture.lecApply.lecaNm}</td>
 								<td>\${lecture.lecApply.lecaCrd}</td>
 								<td>\${lecture.lecApply.lecaCap}</td>
 								<td>\${lecture.employee.empNm}</td>
