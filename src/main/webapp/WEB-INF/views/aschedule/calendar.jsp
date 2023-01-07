@@ -186,9 +186,9 @@
 			return "";
 		} 
 		let date = new Date(p_date);
-		let str = date.getHours() < 10 ? "0"+ date.getHours() : date.getHours() 
-				+ ":" + date.getMinutes() < 10 ? "0" +date.getMinutes() : date.getMinutes();
-		console.log("str : " + str);
+		let str = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours() )
+				+ ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
+		console.log("timeFormat : " + str);
 	}
 	
 	// date객체와 구분자를 받아서 문자형식으로 변환
@@ -206,7 +206,7 @@
 	// 마지막 일자가 +1일로 나와서 -1을 해줌 연, 월이 바뀔수 있으므로 -1한값을 생성자에 넣어주면 맞춰서 연도와 월을 바꿔서 반환해준다
 	function endDateFormat(p_date, p_separator){
 		if(typeof p_separator == "undefined"){
-			alert("구분자를 넣어주세요");
+			errorSwal("구분자를 넣어주세요");
 			return;
 		}
 		let date = new Date(p_date);
@@ -384,7 +384,9 @@
         if (typeof calendarData.event != "undefined") {
             $('#aschCd').val(calendarData.event.extendedProps.aschCd);
             $('#aschStDay').val(dateFormat(calendarData.event.start,"-"));
+            $('#aschStTime').val(timeFormat(calendarData.event.start));
             $('#aschEnDay').val(endDateFormat(calendarData.event.end,"-"));
+            $('#aschEnTime').val(timeFormat(calendarData.event.end));
             console.log(timeFormat(calendarData.event.start));
 
             readMode();
@@ -395,6 +397,7 @@
             $('#aschEnDay').val(endDateFormat(calendarData.endStr,"-"));
             $("#aschTtl").val("");
             $("#aschCon").val("");
+            insertMode();
         }
         //모달창 show
         $('.insertModal').modal('show');
@@ -424,27 +427,31 @@
         calendarData = null;
     }
 	
-	
+	function errorSwal(p_arg){
+		swal.fire({
+			icon: 'error',
+			text: p_arg
+		});
+	}
 	//일정등록-------------------------------------------------------------------------------------------------
     function insertSch(arg) {
 		
-		console.log(arg);
 		if($("#aschTtl").val() == ""){
-			alert("제목을 입력해주세요.");
+			errorSwal('제목을 입력해주세요.');
 			return;
 		}else if( $("#aschCon").val() == ""){
-			alert("내용을 입력해주세요.");
+			errorSwal("내용을 입력해주세요.");
 			return;
 		}
 		
         if (typeof arg.event != "undefined"){
-        	alert("이번트 선택 안됨");
+        	errorSwal("이번트 선택 안됨");
         	return;
         } 
         
 //         if (!(arg.startStr.substring(0, 10) != arg.endStr.substring(0, 10))
 //         		&& $('.insertModal #aschEn').val() <= $('.insertModal #aschSt').val()) {
-//                 alert('종료시간을 시작시간보다 크게 선택해주세요');
+//                 errorSwal('종료시간을 시작시간보다 크게 선택해주세요');
 //                 $('.insertModal #aschEn').focus();
 //                 return;
             
@@ -458,7 +465,7 @@
         }
         
         if (data.aschSt >= data.aschEn) {
-            alert('종료시간을 시작시간보다 크게 선택해주세요');
+        	errorSwal('종료시간을 시작시간보다 크게 선택해주세요');
             return;
         }
 
@@ -474,14 +481,14 @@
             traditional: true,
             success: function (result, status, xhr) {
 				if(result == null){
-					alert("일정 등록 실패");
+					errorSwal("일정 등록 실패");
 					return;
 				}
                 initModal();
                 loadEvent();
             },
             error: function (xhr, status, error) {
-                alert('일정 등록 실패\n새로고침 후 재시도 해주세요');
+            	errorSwal('일정 등록 실패\n새로고침 후 재시도 해주세요');
             }
         }); // end ajax
         
@@ -515,7 +522,7 @@
                     initModal(modal, arg);
                 },
                 error: function (xhr, status, error) {
-                    alert('일정 삭제 실패<br>새로고침 후 재시도 해주세요');
+                    errorSwal('일정 삭제 실패<br>새로고침 후 재시도 해주세요');
                 }
             });// end ajax
         }
