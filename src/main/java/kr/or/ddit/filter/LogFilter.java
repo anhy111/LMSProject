@@ -30,22 +30,18 @@ public class LogFilter implements Filter {
         System.out.println("userId = " + userId);
 
         String requestURI = httpRequest.getRequestURI();
-        log.info("log filter request = {} " + requestURI);
+        log.info("log filter request = {} " , requestURI);
 
-        String uuid = UUID.randomUUID().toString();
-        log.info("log filter uuid = {} " + uuid);
-
-        String regex = "^/board/(\\d+)$";
-        System.out.println("regex = " + regex);
+        String regex = "^/qna/(\\d+)$";
 
         // 정규표현식을 컴파일한다
         Pattern pattern = Pattern.compile(regex);
-
+        log.info("pattern = >>       " + String.valueOf(pattern));
 // 입력 문자열에 정규표현식을 적용한다
         Matcher matcher = pattern.matcher(requestURI);
         log.info(String.format("    matcher                         = {} %s", matcher));
 
-// 정규표현식과 일치하는 문자열을 찾는다
+        // 정규표현식과 일치하는 문자열을 찾는다
         if (matcher.find()) {
             // 캡쳐한 그룹(group)을 추출한다
             String group = matcher.group(1);

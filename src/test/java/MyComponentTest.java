@@ -10,6 +10,8 @@ import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@BootstrapWith(MyCustomTestContextBootstrapper.class)
+@ComponentScan
 public class MyComponentTest {
 
     @Autowired
@@ -22,6 +24,7 @@ public class MyComponentTest {
     public void s3ClientTest() {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+
         if (!context.isActive()) {
             context.register(S3Config.class);
             context.refresh();

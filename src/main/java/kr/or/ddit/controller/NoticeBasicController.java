@@ -44,6 +44,8 @@ public class NoticeBasicController {
 
     private static final String REDIRECT_MAIN = "redirect:/notice/list";
 
+    private static final String VIEWS_NOTICE_MODIFYFORM = "notice/modifyForm";
+
 
     //공지사항 리스트
     @GetMapping("/list")
@@ -124,7 +126,7 @@ public class NoticeBasicController {
         // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
 
-        return "notice/noticeForm";
+        return VIEWS_NOTICE_MODIFYFORM;
     }
 
     //공지사항 등록(Save)
