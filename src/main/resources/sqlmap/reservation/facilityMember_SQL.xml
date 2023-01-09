@@ -10,7 +10,7 @@
 
     <insert id="insertSch" parameterType="FacilityScheduleVO">
        <selectKey order="BEFORE" resultType="Integer" keyProperty="rsvCd">
-          SELECT NVL(MAX(RSV_CD),0)+1 FROM reservation where MEM_NO = #{memNo}
+          SELECT NVL(MAX(RSV_CD),0)+1 FROM reservation
        </selectKey>
 
         INSERT INTO reservation (
