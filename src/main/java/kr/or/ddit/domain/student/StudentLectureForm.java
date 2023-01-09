@@ -5,10 +5,12 @@ import lombok.Getter;
 @Getter
 public class StudentLectureForm {
 
-    private int stuNo;
+    private int lecaYr;
 
+    private int lecaSem;
+
+    private int subCd;
+    private String lecaNm;
     private int lecaCd;
-
-    private String subNm;
 
 }

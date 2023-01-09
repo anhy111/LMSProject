@@ -134,7 +134,7 @@
 		FROM LEC_DATA ld,lecture l, lec_Apply la
 		where la.leca_Cd = l.leca_cd
 		and l.leca_cd = ld.leca_cd
-		and l.leca_Cd = 1
+		and l.leca_Cd = #{lecaCd}
 		and rownum between ((#{viewPage} - 1) * 10 + 1) and (#{viewPage} * 10)
 		<if test="category == 1 and keyWord != null and keyWord !=''">
 			<include refid="where"></include>
