@@ -77,6 +77,14 @@ public interface LectureMapper {
 	public int approveLecture(Lecture lecture);
 
 
-	@Select("SELECT a.leca_cd,(SELECT b.leca_nm from lec_apply b where b.leca_cd = a.leca_cd) sub_nm  FROM stu_lec a where a.stu_no = #{studentId}")
+	@Select("SELECT LA.LECA_NM,\r\n" + 
+			"        LA.LECA_YR,\r\n" + 
+			"        LA.LECA_SEM,\r\n" + 
+			"        L.SUB_CD,\r\n" + 
+			"        L.LECA_CD\r\n" + 
+			"FROM LEC_APPLY LA, LECTURE L, STU_LEC SL\r\n" + 
+			"WHERE LA.LECA_CD = L.LECA_CD\r\n" + 
+			"AND L.LECA_CD = SL.LECA_CD\r\n" + 
+			"AND SL.STU_NO = #{studentId}")
     List<StudentLectureForm> studentLectureSearchAll(String studentId);
 }

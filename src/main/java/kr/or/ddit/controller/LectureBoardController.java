@@ -62,17 +62,20 @@ public class LectureBoardController {
 		int totalPage = (int) Math.ceil((double) totalRow / 10);
 
 		Lecture lecture = this.lectureBoardService.dataList(keyWord, category, lecaCd, viewPage);
+		LecApply lecApply = this.lectureBoardService.lecApplySearch(lecaCd);
+		String lecaNm = lecApply.getLecaNm();
 		
 		try {
 			List<LecData> lecData = lecture.getLecDataList();
+			
 			mav.addObject("lecData", lecData);
 			mav.addObject("lecture", lecture);
 			mav.addObject("totalRow", totalRow);
 			mav.addObject("totalPage", totalPage);
 			mav.setViewName("lectureBoard/data/lectureData");
-
 			
 		}catch (Exception e) {
+			mav.addObject("lecaNm", lecaNm);
 			mav.setViewName("lectureBoard/data/lectureData");
 			return mav;
 		}
@@ -457,6 +460,11 @@ public class LectureBoardController {
 		model.addAttribute("stuLec", stuLec);
 
 		return "lectureBoard/score/stuLecScore";
+	}
+	
+	@GetMapping("data/testt")
+	public String tt() {
+		return "lectureBoard/data/testt";
 	}
 
 

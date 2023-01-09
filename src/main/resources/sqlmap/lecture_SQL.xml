@@ -183,6 +183,7 @@
 			 , LA.LECA_NM
 			 , LA.LECA_YR
 			 , LA.LECA_SEM
+			 , S.DEP_CD
 		FROM 
 		       PROFESSOR P
 		     , EMPLOYEE E

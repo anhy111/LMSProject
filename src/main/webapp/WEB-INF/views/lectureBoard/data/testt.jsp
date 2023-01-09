@@ -1,13 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page session="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
+<!DOCTYPE html>
 <html>
 <head>
+<title></title>
 <style type="text/css">
-#book {
-	top: 0px;
-}
 @import url("https://fonts.googleapis.com/css?family=card1o:400i|Rubik:400,700&display=swap");
 :root {
   --d: 700ms;
@@ -29,12 +30,12 @@
   font-family: var(--font-sans);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .page-content1 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
   .page-content1 {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -44,12 +45,11 @@
   display: flex;
   align-items: flex-end;
   overflow: hidden;
-  padding: 0;
+  padding: 1rem;
   width: 100%;
   text-align: center;
-  color: white;
+  color: black;
   background-color: whitesmoke;
-  background-image: url('/resources/upload/msh.jsp')
 }
 
 @media (min-width: 600px) {
@@ -205,52 +205,72 @@
     transition-duration: 0s;
   }
 }
+
 </style>
-<title>Home</title>
-<script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
-<script type="text/javascript">
-	var date = new Date();
-	let year = date.getFullYear();
-	let month = date.getMonth()+1;
-	var semester;
-	console.log(month)
-// 	var color = [ 'primary', 'info', 'danger', 'warning', 'secondary', 'dark' ];
 
-	if (month == '1' ||month == '2' ||month == '3' || month == '4' || month == '5' || month == '6')
-		semester = 1;
-	else if (month == '9' || month == '10' || month == '11' || month == '12')
-		semester = 2;
-
-	let lectureListYear = year + "년도 " + semester + "학기 강의목록";
-	console.log(lectureListYear);
-
-	$(function() {
-		$("#lectureListYear").text(lectureListYear);
-	})
-</script>
-</head>
-<body>
-
-	<div class="col" align="center">
-			<h4 align="left">
-				<strong id="lectureListYear"> </strong>
-			</h4>
-			<hr>
-		<br>
-		<div class="col-sm-12">
-			<main class="page-content1">
-			<c:forEach var="row" items="${lecture}" varStatus="stat">
-				<div class="card1"style="background-image: url('/resources/upload/${row.depCd}.jpg'); background-size: 100%;"> 
-				    <div class="content1" >
-				      <h4 class="title1">${row.lecApply.lecaNm}</h4>
-				      <p class="copy">${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}학기</p>
-<!-- 				      <p class="copy2">줄바꾸기</p> -->
-				      <a class="btn1" href="/lectureBoard/lecPlan?lecaCd=${row.lecaCd}">강의실 가기</a>
-				    </div>
-			    </div>
-			</c:forEach>
-		    </main>
-		</div>
-	</div>
-</body>
-</html>
+<main class="page-content1">
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+  <div class="card1">
+    <div class="content1">
+      <h2 class="title1">Mountain View</h2>
+      <p class="copy">줄바꾸기</p>
+      <p class="copy2">줄바꾸기</p>
+      <button class="btn1">View Trips</button>
+    </div>
+  </div>
+</main>
