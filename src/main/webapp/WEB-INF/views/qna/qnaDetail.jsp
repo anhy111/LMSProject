@@ -63,7 +63,7 @@
                     </tr>
                     <tr>
                         <td colspan="6" class="table-title">
-                            <p class="m-3" height="50%" >
+                            <p class="m-3"style="height: 200px" >
                                 <c:out value="${form.qnaCon}" />
                             </p>
                         </td>

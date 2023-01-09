@@ -91,41 +91,37 @@
 
 </script>
 
-<div class="card">
-    <div class="card-body">
-        <div class="allRound">
-            <h3>문의게시판</h3>
-            <div class="pageInfo">
-                <p>
-                    학교 관련 궁금한 사항에 대해 질문을 남길 수 있는 페이지입니다.
-                    <br>
-                    등록된 질문에 대해서는 차례대로 답변을 남겨드립니다.
-                    <br>
-                    작성자의 정보는 관리자만 볼 수 있으며, 글은 비공개 처리여부를 선택할 수 있습니다.
-                </p>
-            </div>
-
-
-            <form method="POST" name="form" id="questionForm">
-                <div class="titleRound">
-                    <label>제목</label>
-                    <input type="text" class="inputText" name="title" id="title"/>
-                </div>
-                <div class="textArea"><textarea name="content" id="content"></textarea></div>
-                <input type="hidden" name="memberNumber" value="${memberNumber}" id="memberNumber"/>
-
-                <input id="N101" name="accessType" type="radio" value="1" checked/>
-                <label for="N101">공개</label>&emsp;
-                <input id="N102" name="accessType" type="radio" value="2"/>
-                <label for="N102">비공개</label>&emsp;
-
-                <div id="btnRound">
-                    <input type="submit" id="insertBtn" class="btn btn-primary" value="등록">
-                    <input type="button" onclick="history.back()" id="cancelBtn" class="btn btn-primary" value="취소">
-                </div>
-                <sec:csrfInput/>
-            </form>
-
-        </div>
+<div class="allRound">
+    <h3>문의게시판</h3>
+    <div class="pageInfo">
+        <p>
+            학교 관련 궁금한 사항에 대해 질문을 남길 수 있는 페이지입니다.
+            <br>
+            등록된 질문에 대해서는 차례대로 답변을 남겨드립니다.
+            <br>
+            작성자의 정보는 관리자만 볼 수 있으며, 글은 비공개 처리여부를 선택할 수 있습니다.
+        </p>
     </div>
+
+
+    <form method="POST" name="form" id="questionForm">
+        <div class="titleRound">
+            <label>제목</label>
+            <input type="text" placeholder="제목을 입력해주세요." style="width: 100%;" class="inputText" name="title" id="title"/>
+        </div>
+
+        <div class="textArea">
+            <textarea name="content" style="width: 100%;" rows="20rem" id="content"></textarea>
+        </div>
+
+<%--        <div class="textArea">--%>
+<%--            <textarea class="textArea" name="content" rows="20rem" style="background-color:white;border:0;"></textarea>--%>
+<%--        </div>--%>
+        <input type="hidden" name="memberNumber" value="${memberNumber}" id="memberNumber"/>
+        <div id="btnRound">
+            <input type="submit" id="insertBtn" class="btn btn-primary" value="등록">
+            <input type="button" onclick="history.back()" id="cancelBtn" class="btn btn-primary" value="취소">
+        </div>
+        <sec:csrfInput/>
+    </form>
 </div>

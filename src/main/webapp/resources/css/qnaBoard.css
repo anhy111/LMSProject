@@ -76,9 +76,7 @@ table td:nth-child(2){
 	border-radius : 18px;
 	margin-top : 20px;
 }
-.titleRound{
-	width : 100%;
-}
+
 #qnatitle{
 	display : inline-block;
 	font-size : 13pt;
@@ -92,13 +90,10 @@ table td:nth-child(2){
 }
 
 .inputText{
-	width : 82%;
 	height : 40px;
 }
 .textArea{
 	margin-top : 30px;
-	width : 93%;
-	margin-left : 35px;
 }
 #showRound{
 	display : inline-block;
