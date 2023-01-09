@@ -37,10 +37,13 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="content"></label>
-                                <textarea class="textarea" name="content" id="content"
-                                          rows="40" placeholder="1000자 내외로 작성하세요."
-                                          style="display: none;">
-                                    </textarea>
+                                <div class="textArea">
+                                    <textarea name="content" style="width: 100%;" rows="20rem" id="content"></textarea>
+                                </div>
+<%--                                <textarea class="textarea" name="content" id="content"--%>
+<%--                                          rows="40" placeholder="1000자 내외로 작성하세요."--%>
+<%--                                          style="display: none;">--%>
+<%--                                </textarea>--%>
                             </div>
                         </div>
                         <input type="file" name="files2" multiple>
@@ -52,7 +55,8 @@
                     <button class="btn btn-outline-primary" type="button"
                             onclick="autoFill();">자동완성
                     </button>&nbsp;&nbsp;
-                    <button class="btn btn-outline-primary" type="submit" id="registBtn">등록
+                    <button class="btn btn-outline-primary" type="submit"
+                            onclick="regist_go()">등록
                     </button>
                     &nbsp;&nbsp;
                     <button class="btn btn-outline-danger" type="button"
@@ -64,12 +68,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    window.onload = () => {
-        summernote_go($('#content'), '<%=request.getContextPath()%>');
-    }
-</script>
 
 <script>
     const f_alert = () => {
@@ -112,7 +110,7 @@
 
     function autoFill() {
         $('#title').val("중요공지사항입니다!!!");
-        $('#content').summernote('pasteHTML', '중요 공지 내용 입니다.');
+        $('#content').val('중요 공지 내용 입니다.');
     }
 
 </script>
