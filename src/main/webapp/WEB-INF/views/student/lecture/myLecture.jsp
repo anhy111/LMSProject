@@ -260,21 +260,6 @@
 			</c:forEach>
 		    </main>
 
-<%--                 <c:forEach var="row" items="${lectureList}" varStatus="stat"> --%>
-<!--                     <div class="small-box bg-info" -->
-<!--                          style="width: 250px; display: inline-block;"> -->
-<!--                         <div class="inner"> -->
-<%--                             <h4>${row.subNm}</h4> --%>
-<!--                             <p>22년도&nbsp;2학기</p> -->
-<!--                         </div> -->
-<!--                         <div class="icon" id="book"> -->
-<!--                             <i class="ion-ios-book"></i> -->
-<!--                         </div> -->
-<%--                         <a href="/lectureBoard/lecPlan?lecaCd=${row.lecaCd}" class="small-box-footer">강의실 가기 --%>
-<!--                             <i class="fas fa-arrow-circle-right"></i></a> -->
-<!--                     </div> -->
-<%--                 </c:forEach> --%>
-
             </div>
         </div>
 </div>

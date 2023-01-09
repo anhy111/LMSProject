@@ -5,13 +5,16 @@
 	<div class="alert alert-light col" role="alert">
 		<!-- 게시판 안내사항 -->
 		<p>
-			<strong>성적장학금은 각 학과별 학년에따라 석차 1,2,3등 순으로 수석, 우수, 격려장학금을 수여한다.</strong>
+			<strong>※&nbsp;성적장학금</strong>은 각<strong>&nbsp;학과</strong>&nbsp;<strong>학년</strong>별&nbsp;석차순,
+			
+			<br><br><strong style="color:blue;">수석, 우수, 격려</strong>장학금을 수여함
+			
+			<br><br>
+			<i class="fas fa-check-square"></i>수석장학금 등록금의&nbsp;<strong>100%</strong><br>
 			<br>
-			- 수석장학금 등록금 100%
+			<i class="fas fa-check-square"></i>우수장학금 등록금의&nbsp;<strong>50%</strong><br>
 			<br>
-			- 우수장학금 등록금 50%
-			<br>
-			- 격려장학금 등록금 30%
+			<i class="fas fa-check-square"></i>격려장학금 등록금의&nbsp;<strong>30%</strong>
 		</p>
 	</div>
 </div>

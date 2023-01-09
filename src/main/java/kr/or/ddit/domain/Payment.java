@@ -1,6 +1,7 @@
 package kr.or.ddit.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,6 +22,8 @@ public class Payment {
 	
 	private int paySumfee;	//납부되는 등록금 총액
 	private int paySumamt;	//납부된 등록금 총액
+	
+	private List<Integer> stuList;	//등록금 고지 학번 리스트
 	
 	private int depCd;		//학과코드
 	private String depNm;	//학과명

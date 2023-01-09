@@ -19,7 +19,7 @@ public interface PaymentMapper {
 	public int adminBillCount();
 
 	// 등록금 고지 관리 고지서 발송
-	public int insert(Payment payment);
+	public int insert(List<Integer> stuList);
 	
 	// 등록금 납부 총 납부액
 	public Payment sumFee();

@@ -34,22 +34,12 @@
 		</table>
 	</div>
 </div>
-<script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
-<script src="/resources/adminlte/dist/js/adminlte.min.js"></script>
-<script src="/resources/adminlte/dist/js/demo.js"></script>
 <script type="text/javascript">
 
 	let depCd = "${param.depCd}"
 	
 	$(function() {
 
-		$('.select2').select2();
-		//Initialize Select2 Elements
-		$('.select2bs4').select2({
-			theme : 'bootstrap4'
-		});
-		
 		$("#btnPro").on("click",searchProfessor);
 		
 		searchProfessor();
@@ -68,7 +58,6 @@
 			success : function(result){
 				$("#proList").html("");
 				let str = "";
-				
 				if(result == null || result.length == 0){
 					str += `<tr class="text-center">
 								<td colspan='7'>검색결과가 없습니다.</td>

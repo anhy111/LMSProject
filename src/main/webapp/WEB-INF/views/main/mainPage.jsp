@@ -71,9 +71,11 @@ h1{margin:0;}
       <div class="portlet-header" style="vertical-align: middle;">
         <span class="header"></span>
       </div>
-      <div class="content">
-        Widget content.
-      </div>
+      <c:forEach begin="1" end="10" step="1" varStatus="status">
+	      <div class="content${status.count}" style="display:none;">
+	        Widget content.
+	      </div>
+      </c:forEach>
     </div>
   </div>
 </div>
@@ -117,7 +119,6 @@ $(function() {
 	}
 	
 	
-
 	
 	$("#showInfo").click(function() {
 		 
@@ -183,6 +184,15 @@ $(function() {
 //     });
 	
 	dashboardFn.initiate();
+	
+	var nodes = $("#grid1").data('gridstack').grid.nodes;
+	
+	nodes.forEach(function(item){
+		let itm = item.el.data();
+		
+		
+		
+	});
 
 });
 

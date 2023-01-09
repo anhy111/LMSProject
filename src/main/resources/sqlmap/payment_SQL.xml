@@ -30,15 +30,15 @@
 		                    AND   A.STU_NO = STU_NO
 		                    AND
 		                    CASE
-		                            WHEN TO_NUMBER(TO_CHAR(PAY_DT,'MM') ) BETWEEN 3 AND 8 THEN 1
+		                            WHEN TO_NUMBER(TO_CHAR(PAY_NT,'MM') ) BETWEEN 1 AND 8 THEN 1
 		                            ELSE 2
 		                        END
 		                    =
 		                        CASE
-		                            WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM') ) BETWEEN 3 AND 8 THEN 1
+		                            WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM') ) BETWEEN 1 AND 8 THEN 1
 		                            ELSE 2
 		                        END
-		                    AND   TO_CHAR(PAY_DT,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+		                    AND   TO_CHAR(PAY_NT,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
 		            ) = 1 THEN '고지'
 		            WHEN (
 		                SELECT
@@ -50,15 +50,15 @@
 		                    AND   A.STU_NO = STU_NO
 		                    AND
 		                    CASE
-		                            WHEN TO_NUMBER(TO_CHAR(PAY_DT,'MM') ) BETWEEN 3 AND 8 THEN 1
+		                            WHEN TO_NUMBER(TO_CHAR(PAY_NT,'MM') ) BETWEEN 1 AND 8 THEN 1
 		                            ELSE 2
 		                        END
 		                    =
 		                        CASE
-		                            WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM') ) BETWEEN 3 AND 8 THEN 1
+		                            WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM') ) BETWEEN 1 AND 8 THEN 1
 		                            ELSE 2
 		                        END
-		                    AND   TO_CHAR(PAY_DT,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+		                    AND   TO_CHAR(PAY_NT,'YYYY') = TO_CHAR(SYSDATE,'YYYY')
 		            ) = 1 THEN '고지'
 		            ELSE '-'
 		        END PAY_YN,
@@ -75,11 +75,22 @@
 		FROM
 		    STUDENT A,
 		    DEPARTMENT C,
-		    COLLEGE D
+		    COLLEGE D,
+		    (
+		        SELECT SP.STU_NO, SP.PAY_SEM, SP.PAY_DT, SP.PAY_AMT, SP.PAY_YN, SP.PAY_NT, SP.PAY_CD
+		        FROM PAYMENT SP
+		        WHERE TO_CHAR(SP.PAY_NT,'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+		        AND   SP.PAY_SEM =  CASE
+		                                WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM') ) BETWEEN 1 AND 8 THEN 1
+		                                ELSE 2
+		                            END
+		    ) MP
 		WHERE
 		    A.STU_RGB = 'RCD002'
 		    AND   C.DEP_CD = A.DEP_CD
 		    AND   D.COL_CD = C.COL_CD
+		    AND   A.STU_NO = MP.STU_NO(+)
+		    AND   MP.STU_NO IS NULL
 		ORDER BY
 		    PAY_YN ASC,
 		    A.DEP_CD ASC,
@@ -94,20 +105,24 @@
 	</select>
 	
 	<!-- 등록금 고지하기 -->
-	<update id="insert" parameterType="payment">
-		INSERT INTO PAYMENT (
+	<update id="insert" parameterType="java.util.List">
+	
+		<foreach collection="list" item="stuNo"
+			open="INSERT ALL " index="index" close="SELECT * FROM DUAL" separator=" ">
+			INTO PAYMENT (
 		             PAY_CD
 		            , STU_NO
 		            , PAY_SEM
 		            , PAY_YN
 		            , PAY_NT
-		) VALUES (
-		    SELECT NVL(MAX(PAY_CD),0)+1
-		    , #{stuNo}
-		    , (SELECT MAX(STU_SEM)+1 FROM STUDENT WHERE STU_NO = #{stuNo})
-		    , 'PAY001'
-		    , SYSDATE
-		)
+			) VALUES (
+			    (SELECT NVL(MAX(PAY_CD),0)+1 + #{index} FROM PAYMENT)
+			    , #{stuNo}
+			    , (SELECT MOD(STU_SEM,2) + 1 FROM STUDENT WHERE STU_NO = #{stuNo})
+			    , 'PAY001'
+			    , SYSDATE
+			)
+		</foreach>
 	</update>
 	
 	<!-- 관리자의 등록금 납부 조회 -->

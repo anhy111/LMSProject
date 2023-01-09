@@ -56,12 +56,16 @@
 	
 		UPDATE DEPARTMENT
 		    SET COL_CD = #{colCd}
+		    	<if test="proNo > 0">
 		        ,PRO_NO = #{proNo}
+		        </if>
 		        ,DEP_NM = #{depNm}
 		        ,DEP_DES = #{depDes}
 		        ,DEP_CAP = #{depCap}
 		        ,DEP_TEL = #{depTel}
+		        <if test="empNo > 0">
 		        ,EMP_NO = #{empNo}
+		        </if>
 		WHERE 
 		    DEP_CD = #{depCd}
 	</update>

@@ -5,18 +5,11 @@
 <%
     String no = String.valueOf(session.getAttribute("no"));
 %>
-<style>
-.brand-image:hover{
-border: 5px dotted white;
-opacity:0.9;
-transition: border 2s opacity 2s;
-}
-</style>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:1;top: 30px;">
+       style="background-color: #001F3F;opacity:1;">
 
-    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;">
+    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding:0;">
     <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 <!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
 <!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
@@ -24,7 +17,7 @@ transition: border 2s opacity 2s;
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="mt-2 sidebar">
         <!-- Sidebar user panel (optional) -->
 
         <!-- SidebarSearch Form -->
@@ -200,21 +193,21 @@ transition: border 2s opacity 2s;
                             결재
                         </p>
                     </a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">
-                        <p>
-                            공지사항 관리
-                        </p>
-                    </a></li>
+<!--                     <li class="nav-item"><a href="#" class="nav-link"> -->
+<!--                         <p> -->
+<!--                             공지사항 관리 -->
+<!--                         </p> -->
+<!--                     </a></li> -->
                     <li class="nav-item"><a href="/aschedule/calendar" class="nav-link">
-                        <p>학사일정 관리</p>
+                        <p>학사 일정 관리</p>
                     </a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">
-                        <p>강의</p>
-                    </a></li>
+<!--                     <li class="nav-item"><a href="#" class="nav-link"> -->
+<!--                         <p>강의</p> -->
+<!--                     </a></li> -->
                     <li class="nav-item"><a href="#" class="nav-link">
 
                         <p>
-                            등록/장학 <i class="fas fa-angle-left right"></i>
+                            등록 및 장학 관리 <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                         <ul class="nav nav-treeview" style="display: none;">
@@ -248,17 +241,17 @@ transition: border 2s opacity 2s;
                                     <li class="nav-item"><a href="#"
                                                             class="nav-link">
 
-                                        <p>등록금 목록 조회</p>
+                                        <p>등록금 목록</p>
                                     </a></li>
                                     <li class="nav-item"><a href="/payment/admin/adminBill"
                                                             class="nav-link">
 
-                                        <p>등록금 고지 관리</p>
+                                        <p>등록금 고지</p>
                                     </a></li>
                                     <li class="nav-item"><a href="/payment/admin/adminPayment"
                                                             class="nav-link">
 
-                                        <p>등록금 납부 관리</p>
+                                        <p>등록금 납부</p>
                                     </a></li>
                                 </ul>
                             </li>
@@ -267,14 +260,14 @@ transition: border 2s opacity 2s;
                     <li class="nav-item"><a href="#" class="nav-link">
 
                         <p>
-                            학생관리 <i class="right fas fa-angle-left"></i>
+                            학생 관리 <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item"><a href="/manage/stuManage"
                                                     class="nav-link">
 
-                                <p>학생 목록 조회</p>
+                                <p>학생 조회</p>
                             </a></li>
                             <li class="nav-item"><a href="/manage/recordManage"
                                                     class="nav-link">
@@ -293,7 +286,7 @@ transition: border 2s opacity 2s;
                             <li class="nav-item"><a href="/manage/empManage"
                                                     class="nav-link">
 
-                                <p>교직원 목록 조회</p>
+                                <p>교직원 목록</p>
                             </a></li>
                             <li class="nav-item"><a href="/manage/insertEmp"
                                                     class="nav-link">

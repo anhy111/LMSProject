@@ -78,9 +78,12 @@ public class PaymentController {
 	@PostMapping("/admin/insert")
 	public int insert(@RequestBody Payment payment) {
 		
-		int cnt = this.paymentService.insert(payment);
+		List<Integer> stuList = payment.getStuList();
+		log.info("학번들 담기나? : " + stuList);
 		
-		return cnt;
+		int BillResult = this.paymentService.insert(stuList);
+		
+		return BillResult;
 	}
 
 	// 등록금 납부 관리

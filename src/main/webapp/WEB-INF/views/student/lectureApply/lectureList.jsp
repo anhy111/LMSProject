@@ -363,7 +363,7 @@
 			Swal.fire({
 				icon: 'error',
 				title:'실패',
-				text : '중복되는 시간이 있습니다.'
+				text : '재학중인 학생만 수강신청이 가능합니다.'
 			}).then(function(){
 				location.href = "/";
 				return;
@@ -765,6 +765,7 @@
 							$("#a"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
 										.css("color","white")
 										.css("borderTop","none")
+										.css("borderBottom","none")
 										.val(allocation.lecaCd);
 						}
 							

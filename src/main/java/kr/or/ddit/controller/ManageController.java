@@ -116,7 +116,7 @@ public class ManageController {
 		int deleteStu = this.manageService.deleteStu(map);
 		this.manageService.deleteMemStu(map);
 
-		log.info("삭제되었을 거라고 믿어의심치 않는다 . " + deleteStu);
+		log.info("삭제되었을 거라고 믿어의심치 않는다 . 응 아니야~ " + deleteStu);
 
 		return deleteStu;
 	}
