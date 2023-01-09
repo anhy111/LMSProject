@@ -66,4 +66,12 @@ public class AscheduleController {
 		return aScheduleList;
 	}
 	
+	@ResponseBody
+	@PostMapping("/updateSch")
+	public String updateSch(@RequestBody ASchedule aSchedule) {
+		log.info("AscheduleController.updateSch.aSchedule :" + aSchedule);
+		
+		return null;
+	}
+	
 }
