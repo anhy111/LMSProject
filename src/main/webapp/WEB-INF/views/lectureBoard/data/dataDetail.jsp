@@ -28,7 +28,7 @@
 
 					<div class="col-sm-4" style="text-align: right;">
 						<br> <b class="col taskData" name="ldtWriter">작성자 :
-							${lecData.ldtWriter}</b>&nbsp; | &nbsp; <b> 등록일 : <fmt:formatDate
+							${lecData.ldtWriter}&nbsp; | &nbsp;등록일 : <fmt:formatDate
 								value="${lecData.ldtReg}" pattern="yyyy-MM-dd" />
 						</b> <input type="hidden" name="ldtWriter"
 							value="${lecData.ldtWriter}">

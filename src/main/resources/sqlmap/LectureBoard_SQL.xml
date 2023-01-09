@@ -558,10 +558,19 @@
 				    SELECT  T.*
 				        ,   RANK() OVER(ORDER BY T.TOTAL_SCORE DESC) RANK
 				    FROM(
-							SELECT U.DEP_NM, U.COL_NM, U.MEM_NO, U.STU_NM, U.STU_YRS,U.STU_NO,
-							        U.TASK_SCORE, U.MTEST_SCORE,U.FTEST_SCORE, U.ATTEND_SCORE,
-							         U.MTEST_SCORE+U.FTEST_SCORE+U.TASK_SCORE  + U.ATTEND_SCORE AS TOTAL_SCORE
-		                             ,U.SL_SCORE AS TOTAL_GRADE
+							SELECT 
+									  U.DEP_NM
+									, U.COL_NM
+									, U.MEM_NO
+									, U.STU_NM
+									, U.STU_YRS
+									, U.STU_NO
+									, U.TASK_SCORE
+									, U.MTEST_SCORE
+									, U.FTEST_SCORE
+									, U.ATTEND_SCORE
+									, U.MTEST_SCORE + U.FTEST_SCORE + U.TASK_SCORE + U.ATTEND_SCORE AS TOTAL_SCORE
+				                    , U.SL_SCORE AS TOTAL_GRADE
 							FROM    (
 		                                SELECT  D.DEP_NM
 		                                    ,   C.COL_NM
@@ -570,10 +579,7 @@
 		                                    ,   L.SL_SCORE
 		                                    ,   S.STU_YR || '학년' AS STU_YRS
 		                                    ,	S.STU_NO
-		                                       
-		                                    
-		                                
-		                                    ,  NVL((SELECT ROUND((((SELECT SUM(TSUB_SCORE) FROM TASK_SUBMIT WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO)/(SELECT SUM(TASK_SCORE) FROM TASK  WHERE LECA_CD = #{lecaCd})) * (SELECT LECA_TP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
+		                                    ,   NVL((SELECT ROUND((((SELECT SUM(TSUB_SCORE) FROM TASK_SUBMIT WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO)/(SELECT SUM(TASK_SCORE) FROM TASK  WHERE LECA_CD = #{lecaCd})) * (SELECT LECA_TP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
 		                                        TASK_SCORE
 		                                    ,   NVL((SELECT ROUND(((SELECT SUM(ST_SCORE) FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO AND TEST_PART = 'T01')/( 100) * (SELECT LECA_FP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
 		                                        MTEST_SCORE
@@ -594,17 +600,17 @@
 		                                                (16 * (SELECT LECA_CRD FROM LEC_APPLY WHERE LECA_CD = #{lecaCd}))* (SELECT LECA_AP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd}))),2)
 		                                                FROM DUAL
 		                                        ),0) ATTEND_SCORE
-		FROM    MEMBER  M INNER JOIN STUDENT    S ON(M.MEM_NO = S.STU_NO)
-		                  INNER JOIN DEPARTMENT D ON(S.DEP_CD = D.DEP_CD)
-		                  INNER JOIN COLLEGE    C ON(D.COL_CD = C.COL_CD)
-		                  LEFT OUTER JOIN STU_LEC    L ON(S.STU_NO = L.STU_NO)
-		WHERE    L.LECA_CD = #{lecaCd} group by D.DEP_NM, C.COL_NM, M.MEM_NO, S.STU_NM, S.STU_YR || '학년', 
-		'학년', L.SL_SCORE,S.STU_NO
-		ORDER BY S.STU_NM
-							) U
-					) T
-			    	ORDER BY T.TOTAL_SCORE DESC
-				)S
+			FROM    MEMBER  M INNER JOIN STUDENT    S ON(M.MEM_NO = S.STU_NO)
+			                  INNER JOIN DEPARTMENT D ON(S.DEP_CD = D.DEP_CD)
+			                  INNER JOIN COLLEGE    C ON(D.COL_CD = C.COL_CD)
+			                  LEFT OUTER JOIN STU_LEC    L ON(S.STU_NO = L.STU_NO)
+			WHERE    L.LECA_CD = #{lecaCd} group by D.DEP_NM, C.COL_NM, M.MEM_NO, S.STU_NM, S.STU_YR || '학년', 
+			'학년', L.SL_SCORE,S.STU_NO
+			ORDER BY S.STU_NM
+								) U
+						) T
+				    	ORDER BY T.TOTAL_SCORE DESC
+					)S
 				]]>
 	</select>
 	
