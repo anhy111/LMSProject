@@ -466,6 +466,17 @@ public class LectureBoardController {
 	public String tt() {
 		return "lectureBoard/data/testt";
 	}
+	
+	@ResponseBody
+	@PostMapping("stuDetail")
+	public Student stuDetail(@RequestBody String stuNo) {
+		log.info("학생 상세"+stuNo);
+		String a = stuNo.substring(6);
+		log.info(a);
+		Student stu = this.lectureBoardService.stuDetail(Integer.parseInt(a));
+		log.info(a.toString());
+		return stu;
+	}
 
 
 }

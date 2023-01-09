@@ -665,7 +665,15 @@
 	
 	</select>
 	
-	
+	<!-- 학생목록에서 학생 상세 -->
+	<select id="stuDetail" parameterType="int" resultType="student">
+	SELECT 
+	         D.DEP_NM
+	        ,S.*
+	FROM  DEPARTMENT D, STUDENT S
+	WHERE D.DEP_CD = S.DEP_CD
+	AND S.STU_NO = #{stuNo}
+	</select>
 	
 	
 	
