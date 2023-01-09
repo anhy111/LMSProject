@@ -47,5 +47,21 @@
 		OR SC.ASCH_EN BETWEEN TO_DATE(#{formatAschSt},'YYYY-MM-DD')
 		                AND TO_DATE(#{formatAschEn},'YYYY-MM-DD')
 	</select>
+	
+	<update id="updateSch" parameterType="aSchedule">
+		UPDATE A_SCHEDULE
+			SET ASCH_TTL = #{aschTtl}
+			, ASCH_CON = #{aschCon}
+			, ASCH_ST = #{aschSt}
+			, ASCH_EN = #{aschEn}
+			, ASCH_REG_DT = SYSDATE	
+			, EMP_NO = #{empNo}
+		WHERE ASCH_CD = #{aschCd}
+	</update>
+	
+	<delete id="deleteSch" parameterType="aSchedule">
+		DELETE FROM A_SCHEDULE
+		WHERE ASCH_CD = #{aschCd}
+	</delete>
 </mapper>
 
