@@ -19,12 +19,8 @@ q
 Asrc/main/java/kr/or/ddit/service/impl/NoticeBasicServiceImpl.java,f\1\f1f4ef8334326d89b41802e904fa59b63ba96834
 ^
 .src/main/webapp/WEB-INF/views/qna/qnaBoard.jsp,7\b\7bc98dfd8b32acca6af9f23f8ca11340918669cc
-^
-.src/main/webapp/WEB-INF/views/qna/qnaWrite.jsp,d\e\de90f7b61485a5ed14e5746e2c71681972c45139
 `
 0src/main/java/kr/or/ddit/controller/QnaForm.java,c\a\cad202363d9944a33529705931a599592244d99d
-_
-/src/main/webapp/WEB-INF/spring/root-context.xml,5\2\528c08e315052712c6de729d808bc541b1c5b506
 ^
 .src/main/java/kr/or/ddit/domain/qna/QnaVO.java,6\b\6b4ffe53ae8c63d0157770e3796e1a6cfcd30263
 \
@@ -47,8 +43,6 @@ c
 3src/main/java/kr/or/ddit/controller/NoticeForm.java,5/2/523c3a4867d4f8f7e9d3dd6fea4aac652d84e85e
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4/9/496a238a6afa168dbaf6efd37bb459331589579c
-_
-/src/main/webapp/WEB-INF/views/qna/qnaDetail.jsp,8/d/8dcc38ed25250e740bc2b46f5a65c343a6dc6975
 `
 0src/main/java/kr/or/ddit/service/QnaService.java,2/d/2d1301fe14888e4dac9b77574af2ce3d763bae30
 i
@@ -67,8 +61,6 @@ n
 >src/main/java/kr/or/ddit/controller/BambooBoardController.java,e/5/e561b3124c3dafaf67ebdd970f502b6c14d1c9cf
 \
 ,src/main/webapp/WEB-INF/views/test/popup.jsp,c/4/c48a1368fcd2b17aa3fe2acab374590ae46064ba
-_
-/src/main/webapp/WEB-INF/spring/tiles-config.xml,1/6/16c3f120c572673623cab30e856107919960ae6d
 i
 9src/main/java/kr/or/ddit/controller/LecQnaController.java,c/7/c71353c8d7b0139e7492775ef173497e67188c70
 ]

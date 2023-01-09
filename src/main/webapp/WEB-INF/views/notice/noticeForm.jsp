@@ -5,28 +5,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<%--라이브러리 sec--%>
-<head>
-    <style>
-        .drop-zone {
-            width: 500px;
-            height: 250px;
-            background-color: #ffffff;
-            margin-top: 20px;
-            position: relative;
-            padding: 50px;
-            border-radius: 15px;
-            border: 3px dashed #71748d;
-            font-size: 15px;
-        }
-
-        .drop-zone-dragenter, .drop-zone-dragover {
-            background-color: #dbdbe7;
-            /*     border: 3px solid pink; */
-        }
-    </style>
-</head>
-
 <!-- 게시판상세 -->
 <!-- ================================================= -->
 <!-- MAIN-CONTENT -->
@@ -36,81 +14,60 @@
     <!-- 111111 -->
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card">
-                <h2 class="card-header">공지사항 등록하기</h2>
+            <h2 class="card-header">공지사항 등록하기</h2>
 
 
-                <div class="card-body">
-                    <form action="/notice/noticeForm" method="post" enctype="multipart/form-data" name="form">
-                        <sec:csrfInput/>
-                        <input type="file" name="files2"  multiple >
-                        <div class="row">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <th>제목</th>
-                                    <td class="table-title"><input class="form-control"
-                                                                   id="title" name="title" type="text"
-                                                                   style="width:100%"/>
-                                    </td>
-                                    <th>중요공지여부</th>
-                                    <td class="table-title">
-                                        <div style="width:10%">
-                                            <input type="checkbox" id="input_check" value='imp'
-                                                   style=position:relative;left:50px;>
-                                        </div>
-                                        <div id="wrapper" style="margin-top: -1px;"></div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="content"></label>
-                                    <textarea class="textarea" name="content" id="content"
-                                              rows="40" placeholder="1000자 내외로 작성하세요."
-                                              style="display: none;">
-                                    </textarea>
-                                </div>
-                            </div>
-                            <div class="col-xl-4">
-                                <div class="drop-zone ">
-                                    <br/>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit">등록</button>
-                    </form>
-
-
-
-                    <div class="row justify-content-end mt-3"
-                         style="padding-right: 30px; padding-bottom: 50px;">
-                        <button class="btn btn-outline-primary" type="button"
-                                onclick="autoFill();">자동완성
-                        </button>&nbsp;&nbsp;
-                        <button class="btn btn-outline-primary" form="form" type="submit" id="registBtn">등록
-                        </button>
-                        &nbsp;&nbsp;
-                        <button class="btn btn-outline-danger" type="button"
-                                onclick="f_alert();">취소
-                        </button>
+            <div class="card-body">
+                <form action="/notice/noticeForm" method="post" enctype="multipart/form-data" name="form">
+                    <sec:csrfInput/>
+                    <div class="row">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th>제목</th>
+                                <td class="table-title"><input class="form-control"
+                                                               id="title" name="title" type="text"
+                                                               style="width:100%"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="content"></label>
+                                <div class="textArea">
+                                    <textarea name="content" style="width: 100%;" rows="20rem" id="content"></textarea>
+                                </div>
+<%--                                <textarea class="textarea" name="content" id="content"--%>
+<%--                                          rows="40" placeholder="1000자 내외로 작성하세요."--%>
+<%--                                          style="display: none;">--%>
+<%--                                </textarea>--%>
+                            </div>
+                        </div>
+                        <input type="file" name="files2" multiple>
+                    </div>
+                    <button type="submit">등록</button>
+                </form>
+                <div class="row justify-content-end mt-3"
+                     style="padding-right: 30px; padding-bottom: 50px;">
+                    <button class="btn btn-outline-primary" type="button"
+                            onclick="autoFill();">자동완성
+                    </button>&nbsp;&nbsp;
+                    <button class="btn btn-outline-primary" type="submit"
+                            onclick="regist_go()">등록
+                    </button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-outline-danger" type="button"
+                            onclick="f_alert();">취소
+                    </button>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    window.onload = () => {
-        summernote_go($('#content'), '<%=request.getContextPath()%>');
-    }
-
-</script>
 
 <script>
     const f_alert = () => {
@@ -153,7 +110,7 @@
 
     function autoFill() {
         $('#title').val("중요공지사항입니다!!!");
-        $('#content').summernote('pasteHTML', '중요 공지 내용 입니다.');
+        $('#content').val('중요 공지 내용 입니다.');
     }
 
 </script>

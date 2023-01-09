@@ -4,12 +4,33 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<div class="row mt-3">
-	<label>단과대학별 중점지표</label>
+<!-- <div class="card" style="position: relative; left: 0px; top: 0px;border-top:0;"> -->
+<div class="card-header ui-sortable-handle" style="cursor: move;">
+<h1 class="card-title font-weight-bold text-monospace">
+중점지표
+<i class="fas fa-chart-bar"></i>
+</h1>
+<div class="card-tools">
+<ul class="nav nav-pills ml-auto">
+<li class="nav-item">
+<a class="nav-link active" href="#chart1" data-toggle="tab">등록비율</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#chart2" data-toggle="tab">재적현황</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#chart3" data-toggle="tab">강의평가</a>
+</li>
+</ul>
 </div>
+</div>
+<div class="card-body">
+<div class="tab-content p-0">
+
+<div class="chart tab-pane active" id="chart1" style="position: relative; ">
 <div class="row">
-	<div class="form-group col-2 pl-0">
-		<select id="yr" class="select2bs4 select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
+	<div class="form-group col-2">
+		<select id="yr" class="select2bs4 form-control bg-gradient-info select2-hidden-accessible rc" style="width: 100%;color:white;" aria-hidden="true">
 			<option value="0">연도</option>
 			<option value="2019">2019</option>
 			<option value="2020">2020</option>
@@ -18,7 +39,106 @@
 		</select>
 	</div>
 	<div class="form-group col-2">
-		<select id="college" class="select2bs4 select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
+		<select id="college" class="select2bs4 form-control bg-gradient-info   select2-hidden-accessible rc" style="width: 100%;color:white;" aria-hidden="true">
+			<option value="0">단과대학</option>
+			<c:forEach var="college" items="${collegeList}">
+				<option value="${college.colCd}">${college.colNm}</option>
+			</c:forEach>
+		</select>
+	</div>
+</div>
+<div class="row">
+	<div class="col-7 pl-0">
+		<div id="recruitmentRate" style="width: 1200px; height: 600px;"></div>
+	</div>
+</div>
+</div>
+
+<div class="chart tab-pane" id="chart2" style="position: relative;">
+<div class="row">
+	<div class="form-group col-2">
+		<select id="yrSt" class="select2bs4 form-control bg-gradient-info  select2-hidden-accessible st" style="width: 100%;color:white;" aria-hidden="true">
+			<option value="0">연도</option>
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
+		</select>
+	</div>
+	<div class="form-group col-2">
+		<select id="collegeSt" class="select2bs4 form-control bg-gradient-info   select2-hidden-accessible st" style="width: 100%;color:white;" aria-hidden="true">
+			<option value="0">단과대학</option>
+			<c:forEach var="college" items="${collegeList}">
+				<option value="${college.colCd}">${college.colNm}</option>
+			</c:forEach>
+		</select>
+	</div>
+</div>
+<div class="row">
+	<div class="col-7 pl-0">
+		<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 600px;"></div>
+	</div>
+</div>
+</div>
+
+<div class="chart tab-pane" id="chart3" style="position: relative;">
+<div class="row">
+	<div class="form-group col-2">
+		<select id="yrAv" class="select2bs4 form-control bg-gradient-info   select2-hidden-accessible av" style="width: 100%;color:white;" aria-hidden="true">
+			<option value="0">연도</option>
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
+		</select>
+	</div>
+	<div class="form-group col-2 ">
+		<select id="semAv" class="select2bs4 form-control bg-gradient-info   select2-hidden-accessible av" style="width: 100%;color:white;" aria-hidden="true">
+			<option value="">학기</option>
+			<option value="1학기">1학기</option>
+			<option value="2학기">2학기</option>
+		</select>
+	</div>
+	<div class="form-group col-2">
+		<select id="collegeAv" class="select2bs4 form-control bg-gradient-info   select2-hidden-accessible av" style="width: 100%;color:white;" aria-hidden="true">
+			<option value="0">단과대학</option>
+			<c:forEach var="college" items="${collegeList}">
+				<option value="${college.colCd}">${college.colNm}</option>
+			</c:forEach>
+		</select>
+	</div>
+	<div class="form-group col-2">
+		<select id="departmentAv" class="select2bs4 form-control bg-gradient-info   select2-hidden-accessible av" style="width: 100%;color:white;" aria-hidden="true">
+			<option value="0">학과</option>
+		</select>
+	</div>
+</div>
+<div class="row">
+	<div class="col-8 pl-0">
+		<div id="evaluation" style="width: 1200px; height: 600px;"></div>
+	</div>
+</div>
+</div>
+
+</div>
+</div>
+<!-- </div> -->
+
+<div class="row mt-3">
+	<label>단과대학별 중점지표</label>
+</div>
+<div class="row">
+	<div class="form-group col-2 pl-0">
+		<select id="yr" class="select2bs4 form-control  select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
+			<option value="0">연도</option>
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
+		</select>
+	</div>
+	<div class="form-group col-2">
+		<select id="college" class="select2bs4 form-control select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
 			<option value="0">단과대학</option>
 			<c:forEach var="college" items="${collegeList}">
 				<option value="${college.colCd}">${college.colNm}</option>
@@ -36,7 +156,7 @@
 </div>
 <div class="row">
 	<div class="form-group col-2 pl-0">
-		<select id="yrSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
+		<select id="yrSt" class="select2bs4 form-control  select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
 			<option value="0">연도</option>
 			<option value="2019">2019</option>
 			<option value="2020">2020</option>
@@ -45,7 +165,7 @@
 		</select>
 	</div>
 	<div class="form-group col-2 pl-0">
-		<select id="collegeSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
+		<select id="collegeSt" class="select2bs4 form-control  select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
 			<option value="0">단과대학</option>
 			<c:forEach var="college" items="${collegeList}">
 				<option value="${college.colCd}">${college.colNm}</option>
@@ -63,7 +183,7 @@
 </div>
 <div class="row">
 	<div class="form-group col-2 pl-0">
-		<select id="yrAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
+		<select id="yrAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 			<option value="0">연도</option>
 			<option value="2019">2019</option>
 			<option value="2020">2020</option>
@@ -72,14 +192,14 @@
 		</select>
 	</div>
 	<div class="form-group col-2 ">
-		<select id="semAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
+		<select id="semAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 			<option value="">학기</option>
 			<option value="1학기">1학기</option>
 			<option value="2학기">2학기</option>
 		</select>
 	</div>
 	<div class="form-group col-2">
-		<select id="collegeAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
+		<select id="collegeAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 			<option value="0">단과대학</option>
 			<c:forEach var="college" items="${collegeList}">
 				<option value="${college.colCd}">${college.colNm}</option>
@@ -87,7 +207,7 @@
 		</select>
 	</div>
 	<div class="form-group col-2">
-		<select id="departmentAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
+		<select id="departmentAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 			<option value="0">학과</option>
 		</select>
 	</div>
@@ -310,7 +430,7 @@
 										});
 						data.addRows(arr);
 						var options = {
-							height : 600,
+							height:600,
 							colors : [ "#34314c", "#47b8e0", "#ffc952",
 									"#ff7473", "#a5d296", "#addeea" ],
 							vAxis : {
@@ -378,7 +498,7 @@
 				data.addRows(arr);
 
 				var options = {
-					height : 600,
+						height:600,
 					hAxis : {
 						maxValue : 4.5
 					},

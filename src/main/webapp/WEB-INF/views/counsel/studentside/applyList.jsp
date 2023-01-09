@@ -42,7 +42,7 @@ cursor:pointer;
 </style>
 
 <div class="row">
-	<div class="form-group col-12">
+	<div class="mt-5 form-group col-12">
 			<div class="card-header d-flex p-0">
 <!-- 				<h3 class="card-title p-3"><b>상담내역</b></h3> -->
 				<ul class="nav nav-pills mr-auto p-2">
@@ -55,14 +55,14 @@ cursor:pointer;
 			<div class=" alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
 						<p>
-							<strong><b>※ 안내사항</b></strong> <br>
+							<strong><b>※안내사항</b></strong> <br>
 							<br> (1)&nbsp;상단탭의&nbsp;<strong style="color:blue">대면/비대면</strong>을 클릭하면 구분하여 확인 할 수 있습니다.<br>
 							<br> (2)&nbsp;<strong>승인대기</strong>시에는 수정, 삭제 할 수 있으며<br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>승인 및 반려</strong>처리가 되면 수정, 삭제할 수 없습니다.<br> 
 							<br> (3)&nbsp;하단의 <strong>신청</strong> 버튼을 눌러 신청 할 수 있습니다.<br>
 							<br> (4)&nbsp;<strong>기록 및 답변</strong>이 등록되면 확인/출력 할 수 있습니다.
 						</p>
 					</div>
-			<div class="card-body">
+			<div class="pb-0 card-body">
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab_1">			<table
 				class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
@@ -123,13 +123,13 @@ cursor:pointer;
 			 </div>
 				</div>
 			</div>
-	</div>
-</div>
-<div class="row">
-<div class="col-12 pr-0	" style="text-align: end;">
+<!-- <div class="row"> -->
+<div class="col-12" style="text-align: end;">
 	<!-- 			<button class="btn btn-sm btn-outline-primary" >신청</button> -->
-	<button id="applyBtn" class="btn btn-primary"data-toggle="modal" data-target="#applyCounsel">신청</button>
+	<button id="applyBtn" class="mr-2 btn btn-primary"data-toggle="modal" data-target="#applyCounsel">상담 신청</button>
 </div>
+<!-- </div> -->
+	</div>
 </div>
 
 <!-- 신청 모달 -->

@@ -93,14 +93,11 @@
         <div class="alert alert-light" role="alert"
              style="font-size: 0.9em;padding: 35px;border: 1px solid #eee;">
             <p>
-                <strong>&#8251; 시험 제출자 안내 사항</strong>
+                <strong>&#8251; 학교 관련 궁금한 사항에 대해 질문을 남길 수 있는 페이지입니다.</strong>
                 <br><br>
-                (1) 반드시 <strong>기간을 먼저 설정</strong>한 후, 시험을 등록하는 것을 권장합니다.<br>
-                &emsp;- 시험 기간 미설정시, 등록 직후 바로 시험에 응시 가능합니다.<br>
-                &emsp;- <strong>기간을 설정하지 않고 문제를 등록하여 문제 유출이 되는 경우가 종종 발생합니다.</strong><br>
-                <br>
-                (2) 시험은 한 문항당 4지 선다 방식으로 등록할 수 있습니다.<br>
-                &emsp;- <strong>정답 란에는 1~4까지의 숫자</strong>만 입력이 가능합니다.<br>
+                &emsp;- 등록된 질문에 대해서는 차례대로 답변을 남겨드립니다.<br>
+                &emsp;- <strong>작성자의 정보는모든 사용자가 볼 수 있습니다.</strong><br>
+                &emsp;- <strong>글은 답변완료 후 수정/삭제가 불가 합니다.</strong><br>
             </p>
         </div>
 

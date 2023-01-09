@@ -37,7 +37,7 @@ public class KeyIndicatorsController {
 		List<College> collegeList = this.collegeService.CollegeList();
 		
 		model.addAttribute("collegeList", collegeList);
-		model.addAttribute("bodyTitle","중점지표");
+//		model.addAttribute("bodyTitle","중점지표");
 		return "chart/keyIndicators";
 	}
 	

@@ -109,4 +109,6 @@ public interface LectureBoardMapper {
 
 	@Select("SELECT COUNT(*) FROM lec_data where #{lecaCd} = leca_cd")
 	int getLectureBoardTotalRow(int lecaCd);
+	
+	public Student stuDetail(int stuNo);
 }

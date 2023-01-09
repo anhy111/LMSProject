@@ -9,6 +9,7 @@
 <title>Home</title>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <style type="text/css">
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -94,9 +95,9 @@ table {
 				<div class="row">
 					<br>
 				</div>
-				<h2>
-					<strong id="">${lecture.lecApply.lecaNm} - 강의자료실</strong>
-				</h2>
+				<h4>
+					<strong id="">${lecaNm} 강의자료실</strong>
+				</h4>
 			</div>
 			<div class="col-sm-12">
 				<section class="notice">
@@ -118,6 +119,12 @@ table {
 									</tr>
 								</thead>
 								<tbody>
+									<c:if test="${empty lecData}">
+										<tr>
+											<td colspan="5">등록된 자료가 없습니다.</td>
+										</tr>
+									</c:if>
+									<c:if test="${!empty lecData}">
 									<c:forEach var="row" items="${lecData}" varStatus="stat">
 										<tr class="odd">
 											<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
@@ -128,6 +135,7 @@ table {
 											<td>${row.ldtCount}</td>
 										</tr>
 									</c:forEach>
+									</c:if>
 								</tbody>
 							</table>
 						</div>
