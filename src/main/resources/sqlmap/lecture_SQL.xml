@@ -28,6 +28,7 @@
 		<result property="lecHcnt"        column="LEC_HCNT" />
 		<result property="lecaYn"         column="LECA_YN" />
 		<result property="depCd"          column="DEP_CD" />
+		<result property="rowNo"          column="ROWNO" /> 
 		<collection property="lecApply"   resultMap="lecApplyMap"></collection>
 		<collection property="employee"   resultMap="employeeMap"></collection>
 		<collection property="department" resultMap="departmentMap"></collection>
@@ -571,9 +572,14 @@
 		ORDER BY ROWNO ASC
 	</select>
 	
-	<select id="lectureListPaging" parameterType="studentLecture" resultMap="lectureMap"> 
-		SELECT COUNT(LECA_CD) FROM LECTURE
-		WHERE 1=1
+	<select id="lectureListPaging" parameterType="studentLecture" resultType="int"> 
+		SELECT COUNT(L.LECA_CD) FROM DEPARTMENT D
+			                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
+			                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
+			                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
+			                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+			                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+        WHERE 1=1
 		<if test="colCd > 0">
 			AND COL_CD = #{colCd}
 		</if>

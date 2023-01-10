@@ -26,4 +26,5 @@ public class Lecture {
     private Subject subject;
     private List<LecData> lecDataList;
 	
+    private int rowNo; //순번
 }
