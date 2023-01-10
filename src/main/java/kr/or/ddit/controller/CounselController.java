@@ -27,7 +27,6 @@ public class CounselController {
 	CounselService counselService;
 	@Autowired
 	RecordService recordService;
-	
 	/*
 	 *  학생 컨트롤러
 	 */

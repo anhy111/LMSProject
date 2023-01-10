@@ -225,14 +225,14 @@ $(function(){
 	    <sec:authorize access="hasRole('ROLE_MANAGER')">
 	      <li class="nav-item categorybar active">
 <!-- 	        <a class="navbar-link" style="color:white;margin-left: 50px;margin-right: 50px;padding-bottom: 15px;" href="#">사이버캠퍼스</a> -->
-	        <a class="navbar-link" style="color:white;margin-right: 50px;margin-right: 50px;padding-bottom: 15px;"href="/notice/list">공지사항</a>
+	        <a class="navbar-link" style="color:white;margin-right: 50px;margin-left: 50px;padding-bottom: 15px;"href="/notice/list">공지사항</a>
 	        <a class="navbar-link" style="color:white;margin-right: 50px;padding-bottom: 15px;"href="/qna/main">문의게시판</a>
 	        <a class="navbar-link" style="color:white;margin-right: 50px;padding-bottom: 15px;" href="/facility/full">시설예약</a>
 	      </li>
 	     </sec:authorize>
 	    </ul>
 	<!-- Right navbar links -->
-	<ul class="navbar-nav ml-auto">
+	<ul class="navbar-nav ml-auto mt-4">
 	
 		<!-- 로그인 하지 않은 경우 -->
 		<sec:authorize access="isAnonymous()">

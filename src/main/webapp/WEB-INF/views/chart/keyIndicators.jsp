@@ -20,7 +20,7 @@
 </li>
 <li class="nav-item">
 <a class="nav-link" href="#chart3" data-toggle="tab">강의평가</a>
-</li>
+</li> 		
 </ul>
 </div>
 </div>
@@ -49,7 +49,7 @@
 </div>
 <div class="row">
 	<div class="col-7 pl-0">
-		<div id="recruitmentRate" style="width: 1200px; height: 600px;"></div>
+		<div id="recruitmentRate" style="width: 1200px; height: 600px;position: relative;left: -5%;"></div>
 	</div>
 </div>
 </div>
@@ -76,7 +76,7 @@
 </div>
 <div class="row">
 	<div class="col-7 pl-0">
-		<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 600px;"></div>
+		<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 600px;position: relative;left: -25%;"></div>
 	</div>
 </div>
 </div>
@@ -115,7 +115,7 @@
 </div>
 <div class="row">
 	<div class="col-8 pl-0">
-		<div id="evaluation" style="width: 1200px; height: 600px;"></div>
+		<div id="evaluation" style="width: 1200px; height: 600px;position: relative;left:-5%;"></div>
 	</div>
 </div>
 </div>
@@ -124,99 +124,99 @@
 </div>
 <!-- </div> -->
 
-<div class="row mt-3">
-	<label>단과대학별 중점지표</label>
-</div>
-<div class="row">
-	<div class="form-group col-2 pl-0">
-		<select id="yr" class="select2bs4 form-control  select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
-			<option value="0">연도</option>
-			<option value="2019">2019</option>
-			<option value="2020">2020</option>
-			<option value="2021">2021</option>
-			<option value="2022">2022</option>
-		</select>
-	</div>
-	<div class="form-group col-2">
-		<select id="college" class="select2bs4 form-control select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
-			<option value="0">단과대학</option>
-			<c:forEach var="college" items="${collegeList}">
-				<option value="${college.colCd}">${college.colNm}</option>
-			</c:forEach>
-		</select>
-	</div>
-</div>
-<div class="row">
-	<div class="col-7 pl-0">
-		<div id="recruitmentRate" style="width: 1200px; height: 600px;"></div>
-	</div>
-</div>
-<div class="row">
-	<label>재적상태현황</label>
-</div>
-<div class="row">
-	<div class="form-group col-2 pl-0">
-		<select id="yrSt" class="select2bs4 form-control  select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
-			<option value="0">연도</option>
-			<option value="2019">2019</option>
-			<option value="2020">2020</option>
-			<option value="2021">2021</option>
-			<option value="2022">2022</option>
-		</select>
-	</div>
-	<div class="form-group col-2 pl-0">
-		<select id="collegeSt" class="select2bs4 form-control  select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
-			<option value="0">단과대학</option>
-			<c:forEach var="college" items="${collegeList}">
-				<option value="${college.colCd}">${college.colNm}</option>
-			</c:forEach>
-		</select>
-	</div>
-</div>
-<div class="row">
-	<div class="col-7 pl-0">
-		<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 600px;"></div>
-	</div>
-</div>
-<div class="row">
-	<label>전체교원 강의평가</label>
-</div>
-<div class="row">
-	<div class="form-group col-2 pl-0">
-		<select id="yrAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
-			<option value="0">연도</option>
-			<option value="2019">2019</option>
-			<option value="2020">2020</option>
-			<option value="2021">2021</option>
-			<option value="2022">2022</option>
-		</select>
-	</div>
-	<div class="form-group col-2 ">
-		<select id="semAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
-			<option value="">학기</option>
-			<option value="1학기">1학기</option>
-			<option value="2학기">2학기</option>
-		</select>
-	</div>
-	<div class="form-group col-2">
-		<select id="collegeAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
-			<option value="0">단과대학</option>
-			<c:forEach var="college" items="${collegeList}">
-				<option value="${college.colCd}">${college.colNm}</option>
-			</c:forEach>
-		</select>
-	</div>
-	<div class="form-group col-2">
-		<select id="departmentAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
-			<option value="0">학과</option>
-		</select>
-	</div>
-</div>
-<div class="row">
-	<div class="col-8 pl-0">
-		<div id="evaluation" style="width: 1200px; height: 600px;"></div>
-	</div>
-</div>
+<!-- <div class="row mt-3"> -->
+<!-- 	<label>단과대학별 중점지표</label> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<div class="form-group col-2 pl-0"> -->
+<!-- 		<select id="yr" class="select2bs4 form-control  select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="0">연도</option> -->
+<!-- 			<option value="2019">2019</option> -->
+<!-- 			<option value="2020">2020</option> -->
+<!-- 			<option value="2021">2021</option> -->
+<!-- 			<option value="2022">2022</option> -->
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- 	<div class="form-group col-2"> -->
+<!-- 		<select id="college" class="select2bs4 form-control select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="0">단과대학</option> -->
+<%-- 			<c:forEach var="college" items="${collegeList}"> --%>
+<%-- 				<option value="${college.colCd}">${college.colNm}</option> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<div class="col-7 pl-0"> -->
+<!-- 		<div id="recruitmentRate" style="width: 1200px; height: 600px;"></div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<label>재적상태현황</label> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<div class="form-group col-2 pl-0"> -->
+<!-- 		<select id="yrSt" class="select2bs4 form-control  select2-hidden-accessible st" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="0">연도</option> -->
+<!-- 			<option value="2019">2019</option> -->
+<!-- 			<option value="2020">2020</option> -->
+<!-- 			<option value="2021">2021</option> -->
+<!-- 			<option value="2022">2022</option> -->
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- 	<div class="form-group col-2 pl-0"> -->
+<!-- 		<select id="collegeSt" class="select2bs4 form-control  select2-hidden-accessible st" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="0">단과대학</option> -->
+<%-- 			<c:forEach var="college" items="${collegeList}"> --%>
+<%-- 				<option value="${college.colCd}">${college.colNm}</option> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<div class="col-7 pl-0"> -->
+<!-- 		<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 600px;"></div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<label>전체교원 강의평가</label> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<div class="form-group col-2 pl-0"> -->
+<!-- 		<select id="yrAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="0">연도</option> -->
+<!-- 			<option value="2019">2019</option> -->
+<!-- 			<option value="2020">2020</option> -->
+<!-- 			<option value="2021">2021</option> -->
+<!-- 			<option value="2022">2022</option> -->
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- 	<div class="form-group col-2 "> -->
+<!-- 		<select id="semAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="">학기</option> -->
+<!-- 			<option value="1학기">1학기</option> -->
+<!-- 			<option value="2학기">2학기</option> -->
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- 	<div class="form-group col-2"> -->
+<!-- 		<select id="collegeAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="0">단과대학</option> -->
+<%-- 			<c:forEach var="college" items="${collegeList}"> --%>
+<%-- 				<option value="${college.colCd}">${college.colNm}</option> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- 	<div class="form-group col-2"> -->
+<!-- 		<select id="departmentAv" class="select2bs4 form-control  select2-hidden-accessible av" style="width: 100%;" aria-hidden="true"> -->
+<!-- 			<option value="0">학과</option> -->
+<!-- 		</select> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- 	<div class="col-8 pl-0"> -->
+<!-- 		<div id="evaluation" style="width: 1200px; height: 600px;"></div> -->
+<!-- 	</div> -->
+<!-- </div> -->
 <script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
 <script src="/resources/adminlte/dist/js/demo.js"></script>
@@ -243,8 +243,8 @@
 				departmentByCollege.call(this, "departmentAv");
 			}
 			evaluationChart();
-		});
-
+		}).trigger("change");
+	
 	});
 
 	function departmentByCollege(p_id) {
@@ -430,7 +430,8 @@
 										});
 						data.addRows(arr);
 						var options = {
-							height:600,
+							width:1600,
+							height:500,
 							colors : [ "#34314c", "#47b8e0", "#ffc952",
 									"#ff7473", "#a5d296", "#addeea" ],
 							vAxis : {
@@ -454,7 +455,6 @@
 	}// end function
 
 	function evaluationChart() {
-
 		let colCd = $("#collegeAv").val();
 		let depCd = $("#departmentAv").val();
 
@@ -498,6 +498,7 @@
 				data.addRows(arr);
 
 				var options = {
+						width:1500,
 						height:600,
 					hAxis : {
 						maxValue : 4.5
@@ -518,4 +519,10 @@
 			}
 		});
 	}
+	$(function(){
+		$("#yrAv option:eq(1)").prop("selected",true);
+		setTimeout(function() {
+			$("#yrAv option:eq(0)").prop("selected",true);
+			}, 1000);
+	})
 </script>
