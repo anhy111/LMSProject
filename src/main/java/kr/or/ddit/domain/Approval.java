@@ -21,4 +21,5 @@ public class Approval {
 	
 	private List<Allocation> allocationList; // 결재시에 강의실도 함께 배정한다.
 	
+	private int viewPage;//페이지 번호
 }
