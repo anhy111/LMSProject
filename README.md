@@ -2,9 +2,31 @@
 
 ![ddit 메인 화면 캡처](https://user-images.githubusercontent.com/107231837/211437489-77a27e9b-5d76-42b3-8ed6-735ac298f45c.PNG)
 
-## Summary
+## 💼Summary
 
-## Features
+## 🌟Features
+Register user using nickname, email, password, image. Login / Logout using cookie. Edit User for nickname or image.
+
+* User
+  * Register & Edit
+    * nickname, email, image
+  * Login & Logout
+    * cookie & session & passport
+User Information & Follow list on Profile.
+
+* Profile
+  * User Information
+  * Followers & Followings List
+
+Add, Remove, Edit a tweet(post). User can retweet others' post. User can add Hashtag on a post. Visitor can add a Comment, Like on a post.
+
+* Post
+  * Add & Remove & Edit a post
+  * Retweet
+  * Comment
+  * Like
+  * Hashtag
+    * regex, "/(#[^\s#]+)/g"
 
 Images are stored at AWS S3. Resizing using Lambda.
 
@@ -12,7 +34,7 @@ Images are stored at AWS S3. Resizing using Lambda.
   * aws s3
   * lambda for resizing
 
-## Tech Stack
+## 🔧Tech Stack
 
 * Java
 * Javascript
@@ -23,13 +45,13 @@ Images are stored at AWS S3. Resizing using Lambda.
 * Tomcat
 * Mybatis
 
-## Database
+## 🗃️Database
 
-## Spring
+## 📚Spring
 
-## Future Works
+## 🗓️Future Works
 
-## Research
+## 🏫Research
 
 ### aws-ec2
 <details>
