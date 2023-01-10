@@ -14,18 +14,19 @@
 <!--	</resultMap>-->
 
 	<select id="showList" resultType="qna" >
-        SELECT q.QNA_CD,
+        SELECT
+			   rownum,
+               q.QNA_CD,
                q.MEM_NO,
                q.QNA_TTL,
                q.QNA_CON,
                q.QNA_DT,
-               q.QNA_YN,
-               q.QNA_UPDATE,
                q.QNA_HIT,
                (select nvl(count(r.qna_cd), 0) from qna_reply r where r.qna_cd = q.qna_cd) qna_reply_count,
                (select stu_nm from student s where q.mem_no = s.stu_no) stu_nm
         FROM qna q
-        ORDER BY q.QNA_DT DESC
+        WHERE (SELECT COUNT(*) FROM qna q2 WHERE q2.QNA_DT > q.QNA_DT) BETWEEN (10 * (#{viewPage} - 1) ) AND (10 * #{viewPage} -1)
+        ORDER BY q.QNA_CD DESC
     </select>
 
 	<insert id="qnaSave" parameterType="qna">
@@ -35,7 +36,6 @@
             , qna_ttl
             , qna_con
 			, qna_dt
-            , qna_yn
 		)
 		VALUES (
 			  QNA_SEQ.NEXTVAL
@@ -43,7 +43,6 @@
 			, #{qnaTtl}
 			, #{qnaCon}
 			, sysdate
-		    , #{qnaYn}
 			   )
 	</insert>
 

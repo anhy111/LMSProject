@@ -18,12 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import kr.or.ddit.controller.ManageController;
 import kr.or.ddit.domain.ASchedule;
@@ -53,14 +48,15 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model, HttpSession session) throws ParseException {
+	public String home(Model model, HttpSession session,
+					   @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage) throws ParseException {
 		
 		int memNo = (int)session.getAttribute("no");
 		
 		Portlet memPortlet = this.portletService.memPortlet(memNo);
 		
 		List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicSelectAll(1);
-		List<Qna> showList = qnaService.showList();
+		List<Qna> showList = qnaService.showList(viewPage);
 
         model.addAttribute("qnaList", showList);
         model.addAttribute("noticeBasicList", noticeBasicList);

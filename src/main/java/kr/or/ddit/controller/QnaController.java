@@ -27,16 +27,21 @@ public class QnaController {
 
     //QnA 메인 페이지
     @GetMapping("/main")
-    public String qna(Model model) {
+    public String qna(Model model,
+                      @RequestParam(value = "viewPage", required = false, defaultValue = "1") int viewPage) {
 
-        // 조회수 조회
+        // 총 행의 수 조회
         int totalRow = this.qnaService.getQnaTotalRow();
 
+        //총 페이지의 수 계산
+        int totalPage = (int) Math.ceil((double) totalRow / 10);
+
         // 목록 조회
-        List<Qna> showList = qnaService.showList();
+        List<Qna> showList = qnaService.showList(viewPage);
 
         model.addAttribute("qnaList", showList);
         model.addAttribute("totalRow", totalRow);
+        model.addAttribute("totalPage", totalPage);
 
         return VIEWS_QNA_MAIN;
     }
@@ -54,7 +59,9 @@ public class QnaController {
 
     @PostMapping("/qnaWrite")
     public String postQnaWriteForm(@ModelAttribute("qnaForm") QnaForm qnaForm) {
-        Qna qna = new Qna(qnaForm.getMemberNumber(), qnaForm.getTitle(), qnaForm.getContent(), qnaForm.getAccessType());
+        Qna qna = new Qna(qnaForm.getMemberNumber(), qnaForm.getTitle(), qnaForm.getContent());
+
+
 
         qnaService.qnaSave(qna);
 
@@ -66,6 +73,8 @@ public class QnaController {
 
         //조회수++
         qnaService.updateViewCount(qnaCd);
+
+
 
         // 게시글 아이디를(noticeCd) 통해서 findOne 메서드를 호출하여 조회한다.
         Qna qna = qnaService.findOne(qnaCd);
