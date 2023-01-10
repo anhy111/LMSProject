@@ -7,7 +7,11 @@
 ## Features
 
 ## Tech Stack
-*Java
+
+* Java
+* Javascript
+* Mybatis
+* OracleDatabase
 
 ## Database
 
