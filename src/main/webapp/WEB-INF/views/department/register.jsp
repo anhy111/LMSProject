@@ -33,7 +33,7 @@
 		<div class="form-group col-3">
 			<label>최대정원:</label>
 			<div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-				<input type="number" name="depCap" class="form-control rounded-0" value="" required />
+				<input type="number" name="depCap" class="form-control rounded-0" required />
 			</div>
 		</div>
 		<div class="form-group col-3">
@@ -53,6 +53,7 @@
 	</div>
 	<div class="row">
 		<div class="form-group col text-right">
+			<button type="button" id="autoFill" class="btn btn-outline-secondary">자동채우기</button>
 			<button type="submit" id="regist" class="btn btn-outline-primary">확인</button>
 			<a href="/department/list" class="btn btn-outline-info">목록</a>
 		</div>
@@ -73,30 +74,36 @@
 			theme : 'bootstrap4'
 		});
 
-		$("input[name='depNm']").on(
-				"keyup",
-				function() {
+		$("input[name='depNm']").on("keyup",function() {
 
-					data = {
-						depNm : this.value
+			data = {
+				depNm : this.value
+			}
+			$.ajax({
+				url : "/department/nameValidation",
+				type : "get",
+				data : data,
+				success : function(result) {
+					if (result > 0) {
+						$("#validation").html("학과명이 존재합니다.").css(
+								"color", "red");
+						valid_flag = false;
+					} else {
+						$("#validation").html("일치하는 학과명이 없습니다.").css(
+								"color", "blue");
+						valid_flag = true;
 					}
-					$.ajax({
-						url : "/department/nameValidation",
-						type : "get",
-						data : data,
-						success : function(result) {
-							if (result > 0) {
-								$("#validation").html("학과명이 존재합니다.").css(
-										"color", "red");
-								valid_flag = false;
-							} else {
-								$("#validation").html("일치하는 학과명이 없습니다.").css(
-										"color", "blue");
-								valid_flag = true;
-							}
-						}
-					});
-				});
+				}
+			});
+		});
+		
+		$("#autoFill").on("click",function(){
+			$("#college").val(1).select2({theme : 'bootstrap4'});
+			$("input[name=depNm]").val('금융보험학과').trigger("keyup");
+			$("input[name=depCap]").val(100);
+			$("input[name=depTel]").val("042-512-5553");
+			$("textarea[name=depDes]").val("금융보험학과는 금융보험산업 또는 금융현상에 대한 이해를 위해 금융거래에 있어서의 독특한 매커니즘, 금융상품이 지니고 있는 의미, 금융상품의 가치판단, 금융거래상의 정보화를 이해하고자 하는 학문입니다. 또한 이들이 실물경제에 미치는 영향들을 파악하기 위해서 기본적인 이론과 실무에 대한 학습을 통해 장차 경제발전에 기여할 인재를 양성하는 것을 목표로 합니다. 돈과 관련된 상품ㆍ서비스에 대해 배우는 ‘금융’, 기업 및 기관의 재무 상태 분석 및 자산관리, 예산과 연관된 ‘회계’, 개인이나 기업 및 기관이 내는 세금과 관련된 ‘세무’. 금융ㆍ회계ㆍ세무학과에서는 이처럼 돈과 관련된 정보를 산출하고, 이를 잘 관리할 수있는 전문 인력을 육성합니다.");
+		})
 
 	});
 

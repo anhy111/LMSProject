@@ -336,7 +336,7 @@
 		$("#timeTableSave").on("click",loadSaveTimeTalble);
 		
 		
-		$("#cartColleage").on("change",function(){
+		$("#cartCollege").on("change",function(){
 			
 			let data = {
 					colCd : this.value

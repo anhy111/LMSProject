@@ -777,5 +777,11 @@
 		
 	}// end function
 	
+	function errorSwal(p_arg){
+		swal.fire({
+			icon: 'error',
+			text: p_arg
+		});
+	}
 	
 </script>
