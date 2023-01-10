@@ -1,5 +1,6 @@
 package kr.or.ddit.filter;
 
+import kr.or.ddit.mapper.LogMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Slf4j
-@RequiredArgsConstructor
+@Controller
 public class LogFilter implements Filter {
 
-//    private final LogCreateService logCreateService;
+    @Autowired
+    LogCreateService logService;
 
 
     @Override
@@ -38,7 +40,7 @@ public class LogFilter implements Filter {
         System.out.println("a = " + a);
         System.out.println("b = " + b);
 
-//        logCreateService.logPush(logData);
+//        logService.logPush(logData);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

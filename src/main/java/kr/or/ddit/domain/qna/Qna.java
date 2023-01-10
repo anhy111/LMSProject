@@ -18,6 +18,7 @@ public class Qna {
     private String stuNm; // 학생이름
     private String qnaTtl;
     private String qnaCon;
+
     @DateTimeFormat(pattern = "yyyymmdd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date qnaDt;
@@ -31,10 +32,9 @@ public class Qna {
 
 //    private Member memberVO;
 
-    public Qna(Long memNo, String qnaTtl, String qnaCon, String qnaYn) {
+    public Qna(Long memNo, String qnaTtl, String qnaCon) {
         this.memNo = memNo;
         this.qnaTtl = qnaTtl;
         this.qnaCon = qnaCon;
-        this.qnaYn = qnaYn;
     }
 }
