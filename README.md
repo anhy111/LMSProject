@@ -50,6 +50,7 @@ Images are stored at AWS S3. Resizing using Lambda.
 * OracleDatabase
 
 ## 🗃️Database
+![105812886-4e945380-5ff2-11eb-9f55-8d95b7dbbd15](https://user-images.githubusercontent.com/107231837/211446844-29e7f6f2-06f3-460f-8e56-0ba950878c31.png)
 
 ## 📚Spring
 ![108622394-dd727f80-747b-11eb-913c-fea473baa019](https://user-images.githubusercontent.com/107231837/211446695-018fa89e-00ab-444b-af8a-d8aa57f8b354.png)
