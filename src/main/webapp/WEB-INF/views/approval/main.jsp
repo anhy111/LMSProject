@@ -3,7 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link rel="stylesheet" type="text/css" href="/resources/css/schRcmd.css">
-
+<div id="tellCnt" class="row text-right m-0 p-0">
+	<div class="col">
+		[총 <span style="color:red; font-weight: bold;" id="cntSpan"></span>건]
+	</div>
+</div>
 <div class="row">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm text-center">
 		<thead>
@@ -23,6 +27,9 @@
 			
 		</tbody>
 	</table>
+</div>
+<div style="text-align:center;" id="paging">
+	
 </div>
 <div class="modal" id="modal-lg" style="display: none; z-index: 1041" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -211,8 +218,6 @@
 		
 		$approvalList = $("#approvalList");
 		
-		approvalList();
-		
 		// 강의계획서 모달
 		$(document).on("click",".lecApply",function(){
 			lecaCd = this.value;
@@ -262,6 +267,8 @@
 			$("#referReasonRead").modal('show');
 			$("#reasonRead").val(apprRsn);
 		});
+		
+		addPage(1);
 		
 	});
 	
@@ -333,11 +340,14 @@
 	}
 	
 	
-	function approvalList(){
-		
+	function approvalList(viewPage){
+		let data = {
+			viewPage : viewPage
+		}
 		$.ajax({
 			url : "/approval/list",
 			type : "get",
+			data : data,
 			success : function(result){
 				$approvalList.html("");
 				let str = "";
@@ -389,6 +399,36 @@
 					return p_html;
 				});
 				
+			}
+		})
+	}
+	
+function addPage(viewPage){
+		
+		let data = {
+			viewPage : viewPage
+		};
+		$.ajax({
+			url : "/approval/approvalCount",
+			type : "get",
+			data : data,
+			contentType : "application/json; charset=utf-8",
+			success : function(totalData){
+				$("#cntSpan").html(totalData);
+				let totalPage = Math.ceil(totalData/10) == 0 ? 1 : Math.ceil(totalData/10);
+				
+				let $paging = $("#paging");
+				str = "";
+				for(let i=1; i<=totalPage; i++){
+					let activeClass = "";
+					if(viewPage != i){
+						activeClass = "-outline"
+					}
+					str += `<a href="javascript:addPage(\${i})" class="btn btn\${activeClass}-primary">\${i}</a>`;
+				}
+				
+				$paging.html(str);
+				approvalList(viewPage);
 			}
 		})
 	}

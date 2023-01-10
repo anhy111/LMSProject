@@ -52,6 +52,10 @@
                                     <p>수강중인 강의</p>
                                 </a>
                             </li>
+                            <li class="nav-item"><a href="/student/lecture/list"
+                                                    class="nav-link">
+                                <p>수강 편람</p>
+                            </a></li>
                             <li class="nav-item">
                                 <a href="/student/lectureApply/spareList" class="nav-link">
                                     <p>예비수강신청</p>
@@ -61,10 +65,6 @@
                                 <a href="/student/lectureApply/list" class="nav-link">
                                     <p>수강신청</p>
                                 </a></li>
-                            <li class="nav-item"><a href="/student/lecture/list"
-                                                    class="nav-link">
-                                <p>수강 편람</p>
-                            </a></li>
                             <li class="nav-item"><a href="/student/evaluation/list"
                                                     class="nav-link">
                                 <p>강의 평가</p>
