@@ -52,7 +52,7 @@ Images are stored at AWS S3. Resizing using Lambda.
 ## 🗃️Database
 
 ## 📚Spring
-
+![108622394-dd727f80-747b-11eb-913c-fea473baa019](https://user-images.githubusercontent.com/107231837/211446695-018fa89e-00ab-444b-af8a-d8aa57f8b354.png)
 ## 🗓️Future Works
 
 ## 🏫Research
