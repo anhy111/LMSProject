@@ -302,10 +302,36 @@
 				xhr.setRequestHeader(header, token);
 			},
 			success : function(result){
-				console.log(result);
+				if(result <= 0){
+					Swal.fire(
+					      	"결재 실패",
+					        "새로고침 후 다시시도해주세요.", // had a missing comma
+					        "error"
+				    )
+				}
+				let msg = '';
+				switch(p_code){
+				case 'AP001':
+					msg = '지급';
+					break;
+				case 'AP002':
+					msg = '취소';
+					break;
+				case 'AP003':
+					msg = '반려';
+					break;
+				}
+				Swal.fire(
+	                    msg +' 완료',
+	                    '정상적으로 '+msg+' 되었습니다.',
+	                    'success'
+	            ).then(function(){
+	            	window.location.reload(true);
+	            });
 			}
 		})
 	}
+	
 	
 	function approvalList(){
 		

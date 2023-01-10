@@ -3,26 +3,37 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-
+<link rel="stylesheet" href="/resources/css/topTable.css" type="text/css">
 <div class="row">
-	<table class="table table-sm text-center col p-0 myinfo">
-		<tbody>
-			<tr>
-				<th width="25%">학번</th>
-				<td width="25%">${student.stuNo}</td>
-				<th width="25%">성명</th>
-				<td width="25%">${student.stuNm}</td>
-			</tr>
-			<tr>
-				<th>소속</th>
-				<td>${student.depNm}</td>
-				<th>재학학기</th>
-				<td>${student.stuYr}학년${student.stuSem}학기</td>
-			</tr>
-		</tbody>
+	<table id="stuInfoTable">
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
+		</tr>
+		<tr>
+			<th>학번</th>
+			<td>
+				<input type="text" class="infoText" value="${student.stuNo}" readonly="readonly">
+			</td>
+			<th>성명</th>
+			<td>
+				<input type="text" class="infoText" value="${student.stuNm}" readonly="readonly">
+			</td>
+			<th>소속</th>
+			<td>
+				<input type="text" class="infoText" value="${student.depNm}" readonly="readonly">
+			</td>
+			<th>재학학기</th>
+			<td>
+				<input type="text" class="infoText" id="maxCredit" value="${student.stuYr}학년${student.stuSem}학기" readonly="readonly">
+			</td>
+			<th></th>
+		</tr>
+		<tr>
+			<td colspan="9" style="background: #F3F8FF; height: 5px;"></td>
+		</tr>
 	</table>
 </div>
-<div class="row">
+<div class="row mt-5">
 	<div class="alert alert-light col" role="alert">
 		<!-- 게시판 안내사항 -->
 		<p>
@@ -151,6 +162,8 @@
 			for(let i=1; i<=evSize; i++){
 				$(":radio[name='evlq" + i + "']").radioSelect('5');
 			}
+			
+			$("#cont").val("교수님의 강의자료가 충분하였고, 열의에 찬 강의였습니다.");
 		});
 		
 		$("#save").on("click",function(){
@@ -162,7 +175,7 @@
 			for(let i=1; i<=evSize; i++){
 				let value = $("input[name=evlq"+ i + "]:checked").val();
 				if(typeof value == 'undefined'){
-					alert("선택되지 않은 항목이 존재합니다.");
+					errorSwal("선택되지 않은 항목이 존재합니다.");
 					return;
 				}
 				
@@ -170,17 +183,17 @@
 			}
 			
 			if(content == ""){
-				alert("의견을 입력해주세요.");
+				errorSwal("의견을 입력해주세요.");
 				return;
 			}
 			
 			if(lecaCd == 0){
-				alert("강의를 선택해주세요");
+				errorSwal("강의를 선택해주세요");
 				return;
 			}
 			
 			if(!enabled){
-				alert("평가할 강의를 선택해주세요.");
+				errorSwal("평가할 강의를 선택해주세요.");
 				return;
 			}
 			
@@ -203,10 +216,10 @@
 				},
 				success : function(result){
 					if(result > 0){
-						alert("평가가 완료되었습니다.");
+						errorSwal("평가가 완료되었습니다.");
 						location.reload();
 					} else{
-						alert("다시 시도해주세요.");
+						errorSwal("다시 시도해주세요.");
 					}
 				}
 			})
@@ -222,6 +235,13 @@
 			  return this;
 		};
 	});
+	
+	function errorSwal(p_arg){
+		swal.fire({
+			icon: 'error',
+			text: p_arg
+		});
+	}
 	
 	function highlightRow(obj, p_lecaCd){
 		
