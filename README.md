@@ -44,6 +44,7 @@ Images are stored at AWS S3. Resizing using Lambda.
 * Spring-Jpa
 * Tomcat
 * Mybatis
+* OracleDatabase
 
 ## 🗃️Database
 
