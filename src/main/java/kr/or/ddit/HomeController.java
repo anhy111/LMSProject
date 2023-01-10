@@ -2,6 +2,7 @@ package kr.or.ddit;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -25,7 +26,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.controller.ManageController;
 import kr.or.ddit.domain.Portlet;
+import kr.or.ddit.domain.notice.NoticeBasic;
+import kr.or.ddit.domain.qna.Qna;
+import kr.or.ddit.service.NoticeBasicService;
 import kr.or.ddit.service.PortletService;
+import kr.or.ddit.service.QnaService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,6 +40,10 @@ public class HomeController {
 
 	@Autowired
 	PortletService portletService;
+	@Autowired
+	NoticeBasicService noticeBasicService;
+	@Autowired
+	QnaService qnaService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -45,6 +54,11 @@ public class HomeController {
 		
 		Portlet memPortlet = this.portletService.memPortlet(memNo);
 		
+		List<NoticeBasic> noticeBasicList = this.noticeBasicService.noticeBasicSelectAll(1);
+		List<Qna> showList = qnaService.showList();
+
+        model.addAttribute("qnaList", showList);
+        model.addAttribute("noticeBasicList", noticeBasicList);
 		model.addAttribute("memPortlet", memPortlet);
 		
 		return "main/mainPage";
