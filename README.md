@@ -36,13 +36,24 @@ Images are stored at AWS S3. Resizing using Lambda.
 <summary>세부 사항</summary>
 <div markdown="1">
 
-basic setup for ubuntu
+#### basic setup for ubuntu
+<pre>
+<code>
 $ sudo apt-get update
 $ sudo apt-get install -y build-essential
-npm install for ubuntu
+</code>
+</pre>
+#### npm install for ubuntu
+<pre>
+<code>
 $ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash --
 $ sudo apt-get install -y nodejs
-mysql install for ubuntu
+</code>
+</pre>
+
+#### mysql install for ubuntu
+<pre>
+<code>
 $ sudo apt-get install -y mysql-server
 $ sudo su
 $ mysql_secure_installation
@@ -50,6 +61,8 @@ $ mysql -u root -p
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 $ vim .env
 $ npx sequelize db:create
+</code>
+</pre>
 
 </div>
 </details>
