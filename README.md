@@ -6,6 +6,12 @@
 
 ## Features
 
+Images are stored at AWS S3. Resizing using Lambda.
+
+* Image
+  * aws s3
+  * lambda for resizing
+
 ## Tech Stack
 
 * Java
