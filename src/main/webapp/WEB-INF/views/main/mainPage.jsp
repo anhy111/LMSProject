@@ -7,6 +7,9 @@
 <link rel="stylesheet" type="text/css" href="http://alangunning.github.io/gridstack.js/demo/libraries/jquery-ui-1.11.4/jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.2.6/gridstack.min.css">
 <link rel="stylesheet" type="text/css" href="http://alangunning.github.io/gridstack.js/demo/css/multiple-grids.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<link href="/resources/fullcalendar-5.11.3/lib/main.css" rel="stylesheet"/>
+<script src="/resources/fullcalendar-5.11.3/lib/main.js"></script>
 
 <style>
 .grid-stack>.grid-stack-item>.grid-stack-item-content {
@@ -86,7 +89,7 @@ h1{margin:0;}
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/lodash/lodash-3.8.0-compat.min.js"></script>
 <script type="text/javascript" src="/resources/js/gridstack.js"></script>
-<script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/js/multiple-grids.js"></script>
+<script type="text/javascript" src="/resources/js/multiple-grids.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/touch-punch-0.2.3/jquery.ui.touch-punch.min.js"></script>
 <script type="text/javascript">
 
@@ -102,17 +105,17 @@ $(function() {
 	
 	if(myPortlet == null || myPortlet == ''){
 		serialized_data = [
-			 { id: 1, name: "학사 일정", x: 0, y: 0, width: 2, height: 4, active: true },
-			  { id: 2, name: "수강 내역", x: 1, y: 4, width: 1, height: 2, active: true },
-			  { id: 3, name: "성적", x: 2, y: 4, width: 1, height: 2, active: true },
+			 { id: 1, name: "학사 일정", x: 0, y: 0, width: 2, height: 6, active: true },
+			  { id: 2, name: "수강 내역", x: 2, y: 8, width: 1, height: 3, active: true },
+			  { id: 3, name: "성적", x: 2, y: 4, width: 1, height: 2, active: false },
 			  { id: 4, name: "시설예약", x: 0, y: 3, width: 1, height: 1, active: false },
 			  { id: 5, name: "시간표", x: 1, y: 4, width: 3, height: 1, active: false },
 			  { id: 6, name: "상담 내역", x: 0, y: 4, width: 1, height: 2, active: false },
 			  { id: 7, name: "공지사항", x: 2, y: 0, width: 2, height: 2, active: true },
 			  { id: 8, name: "문의게시판", x: 2, y: 2, width: 2, height: 2, active: true },
-			  { id: 9, name: "날씨", x: 0, y: 4, width: 1, height: 2, active: true},
+			  { id: 9, name: "날씨", x: 3, y: 8, width: 1, height: 3, active: true},
 			  { id: 10, name: "뉴스", x: 2, y: 4, width: 1, height: 2, active: false },
-			  { id: 11, name: "오늘의 학식", x: 3, y: 4, width: 1, height: 2, active: true }
+			  { id: 11, name: "오늘의 학식", x: 3, y: 4, width: 1, height: 2, active: false }
 			];
 	}else{
 		let portlet = '${memPortlet.poCont}';
@@ -128,6 +131,11 @@ $(function() {
 		let itm = item.el.data();
 		let str = "";
 		switch(itm.widgetId){ //공지사항
+		case 1:
+			str = `
+				<div id="calendar"></div>
+			`;
+			break;
 		case 2:
 			str = `
 				<div class="callout callout-info m-3 pb-0">
@@ -274,7 +282,7 @@ $(function() {
 			break;
 		case 9:
 			str = `
-				<div class="m-3" style="overflow:auto;">
+				<div class="m-3" style="overflow:auto;heigth:100%;">
 					<div style="text-align:center;">
 						<label>대전광역시 중구 오류동</label>
 					</div>
@@ -318,7 +326,144 @@ $(function() {
 		$('[data-widget-id=\"'+itm.widgetId+'\"] .content'+itm.widgetId).css("display", "block").append(str);
 	});
 			
+	initFullCalendar();
+	
+	$(document).on("click",'.fc-prev-button',function(){
+		console.log("event : " ,calendar);
+    	loadEvent();
+	});
+	
+	$(document).on("click",'.fc-next-button',function(){
+		console.log("event : " ,calendar);
+	   	loadEvent();
+	});
 
 });
+
+function loadEvent() {
+    let start = calendar.view.currentStart;
+    let end = endDateFormat(calendar.view.currentEnd,"-");
+    let data = {
+    		aschSt : new Date(start),
+    		aschEn : new Date(end)
+    };
+    console.log(data);
+    $.ajax({
+        type: "post",
+        url: "/aschedule/loadSchedule",
+        data: JSON.stringify(data),
+        contentType:"application/json; charset=utf-8",
+        dataType: "JSON",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+        success: function (list) {
+        	calendar.removeAllEvents();
+        	
+        	monthSch = [];
+        	
+            for (var i = 0; i < list.length; i++) {
+            	let data = {
+                    title: list[i]['aschTtl'],
+                    content: list[i]['aschCon'],
+                    aschCd: list[i]['aschCd'],
+                    empNo: list[i]['empNo'],
+                    empNm: list[i]['empNm'],
+                    start: list[i]['aschSt'],
+                    end: list[i]['aschEn'],
+                    backgroundColor : color[i % 9],
+                    borderColor : color[i % 9]
+                }
+            	calendar.addEvent(data);
+                monthSch.push(data);
+            }
+            calendar.render();
+        },
+        error : function(){
+        	calendar.render();
+        }
+    });
+}
+
+function initFullCalendar(){
+	let calendarArg = document.querySelector("#calendar");
+	calendar = new FullCalendar.Calendar(calendarArg, {
+		id : "calendar",
+		height : 665 ,
+		headerToolbar : {
+			left: 'prev, today',
+			center : 'title',
+			right: 'next'
+		},
+		initialView : 'dayGridMonth',
+		fixedWeekCount: false,
+		locale : 'ko',
+		slotMinTime : '09:00',
+		slotMaxTime : '19:00',
+		initialDate : todayStr,
+		navLinks : false, // can click day/week names to navigate views
+		selectable : true,
+		selectMirror : true,
+		eventLimit : true,
+		select : function(arg) {
+			modalOpen(arg); //일자 클릭 시 모달 호출
+		},
+		eventClick : function(arg) {
+			modalOpen(arg); //이벤트 클릭 시 모달 호출
+		},
+		eventChange : function(arg) {
+			//allDay true로 바꾸면 end가 없어서 만듬
+			if (arg.event.end == null) {
+				var end = new Date();
+				end.setDate(arg.event.start.getDate() + 1);
+				arg.event.setEnd(end);
+			}
+		},
+		eventDrop : function(arg) {
+			modalOpen(arg); //이벤트 드래그드랍 시 모달 호출
+		},
+		eventResize : function(arg) {
+			modalOpen(arg); //이벤트 사이즈 변경시(일정변경) 모달 호출
+		},
+		editable : true,
+		dayMaxEvents : true
+	});// end calendar
+	
+	loadEvent();
+}
+
+const color = ["#EF404A","#F2728C","#80B463","#27AAE1","#9E7EB9","#4EB8B9","#F79552","#FFCC4E","#D5E05B"];
+var today = new Date();
+	var month = today.getMonth() + 1; //getMonth()는 9월이 8으로 나옴
+	var date = today.getDate();
+	var calendar; // 달력변수
+	var todayStr = dateFormat(today,"-");
+	var calendarData;
+	var monthSch = [];
+	
+// date객체와 구분자를 받아서 문자형식으로 변환
+function dateFormat(p_date,p_separator){
+	if(p_date == "" || p_date == null){
+		return "";
+	}
+	let date = new Date(p_date);
+	let str = date.getFullYear() + p_separator
+				+ (date.getMonth()+1 < 10 ? "0" + (date.getMonth()+1) :  date.getMonth()+1) + p_separator
+						+ (date.getDate() < 10 ? "0" + date.getDate() : date.getDate());
+	return str;
+}
+
+
+//마지막 일자가 +1일로 나와서 -1을 해줌 연, 월이 바뀔수 있으므로 -1한값을 생성자에 넣어주면 맞춰서 연도와 월을 바꿔서 반환해준다
+function endDateFormat(p_date, p_separator){
+	if(typeof p_separator == "undefined"){
+		errorSwal("구분자를 넣어주세요");
+		return;
+	}
+	let date = new Date(p_date);
+	date = new Date(date.getFullYear(),date.getMonth(),date.getDate()-1);
+	
+	return dateFormat(date,p_separator);
+}
 
 </script>

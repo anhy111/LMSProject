@@ -112,7 +112,7 @@ h1{margin:0;}
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/jquery-ui-1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/lodash/lodash-3.8.0-compat.min.js"></script>
 <script type="text/javascript" src="/resources/js/gridstack.js"></script>
-<script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/js/multiple-grids.js"></script>
+<script type="text/javascript" src="/resources/js/multiple-grids.js"></script>
 <script type="text/javascript" src="http://alangunning.github.io/gridstack.js/demo/libraries/touch-punch-0.2.3/jquery.ui.touch-punch.min.js"></script>
 <script type="text/javascript">
 
@@ -128,17 +128,17 @@ $(function() {
 	
 	if(myPortlet == null || myPortlet == ''){
 		serialized_data = [
-			{ id: 1, name: "학사 일정", x: 0, y: 0, width: 2, height: 4, active: true },
-			  { id: 2, name: "수강 내역", x: 1, y: 4, width: 1, height: 2, active: true },
-			  { id: 3, name: "성적", x: 2, y: 4, width: 1, height: 2, active: true },
+			{ id: 1, name: "학사 일정", x: 0, y: 0, width: 2, height: 6, active: true },
+			  { id: 2, name: "수강 내역", x: 2, y: 8, width: 1, height: 3, active: true },
+			  { id: 3, name: "성적", x: 2, y: 4, width: 1, height: 2, active: false },
 			  { id: 4, name: "시설예약", x: 0, y: 3, width: 1, height: 1, active: false },
 			  { id: 5, name: "시간표", x: 1, y: 4, width: 3, height: 1, active: false },
 			  { id: 6, name: "상담 내역", x: 0, y: 4, width: 1, height: 2, active: false },
 			  { id: 7, name: "공지사항", x: 2, y: 0, width: 2, height: 2, active: true },
 			  { id: 8, name: "문의게시판", x: 2, y: 2, width: 2, height: 2, active: true },
-			  { id: 9, name: "날씨", x: 0, y: 4, width: 1, height: 2, active: true},
+			  { id: 9, name: "날씨", x: 3, y: 8, width: 1, height: 3, active: true},
 			  { id: 10, name: "뉴스", x: 2, y: 4, width: 1, height: 2, active: false },
-			  { id: 11, name: "오늘의 학식", x: 3, y: 4, width: 1, height: 2, active: true }
+			  { id: 11, name: "오늘의 학식", x: 3, y: 4, width: 1, height: 2, active: false }
 			];
 		
 	}else{
