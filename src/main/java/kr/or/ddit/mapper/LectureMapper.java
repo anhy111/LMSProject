@@ -87,4 +87,7 @@ public interface LectureMapper {
 			"AND L.LECA_CD = SL.LECA_CD\r\n" + 
 			"AND SL.STU_NO = #{studentId}")
     List<StudentLectureForm> studentLectureSearchAll(String studentId);
+	
+	// 수강편람 데이터수
+	public int lectureListPaging(StudentLecture studentLecture);
 }

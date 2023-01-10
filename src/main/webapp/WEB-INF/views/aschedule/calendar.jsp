@@ -534,7 +534,7 @@
             },
             traditional: true,
             success: function (result, status, xhr) {
-				if(result <= data){
+				if(result <= 0){
 					errorSwal("일정 수정 실패");
 					return;
 				}else{

@@ -63,4 +63,7 @@ public interface LectureService {
 	public int approveLecture(Lecture lecture);
 
     List<StudentLectureForm> studentLectureSearchAll(String studentId);
+    
+    // 수강편람 데이터수
+ 	public int lectureListPaging(StudentLecture studentLecture);
 }
