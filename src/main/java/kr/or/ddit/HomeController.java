@@ -1,6 +1,7 @@
 package kr.or.ddit;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -20,9 +21,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import kr.or.ddit.controller.ManageController;
+import kr.or.ddit.domain.ASchedule;
 import kr.or.ddit.domain.Portlet;
 import kr.or.ddit.domain.notice.NoticeBasic;
 import kr.or.ddit.domain.qna.Qna;
+import kr.or.ddit.service.AScheduleService;
 import kr.or.ddit.service.NoticeBasicService;
 import kr.or.ddit.service.PortletService;
 import kr.or.ddit.service.QnaService;
@@ -39,6 +42,8 @@ public class HomeController {
 	NoticeBasicService noticeBasicService;
 	@Autowired
 	QnaService qnaService;
+	@Autowired
+	AScheduleService aScheduleService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -79,6 +84,21 @@ public class HomeController {
 		this.portletService.updatePortlet(map);
 		
 		return 1;
+	}
+	
+	@ResponseBody
+	@PostMapping("/loadSchedule")
+	public List<ASchedule> loadSchedule(@RequestBody ASchedule aSchedule){
+		
+		log.info("AscheduleController.loadSchedule.aSchedule : " + aSchedule);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		aSchedule.setFormatAschSt(format.format(aSchedule.getAschSt()));
+		aSchedule.setFormatAschEn(format.format(aSchedule.getAschEn()));
+		
+		List<ASchedule> aScheduleList = this.aScheduleService.loadScheduleForMonth(aSchedule);
+		log.info("AscheduleController.loadSchedule.aScheduleList : " + aScheduleList);
+		
+		return aScheduleList;
 	}
 
 }

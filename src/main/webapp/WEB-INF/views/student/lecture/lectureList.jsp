@@ -81,6 +81,9 @@
 		</table>
 	</div>
 </div>
+<div style="text-align:center;" id="paging">
+	
+</div>
 <script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
 <script src="/resources/adminlte/dist/js/demo.js"></script>
@@ -202,4 +205,10 @@
 			}
 		});
 	}
+	
+// 	function addPage(){
+// 		$.ajax({
+// 			url : 
+// 		})
+// 	}
 </script>

@@ -147,4 +147,9 @@ public class LectureServiceImpl implements LectureService{
 	public int approveLecture(Lecture lecture) {
 		return this.lectureMapper.approveLecture(lecture);
 	}
+	
+	@Override
+	public int lectureListPaging(StudentLecture studentLecture) {
+		return this.lectureMapper.lectureListPaging(studentLecture);
+	}
 }

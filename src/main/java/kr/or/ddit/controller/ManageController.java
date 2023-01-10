@@ -80,7 +80,7 @@ public class ManageController {
 	@PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_PROFESSOR')")
 	@PostMapping("/manage/stuSearch")
 	@ResponseBody
-	public List<Student> stuSearch(@RequestBody Map<String, String> map, Model model) {
+	public List<Student> stuSearch(@RequestBody Map<String, String> map, Model model, @RequestParam(value="viewPage", required = false, defaultValue = "1") int viewPage) {
 		
 		List<Student> stuSearch = this.manageService.stuSearch(map);
 		log.info("휴 어떻게 온담" + stuSearch);

@@ -375,7 +375,7 @@ $(function(){
 			<a href="/manage/stuManage?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
 		</c:if>
 		<c:if test="${param.viewPage!=pageNumber}">
-			<a href="/manage/stuManage?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
+			<a href="/manage/stuManage?viewPage=${pageNumber}" class="btn btn-outline-primary">${pageNumber}</a>
 		</c:if>
 	</c:forEach>
 </div>

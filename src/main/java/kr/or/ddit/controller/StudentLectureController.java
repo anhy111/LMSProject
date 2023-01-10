@@ -48,6 +48,7 @@ public class StudentLectureController {
 	@GetMapping("/searchList")
 	public List<Lecture> searchList(StudentLecture studnLecture){
 		log.info("studnLecture : " + studnLecture);
+		
 		return this.lectureService.searchList(studnLecture);
 	}
 	

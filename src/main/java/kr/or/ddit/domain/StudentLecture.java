@@ -22,4 +22,7 @@ public class StudentLecture {
 	
 	// 장바구니, 수강강의 구분
 	private String category;
+	
+	// 페이징처리
+	private int viewPage = 1;
 }
