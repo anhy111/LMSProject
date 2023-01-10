@@ -80,11 +80,9 @@ h1{margin:0;}
 
 <input type="hidden" id="memNo" value="<%=no%>"/>
 
-<div><a id="showInfo" class="btn btn-light" href="#">저장하기</a></div>
+<div><a id="showInfo" class="btn btn-primary mt-3 ml-3" href="#">저장하기</a></div>
 <div id="dashboard">
 	<div class="active-widgets">
-		<div class="header-title">
-		</div>
 		<div class="grid-stack" id="grid1">
 		</div>
 	</div>
@@ -197,7 +195,9 @@ $(function() {
 		            title: '저장 성공',         // Alert 제목
 		            text: '성공적으로 저장되었습니다.',  // Alert 내용
 		        }).then(function(){
-		        	window.location.reload(true);			        	
+// 		        	window.location.reload(true);	
+		        	opener.parent.location.reload();
+		        	window.close();
 		        });
 				
 			},

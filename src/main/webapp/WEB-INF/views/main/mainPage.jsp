@@ -119,69 +119,6 @@ $(function() {
 		serialized_data = JSON.parse(portlet);
 	}
 	
-	
-	
-	$("#showInfo").click(function() {
-		 
-        var nodes = $("#grid1").data('gridstack').grid.nodes;
-        
-        for(let i = 0; i < serialized_data.length; i++){
-//         	console.log("하이 : ", serialized_data[i]);
-        	serialized_data[i].active = false;
-        	
-        	nodes.forEach(function(item){
-        		let itm = item.el.data();
-        		if(serialized_data[i].id == itm.widgetId){
-        			serialized_data[i] = {id: itm.widgetId, name: serialized_data[i].name, x: itm.gsX, y: itm.gsY, width: itm.gsWidth, height: itm.gsHeight, active: true}
-        			
-// 	        		console.log("item은? ", itm);
-// 					console.log(itm.widgetId +' + '+itm.gsX +' + '+itm.gsY +' + '+itm.gsWidth +' + '+itm.gsHeight + ' + ' + itm.gsActive);
-        		}
-        	});
-        }
-        
-        console.log("바뀐데이터 : ", serialized_data)
-        let poCont = JSON.stringify(serialized_data);
-        let memNo = $("#memNo").val();
-        
-        let data = {
-        	"poCont" : poCont,
-        	"memNo" : memNo
-        }
-        
-        $.ajax({
-			type: 'post',
-			url: '/updatePortlet',
-			contentType:"application/json;charset=utf-8",
-			data:JSON.stringify(data),
-			beforeSend:function(xhr){
-				xhr.setRequestHeader(header, token);
-			},
-			success :function(data){
-// 				console.log("성공이냐 " + data)
-				
-				Swal.fire({
-		            icon: 'success',                         // Alert 타입
-		            title: '저장 성공',         // Alert 제목
-		            text: '성공적으로 저장되었습니다.',  // Alert 내용
-		        }).then(function(){
-		        	window.location.reload(true);			        	
-		        });
-				
-			},
-			error:function(request, status, error){
-				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
-			
-		});
-         
-    });
- 
-//     $(document).on('click', '.grid-stack-item', function() {
-//         console.log('grid id : ' + $(this).parent().attr("id"));
-//         console.log('widget id : ' + $(this).attr("data-gs-id"));
-//     });
-	
 	dashboardFn.initiate();
 	
 	var nodes = $("#grid1").data('gridstack').grid.nodes;
