@@ -16,8 +16,12 @@ Images are stored at AWS S3. Resizing using Lambda.
 
 * Java
 * Javascript
+* Spring
+* Spring-Session
+* Spring-Security
+* Spring-Jpa
+* Tomcat
 * Mybatis
-* OracleDatabase
 
 ## Database
 
