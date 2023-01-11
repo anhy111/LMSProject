@@ -147,12 +147,12 @@ table {
 								<div class="col-md-10 offset-md-1">
 									<div class="form-group">
 										<div class="input-group input-group-lg">
-											<select name="category">
+											<select name="category" class="form-control col-1">
 												<option value="1">전체</option>
 												<option value="2">제목</option>
 												<option value="3">작성자</option>
 											</select> <input type="hidden" name="lecaCd" value="${param.lecaCd}">
-											<input type="search" class="form-control form-control-lg"
+											<input type="search" class="col-4 form-control form-control"
 												placeholder="검색어를 입력하세요" id="keyword" name="keyWord"
 												value="${keyWord}">
 											<div class="input-group-append">
@@ -169,9 +169,11 @@ table {
 				</section>
 			</div>
 	<%--                    페이지--%>
+	<div class="col-12 text-center">
 	<c:forEach var="pageNumber" begin="1" end="${totalPage}">
 		<a href="lectureData?viewPage=${pageNumber}&&lecaCd=${param.lecaCd}" class="btn btn-primary">${pageNumber}</a>
 	</c:forEach>
+	</div>
 
 </body>
 </html>
