@@ -91,9 +91,6 @@
 							성적
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="/lectureBoard/score/studentList?lecaCd=${param.lecaCd}" class="nav-link">수강생 목록</a>
-					</li>
 				</sec:authorize>
 			</ul>
 		</nav>

@@ -70,7 +70,7 @@
 						</div>
 					</c:if>
 					<div class="custom-file modifyDisplay" style="display: none">
-						<input type="file" id="customFile" name="files" multiple>
+						<input type="file" id="customFile" name="filefile" multiple>
 						<label class="custom-file-label" for="customFile">Choose
 							file</label>
 					</div>

@@ -188,7 +188,6 @@ function start(){
 		
 		
 		$('#objDetail').on('click', function(){
-			alert($('#lecaCd').val());
 			var popup = window.open("/lectureBoard/score/totalScore?lecaCd=" + $('#lecaCd').val() );
 			
 			flag = 1;
@@ -196,15 +195,24 @@ function start(){
 		
 		$('#yBtn').on('click', function(){
 			if($('#objYns').val() != "승인대기"){
-				alert("이미 승인 또는 반려를 하신 내역입니다.");
+				Swal.fire({
+					icon: 'warning',
+					text : '이미 승인 또는 반려를 하신 내역입니다.'
+				})
 				return false;
 			}
 			if(flag == 0){
-				alert("상세보기를 보신 후에 승인 또는 반려를 하실 수 있습니다.");
+				Swal.fire({
+					icon: 'warning',
+					text : "상세보기를 보신 후에 승인 또는 반려를 하실 수 있습니다."
+				})
 				return false;
 			}
 			if(!($('#objRpl').val())){
-				alert("답변을 기입해야 반려하실 수 있습니다.");
+				Swal.fire({
+					icon: 'warning',
+					text : "답변을 기입해야 반려하실 수 있습니다."
+				})
 			}else{
 				$.ajax({
 					url : "/totalScore/updateY",
@@ -222,6 +230,10 @@ function start(){
 						$('#objRpl').attr('readonly', false);
 						$('#yBtn').attr('disabled', false);
 						$('#nBtn').attr('disabled', false);
+						Swal.fire({
+							icon: 'success',
+							text : "승인완료!."
+						})
 						start();
 					},
 					dataType : 'json'
@@ -230,16 +242,25 @@ function start(){
 		});
 		
 		$('#nBtn').on('click', function(){
-// 			if($('#objYns').val() != "승인대기"){
-// 				alert("이미 승인 또는 반려를 하신 내역입니다.");
-// 				return false;
-// 			}
+			if($('#objYns').val() != "승인대기"){
+				Swal.fire({
+					icon: 'warning',
+					text : '이미 승인 또는 반려를 하신 내역입니다.'
+				})
+				return false;
+			}
 			if(flag == 0){
-				alert("상세보기를 보신 후에 승인 또는 반려를 하실 수 있습니다.");
+				Swal.fire({
+					icon: 'warning',
+					text : "상세보기를 보신 후에 승인 또는 반려를 하실 수 있습니다."
+				})
 				return false;
 			}
 			if(!($('#objRpl').val())){
-				alert("답변을 기입해야 반려하실 수 있습니다.");
+				Swal.fire({
+					icon: 'warning',
+					text : "답변을 기입해야 반려하실 수 있습니다."
+				})
 			}else{
 				$.ajax({
 					url : "/totalScore/updateN",
