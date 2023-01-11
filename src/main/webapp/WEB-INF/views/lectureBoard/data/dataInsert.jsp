@@ -40,7 +40,7 @@
 					<div class="col-sm-10">
 					</div>
 						<div class="col-sm-1" align="right" >
-							<button class="btn btn-outline-primary" id="modify">등록</button>
+							<button type="submit" class="btn btn-outline-primary" id="modify">등록</button>
 						</div>
 					<div class="col-sm-1">
 						<a class="btn btn-outline-warning" href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}">취소</a>

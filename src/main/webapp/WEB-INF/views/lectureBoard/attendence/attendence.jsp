@@ -146,7 +146,7 @@ let token = "${_csrf.token}";
 	$(function() {
 		
 		// 로딩창
-		loadingWithMask();
+// 		loadingWithMask();
 		
 		var lateCnt = 0;
 		var atenEarly = 0;
