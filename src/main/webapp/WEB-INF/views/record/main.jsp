@@ -27,6 +27,8 @@ cursor:pointer;
 <!-- 	</h3> -->
 <!-- </div> -->
 <div class="row">
+ <iframe name='blankifr' style='display:none;'></iframe>
+<input type="hidden" value="${student.stuRgb }" id="stuRgb" />
 <div class="col-6 alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
 						<p>
@@ -41,7 +43,7 @@ cursor:pointer;
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee;">
 						<p>
 							<strong>현재 내 학적 상태</strong> <br>
-							<br> <strong>학적구분&nbsp;:&nbsp;</strong>&nbsp;<span id="recordStateNow"></span><br>
+							<br> <strong>학적구분&nbsp;:&nbsp;</strong>&nbsp;<span id="recordStateNow"style="color:blue;"></span><br>
 							<br> <strong>신청날짜&nbsp;:&nbsp;</strong>&nbsp;<span id="recordApplyDate"style="color:blue;"></span><br> 
 							<br> <strong>종료날짜&nbsp;:&nbsp;</strong>&nbsp;<span id="recordEndDate" style="color:blue;"></span><br>
 							<br> <strong>비고&nbsp;:&nbsp;</strong>&nbsp;<span id="recordStateEtc" style="color:blue;"></span><br>
@@ -109,7 +111,7 @@ cursor:pointer;
 			</div>
 			<div class="modal-body">
 				<!-- 모달바디 -->
-				<form id="form" action="/record/applyPost" class="row" method="post"
+				<form id="form" action="/record/applyPost" class="row" method="post" target='blankifr'
 					onsubmit="return checkFormData()" style="height: 100%;margin: 0 auto;padding: 0;">
 					<div class="alert alert-light" role="alert"
 						style="font-size: 0.9em; padding: 1em; border: 1px solid #eee; width: 100em;">
@@ -181,6 +183,7 @@ cursor:pointer;
 				<!-- 모달바디 -->
 			</div>
 			<div class="modal-footer justify-content-align">
+			<button type="button" id="insertData" class="btn btn-outline-primary">자동 입력</button>
 				<button type="submit" form="form"
 					class="btn btn-outline-primary">등록</button>
 				<a onclick="dataReset()" class="btn btn-outline-secondary">작성취소</a>
@@ -296,10 +299,14 @@ cursor:pointer;
 		    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
 		    var day = date.getDate();                   //d
 		    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-		    return  year + '/' + month + '/' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+		    return  year + '/' + month + '/' + day;       //'`-' 추가하여 yyyy-mm-dd 형태 생성 가능
 		}
 		
 		$(document).ready(function(){
+			$("#recordStateNow").text($("#stuRgb").val());
+    	    $("#recordApplyDate").text("없음");
+    	    $("#recordEndDate").text("없음");
+    	    $("#recordStateEtc").text("없음");
 			year = date.getFullYear(); //년도 recYr
 			month = date.getMonth()+1;
 		    if (month == '1' || month == '2' || month == '3' || month == '4' || month == '5' || month == '6') currentSemester = 1;
@@ -368,6 +375,12 @@ cursor:pointer;
 		    	    appliedRecordIsDone(tds[2].innerHTML,tds[3].innerHTML,tds[1].innerHTML);
 	    	      }
 		    	}
+// 		    	if(apply.innerHTML == '승인대기'||apply.innerHTML == '처리완료'||apply == null){
+// 		    		$("#recordStateNow").text($("#stuRgb").val());
+// 		    	    $("#recordApplyDate").text("없음");
+// 		    	    $("#recordEndDate").text("없음");
+// 		    	    $("#recordStateEtc").text("없음");
+// 		    	}
 		    })
 		  });
 		
@@ -740,8 +753,28 @@ cursor:pointer;
 		})
 		return false;	
 		} 
-
-		return true;
+		Swal.fire({
+			  title: '신청 완료되었습니다.',
+			  text: "상담 페이지로 이동 하시겠습니까?",
+			  icon: 'success',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '네 이동합니다',
+			  cancelButtonText: '아니요'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				  $("#form").attr("target","blankifr");
+				  location.href = "/counsel/studentside/applyList?stuNo="+$("input[name='stuNo']").val();
+// 				  return true;
+			  } else {
+				  $("#form").removeAttr("target");
+				  location.href = "/record/main?stuNo="+$("input[name='stuNo']").val();
+				  
+			  }
+			});
+		
+		
 	}
 		
 	function dataReset(){
@@ -767,4 +800,10 @@ cursor:pointer;
 			});
 			  return;
 	}
+	
+	$("#insertData").on("click",function(){
+		$("#recYr option:eq(1)").prop("selected",true);
+		$("#recPer option:eq(1)").prop("selected",true);
+		$("#recRsn").val("건강상의 이유로 휴학 신청합니다.")
+	})
 </script>
