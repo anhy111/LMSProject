@@ -239,7 +239,7 @@ cursor:pointer;
 							<label>상담 할 내용*</label>
 						</div>
 					</div>
-					<div class="row" style="height:300px;max-height:400px;">
+					<div class="row" style="height:200px;max-height:400px;">
 						<textarea id="cnslCon"name="cnslCon" rows="3" class="col-10 ml-2 h-100 form-control"></textarea>
 					</div>
 				</div>
@@ -253,6 +253,7 @@ cursor:pointer;
 				<!-- 모달바디 -->
 			</div>
 			<div class="modal-footer justify-content-align">
+			<button type="button" id="insertData" class="btn btn-outline-primary">자동 입력</button>
 				<button onclick="checkInsertData()" type="button"  class="btn btn-outline-primary">등록</button>
 				<a onclick="dataReset()" class="btn btn-outline-secondary">취소</a>
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -788,4 +789,9 @@ $("input:radio[name='cnslType']").change(function() {
 		$("#cnslDt").removeAttr("required", "required");
 	}
 });
+
+$("#insertData").on("click",function(){
+    $("input[name='cnslTtl']").val("건강상의 이유로 1년 휴학 신청합니다.");
+	$("#cnslCon").val("입원 및 치료를 목적 으로 질병 휴학 1년 신청 합니다.");					
+})
 </script>
