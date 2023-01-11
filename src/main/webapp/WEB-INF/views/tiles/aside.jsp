@@ -275,7 +275,7 @@
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="/manage/empManage"
+                            <li class="nav-item"><a href="/manage/empManage?viewPage=1"
                                                     class="nav-link">
 
                                 <p>교직원 목록</p>

@@ -82,11 +82,9 @@
 	<div class="card-body col-7 container-fluid">
 		<div class="row">
 			<label class="col-2">강의 평가</label>
-			<div class="form-group col-2 offset-6">
-				<button class="btn btn-secondary btn-flat" id="autoFill">자동채우기</button>
-			</div>
-			<div class="form-group col-2">
-				<button class="btn btn-secondary btn-flat" id="save">저장</button>
+			<div class="form-group col-5 offset-5 text-right">
+				<button class="btn btn-outline-secondary btn-flat" id="autoFill">자동채우기</button>
+				<button class="btn btn-outline-primary btn-flat" id="save">저장</button>
 			</div>
 
 		</div>

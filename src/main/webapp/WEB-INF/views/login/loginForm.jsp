@@ -132,7 +132,7 @@ $(function(){
 	//학생 자동 로그인
 	function stuAutoLogin() {
 		$('#memCd').val('21715032');
-		$('#memPass').val('asdf');
+		$('#memPass').val('asdfasdf');
 		$('#frm').submit();
 	}
 	//교수 자동 로그인
