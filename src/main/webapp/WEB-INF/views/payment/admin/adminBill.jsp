@@ -23,7 +23,7 @@
 </div>
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="table-responsive" style="height: 300px;">
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
@@ -91,14 +91,10 @@
 		}
 	});
 
-	let checkboxAll = "";
 
 	$(function () {
-		checkboxAll = document.querySelectorAll(".checkboxAll");
 		$("#checkboxAll").on("click", function () {
-			for (var i = 0; i < checkboxAll.length; i++) {
-				checkboxAll[i].checked = true;
-			}
+			$(".checkboxAll").prop("checked", true);
 		});
 	})
 
@@ -136,27 +132,27 @@
 			}
 		});
 	}	
-	$(function () {
+// 	$(function () {
 
-		$.ajax({
-			url: "/scholarship/admin/scholarshipCheck",
-			method: "POST",
-			data: JSON.stringify(dataSet),
-			dataType: "json",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader(header, token);
-			},
-			success: function (result) {
-				if (result == 0) {
-					$('#btn1').remove();
-					var str = "<span style='color:red;'>&ensp;&ensp;*성적장학금을 수여하지 않은 상태이므로 등록금을 고지할 수 없습니다.</span>";
-					$('#noticeCheck').append(str);
-				}
-			}
-		})
-
-		$('#btn1').on('click', function () {
-			submit();
-		})
-	});
+// 		$.ajax({
+// 			url: "/scholarship/admin/scholarshipCheck",
+// 			method: "POST",
+// 			data: JSON.stringify(dataSet),
+// 			dataType: "json",
+// 			beforeSend: function (xhr) {
+// 				xhr.setRequestHeader(header, token);
+// 			},
+// 			success: function (result) {
+// 				if (result == 0) {
+// 					$('#btn1').remove();
+// 					var str = "<span style='color:red;'>&ensp;&ensp;*성적장학금을 수여하지 않은 상태이므로 등록금을 고지할 수 없습니다.</span>";
+// 					$('#noticeCheck').append(str);
+// 				}
+// 			}
+// 		})
+// 	});
+	
+	$('#btn1').on('click', function () {
+		submit();
+	})
 </script>
