@@ -48,21 +48,22 @@
                         </div>
                         <input type="file" name="files2" multiple>
                     </div>
-                    <button type="submit">등록</button>
+<%--                    <button type="submit">등록</button>--%>
+                    <div class="row justify-content-end mt-3"
+                         style="padding-right: 30px; padding-bottom: 50px;">
+                        <button class="btn btn-outline-primary" type="button"
+                                onclick="autoFill();">자동완성
+                        </button>&nbsp;&nbsp;
+                        <button class="btn btn-outline-primary" type="submit"
+                                type="submit">등록
+                        </button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-outline-danger" type="button"
+                                onclick="f_alert();">취소
+                        </button>
+                    </div>
                 </form>
-                <div class="row justify-content-end mt-3"
-                     style="padding-right: 30px; padding-bottom: 50px;">
-                    <button class="btn btn-outline-primary" type="button"
-                            onclick="autoFill();">자동완성
-                    </button>&nbsp;&nbsp;
-                    <button class="btn btn-outline-primary" type="submit"
-                            onclick="regist_go()">등록
-                    </button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-outline-danger" type="button"
-                            onclick="f_alert();">취소
-                    </button>
-                </div>
+
 
             </div>
         </div>
