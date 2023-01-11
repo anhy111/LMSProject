@@ -71,7 +71,7 @@ tr.text-center td:hover {
 									<td data-value="${counselList.cnslCd}">${status.end-status.index }</td>
 									<td>${counselList.stuNm}</td>
 									<td>${counselList.cnslCate }</td>
-									<td>${fn:substring(counselList.cnslTtl,0,8) }</td>
+									<td class="text-left">${counselList.cnslTtl }</td>
 									<td><fmt:formatDate value="${counselList.cnslReg }"
 											pattern="yy/MM/dd" /></td>
 									<td><fmt:formatDate value="${counselList.cnslDt }"
@@ -109,7 +109,7 @@ tr.text-center td:hover {
 									<td data-value="${nonFaceCounselList.cnslCd}">${status.end-status.index }</td>
 									<td>${nonFaceCounselList.stuNm}</td>
 									<td>${nonFaceCounselList.cnslCate }</td>
-									<td>${fn:substring(nonFaceCounselList.cnslTtl,0,8) }</td>
+									<td class="text-left">${nonFaceCounselList.cnslTtl }</td>
 									<td><fmt:formatDate value="${nonFaceCounselList.cnslReg }"
 											pattern="yy/MM/dd" /></td>
 									<td><fmt:formatDate value="${nonFaceCounselList.cnslDt }"

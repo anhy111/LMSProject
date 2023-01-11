@@ -43,13 +43,16 @@
 							
 							<div class="form-group">
 								<div class="row">
-									<div class="col-sm-8"></div>
+									<div class="col-sm-6"></div>
 										<div class="col-sm-2">
-											<button type="submit" class="btn btn-block btn-info" >등록</button>
+											<button type="button" id="autoFill" class="btn btn-block btn-outline-info" >자동채우기</button>
+										</div>
+										<div class="col-sm-2">
+											<button type="submit" class="btn btn-block btn-outline-info" >등록</button>
 										</div>
 										<div class="col-sm-2">
 								<!-- ★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆ -->
-											<a href="/lectureBoard/task/taskSubmitList?lecaCd=${param.lecaCd}&&taskCd=${param.taskCd}" class="btn btn-block btn-danger">취소</a>
+											<a href="/lectureBoard/task/taskSubmitList?lecaCd=${param.lecaCd}&&taskCd=${param.taskCd}" class="btn btn-block btn-outline-danger">취소</a>
 										</div>					
 								</div>
 								<br>
@@ -62,6 +65,10 @@
  	</div>
 </div>
 <script type="text/javascript">
+	$("#autoFill").on("click",function(){
+		CKEDITOR.instances.tsubCon.setData("동태적 거시경제모형을 이용해 지난 2년간 코로나로 인한 주식시장의 움직임에 대해 분석을 해봤습니다.")
+	})
+	
 	$("input[type='file']").on('change',function(){
 		var str = '';
 		for(var i = 0;i<event.target.files.length;i++){

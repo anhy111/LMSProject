@@ -105,7 +105,7 @@
 													<th>
 														<label style="margin: 10px; float: left;" class="cnt">1.&nbsp;</label>
 														 <span> 
-														 	<input type="text" minlength="1" class="form-control question" name="testQList[0].teqCon" placeholder="문제를 입력하세요." style="width: 90%; display: inline-block;" required />
+														 	<input type="text" minlength="1" class="form-control question" id="testQList0teqCon"name="testQList[0].teqCon" placeholder="문제를 입력하세요." style="width: 90%; display: inline-block;" required />
 															<button type="button" id="delbtn"class="minusbtn btn btn-light">-</button>
 														</span>	
 													</th>
@@ -114,11 +114,11 @@
 											<tbody>
 												<tr>
 													<td>
-														<input type="text"   name="testQList[0].teqOption1" class="form-control firchoice zero"     placeholder="첫 번째 보기 답안을 입력하세요." style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
-														<input type="text"   name="testQList[0].teqOption2" class="form-control secchoice zero"     placeholder="두 번째 보기 답안을 입력하세요."style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
-														<input type="text"   name="testQList[0].teqOption3" class="form-control thichoice zero"     placeholder="세 번째 보기 답안을 입력하세요."style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
-														<input type="text"   name="testQList[0].teqOption4" class="form-control forchoice zero"     placeholder="네 번째 보기 답안을 입력하세요."style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
-														<input type="number" name="testQList[0].teqAnswer"  class="form-control questionAnswer zero"placeholder="정답을 숫자로 입력하세요.(예시: 3)"style="width: 97%; margin: 10px 10px 10px 35px;" minlength="1"  min="1" max="4" step="1" required />
+														<input type="text"   id="testQList0teqOption1" name="testQList[0].teqOption1" class="form-control firchoice zero"     placeholder="첫 번째 보기 답안을 입력하세요." style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
+														<input type="text"   id="testQList0teqOption2" name="testQList[0].teqOption2" class="form-control secchoice zero"     placeholder="두 번째 보기 답안을 입력하세요."style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
+														<input type="text"   id="testQList0teqOption3" name="testQList[0].teqOption3" class="form-control thichoice zero"     placeholder="세 번째 보기 답안을 입력하세요."style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
+														<input type="text"   id="testQList0teqOption4" name="testQList[0].teqOption4" class="form-control forchoice zero"     placeholder="네 번째 보기 답안을 입력하세요."style="width: 97%; margin: 10px 10px 10px 35px;"  minlength="1" required />
+														<input type="number" id="testQList0teqAnswer"  name="testQList[0].teqAnswer"  class="form-control questionAnswer zero"placeholder="정답을 숫자로 입력하세요.(예시: 3)"style="width: 97%; margin: 10px 10px 10px 35px;" minlength="1"  min="1" max="4" step="1" required />
 													</td>
 												</tr>
 											</tbody>
@@ -129,7 +129,8 @@
 										<button type="button" class="plusBtn btn btn-secondary">+</button>
 									</div>
 									<div style="clear: both;"></div>
-									<button type="submit" class="btn btn-primary"style="float: right;">제출</button>
+									<button type="button" class="btn btn-outline-primary" style="float: right;" id="autoFill">자동채우기</button>
+									<button type="submit" class="btn btn-outline-primary"style="float: right;">제출</button>
 									<sec:csrfInput />
 								</form>
 								<a href="/lectureBoard/test/test?lecaCd=${param.lecaCd}" class="btn btn-light">취소</a>
@@ -138,21 +139,22 @@
 				</div>
 </div>
 <script type="text/javascript" defer="defer">
+
 let count = 1;
 	// 문제 생성
 	$('.plusBtn').on('click', function() {
 		var str = '<table class="table table-centered mb-0">';
 		str += '<thead><tr><th>';
 		str += '<label style="margin:10px;float:left;" class="cnt">' + (parseInt(count) + 1) + '.&nbsp;</label>';
-		str += '<span><input type="text" minlength="1" class="form-control" name="testQList['+count +'].teqCon" placeholder="문제를 입력하세요." value="" style="width:90%;display: inline-block;"/><button type="button" class="minusbtn btn btn-light">-</button></span>';
+		str += '<span><input type="text" minlength="1" class="form-control" id="testQList'+count +'teqCon" name="testQList['+count +'].teqCon" placeholder="문제를 입력하세요." value="" style="width:90%;display: inline-block;"/><button type="button" class="minusbtn btn btn-light">-</button></span>';
 		str += '</th></tr></thead>';
 		str += '<tbody><tr><td>';
 		//-----
-		str += '<input type="text"   name="testQList['+count +'].teqOption1" class="form-control firchoice zero" placeholder="첫 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="text"   name="testQList['+count +'].teqOption2" class="form-control secchoice zero" placeholder="두 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="text"   name="testQList['+count +'].teqOption3" class="form-control thichoice zero" placeholder="세 번째 보기 답안을 입력하세요."  minlength="1"  style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="text"   name="testQList['+count +'].teqOption4" class="form-control forchoice zero" placeholder="네 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
-		str += '<input type="number" name="testQList['+count +'].teqAnswer"  class="form-control questionAnswer zero" placeholder="정답을 숫자로 입력하세요.(예시:&nbsp;3)"   minlength="1" min="1" max="4" stequestionAnswerp="1"style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="text"   id="testQList'+count +'teqOption1" name="testQList['+count +'].teqOption1" class="form-control firchoice zero" placeholder="첫 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="text"   id="testQList'+count +'teqOption2" name="testQList['+count +'].teqOption2" class="form-control secchoice zero" placeholder="두 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="text"   id="testQList'+count +'teqOption3" name="testQList['+count +'].teqOption3" class="form-control thichoice zero" placeholder="세 번째 보기 답안을 입력하세요."  minlength="1"  style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="text"   id="testQList'+count +'teqOption4" name="testQList['+count +'].teqOption4" class="form-control forchoice zero" placeholder="네 번째 보기 답안을 입력하세요."  minlength="1" style="width:97%;margin:10px 10px 10px 35px;"/>';
+		str += '<input type="number" id="testQList'+count +'teqAnswer" name="testQList['+count +'].teqAnswer"  class="form-control questionAnswer zero" placeholder="정답을 숫자로 입력하세요.(예시:&nbsp;3)"   minlength="1" min="1" max="4" stequestionAnswerp="1"style="width:97%;margin:10px 10px 10px 35px;"/>';
 		str += '</td></tr></tbody></table>';
 		
 			if(count == 10) {
@@ -207,11 +209,54 @@ let count = 1;
 		$('.cnt').each(function(i, v){
 			$(this).text(i+1 + ".");
 		});
-		
-		
 	})
+$("#autoFill").on("click", function(){
+	$("#testNm").val("2023년 1학기 거시경제학 기말고사");
+	$("#testCon").val("기말고사는 성적의 30%를 차지하니 잘 푸시기 바랍니다.");
+	
+	$("#testQList0teqCon").val("다음 중 '보이지 않는 손'에 대한 정의 중 맞는 것은?");
+	$("#testQList0teqOption1").val("각자 자신의 이익만을 추구하다 보면 전체적으로 균형이 달성되지 않는다는 뜻이다.");
+	$("#testQList0teqOption2").val("행동을 할 때는 다른 사람의 기분도 충분히 고려해야 한다는 뜻이다.");
+	$("#testQList0teqOption3").val("각자 이기적 목표만을 추구하더라도 조화와 효율을 달성할 수 있다는 뜻이다.");
+	$("#testQList0teqOption4").val("보이지 않는 곳에서 이익을 추구하는 것은 도덕적으로 정당화될 수 없다는 뜻이다.");
+	$("#testQList0teqAnswer").val("3");
+	
+	$("#testQList1teqCon").val("보험회사에서 판매하던 보험을 이제 은행에서도 판매할 수 있게 됐다. 이처럼 은행에서 보험을 판매하는 것을 무엇이라 하는가?");
+	$("#testQList1teqOption1").val("어슈어 뱅크");
+	$("#testQList1teqOption2").val("방카슈랑스");
+	$("#testQList1teqOption3").val("인디펜던스");
+	$("#testQList1teqOption4").val("인슈어런스");
+	$("#testQList1teqAnswer").val("2");
+	
+	$("#testQList2teqCon").val("법인세에 대한 다음 설명중 맞는 것은?");
+	$("#testQList2teqOption1").val("재정적자에 직면한 각국 정부들은 경쟁적으로 법인세를 올리는 추세이다.");
+	$("#testQList2teqOption2").val("최저한 세율은 각종 감면조치에 상관없이 무조건 내야하는 최소한의 세율이다.");
+	$("#testQList2teqOption3").val("법인세는 주주배당을 실시한 뒤 잔여이익에서 내는 세금이다.");
+	$("#testQList2teqOption4").val("법인세는 각 지방 자치단체에 낸다.");
+	$("#testQList2teqAnswer").val("2");
+	
+	$("#testQList3teqCon").val("세계적 유통 체인인 월마트가 한국 내 영업에서 매출부진에 시달린 끝에 결국 철수하고 말았다. 이 회사가 한국에서 철수한 이유를 추정한 다음의 주장 중 적절치 않은 것은?");
+			
+	$("#testQList3teqOption1").val("아마도 한국 소비자들의 쇼핑 패턴 분석에 실패했을 것이다.");
+	$("#testQList3teqOption2").val("미국 신선 농산물 판매를 고집하면서 다양한 상품을 판매하는데 실패했을 것이다.");
+	$("#testQList3teqOption3").val("한국 내 부동산 가격이 높아 신규 점포 확장에 실패했을 수 있다.");
+	$("#testQList3teqOption4").val("미국식 할인점 경영을 고집하면서 매장 관리, 상품 전시 등에서 실패했을 것이다.");
+	$("#testQList3teqAnswer").val("2");
+	
+	$("#testQList4teqCon").val("독점기업의 가격 전략에 관한 설명으로 옳은 것은?");
+	$("#testQList4teqOption1").val("소비자잉여를 유지하며 생산자의 이윤을 극대화한다");
+	$("#testQList4teqOption2").val("독점가격은 한계비용과 같다.");
+	$("#testQList4teqOption3").val("가격차별을 하는 경우 단일 가격을 설정하는 것에 비해 사회적 후생은 증가한다.");
+	$("#testQList4teqOption4").val("가격차별을 하는 경우 수요의 가격탄력성이 더 높은 소비자들에게 더 높은 가격을 부과한다.");
+	$("#testQList4teqAnswer").val("3");
+})
+	
 </script>
 <script type="text/javascript" >
+
+
+
+
 	$("#reservationtime").daterangepicker(
 			{
 				locale : {

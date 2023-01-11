@@ -70,9 +70,8 @@
 						</div>
 					</c:if>
 					<div class="custom-file modifyDisplay" style="display: none">
-						<input type="file" id="customFile" name="filefile" multiple>
-						<label class="custom-file-label" for="customFile">Choose
-							file</label>
+						<input type="file" id="customFile" name="files" multiple>
+						<label class="custom-file-label" for="customFile">Choose file</label>
 					</div>
 					<div class="row">
 						<div class="col-sm-7"></div>
@@ -135,10 +134,10 @@ $("#DeleteButton").on("click",function(){
 		  Swal.fire({
 			    title : "삭제되었습니다.",
 			    icon : "success"
-		  });
-		//여기 해야 됨☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
-		}
+		  }).then(function(){
 			location.replace('/lectureBoard/data/dataDelete?lecaCd=' + ${lecData.lecaCd}+'&&ldtCd='+${lecData.ldtCd});
+		  });
+		}
 	})
 });
 	

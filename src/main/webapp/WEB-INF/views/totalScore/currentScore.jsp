@@ -51,9 +51,9 @@
 		color : black;
 	}
 	#tgradePreListRound{
-		width : 90%;
-		margin-left : auto;
-		margin-right : auto;
+		width : 100%;
+/* 		margin-left : auto; */
+/* 		margin-right : auto; */
 	}
 	.tgradePreListSelect{
 		display:inline-block;
@@ -178,7 +178,7 @@ let token = "${_csrf.token}";
     	<i class="mdi mdi-home" style="font-size: 1.3em"></i> <i class="dripicons-chevron-right"></i> 성적 <i class="dripicons-chevron-right"></i> <span style="font-weight: bold;">현재 학기 성적 조회</span>
   	</div>
 
-	<div id = "personalGradeInfo">
+<!-- 	<div id = "personalGradeInfo"> -->
 		<table id="stuInfoTable">
   		<tr>
 			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
@@ -228,7 +228,7 @@ let token = "${_csrf.token}";
 			<td colspan="9" style="background: #F3F8FF; height: 10px;"></td>
 		</tr>
   	</table>
-	</div>
+<!-- 	</div> -->
 	<br><br>
 	
 	<p class="tgradePreListSelect"><i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;취득성적</p>

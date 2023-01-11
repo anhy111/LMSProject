@@ -2,15 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec"
            uri="http://www.springframework.org/security/tags" %>
+<script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
+<script src="/resources/adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
 <%
     String no = String.valueOf(session.getAttribute("no"));
 %>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:1;">
+       style="background-color: #001F3F;opacity:0.9;">
 
 	<sec:authorize access="hasRole('ROLE_STUDENT')">
-	    <a href="/" class="brand-link bg-navy" style="text-align:left;padding:0;">
+	    <a href="/" class="brand-link bg-navy" style="text-align:left;padding:0;box-shadow: 3px 2px 3px -1px var(--light)">
 	   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 	<!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
 	<!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
@@ -18,18 +20,18 @@
 	    </a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-		<a href="/lecture/myLecture" class="brand-link bg-navy" style="text-align:left;padding:0;">
+		<a href="/lecture/myLecture" class="brand-link bg-navy" style="text-align:left;padding:0;box-shadow: 3px 2px 3px -1px var(--light)">
 		   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 	    </a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_MANAGER')">
-		<a href="/aschedule/calendar" class="brand-link bg-navy" style="text-align:left;padding:0;">
+		<a href="/aschedule/calendar" class="brand-link bg-navy" style="text-align:left;padding:0;box-shadow: 3px 2px 3px -1px var(--light)">
 		   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 	    </a>
 	</sec:authorize>
 	
     <!-- Sidebar -->
-    <div class="mt-2 sidebar">
+    <div class="mt-5 sidebar">
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent"
@@ -40,14 +42,14 @@
                 <sec:authorize access="hasRole('ROLE_STUDENT')">
                 
 <!--                     <li class="nav-header">학생 어사이드</li> -->
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link">
 
                         <p>
                             수강관리 <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
+                        <ul class="nav nav-treeview" >
+                            <li class="nav-item ">
                                 <a href="/student/lecture/myLecture" class="nav-link">
                                     <p>수강중인 강의</p>
                                 </a>
@@ -126,7 +128,7 @@
                 
                 <!-- 교수 어사이드 -->
                 <sec:authorize access="hasRole('ROLE_PROFESSOR')">
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link">
                         <p>
                             강의 <i class="right fas fa-angle-left"></i>
                         </p>
@@ -148,7 +150,7 @@
                         </ul>
                     </li>
                     <!-- 학적관리 -->
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link">
                         <p>
                             학생 관리 <i class="right fas fa-angle-left"></i>
                         </p>
@@ -196,7 +198,7 @@
 <!--                     <li class="nav-item"><a href="#" class="nav-link"> -->
 <!--                         <p>강의</p> -->
 <!--                     </a></li> -->
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link">
 
                         <p>
                             등록 및 장학 관리 <i class="fas fa-angle-left right"></i>
@@ -249,7 +251,7 @@
 <!--                             </li> -->
 <!--                         </ul> -->
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link">
 
                         <p>
                             학생 관리 <i class="right fas fa-angle-left"></i>
@@ -268,7 +270,7 @@
                             </a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link">
 
                         <p>
                             교직원 관리<i class="right fas fa-angle-left"></i>
@@ -292,7 +294,7 @@
                             </a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">
+                    <li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link">
 
                         <p>
                             학과 <i class="right fas fa-angle-left"></i>
@@ -322,3 +324,6 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+<script type="text/javascript">
+
+</script>
