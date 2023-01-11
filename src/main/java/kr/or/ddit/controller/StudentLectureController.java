@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,6 +49,7 @@ public class StudentLectureController {
 	@GetMapping("/searchList")
 	public List<Lecture> searchList(StudentLecture studnLecture){
 		log.info("studnLecture : " + studnLecture);
+		
 		return this.lectureService.searchList(studnLecture);
 	}
 	
@@ -82,4 +84,12 @@ public class StudentLectureController {
 		model.addAttribute("data", lecApplySearch);
 		return "lectureBoard/score/totalScore2";
 	}
+	
+	@ResponseBody
+	@GetMapping("/lectureCount") 
+	public String lectureCount(StudentLecture studentLecture) {
+		log.info("StudentLectureController.lectureCount.studentLecture : " + studentLecture);
+		return this.lectureService.lectureListPaging(studentLecture) + "";
+	}
+	
 }

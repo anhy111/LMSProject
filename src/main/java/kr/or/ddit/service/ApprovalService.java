@@ -21,4 +21,7 @@ public interface ApprovalService {
     
 	// 장학생 추천 결재 디테일
     Student schStuDetail(Approval approval);
+    
+    // 총 데이터 수
+    int approvalListPaging(Approval approval);
 }

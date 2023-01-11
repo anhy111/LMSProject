@@ -3,6 +3,7 @@ package kr.or.ddit.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.domain.CommonDetail;
 import kr.or.ddit.domain.Record;
+import kr.or.ddit.domain.Student;
 import kr.or.ddit.service.CommonDetailService;
+import kr.or.ddit.service.MemberService;
 import kr.or.ddit.service.RecordService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,12 +32,17 @@ public class RecordController {
 	RecordService recordService;
 	@Autowired
 	CommonDetailService commonDetailService;
+	@Autowired
+	MemberService memberService;
 	
 	@GetMapping("/main")
-	public String RecordList(Model model, int stuNo) {
-		
+	public String RecordList(Model model, int stuNo,HttpSession session) {
+		int memNo = (int)session.getAttribute("no");
+		Student student = this.memberService.readStudent(memNo);
 		List<Record> recordsList = this.recordService.RecordList(stuNo);
 		//공통 약속
+		log.info("정보 봅시다 : " + student.toString());
+		model.addAttribute("student", student);
 		model.addAttribute("bodyTitle","학적 변동 내역");
 		model.addAttribute("recordsList",recordsList);
 		

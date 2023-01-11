@@ -36,7 +36,6 @@
 <link rel="stylesheet" href="/resources/adminlte/plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="/resources/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- boardTemplate -->
-<link rel="stylesheet" type="text/css" href="/resources/css/boardTemplate.css">
 <script src="/resources/adminlte/plugins/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- jQuery UI 1.11.4 -->

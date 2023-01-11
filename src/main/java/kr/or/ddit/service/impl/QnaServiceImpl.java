@@ -27,8 +27,8 @@ public class QnaServiceImpl implements QnaService {
 
     //문의게시판/검색결과 리스트 출력
     @Override
-    public List<Qna> showList() {
-        return this.qnaMapper.showList();
+    public List<Qna> showList(int viewPage) {
+        return this.qnaMapper.showList(viewPage);
     }
 
     //게시글 조회

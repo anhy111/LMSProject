@@ -101,6 +101,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return this.approvalMapper.schStuDetail(approval);
 	}
 	
+	@Override
+	public int approvalListPaging(Approval approval) {
+		return this.approvalMapper.approvalListPaging(approval);
+	}
+	
 	// 공통코드를 숫자로 치환해주는 함수
 	private int getLecaYn(String apprYn) {
 		if(apprYn.equals("AP001")) {

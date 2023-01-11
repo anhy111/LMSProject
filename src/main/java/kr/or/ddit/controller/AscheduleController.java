@@ -58,12 +58,24 @@ public class AscheduleController {
 		aSchedule.setFormatAschEn(format.format(aSchedule.getAschEn()));
 		
 		List<ASchedule> aScheduleList = this.aScheduleService.loadScheduleForMonth(aSchedule);
-		
-		
-		
 		log.info("AscheduleController.loadSchedule.aScheduleList : " + aScheduleList);
 		
 		return aScheduleList;
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateSch")
+	public String updateSch(@RequestBody ASchedule aSchedule) {
+		log.info("AscheduleController.updateSch.aSchedule :" + aSchedule);
+		return this.aScheduleService.updateSch(aSchedule) + "";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/deleteSch")
+	public String deleteSch(@RequestBody ASchedule aSchedule) {
+		log.info("AscheduleController.deleteSch.aSchedule :" + aSchedule);
+		return this.aScheduleService.deleteSch(aSchedule) + "";
 	}
 	
 }

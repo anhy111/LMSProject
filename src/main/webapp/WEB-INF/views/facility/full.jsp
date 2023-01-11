@@ -582,7 +582,7 @@ $(function(){
 
             data = {
                 memNo: '<%=sessionId%>',
-                facCd: $('#facility').val(),
+                facCd: $('.facility').val(),
                 rsvSt: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
                 rsvEn: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
                 backgroundColor: $("#backgroundColor").val()

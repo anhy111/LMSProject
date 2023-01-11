@@ -14,7 +14,7 @@
     <!-- 111111 -->
     <div class="row">
             <div class="col-12">
-            	<div class="mr-auto col-4">
+            	<div class="mr-auto row">
                 <h1 class="title">${form.noticeTtl}</h1>
                     <div style="border:0;" class="form-control">작성일&nbsp;&nbsp;:&nbsp;&nbsp;<fmt:formatDate value="${form.noticeReg}" pattern="yyyy/MM/dd"/></div>
                 </div>

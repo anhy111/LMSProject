@@ -55,9 +55,8 @@ public class ApprovalController {
 	
 	@ResponseBody
 	@GetMapping("/list")
-	public List<Approval> list(HttpServletRequest req){
+	public List<Approval> list(HttpServletRequest req, Approval approval){
 		int empNo = (int)req.getSession().getAttribute("no");
-		Approval approval = new Approval();
 		approval.setEmpNo(empNo);
 		return this.approvalService.approvalList(approval);
 	}
@@ -96,6 +95,13 @@ public class ApprovalController {
 	public Student schStuDetail(Approval approval) {
 		log.info("approval : " + approval);
 		return this.approvalService.schStuDetail(approval);
+	}
+	
+	@ResponseBody
+	@GetMapping("/approvalCount")
+	public String approvalCount(Approval approval) {
+		log.info("ApprovalController.approvalCount.approval : " + approval);
+		return this.approvalService.approvalListPaging(approval) + "";
 	}
 	
 	

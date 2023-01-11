@@ -24,4 +24,14 @@ public class AScheduleServiceImpl implements AScheduleService {
 	public List<ASchedule> loadScheduleForMonth(ASchedule aSchedule) {
 		return this.aScheduleMapper.loadScheduleForMonth(aSchedule);
 	}
+	
+	@Override
+	public int updateSch(ASchedule aSchedule) {
+		return this.aScheduleMapper.updateSch(aSchedule);
+	}
+	
+	@Override
+	public int deleteSch(ASchedule aSchedule) {
+		return this.aScheduleMapper.deleteSch(aSchedule);
+	}
 }

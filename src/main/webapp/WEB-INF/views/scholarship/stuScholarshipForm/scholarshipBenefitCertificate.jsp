@@ -43,7 +43,7 @@
 			<div class="hcI" style="left: 70.21mm; top: 60.53mm;">
 				<div class="hls ps11"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 1.22mm; height: 4.82mm; width: 120.30mm;">
-					<span class="hrt cs6" style="letter-spacing: 5px;">박관우</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">이승연</span>
 				</div>
 				<div class="hls ps34"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 8.35mm; height: 4.82mm; width: 42.52mm;">

@@ -9,30 +9,27 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
        style="background-color: #001F3F;opacity:1;">
 
-    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding:0;">
-    <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
-<!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
-<!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
-<!--         <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span> -->
-    </a>
-
+	<sec:authorize access="hasRole('ROLE_STUDENT')">
+	    <a href="/lecture/myLecture" class="brand-link bg-navy" style="text-align:left;padding:0;">
+	   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
+	<!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
+	<!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
+	<!--         <span class="brand-text font-weight-light">&nbsp;학사관리시스템</span> -->
+	    </a>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_PROFESSOR')">
+		<a href="/lecture/myLecture" class="brand-link bg-navy" style="text-align:left;padding:0;">
+		   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
+	    </a>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_MANAGER')">
+		<a href="/aschedule/calendar" class="brand-link bg-navy" style="text-align:left;padding:0;">
+		   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
+	    </a>
+	</sec:authorize>
+	
     <!-- Sidebar -->
     <div class="mt-2 sidebar">
-        <!-- Sidebar user panel (optional) -->
-
-        <!-- SidebarSearch Form -->
-        <!--         <div class="form-inline"> -->
-        <!--             <div class="input-group" data-widget="sidebar-search"> -->
-        <!--                 <input class="form-control form-control-sidebar" type="search" -->
-        <!--                        placeholder="Search" aria-label="Search"> -->
-        <!--                 <div class="input-group-append"> -->
-        <!--                     <button class="btn btn-sidebar"> -->
-        <!--                         <i class="fas fa-search fa-fw"></i> -->
-        <!--                     </button> -->
-        <!--                 </div> -->
-        <!--             </div> -->
-        <!--         </div> -->
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent"
@@ -55,6 +52,10 @@
                                     <p>수강중인 강의</p>
                                 </a>
                             </li>
+                            <li class="nav-item"><a href="/student/lecture/list"
+                                                    class="nav-link">
+                                <p>수강 편람</p>
+                            </a></li>
                             <li class="nav-item">
                                 <a href="/student/lectureApply/spareList" class="nav-link">
                                     <p>예비수강신청</p>
@@ -64,10 +65,6 @@
                                 <a href="/student/lectureApply/list" class="nav-link">
                                     <p>수강신청</p>
                                 </a></li>
-                            <li class="nav-item"><a href="/student/lecture/list"
-                                                    class="nav-link">
-                                <p>수강 편람</p>
-                            </a></li>
                             <li class="nav-item"><a href="/student/evaluation/list"
                                                     class="nav-link">
                                 <p>강의 평가</p>
@@ -96,7 +93,7 @@
                                 <p>전체 성적 조회</p>
                             </a></li>
                             <li class="nav-item"><a href="/totalScore/currentScore" class="nav-link">
-                                <p>현재 학기 성적 조회</p>
+                                <p>현재 성적 조회</p>
                             </a></li>
                             <li class="nav-item"><a href="/totalScore/preAppeal" class="nav-link">
                                 <p>성적 이의 신청</p>
@@ -135,11 +132,6 @@
                         </p>
                     </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="/lecture/list"
-                                                    class="nav-link">
-                                <p>전체 강의 조회</p>
-                            </a></li>
-
                             <li class="nav-item"><a href="/professor/lecApply/inquiry" class="nav-link">
 
                                 <p>강의계획서 관리</p>
@@ -210,39 +202,39 @@
                             등록 및 장학 관리 <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                        <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item"><a href="#" class="nav-link">
-                                <p>
-                                    장학 <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
+<!--                         <ul class="nav nav-treeview" style="display: none;"> -->
+<!--                         <li class="nav-item"><a href="#" class="nav-link"> -->
+<!--                                 <p> -->
+<!--                                     장학 <i class="fas fa-angle-left right"></i> -->
+<!--                                 </p> -->
+<!--                             </a> -->
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item"><a
-                                            href="#" class="nav-link">
-                                        <p>장학금 목록</p>
-                                    </a></li>
+<!--                                     <li class="nav-item"><a -->
+<!--                                             href="#" class="nav-link"> -->
+<!--                                         <p>장학금 목록</p> -->
+<!--                                     </a></li> -->
                                     <li class="nav-item"><a
                                             href="/scholarship/admin/scholarshipAward" class="nav-link">
                                         <p>장학금 수여</p>
                                     </a></li>
-                                    <li class="nav-item"><a
-                                            href="#" class="nav-link">
+<!--                                     <li class="nav-item"><a -->
+<!--                                             href="#" class="nav-link"> -->
 
-                                        <p>장학생 조회</p>
-                                    </a></li>
+<!--                                         <p>장학생 조회</p> -->
+<!--                                     </a></li> -->
                                 </ul>
-                            </li>
-                            <li class="nav-item"><a href="#" class="nav-link">
-                                <p>
-                                    등록 <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
+<!--                             </li> -->
+<!--                             <li class="nav-item"><a href="#" class="nav-link"> -->
+<!--                                 <p> -->
+<!--                                     등록 <i class="fas fa-angle-left right"></i> -->
+<!--                                 </p> -->
+<!--                             </a> -->
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item"><a href="#"
-                                                            class="nav-link">
+<!--                                     <li class="nav-item"><a href="#" -->
+<!--                                                             class="nav-link"> -->
 
-                                        <p>등록금 목록</p>
-                                    </a></li>
+<!--                                         <p>등록금 목록</p> -->
+<!--                                     </a></li> -->
                                     <li class="nav-item"><a href="/payment/admin/adminBill"
                                                             class="nav-link">
 
@@ -254,8 +246,8 @@
                                         <p>등록금 납부</p>
                                     </a></li>
                                 </ul>
-                            </li>
-                        </ul>
+<!--                             </li> -->
+<!--                         </ul> -->
                     </li>
                     <li class="nav-item"><a href="#" class="nav-link">
 

@@ -28,6 +28,7 @@
 		<result property="lecHcnt"        column="LEC_HCNT" />
 		<result property="lecaYn"         column="LECA_YN" />
 		<result property="depCd"          column="DEP_CD" />
+		<result property="rowNo"          column="ROWNO" /> 
 		<collection property="lecApply"   resultMap="lecApplyMap"></collection>
 		<collection property="employee"   resultMap="employeeMap"></collection>
 		<collection property="department" resultMap="departmentMap"></collection>
@@ -524,27 +525,62 @@
 
 	
 	<select id="searchList" parameterType="studentLecture" resultMap="lectureMap">
-		SELECT 
-		       L.LECA_CD 
-		     , E.EMP_NM 
-		     , LA.LECA_NM 
-		     , LA.LECA_CRD 
-		     , LA.LECA_TRG
-		     , L.LEC_HCNT
-		     , D.DEP_NM
-		     , LA.LECA_CAP 
-		     , LA.LECA_CATE 
-		     , LA.LECA_YR
-		     , LA.LECA_SEM
-		     , D.COL_CD
-		FROM DEPARTMENT D
-		                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
-		                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
-		                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
-		                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
-		                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+		
+		WITH T AS(
+			SELECT 
+				   ROW_NUMBER() OVER(ORDER BY L.LECA_CD)-1 ROWNO
+			     , L.LECA_CD 
+			     , E.EMP_NM 
+			     , LA.LECA_NM 
+			     , LA.LECA_CRD 
+			     , LA.LECA_TRG
+			     , L.LEC_HCNT
+			     , D.DEP_NM
+			     , LA.LECA_CAP 
+			     , LA.LECA_CATE 
+			     , LA.LECA_YR
+			     , LA.LECA_SEM
+			     , D.COL_CD
+			FROM DEPARTMENT D
+			                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
+			                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
+			                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
+			                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+			                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+	        WHERE 1=1
+	        <if test="colCd > 0">
+				AND COL_CD = #{colCd}
+			</if>
+	        <if test="depNm != null and depNm != ''">
+				AND DEP_NM LIKE '%' || #{depNm} || '%'
+			</if>
+			<if test="lecaTrg != null and lecaTrg != ''">
+				AND LECA_TRG LIKE '%' || #{lecaTrg} || '%'
+			</if>
+			<if test="lecaCate != null and lecaCate != ''">
+				AND LECA_CATE LIKE '%' || #{lecaCate} || '%'
+			</if>
+			<if test="lecaNm != null and lecaNm != ''">
+				AND LECA_NM LIKE '%' || #{lecaNm} || '%'
+			</if>
+			ORDER BY L.LECA_CD ASC
+		)
+		SELECT *
+		FROM T
+		WHERE T.ROWNO
+		BETWEEN (10 * (#{viewPage}-1)) AND ((10*#{viewPage})-1)
+		ORDER BY ROWNO ASC
+	</select>
+	
+	<select id="lectureListPaging" parameterType="studentLecture" resultType="int"> 
+		SELECT COUNT(L.LECA_CD) FROM DEPARTMENT D
+			                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
+			                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
+			                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
+			                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+			                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
         WHERE 1=1
-        <if test="colCd > 0">
+		<if test="colCd > 0">
 			AND COL_CD = #{colCd}
 		</if>
         <if test="depNm != null and depNm != ''">

@@ -13,8 +13,6 @@ n
 >src/main/webapp/WEB-INF/views/lectureBoard/data/dataInsert.jsp,a\f\afb7942b15610021a2377f6fcd53cb50bdf66193
 c
 3src/main/webapp/WEB-INF/views/notice/modifyForm.jsp,2\b\2b98f63ea178f9438c02e950961c23b54d8553fb
-h
-8src/main/java/kr/or/ddit/service/NoticeBasicService.java,3\8\386a2202f581e6d350993b1d831716b6509c52a5
 q
 Asrc/main/java/kr/or/ddit/service/impl/NoticeBasicServiceImpl.java,f\1\f1f4ef8334326d89b41802e904fa59b63ba96834
 ^
@@ -23,8 +21,6 @@ Asrc/main/java/kr/or/ddit/service/impl/NoticeBasicServiceImpl.java,f\1\f1f4ef83
 0src/main/java/kr/or/ddit/controller/QnaForm.java,c\a\cad202363d9944a33529705931a599592244d99d
 ^
 .src/main/java/kr/or/ddit/domain/qna/QnaVO.java,6\b\6b4ffe53ae8c63d0157770e3796e1a6cfcd30263
-\
-,src/main/java/kr/or/ddit/domain/qna/Qna.java,1/c/1c9b80a4667dd7067f0d356071eed1b662c90253
 i
 9src/main/java/kr/or/ddit/service/LectureBoardService.java,b/0/b06cb052299f16d1df43f9cb19fe69f8e8536335
 r
@@ -43,14 +39,8 @@ c
 3src/main/java/kr/or/ddit/controller/NoticeForm.java,5/2/523c3a4867d4f8f7e9d3dd6fea4aac652d84e85e
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4/9/496a238a6afa168dbaf6efd37bb459331589579c
-`
-0src/main/java/kr/or/ddit/service/QnaService.java,2/d/2d1301fe14888e4dac9b77574af2ce3d763bae30
-i
-9src/main/java/kr/or/ddit/service/impl/QnaServiceImpl.java,b/7/b7302e4b5dcbecfcbfd81a62281754c947667d18
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-^
-.src/main/java/kr/or/ddit/mapper/QnaMapper.java,6/2/6254787e0f2eae1d7174795853df6b91295c7a54
 k
 ;src/main/java/kr/or/ddit/controller/ApprovalController.java,7/3/73684ae6d65984d316acd8ba1a6e420345addbb7
 †
@@ -81,14 +71,8 @@ m
 =src/main/webapp/WEB-INF/views/student/lecture/lectureList.jsp,a/5/a5b6717a1acb5b5abd4cf8bd16059f3836f6a7b0
 ^
 .src/main/java/kr/or/ddit/util/EchoHandler.java,1\d\1dadabc68555c01afacc4d7919bacad2c6801c30
-n
->src/main/java/kr/or/ddit/mapper/StudentLectureApplyMapper.java,9\7\9724395b29332751913f490def813beb0434a60a
-i
-9src/main/java/kr/or/ddit/mapper/StuManageOfProMapper.java,9\6\96f8dd5cdac864fbda8177d8e2f3fbe961f32ae7
 g
 7src/main/java/kr/or/ddit/mapper/LectureApplyMapper.java,3\b\3b44e028dd243be89b78cadcb6af1cb8e4bb37b7
-g
-7src/main/java/kr/or/ddit/mapper/LectureBoardMapper.java,6\5\6543d6d3dfbecda761af5a2437eaadd43d3226e3
 e
 5src/main/webapp/WEB-INF/mybatisAlias/mybatisAlias.xml,0\2\02e38ac296a17323bde8602b819a5c8eae112772
 [

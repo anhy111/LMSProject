@@ -18,6 +18,13 @@
 	.close span{
 		color:white;
 	}
+	#schList tr{
+		cursor: pointer;
+	}
+	#schList tr:hover {
+		background-color: rgb(0, 31, 63, 0.20);
+	}
+}
 
 </style>
 <!-- fullcalender -->
@@ -32,7 +39,7 @@
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title">일정 등록</h4>
-					<button type="button" class="close" onclick="initModal( calendarData)">
+					<button type="button" class="close" onclick="initModal()">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
@@ -45,7 +52,7 @@
 							<input type="date" class="form-control" id="aschStDay">
 						</div>
 						<div class="form-group col-5">
-							<select class="form-control" id="aschStTime" onchange="startChange()">
+							<select class="form-control" id="aschStTime">
 								<option value="09:00">09:00</option>
 								<option value="09:30">09:30</option>
 								<option value="10:00">10:00</option>
@@ -133,37 +140,30 @@
 						<button type="button" id="edit" class="btn btn-outline-warning" >수정</button>
 						<button type="button" id="delete" class="btn btn-outline-danger" >삭제</button>
 					</div>
-					<div id="spn3" class="container-fluid p-0" style="display: none;">
-						<div class="row">
-							<div class="col text-left">
-								<button id="autoFillUpd" class="btn btn-outline-secondary">자동채우기</button>
-							</div>
-							<div class="col text-right">
-								<button type="button" id="update" class="btn btn-outline-primary">확인</button>
-								<button type="button" id="cancel" class="btn btn-outline-secondary">취소</button>
-							</div>
-						</div>
+					<div id="spn3"  style="display: none;">
+						<button type="button" id="update" class="btn btn-outline-primary">확인</button>
+						<button type="button" id="cancel" class="btn btn-outline-secondary">취소</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4 pt-3">
+	<div class="col-md-5 pt-3">
 		<br>
 		<br>
 		<br>
-		<table class="table table-sm table-bordered mt-3">
+		<table class="table table-sm table-bordered mt-3 text-center">
 			<thead>
-				<th>기간</th>
+				<th width="35%">기간</th>
 				<th>일정명</th>
-				<th>등록자</th>
+				<th width="15%">등록자</th>
 			</thead>
 			<tbody id="schList">
 				
 			</tbody>
 		</table>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-7">
 		 <div id="calendar"></div>
 	</div>
 </div>
@@ -188,7 +188,7 @@
 		let date = new Date(p_date);
 		let str = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours() )
 				+ ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
-		console.log("timeFormat : " + str);
+		return str;
 	}
 	
 	// date객체와 구분자를 받아서 문자형식으로 변환
@@ -253,6 +253,7 @@
 	
 	function dispTable(){
 		let str = "";
+		console.log(monthSch.length);
 		if(monthSch.length == 0){
 			str += `<tr>
 						<td colspan='3'>일정이 없습니다.</td>
@@ -261,9 +262,9 @@
 			return;
 		}
 		for(let i=0; i<monthSch.length; i++){
-			str += `<tr value='\${monthSch[i].aschCd}' class="read">
+			str += `<tr data-aschCd='\${monthSch[i].aschCd}' class="read">
 						<td>\${dateFormat(monthSch[i].start,"/")} ~ \${dateFormat(monthSch[i].end,"/")}</td>
-						<td>\${monthSch[i].title}</td>
+						<td class='text-left'>\${monthSch[i].title}</td>
 						<td>\${monthSch[i].empNm}</td>
 					</tr>`;
 		}
@@ -275,7 +276,8 @@
 		let calendarArg = document.querySelector("#calendar");
 
 		calendar = new FullCalendar.Calendar(calendarArg, {
-			height : 800,
+			id : "calendar",
+			height : 700,
 			headerToolbar : {
 				left: 'prev,next today',
 				center : 'title',
@@ -342,12 +344,7 @@
                 xhr.setRequestHeader(header, token);
             },
             success: function (list) {
-            	console.log(list);
             	calendar.removeAllEvents();
-            	if(list == null || list.length == 0){
-            		calendar.render();
-            		return;
-            	}
             	
             	monthSch = [];
             	
@@ -379,16 +376,17 @@
 	
 	// 일정등록 모달
 	function modalOpen(arg) {
+		console.log(arg);
 		calendarData = arg;
         //값이 있는경우 세팅
         if (typeof calendarData.event != "undefined") {
             $('#aschCd').val(calendarData.event.extendedProps.aschCd);
             $('#aschStDay').val(dateFormat(calendarData.event.start,"-"));
-            $('#aschStTime').val(timeFormat(calendarData.event.start));
+            $('#aschStTime').val(timeFormat(calendarData.event.start)).attr("selected","selected");
             $('#aschEnDay').val(endDateFormat(calendarData.event.end,"-"));
             $('#aschEnTime').val(timeFormat(calendarData.event.end));
-            console.log(timeFormat(calendarData.event.start));
-
+			$("#aschTtl").val(calendarData.event.title);
+			$("#aschCon").val(calendarData.event.extendedProps.content);
             readMode();
 
             
@@ -403,17 +401,36 @@
         $('.insertModal').modal('show');
     }
 	
+	function addTableEvent(p_val){
+		
+		let events = calendar.getEvents();
+		for(let i=0; i<events.length; i++){
+			if(events[i]._def.extendedProps.aschCd == p_val){
+				console.log(events[i])
+				$('#aschCd').val(events[i]._def.extendedProps.aschCd);
+	            $('#aschStDay').val(dateFormat(events[i].start,"-"));
+	            $('#aschStTime').val(timeFormat(events[i].start)).attr("selected","selected");
+	            $('#aschEnDay').val(dateFormat(events[i].end,"-"));
+	            $('#aschEnTime').val(timeFormat(events[i].end));
+				$("#aschTtl").val(events[i]._def.title);
+				$("#aschCon").val(events[i]._def.extendedProps.content);
+				readMode();
+				$('.insertModal').modal('show');
+			}
+		}
+		
+	}
 
 	//시작일자 변경 시 종료일자는 +30분으로 설정---------------------------------------------------------------------------
 	function startChange() {
-        var start = $('#aschSt').val();
-        var end = $('#aschEn').val();
+        var start = $('#aschStTime').val();
+        var end = $('#aschEnTime').val();
         if (start.substring(3, 5) == '00')
             end = start.substring(0, 2) + ':30';
         else
             end = (parseInt(start.substring(0, 2)) + 1) + ':00';
 
-        $('#aschEn').val(end);
+        $('#aschEnTime').val(end);
     }
 	
 	//모달초기화-------------------------------------------------------------------------------------------------
@@ -433,6 +450,7 @@
 			text: p_arg
 		});
 	}
+	
 	//일정등록-------------------------------------------------------------------------------------------------
     function insertSch(arg) {
 		
@@ -449,13 +467,6 @@
         	return;
         } 
         
-//         if (!(arg.startStr.substring(0, 10) != arg.endStr.substring(0, 10))
-//         		&& $('.insertModal #aschEn').val() <= $('.insertModal #aschSt').val()) {
-//                 errorSwal('종료시간을 시작시간보다 크게 선택해주세요');
-//                 $('.insertModal #aschEn').focus();
-//                 return;
-            
-//         }
         data = {
             empNo: empNo,
             aschSt: new Date($("#aschStDay").val() + " " +  $("#aschStTime").val()),
@@ -494,17 +505,70 @@
         
     } // end function 
 	
-  	//일정삭제-------------------------------------------------------------------------------------------------
-    function deleteSch(modal, arg) {
-        if (confirm('일정을 삭제하시겠습니까?')) {
-            var data = {
-                empNo: empNo,
-                rsvCd: $('.' + modal + ' #rsvCd').val(), //seq 컬럼 추가해서 기본키 seq로 바꾸고 title은 중복 가능하게 변경하기★★★★
-                facCd: $('.' + modal + ' #facCd').val()
+   	function updateSch(arg){
+   		if($("#aschTtl").val() == ""){
+			errorSwal('제목을 입력해주세요.');
+			return;
+		}else if( $("#aschCon").val() == ""){
+			errorSwal("내용을 입력해주세요.");
+			return;
+		}
+   		
+   		data = {
+   	            empNo: empNo,
+   	            aschCd : $("#aschCd").val(),
+   	            aschSt: new Date($("#aschStDay").val() + " " +  $("#aschStTime").val()),
+   	            aschEn: new Date($("#aschEnDay").val() + " " +  $("#aschEnTime").val()),
+   	            aschTtl : $("#aschTtl").val(),
+   	        	aschCon : $("#aschCon").val()
+ 	    }
+   		console.log(data);
+   		
+   		$.ajax({
+            url: "/aschedule/updateSch",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            traditional: true,
+            success: function (result, status, xhr) {
+				if(result <= 0){
+					errorSwal("일정 수정 실패");
+					return;
+				}else{
+					Swal.fire({
+			            icon: 'success',                         // Alert 타입
+			            title: '수정 성공!',         // Alert 제목
+			            text: '정상적으로 수정되었습니다.',  // Alert 내용
+			        })
+				}
+                initModal();
+                loadEvent();
+            },
+            error: function (xhr, status, error) {
+            	errorSwal('일정 수정 실패\n새로고침 후 재시도 해주세요');
             }
-
-            let header = "${_csrf.headerName}";
-            let token = "${_csrf.token}";
+        }); // end ajax
+   		
+    }
+    
+  	//일정삭제-------------------------------------------------------------------------------------------------
+    function deleteSch( arg) {
+    	Swal.fire({
+            title: '정말로 삭제 하시겠습니까?',
+            text: "한번 삭제한 내용은 되돌릴 수 없습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+	 	}).then(function(dlt) {
+            var data = {
+                aschCd: $('#aschCd').val(), 			//seq 컬럼 추가해서 기본키 seq로 바꾸고 title은 중복 가능하게 변경하기★★★★
+            }
 
             //DB 삭제
             $.ajax({
@@ -518,14 +582,23 @@
                 },
                 traditional: true,
                 success: function (data, status, xhr) {
-                    arg.event.remove();
-                    initModal(modal, arg);
+                	if(data <= 0){
+                		errorSwal('새로고침 후 재시도 해주세요');
+                		return;
+                	}
+                	Swal.fire(
+		                    '삭제 완료',
+		                    '정상적으로 삭제 되었습니다.',
+		                    'success'
+	                )
+                    initModal();
+                    loadEvent();
                 },
                 error: function (xhr, status, error) {
-                    errorSwal('일정 삭제 실패<br>새로고침 후 재시도 해주세요');
+                    errorSwal('새로고침 후 재시도 해주세요');
                 }
             });// end ajax
-        }
+        })
     }// end function
   	
   	
@@ -549,7 +622,19 @@
 		});
 		
 		$(document).on("click",".read",function(){
-			
+			addTableEvent($(this).attr("data-aschCd"));
+		})
+		
+		$("#aschStTime").on("change",function(){
+			startChange();
+		})
+		
+		$("#update").on("click",function(){
+			updateSch(calendarData);
+		})
+		
+		$("#delete").on("click",function(){
+			deleteSch(calendarData);
 		})
 		initFullCalendar();
 		
