@@ -67,6 +67,9 @@ public class LectureController {
 			log.info(lecture2.toString());
 		}
 
+		String[] color = {"#C8707E", "#E28FAD", "#E58E58", "#5AA08D", "#A8C879", "#AC99C1", "#96B1D0", "#C08863"};
+		
+		mav.addObject("color", color);
 		mav.addObject("lecture", list);
 		mav.setViewName("lecture/myLecture");
 
@@ -205,12 +208,15 @@ public class LectureController {
 
 	@PostMapping("/lectureBoard/task/submitTask")
 	public String submitTask2(Principal principal, @RequestParam MultipartFile[] files, TaskSubmit taskSubmit) {
+		log.info("과제 제출");
 		int stuNo = Integer.parseInt(principal.getName());
 		taskSubmit.setStuNo(stuNo);
 		int lecaCd = taskSubmit.getLecaCd();
 		int taskCd = taskSubmit.getTaskCd();
 		log.info(taskSubmit.toString());
-		if (files[0].getSize() > 0) {
+		log.info(files.length+"sssssssssssssssssssssssssss");
+		if (files.length > 0) {
+			log.info("첨부파일 있다.");
 			this.fileUploadUtil.fileUploadAction(files);
 //
 			this.lectureservice.insertTaskSubmit1(taskSubmit);

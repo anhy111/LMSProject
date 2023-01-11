@@ -16,6 +16,8 @@
 						</h1>
 					</div>
 				</div>
+				<br>
+				<br>
 				<div class="col-sm-12">
 					<section class="content">
 						<div class="container-fluid">
@@ -72,7 +74,7 @@
 	    $(this).next('.custom-file-label').html(str);
 	});
 	
-	CKEDITOR.replace("#tsubCon",
+	CKEDITOR.replace("tsubCon",
 			{
 			width:'100%',
 			height:'500px',

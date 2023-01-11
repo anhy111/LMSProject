@@ -124,7 +124,6 @@
 .copy {
   font-family: var(--font-serif);
   font-size: 1.125rem;
-  font-style: italic;
   line-height: 1.35;
 }
 
@@ -227,10 +226,11 @@
 	$(function() {
 		$("#lectureListYear").text(lectureListYear);
 	})
+	
+	
 </script>
 </head>
 <body>
-
 	<div class="col" align="center">
 			<h4 align="left">
 				<strong id="lectureListYear"> </strong>
@@ -240,10 +240,10 @@
 		<div class="col-sm-12">
 			<main class="page-content1">
 			<c:forEach var="row" items="${lecture}" varStatus="stat">
-				<div class="card1"style="background-image: url('/resources/upload/${row.depCd}.jpg'); background-size: 100%;"> 
+				<div class="card1" style=" background:linear-gradient( ${color[stat.count]} 60%, whitesmoke 40%); background-size: 100%;"> 
 				    <div class="content1" >
-				      <h4 class="title1">${row.lecApply.lecaNm}</h4>
-				      <p class="copy">${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}학기</p>
+				      <h4 class="title1" style="color: black">${row.lecApply.lecaNm}</h4>
+				      <p class="copy" style="color:black">${row.lecApply.lecaYr}년도&nbsp;${row.lecApply.lecaSem}학기</p>
 <!-- 				      <p class="copy2">줄바꾸기</p> -->
 				      <a class="btn1" href="/lectureBoard/lecPlan?lecaCd=${row.lecaCd}">강의실 가기</a>
 				    </div>

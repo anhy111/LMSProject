@@ -59,7 +59,8 @@
 					<div class="col-sm-12">
 						<section class="content">
 							<div class="container-fluid">
-										<div>
+										<div class="taskData" style="min-height: 300px">${task.taskSubmitList[0].tsubCon}</div>
+										<div class="modifyDisplay">
 											<textarea id="tsubCon" name="tsubCon" class="form-control"
 												cols="15" rows="15">${task.taskSubmitList[0].tsubCon}</textarea>
 										</div>

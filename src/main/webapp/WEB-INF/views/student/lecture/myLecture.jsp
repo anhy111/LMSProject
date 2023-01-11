@@ -48,8 +48,7 @@
   width: 100%;
   text-align: center;
   color: white;
-  background-color: whitesmoke;
-  background-image: url('/resources/upload/msh.jsp')
+/*   background-color: whitesmoke; */
 }
 
 @media (min-width: 600px) {
@@ -124,14 +123,12 @@
 .copy {
   font-family: var(--font-serif);
   font-size: 1.125rem;
-  font-style: italic;
   line-height: 1.35;
 }
 
 .copy2 {
   font-family: var(--font-serif);
   font-size: 1.125rem;
-  font-style: italic;
   line-height: 1.35;
 }
 
@@ -249,10 +246,10 @@
             <div class="col-sm-12" align="center">
             <main class="page-content1">
 			<c:forEach var="row" items="${lectureList}" varStatus="stat">
-				<div class="card1"style="background-image: url('/resources/upload/${row.subCd}.jpg'); background-size: 100%;"> 
+				<div class="card1" style="background:linear-gradient(${color[stat.count]} 60%, whitesmoke 40%)"> 
 				    <div class="content1" >
-				      <h4 class="title1">${row.lecaNm}</h4>
-				      <p class="copy">${row.lecaYr}년도&nbsp;${row.lecaSem}학기</p>
+				      <h4 class="title1" style="color:black">${row.lecaNm}</h4>
+				      <p class="copy" style="color:black">${row.lecaYr}년도&nbsp;${row.lecaSem}학기</p>
 <!-- 				      <p class="copy2">줄바꾸기</p> -->
 				      <a class="btn1" href="/lectureBoard/lecPlan?lecaCd=${row.lecaCd}">강의실 가기</a>
 				    </div>

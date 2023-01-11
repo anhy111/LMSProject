@@ -149,7 +149,12 @@ let token = "${_csrf.token}";
 		
 		
 		$('#preAppealSubmitBtn').on('click', function() {
+			Swal.fire({
+				icon: 'success',
+				text : '성적이의 신청 완료!'
+			}).then(function(){
 			$('#preAppealForm').submit();
+			})
 		});
 		
 		$('#autoInsertBtn').on('click', function() {
@@ -243,13 +248,20 @@ let token = "${_csrf.token}";
 			<div id="grid"></div>
 		</div>
 		<div class="divDiv">
-			<i class="mdi mdi-record-circle" style="color: #001353;"></i>&ensp;이의신청
+			
 			<button type="button" class="btn btn-primary" id="preAppealSubmitBtn">신청하기</button>
 			<button type="button" class="btn btn-outline-secondary" id="autoInsertBtn">자동 채우기</button>
 			<p>
 			</p>
 			
 				<form action="/totalScore/sendAppeal" method="POST" id="preAppealForm">
+				<div class="row">
+				<div class="col-3">
+				</div>
+				<div >
+				&ensp;<i class="mdi mdi-record-circle" style="color: #001353;">이의신청</i>
+				</div>
+				</div>
 			<table id="appealGrade" border="1" style="height:460px;">
 				<tr>
 					<th>년도/학기</th>

@@ -65,7 +65,9 @@ public class StudentLectureController {
 		String studentId = principal.getName();
 		List<StudentLectureForm> lectureList = lectureService.studentLectureSearchAll(studentId);
 		log.info(lectureList.toString());
-
+		String[] color = {"#C8707E", "#E28FAD", "#E58E58", "#5AA08D", "#A8C879", "#AC99C1", "#96B1D0", "#C08863","#C8707E", "#E28FAD", "#E58E58", "#5AA08D", "#A8C879", "#AC99C1", "#96B1D0", "#C08863"};
+		
+		model.addAttribute("color", color);
 		model.addAttribute("lectureList", lectureList);
 
 		return "student/lecture/myLecture";
