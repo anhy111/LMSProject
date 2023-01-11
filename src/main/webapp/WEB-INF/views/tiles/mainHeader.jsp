@@ -228,7 +228,7 @@ $(function(){
 	     </sec:authorize>
 	    </ul>
 	<!-- Right navbar links -->
-	<ul class="navbar-nav ml-auto">
+	<ul class="navbar-nav ml-auto mt-4">
 	
 		<!-- 로그인 하지 않은 경우 -->
 		<sec:authorize access="isAnonymous()">

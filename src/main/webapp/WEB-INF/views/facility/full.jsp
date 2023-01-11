@@ -290,16 +290,16 @@
 				</p>
 			</div>
 		<div class="row" id="basketballCourt" style="display:none;">
-			<img style="width:480px;height:220px;"src="https://media.angi.com/s3fs-public/indoor-basketball-court.jpg">
+			<img style="width:100%;height:220px;"src="https://media.angi.com/s3fs-public/indoor-basketball-court.jpg">
 		</div>
     	<div class="row" id="tenisCourt" style="display:none;">
-			<img style="width:480px;height:220px;"src="https://www.auc.or.kr/storage/ck/2021/01/Dcyo5PEPTX87gFEXGqZ4.jpg">
+			<img style="width:100%;height:220px;"src="https://www.auc.or.kr/storage/ck/2021/01/Dcyo5PEPTX87gFEXGqZ4.jpg">
 		</div>
     	<div class="row" id="studyRoom1" style="display:none;">
-			<img style="width:480px;height:220px;"src="https://regainstudy.com/theme/basic/img/sub/sub3-1_img_01.jpg">
+			<img style="width:100%;height:220px;"src="https://regainstudy.com/theme/basic/img/sub/sub3-1_img_01.jpg">
 		</div>
     	<div class="row" id="studyRoom2" style="display:none;">
-			<img style="width:480px;height:220px;"src="http://ojsfile.ohmynews.com/STD_IMG_FILE/2018/0116/IE002271776_STD.jpg">
+			<img style="width:100%;height:220px;"src="http://ojsfile.ohmynews.com/STD_IMG_FILE/2018/0116/IE002271776_STD.jpg">
 		</div>
 		</div>
 	</div>

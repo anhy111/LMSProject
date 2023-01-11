@@ -81,7 +81,7 @@ cursor:pointer;
 						<tr class="text-center counselListTr">
 							<td data-value="${counselList.cnslCd}">${status.end-status.index }</td>
 							<td>${counselList.cnslCate }</td>
-							<td  >${fn:substring(counselList.cnslTtl,0,8) }</td>
+							<td class="text-left" >${counselList.cnslTtl }</td>
 							<td><fmt:formatDate value="${counselList.cnslDt }" pattern="yy/MM/dd" /></td>
 							<c:if test="${counselList.cnslYn eq 'AP001' }"><td class="acceptHover" style="color:blue;">승인완료</td>
 							<td class="acceptHovered" style="display:none;color:blue;background-color:white;">상담기록</td>
@@ -111,7 +111,7 @@ cursor:pointer;
 						<tr class="text-center nonFaceCounselListTr" data-toggle="modal" data-target="#modifyCounsel">
 							<td data-value="${nonFaceCounselList.cnslCd}">${status.end-status.index }</td>
 							<td>${nonFaceCounselList.cnslCate }</td>
-							<td  >${fn:substring(nonFaceCounselList.cnslTtl,0,8) }</td>
+							<td class="text-left" >${nonFaceCounselList.cnslTtl }</td>
 							<c:if test="${nonFaceCounselList.cnslYn eq 'AP001' }"><td style="color:blue;">승인완료</td></c:if>
 							<c:if test="${nonFaceCounselList.cnslYn eq 'AP002' }"><td style="color:black;">승인대기</td></c:if>
 							<c:if test="${nonFaceCounselList.cnslYn eq 'AP003' }"><td style="color:red;">반려</td></c:if>
