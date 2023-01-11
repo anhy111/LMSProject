@@ -327,7 +327,6 @@ $(function(){
 				<td>${employeeList.empNo}</td>
 				<td>
 					<div class="image">
-						<img src="/upload${employeeList.empPic}" class="img-circle" alt="User Image" style="max-width:20px;">
 						${employeeList.empNm}
 					</div> 
 				</td>

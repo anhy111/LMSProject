@@ -332,7 +332,7 @@ $(function(){
 </div>
 
 <!-- 학생목록 -->
-<div style="text-align:center;">
+<div style="text-align:center; overflow:scroll; width:1450px; height:600px;">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
 			<tr class="text-center">
@@ -367,17 +367,6 @@ $(function(){
 			</c:forEach>
 		</tbody>
 	</table>
-</div>
-
-<div style="text-align:center;">
-	<c:forEach var="pageNumber" begin="1" end="${totalPage}">
-		<c:if test="${param.viewPage==pageNumber}">
-			<a href="/manage/stuManage?viewPage=${pageNumber}" class="btn btn-primary">${pageNumber}</a>
-		</c:if>
-		<c:if test="${param.viewPage!=pageNumber}">
-			<a href="/manage/stuManage?viewPage=${pageNumber}" class="btn btn-outline-primary">${pageNumber}</a>
-		</c:if>
-	</c:forEach>
 </div>
 
 <!-- 모달 -->
@@ -637,7 +626,6 @@ function loadSearchStuList(){
 							<td>\${student.stuNo}</td>
 							<td>
 								<div class="image">
-									<img src="/upload\${student.stuPic}" class="img-circle" alt="User Image" style="max-width: 20px;"> 
 									\${student.stuNm}
 								</div>
 							</td>
