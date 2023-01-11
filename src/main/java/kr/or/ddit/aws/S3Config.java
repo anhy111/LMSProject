@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3Config {
 
-    @Value("${AKIAW4KZF3HTIXUXVPPS}")
+    @Value("${}")
     private String accessKey;
 
-    @Value("${GlshevQDS6OaNyYKYUeuE3mskYOwTEOR3R15ROku}")
+    @Value("${}")
     private String secretKey;
 
     @Bean
