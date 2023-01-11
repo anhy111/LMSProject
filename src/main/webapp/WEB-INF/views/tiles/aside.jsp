@@ -10,7 +10,7 @@
        style="background-color: #001F3F;opacity:1;">
 
 	<sec:authorize access="hasRole('ROLE_STUDENT')">
-	    <a href="/lecture/myLecture" class="brand-link bg-navy" style="text-align:left;padding:0;">
+	    <a href="/" class="brand-link bg-navy" style="text-align:left;padding:0;">
 	   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 	<!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
 	<!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->

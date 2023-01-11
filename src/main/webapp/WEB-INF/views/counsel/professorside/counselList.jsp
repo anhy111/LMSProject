@@ -491,11 +491,11 @@ $("#counselAnswerBtn").on("click",function(){
 	if(!($("#cnslRpl").val() == null || $("#cnslRpl").val() == "")){
 	data.cnslRpl = $("#cnslRpl").val();
 	data.cnslYn = "AP001";
-	alert("값이있음 승인!")
+// 	alert("값이있음 승인!")
 	} else {
 	data.cnslRpl = $("#cnslRpl").val();
 	data.cnslYn = "AP002";
-	alert("값이없음 승인대기")
+// 	alert("값이없음 승인대기")
 	}
 	
 	$.ajax({
@@ -591,7 +591,7 @@ nonFaceCounselListTr.forEach(counsel=>{
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
-					alert(JSON.stringify(result));
+// 					alert(JSON.stringify(result));
 					$("#modifyCnslCd").val(result.cnslCd);
 					$("#modifyCnslTtl").val(result.cnslTtl);
 					$("#modifyStuNm").val(result.stuNm);
