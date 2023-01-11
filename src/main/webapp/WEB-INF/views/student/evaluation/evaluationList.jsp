@@ -53,7 +53,7 @@
 			<table class="table text-nowrap table-striped table-bordered table-sm text-center table-hover">
 				<thead>
 					<tr>
-						<th>순번</th>
+						<th>No</th>
 						<th>과목명</th>
 						<th>담당교수</th>
 						<th>평가여부</th>
@@ -82,11 +82,9 @@
 	<div class="card-body col-7 container-fluid">
 		<div class="row">
 			<label class="col-2">강의 평가</label>
-			<div class="form-group col-2 offset-6">
-				<button class="btn btn-secondary btn-flat" id="autoFill">자동채우기</button>
-			</div>
-			<div class="form-group col-2">
-				<button class="btn btn-secondary btn-flat" id="save">저장</button>
+			<div class="form-group col-5 offset-5 text-right">
+				<button class="btn btn-outline-secondary btn-flat" id="autoFill">자동채우기</button>
+				<button class="btn btn-outline-primary btn-flat" id="save">저장</button>
 			</div>
 
 		</div>
@@ -216,8 +214,12 @@
 				},
 				success : function(result){
 					if(result > 0){
-						errorSwal("평가가 완료되었습니다.");
-						location.reload();
+						swal.fire({
+							icon: 'success',
+							text: '평가가 완료되었습니다.'
+						}).then(function(){
+							location.reload();
+						});
 					} else{
 						errorSwal("다시 시도해주세요.");
 					}
