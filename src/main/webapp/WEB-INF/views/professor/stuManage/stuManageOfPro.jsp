@@ -316,7 +316,7 @@ $(function(){
 	</div>
 </div>
 
-<div style="text-align:center; overflow:scroll; width:1450px; height:600px;">
+<div style="text-align:center; overflow:scroll; height:600px;">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
 			<tr class="text-center">
