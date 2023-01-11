@@ -71,7 +71,7 @@ tr.text-center td:hover {
 									<td data-value="${counselList.cnslCd}">${status.end-status.index }</td>
 									<td>${counselList.stuNm}</td>
 									<td>${counselList.cnslCate }</td>
-									<td>${fn:substring(counselList.cnslTtl,0,8) }</td>
+									<td class="text-left">${counselList.cnslTtl }</td>
 									<td><fmt:formatDate value="${counselList.cnslReg }"
 											pattern="yy/MM/dd" /></td>
 									<td><fmt:formatDate value="${counselList.cnslDt }"
@@ -109,7 +109,7 @@ tr.text-center td:hover {
 									<td data-value="${nonFaceCounselList.cnslCd}">${status.end-status.index }</td>
 									<td>${nonFaceCounselList.stuNm}</td>
 									<td>${nonFaceCounselList.cnslCate }</td>
-									<td>${fn:substring(nonFaceCounselList.cnslTtl,0,8) }</td>
+									<td class="text-left">${nonFaceCounselList.cnslTtl }</td>
 									<td><fmt:formatDate value="${nonFaceCounselList.cnslReg }"
 											pattern="yy/MM/dd" /></td>
 									<td><fmt:formatDate value="${nonFaceCounselList.cnslDt }"
@@ -491,11 +491,11 @@ $("#counselAnswerBtn").on("click",function(){
 	if(!($("#cnslRpl").val() == null || $("#cnslRpl").val() == "")){
 	data.cnslRpl = $("#cnslRpl").val();
 	data.cnslYn = "AP001";
-	alert("값이있음 승인!")
+// 	alert("값이있음 승인!")
 	} else {
 	data.cnslRpl = $("#cnslRpl").val();
 	data.cnslYn = "AP002";
-	alert("값이없음 승인대기")
+// 	alert("값이없음 승인대기")
 	}
 	
 	$.ajax({
@@ -591,7 +591,7 @@ nonFaceCounselListTr.forEach(counsel=>{
 				xhr.setRequestHeader(header, token);
 			},
 			success:function(result){
-					alert(JSON.stringify(result));
+// 					alert(JSON.stringify(result));
 					$("#modifyCnslCd").val(result.cnslCd);
 					$("#modifyCnslTtl").val(result.cnslTtl);
 					$("#modifyStuNm").val(result.stuNm);

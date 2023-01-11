@@ -67,7 +67,7 @@
 		<table class="table text-nowrap table-striped table-bordered table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="4%">순번</th>
+					<th width="4%">No</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
 					<th width="6%">연도</th>

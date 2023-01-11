@@ -47,27 +47,27 @@
 				</div>
 				<div class="hls ps34"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 8.35mm; height: 4.82mm; width: 42.52mm;">
-					<span class="hrt cs6" style="letter-spacing: 5px;">950821-1******</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">990119-2******</span>
 				</div>
 				<div class="hls ps34"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 15.48mm; height: 4.82mm; width: 42.52mm;">
-					<span class="hrt cs6" style="letter-spacing: 5px;">법정대학</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">경상대학</span>
 				</div>
 				<div class="hls ps35"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 22.61mm; height: 4.82mm; width: 38.99mm;">
-					<span class="hrt cs6" style="letter-spacing: 5px;">정치언론국방학과</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">경제학과</span>
 				</div>
 				<div class="hls ps35"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 29.75mm; height: 4.82mm; width: 38.99mm;">
-					<span class="hrt cs6" style="letter-spacing: 5px;">제4학년</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">제3학년</span>
 				</div>
 				<div class="hls ps12"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 36.88mm; height: 4.82mm; width: 120.30mm;">
-					<span class="hrt cs6" style="letter-spacing: 5px;">대전광역시 동구 성남로 15</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">대전광역시 서구 가수원로 98</span>
 				</div>
 				<div class="hls ps13"
 					style="line-height: 3.98mm; white-space: nowrap; left: 19.56mm; top: 43.90mm; height: 4.82mm; width: 120.30mm;">
-					<span class="hrt cs6" style="letter-spacing: 5px;">108동 1602호 (성남동,스마트뷰)</span>
+					<span class="hrt cs6" style="letter-spacing: 5px;">108동 1602호 (가수원동,스마트뷰)</span>
 				</div>
 			</div>
 			<div class="hcI" style="top: 113.25mm;">
@@ -84,7 +84,7 @@
 				</div>
 				<div class="hls ps32"
 					style="line-height: 4.89mm; white-space: nowrap; left: 0mm; top: 90.80mm; height: 5.74mm; width: 209.14mm;">
-					<span class="hrt cs31" style="letter-spacing: 5px;">2023년 01월 02일</span>
+					<span class="hrt cs31" style="letter-spacing: 5px;">2023년 01월 13일</span>
 				</div>
 				<div class="hls ps33"
 					style="line-height: 10.44mm; white-space: nowrap; left: 0mm; top: 105.40mm; height: 10.56mm; width: 208.45mm;">
@@ -192,7 +192,7 @@
 					<div class="hcI">
 						<div class="hls ps22"
 							style="line-height: 3.98mm; white-space: nowrap; left: 13.05mm; top: 0.72mm; height: 4.82mm; width: 21.83mm;">
-							<span class="hrt cs6">2018</span>
+							<span class="hrt cs6">2022</span>
 						</div>
 					</div>
 				</div>
@@ -215,7 +215,7 @@
 					<div class="hcI">
 						<div class="hls ps36"
 							style="line-height: 3.98mm; white-space: nowrap; left: 1.83mm; top: 0.72mm; height: 4.82mm; width: 60.14mm;">
-							<span class="hrt cs34">편입생장학금</span>
+							<span class="hrt cs34">우수장학금</span>
 						</div>
 					</div>
 				</div>
@@ -226,175 +226,13 @@
 					<div class="hcI">
 						<div class="hls ps25"
 							style="line-height: 3.98mm; white-space: nowrap; left: 0mm; top: 0.72mm; height: 4.82mm; width: 32.13mm;">
-							<span class="hrt cs9">575,000</span>
+							<span class="hrt cs9">1,250,000</span>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="hce"
 				style="left: 155.42mm; top: 6.98mm; width: 26.16mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps26"
-							style="line-height: 3.27mm; white-space: nowrap; left: 0mm; top: 0mm; height: 4.06mm; width: 26.15mm;"></div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 0mm; top: 12.84mm; width: 34.89mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps22"
-							style="line-height: 3.98mm; white-space: nowrap; left: 13.05mm; top: 0.72mm; height: 4.82mm; width: 21.83mm;">
-							<span class="hrt cs6">2018</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 34.89mm; top: 12.84mm; width: 25.22mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps23"
-							style="line-height: 3.98mm; white-space: nowrap; left: 7.76mm; top: 0.72mm; height: 4.82mm; width: 17.46mm;">
-							<span class="hrt cs6">1학</span><span class="hrt cs27">&nbsp;</span><span
-								class="hrt cs6">기</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 60.11mm; top: 12.84mm; width: 61.98mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps24"
-							style="line-height: 3.98mm; white-space: nowrap; left: 1.83mm; top: 0.72mm; height: 4.82mm; width: 60.14mm;">
-							<span class="hrt cs34">입학금 감축 대응지원</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 122.10mm; top: 12.84mm; width: 33.32mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps25"
-							style="line-height: 3.98mm; white-space: nowrap; left: 0mm; top: 0.72mm; height: 4.82mm; width: 32.13mm;">
-							<span class="hrt cs9">143,760</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 155.42mm; top: 12.84mm; width: 26.16mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps26"
-							style="line-height: 3.27mm; white-space: nowrap; left: 0mm; top: 0mm; height: 4.06mm; width: 26.15mm;"></div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 0mm; top: 18.70mm; width: 34.89mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps27"
-							style="line-height: 3.98mm; white-space: nowrap; left: 13.05mm; top: 0.69mm; height: 4.82mm; width: 21.83mm;">
-							<span class="hrt cs6">2020</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 34.89mm; top: 18.70mm; width: 25.22mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps28"
-							style="line-height: 3.98mm; white-space: nowrap; left: 7.76mm; top: 0.69mm; height: 4.82mm; width: 17.46mm;">
-							<span class="hrt cs6">1학</span><span class="hrt cs27">&nbsp;</span><span
-								class="hrt cs6">기</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 60.11mm; top: 18.70mm; width: 61.98mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps29"
-							style="line-height: 3.98mm; white-space: nowrap; left: 1.83mm; top: 0.69mm; height: 4.82mm; width: 60.14mm;">
-							<span class="hrt cs34">특별장학금 (코로나19)_기타</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 122.10mm; top: 18.70mm; width: 33.32mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps30"
-							style="line-height: 3.98mm; white-space: nowrap; left: 0mm; top: 0.69mm; height: 4.82mm; width: 32.13mm;">
-							<span class="hrt cs9">100,000</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 155.42mm; top: 18.70mm; width: 26.16mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps26"
-							style="line-height: 3.27mm; white-space: nowrap; left: 0mm; top: 0mm; height: 4.06mm; width: 26.15mm;"></div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 0mm; top: 24.55mm; width: 34.89mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps27"
-							style="line-height: 3.98mm; white-space: nowrap; left: 13.05mm; top: 0.69mm; height: 4.82mm; width: 21.83mm;">
-							<span class="hrt cs6">2020</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 34.89mm; top: 24.55mm; width: 25.22mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps28"
-							style="line-height: 3.98mm; white-space: nowrap; left: 7.76mm; top: 0.69mm; height: 4.82mm; width: 17.46mm;">
-							<span class="hrt cs6">2학</span><span class="hrt cs27">&nbsp;</span><span
-								class="hrt cs6">기</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 60.11mm; top: 24.55mm; width: 61.98mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps29"
-							style="line-height: 3.98mm; white-space: nowrap; left: 1.83mm; top: 0.69mm; height: 4.82mm; width: 60.14mm;">
-							<span class="hrt cs34">특별장학금 (코로나19)_기타</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 122.10mm; top: 24.55mm; width: 33.32mm; height: 5.86mm;">
-				<div class="hcD" style="left: 0mm; top: 0mm;">
-					<div class="hcI">
-						<div class="hls ps30"
-							style="line-height: 3.98mm; white-space: nowrap; left: 0mm; top: 0.69mm; height: 4.82mm; width: 32.13mm;">
-							<span class="hrt cs9">100,000</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hce"
-				style="left: 155.42mm; top: 24.55mm; width: 26.16mm; height: 5.86mm;">
 				<div class="hcD" style="left: 0mm; top: 0mm;">
 					<div class="hcI">
 						<div class="hls ps26"

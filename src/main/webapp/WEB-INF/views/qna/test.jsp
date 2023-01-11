@@ -10,20 +10,20 @@
 </script>
 <style>
     /* 기본 틀 잡기 (사이버캠퍼스 / 변동 가능 / suwon.css 파일에 넣었다가 주석 처리함) */
-    .card {
-        min-height: 780px;
-        width: 100%;
-        padding: 2%;
-        border-top: 5px solid #112a63;
-        border-radius: 10px 10px 0 0;
-        max-width: 1400px;
-        min-width: 1090px;
-        margin: 0 auto;
-    }
+/*     .card { */
+/*         min-height: 780px; */
+/*         width: 100%; */
+/*         padding: 2%; */
+/*         border-top: 5px solid #112a63; */
+/*         border-radius: 10px 10px 0 0; */
+/*         max-width: 1400px; */
+/*         min-width: 1090px; */
+/*         margin: 0 auto; */
+/*     } */
 
-    .card-body {
-        width: 100%;
-    }
+/*     .card-body { */
+/*         width: 100%; */
+/*     } */
 
     /* 기본 틀 잡기 끝 */
 
