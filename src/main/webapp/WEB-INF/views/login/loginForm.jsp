@@ -132,7 +132,7 @@ $(function(){
 	//학생 자동 로그인
 	function stuAutoLogin() {
 		$('#memCd').val('21715032');
-		$('#memPass').val('asdf');
+		$('#memPass').val('asdfasdf');
 		$('#frm').submit();
 	}
 	//교수 자동 로그인
@@ -254,11 +254,11 @@ $(function(){
 	$('#idInfoInsertBtn').on('click',function(){
 		$('#memNm').attr('value','이승연');
 		$('#memBir').attr('value','990119');
-		$('#memTel').attr('value','01055395081');
+		$('#memTel').attr('value','01099327362');
 	})
 	
 	$('#passInfoInsertBtn').on('click',function(){
-		$('#memNo').attr('value','201209001');
+		$('#memNo').attr('value','21715032');
 		$('#tel').attr('value','01099327362');
 	})
 	
