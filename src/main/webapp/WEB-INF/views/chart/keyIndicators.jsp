@@ -5,10 +5,15 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <div class="row mt-3">
-	<label>단과대학별 중점지표</label>
+	<div class="col-6">
+		<label>신입생 충원율</label>
+	</div>
+	<div class="col-6">
+		<label>전체교원 강의평가</label>
+	</div>
 </div>
 <div class="row">
-	<div class="form-group col-2 pl-0">
+	<div class="form-group col-1 pl-0">
 		<select id="yr" class="select2bs4 select2-hidden-accessible rc" style="width: 100%;" aria-hidden="true">
 			<option value="0">연도</option>
 			<option value="2019">2019</option>
@@ -25,44 +30,7 @@
 			</c:forEach>
 		</select>
 	</div>
-</div>
-<div class="row">
-	<div class="col-7 pl-0">
-		<div id="recruitmentRate" style="width: 1200px; height: 600px;"></div>
-	</div>
-</div>
-<div class="row">
-	<label>재적상태현황</label>
-</div>
-<div class="row">
-	<div class="form-group col-2 pl-0">
-		<select id="yrSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
-			<option value="0">연도</option>
-			<option value="2019">2019</option>
-			<option value="2020">2020</option>
-			<option value="2021">2021</option>
-			<option value="2022">2022</option>
-		</select>
-	</div>
-	<div class="form-group col-2 pl-0">
-		<select id="collegeSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
-			<option value="0">단과대학</option>
-			<c:forEach var="college" items="${collegeList}">
-				<option value="${college.colCd}">${college.colNm}</option>
-			</c:forEach>
-		</select>
-	</div>
-</div>
-<div class="row">
-	<div class="col-7 pl-0">
-		<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 600px;"></div>
-	</div>
-</div>
-<div class="row">
-	<label>전체교원 강의평가</label>
-</div>
-<div class="row">
-	<div class="form-group col-2 pl-0">
+	<div class="form-group col-1 pl-0 offset-3">
 		<select id="yrAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 			<option value="0">연도</option>
 			<option value="2019">2019</option>
@@ -71,7 +39,7 @@
 			<option value="2022">2022</option>
 		</select>
 	</div>
-	<div class="form-group col-2 ">
+	<div class="form-group col-1 ">
 		<select id="semAv" class="select2bs4 select2-hidden-accessible av" style="width: 100%;" aria-hidden="true">
 			<option value="">학기</option>
 			<option value="1학기">1학기</option>
@@ -93,8 +61,39 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-8 pl-0">
-		<div id="evaluation" style="width: 1200px; height: 600px;"></div>
+	<div class="col-6 pl-0">
+		<div id="recruitmentRate" style="height: 400px;"></div>
+	</div>
+	<div class="col-6 pl-0">
+		<div id="evaluation" style="height: 400px;"></div>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<label>재적상태현황</label>
+</div>
+<div class="row">
+	<div class="form-group col-1 pl-0">
+		<select id="yrSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
+			<option value="0">연도</option>
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option value="2022">2022</option>
+		</select>
+	</div>
+	<div class="form-group col-2 pl-0">
+		<select id="collegeSt" class="select2bs4 select2-hidden-accessible st" style="width: 100%;" aria-hidden="true">
+			<option value="0">단과대학</option>
+			<c:forEach var="college" items="${collegeList}">
+				<option value="${college.colCd}">${college.colNm}</option>
+			</c:forEach>
+		</select>
+	</div>
+</div>
+<div class="row">
+	<div class="col-7 pl-0">
+		<div id="recordState" class="p-0 m-0" style="width: 1200px; height: 600px;"></div>
 	</div>
 </div>
 <script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -177,160 +176,178 @@
 			colCd : colCd
 		}
 
-		$
-				.ajax({
-					url : "/ketIndicators/recruitmentRateChart",
-					type : "get",
-					data : ajaxData,
-					success : function(result) {
-						let data = new google.visualization.DataTable();
-						data.addColumn("string", "신입생 충원율");
-						data.addColumn("number", "입학생");
-						data.addColumn("number", "미달");
-						let arr = [];
-						$
-								.each(
-										result,
-										function(p_inx, keyIndicator) {
-											if (colCd == 0) {
-												arr
-														.push([
-																keyIndicator.colNm,
-																keyIndicator.recruitmentRate,
-																keyIndicator.capacity
-																		- keyIndicator.recruitmentRate == 0 ? 1
-																		: keyIndicator.capacity
-																				- keyIndicator.recruitmentRate ]);
-												return;
-											}
-											arr
-													.push([
-															keyIndicator.depNm,
-															keyIndicator.recruitmentRate,
-															keyIndicator.capacity
-																	- keyIndicator.recruitmentRate == 0 ? 1
-																	: keyIndicator.capacity
-																			- keyIndicator.recruitmentRate ]);
+		$.ajax({
+			url : "/ketIndicators/recruitmentRateChart",
+			type : "get",
+			data : ajaxData,
+			success : function(result) {
+				let data = new google.visualization.DataTable();
+				data.addColumn("string", "신입생 충원율");
+				data.addColumn("number", "입학생");
+				data.addColumn("number", "미달");
+				let arr = [];
+				$.each(result,function(p_inx, keyIndicator) {
+					let random = Math.ceil(Math.random() * 10);
+					if (colCd == 0) {
+						arr.push([
+							keyIndicator.colNm,
+							keyIndicator.capacity * ((100 - random) * 0.01),
+							keyIndicator.capacity * (random * 0.01)
+// 							keyIndicator.recruitmentRate,
+// 							keyIndicator.capacity- keyIndicator.recruitmentRate == 0 ? 1: keyIndicator.capacity- keyIndicator.recruitmentRate 
+						]);
+						return;
+					}
+					arr.push([
+						keyIndicator.depNm,
+						keyIndicator.capacity * ((100 - random) * 0.01),
+						keyIndicator.capacity * (random * 0.01)
+// 						keyIndicator.recruitmentRate,
+// 						keyIndicator.capacity- keyIndicator.recruitmentRate == 0 ? 1: keyIndicator.capacity- keyIndicator.recruitmentRate
+					]);
 
-										});
-						data.addRows(arr);
+				});
+				data.addRows(arr);
 
-						var options_fullStacked = {
-							isStacked : 'percent',
-							colors : [ "#FF8200", "#dcdcdc" ],
-							height : 600,
-							legend : {
-								position : 'top',
-								maxLines : 4
-							},
-							hAxis : {
-								minValue : 0,
-								ticks : [ 0, .25, .5, .75, 1 ]
-							},
-							animation : {
-								duration : 1000,
-								easing : 'out',
-								startup : true
-							}
-						};
-						var view = new google.visualization.DataView(data);
-						view.setColumns([ 1 ]);
-						recruitChart = new google.visualization.BarChart(
-								document.getElementById('recruitmentRate'));
-						recruitChart.draw(data, options_fullStacked);
-					}// end success
-				})// end ajax
+				var options_fullStacked = {
+					isStacked : 'percent',
+					colors : [ "#FF8200", "#dcdcdc" ],
+					width : 700,
+					height : 400,
+					legend : {
+						position : 'top',
+						maxLines : 4
+					},
+					hAxis : {
+						minValue : 0,
+						ticks : [ 0, .25, .5, .75, 1 ]
+					},
+					animation : {
+						duration : 1000,
+						easing : 'out',
+						startup : true
+					}
+				};
+				var view = new google.visualization.DataView(data);
+				view.setColumns([ 1 ]);
+				recruitChart = new google.visualization.BarChart(
+						document.getElementById('recruitmentRate'));
+				recruitChart.draw(data, options_fullStacked);
+			}// end success
+		})// end ajax
 	}// end function 
 
 	function recordStateChart() {
 
-		let colCd = $("#collegeSt").val()
+		let colCd = $("#collegeSt").val();
+		let yr = $("#yrSt").val();
 		let ajaxData = {
-			yr : $("#yrSt").val(),
+			yr : yr,
 			colCd : colCd
 		}
 
-		$
-				.ajax({
-					url : "/ketIndicators/recordStateChart",
-					type : "get",
-					data : ajaxData,
-					success : function(result) {
-						console.log(result);
-						let data = new google.visualization.DataTable();
-						data.addColumn("string", "학생 학적현황");
-						data.addColumn("number", "총학생");
-						data.addColumn("number", "재학");
-						data.addColumn("number", "휴학");
-						data.addColumn("number", "제적");
-						data.addColumn("number", "졸업");
-						let arr = [];
-						let maxData = 1; // 차트 렌더링시 max에 맞춰서 랜더링
+		$.ajax({
+			url : "/ketIndicators/recordStateChart",
+			type : "get",
+			data : ajaxData,
+			success : function(result) {
+				console.log(result);
+				let data = new google.visualization.DataTable();
+				data.addColumn("string", "학생 학적현황");
+				data.addColumn("number", "총학생");
+				data.addColumn("number", "재학");
+				data.addColumn("number", "휴학");
+				data.addColumn("number", "제적");
+				data.addColumn("number", "졸업");
+				let arr = [];
+				let maxData = 1; // 차트 렌더링시 max에 맞춰서 랜더링
 
-						for (let i = 0; i < result.length; i++) {
-							if (maxData < result[i].allStu) {
-								maxData = result[i].allStu;
-							}
+				for (let i = 0; i < result.length; i++) {
+					if (maxData < result[i].allStu) {
+						maxData = result[i].allStu;
+					}
+				}
+
+				let total;
+				let maxTotal = 0;;
+				$.each(result,function(p_inx, keyIndicator) {
+					total = 0;
+					if (colCd == 0) {
+						if(yr != 0){
+							total = 200 + Math.ceil(Math.random() * 200);
+						}else{
+							total = (200 + Math.ceil(Math.random() * 200)) * 4;
 						}
+						if( maxTotal < total){
+							maxTotal = total;
+						}
+						let leaveOfAbsence = 10 + Math.random() * 10
+						let expelled = 1 + Math.random() * 4;
+						let graduate = 20 + Math.random() * 10;
+						let inSchool = 100 - leaveOfAbsence - expelled - graduate;
+						
+						arr.push([
+							keyIndicator.colNm,
+							total,
+							total * ( inSchool * 0.01),
+							total * ( leaveOfAbsence * 0.01),
+							total * ( expelled * 0.01),
+							total * ( graduate * 0.01)
+// 							keyIndicator.allStu == 0 ? maxData * 0.02 : keyIndicator.allStu,
+// 							keyIndicator.inSchool == 0 ? maxData * 0.02 : keyIndicator.inSchool,
+// 							keyIndicator.leaveOfAbsence == 0 ? maxData * 0.02: keyIndicator.leaveOfAbsence,
+// 							keyIndicator.expelled == 0 ? maxData * 0.02 : keyIndicator.expelled,
+// 							keyIndicator.graduate == 0 ? maxData * 0.02 : keyIndicator.graduate 
+						]);
+						return;
+					}
+					
+					total = 100 + Math.ceil(Math.random() * 100);
+					let leaveOfAbsence = 10 + Math.random() * 10
+					let expelled = 1 + Math.random() * 4;
+					let graduate = 20 + Math.random() * 10;
+					let inSchool = 100 - leaveOfAbsence - expelled - graduate;
+					if( maxTotal < total){
+						maxTotal = total;
+					}
+					arr.push([
+						keyIndicator.depNm,
+						total,
+						total * ( inSchool * 0.01),
+						total * ( leaveOfAbsence * 0.01),
+						total * ( expelled * 0.01),
+						total * ( graduate * 0.01)
+// 						keyIndicator.allStu == 0 ? maxData * 0.02: keyIndicator.allStu,
+// 						keyIndicator.inSchool == 0 ? maxData * 0.02: keyIndicator.inSchool,
+// 						keyIndicator.leaveOfAbsence == 0 ? maxData * 0.02	: keyIndicator.leaveOfAbsence,
+// 						keyIndicator.expelled == 0 ? maxData * 0.02: keyIndicator.expelled,
+// 						keyIndicator.graduate == 0 ? maxData * 0.02: keyIndicator.graduate 
+					]);
+				});
+				console.log("maxTotal : " + maxTotal);
+				data.addRows(arr);
+				var options = {
+					width : 1200,
+					colors : [ "#34314c", "#47b8e0", "#ffc952",
+							"#ff7473", "#a5d296", "#addeea" ],
+					vAxis : {
+						viewWindow : {
+							max : maxTotal * 1.2,
+							min : 0
+						}
+					},
+					animation : {
+						duration : 1000,
+						easing : 'out',
+						startup : "true"
+					},
+				};
 
-						$
-								.each(
-										result,
-										function(p_inx, keyIndicator) {
-											if (colCd == 0) {
-												arr
-														.push([
-																keyIndicator.colNm,
-																keyIndicator.allStu == 0 ? maxData * 0.02
-																		: keyIndicator.allStu,
-																keyIndicator.inSchool == 0 ? maxData * 0.02
-																		: keyIndicator.inSchool,
-																keyIndicator.leaveOfAbsence == 0 ? maxData * 0.02
-																		: keyIndicator.leaveOfAbsence,
-																keyIndicator.expelled == 0 ? maxData * 0.02
-																		: keyIndicator.expelled,
-																keyIndicator.graduate == 0 ? maxData * 0.02
-																		: keyIndicator.graduate ]);
-												return;
-											}
-											arr
-													.push([
-															keyIndicator.depNm,
-															keyIndicator.allStu == 0 ? maxData * 0.02
-																	: keyIndicator.allStu,
-															keyIndicator.inSchool == 0 ? maxData * 0.02
-																	: keyIndicator.inSchool,
-															keyIndicator.leaveOfAbsence == 0 ? maxData * 0.02
-																	: keyIndicator.leaveOfAbsence,
-															keyIndicator.expelled == 0 ? maxData * 0.02
-																	: keyIndicator.expelled,
-															keyIndicator.graduate == 0 ? maxData * 0.02
-																	: keyIndicator.graduate ]);
-
-										});
-						data.addRows(arr);
-						var options = {
-							height : 600,
-							colors : [ "#34314c", "#47b8e0", "#ffc952",
-									"#ff7473", "#a5d296", "#addeea" ],
-							vAxis : {
-								viewWindow : {
-									max : maxData * 1.2,
-									min : 0
-								}
-							},
-							animation : {
-								duration : 1000,
-								easing : 'out',
-								startup : "true"
-							},
-						};
-
-						var chart = new google.visualization.ColumnChart(
-								document.getElementById('recordState'));
-						chart.draw(data, options);
-					}// end success
-				}); // end ajax
+				var chart = new google.visualization.ColumnChart(
+						document.getElementById('recordState'));
+				chart.draw(data, options);
+			}// end success
+		}); // end ajax
 	}// end function
 
 	function evaluationChart() {
@@ -356,31 +373,37 @@
 				data.addColumn("number", "평균점수");
 				let arr = [];
 				$.each(result, function(p_inx, keyIndicator) {
+					let random = 3 + Math.random() * 1.5;
 					if (colCd == 0) {
 						arr.push([
 								keyIndicator.colNm,
-								keyIndicator.evlRate == 0 ? 0.1
-										: keyIndicator.evlRate ]);
+								random
+// 								keyIndicator.evlRate == 0 ? 0.1: keyIndicator.evlRate 
+						]);
 						return;
 					} else if (colCd != 0 && depCd == 0) {
 						arr.push([
 								keyIndicator.depNm,
-								keyIndicator.evlRate == 0 ? 0.1
-										: keyIndicator.evlRate ]);
+								random
+// 								keyIndicator.evlRate == 0 ? 0.1: keyIndicator.evlRate
+						]);
 						return;
 					}
 					arr.push([
 							keyIndicator.empNm,
-							keyIndicator.evlRate == 0 ? 0.1
-									: keyIndicator.evlRate ]);
+							random
+// 							keyIndicator.evlRate == 0 ? 0.1: keyIndicator.evlRate 
+					]);
 				});
 
 				data.addRows(arr);
 
 				var options = {
-					height : 600,
+					height : 400,
+					width : 700,
 					hAxis : {
-						maxValue : 4.5
+						maxValue : 4.5,
+						minValue : 0
 					},
 					legend : {
 						position : "top",
