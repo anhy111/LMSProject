@@ -480,6 +480,9 @@ public class LectureApplyController {
 	public int getSubCdList(HttpServletRequest request
 			, @RequestBody String subNm) {
 		
+		HttpSession session = request.getSession();
+		int proNo = (int)session.getAttribute("no");
+		
 		subNm = subNm.replaceAll("\"", "");
 		
 		log.info("subNm2 : 	" + subNm);

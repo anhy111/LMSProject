@@ -581,7 +581,7 @@
 	// 자동 채우기
 	function insertData() {
 		$('#lecaYr').val('2023');
-		$('#lecaSem').val('2');
+		$('#lecaSem').val('1');
 		$('#lecaNm').val('고급 JAVA 프로그래밍');
 		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
 		$('#lecaTrg').val('3');
