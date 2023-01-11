@@ -636,6 +636,11 @@
 		$("#delete").on("click",function(){
 			deleteSch(calendarData);
 		})
+		
+		$("#autoFillReg").on("click",function(){
+			$("#aschTtl").val("개교기념일");
+			$("#aschCon").val("10주년 기념학교사 자료 수집 및 전시 계획\n10주년기념 미술전 전시 계획 예정 입니다.");
+		})
 		initFullCalendar();
 		
 		$(document).on("click",'.fc-prev-button',function(){

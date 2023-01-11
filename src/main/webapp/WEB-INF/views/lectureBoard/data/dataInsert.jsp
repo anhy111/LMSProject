@@ -28,7 +28,7 @@
 											<div  class="taskData">
 												<label>첨부파일</label> <br>
 												<div class="custom-file">
-													<input type="file" id="customFile" name="files"  multiple >
+													<input type="file" id="customFile" name="sendingFile" multiple >
 													<label class="custom-file-label" for="customFile">Choose file</label>
 												</div>
 										</div>
@@ -40,7 +40,7 @@
 					<div class="col-sm-10">
 					</div>
 						<div class="col-sm-1" align="right" >
-							<button class="btn btn-outline-primary" id="modify">등록</button>
+							<button type="submit" class="btn btn-outline-primary" id="modify">등록</button>
 						</div>
 					<div class="col-sm-1">
 						<a class="btn btn-outline-warning" href="/lectureBoard/data/lectureData?lecaCd=${param.lecaCd}">취소</a>
@@ -52,17 +52,19 @@
 </div>
 </div>
 <script type="text/javascript">
+
 $("input[type='file']").on('change',function(){
 	var str = '';
-	for(var i = 0;i<event.target.files.length;i++){
-		if(event.target.files.length - 1 != i){
-			str += event.target.files[i].name+', ';
+	for(var i = 0;i<event.target.filefile2.length;i++){
+		if(event.target.filefile2.length - 1 != i){
+			str += event.target.filefile2[i].name+', ';
 		}else{
-			str += event.target.files[i].name;
+			str += event.target.filefile2[i].name;
 		}
 	}
     $(this).next('.custom-file-label').html(str);
 });
+
 CKEDITOR.replace("ldtCon",
 		{
 		width:'100%',

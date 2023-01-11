@@ -108,7 +108,7 @@
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="4%">순번</th>
+					<th width="4%">No</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
 					<th width="4%">학년</th>
@@ -177,7 +177,7 @@
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="4%">순번</th>
+					<th width="4%">No</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
 					<th width="4%">학년</th>

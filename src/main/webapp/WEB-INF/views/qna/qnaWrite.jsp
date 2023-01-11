@@ -130,6 +130,6 @@
 <script>
     function autoFill() {
         $('#title').val("질문있습니다.");
-        $('#content').val('중요 질문 입니다.');
+        $('#content').val('학적 수정에서 계좌번호를 변경할 수 없어요.');
     }
 </script>

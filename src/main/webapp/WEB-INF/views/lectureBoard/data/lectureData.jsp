@@ -131,7 +131,7 @@ table {
 											<td class="td-title"><a href="/lectureBoard/data/dataDetail?ldtCd=${row.ldtCd}&&lecaCd=${row.lecaCd}"><B>${row.ldtTtl}</B></a></td>
 											<td>${row.ldtWriter}</td>
 											<td><fmt:formatDate value="${row.ldtReg}"
-													pattern="yyyy-mm-dd" /></td>
+													pattern="yyyy/MM/dd" /></td>
 											<td>${row.ldtCount}</td>
 										</tr>
 									</c:forEach>
