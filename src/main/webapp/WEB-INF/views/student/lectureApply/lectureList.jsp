@@ -109,7 +109,7 @@
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="4%">순번</th>
+					<th width="4%">No</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
 					<th width="4%">학년</th>
@@ -139,7 +139,7 @@
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="4%">순번</th>
+					<th width="4%">No</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
 					<th width="4%">학년</th>
@@ -207,7 +207,7 @@
 		<table class="table table-head-fixed text-nowrap table-striped table-bordered table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="4%">순번</th>
+					<th width="4%">No</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
 					<th width="4%">학년</th>
@@ -484,6 +484,9 @@
 			window.open("/student/lectureApply/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
 		});
 		
+		setInterval(loadNotYetApplyLecture, 2000); 
+		setInterval(loadCompleteApplyLecture, 2000);
+		setInterval(loadNotApplySaveLecture, 2000);
 		loadNotYetApplyLecture(); 
 		loadCompleteApplyLecture();
 		loadNotApplySaveLecture();

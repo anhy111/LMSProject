@@ -53,7 +53,7 @@
 			<table class="table text-nowrap table-striped table-bordered table-sm text-center table-hover">
 				<thead>
 					<tr>
-						<th>순번</th>
+						<th>No</th>
 						<th>과목명</th>
 						<th>담당교수</th>
 						<th>평가여부</th>
@@ -216,8 +216,12 @@
 				},
 				success : function(result){
 					if(result > 0){
-						errorSwal("평가가 완료되었습니다.");
-						location.reload();
+						swal.fire({
+							icon: 'success',
+							text: '평가가 완료되었습니다.'
+						}).then(function(){
+							location.reload();
+						});
 					} else{
 						errorSwal("다시 시도해주세요.");
 					}
