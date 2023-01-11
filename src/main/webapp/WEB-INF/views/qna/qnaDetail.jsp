@@ -96,6 +96,7 @@
             <!-- 버튼 시작 -->
             <!-- ================================================= -->
             <div class="row justify-content-end mt-3">
+<sec:authorize access="hasRole('ROLE_STUDENT')">
                 <c:if test="${empty qnaReply.qnarCon}">
                     <button class="btn btn-outline-primary m-1" type="button"
                             onclick="location.href='/qna/update/${form.qnaCd}'">수정
@@ -106,8 +107,17 @@
                     <button class="btn btn-primary m-1" type="button" onclick="location.href='/qna/main'">목록
                     </button>
                 </c:if>
-            </div>
+</sec:authorize>
 
+                <sec:authorize access="hasRole('ROLE_MANAGER')">
+                <button class="btn btn-outline-danger m-1" type="button"
+                        onclick="location.href='/qna/delete/${form.qnaCd}'">삭제
+                </button>
+                <button class="btn btn-primary m-1" type="button" onclick="location.href='/qna/main'">목록
+                </button>
+                </sec:authorize>
+
+            </div>
             <!-- ================================================= -->
             <!-- 댓글 시작 -->
             <!-- ================================================= -->
@@ -134,6 +144,9 @@
 </div>
 <script>
     function autoFill() {
-        $('#autoFillField').val("중요공지사항입니다!!!");
+        $('#autoFillField').val("계좌번호 변경은 등록 > 출력/등록 > 계좌번호변경 메뉴에서 하실 수 있습니다. " +
+            "기관 / 부서 : 정보통신처 / 정보개발팀" +
+            "담당업무 : 정보시스템서비스(학사포탈)" +
+            "연 락 처 : 2123-6391 ");
     }
 </script>
