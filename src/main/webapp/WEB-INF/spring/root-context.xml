@@ -54,11 +54,11 @@
 	</bean>
 
 	<!-- AWS Bean 주입. -->
-	<bean id="s3Config"
-		  class="kr.or.ddit.aws.S3Config"></bean>
+<!-- 	<bean id="s3Config" -->
+<!-- 		  class="kr.or.ddit.aws.S3Config"></bean> -->
 
-	<bean id="myComponent"
-		class="kr.or.ddit.aws.MyComponent"></bean>
+<!-- 	<bean id="myComponent" -->
+<!-- 		class="kr.or.ddit.aws.MyComponent"></bean> -->
 	<!-- AWS Bean 주입 끝. -->
 
 	<!-- Filter Bean 설정 시작. -->
