@@ -2,6 +2,7 @@ package kr.or.ddit.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.ddit.domain.StudentLecture;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@EnableTransactionManagement
 public class StudentLectureApplyServiceImpl implements StudentLectureApplyService{
 	
 	@Autowired
