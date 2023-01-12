@@ -28,7 +28,7 @@
 											<div  class="taskData">
 												<label>첨부파일</label> <br>
 												<div class="custom-file">
-													<input type="file" id="customFile" name="sendingFile" multiple >
+													<input type="file" id="customFile" name="files" multiple >
 													<label class="custom-file-label" for="customFile">Choose file</label>
 												</div>
 										</div>

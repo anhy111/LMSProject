@@ -137,9 +137,9 @@ public class LectureBoardController {
 	}
 
 	@PostMapping("data/dataInsert")
-
 	public String insertData2(MultipartFile[] files, LecData lecData, Principal principal, String lecaCd) {
 		log.info("files : " + files);
+		log.info("files.length : " +files.length);
 
 		String empNo = principal.getName();
 		lecData.setLecaCd(Integer.parseInt(lecaCd));
@@ -149,7 +149,15 @@ public class LectureBoardController {
 		map.put("ldtTtl", lecData.getLdtTtl());
 		map.put("ldtCon", lecData.getLdtCon());
 		map.put("lecaCd", lecData.getLecaCd());
+		
+		if(files.length == 0) {
+			log.info("파일 없음 length == 0");
+			this.lectureBoardService.dataInsert2(map);
+			
+			Integer ldtCd = (Integer) map.get("ldtCd");
 
+			return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&&ldtCd=" + ldtCd;
+		}
 
 		for (MultipartFile file : files) {
 			if (file.getOriginalFilename().equals("")) {
