@@ -350,7 +350,7 @@ tr.text-center td:hover {
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="top: 50px;">
+		<div class="modal-content" style="top: 20px;">
 			<div class="modal-header"
 				style="background-color: #001F3F; color: white;">
 				<h5 class="modal-title">상담 상세</h5>

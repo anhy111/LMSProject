@@ -137,7 +137,7 @@ cursor:pointer;
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="top:50px;">
+		<div class="modal-content">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
 				<h5 class="modal-title">상담 신청서 작성</h5>
 				<button type="button" class="close" data-dismiss="modal"
@@ -239,8 +239,8 @@ cursor:pointer;
 							<label>상담 할 내용*</label>
 						</div>
 					</div>
-					<div class="row" style="height:200px;max-height:400px;">
-						<textarea id="cnslCon"name="cnslCon" rows="3" class="col-10 ml-2 h-100 form-control"></textarea>
+					<div class="row" style="height:100px;max-height:200px;">
+						<textarea id="cnslCon"name="cnslCon" rows="3" class="col-10 ml-2 h-60 form-control"></textarea>
 					</div>
 				</div>
 				<div class="col-4" style="display: inherit; padding-top: 20px;">
