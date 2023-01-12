@@ -156,7 +156,7 @@ public class LectureBoardController {
 			
 			Integer ldtCd = (Integer) map.get("ldtCd");
 
-			return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&&ldtCd=" + ldtCd;
+			return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&ldtCd=" + ldtCd;
 		}
 
 		for (MultipartFile file : files) {
@@ -175,7 +175,7 @@ public class LectureBoardController {
 
 		Integer ldtCd = (Integer) map.get("ldtCd");
 
-		return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&&ldtCd=" + ldtCd;
+		return "redirect:/lectureBoard/data/dataDetail?lecaCd=" + lecData.getLecaCd() + "&ldtCd=" + ldtCd;
 	}
 
 	// 시험 홈
