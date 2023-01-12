@@ -4,9 +4,9 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
-       style="background-color: #001F3F;opacity:0.9;">
+       style="background-color: #001F3F;opacity:1;">
 	<!-- Brand Logo -->
-    <a href="/" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;box-shadow: 3px 2px 3px -1px var(--light)">
+    <a href="/" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
     <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 <!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
 <!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
@@ -14,10 +14,10 @@
     </a>
 
 	<!-- Sidebar -->
-	<div class="sidebar mt-5">
+	<div class="sidebar mt-2">
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="pt-3 nav nav-pills nav-sidebar flex-column"
+			<ul class="nav nav-pills nav-sidebar flex-column"
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->

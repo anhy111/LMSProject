@@ -20,18 +20,18 @@
 	    </a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-		<a href="/lecture/myLecture" class="brand-link bg-navy" style="text-align:left;padding:0;box-shadow: 3px 2px 3px -1px var(--light)">
+		<a href="/lecture/myLecture" class="brand-link bg-navy" style="text-align:left;padding:0;">
 		   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 	    </a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_MANAGER')">
-		<a href="/aschedule/calendar" class="brand-link bg-navy" style="text-align:left;padding:0;box-shadow: 3px 2px 3px -1px var(--light)">
+		<a href="/aschedule/calendar" class="brand-link bg-navy" style="text-align:left;padding:0;">
 		   	 <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 	    </a>
 	</sec:authorize>
 	
     <!-- Sidebar -->
-    <div class="mt-5 sidebar">
+    <div class="mt-2 sidebar">
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent"
