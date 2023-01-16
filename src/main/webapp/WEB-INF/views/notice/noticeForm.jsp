@@ -2,8 +2,31 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
+<head>
+    <style>
+        .drop-zone {
+            width: 500px;
+            height: 250px;
+            background-color: #ffffff;
+            margin-top: 20px;
+            position: relative;
+            padding: 50px;
+            border-radius: 15px;
+            border: 3px dashed #71748d;
+            font-size: 15px;
+        }
+
+        #fileUpload {
+        }
+
+        .drop-zone-dragenter, .drop-zone-dragover {
+            background-color: #dbdbe7;
+            /*     border: 3px solid pink; */
+        }
+    </style>
+</head>
 
 <!-- 게시판상세 -->
 <!-- ================================================= -->
@@ -14,31 +37,55 @@
     <!-- 111111 -->
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <h2 class="card-header">공지사항 등록하기</h2>
+            <div class="card">
+                <h2 class="card-header">공지사항 등록하기</h2>
 
 
-            <div class="card-body">
-                <form action="/notice/noticeForm" method="post" enctype="multipart/form-data" name="form">
-                    <sec:csrfInput/>
-                    <div class="row">
-                        <table class="table table-bordered">
-                            <tbody>
-                            <tr>
-                                <th>제목</th>
-                                <td class="table-title"><input class="form-control"
-                                                               id="title" name="title" type="text"
-                                                               style="width:100%"/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="content"></label>
-                                <div class="textArea">
-                                    <textarea name="content" style="width: 100%;" rows="20rem" id="content"></textarea>
+                <div class="card-body">
+                    <form role="form" action="/notice/noticeForm" method="post" name="form">
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th>제목</th>
+                                    <td class="table-title"><input class="form-control"
+                                                                   id="title" name="title" type="text"
+                                                                   style="width:100%"/>
+                                    </td>
+                                    <th>중요공지여부</th>
+                                    <td class="table-title">
+                                        <div style="width:10%">
+
+                                            <input type="checkbox" id="input_check" value='imp'
+                                                   style=position:relative;left:50px;>
+                                        </div>
+                                        <div id="wrapper" style="margin-top: -1px;"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!-- <th>마감날짜</th>
+                                    <td class="table-title">
+                                        <div
+                                            class="tui-datepicker-input tui-datetime-input tui-has-focus">
+                                            <input type="text" id="datepicker-input-1" name="dueDate"
+                                                aria-label="Date-Time"> <span class="tui-ico-date"></span>
+                                        </div>
+                                        <div id="wrapper-1" style="margin-top: -1px;"></div>
+
+                                    </td> -->
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label for="content"></label>
+                                    <textarea class="textarea" name="content" id="content"
+                                              rows="20" placeholder="1000자 내외로 작성하세요."
+                                              style="display: none;"></textarea>
+
                                 </div>
 <%--                                <textarea class="textarea" name="content" id="content"--%>
 <%--                                          rows="40" placeholder="1000자 내외로 작성하세요."--%>
@@ -54,8 +101,7 @@
                         <button class="btn btn-outline-primary" type="button"
                                 onclick="autoFill();">자동완성
                         </button>&nbsp;&nbsp;
-                        <button class="btn btn-outline-primary" type="submit"
-                                type="submit">등록
+                        <button class="btn btn-outline-primary" type="submit" id="registBtn">등록
                         </button>
                         &nbsp;&nbsp;
                         <button class="btn btn-outline-danger" type="button"
