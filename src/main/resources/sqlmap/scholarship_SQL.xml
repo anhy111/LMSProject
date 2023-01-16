@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.ScholarshipMapper">
+
+	<!-- 장학금 리스트 -->
+	<select id="scholarshipInquiry" resultType="scholarship">
+		SELECT
+		    SCL_NM
+		    , SCL_AMT
+		    , SCL_DETAIL
+		    , SCL_CAP
+		FROM SCHOLARSHIP
+	</select>
+	
+	<!-- 장학금 수여 리스트 -->
+	<select id="scholarshipAwardList" resultType="sclHistory">
+		<![CDATA[
+		SELECT
+		    *
+		FROM
+		    (
+		        WITH T AS (
+		            SELECT
+		                A.STU_NO,
+		                S.STU_NM,
+		                C.DEP_CD,
+		                C.DEP_NM,
+		                S.STU_YR
+		                || '학년' AS STU_YR,
+		                CASE
+		                        WHEN MOD(S.STU_SEM,2) = 1 THEN 1
+		                        ELSE 2
+		                    END
+		                || '학기' AS STU_SEM,
+		                E.COL_NM,
+		                E.COL_FEE,
+		                A.LECA_CD,
+		                A.SL_SCORE
+		            FROM
+		                STU_LEC A
+		                INNER JOIN STUDENT S ON A.STU_NO = S.STU_NO
+		                INNER JOIN DEPARTMENT C ON C.DEP_CD = S.DEP_CD
+		                INNER JOIN COLLEGE E ON E.COL_CD = C.COL_CD
+		        ) SELECT
+		            T.STU_NO,
+		            T.STU_NM,
+		            T.DEP_NM,
+		            T.STU_SEM,
+		            T.STU_YR,
+		            T.COL_NM,
+		            T.COL_FEE,
+		            ROUND(NVL(SUM(T.SL_SCORE * LA.LECA_CRD) / DECODE(SUM(LA.LECA_CRD),0,NULL,SUM(LA.LECA_CRD) ),0),2) AS TOTAL_AVG,
+		            RANK() OVER(
+		                PARTITION BY T.DEP_CD,
+		                T.STU_YR
+		                ORDER BY
+		                    ROUND(NVL(SUM(T.SL_SCORE * LA.LECA_CRD) / DECODE(SUM(LA.LECA_CRD),0,NULL,SUM(LA.LECA_CRD) ),0),2) DESC
+		            ) AS RANKING,
+		            CASE
+		                    WHEN RANK() OVER(
+		                        PARTITION BY T.DEP_CD,
+		                        T.STU_YR
+		                        ORDER BY
+		                            ROUND(NVL(SUM(T.SL_SCORE * LA.LECA_CRD) / DECODE(SUM(LA.LECA_CRD),0,NULL,SUM(LA.LECA_CRD) ),0),2) DESC
+		                    ) = 1 THEN T.COL_FEE * (
+		                        SELECT
+		                            SCL_AMT
+		                        FROM
+		                            SCHOLARSHIP
+		                        WHERE
+		                            SCL_CD = 1
+		                    ) * 0.01
+		                    WHEN RANK() OVER(
+		                        PARTITION BY T.DEP_CD,
+		                        T.STU_YR
+		                        ORDER BY
+		                            ROUND(NVL(SUM(T.SL_SCORE * LA.LECA_CRD) / DECODE(SUM(LA.LECA_CRD),0,NULL,SUM(LA.LECA_CRD) ),0),2) DESC
+		                    ) = 2 THEN T.COL_FEE * (
+		                        SELECT
+		                            SCL_AMT
+		                        FROM
+		                            SCHOLARSHIP
+		                        WHERE
+		                            SCL_CD = 2
+		                    ) * 0.01
+		                    ELSE T.COL_FEE * (
+		                        SELECT
+		                            SCL_AMT
+		                        FROM
+		                            SCHOLARSHIP
+		                        WHERE
+		                            SCL_CD = 3
+		                    ) * 0.01
+		                END
+		            AS SCLH_AMT
+		          FROM
+		            T
+		            INNER JOIN LECTURE L ON T.LECA_CD = L.LECA_CD
+		            INNER JOIN LEC_APPLY LA ON L.LECA_CD = LA.LECA_CD
+		            WHERE
+		                LA.LECA_YR = 
+		                CASE 
+		                    WHEN LA.LECA_SEM = 2 THEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) -1
+		                    ELSE TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		                END
+		            AND LA.LECA_SEM =
+		                CASE 
+		                    WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM'))>=3
+		                        AND TO_NUMBER(TO_CHAR(SYSDATE,'MM'))<= 8 THEN 1
+		                    ELSE 2
+		                END
+		        GROUP BY
+		            T.STU_NO,
+		            T.STU_NM,
+		            T.DEP_NM,
+		            T.STU_SEM,
+		            T.STU_YR,
+		            T.COL_NM,
+		            T.COL_FEE,
+		            T.DEP_CD
+		    ) W
+		WHERE
+		    W.RANKING <= 3
+		]]>
+	</select>
+	
+	<!-- 장학금 수여자 확인 -->
+	<select id="scholarshipCheck" parameterType="int" resultType="int">
+		<![CDATA[
+		SELECT COUNT(SCLH_CD)
+		FROM SCL_HISTORY
+		WHERE STU_NO = #{stuNo}
+		AND
+		    SCLH_SEM =
+		    CASE
+		        WHEN TO_NUMBER(TO_CHAR(SYSDATE,'MM')) >=3
+		        AND TO_NUMBER(TO_CHAR(SYSDATE,'MM')) <=8 THEN 1
+		        ELSE 2
+		    END
+		AND TO_CHAR(SCLH_YR) = 
+		    CASE
+		        WHEN SCLH_SEM = 2 THEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) -1
+		        ELSE TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		    END
+		]]>
+	</select>
+	
+	<!-- 장학금 수여학생 정보 -->
+	<select id="studentInfoList" resultType="sclHistory">
+		SELECT
+		        LECA_CRD
+		        , LECA_CATE
+		        , LECA_NM
+		        , SL_SCORE
+		FROM    STU_LEC SL, LEC_APPLY LA, LECTURE L, DEPARTMENT D, SUBJECT SJ
+		WHERE   SL.LECA_CD = L.LECA_CD
+		AND     L.LECA_CD = LA.LECA_CD
+		AND     SJ.DEP_CD = D.DEP_CD
+		AND     SJ.SUB_CD = L.SUB_CD
+		AND     SL.STU_NO = #{stuNo}
+	</select>
+	
+	<!-- 장학금 수여 -->
+	<insert id="scholarshipConfer" parameterType="sclHistory">
+		INSERT INTO SCL_HISTORY (
+		     SCLH_CD
+		     , SCL_CD
+		     , STU_NO
+		     , SCLH_YR
+		     , SCLH_SEM
+		     , SCLH_YN
+		     , SCLH_PAY_YN
+		     , SCLH_AMT
+		) VALUES (
+		    SCLH_SEQ.NEXTVAL
+		    , #{sclCd}
+		    , #{stuNo}
+		    , (SELECT 
+		        CASE
+		            WHEN STU_SEM = 2 THEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')) -1
+		            ELSE TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))
+		        END
+		     FROM STUDENT WHERE STU_NO = #{stuNo})
+       		, (SELECT STU_SEM FROM STUDENT WHERE STU_NO = #{stuNo})
+		    , 'AP001'
+		    , 'PVD001'
+		    , #{sclhAmt}
+		)
+	</insert>
+	
+	<!-- 학생 장학금 수혜내역 리스트 -->
+	<select id="stuScholarshipList" resultType="sclHistory">
+		SELECT
+		    SCLH_YR
+		    , SCLH_SEM
+		    , SCL_NM
+		    , SCLH_AMT
+		    , SCLH_CD
+		FROM SCHOLARSHIP S, SCL_HISTORY SH
+		WHERE SH.SCL_CD = S.SCL_CD
+		AND STU_NO = #{stuNo}
+	</select>
+
+	<!-- 학생 장학금 수혜 증명서 -->
+	<select id="scholarshipBenefitCertificate" parameterType="hashmap" resultType="hashmap">
+		SELECT
+		    SCLH_YR
+		    , SCLH_SEM
+		    , SCL_NM
+		    , SCLH_AMT
+		    , SCLH_CD
+		FROM SCHOLARSHIP S, SCL_HISTORY SH
+		WHERE SH.SCL_CD = S.SCL_CD
+		AND STU_NO = #{stuNo}
+	</select>
+	
+	<update id="approveSclh" parameterType="sclHistory">
+		UPDATE SCL_HISTORY
+		    SET SCLH_PAY_YN = #{sclhPayYn}
+		WHERE SCLH_CD = ${sclhCd}
+	</update>
+</mapper>
+
+
+
+
+
+
+

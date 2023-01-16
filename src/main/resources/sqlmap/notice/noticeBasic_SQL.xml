@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : xml파일은 여러개일 수 있음.
+이를 구별하기 위한 식별 용도로 사용 -->
+<mapper namespace="kr.or.ddit.mapper.NoticeBasicMapper">
+
+    <resultMap type="NoticeBasic" id="NoticeBasicMap">
+        <result property="noticeCd" column="NOTICE_CD" />
+        <result property="noticeTtl" column="NOTICE_TTL" />
+        <result property="noticeReg" column="NOTICE_REG" />
+        <result property="noticeCon" column="NOTICE_CON" />
+        <result property="noticeHit" column="NOTICE_HIT" />
+        <result property="atchFileId" column="ATCH_FILE_ID" />
+        <collection property="attachList" resultMap="attachMap"></collection>
+    </resultMap>
+
+    <resultMap  type="attach" id="attachMap">
+        <result property="atchFileId" column="ATCH_FILE_ID" />
+        <result property="streFileNm" column="STRE_FILE_NM" />
+        <result property="orignlFileNm" column="ORIGNL_FILE_NM" />
+    </resultMap>
+
+    <!-- 공지사항 상세 조회(첨부파일 포함) -->
+    <select id="noticeBasicFindNotice" parameterType="Long" resultMap="NoticeBasicMap">
+        SELECT B.NOTICE_CD, B.NOTICE_TTL, B.NOTICE_REG, B.NOTICE_CON, B.NOTICE_HIT, B.ATCH_FILE_ID
+             , A.STRE_FILE_NM, A.ORIGNL_FILE_NM
+        FROM notice_basic B, ATTACH A
+        WHERE B.ATCH_FILE_ID = A.ATCH_FILE_ID (+)
+          AND NOTICE_CD = #{noticeCd}
+    </select>
+
+    <!-- 공지사항 등록 -->
+    <insert id="noticeBasicSave" parameterType="NoticeBasic">
+
+        INSERT INTO
+            NOTICE_BASIC (
+            NOTICE_CD,
+            NOTICE_TTL,
+            NOTICE_REG,
+            NOTICE_CON
+        )
+        VALUES
+            (
+            NOTICEBASIC_SEQ.NEXTVAL,
+            #{noticeTtl},
+            SYSDATE,
+            #{noticeCon}
+            )
+    </insert>
+    <!-- 공지사항 등록 첨부파일    -->
+    <insert id="noticeBasicSaveWithAttach" parameterType="NoticeBasic">
+
+        INSERT INTO
+            NOTICE_BASIC (
+            NOTICE_CD,
+            NOTICE_TTL,
+            NOTICE_REG,
+            NOTICE_CON,
+            ATCH_FILE_ID
+        )
+        VALUES
+            (
+                NOTICEBASIC_SEQ.NEXTVAL,
+                #{noticeTtl},
+                SYSDATE,
+                #{noticeCon},
+                (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+            )
+    </insert>
+
+
+
+    <!-- 공지사항 수정 -->
+    <update id="noticeBasicUpdate" parameterType="NoticeBasic">
+        UPDATE NOTICE_BASIC
+        SET
+            NOTICE_TTL = #{noticeTtl},
+            NOTICE_CON = #{noticeCon},
+            NOTICE_REG = SYSDATE
+        WHERE
+            NOTICE_CD = #{noticeCd}
+    </update>
+
+    <!-- 공지사항 삭제 -->
+    <delete id="noticeBasicDelete">
+        DELETE
+        FROM NOTICE_BASIC
+        WHERE NOTICE_CD = #{noticetCd}
+    </delete>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

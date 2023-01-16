@@ -85,31 +85,17 @@
                                     <textarea class="textarea" name="content" id="content"
                                               rows="20" placeholder="1000자 내외로 작성하세요."
                                               style="display: none;"></textarea>
+
                                 </div>
+<%--                                <textarea class="textarea" name="content" id="content"--%>
+<%--                                          rows="40" placeholder="1000자 내외로 작성하세요."--%>
+<%--                                          style="display: none;">--%>
+<%--                                </textarea>--%>
                             </div>
-                            <!--  <div class="col-xl-4">
-                                <div class="drop-zone ">
-                                    <br />
-                                    <div style="text-align: center; font-size: 50px;">
-                                        <i class="fas fa-upload"></i>
-                                    </div>
-                                    <div
-                                        style="text-align: center; font-size: 20px; font-weight: bold;">
-                                        파일 선택 클릭<br />또는 파일을 여기로 드래그하세요.
-                                    </div>
-
-                                </div>
-                                        <input  style="padding-left:210px;" type="file" id="fileUpload" multiple> <br> <br>
-                            </div> -->
                         </div>
-                        <button type="submit">등록</button>
-                    </form>
-
-
-                    <!-- ================================================= -->
-                    <!-- 버튼 시작 -->
-                    <!-- ================================================= -->
-
+                        <input type="file" name="files2" multiple>
+                    </div>
+<%--                    <button type="submit">등록</button>--%>
                     <div class="row justify-content-end mt-3"
                          style="padding-right: 30px; padding-bottom: 50px;">
                         <button class="btn btn-outline-primary" type="button"
@@ -121,43 +107,28 @@
                         <button class="btn btn-outline-danger" type="button"
                                 onclick="f_alert();">취소
                         </button>
-                        &nbsp;&nbsp;
                     </div>
-                    <!-- ================================ ================= -->
-                    <!-- 버튼 끝 -->
-                    <!-- ================================================= -->
-                </div>
+                </form>
+
+
             </div>
         </div>
     </div>
-
-    <!-- 11111끝 -->
-
 </div>
 
 <script>
-    window.onload = function () {
-        summernote_go($('#content'), '<%=request.getContextPath()%>');
-    }
-</script>
-
-
-<script>
-    function f_alert() {
+    const f_alert = () => {
         if (!confirm("작성중인 글이 있습니다. 이전화면으로 돌아가겠습니까?")) {
             alert("취소되었습니다.");
         } else {
             alert("이전화면으로 돌아갑니다.")
             history.back();
         }
-    }
-
+    };
 </script>
-
 
 <script>
     function regist_go() {
-
         Swal.fire({
             title: '등록하시겠습니까?',
             showDenyButton: true,
@@ -185,8 +156,16 @@
     }
 
     function autoFill() {
-        $('#title').val("중요공지사항입니다!!!");
-        $('#content').summernote('pasteHTML', '중요 공지 내용 입니다.');
+        $('#title').val("제9회 연수대학교 인문학 캠프 개최안내");
+        $('#content').val("" +
+            "[SNU 고교-대학 연계 고교생 아카데미]" +
+            "가. 대 상 : 전국 고등학교 예비 2,3학년(現 1,2학년) 재학생 80명" +
+            "나. 일 정 : 2023.1.17.(화) 10:00 ~ 17:00" +
+            "다. 장 소 : 인문대학 동 B101호 대강의실 및 조별 활동용 인문대학 강의실" +
+            "라. 접수방법 : 온라인 접수(https://hedu.snu.ac.kr/camp2023)" +
+            "마. 접수기간 :  2023.1.2.(월) 17시까지 (선착순 100명 접수)    ※중복접수는 선발대상에서 제외" +
+            "바. 선발방법 : 선착순 100명 접수 후 서류 심사를 통해 최종 80명 선발" +
+            "사. 선발결과 발표 :  2023.1.9.(월) 17:00 이후 서울대학교 인문대학 홈페이지 게재 예정 (인문소식 - 공지사항)");
     }
 
 </script>

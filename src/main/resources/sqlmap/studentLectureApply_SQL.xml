@@ -6,9 +6,118 @@
 <mapper namespace="kr.or.ddit.mapper.StudentLectureApplyMapper">
 
 	<insert id="apply" parameterType="studentLecture"> 
-		INSERT INTO STU_LEC(STU_NO, LECA_CD) VALUES(#{stuNo}, #{lecaCd})
+		<selectKey order="BEFORE" resultType="int" keyProperty="slSn">
+			SELECT NVL(MAX(SL_SN),0) + 1
+			FROM STU_LEC
+			WHERE STU_NO = #{stuNo}
+		</selectKey>
+		INSERT INTO STU_LEC(STU_NO, LECA_CD, SL_SN) VALUES(#{stuNo}, #{lecaCd}, #{slSn})
 	</insert>
+	
+	<delete id="applyCancel" parameterType="studentLecture">
+		DELETE FROM STU_LEC
+		WHERE STU_NO = #{stuNo}
+		AND LECA_CD = #{lecaCd}
+	</delete>
+	
+	<insert id="save" parameterType="studentLecture"> 
+		<selectKey order="BEFORE" resultType="int" keyProperty="wsSn">
+			SELECT NVL(MAX(WS_SN),0) + 1
+			FROM WISH
+			WHERE STU_NO = #{stuNo}
+		</selectKey>
+		INSERT INTO WISH(STU_NO, LECA_CD, WS_SN) VALUES(#{stuNo}, #{lecaCd}, #{wsSn})
+	</insert>
+	
+	<delete id="saveCancel" parameterType="studentLecture">
+		DELETE FROM WISH
+		WHERE STU_NO = #{stuNo}
+		AND LECA_CD = #{lecaCd}
+	</delete>
+	
+	<update id="increaseHeadcount" parameterType="studentLecture">
+		UPDATE LECTURE
+		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) + 1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+	
+	<update id="decreaseHeadcount" parameterType="studentLecture"> 
+		UPDATE LECTURE
+		    SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) - 1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
 
+	<select id="checkHeadcount" parameterType="studentLecture" resultType="int">
+		SELECT COUNT(*)
+		FROM LECTURE L
+		WHERE L.LECA_CD = #{lecaCd}
+		AND L.LEC_HCNT <![CDATA[<]]> (
+		    SELECT LA.LECA_CAP
+		    FROM LEC_APPLY LA
+		    WHERE LA.LECA_CD = #{lecaCd}
+		)
+	</select>
+	
+	<select id="maxCredit" parameterType="studentLecture" resultType="int">
+		SELECT COUNT(*)
+		FROM DUAL
+		WHERE (
+		        SELECT CEIL(GC.RDC_REQ_CRD / 8)
+		        FROM GRDT_CND GC, DEPARTMENT D, STUDENT S
+		        WHERE GC.DEP_CD = D.DEP_CD
+		        AND S.DEP_CD = D.DEP_CD
+		        AND S.STU_NO = #{stuNo}
+                AND GC.RDC_YR = TO_CHAR(SYSDATE,'YYYY')
+		        ) <![CDATA[>]]> (
+					                SELECT LECA_CRD + (
+					                                    SELECT NVL(SUM(LA.LECA_CRD),0)
+					                                    FROM LECTURE L, LEC_APPLY LA
+					                                    <if test="category == 'stuLec'">
+									                    , STU_LEC SL
+									                    </if>
+									                    <if test="category == 'wish'">
+									                    , WISH SL
+									                    </if>
+					                                    WHERE SL.LECA_CD = L.LECA_CD
+					                                    AND L.LECA_CD = LA.LECA_CD
+			                                            AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+					                                    AND SL.STU_NO = #{stuNo}
+					                                )
+					                FROM LEC_APPLY
+					                WHERE LECA_CD = #{lecaCd}
+					         	)
+	</select>
+	 
+	<select id="duplicateCheckLectureTime" parameterType="studentLecture" resultType="int">
+		SELECT SUM(U.DUPLICATE) DUPLICATE
+		FROM(
+		        SELECT A.ROOM_CD
+		             , A.LECA_CD
+		             , A.ALT_DT
+		             , A.ALT_TT
+		             , (
+		                    SELECT COUNT(SA.LECA_CD) 
+		                    FROM LEC_APPLY SLA, ALLOCATION SA
+		                    <if test="category == 'stuLec'">
+		                    , STU_LEC SSL
+		                    </if>
+		                    <if test="category == 'wish'">
+		                    , WISH SSL
+		                    </if>
+		                    WHERE SLA.LECA_CD = SA.LECA_CD
+		                    AND SSL.LECA_CD = SLA.LECA_CD
+		                    AND SSL.STU_NO = #{stuNo}
+		                    AND SLA.LECA_YR = LA.LECA_YR
+		                    AND SLA.LECA_SEM = LA.LECA_SEM
+		                    AND SA.ALT_DT = A.ALT_DT
+		                    AND SA.ALT_TT = A.ALT_TT
+		                ) DUPLICATE
+		        FROM ALLOCATION A, LEC_APPLY LA
+		        WHERE LA.LECA_CD = A.LECA_CD
+		        AND A.LECA_CD = #{lecaCd}
+		) U
+	</select>
 
+	
 </mapper>
 

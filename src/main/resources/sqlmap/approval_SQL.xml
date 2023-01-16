@@ -7,14 +7,149 @@
 
 
 <!-- 결재요청 목록 -->
-<select id="ApprovalList" resultType="Approval">
-SELECT APPR_CD, PRO_NO, APPR_DT, APPR_YN, APPR_RSN, APPR_CATE
-FROM APPROVAL
+<!-- 결재자가 로그인한 관리자인 결재목록만 조회 -->
+<select id="approvalList" resultType="approval">
+	WITH T AS(
+		SELECT ROW_NUMBER() OVER(ORDER BY A.APPR_CD DESC)-1 ROWNO
+			 , A.APPR_CD
+			 , A.APPR_DT
+			 , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = A.APPR_YN ) APPR_YN
+			 , A.APPR_RSN
+			 , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = A.APPR_CATE ) APPR_CATE
+			 , A.PRO_NO
+			 , (SELECT EP.EMP_NM FROM EMPLOYEE EP WHERE EP.EMP_NO = A.PRO_NO ) PRO_NM
+			 , (SELECT EE.EMP_NM FROM EMPLOYEE EE WHERE EE.EMP_NO = A.EMP_NO ) EMP_NM
+			 , A.APPR_SDT
+			 , A.APPR_TAG_CD
+		FROM APPROVAL A
+	)
+	SELECT *
+	FROM T
+	WHERE T.ROWNO
+	BETWEEN (10 * (#{viewPage}-1)) AND ((10*#{viewPage})-1)
+	ORDER BY T.ROWNO ASC
 </select>
 
-<!-- 상세 -->
-<!-- 수정 -->
-<!-- 입력 -->
-<!-- 삭제 -->
+<insert id="insertApproval" parameterType="approval"> 
+	<selectKey order="BEFORE" resultType="int" keyProperty="apprCd">
+		SELECT NVL(MAX(APPR_CD),0) + 1 FROM APPROVAL
+	</selectKey>
+		INSERT INTO APPROVAL(APPR_CD, APPR_YN, APPR_CATE, PRO_NO, APPR_SDT, APPR_TAG_CD)
+		    VALUES(#{apprCd}, 'AP002', #{apprCate}, #{proNo}, SYSDATE, #{apprTagCd})
+</insert>
+
+<update id="updateApproval" parameterType="approval"> 
+	UPDATE APPROVAL
+	    SET 
+	   		<if test="apprYn == 'AP002'">
+	    		APPR_DT = ''
+	    	   , EMP_NO = ''
+	    	</if>
+	    	<if test="apprYn == 'AP001'">
+	    		APPR_DT = SYSDATE
+	    		, EMP_NO = #{empNo}
+	    	</if>
+	    	<if test="apprYn == 'AP003'">
+	    		APPR_DT = SYSDATE
+	    		, EMP_NO = #{empNo}
+	    	</if>
+	      , APPR_RSN = #{apprRsn}
+	      , APPR_YN = #{apprYn}
+	WHERE APPR_CATE = #{apprCate}
+	AND APPR_TAG_CD = #{apprTagCd}
+</update>
+
+<delete id="deleteApproval" parameterType="approval"> 
+	DELETE FROM APPROVAL
+	WHERE APPR_CATE = #{apprCate}
+	AND APPR_TAG_CD = #{apprTagCd}
+</delete>
+
+<resultMap type="student" id="schMap">
+	<result property="depNm" column="DEP_NM" />
+	<result property="depCd" column="DEP_CD" />
+	<result property="colCd" column="COL_CD" />
+	<result property="colNm" column="COL_NM" />
+	<result property="stuNo" column="STU_NO" />
+	<result property="stuYr" column="STU_YR" />
+	<result property="stuSem" column="STU_SEM" />
+	<result property="stuNm" column="STU_NM" />
+	<result property="stuNme" column="STU_NME" />
+	<result property="stuTel" column="STU_TEL" />
+	<result property="stuZip" column="STU_ZIP" />
+	<result property="stuAddr1" column="STU_ADDR1" />
+	<result property="stuAddr2" column="STU_ADDR2" />
+	<result property="stuPic" column="STU_PIC" />
+	<result property="stuBir" column="STU_BIR" />
+	<result property="proNo" column="PRO_NO" />
+	<result property="empNm" column="EMP_NM" />
+	<result property="deanNm" column="DEAN_NM" />
+	<collection property="sclHistory" resultMap="schMap2" />
+</resultMap>
+
+<resultMap type="sclHistory" id="schMap2">
+	<result property="sclhCd" column="SCLH_CD"/>
+	<result property="sclhYr" column="SCLH_YR"/>
+	<result property="sclhSem" column="SCLH_SEM"/>
+	<result property="sclhDt" column="SCLH_DT"/>
+	<result property="sclhYn" column="SCLH_YN"/>
+	<result property="sclhPayYn" column="SCLH_PAY_YN"/>
+	<result property="sclhAmt" column="SCLH_AMT"/>
+	<result property="sclhRcmd" column="SCLH_RCMD"/>
+	<collection property="approval" resultMap="apprMap" />
+</resultMap>
+
+<resultMap type="approval" id="apprMap">
+	<result property="apprCd" column="APPR_CD" />
+	<result property="apprDt" column="APPR_DT" />
+	<result property="apprSdt" column="APPR_SDT" />
+	<result property="apprYn" column="APPR_YN" />
+	<result property="apprRsn" column="APPR_RSN" />
+	<result property="apprCate" column="APPR_CATE" />
+	<result property="apprTagCd" column="APPR_TAG_CD" />
+</resultMap>
+
+<select id="schStuDetail" parameterType="approval" resultMap="schMap">
+		SELECT  SH.SCLH_CD
+		        , D.DEP_NM
+		        , C.COL_NM
+		        , S.STU_NO 
+		        , S.DEP_CD
+		        , S.STU_YR
+		        , S.STU_SEM
+		        , S.STU_NM
+		        , S.STU_NME
+		        , S.STU_TEL
+		        , S.STU_ZIP
+		        , S.STU_ADDR1
+		        , S.STU_ADDR2
+		        , S.STU_PIC
+		        , S.STU_BIR
+		        , S.PRO_NO
+		        , SH.SCLH_YR
+		        , SH.SCLH_SEM
+		        , SH.SCLH_DT
+		        , SH.SCLH_YN
+		        , SH.SCLH_AMT
+		        , SH.SCLH_RCMD
+                , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = SH.SCLH_PAY_YN) SCLH_PAY_YN
+		        , (SELECT E.EMP_NM FROM EMPLOYEE E, PROFESSOR P WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = SH.PRO_NO) EMP_NM
+                , (SELECT E.EMP_NM FROM EMPLOYEE E, PROFESSOR P, DEPARTMENT SD WHERE E.EMP_NO = P.PRO_NO AND SD.PRO_NO = P.PRO_NO AND SD.DEP_CD = S.DEP_CD) DEAN_NM
+                , A.APPR_YN
+                , A.APPR_RSN
+                , A.APPR_TAG_CD
+		FROM COLLEGE C, DEPARTMENT D, STUDENT S, SCL_HISTORY SH, APPROVAL A
+		WHERE C.COL_CD = D.COL_CD
+		AND D.DEP_CD = S.DEP_CD
+		AND S.STU_NO = SH.STU_NO
+        AND SH.SCLH_CD = A.APPR_TAG_CD
+		AND SH.SCLH_CD = #{apprTagCd}
+</select>
+
+<select id="approvalListPaging" parameterType="approval" resultType="int">
+		SELECT COUNT(A.APPR_CD)
+		FROM APPROVAL A	
+</select>
+	
 </mapper>
 

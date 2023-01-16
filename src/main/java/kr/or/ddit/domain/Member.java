@@ -1,25 +1,24 @@
 package kr.or.ddit.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
-@Getter @Setter
-public class Member {
+@Data
+public class Member implements Serializable {
 
     private int memNo;
-    private String memMl;
+    private String memTel;
     private String memPass;
+    private String depCd;
     //1:N
     private List<MemberAuth> memberAuthList;
 
-    public Member() {
-    }
 
     @Override
     public String toString() {
-        return "MemberVO [memNo=" + memNo + ", memMl=" + memMl + ", memPass=" + memPass + ", memberAuthList="
+        return "MemberVO [memNo=" + memNo + ", memTel=" + memTel + ", memPass=" + memPass + ", memberAuthList="
                 + memberAuthList + "]";
     }
 

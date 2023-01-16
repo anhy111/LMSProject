@@ -9,6 +9,106 @@
 		select DEP_CD, COL_CD, PRO_NO, DEP_NM, DEP_DES, DEP_CAP, DEP_TEL, EMP_NO
 		from DEPARTMENT
 	</select>
+	
+	<select id="departmentListByCollege" parameterType="int" resultType="department"> 
+		SELECT D.DEP_CD
+		     , D.COL_CD
+		     , D.PRO_NO
+		     , D.DEP_NM
+		     , D.DEP_DES
+		     , D.DEP_CAP
+		     , D.DEP_TEL
+		     , D.EMP_NO
+		     , C.COL_NM
+		FROM DEPARTMENT D, COLLEGE C 
+		WHERE D.COL_CD = C.COL_CD
+		<if test="colCd != 0">
+		AND C.COL_CD = ${colCd}
+		</if>
+	</select>
 
+	<insert id="register" parameterType="department">
+		<selectKey order="BEFORE" keyProperty="depCd" resultType="int">
+			SELECT NVL(MAX(DEP_CD),0)+1 FROM DEPARTMENT
+		</selectKey>
+		INSERT INTO DEPARTMENT(DEP_CD, COL_CD, DEP_NM, DEP_DES, DEP_CAP, DEP_TEL) 
+            VALUES(#{depCd}, #{colCd}, #{depNm},#{depDes},#{depCap},#{depTel})
+	</insert>
+	
+	<select id="departmentDetail" parameterType="department" resultType="department">
+		SELECT
+		    D.DEP_CD,
+		    D.COL_CD,
+		    D.PRO_NO,
+		    (SELECT SE.EMP_NM FROM EMPLOYEE SE WHERE D.PRO_NO = SE.EMP_NO) PRO_NM,
+		    D.DEP_NM,
+		    D.DEP_DES,
+		    D.DEP_CAP,
+		    D.DEP_TEL,
+		    D.EMP_NO,
+		    (SELECT TE.EMP_NM FROM EMPLOYEE TE WHERE TE.EMP_NO = D.EMP_NO) EMP_NM
+		FROM 
+		    DEPARTMENT D
+		WHERE D.DEP_CD = #{depCd}
+	</select>
+	
+	<update id="update" parameterType="department">
+	
+		UPDATE DEPARTMENT
+		    SET COL_CD = #{colCd}
+		    	<if test="proNo > 0">
+		        ,PRO_NO = #{proNo}
+		        </if>
+		        ,DEP_NM = #{depNm}
+		        ,DEP_DES = #{depDes}
+		        ,DEP_CAP = #{depCap}
+		        ,DEP_TEL = #{depTel}
+		        <if test="empNo > 0">
+		        ,EMP_NO = #{empNo}
+		        </if>
+		WHERE 
+		    DEP_CD = #{depCd}
+	</update>
+	
+	<delete id="delete" parameterType="department"> 
+		delete from department
+		where dep_cd = #{depCd}
+	</delete>
+	
+	<select id="validationDepartmentName" parameterType="string" resultType="int"> 
+		SELECT COUNT(*) 
+		FROM DEPARTMENT
+		WHERE DEP_NM LIKE #{depNm}
+	</select>
+	
+	<select id="searchProfessor" parameterType="department" resultType="professor"> 
+		SELECT C.COL_NM
+		     , D.DEP_NM
+		     , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = P.PRO_POS) PRO_POS
+		     , P.PRO_NO
+		     , E.EMP_NM
+		FROM PROFESSOR P, EMPLOYEE E, DEPARTMENT D, COLLEGE C
+		WHERE P.PRO_NO = E.EMP_NO
+		AND C.COL_CD = D.COL_CD
+		AND D.DEP_CD = P.DEP_CD
+		AND P.PRO_POS IN('P_POS001','P_POS002')
+		AND E.EMP_POS = 'E_POS007'
+		AND P.DEP_CD = #{depCd}
+		<if test="proNm != null and proNm != ''">
+		AND EMP_NM LIKE '%' || #{proNm} || '%'
+		</if>
+	</select>
+	
+	<select id="searchEmployee" parameterType="department" resultType="employee"> 
+		SELECT EMP_NO
+		     , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = EMP_DIV) EMP_DIV
+		     , (SELECT COMD_NM FROM COMMON_DETAIL WHERE COMD_CD = EMP_POS) EMP_POS
+		     , EMP_NM
+		FROM EMPLOYEE
+		WHERE EMP_DIV = 'DIV002'
+		<if test="empNm != null and empNm != ''">
+		AND EMP_NM LIKE '%' || #{empNm} || '%'
+		</if>
+	</select>
 </mapper>
 

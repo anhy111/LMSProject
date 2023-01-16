@@ -52,7 +52,21 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
+
+	<!-- AWS Bean 주입. -->
+<!-- 	<bean id="s3Config" -->
+<!-- 		  class="kr.or.ddit.aws.S3Config"></bean> -->
+
+<!-- 	<bean id="myComponent" -->
+<!-- 		class="kr.or.ddit.aws.MyComponent"></bean> -->
+	<!-- AWS Bean 주입 끝. -->
+
+	<!-- Filter Bean 설정 시작. -->
+		<bean id="logFilter"
+			  class="kr.or.ddit.filter.LogFilter"></bean>
+
+	<!-- Filter Bean 설정 끝. -->
+
 	<!-- 애너테이션 기반의 트랜잭션 제어를 활성화함 -->
 	<tx:annotation-driven />
 	
@@ -66,8 +80,12 @@
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	<!-- kr.or.ddit.aop 패키지를 스캔 대상으로 등록 -->
 	
-	<!-- kr.or.ddit.aop 패키지를 컴포넌트 스캔 대상으로 등록 -->
+	<!-- kr.or.ddit.aws 패키지를 컴포넌트 스캔 대상으로 등록 -->
 	<context:component-scan
-		base-package="kr.or.ddit.aop"></context:component-scan>
+		base-package="kr.or.ddit.aws"></context:component-scan>
+
+	<!-- kr.or.ddit.filter 패키지를 컴포넌트 스캔 대상으로 등록 -->
+	<context:component-scan
+			base-package="kr.or.ddit.filter"></context:component-scan>
 
 </beans>

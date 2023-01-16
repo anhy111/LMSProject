@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -44,36 +46,48 @@ public class CustomLoginSuccessHandler extends
 		// 로그인 아이디
 		log.info("username : " + customUser.getUsername());
 		Member member = customUser.getMemberVO();
+		
+		
 		Member read = memberMapper.read(member.getMemNo());
 		Employee readEmployee = memberMapper.readEmployee(member.getMemNo());
 		Student readStudent = memberMapper.readStudent(member.getMemNo());
 		Professor readProfessor = memberMapper.readProfessor(member.getMemNo());
 		Manager readManager = memberMapper.readManager(member.getMemNo());
+		
 
 		log.info("이렇게하면 들어올까욤? " + readEmployee);
 		HttpSession session = request.getSession();
-
+		session.setMaxInactiveInterval(1800); // 세션 만료시간
+		
 		session.setAttribute("no", read.getMemNo());
 		String no = String.valueOf(session.getAttribute("no"));
 		log.info("no는?? " + no);
+		
+		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 		if (readEmployee != null) {
+			session.setAttribute("name", readEmployee.getEmpNm());
+			session.setAttribute("pic", readEmployee.getEmpPic());
 			if (readProfessor != null) {
-				session.setAttribute("name", readEmployee.getEmpNm());
+				redirectStrategy.sendRedirect(request, response, "/lecture/myLecture");
 				session.setAttribute("position", readProfessor.getProPos());
-
+				session.setAttribute("department", readProfessor.getDepCd());
+				session.setAttribute("depCd", readProfessor.getDepCd());
+				return;
 			} else {
-				session.setAttribute("name", readEmployee.getEmpNm());
-				session.setAttribute("position", readManager.getMgrPos());
-				session.setAttribute("division", readManager.getMgrDiv());
+				redirectStrategy.sendRedirect(request, response, "/aschedule/calendar");
+				session.setAttribute("position", readManager.getEmpPos());
+				session.setAttribute("division", readManager.getEmpDiv());
+				return;
 			}
 		} else {
 			session.setAttribute("name", readStudent.getStuNm());
 			String name = String.valueOf(session.getAttribute("name"));
 			session.setAttribute("department", readStudent.getDepNm());
 			log.info("name은??" + name);
+			session.setAttribute("pic", readStudent.getStuPic());
 		}
-
+		
 		super.onAuthenticationSuccess(request, response, auth);
 	}
 

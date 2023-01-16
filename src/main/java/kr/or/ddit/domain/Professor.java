@@ -27,12 +27,12 @@ public class Professor {
     private Date empJoin;    //입사일
     private String empRet;    //퇴사일
     
-	private int colCd;
-	private String depNm;
-	private String depDes;
-	private int depCap;
-	private String depTel;
-	private int empNo;
+	private int colCd;		//단대코드
+	private String depNm;	//학과명
+	private String depDes;	//학과소개
+	private int depCap;		//최대정원
+	private String depTel;	//학과전화번호
+	private int empNo;		//조교
 	
 	private String colNm; //단과대학명
 	private String colDes; //단과대설명

@@ -4,17 +4,209 @@
 <!-- namespace : xml파일은 여러개일 수 있음. 
 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="kr.or.ddit.mapper.CounselMapper">
+<!-- 상담 등록시 로그인한 학생의 담당교수 목록 -->
+<select id="listOfProfessor" parameterType="int" resultType="Counsel">
+SELECT 
+E.EMP_NM
+,D.PRO_NO
+FROM PROFESSOR P, EMPLOYEE E, STUDENT S, DEPARTMENT D
+WHERE S.STU_NO = #{stuNo}
+AND D.DEP_CD = P.DEP_CD
+AND P.PRO_NO = S.PRO_NO
+AND P.PRO_NO = E.EMP_NO
+</select>
+<!-- 학생의 상담 신청 목록 -->
+<select id="studentApplyList"  parameterType="int" resultType="Counsel">
+SELECT 
+  C.CNSL_CD
+, C.STU_NO 
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
+, C.CNSL_TTL
+, C.CNSL_CON
+, C.CNSL_REG 
+, C.CNSL_DT
+, C.CNSL_RPL
+, C.PRO_NO
+, E.EMP_NM
+, S.STU_NM
+, C.CNSL_TYPE
+, C.CNSL_YN
+FROM COUNSEL C, EMPLOYEE E, PROFESSOR P, STUDENT S, DEPARTMENT D
+WHERE 
+C.STU_NO = #{stu_no}
+AND C.STU_NO = S.STU_NO
+AND S.PRO_NO = P.PRO_NO
+AND P.PRO_NO = E.EMP_NO
+AND D.DEP_CD = P.DEP_CD
+</select>
+<!-- 학생의 상담 신청 -->
+<insert id="applyInsert"  parameterType="Counsel">
+INSERT INTO COUNSEL (
+  CNSL_CD
+, STU_NO
+, CNSL_CATE
+, PRO_NO
+, CNSL_TYPE
+, CNSL_REG
+, CNSL_YN
+<if test="cnslTtl != null or cnslTtl !='' ">
+, CNSL_TTL
+</if>
+<if test="cnslCon != null or cnslCon !='' ">
+, CNSL_CON
+</if>
+<if test="cnslDt != null">
+, CNSL_DT
+</if>
+<if test="recCd != null or recCd !='' ">
+, REC_CD
+</if>
 
+)
+VALUES(
+  COUNSEL_SEQ.NEXTVAL
+, #{stuNo}
+, #{cnslCate}
+, #{proNo}
+, #{cnslType}
+, SYSDATE
+, #{cnslYn}
+<if test="cnslTtl != null or cnslTtl !='' ">
+, #{cnslTtl}
+</if>
+<if test="cnslCon != null or cnslCon !='' ">
+, #{cnslCon}
+</if>
+<if test="cnslDt != null">
+, #{cnslDt}
+</if>
+<if test="recCd != null or recCd !='' ">
+, #{recCd}
+</if>
 
-<!-- 상담 목록 -->
-<select id="CounselList" resultType="Counsel">
-SELECT CNSL_CD, STU_NO, CNSL_CATE, CNSL_TTL, CNSL_CON, CNSL_REG, CNSL_DT, CNSL_RPL
+)
+</insert>
+<!-- 상담 상세 -->
+<select id="applyDetail" parameterType="int" resultType="Counsel">
+SELECT 
+CNSL_CD
+, STU_NO
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_CATE = COMD_CD) AS CNSL_CATE 
+, CNSL_TTL
+, CNSL_CON
+, CNSL_REG
+, CNSL_DT
+, CNSL_RPL
+, PRO_NO
+, CNSL_TYPE
+, REC_CD
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_YN = COMD_CD) AS CNSL_YN
 FROM COUNSEL
+WHERE CNSL_CD = #{cnslCd}
+</select>
+<!-- 상담 수정 -->
+<update id="applyModify" parameterType="Counsel">
+UPDATE COUNSEL 
+<set>
+CNSL_TTL = #{cnslTtl}
+ <if test="cnslCon != null and cnslCon !='' ">,CNSL_CON = #{cnslCon}</if>
+</set>
+WHERE CNSL_CD = #{cnslCd}
+</update>
+<!--  상담 삭제 -->
+<delete id="applyDelete" parameterType="int">
+DELETE 
+FROM COUNSEL
+WHERE CNSL_CD = #{cnslCd}
+</delete>
+<!-- 교수의 상담 답변 -->
+<update id="applyAnswerUpdate" parameterType="Counsel">
+UPDATE COUNSEL 
+<set>
+  CNSL_DT = SYSDATE 
+, CNSL_RPL = #{cnslRpl}
+<if test="cnslType != null and cnslType !='' ">, CNSL_TYPE = #{cnslType}</if>
+, CNSL_YN = #{cnslYn}
+, PRO_NO = #{proNo}
+</set>
+WHERE CNSL_CD = #{cnslCd}
+</update>
+<!-- 교수의 상담 리스트 조회 -->
+<select id="professorCounselList" parameterType="int" resultType="Counsel">
+SELECT 
+  C.CNSL_CD
+, C.STU_NO
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
+, C.CNSL_TTL
+, C.CNSL_CON
+, C.CNSL_REG
+, C.CNSL_DT
+, C.CNSL_RPL
+, C.PRO_NO
+, S.STU_NM
+, C.CNSL_TYPE
+FROM COUNSEL C, EMPLOYEE E, PROFESSOR P, STUDENT S, DEPARTMENT D
+WHERE 
+C.PRO_NO = #{proNo}
+AND C.STU_NO = S.STU_NO
+AND S.PRO_NO = P.PRO_NO
+AND P.PRO_NO = E.EMP_NO
+AND D.DEP_CD = P.DEP_CD
+</select>
+<!-- 교수의 상담내용 상세보기 -->
+<select id="answerDetail" parameterType="int" resultType="Counsel">
+SELECT
+ C.CNSL_CD
+,S.STU_NM
+,C.CNSL_TTL
+,C.CNSL_CON
+,C.CNSL_RPL 
+,C.CNSL_DT
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
+,C.CNSL_TYPE 
+,C.REC_CD  
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_YN = COMD_CD) AS CNSL_YN
+FROM COUNSEL C, STUDENT S 
+WHERE C.CNSL_CD = #{cnslCd}
+AND C.STU_NO = S.STU_NO
+</select>
+<!-- 교수의 상담 기록서 상세보기 -->
+<select id="answerNoteDetail" parameterType="int" resultType="Counsel">
+SELECT
+ C.CNSL_CD
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE C.CNSL_CATE = COMD_CD) AS CNSL_CATE 
+,S.STU_NM
+,C.CNSL_DT
+,C.CNSL_TTL
+,C.CNSL_CON
+,C.CNSL_RPL
+,E.EMP_NM
+, (SELECT COMD_NM FROM COMMON_DETAIL WHERE CNSL_YN = COMD_CD) AS CNSL_YN
+FROM COUNSEL C, STUDENT S, EMPLOYEE E, PROFESSOR P 
+WHERE C.CNSL_CD = #{cnslCd}
+AND C.STU_NO = S.STU_NO
+AND S.PRO_NO = P.PRO_NO
+AND C.PRO_NO = P.PRO_NO
+AND E.EMP_NO = P.PRO_NO
+</select>
+<!-- 교수의 상담 기록서 작성 및 업데이트 -->
+<update id="answerNoteWriteUpdate" parameterType="Counsel">
+UPDATE COUNSEL
+<set>
+CNSL_RPL = #{cnslRpl}
+<if test="cnslCon != null and cnslCon !='' ">,CNSL_CON = #{cnslCon}</if>
+<if test="cnslYn != null and cnslYn !='' ">,CNSL_YN = #{cnslYn}</if>
+</set>
+WHERE CNSL_CD =  #{cnslCd}
+</update>
+<!-- 상담번호에 따른 학생의 이름 -->
+<select id="studentNameByCounsels" parameterType="int" resultType="String">
+SELECT 
+S.STU_NM
+FROM COUNSEL C, STUDENT S
+WHERE C.CNSL_CD = #{cnslCd}
+AND C.STU_NO = S.STU_NO
 </select>
 
-<!-- 상세 -->
-<!-- 수정 -->
-<!-- 입력 -->
-<!-- 삭제 -->
 </mapper>
 

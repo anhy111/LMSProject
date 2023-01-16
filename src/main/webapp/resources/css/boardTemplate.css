@@ -1,0 +1,39 @@
+/*
+공통으로 사용할 css 추가/변경시 최종프로젝트 게시판에 공지(필수)
+*/
+
+.card {
+		width: 100%;
+		padding: 3%;
+		padding-top:2%;
+		border-top: 5px solid #112a63;
+		border-radius: 10px 10px 0 0 ;
+		min-width: 1090px;
+		margin: 0 auto;
+	}
+	
+.card-body {
+	width: 100%;
+}
+
+.table-responsive-sm {
+		margin-bottom: 40px;
+		min-height: 500px;
+	}
+	
+.table {
+border-bottom: 1px solid #eef2f7;
+}
+.alert-light{
+font-size: 0.9em; 
+padding: 35px; 
+border: 1px solid #eee;
+}
+.alert-light p{
+	margin-bottom: 0px;	
+}
+
+.myinfo th{
+	background-color: #001f3f;
+	color: white;
+}

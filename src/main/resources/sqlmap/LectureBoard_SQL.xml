@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.LectureBoardMapper">
+<sql id="where">
+		<!-- 자료 검색(전체) -->
+		and(
+		 LDT_TTL    LIKE '%'||#{keyWord}||'%'
+        OR    LDT_WRITER LIKE '%'||#{keyWord}||'%')
+	
+	</sql>
+	<sql id="where2">
+		<!-- 강의 검색 -->
+		 and LDT_TTL    LIKE '%'||#{keyWord}||'%'
+	</sql>
+	<sql id="where3">
+		<!-- 강의 검색 -->
+		and	LDT_WRITER LIKE '%'||#{keyWord}||'%'
+	</sql>
+	
+	<resultMap type="attach" id="attachMap">
+		<result property="atchFileId"     column="ATCH_FILE_ID" />
+		<result property="fileSn"         column="FILE_SN" />
+		<result property="fileStreCours"  column="FILE_STRE_COURS" />
+		<result property="streFileNm"     column="STRE_FILE_NM" />
+		<result property="orignlFileNm"   column="ORIGNL_FILE_NM" />
+		<result property="fileExtsn"      column="FILE_EXTSN" />
+		<result property="fileSize"       column="FILE_SIZE" />
+		<result property="createDt"       column="CREATE_DT" />
+	</resultMap>
+	
+	<!-- lecture resultMap======================================================================== -->
+	<resultMap type="lecture" id="lectureMap">
+		<result property="lecaCd"         column="LECA_CD" />
+		<result property="subCd"          column="SUB_CD" />
+		<result property="lecYn"          column="LEC_YN" />
+		<result property="lecHcnt"        column="LEC_HCNT" />
+		<result property="lecaYn"         column="LECA_YN" />
+		<result property="depCd"          column="DEP_CD" />
+		<collection property="lecApply"   resultMap="lecApplyMap"></collection>
+		<collection property="lecDataList"   resultMap="lecDataMap"></collection>
+	</resultMap>
+	
+	<resultMap type="lecApply" id="lecApplyMap">
+		<result property="lecaCd"     column="LECA_CD" />
+		<result property="lecaYr"     column="LECA_YR" />
+		<result property="lecaSem"    column="LECA_SEM" />
+		<result property="lecaNm"     column="LECA_NM" />
+		<result property="lecaCon"    column="LECA_CON" />
+		<result property="lecaTrg"    column="LECA_TRG" />
+		<result property="lecaCrd"    column="LECA_CRD" />
+		<result property="lecaPer"    column="LECA_PER" />
+		<result property="lecaCap"    column="LECA_CAP" />
+		<result property="lecaTt"     column="LECA_TT" />
+		<result property="lecaHall"   column="LECA_HALL" />
+		<result property="lecaUnit"   column="LECA_UNIT" />
+		<result property="lecaBook"   column="LECA_BOOK" />
+		<result property="lecaNote"   column="LECA_NOTE" />
+		<result property="lecaDt"     column="LECA_DT" />
+		<result property="lecaGrade"  column="LECA_GRADE" />
+		<result property="lecaImsiYn" column="LECA_IMSI_YN" />
+		<result property="lecaCate"   column="LECA_CATE" />
+		<result property="lecaMp"     column="LECA_MP" />
+		<result property="lecaFp"     column="LECA_FP" />
+		<result property="lecaTp"     column="LECA_TP" />
+		<result property="lecaAp"     column="LECA_AP" />
+	</resultMap>	
+	
+	<resultMap type="lecData" id="lecDataMap">
+		<result property="ldtCd"      column="LDT_CD" />
+		<result property="lecaCd"     column="LECA_CD" />
+		<result property="ldtTtl"     column="LDT_TTL" />
+		<result property="ldtCon"     column="LDT_CON" />
+		<result property="ldtReg"     column="LDT_REG" />
+		<result property="ldtWriter"  column="LDT_WRITER" />
+		<result property="atchFileId" column="ATCH_FILE_ID" />
+		<result property="ldtCount"   column="LDT_COUNT" />
+		<collection property="attachList"   resultMap="attachMap"></collection>
+	</resultMap>
+	
+	<resultMap type="test" id="testMap">
+		<result property="testCd"      column="TEST_CD"/>
+		<result property="lecaCd"      column="LECA_CD"/>
+		<result property="testNm"      column="TEST_NM" />
+		<result property="testCon"     column="TEST_CON"/>
+		<result property="testReg"     column="TEST_REG" />
+		<result property="testSdt"     column="TEST_SDT" />
+		<result property="testEdt"     column="TEST_EDT" />
+		<result property="testPart"     column="TEST_PART" />
+		<collection property="stuTest" resultMap="stuTestMap"></collection>
+		<collection property="testQList"   resultMap="testQMap"></collection>
+		<collection property="stdList" resultMap="stdMap"></collection>
+	</resultMap>	
+	
+	
+	<resultMap type="testQ" id="testQMap">               
+		<result property="teqCd"     column="TEQ_CD" />      
+		<result property="testCd"     column="TEST_CD" />      
+		<result property="teqSeq"     column="TEQ_SEQ" />     
+		<result property="teqOption1" column="TEQ_OPTION1" />      
+		<result property="teqOption2" column="TEQ_OPTION2" />     
+		<result property="teqOption3" column="TEQ_OPTION3" />     
+		<result property="teqOption4" column="TEQ_OPTION4" />     
+		<result property="teqAnswer"  column="TEQ_ANSWER" /> 
+		<result property="teqCon"  column="TEQ_CON" /> 
+	</resultMap>	                                           
+	
+	<resultMap type="stuTest" id="stuTestMap">
+		<result property="stCd"  column="ST_CD" />
+		<result property="stuNo"  column="STU_NO" />
+		<result property="lecaCd"   column="LECA_CD" />
+		<result property="testCd"   column="TEST_CD" />
+		<result property="stScore" column="ST_SCORE" />
+		<result property="stYn"    column="ST_YN" />
+	</resultMap>
+	
+	<resultMap type="std"  id="stdMap">
+		<result property="teqCd"     column="TEQ_CD"/>
+		<result property="stCd"     column="ST_CD"/>
+		<result property="stdAnswer" column="STD_ANSWER"/>
+	</resultMap>
+	
+	<select id="dataList" parameterType="string" resultMap="lectureMap">
+		SELECT
+		rownum
+		,la.leca_nm
+		,ld.LDT_CD
+		,ld.LECA_CD
+		,ld.LDT_TTL
+		,ld.LDT_CON
+		,ld.LDT_REG
+		,ld.LDT_WRITER
+		,ld.ATCH_FILE_ID
+		,ld.LDT_COUNT
+		FROM LEC_DATA ld,lecture l, lec_Apply la
+		where la.leca_Cd = l.leca_cd
+		and l.leca_cd = ld.leca_cd
+		and l.leca_Cd = #{lecaCd}
+		and rownum between ((#{viewPage} - 1) * 10 + 1) and (#{viewPage} * 10)
+		<if test="category == 1 and keyWord != null and keyWord !=''">
+			<include refid="where"></include>
+		</if>
+		<if test="category == 2 and keyWord != null and keyWord !=''">
+			<include refid="where2"></include>
+		</if>
+		<if test="category == 3 and keyWord != null and keyWord !=''">
+			<include refid="where3"></include>
+		</if>
+	</select>
+	
+	<select id="dataDetail" parameterType="String" resultMap="lecDataMap">
+		SELECT *
+		FROM LEC_DATA ld, ATTACH A
+		WHERE LD.ATCH_FILE_ID = A.ATCH_FILE_ID (+)
+		AND LDT_CD = #{ldtCd}
+	</select>
+	
+	<!-- 과제 조회수 증가 -->
+	<update id="countPlus" parameterType="String">
+	update lec_data
+	set ldt_count = (select nvl(max(ldt_count),0)+1 from lec_data where ldt_cd = #{ldtCd})
+	where ldt_cd = #{ldtCd}
+	</update>
+	
+	<!-- 과제 수정 -->
+	<update id="dataUpdate" parameterType="hashMap">
+		UPDATE
+		LEC_DATA
+		<set>
+			LDT_TTL=#{ldtTtl}
+			,LDT_CON=#{ldtCon}
+			,LDT_WRITER=#{ldtWriter}
+			<if test='result > "0"'>
+				, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+			</if>
+		</set>
+		WHERE
+		LDT_CD=#{ldtCd}
+	</update>
+	
+	<delete id="dataDelete" parameterType="String">
+		DELETE 
+		FROM LEC_DATA
+		WHERE LDT_CD = #{ldtCd}
+	</delete>
+	
+	<insert id="dataInsert1" parameterType="hashMap">
+		<selectKey keyProperty="ldtCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(LDT_CD),0)+1 FROM LEC_DATA
+		</selectKey>
+		insert into LEC_DATA (
+					LDT_CD
+					,LECA_CD
+					,LDT_TTL
+					,LDT_CON
+					,LDT_REG
+					,ATCH_FILE_ID
+					,LDT_WRITER)
+		values(		
+					#{ldtCd}
+					,#{lecaCd}
+					,#{ldtTtl}
+					,#{ldtCon}
+					,SYSDATE
+					,(SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+					,(select emp_nm from EMPLOYEE where emp_no = #{empNo}))
+						
+						
+	</insert>
+
+	<insert id="dataInsert2" parameterType="hashMap">
+		<selectKey keyProperty="ldtCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(LDT_CD),0)+1 FROM LEC_DATA
+		</selectKey>
+		insert into LEC_DATA (
+					 LDT_CD
+					,LECA_CD
+					,LDT_TTL
+					,LDT_CON
+					,LDT_REG
+					,LDT_WRITER)
+		values(
+					 #{ldtCd}
+					,#{lecaCd}
+					,#{ldtTtl}
+					,#{ldtCon}
+					,SYSDATE
+					,(select emp_nm from EMPLOYEE where emp_no = #{empNo}))
+	</insert>
+	
+	<!-- 시험 리스트 -->
+	<select id="testList" parameterType="String" resultMap="testMap">
+		SELECT *
+		FROM TEST T, STU_TEST ST
+		WHERE T.TEST_CD = ST.TEST_CD(+)
+		AND T.LECA_CD = #{lecaCd}
+		ORDER BY T.TEST_CD DESC			 
+	</select>
+	<!-- 제출 여부 판단 -->
+	<select id="submitCheck" parameterType="String" resultMap="testMap">
+	SELECT *
+	FROM TEST T, STU_TEST ST
+	WHERE T.TEST_CD = ST.TEST_CD
+		AND T.LECA_CD = #{lecaCd}
+        and t.test_cd = #{testCd}
+        and st.stu_no = #{stuNo}
+	</select>        
+	
+	<!-- 강의 계획서 조회 -->
+	<select id="lecApplySearch" parameterType="String" resultType="lecApply">
+	select
+		 LECA_CD
+		,LECA_YR
+		,LECA_SEM
+		,LECA_NM
+		,LECA_CON
+		,LECA_TRG
+		,LECA_CRD
+		,LECA_PER
+		,LECA_CAP
+		,LECA_TT
+		,LECA_HALL
+		,LECA_UNIT
+		,LECA_BOOK
+		,LECA_NOTE
+		,LECA_DT
+		,LECA_GRADE
+		,LECA_IMSI_YN
+		,LECA_CATE
+		,LECA_MP
+		,LECA_FP
+		,LECA_TP
+		,LECA_AP
+		,PRO_NO
+	FROM LEC_APPLY
+	WHERE LECA_CD = #{lecaCd}
+	</select>
+	
+	<!-- 시험 틀 추가 -->
+	<insert id="testInsert" parameterType="test">
+		<selectKey order="BEFORE" keyProperty="testCd" resultType="int" >
+			SELECT NVL(MAX(TEST_CD),0)+1 FROM TEST					
+		</selectKey>
+		INSERT INTO TEST(
+						  TEST_CD
+						 ,LECA_CD
+						 ,TEST_NM 
+		                 ,TEST_CON
+		                 ,TEST_SDT
+		                 ,TEST_EDT
+		                 ,TEST_PART
+		                 )
+				VALUES(
+						  #{testCd}
+						 ,#{lecaCd}
+						 ,#{testNm}
+						 ,#{testCon}
+						 ,#{testSdt}
+						 ,#{testEdt}
+						 ,#{testPart}
+				)
+	</insert>
+
+	<insert id="testQInsert" parameterType="testQ">
+			INSERT INTO TEST_Q(
+						 TEQ_CD
+						,TEST_CD
+						,TEQ_SEQ
+						,TEQ_OPTION1
+						,TEQ_OPTION2
+						,TEQ_OPTION3
+						,TEQ_OPTION4
+						,TEQ_ANSWER
+						,TEQ_CON
+			) 
+			VALUES (
+						 (SELECT NVL(MAX(TEQ_CD),0)+1 FROM TEST_Q)		
+			            ,#{testCd}
+			            ,(SELECT NVL(MAX(TEQ_SEQ),0)+1 FROM TEST_Q WHERE TEST_CD = #{testCd})
+			            ,#{teqOption1}
+			            ,#{teqOption2}
+			            ,#{teqOption3}
+			            ,#{teqOption4}
+					    ,#{teqAnswer}
+					    ,#{teqCon}
+			)
+	</insert>
+	
+	<select id="testDetail" parameterType="String" resultMap="testMap">
+		SELECT 
+			 T.TEST_CD
+			,T.LECA_CD
+			,T.TEST_NM
+			,T.TEST_CON
+			,T.TEST_REG
+			,T.TEST_SDT
+			,T.TEST_EDT
+			,T.TEST_PART
+			
+			,TQ.TEST_CD
+			,TQ.TEQ_CD
+			,TQ.TEQ_SEQ
+			,TQ.TEQ_OPTION1
+			,TQ.TEQ_OPTION2
+			,TQ.TEQ_OPTION3
+			,TQ.TEQ_OPTION4
+			,TQ.TEQ_ANSWER
+			,TQ.TEQ_CON
+		FROM 
+			TEST T, TEST_Q TQ
+		WHERE 
+			T.TEST_CD = TQ.TEST_CD
+			AND T.TEST_CD = #{testCd}
+		ORDER BY TQ.TEQ_SEQ ASC		
+	</select>
+	
+	<delete id="testDelete" parameterType="String">
+		DELETE FROM TEST
+		WHERE TEST_CD = #{testCd}
+	</delete>
+	<delete id="testQDelete" parameterType="String">
+		DELETE FROM TEST_Q
+		WHERE TEST_CD = #{testCd}
+	</delete>
+		
+
+	<insert id="stuTestInsert" parameterType="stuTest">
+		<selectKey order="BEFORE" keyProperty="stCd" resultType="int">
+			SELECT NVL(MAX(ST_CD),0)+1 FROM STU_TEST
+		</selectKey>
+		INSERT INTO STU_TEST (  
+								 ST_CD
+								,STU_NO
+								,LECA_CD
+								,TEST_CD
+								,ST_SCORE
+								,ST_YN
+								,TEST_PART
+								)
+					  VALUES (   
+					  			 #{stCd}
+						  		,#{stuNo}
+								,#{lecaCd}
+								,#{testCd}
+								,ROUND((#{stScore}/(5* (SELECT COUNT(TEQ_CD) TEQ_CD FROM TEST_Q WHERE TEST_CD = #{testCd})))*100)
+								,'Y'
+								,#{testPart}
+							 )
+		
+	</insert>
+	
+	<update id="insertStdList" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" > 
+		         into STU_TEST_DETAIL (
+			         					 TEQ_CD
+										,STD_ANSWER
+										,ST_CD
+		        						 )
+						        values (
+		        						 #{item.teqCd}
+		        						,#{item.stdAnswer} 	
+		        						,#{item.stCd} 	
+		        						)
+		            
+        </foreach>
+	</update>
+	
+	<!-- 시험 학생 제출 답안과 점수 확인 -->
+	<select id="stuTestDetail" parameterType="String" resultMap="testMap">
+			WITH aaa AS(
+            SELECT    T.TEST_CD
+					, T.LECA_CD
+					, T.TEST_NM
+					, T.TEST_CON
+					, T.TEST_REG
+					, T.TEST_SDT
+					, T.TEST_EDT
+					, T.TEST_PART
+					
+		            , TQ.TEQ_CD
+		            , TQ.TEQ_CON
+		            , TQ.TEQ_SEQ
+		            , TQ.TEQ_OPTION1
+		            , TQ.TEQ_OPTION2
+		            , TQ.TEQ_OPTION3
+		            , TQ.TEQ_OPTION4
+		            , TQ.TEQ_ANSWER
+		            
+		            , STD.ST_CD
+		            , STD.STD_ANSWER
+            FROM 
+	            	 TEST T
+	            	,TEST_Q TQ
+	            	,STU_TEST_DETAIL STD
+            WHERE 
+            	T.TEST_CD = TQ.TEST_CD
+            	AND TQ.TEQ_CD = STD.TEQ_CD
+            	AND STD.ST_CD = #{stCd}
+            ORDER BY TQ.TEQ_CD)
+            
+            select * from aaa a, stu_test st
+            where a.test_cd = st.test_cd
+	</select>
+	
+	<!-- 출결 : 학생 리스트 -->
+	<select id="studentList" parameterType="String" resultType="student">
+	SELECT  C.COL_NM
+	       ,D.DEP_NM
+	       ,S.STU_YR
+	       ,S.STU_NO
+	       ,S.STU_NM
+	       ,S.STU_TEL
+	       
+	FROM COLLEGE C, DEPARTMENT D, STUDENT S, STU_LEC SL
+	
+	WHERE  C.COL_CD = D.COL_CD
+		   AND D.DEP_CD = S.DEP_CD
+		   AND S.STU_NO = SL.STU_NO
+		   AND SL.LECA_CD = #{lecaCd}
+	</select>
+	
+	<!-- 출결 : 출결 상태 카운트 -->
+	<select id="attendenceDetail" parameterType="String" resultType="attendence">
+	SELECT 
+	        (SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo}) "atenCate"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A001') "atenAttend"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A002') "atenLate"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A003') "atenAbsent"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A004') "atenEarly"
+	       ,(SELECT NVL(COUNT(ATEN_CATE),0) FROM ATTENDENCE WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND ATEN_CATE = 'A005') "atenOffically"
+	FROM 	
+			DUAL
+	</select>
+	
+	<!-- 출결 : 학생 정보 상세(이름 , 학번) -->
+	<select id="attenStudentDetail" parameterType="String" resultType="attendence">
+		SELECT   S.STU_NO
+		        ,S.STU_NM
+		FROM 	
+		        STUDENT S, STU_LEC ST
+		WHERE 	S.STU_NO = ST.STU_NO
+		        AND ST.LECA_CD = #{lecaCd}
+		        AND S.STU_NO = #{stuNo}
+	</select>
+	<!-- 출결 :  -->
+	<select id="attendStuDetail" parameterType="String" resultType="attendence">
+		SELECT  ATEN_CD
+		    ,   LECA_CD
+		    ,   STU_NO
+			,	ATEN_CATE
+		    ,   ATEN_WK
+		    ,   ATEN_HR
+		FROM    ATTENDENCE
+		WHERE   STU_NO = #{stuNo}
+		AND     LECA_CD = #{lecaCd}
+		ORDER BY ATEN_WK, ATEN_HR
+	</select>
+	
+	<select id="attenChkCnt" parameterType="hashMap" resultType="int">
+		SELECT COUNT(ATEN_CD) ATEN_CNT
+		FROM ATTENDENCE
+		WHERE ATEN_WK = #{atenWk}
+		AND ATEN_HR = #{atenHr}
+		AND LECA_CD = #{lecaCd}
+		AND STU_NO = #{stuNo}
+	</select>
+	
+	
+	<!-- 학생별 출결 INSERT -->
+	<insert id="attendStuInsert" parameterType="attendence">
+		<selectKey order="BEFORE" resultType="int" keyProperty="atenCd">
+			SELECT NVL(MAX(ATEN_CD),0)+1 FROM ATTENDENCE
+		</selectKey>
+		INSERT INTO ATTENDENCE (
+		            ATEN_CD
+		        ,   LECA_CD
+		        ,   STU_NO
+		        ,   ATEN_CATE
+		        ,   ATEN_DT
+		        ,   ATEN_WK
+		        ,   ATEN_HR
+		) VALUES (
+		    #{atenCd},
+		    #{lecaCd},
+		    #{stuNo},
+		    #{atenCate},
+		    SYSDATE,
+		    #{atenWk},
+		    #{atenHr}
+		)
+	</insert>
+	
+	<!-- 학생별 출결 update -->
+	<update id="attendStuUpdate" parameterType="attendence">
+		UPDATE ATTENDENCE
+		SET ATEN_CATE = #{atenCate}
+		WHERE ATEN_WK = #{atenWk}
+		AND ATEN_HR = #{atenHr}
+		AND LECA_CD = #{lecaCd}
+		AND STU_NO = #{stuNo}
+	</update>
+	
+	
+	
+	<select id="getGradeList" parameterType="int" resultType="student">
+	<![CDATA[
+			SELECT  S.*
+				    ,   CASE WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.2) THEN 'A+'
+		                     WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.3) THEN 'A'
+				             WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.4) THEN 'B+'
+		                     WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.5) THEN 'B'
+				             WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.6) THEN 'C+'
+		                     WHEN S.RANK <= ((SELECT COUNT(STU_NO) FROM STU_LEC WHERE LECA_CD = #{lecaCd})*0.7) THEN 'C'
+				             ELSE 'D'
+				        END AS GRADE
+				FROM (
+				    SELECT  T.*
+				        ,   RANK() OVER(ORDER BY T.TOTAL_SCORE DESC) RANK
+				    FROM(
+							SELECT 
+									  U.DEP_NM
+									, U.COL_NM
+									, U.MEM_NO
+									, U.STU_NM
+									, U.STU_YRS
+									, U.STU_NO
+									, U.TASK_SCORE
+									, U.MTEST_SCORE
+									, U.FTEST_SCORE
+									, U.ATTEND_SCORE
+									, U.MTEST_SCORE + U.FTEST_SCORE + U.TASK_SCORE + U.ATTEND_SCORE AS TOTAL_SCORE
+				                    , U.SL_SCORE AS TOTAL_GRADE
+							FROM    (
+		                                SELECT  D.DEP_NM
+		                                    ,   C.COL_NM
+		                                    ,   M.MEM_NO
+		                                    ,   S.STU_NM
+		                                    ,   L.SL_SCORE
+		                                    ,   S.STU_YR || '학년' AS STU_YRS
+		                                    ,	S.STU_NO
+		                                    ,   NVL((SELECT ROUND((((SELECT SUM(TSUB_SCORE) FROM TASK_SUBMIT WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO)/(SELECT SUM(TASK_SCORE) FROM TASK  WHERE LECA_CD = #{lecaCd})) * (SELECT LECA_TP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
+		                                        TASK_SCORE
+		                                    ,   NVL((SELECT ROUND(((SELECT SUM(ST_SCORE) FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO AND TEST_PART = 'T01')/( 100) * (SELECT LECA_FP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
+		                                        MTEST_SCORE
+		                                    ,   NVL((SELECT ROUND(((SELECT SUM(ST_SCORE) FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = M.MEM_NO AND TEST_PART = 'T02')/( 100) * (SELECT LECA_FP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd})), 2) FROM DUAL),0)
+		                                        FTEST_SCORE     
+		                                    ,  NVL(
+		                                            (SELECT ROUND((
+		                                                ((SELECT SUM(CASE 	WHEN ATEN_CATE = 'A001' THEN 1
+		                                                                    WHEN ATEN_CATE = 'A002' THEN 0
+		                                                                    WHEN ATEN_CATE = 'A003' THEN 0.5
+		                                                                    WHEN ATEN_CATE = 'A004' THEN 0.5
+		                                                                    WHEN ATEN_CATE = 'A005' THEN 1
+		                                                    END
+		                                                    )
+		                                                    FROM ATTENDENCE
+		                                                    WHERE LECA_CD = #{lecaCd}
+		                                                    AND STU_NO = M.MEM_NO)/
+		                                                (16 * (SELECT LECA_CRD FROM LEC_APPLY WHERE LECA_CD = #{lecaCd}))* (SELECT LECA_AP FROM LEC_APPLY WHERE LECA_CD = #{lecaCd}))),2)
+		                                                FROM DUAL
+		                                        ),0) ATTEND_SCORE
+			FROM    MEMBER  M INNER JOIN STUDENT    S ON(M.MEM_NO = S.STU_NO)
+			                  INNER JOIN DEPARTMENT D ON(S.DEP_CD = D.DEP_CD)
+			                  INNER JOIN COLLEGE    C ON(D.COL_CD = C.COL_CD)
+			                  LEFT OUTER JOIN STU_LEC    L ON(S.STU_NO = L.STU_NO)
+			WHERE    L.LECA_CD = #{lecaCd} group by D.DEP_NM, C.COL_NM, M.MEM_NO, S.STU_NM, S.STU_YR || '학년', 
+			'학년', L.SL_SCORE,S.STU_NO
+			ORDER BY S.STU_NM
+								) U
+						) T
+				    	ORDER BY T.TOTAL_SCORE DESC
+					)S
+				]]>
+	</select>
+	
+	<select id="lecStuScoreDetail" parameterType="hashMap" resultType="student">
+	WITH W AS(
+			SELECT '시험' AS DIV, 
+            COMD_NM AS EVEL_NM,
+            NVL((SELECT ST_SCORE FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo} AND TEST_PART = C.COMD_CD), 0) || '/' || 100 SCORE
+            , NULL AS ET
+		    FROM COMMON_DETAIL C
+		    WHERE COM_CD = 'TEST'
+			
+			UNION ALL
+			SELECT  '과제' AS DIV
+			    ,   K.TASK_NM AS EVEL_NM
+			    ,   NVL((SELECT T.TSUB_SCORE FROM TASK_SUBMIT T WHERE K.TASK_CD = T.TASK_CD AND T.STU_NO = #{stuNo} AND T.LECA_CD = #{lecaCd}),0) || '/' || K.TASK_SCORE AS SCORE
+			    ,   K.TASK_EDT
+			FROM TASK K
+			WHERE K.LECA_CD = #{lecaCd})
+			
+		SELECT W.DIV, W.EVEL_NM, W.SCORE
+		FROM W
+		ORDER BY (CASE DIV WHEN '시험' THEN 1
+		                WHEN '과제' THEN 2
+		                ELSE 3 END), W.ET
+	
+	</select>
+	
+	
+	
+	<select id="getStuScoreAndMaxScore" parameterType="hashmap" resultType="student">
+		SELECT  NVL((SELECT SUM(ST_SCORE)FROM STU_TEST WHERE LECA_CD = #{lecaCd} AND STU_NO = #{stuNo}), 0)
+		    +   NVL((SELECT SUM(TSUB_SCORE)FROM TASK_SUBMIT WHERE STU_NO = #{stuNo} AND LECA_CD = 1),0)  AS STU_CUR_SCORE
+		    ,  (SELECT SUM(TASK_SCORE) FROM TASK WHERE LECA_CD = #{lecaCd}) + ((SELECT COUNT(TEST_CD) FROM TEST WHERE LECA_CD = #{lecaCd}) * 100) LEC_SCORE
+		FROM DUAL             
+	</select>
+	
+	
+	<!-- 학생 최종 성적 등급 부여 -->
+	<update id="stuGradeUpdate" parameterType="stuLec">
+		UPDATE STU_LEC
+		SET SL_SCORE = #{slScore}
+		WHERE STU_NO = #{stuNo}
+		AND LECA_CD = #{lecaCd}
+	</update>
+	
+	<select id="stuLecScoreSearch" parameterType="String" resultType="stuLec">
+	select sl_score
+	from stu_lec
+	where stu_no = #{stuNo}
+			and leca_cd = #{lecaCd} 
+	
+	</select>
+	
+	<!-- 학생목록에서 학생 상세 -->
+	<select id="stuDetail" parameterType="int" resultType="student">
+	SELECT 
+	         D.DEP_NM
+	        ,S.*
+	FROM  DEPARTMENT D, STUDENT S
+	WHERE D.DEP_CD = S.DEP_CD
+	AND S.STU_NO = #{stuNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

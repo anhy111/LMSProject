@@ -4,81 +4,82 @@
 
 	<sql id="where">
 		<!-- 강의 검색 -->
-		and  (  L.LECA_CD     LIKE '%' || #{keyword} || '%'
-	    or      E.EMP_NM      LIKE '%' || #{keyword} || '%'
-	  	or      LA.LECA_NM    LIKE '%' || #{keyword} || '%'
-	 	or      LA.LECA_CRD   LIKE '%' || #{keyword} || '%'
-	 	or      LA.LECA_CAP   LIKE '%' || #{keyword} || '%'
-	 	or      LA.LECA_CATE  LIKE '%' || #{keyword} || '%'
-	 	or      LA.LECA_YR    LIKE '%' || #{keyword} || '%')
+		and ( L.LECA_CD LIKE '%' || #{keyword} || '%'
+		or E.EMP_NM LIKE '%' || #{keyword} || '%'
+		or LA.LECA_NM LIKE '%' || #{keyword} || '%'
+		or LA.LECA_CRD LIKE '%' || #{keyword} || '%'
+		or LA.LECA_CAP LIKE '%' || #{keyword} || '%'
+		or LA.LECA_CATE LIKE '%' || #{keyword} || '%'
+		or LA.LECA_YR LIKE '%' || #{keyword} || '%')
 	</sql>
-	
+
 	<sql id="where2">
 		<!-- 강의 검색 -->
-	  	and  (  LA.LECA_NM    LIKE '%' || #{keyword} || '%'
-	 	or      LA.LECA_SEM   LIKE '%' || #{keyword} || '%'
-	 	or      LA.LECA_YR    LIKE '%' || #{keyword} || '%')
+		and ( LA.LECA_NM LIKE '%' || #{keyword} || '%'
+		or LA.LECA_SEM LIKE '%' || #{keyword} || '%'
+		or LA.LECA_YR LIKE '%' || #{keyword} || '%')
 	</sql>
-	
+
 	<!-- lecture resultMap======================================================================== -->
 	<resultMap type="lecture" id="lectureMap">
-		<result property="lecaCd" column="LECA_CD" />
-		<result property="subCd" column="SUB_CD" />
-		<result property="lecYn" column="LEC_YN" />
-		<result property="lecHcnt" column="LEC_HCNT" />
-		<result property="lecaYn" column="LECA_YN" />
-		<result property="depCd" column="DEP_CD" />
-		<collection property="lecApply" resultMap="lecApplyMap"></collection>
-		<collection property="employee" resultMap="employeeMap"></collection>
+		<result property="lecaCd"         column="LECA_CD" />
+		<result property="subCd"          column="SUB_CD" />
+		<result property="lecYn"          column="LEC_YN" />
+		<result property="lecHcnt"        column="LEC_HCNT" />
+		<result property="lecaYn"         column="LECA_YN" />
+		<result property="depCd"          column="DEP_CD" />
+		<result property="rowNo"          column="ROWNO" /> 
+		<collection property="lecApply"   resultMap="lecApplyMap"></collection>
+		<collection property="employee"   resultMap="employeeMap"></collection>
 		<collection property="department" resultMap="departmentMap"></collection>
+		<collection property="taskList"   resultMap="taskMap"></collection>
 	</resultMap>
-	
+
 	<!-- employee resultMap======================================================================== -->
 	<resultMap type="employee" id="employeeMap">
-		<result property="empNo"  column="EMP_NO" />
-		<result property="empNm" column="EMP_NM" />
-		<result property="empNme" column="EMP_NME" />
-		<result property="empTel" column="EMP_TEL" />
-		<result property="empTel2"  column="EMP_TEL2" />
-		<result property="empZip" column="EMP_ZIP" />
+		<result property="empNo"     column="EMP_NO" />
+		<result property="empNm"     column="EMP_NM" />
+		<result property="empNme"    column="EMP_NME" />
+		<result property="empTel"    column="EMP_TEL" />
+		<result property="empTel2"   column="EMP_TEL2" />
+		<result property="empZip"    column="EMP_ZIP" />
 		<result property="empAddr1"  column="EMP_ADDR1" />
 		<result property="empAddr2"  column="EMP_ADDR2" />
-		<result property="empReg" column="EMP_REG" />
-		<result property="empBankCd"  column="EMP_BANK_CD" />
-		<result property="empDepo"  column="EMP_DEPO" />
-		<result property="empAct" column="EMP_ACT" />
-		<result property="empPic" column="EMP_PIC" />
-		<result property="empJoin"  column="EMP_JOIN" />
-		<result property="empRet" column="EMP_RET" />
+		<result property="empReg"    column="EMP_REG" />
+		<result property="empBankCd" column="EMP_BANK_CD" />
+		<result property="empDepo"   column="EMP_DEPO" />
+		<result property="empAct"    column="EMP_ACT" />
+		<result property="empPic"    column="EMP_PIC" />
+		<result property="empJoin"   column="EMP_JOIN" />
+		<result property="empRet"    column="EMP_RET" />
 	</resultMap>
-	
+
 	<!-- lecApply resultMap======================================================================== -->
 	<resultMap type="lecApply" id="lecApplyMap">
-		<result property="lecaCd"  column="LECA_CD" />
-		<result property="lecaYr"  column="LECA_YR" />
-		<result property="lecaSem" column="LECA_SEM" />
-		<result property="lecaNm"  column="LECA_NM" />
-		<result property="lecaCon" column="LECA_CON" />
-		<result property="lecaTrg" column="LECA_TRG" />
-		<result property="lecaCrd" column="LECA_CRD" />
-		<result property="lecaPer" column="LECA_PER" />
-		<result property="lecaCap" column="LECA_CAP" />
-		<result property="lecaTm"  column="LECA_TM" />
-		<result property="lecaWk"  column="LECA_WK" />
-		<result property="lecaHall" column="LECA_HALL" />
-		<result property="lecaUnit" column="LECA_UNIT" />
-		<result property="lecaBook" column="LECA_BOOK" />
-		<result property="lecaNote" column="LECA_NOTE" />
-		<result property="lecaDt" column="LECA_DT" />
-		<result property="lecaGrade" column="LECA_GRADE" />
+		<result property="lecaCd"     column="LECA_CD" />
+		<result property="lecaYr"     column="LECA_YR" />
+		<result property="lecaSem"    column="LECA_SEM" />
+		<result property="lecaNm"     column="LECA_NM" />
+		<result property="lecaCon"    column="LECA_CON" />
+		<result property="lecaTrg"    column="LECA_TRG" />
+		<result property="lecaCrd"    column="LECA_CRD" />
+		<result property="lecaPer"    column="LECA_PER" />
+		<result property="lecaCap"    column="LECA_CAP" />
+		<result property="lecaTt"     column="LECA_TT" />
+		<result property="lecaHall"   column="LECA_HALL" />
+		<result property="lecaUnit"   column="LECA_UNIT" />
+		<result property="lecaBook"   column="LECA_BOOK" />
+		<result property="lecaNote"   column="LECA_NOTE" />
+		<result property="lecaDt"     column="LECA_DT" />
+		<result property="lecaGrade"  column="LECA_GRADE" />
 		<result property="lecaImsiYn" column="LECA_IMSI_YN" />
-		<result property="lecaCate" column="LECA_CATE" />
-		<result property="lecaMp" column="LECA_MP" />
-		<result property="lecaFp" column="LECA_FP" />
-		<result property="lecaTp" column="LECA_TP" />
-		<result property="lecaAp" column="LECA_AP" />
+		<result property="lecaCate"   column="LECA_CATE" />
+		<result property="lecaMp"     column="LECA_MP" />
+		<result property="lecaFp"     column="LECA_FP" />
+		<result property="lecaTp"     column="LECA_TP" />
+		<result property="lecaAp"     column="LECA_AP" />
 	</resultMap>
-	
+
 	<!-- DEPARTMENT resultMap======================================================================== -->
 	<resultMap type="department" id="departmentMap">
 		<result property="depCd"  column="DEP_CD" />
@@ -88,48 +89,667 @@
 		<result property="depDes" column="DEP_DES" />
 		<result property="depCap" column="DEP_CAP" />
 		<result property="depTel" column="DEP_TEL" />
-		<result property="empNo"  column="EMP_NO"/>
+		<result property="empNo"  column="EMP_NO" />
 	</resultMap>
 
+	<!-- task resultMap======================================================================== -->
+	<resultMap type="task" id="taskMap">
+		<result property="taskCd"             column="TASK_CD" />
+		<result property="lecaCd"             column="LECA_CD" />
+		<result property="taskNm"             column="TASK_NM" />
+		<result property="taskCon"            column="TASK_CON" />
+		<result property="taskSdt"            column="TASK_SDT" />
+		<result property="taskEdt"            column="TASK_EDT" />
+		<result property="atchFileId"         column="ATCH_FILE_ID" />
+		<result property="taskScore"         column="TASK_SCORE" />
+		<collection property="attach"         resultMap="attachMap"></collection>
+		<collection property="taskSubmitList" resultMap="taskSubmitMap"></collection>
+			
+	</resultMap>
+
+	<!-- attach resultMap======================================================================== -->
+	<resultMap type="attach" id="attachMap">
+		<result property="atchFileId"     column="ATCH_FILE_ID" />
+		<result property="fileSn"         column="FILE_SN" />
+		<result property="fileStreCours"  column="FILE_STRE_COURS" />
+		<result property="streFileNm"     column="STRE_FILE_NM" />
+		<result property="orignlFileNm"   column="ORIGNL_FILE_NM" />
+		<result property="fileExtsn"      column="FILE_EXTSN" />
+		<result property="fileSize"       column="FILE_SIZE" />
+		<result property="createDt"       column="CREATE_DT" />
+	</resultMap>
+	<!-- taskSubmit resultMap======================================================================== -->
+	<resultMap type="taskSubmit" id="taskSubmitMap">
+		<result property="tsubCd"      column="TSUB_CD" />
+		<result property="lecaCd"      column="LECA_CD" />
+		<result property="taskCd"      column="TASK_CD" />
+		<result property="stuNo"       column="STU_NO" />
+		<result property="tsubDt"      column="TSUB_DT" />
+		<result property="tsubScore"   column="TSUB_SCORE" />
+		<result property="atchFileId"  column="ATCH_FILE_ID" />
+		<result property="tsubCon"     column="TSUB_CON" />
+		<collection property="student" resultMap="studentMap"></collection>
+		<collection property="attach"  resultMap="attachMap"></collection>
+	</resultMap>
+	<!-- student resultMap======================================================================== -->
+	<resultMap type="student" id="studentMap">
+		<result property="stuNo"     column="STU_NO" />
+		<result property="depCd"     column="DEP_CD" />
+		<result property="stuYr"     column="STU_YR" />
+		<result property="stuSem"    column="STU_SEM" />
+		<result property="stuNm"     column="STU_NM" />
+		<result property="stuNme"    column="STU_NME" />
+		<result property="stuTel"    column="STU_TEL" />
+		<result property="stuZip"    column="STU_ZIP" />
+		<result property="stuAddr1"  column="STU_ADDR1" />
+		<result property="stuAddr2"  column="STU_ADDR2" />
+		<result property="stuReg"    column="STU_REG" />
+		<result property="stuBankCd" column="STU_BANK_CD" />
+		<result property="stuDepo"   column="STU_DEPO" />
+		<result property="stuAct"    column="STU_ACT" />
+		<result property="stuPic"    column="STU_PIC" />
+		<result property="stuBir"    column="STU_BIR" />
+		<result property="proNo"     column="PRO_NO" />
+	</resultMap>
+
+
 	<!-- 이번 학기 전체 강의 목록======================================================================== -->
-	<select id="lectureSearch" parameterType="string" resultMap="lectureMap">
-		SELECT 
-		       L.LECA_CD 
-		     , E.EMP_NM 
-		     , LA.LECA_NM 
-		     , LA.LECA_CRD 
-		     , D.DEP_NM
-		     , LA.LECA_CAP 
-		     , LA.LECA_CATE 
-		     , LA.LECA_YR
-		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
-		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
-		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
-		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
+	<select id="lectureSearch" parameterType="string"
+		resultMap="lectureMap">
+		SELECT
+			  L.LECA_CD
+			, E.EMP_NM
+			, LA.LECA_NM
+			, LA.LECA_CRD
+			, D.DEP_NM
+			, LA.LECA_CAP
+			, LA.LECA_CATE
+			, LA.LECA_YR
+			, LA.LECA_SEM
+		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L,
+		LEC_APPLY LA, DEPARTMENT D
+		WHERE E.EMP_NO = P.PRO_NO ANDP.PRO_NOD =
+		S.PRO_NO
+		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND P.DEP_CD =
+		D.DEP_CD
 		<if test="keyword != null and keyword !=''">
-				<include refid="where"></include>
+			<include refid="where"></include>
 		</if>
 	</select>
-	
+
 	<!-- 담당 강의 조회 (교수가 담당한 강의 검색)======================================================================== -->
-	<select id="professorLecture" resultMap="lectureMap" parameterType="string">
+	<select id="professorLecture" resultMap="lectureMap"
+		parameterType="string">
 		SELECT L.LECA_CD
-		     , LA.LECA_NM 
-		     , LA.LECA_YR
-		     , DECODE(SUBSTR(LA.LECA_SEM,4,2), '9', 2, '10' , 2, '11' , 2, '12' , 2, '03', 1, '04' , 1, '05' , 1 , '06' , 1, '방학') "LECA_SEM"
-		FROM PROFESSOR P, EMPLOYEE E, SUBJECT S, LECTURE L, LEC_APPLY LA, DEPARTMENT D
-		WHERE E.EMP_NO = P.PRO_NO AND P.PRO_NO = S.PRO_NO 
-		AND S.SUB_CD = L.SUB_CD AND L.LECA_CD = LA.LECA_CD AND L.DEP_CD = D.DEP_CD
-		AND S.PRO_NO = #{professorId}
-<!-- 		<if test="keyword != null and keyword !=''"> -->
-<!-- 				<include refid="where2"></include> -->
-<!-- 		</if> -->
+			 , LA.LECA_NM
+			 , LA.LECA_YR
+			 , LA.LECA_SEM
+			 , S.DEP_CD
+		FROM 
+		       PROFESSOR P
+		     , EMPLOYEE E
+		     , SUBJECT S
+		     , LECTURE L
+		     , LEC_APPLY LA
+		WHERE 
+			E.EMP_NO = P.PRO_NO 
+			AND P.PRO_NO = S.PRO_NO
+			AND S.SUB_CD = L.SUB_CD 
+			AND L.LECA_CD = LA.LECA_CD
+			AND S.PRO_NO = #{professorId}
+			AND L.LEC_YN = 'Y'
+			AND L.LEC_HCNT = 1
+            AND LA.LECA_SEM = DECODE(TO_CHAR(SYSDATE, 'MM'),1,1,2,1,3,1,4,1,5,1,6,1,7,2,8,2,9,2,10,2,11,2,12)
+            AND LA.LECA_YR = TO_CHAR(SYSDATE, 'yyyy')
 	</select>
+	<!-- 과제 낸사람 o -->
+	<select id="searchTask" resultMap="lectureMap"
+		parameterType="String">
+		select
+			LA.LECA_NM,
+			LA.LECA_CD,
+			T.TASK_CD,
+			T.TASK_NM,
+			T.TASK_CON,
+			T.TASK_SDT,
+			T.TASK_EDT,
+			TS.TSUB_CD,
+			TS.TSUB_SCORE
+		from
+			LECTURE L,
+			TASK T,
+			LEC_APPLY LA,
+			TASK_SUBMIT TS
+		WHERE
+			L.LECA_CD = T.LECA_CD(+)
+			and LA.LECA_CD = L.LECA_CD(+)
+			and T.TASK_CD = TS.TASK_CD(+)
+			and LA.LECA_CD = ${lecaCd}
+	</select>
+
+	<select id="studentNotYetApplyLectureList"
+		parameterType="studentLecture" resultMap="lectureMap">
+		WITH T AS (
+		SELECT
+			L.LECA_CD,
+			(SELECT E.EMP_NM FROM EMPLOYEE E WHERE E.EMP_NO = LA.PRO_NO) EMP_NM,
+			LA.LECA_NM,
+			LA.LECA_CRD,
+			LA.LECA_TRG,
+			L.LEC_HCNT,
+			D.DEP_NM,
+			LA.LECA_CAP,
+			LA.LECA_CATE,
+			LA.LECA_YR,
+			LA.LECA_SEM,
+			C.COL_NM,
+            C.COL_CD
+		FROM
+			DEPARTMENT D
+			INNER JOIN COLLEGE C ON (D.COL_CD = C.COL_CD)
+			INNER JOIN SUBJECT S ON ( D.DEP_CD = S.DEP_CD )
+			INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+			INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+		WHERE
+			L.LEC_YN = 'Y'
+			AND LA.LECA_SEM = DECODE(TO_CHAR(SYSDATE,'MM'),'12',1,'01',1,'02',1,'03',1,'04',1,'05',1,2)
+			AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')      
+        )                                                                                                          
+		SELECT * FROM T
+		WHERE NOT EXISTS(
+		SELECT SL.LECA_CD
+		FROM STU_LEC SL
+		WHERE SL.STU_NO = #{stuNo}
+		AND SL.LECA_CD = T.LECA_CD
+		)
+		<if test="colCd > 0">
+			AND COL_CD = #{colCd}
+		</if>
+		<if test="depNm != null and depNm != ''">
+			AND DEP_NM LIKE '%' || #{depNm} || '%'
+		</if>
+		<if test="lecaTrg != null and lecaTrg != ''">
+			AND LECA_TRG LIKE '%' || #{lecaTrg} || '%'
+		</if>
+		<if test="lecaCate != null and lecaCate != ''">
+			AND LECA_CATE LIKE '%' || #{lecaCate} || '%'
+		</if>
+		<if test="lecaNm != null and lecaNm != ''">
+			AND LECA_NM LIKE '%' || #{lecaNm} || '%'
+		</if>
+	</select>
+
+	<select id="studentCompleteApplyLectureList"
+		parameterType="studentLecture" resultMap="lectureMap">
+		SELECT
+			L.LECA_CD
+			, (SELECT E.EMP_NM FROM EMPLOYEE E WHERE E.EMP_NO = LA.PRO_NO) EMP_NM
+			, LA.LECA_NM
+			, LA.LECA_CRD
+			, LA.LECA_TRG
+			, L.LEC_HCNT
+			, D.DEP_NM
+			, LA.LECA_CAP
+			, LA.LECA_CATE
+			, LA.LECA_YR
+			, LA.LECA_SEM
+			, SL.STU_NO
+		FROM  SUBJECT S
+			INNER JOIN LECTURE L ON(S.SUB_CD = L.SUB_CD)
+			INNER JOIN LEC_APPLY LA ON(L.LECA_CD = LA.LECA_CD)
+			INNER JOIN DEPARTMENT D ON(S.DEP_CD = D.DEP_CD)
+			LEFT OUTER JOIN STU_LEC SL ON(SL.LECA_CD = L.LECA_CD)
+		WHERE SL.STU_NO =#{stuNo}
+		AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+		ORDER BY SL.SL_SN DESC
+	</select>
+
+	<insert id="insertTask" parameterType="task">
+		<selectKey keyProperty="taskCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(TASK_CD),0)+1 FROM TASK
+		</selectKey>
+		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT,
+		TASK_EDT, ATCH_FILE_ID,TASK_SCORE)
+		values(#{taskCd}, #{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},(SELECT
+		MAX(ATCH_FILE_ID),#{taskScore} FROM ATTACH))
+	</insert>
+
+	<insert id="insertTask2" parameterType="task">
+		<selectKey keyProperty="taskCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(TASK_CD),0)+1 FROM TASK
+		</selectKey>
+		insert into TASK (TASK_CD, LECA_CD, TASK_NM, TASK_CON, TASK_SDT,
+		TASK_EDT,TASK_SCORE)
+		values(#{taskCd},#{lecaCd},#{taskNm},#{taskCon},SYSDATE,#{taskEdt},#{taskScore})
+	</insert>
+
+	<select id="studentNotYetSaveLectureList"
+		parameterType="studentLecture" resultMap="lectureMap">
+		WITH T AS (
+			SELECT
+			L.LECA_CD,
+			(SELECT E.EMP_NM FROM EMPLOYEE E WHERE E.EMP_NO = LA.PRO_NO) EMP_NM,
+			LA.LECA_NM,
+			LA.LECA_CRD,
+			LA.LECA_TRG,
+			L.LEC_HCNT,
+			D.DEP_NM,
+			LA.LECA_CAP,
+			LA.LECA_CATE,
+			LA.LECA_YR,
+			LA.LECA_SEM,
+			C.COL_NM,
+	        C.COL_CD
+			FROM
+			DEPARTMENT D
+			INNER JOIN COLLEGE C ON(D.COL_CD = C.COL_CD)
+			INNER JOIN SUBJECT S ON ( D.DEP_CD = S.DEP_CD )
+			INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+			INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+			WHERE
+			L.LEC_YN = 'Y'
+			AND LA.LECA_SEM =
+			DECODE(TO_CHAR(SYSDATE,'MM'),'12',1,'01',1,'02',1,'03',1,'04',1,'05',1,2)
+			AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+		)
+		SELECT T.LECA_CD
+			 , T.EMP_NM
+			 , T.LECA_NM	 
+			 , T.LECA_CRD
+			 , T.LECA_TRG
+			 , T.LEC_HCNT
+			 , T.DEP_NM
+			 , T.LECA_CAP
+			 , T.LECA_CATE
+			 , T.LECA_YR
+			 , T.LECA_SEM
+			 , T.COL_NM
+	         , T.COL_CD
+		FROM T, WISH W
+		WHERE NOT EXISTS(
+		SELECT W.LECA_CD
+		FROM WISH W
+		WHERE W.STU_NO = #{stuNo}
+		AND W.LECA_CD = T.LECA_CD
+		)
+        AND T.LECA_CD = W.LECA_CD(+)
+		<if test="colCd > 0">
+			AND COL_CD = #{colCd}
+		</if>
+		<if test="depNm != null and depNm != ''">
+			AND DEP_NM LIKE '%' || #{depNm} || '%'
+		</if>
+		<if test="lecaTrg != null and lecaTrg != ''">
+			AND LECA_TRG LIKE '%' || #{lecaTrg} || '%'
+		</if>
+		<if test="lecaCate != null and lecaCate != ''">
+			AND LECA_CATE LIKE '%' || #{lecaCate} || '%'
+		</if>
+		<if test="lecaNm != null and lecaNm != ''">
+			AND LECA_NM LIKE '%' || #{lecaNm} || '%'
+		</if>
+		ORDER BY W.WS_SN DESC
+	</select>
+
+	<select id="studentCompleteSaveLectureList"
+		parameterType="studentLecture" resultMap="lectureMap">
+		SELECT
+		L.LECA_CD
+		, (SELECT E.EMP_NM FROM EMPLOYEE E WHERE E.EMP_NO = LA.PRO_NO) EMP_NM
+		, LA.LECA_NM
+		, LA.LECA_CRD
+		, LA.LECA_TRG
+		, L.LEC_HCNT
+		, D.DEP_NM
+		, LA.LECA_CAP
+		, LA.LECA_CATE
+		, LA.LECA_YR
+		, LA.LECA_SEM
+		, W.STU_NO
+		, W.WS_SN
+		FROM DEPARTMENT D
+		INNER JOIN SUBJECT S ON ( D.DEP_CD = S.DEP_CD )
+		INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+		INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+		LEFT OUTER JOIN WISH W ON(W.LECA_CD = L.LECA_CD)
+		WHERE W.STU_NO = #{stuNo}
+		AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+		ORDER BY W.WS_SN DESC
+	</select>
+
+
+
+	<update id="increaseHeadcount" parameterType="studentLecture">
+		UPDATE LECTURE
+		SET LEC_HCNT = (SELECT LEC_HCNT FROM LECTURE WHERE LECA_CD = #{lecaCd}) +
+		1
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+
+	<!-- 과제 상세보기 -->
+	<select id="detailTask" resultType="task" parameterType="String"
+		resultMap="taskMap">
+		SELECT
+		T.TASK_CD
+		, T.LECA_CD
+		, T.TASK_NM
+		, T.TASK_CON
+		, T.TASK_SDT
+		, T.TASK_EDT
+		, T.TASK_SCORE
+		, T.ATCH_FILE_ID
+		, A.ATCH_FILE_ID
+		, A.FILE_SN
+		, A.FILE_STRE_COURS
+		, A.STRE_FILE_NM
+		, A.ORIGNL_FILE_NM
+		, A.FILE_EXTSN
+		, A.FILE_SIZE
+		, A.CREATE_DT
+		FROM TASK T LEFT OUTER JOIN ATTACH A ON(T.ATCH_FILE_ID =
+		A.ATCH_FILE_ID)
+		WHERE
+		T.TASK_CD = #{taskCd}
+		AND T.LECA_CD = #{lecaCd}
+	</select>
+
+	<!-- 과제 수정 -->
+	<update id="taskUpdate" parameterType="hashMap">
+		UPDATE
+		TASK
+		<set>
+			TASK_NM=#{taskNm}
+			,TASK_CON=#{taskCon}
+			,TASK_EDT=#{taskEdt}
+			,TASK_SCORE=#{taskScore}
+			<if test='result > "0"'>
+				, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+			</if>
+		</set>
+		WHERE
+		TASK_CD=#{taskCd}
+		AND LECA_CD=#{lecaCd}
+	</update>
+
+	<select id="loadNotApplySaveLecture"
+		parameterType="studentLecture" resultMap="lectureMap">
+		SELECT
+		L.LECA_CD
+		, (SELECT E.EMP_NM FROM EMPLOYEE E WHERE E.EMP_NO = LA.PRO_NO) EMP_NM
+		, LA.LECA_NM
+		, LA.LECA_CRD
+		, LA.LECA_TRG
+		, L.LEC_HCNT
+		, D.DEP_NM
+		, LA.LECA_CAP
+		, LA.LECA_CATE
+		, LA.LECA_YR
+		, LA.LECA_SEM
+		, W.STU_NO
+		, SL.STU_NO
+		, W.WS_SN
+		FROM DEPARTMENT D
+		INNER JOIN SUBJECT S ON ( S.DEP_CD = D.DEP_CD )
+		INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+		INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+		LEFT OUTER JOIN WISH W ON(W.LECA_CD = L.LECA_CD)
+		LEFT OUTER JOIN STU_LEC SL ON(W.LECA_CD = SL.LECA_CD AND W.STU_NO =
+		SL.STU_NO)
+		WHERE W.STU_NO = #{stuNo}
+		AND LA.LECA_YR = TO_CHAR(SYSDATE,'YYYY')
+		AND SL.STU_NO IS NULL
+		ORDER BY W.WS_SN DESC
+	</select>
+	<!-- 과제 삭제 -->
+	<delete id="deleteTask" parameterType="String">
+		DELETE
+		FROM TASK
+		WHERE
+		LECA_CD = #{lecaCd}
+		AND TASK_CD = #{taskCd}
+	</delete>
+
+
+
+	
+	<select id="searchList" parameterType="studentLecture" resultMap="lectureMap">
+		
+		WITH T AS(
+			SELECT 
+				   ROW_NUMBER() OVER(ORDER BY L.LECA_CD)-1 ROWNO
+			     , L.LECA_CD 
+			     , E.EMP_NM 
+			     , LA.LECA_NM 
+			     , LA.LECA_CRD 
+			     , LA.LECA_TRG
+			     , L.LEC_HCNT
+			     , D.DEP_NM
+			     , LA.LECA_CAP 
+			     , LA.LECA_CATE 
+			     , LA.LECA_YR
+			     , LA.LECA_SEM
+			     , D.COL_CD
+			FROM DEPARTMENT D
+			                INNER JOIN PROFESSOR P ON ( P.DEP_CD = D.DEP_CD )
+			                INNER JOIN EMPLOYEE E ON ( E.EMP_NO = P.PRO_NO)
+			                INNER JOIN SUBJECT S ON ( P.PRO_NO = S.PRO_NO )
+			                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+			                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+	        WHERE 1=1
+	        <if test="colCd > 0">
+				AND COL_CD = #{colCd}
+			</if>
+	        <if test="depNm != null and depNm != ''">
+				AND DEP_NM LIKE '%' || #{depNm} || '%'
+			</if>
+			<if test="lecaTrg != null and lecaTrg != ''">
+				AND LECA_TRG LIKE '%' || #{lecaTrg} || '%'
+			</if>
+			<if test="lecaCate != null and lecaCate != ''">
+				AND LECA_CATE LIKE '%' || #{lecaCate} || '%'
+			</if>
+			<if test="lecaNm != null and lecaNm != ''">
+				AND LECA_NM LIKE '%' || #{lecaNm} || '%'
+			</if>
+			ORDER BY L.LECA_CD ASC
+		)
+		SELECT *
+		FROM T
+		WHERE T.ROWNO
+		BETWEEN (10 * (#{viewPage}-1)) AND ((10*#{viewPage})-1)
+		ORDER BY ROWNO ASC
+	</select>
+	
+	<select id="lectureListPaging" parameterType="studentLecture" resultType="int"> 
+		SELECT COUNT(L.LECA_CD) FROM DEPARTMENT D
+			                INNER JOIN SUBJECT S ON ( D.DEP_CD = S.DEP_CD )
+			                INNER JOIN LECTURE L ON ( S.SUB_CD = L.SUB_CD )
+			                INNER JOIN LEC_APPLY LA ON ( L.LECA_CD = LA.LECA_CD )
+        WHERE 1=1
+		<if test="colCd > 0">
+			AND COL_CD = #{colCd}
+		</if>
+        <if test="depNm != null and depNm != ''">
+			AND DEP_NM LIKE '%' || #{depNm} || '%'
+		</if>
+		<if test="lecaTrg != null and lecaTrg != ''">
+			AND LECA_TRG LIKE '%' || #{lecaTrg} || '%'
+		</if>
+		<if test="lecaCate != null and lecaCate != ''">
+			AND LECA_CATE LIKE '%' || #{lecaCate} || '%'
+		</if>
+		<if test="lecaNm != null and lecaNm != ''">
+			AND LECA_NM LIKE '%' || #{lecaNm} || '%'
+		</if>
+	</select>
+
+	<!-- 학생들이 제출한 과제 목록 -->
+	<select id="taskSubmitList" resultMap="taskMap"
+		parameterType="String">
+		SELECT
+			TS.TSUB_CD
+			,TS.LECA_CD
+			,TS.TASK_CD
+			,TS.STU_NO
+			,TS.TSUB_DT
+			,TS.TSUB_SCORE
+			,TS.ATCH_FILE_ID
+			,TS.TSUB_CON
+			,S.STU_NM
+			,T.TASK_NM
+			,T.TASK_EDT
+			,T.TASK_SCORE
+		FROM
+		TASK T
+			, TASK_SUBMIT TS
+			, STUDENT S
+		WHERE
+			S.STU_NO = TS.STU_NO
+			AND T.TASK_CD = TS.TASK_CD
+			AND T.TASK_CD = #{taskCd}
+	</select>
+	
+	<!-- 학생이 과제 냈는지 체크 (제출 버튼 보이기 여부) -->
+	<select id="stuSubmitCheck" parameterType="taskSubmit" resultType="taskSubmit">
+	SELECT *
+	FROM TASK_SUBMIT
+	WHERE STU_NO = #{stuNo}
+	AND TASK_CD = #{taskCd}
+	AND LECA_CD = #{lecaCd}
+	</select>
+
+	<!-- 과제 제출 insert 시작=========================================================================================== -->
+
+	<insert id="insertTaskSubmit1" parameterType="taskSubmit">
+		<selectKey keyProperty="tsubCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(TSUB_CD),0)+1 FROM TASK_SUBMIT
+		</selectKey>
+		insert into
+		TASK_SUBMIT (
+					TSUB_CD
+					,LECA_CD
+					,TASK_CD
+					,STU_NO
+					,ATCH_FILE_ID
+					,TSUB_CON
+		)
+		values(
+					#{tsubCd}
+					, #{lecaCd}
+					, #{taskCd}
+					, #{stuNo}
+					, (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+					, #{tsubCon}
+		)
+	</insert>
+
+	<insert id="insertTaskSubmit2" parameterType="taskSubmit">
+		<selectKey keyProperty="tsubCd" order="BEFORE"
+			resultType="int">
+			SELECT NVL(MAX(TSUB_CD),0)+1 FROM TASK_SUBMIT
+		</selectKey>
+		insert into
+		TASK_SUBMIT (
+				TSUB_CD
+				,LECA_CD
+				,TASK_CD
+				,STU_NO
+				,TSUB_CON
+		)
+		values(
+				#{tsubCd}
+				, #{lecaCd}
+				, #{taskCd}
+				, #{stuNo}
+				, #{tsubCon}
+		)
+	</insert>
+	<!-- 과제 제출 insert 끝=========================================================================================== -->
+
+	<!-- 과제 상세보기 시작=========================================================================================== -->
+	<select id="submitDetail" resultType="task"
+		parameterType="hashMap" resultMap="taskMap">
+		SELECT
+				TS.TSUB_CD
+				,TS.LECA_CD
+				,TS.TASK_CD
+				,TS.STU_NO
+				,TS.TSUB_DT
+				,TS.TSUB_SCORE
+				,TS.ATCH_FILE_ID
+				,TS.TSUB_CON
+				,S.STU_NM
+				,T.TASK_NM
+				,T.TASK_EDT
+				,T.TASK_SCORE
+		<if test='result > "0"'>
+				, A.ATCH_FILE_ID
+				, A.FILE_SN
+				, A.FILE_STRE_COURS
+				, A.STRE_FILE_NM
+				, A.ORIGNL_FILE_NM
+				, A.FILE_EXTSN
+				, A.FILE_SIZE
+				, A.CREATE_DT
+		</if>
+		FROM
+				TASK T
+				, TASK_SUBMIT TS
+				, STUDENT S
+		<if test='result > "0"'>
+				, ATTACH A
+		</if>
+		WHERE
+				S.STU_NO = TS.STU_NO
+				AND T.TASK_CD = TS.TASK_CD
+		<if test='result > "0"'>
+			AND TS.ATCH_FILE_ID = A.ATCH_FILE_ID
+		</if>
+		AND TS.TSUB_CD = #{tsubCd}
+	</select>
+	<!-- 과제 상세보기 끝=========================================================================================== -->
+
+	<!-- 과제 수정 시작 =========================================================================================== -->
+	<update id="taskSubmitUpdate" parameterType="hashMap">
+		UPDATE
+		TASK_SUBMIT
+		<set>
+			TSUB_CON = #{tsubCon}
+			<if test='result > "0"'>
+				, ATCH_FILE_ID = (SELECT MAX(ATCH_FILE_ID) FROM ATTACH)
+			</if>
+		</set>
+		WHERE
+		TSUB_CD = #{tsubCd}
+	</update>
+	<!-- 과제 수정 끝=========================================================================================== -->
+
+
+	<update id="scoreUpdate" parameterType="taskSubmit">
+		UPDATE
+		TASK_SUBMIT
+		SET
+		TSUB_SCORE = #{tsubScore}
+		WHERE
+		TSUB_CD = #{tsubCd}
+
+	</update>
+
+
+	<delete id="submitDelete" parameterType="int">
+		delete
+		from TASK_SUBMIT
+		where TSUB_CD = ${tsubCd}
+	</delete>
+	
+	<update id="approveLecture" parameterType="lecture">
+		UPDATE LECTURE
+		    SET LEC_YN = #{lecYn}
+		      , LECA_YN = #{lecaYn}
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+
 </mapper>
-
-
-
-
-
-
-

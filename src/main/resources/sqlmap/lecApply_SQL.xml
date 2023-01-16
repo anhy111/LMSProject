@@ -1,44 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.mapper.LectureApplyMapper">
+	<sql id="yrNsem">
+		<if test="yrNsem != null and !yrNsem.equals('')">
+			AND     U.LECA_YR || U.LECA_SEM = #{yrNsem}
+		</if>
+	</sql>
 
-<!-- 	<resultMap type="professor" id="lecApplyMap"> -->
-<!-- 		<result property="proPos" column="PRO_POS" /> -->
-<!-- 		<result property="proNo" column="PRO_NO" /> -->
-		
-<!-- 		<collection property="employeeList" resultMap="authMap"></collection> -->
-<!-- 	</resultMap> -->
-	
-<!-- 	<resultMap type="employee" id="authMap"> -->
-<!-- 		<result property="empNo" column="EMP_NO" /> -->
-<!-- 		<result property="empNm" column="EMP_NM" /> -->
-<!-- 		<result property="empTel" column="EMP_TEL" /> -->
-<!-- 		<result property="empReg" column="EMP_REG" /> -->
-<!-- 	</resultMap> -->
-
-<!-- 	<select id="detail" parameterType="int" resultMap="lecApplyMap"> -->
-<!-- 		SELECT  P.PRO_NO -->
-<!-- 		        , P.DEP_CD -->
-<!-- 		        , P.PRO_POS -->
-<!-- 		        , E.EMP_NO -->
-<!-- 		        , E.EMP_NM -->
-<!-- 		        , E.EMP_NME -->
-<!-- 		        , E.EMP_TEL -->
-<!-- 		        , E.EMP_TEL2 -->
-<!-- 		        , E.EMP_ZIP -->
-<!-- 		        , E.EMP_ADDR1 -->
-<!-- 		        , E.EMP_ADDR2 -->
-<!-- 		        , E.EMP_REG -->
-<!-- 		        , E.EMP_BANK_CD -->
-<!-- 		        , E.EMP_DEPO -->
-<!-- 		        , E.EMP_ACT -->
-<!-- 		        , E.EMP_PIC -->
-<!-- 		        , E.EMP_JOIN -->
-<!-- 		        , E.EMP_RET -->
-<!-- 		FROM    PROFESSOR P INNER JOIN EMPLOYEE E ON(P.PRO_NO = E.EMP_NO) -->
-<!-- 		WHERE   P.PRO_NO = #{proNo} -->
-<!-- 	</select> -->
-	
 	<select id="proInfo" parameterType="int" resultType="professor">
 		SELECT  P.PRO_NO
 		        , E.EMP_NM
@@ -53,7 +21,7 @@
 		        END EMP_REG
 		        , E.EMP_TEL
 		        , C.COL_NM || ' ' || D.DEP_NM DEP_NM
-		        , P.PRO_POS PRO_POS
+		        , (SELECT  C.COMD_NM FROM COMMON_DETAIL C WHERE C.COMD_CD = P.PRO_POS) PRO_POS
 		        , CASE WHEN E.EMP_RET IS NULL THEN '재직' ELSE '퇴직' END EMP_RET
 		        , E.EMP_PIC
 		FROM    PROFESSOR P, EMPLOYEE E, DEPARTMENT D, COLLEGE C
@@ -63,6 +31,455 @@
 		AND     P.PRO_NO = #{empNo}
 	</select>
 	
+	
+	<select id="getYrNSem" parameterType="int" resultType="lecApply">
+		SELECT  DISTINCT L.LECA_YR
+		        , L.LECA_SEM
+		FROM    LEC_APPLY L, LECTURE T
+		WHERE   L.PRO_NO = #{empNo}
+		AND		T.LECA_YN = 1
+		ORDER BY L.LECA_YR DESC, LECA_SEM DESC
+	</select>
+	
+	<select id="getCnt" parameterType="hashMap" resultType="int">
+		SELECT  COUNT(U.LECA_CD)
+		FROM    LEC_APPLY U
+		WHERE   U.PRO_NO = #{empNo}
+		<include refid="yrNsem"></include>
+<!-- 		AND     U.LECA_IMSI_YN IS NULL -->
+	</select>
+	
+	<select id="list" parameterType="hashMap" resultType="lecApply">
+		SELECT  U.LECA_CD,
+		        U.PRO_NO,
+		        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
+		        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
+		        NVL(U.LECA_TRG, 0) LECA_TRG,
+		        U.SUB_CD,
+		        U.LECA_NM,
+		        NVL(U.LECA_CAP, 0) LECA_CAP,
+		        U.LECA_CATE,
+		        NVL(U.LECA_CRD, 0) LECA_CRD,
+		        NVL(TRIM(U.MON || ' ' || U.TUE || ' ' || U.WED || ' ' || U.THU || ' ' || U.FRI), ' - ')
+		        || ' (' || NVL(U.BLD_SNM, '아직 배정되지 않았습니다.') || ' ' || U.ROOM_NO || ')' LECA_TC,
+		        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+                WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+        		END LECA_GRADE,
+		        U.LECA_DT,
+		        CASE    WHEN U.LECA_YN = 0 THEN '승인대기'
+		                WHEN U.LECA_YN = 1 THEN '승인'
+		                WHEN U.LECA_YN = 2 THEN '반려'
+		                WHEN U.LECA_YN = 3 THEN '임시저장'
+		        END LECA_APPROVAL
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM
+		) U
+		WHERE   U.PRO_NO = #{proNo}
+		<include refid="yrNsem"></include>
+		ORDER BY U.LECA_CD DESC
+	</select>
+	
+	<select id="inquiryFormProInfo" parameterType="int" resultType="professor">
+		SELECT  P.PRO_NO,
+				E.EMP_NM,
+		        C.COL_NM || ' ' || D.DEP_NM EMP_ADDR1,
+		        D.DEP_TEL DEP_TEL,
+		        E.EMP_TEL EMP_TEL
+		FROM    EMPLOYEE E, PROFESSOR P, DEPARTMENT D, COLLEGE C
+		WHERE   E.EMP_NO = P.PRO_NO
+		AND     P.DEP_CD = D.DEP_CD
+		AND     D.COL_CD = C.COL_CD
+		AND     E.EMP_NO = #{proNo}
+	</select>
+	
+	<select id="proInfoByLecaCd" parameterType="int" resultType="professor"> 
+	
+		SELECT  P.PRO_NO,
+				E.EMP_NM,
+		        C.COL_NM || ' ' || D.DEP_NM EMP_ADDR1,
+		        D.DEP_TEL DEP_TEL,
+		        E.EMP_TEL EMP_TEL
+		FROM    EMPLOYEE E, PROFESSOR P, DEPARTMENT D, COLLEGE C, LEC_APPLY LA
+		WHERE   E.EMP_NO = P.PRO_NO
+		AND     P.DEP_CD = D.DEP_CD
+		AND     D.COL_CD = C.COL_CD
+		AND     P.PRO_NO = LA.PRO_NO
+        AND     LA.LECA_CD = #{lecaCd}
+	
+	</select>
+	
+	<select id="inquiryFormLecApInfo" parameterType="int" resultType="lecApply">
+		SELECT  U.LECA_CD,
+		        U.PRO_NO,
+		        U.LECA_YR LECA_YR,
+		        U.LECA_SEM LECA_SEM,
+		        NVL(U.LECA_TRG, 0) LECA_TRG,
+		        U.SUB_CD,
+		        U.LECA_NM,
+		        NVL(U.LECA_CAP, 0) LECA_CAP,
+		        U.LECA_CATE,
+		        NVL(U.LECA_CRD, 0) LECA_CRD,
+		        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+                WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+        		END LECA_GRADE,
+		        U.LECA_DT,
+		        U.SUB_NM,
+		        U.LECA_CON,
+		        U.LECA_BOOK,
+		        U.LECA_MP,
+		        U.LECA_FP,
+		        U.LECA_TP,
+		        U.LECA_AP,
+		        U.LECA_TT,
+		        U.LECA_NOTE
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		            LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		                LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE
+		) U
+		WHERE   U.LECA_CD = #{lecaCd}
+<!-- 		AND     U.LECA_IMSI_YN IS NULL -->
+		ORDER BY U.LECA_CD DESC
+	</select>
+	
+	<select id="inquiryWeekPlan" parameterType="int" resultType="weekplan">
+		SELECT  WP_NO
+		        ,LECA_CD
+		        ,WP_CON
+		FROM    WEEKPLAN
+		WHERE   LECA_CD = #{lecaCd}
+		ORDER BY WP_NO
+	</select>
+	
+	<insert id="lectureSubmit" parameterType="lecApply">
+		<selectKey order="BEFORE" keyProperty="lecaCd"
+				resultType="int">
+			SELECT NVL(MAX(LECA_CD),0)+1
+			FROM LECTURE
+		</selectKey>
+		INSERT INTO LECTURE (
+		             LECA_CD
+		             <if test="subCd != 0">
+		            , SUB_CD
+		            </if>
+		            , LECA_YN
+		) VALUES (
+		    #{lecaCd}
+		    <if test="subCd != 0">
+		    , #{subCd}
+		    </if>
+		    , ${lecaYn}
+		)
+	</insert>
+	
+	<insert id="lecApplySubmit" parameterType="lecApply">
+		INSERT INTO LEC_APPLY (
+		             LECA_CD
+		            , LECA_YR
+		            , LECA_SEM
+		            , LECA_NM
+		            , LECA_CON
+		            , LECA_TRG
+		            , LECA_CRD
+		            , LECA_PER
+		            , LECA_CAP
+		            , LECA_TT
+		            , LECA_BOOK
+		            , LECA_DT
+		            , LECA_GRADE
+		            , LECA_CATE
+		            , LECA_MP
+		            , LECA_FP
+		            , LECA_TP
+		            , LECA_AP
+		            , PRO_NO
+		) VALUES (
+		    ${lecaCd}
+		    , #{lecaYr}
+		    , #{lecaSem}
+		    , #{lecaNm}
+		    , #{lecaCon}
+		    , #{lecaTrg}
+		    , #{lecaCrd}
+		    , #{lecaCrd}
+		    , #{lecaCap}
+		    , #{lecaTt}
+		    , #{lecaBook}
+		    , SYSDATE
+		    , #{lecaGrade}
+		    , #{lecaCate}
+		    , #{lecaMp}
+		    , #{lecaFp}
+		    , #{lecaTp}
+		    , #{lecaAp}
+		    , #{proNo}
+		)
+	</insert>
+	
+	<update id="weekPlanSubmit" parameterType="java.util.List">
+		<foreach collection="list" item="weekPlan"
+			open="INSERT ALL " index="index" close="SELECT * FROM DUAL" separator=" ">
+			INTO WEEKPLAN(
+			WP_NO, LECA_CD, WP_CON
+			)VALUES(
+			    #{index}+1, (select max(LECA_CD) from lec_apply), #{weekPlan.wpCon}
+			)
+		</foreach>
+	</update>
+	
+	<insert id="lecApplyTempSubmit" parameterType="lecApply">
+		INSERT INTO LEC_APPLY (
+		             LECA_CD
+		            , LECA_YR
+		            , LECA_SEM
+		            , LECA_NM
+		            , LECA_CON
+		            , LECA_TRG
+		            , LECA_CRD
+		            , LECA_PER
+		            , LECA_CAP
+		            , LECA_TT
+		            , LECA_BOOK
+		            , LECA_DT
+		            , LECA_GRADE
+<!-- 		            , LECA_IMSI_YN -->
+		            , LECA_CATE
+		            , LECA_MP
+		            , LECA_FP
+		            , LECA_TP
+		            , LECA_AP
+		            , PRO_NO
+		) VALUES (
+		    (select max(LECA_CD) from lecture)
+		    , #{lecaYr}
+		    , #{lecaSem}
+		    , #{lecaNm}
+		    , #{lecaCon}
+		    , #{lecaTrg}
+		    , #{lecaCrd}
+		    , #{lecaCrd}
+		    , #{lecaCap}
+		    , #{lecaTt}
+		    , #{lecaBook}
+		    , SYSDATE
+		    , #{lecaGrade}
+<!-- 		    , 1 -->
+		    , #{lecaCate}
+		    , #{lecaMp}
+		    , #{lecaFp}
+		    , #{lecaTp}
+		    , #{lecaAp}
+		    , #{proNo}
+		)
+	</insert>
+	
+	<select id="subList" parameterType="int" resultType="subject">
+		SELECT  SUB_CD
+		        , SUB_NM
+		        , PRO_NO
+		        , DEP_CD
+		FROM    SUBJECT
+		WHERE   PRO_NO = #{proNo}
+		ORDER BY SUB_NM
+	</select>
+
+	<select id="getSubCdList" parameterType="String" resultType="int">
+		SELECT  SUB_CD
+		FROM    SUBJECT
+		WHERE   SUB_NM = #{subNm}
+	</select>
+	
+	<select id="tempList" parameterType="int" resultType="lecApply">
+		SELECT  U.LECA_CD,
+	        U.LECA_YR || '/' || U.LECA_SEM || '학기' LECA_YS,
+	        U.COL_NM || ' ' || U.DEP_NM LECA_CODP,
+	        NVL(U.LECA_TRG, 0) LECA_TRG,
+	        U.SUB_CD,
+	        U.LECA_NM,
+	        U.LECA_CATE,
+	        NVL(U.LECA_CRD, 0) LECA_CRD,
+	        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+	        WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+	        END LECA_GRADE,
+	        U.LECA_DT
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM
+		) U
+		WHERE   U.PRO_NO = #{proNo}
+<!-- 		AND     U.LECA_IMSI_YN = 1 -->
+		ORDER BY U.LECA_CD DESC
+	</select>
+	
+	<select id="tempFormLecApInfo" parameterType="int" resultType="lecApply">
+		SELECT  U.LECA_CD,
+		        U.PRO_NO,
+		        U.LECA_YR LECA_YR,
+		        U.LECA_SEM LECA_SEM,
+		        NVL(U.LECA_TRG, 0) LECA_TRG,
+		        U.SUB_CD,
+		        U.LECA_NM,
+		        NVL(U.LECA_CAP, 0) LECA_CAP,
+		        U.LECA_CATE,
+		        NVL(U.LECA_CRD, 0) LECA_CRD,
+		        CASE    WHEN U.LECA_GRADE = 0 THEN 'PASS/FAIL'
+                WHEN U.LECA_GRADE = 1 THEN 'GRADE'
+        		END LECA_GRADE,
+		        U.LECA_DT,
+		        U.SUB_NM,
+		        U.LECA_CON,
+		        U.LECA_BOOK,
+		        U.LECA_MP,
+		        U.LECA_FP,
+		        U.LECA_TP,
+		        U.LECA_AP,
+		        U.LECA_TT,
+		        U.LECA_NOTE
+		FROM
+		(
+		    SELECT  LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		            LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		            EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		            LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE,
+		            MAX(MON) MON, MAX(TUE) TUE, MAX(WED) WED, MAX(THU) THU, MAX(FRI) FRI
+		    FROM    VW_APPLY
+		    GROUP BY    LECA_CD, SUB_CD, PRO_NO, LECA_CATE, LECA_YR, LECA_SEM, LECA_IMSI_YN,
+		                LECA_NM, LECA_TRG, LECA_CRD, LECA_CAP, LECA_GRADE, LECA_YN, LECA_DT,
+		                EMP_NM, BLD_SNM, ROOM_NO, COL_NM, DEP_NM, SUB_NM, LECA_CON, LECA_BOOK,
+		                LECA_MP, LECA_FP, LECA_TP, LECA_AP, LECA_TT, LECA_NOTE
+		) U
+		WHERE   U.LECA_CD = #{lecaCd}
+<!-- 		AND     U.LECA_IMSI_YN = 1 -->
+		ORDER BY U.LECA_CD DESC
+	</select>
+
+	<update id="lectureUpdate" parameterType="lecApply">
+		UPDATE  LECTURE
+		SET     SUB_CD = #{subCd}
+				, LECA_YN = #{lecaYn}
+		WHERE   LECA_CD = #{lecaCd}
+	</update>
+	
+	<update id="lecApplyUpdate" parameterType="lecApply">
+		UPDATE LEC_APPLY
+		SET
+            LECA_YR = #{lecaYr}
+            , LECA_SEM = #{lecaSem}
+            , LECA_NM = #{lecaNm}
+            , LECA_CON = #{lecaCon}
+            , LECA_TRG = #{lecaTrg}
+            , LECA_CRD = #{lecaCrd}
+            , LECA_PER = #{lecaCrd}
+            , LECA_CAP = #{lecaCap}
+            , LECA_TT =  #{lecaTt}
+            , LECA_BOOK = #{lecaBook}
+            , LECA_NOTE = #{lecaNote}
+            , LECA_DT = SYSDATE
+            , LECA_GRADE = #{lecaGrade}
+            , LECA_CATE = #{lecaCate}
+            , LECA_MP = #{lecaMp}
+            , LECA_FP = #{lecaFp}
+            , LECA_TP = #{lecaTp}
+            , LECA_AP = #{lecaAp}
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+	
+	<update id="weekPlanUpdate" parameterType="java.util.List" >
+		<foreach collection="list" item="weekPlan" 
+			 index="index" open="DECLARE BEGIN" separator=";" close="; END;">
+			 
+			UPDATE WEEKPLAN
+			SET     WP_CON = #{weekPlan.wpCon}
+			WHERE   LECA_CD = #{weekPlan.lecaCd}
+			AND     WP_NO = #{weekPlan.wpNo}
+		</foreach>
+	</update>
+	
+	<update id="temporarySubmit" parameterType="lecApply">
+		UPDATE LEC_APPLY
+		SET
+            LECA_YR = #{lecaYr}
+            , LECA_SEM = #{lecaSem}
+            , LECA_NM = #{lecaNm}
+            , LECA_CON = #{lecaCon}
+            , LECA_TRG = #{lecaTrg}
+            , LECA_CRD = #{lecaCrd}
+            , LECA_PER = #{lecaCrd}
+            , LECA_CAP = #{lecaCap}
+            , LECA_TT =  #{lecaTt}
+            , LECA_BOOK = #{lecaBook}
+            , LECA_NOTE = #{lecaNote}
+            , LECA_DT = SYSDATE
+            , LECA_GRADE = #{lecaGrade}
+<!--             , LECA_IMSI_YN = null -->
+            , LECA_CATE = #{lecaCate}
+            , LECA_MP = #{lecaMp}
+            , LECA_FP = #{lecaFp}
+            , LECA_TP = #{lecaTp}
+            , LECA_AP = #{lecaAp}
+		WHERE LECA_CD = #{lecaCd}
+	</update>
+	
+	<delete id="lectureDelete" parameterType="int">
+		DELETE LECTURE WHERE LECA_CD = #{lecaCd}
+	</delete>
+	
+	<delete id="lecApplyDelete" parameterType="int">
+		DELETE LEC_APPLY WHERE LECA_CD = #{lecaCd}
+	</delete>
+	
+	<delete id="weekPlanDelete" parameterType="int">
+		DELETE WEEKPLAN WHERE LECA_CD = #{lecaCd}
+	</delete>
+	
+	<select id="alreadyTimeTableList" parameterType="lecApply" resultType="lecApply">
+		SELECT DECODE(L.LECA_YN
+		                ,0,'승인대기'
+		                ,1,'승인'
+		        )LECA_APPROVAL
+		     , LA.LECA_TT
+		FROM LEC_APPLY LA, LECTURE L
+		WHERE LA.LECA_CD = L.LECA_CD
+		AND L.LECA_YN IN(0,1)
+		AND LA.LECA_YR = #{lecaYr}
+		AND LA.LECA_SEM = #{lecaSem}
+	</select>
+	
+	<select id="getLecaApproval" parameterType="int" resultType="approval">
+		SELECT DECODE(L.LECA_YN
+		                ,0,'승인대기'
+				        ,1,'승인'
+		                ,2,'반려'
+		             ) APPR_YN
+		     , A.APPR_RSN
+		FROM LECTURE L, APPROVAL A 
+		WHERE L.LECA_CD = A.APPR_TAG_CD
+		AND A.APPR_CATE = 'APC001' 
+		AND L.LECA_CD = #{lecaCd}
+	</select>
 </mapper>
 
 
