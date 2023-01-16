@@ -40,7 +40,7 @@
 							<input type="hidden" id="lecaCd" name="lecaCd" value="${task.lecaCd}">
 							<input type="hidden" id="tsubCd" name="tsubCd" value="${task.taskSubmitList[0].tsubCd}">
 						</div>
-						<!-- 							taskSubmitList=[TaskSubmit(tsubCd=2, lecaCd=2, taskCd=1, stuNo=21715032, tsubDt=Fri Dec 16 10:07:08 KST 2022, tsubScore=0, atchFileId=3, tsubCon=이게 뭡니까 이게, student=Student(stuNo=21715032, depCd=0, stuYr=0, stuSem=0, stuNm=학생이승연 -->
+						<!--taskSubmitList=[TaskSubmit(tsubCd=2, lecaCd=2, taskCd=1, stuNo=21715032, tsubDt=Fri Dec 16 10:07:08 KST 2022, tsubScore=0, atchFileId=3, tsubCon=이게 뭡니까 이게, student=Student(stuNo=21715032, depCd=0, stuYr=0, stuSem=0, stuNm=학생이승연 -->
 						<div class="col-sm-6" style="text-align: right;">
 							<br>
 							<p class="col taskData">
@@ -59,7 +59,8 @@
 					<div class="col-sm-12">
 						<section class="content">
 							<div class="container-fluid">
-										<div>
+										<div class="taskData" style="min-height: 300px">${task.taskSubmitList[0].tsubCon}</div>
+										<div class="modifyDisplay">
 											<textarea id="tsubCon" name="tsubCon" class="form-control"
 												cols="15" rows="15">${task.taskSubmitList[0].tsubCon}</textarea>
 										</div>

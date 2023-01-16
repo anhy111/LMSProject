@@ -94,4 +94,7 @@ public interface LectureBoardService {
 	public StudentLecture stuLecScoreSearch(String lecaCd, String stuNo);
 
 	int getLectureBoardTotalRow(int lecaCd);
+	
+	//학생상세
+	public Student stuDetail(int stuNo);
 }

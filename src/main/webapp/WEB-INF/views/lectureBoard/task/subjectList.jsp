@@ -83,7 +83,7 @@
 						<tr class="even">
 					</c:if>
 							<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
-							<td><a
+							<td><a style="color:black;"
 								href="/lectureBoard/task/taskDetail?lecaCd=${param.lecaCd}&&taskCd=${row.taskCd}">${row.taskNm}</a></td>
 							<td><fmt:formatDate value="${row.taskSdt}"
 									pattern="yyyy-MM-dd" /></td>

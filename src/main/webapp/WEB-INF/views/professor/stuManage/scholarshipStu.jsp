@@ -85,7 +85,7 @@ function loadSearchList(){
 						<td>\${sclHistory.stuNo}</td>
 						<td>
 							<div class="image">
-								<img src="/upload\${sclHistory.stuPic}" class="img-circle" alt="User Image" style="max-width: 20px;"> \${sclHistory.stuNm}
+								\${sclHistory.stuNm}
 							</div>
 						</td>
 						<td>
@@ -402,7 +402,7 @@ $(function(){
 	</div>
 </div>
 
-<div style="text-align:center;">
+<div style="text-align:center; overflow:scroll; width:100%; height:600px;">
 	<table class="table table-head-fixed text-nowrap table-striped table-bordered table-condensed table-sm">
 		<thead>
 			<tr class="text-center">

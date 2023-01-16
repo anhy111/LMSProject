@@ -108,12 +108,12 @@
 					     		AND SUBSTR(STU_NO,1,4) = #{yr}
 				     		</if>
 			     	) ALL_STU
-			     , (SELECT NVL(COUNT(S2.STU_NO),0) FROM STUDENT S2, DEPARTMENT D2 WHERE S2.DEP_CD = D2.DEP_CD AND D2.COL_CD = C.COL_CD AND STU_RGB = 'RCD006' 
+			     , (SELECT NVL(COUNT(S2.STU_NO),0) FROM STUDENT S2, DEPARTMENT D2 WHERE S2.DEP_CD = D2.DEP_CD AND D2.COL_CD = C.COL_CD AND STU_RGB = 'RCD002' 
 						    <if test="yr != 0">
 					     		AND SUBSTR(STU_NO,1,4) = #{yr}
 				     		</if>
-					) IN_SCHOOL
-			     , (SELECT NVL(COUNT(S3.STU_NO),0) FROM STUDENT S3, DEPARTMENT D3 WHERE S3.DEP_CD = D3.DEP_CD AND D3.COL_CD = C.COL_CD AND STU_RGB IN( 'RCD001', 'RCD002') 
+					) IN_SCHOOL 
+			     , (SELECT NVL(COUNT(S3.STU_NO),0) FROM STUDENT S3, DEPARTMENT D3 WHERE S3.DEP_CD = D3.DEP_CD AND D3.COL_CD = C.COL_CD AND STU_RGB = 'RCD001'
 							<if test="yr != 0">
 					     		AND SUBSTR(STU_NO,1,4) = #{yr}
 				     		</if>
@@ -137,12 +137,12 @@
 				     			AND SUBSTR(STU_NO,1,4) = #{yr}
 				    		</if>			      	
 		    		) ALL_STU
-			     , (SELECT NVL(COUNT(S2.STU_NO),0) FROM STUDENT S2, DEPARTMENT D2 WHERE S2.DEP_CD = D2.DEP_CD AND D2.DEP_CD = D.DEP_CD AND STU_RGB = 'RCD006' AND D2.COL_CD = #{colCd} 
+			     , (SELECT NVL(COUNT(S2.STU_NO),0) FROM STUDENT S2, DEPARTMENT D2 WHERE S2.DEP_CD = D2.DEP_CD AND D2.DEP_CD = D.DEP_CD AND STU_RGB = 'RCD002' AND D2.COL_CD = #{colCd} 
 							<if test="yr != 0">
 				     			AND SUBSTR(STU_NO,1,4) = #{yr}
 				    		</if>			     	
 		    		) IN_SCHOOL
-			     , (SELECT NVL(COUNT(S3.STU_NO),0) FROM STUDENT S3, DEPARTMENT D3 WHERE S3.DEP_CD = D3.DEP_CD AND D3.DEP_CD = D.DEP_CD AND STU_RGB IN( 'RCD001', 'RCD002') AND D3.COL_CD = #{colCd}  
+			     , (SELECT NVL(COUNT(S3.STU_NO),0) FROM STUDENT S3, DEPARTMENT D3 WHERE S3.DEP_CD = D3.DEP_CD AND D3.DEP_CD = D.DEP_CD AND STU_RGB = 'RCD001' AND D3.COL_CD = #{colCd}  
 							<if test="yr != 0">
 				     			AND SUBSTR(STU_NO,1,4) = #{yr}
 				    		</if>			     	

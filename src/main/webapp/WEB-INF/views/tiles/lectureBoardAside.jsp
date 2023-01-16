@@ -6,7 +6,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4"
        style="background-color: #001F3F;opacity:1;">
 	<!-- Brand Logo -->
-    <a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
+    <a href="/" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
     <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 <!--         <img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" -->
 <!--              class="brand-image img-circle elevation-3" style="opacity:1"> -->
@@ -14,16 +14,15 @@
     </a>
 
 	<!-- Sidebar -->
-	<div class="sidebar">
+	<div class="sidebar mt-2">
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="pt-3 nav nav-pills nav-sidebar flex-column"
+			<ul class="nav nav-pills nav-sidebar flex-column"
 				data-widget="treeview" role="menu" data-accordion="false">
 				<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 				<!-- 학생 수강관리 ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★-->
 				<sec:authorize access="hasRole('ROLE_STUDENT')">
-							<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
 						<a href="/lectureBoard/lecPlan?lecaCd=${param.lecaCd}" class="nav-link">
 							강의 계획서
@@ -60,7 +59,6 @@
 				</sec:authorize>
 				<!-- 교수 어사이드 수강관리 ☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★ -->
 				<sec:authorize access="hasRole('ROLE_PROFESSOR')">
-					<li class="nav-header">강의 게시판</li>
 					<li class="nav-item">
 						<a href="/lectureBoard/lecPlan?lecaCd=${param.lecaCd}" class="nav-link">
 							강의 계획서
@@ -90,9 +88,6 @@
 						<a href="/lectureBoard/score/totalScore?lecaCd=${param.lecaCd}" class="nav-link"> 
 							성적
 						</a>
-					</li>
-					<li class="nav-item">
-						<a href="/lectureBoard/score/studentList?lecaCd=${param.lecaCd}" class="nav-link">수강생 목록</a>
 					</li>
 				</sec:authorize>
 			</ul>

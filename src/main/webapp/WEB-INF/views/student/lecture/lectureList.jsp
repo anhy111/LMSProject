@@ -20,7 +20,7 @@
 <div class="row mt-3">
 	<div class="form-group col-2 pl-0">
 		<select id="college" class="select2bs4 select2-hidden-accessible" style="width: 100%;" aria-hidden="true">
-			<option value="">단과대학</option>
+			<option value="0">단과대학</option>
 			<c:forEach var="college" items="${collegeList}">
 				<option value="${college.colCd}">${college.colNm}</option>
 			</c:forEach>
@@ -57,12 +57,17 @@
 		<button id="search" type="button" class="btn btn-flat btn-primary" value="">검색</button>
 	</div>
 </div>
+<div id="tellCnt" class="row text-right m-0 p-0">
+	<div class="col">
+		[총 <span style="color:red; font-weight: bold;" id="cntSpan"></span>건]
+	</div>
+</div>
 <div class="row pb-3">
 	<div class="card-body pl-0 pt-0" style="height: 600px;">
 		<table class="table text-nowrap table-striped table-bordered table-sm">
 			<thead>
 				<tr class="text-center">
-					<th width="4%">순번</th>
+					<th width="4%">No</th>
 					<th width="8%">이수구분</th>
 					<th width="18%">개설학과</th>
 					<th width="6%">연도</th>
@@ -81,6 +86,9 @@
 		</table>
 	</div>
 </div>
+<div style="text-align:center;" id="paging">
+	
+</div>
 <script src="/resources/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/adminlte/plugins/select2/js/select2.full.min.js"></script>
 <script src="/resources/adminlte/dist/js/demo.js"></script>
@@ -97,7 +105,9 @@
 			theme : 'bootstrap4'
 		});
 
-		$("#search").on("click",loadSearchLectureList);
+		$("#search").on("click",function(){
+			addPage(1);
+		});
 		
 		$("#college").on("change",function(){
 			
@@ -133,10 +143,10 @@
 			window.open("/student/lectureApply/inquiryForm?lecaCd="+lecaCd, "inquirydetail", "width=1000, height=800, left=100, top=50");
 		});
 		
-		loadSearchLectureList();
+		addPage(1);
 	});
 	
-	function loadSearchLectureList(){
+	function loadSearchLectureList(viewPage){
 		
 		let college = $("#college").val();
 		let department = $("#department").val();
@@ -146,11 +156,12 @@
 		
 		
 		let data = {
-			colNm : college,
+			colCd : college,
 			depNm :  department,
 			lecaTrg : yr,
 			lecaCate : category,
-			lecaNm : subject
+			lecaNm : subject,
+			viewPage : viewPage
 		};
 
 
@@ -183,7 +194,7 @@
 					
 					
 					str += `<tr class="text-center">
-								<td>\${p_inx+1}</td>
+								<td>\${lecture.rowNo+1}</td>
 								<td>\${lecture.lecApply.lecaCate}</td>
 								<td class="text-left">\${lecture.department.depNm}</td>
 								<td>\${lecture.lecApply.lecaYr}</td>
@@ -201,5 +212,43 @@
 				$("#lectureList").append(str);
 			}
 		});
+	}
+	
+	function addPage(viewPage){
+		
+		let data = {
+				colCd : $("#college").val(),
+				depNm :  $("#department").val(),
+				lecaTrg : $("#yr").val(),
+				lecaCate : $("#category").val(),
+				lecaNm : $("#subject").val(),
+				viewPage : viewPage
+		};
+		$.ajax({
+			url : "/student/lecture/lectureCount",
+			type : "get",
+			data : data,
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(totalData){
+				$("#cntSpan").html(totalData);
+				let totalPage = Math.ceil(totalData/10) == 0 ? 1 : Math.ceil(totalData/10);
+				
+				let $paging = $("#paging");
+				str = "";
+				for(let i=1; i<=totalPage; i++){
+					let activeClass = "";
+					if(viewPage != i){
+						activeClass = "-outline"
+					}
+					str += `<a href="javascript:addPage(\${i})" class="btn btn\${activeClass}-primary">\${i}</a>`;
+				}
+				
+				$paging.html(str);
+				loadSearchLectureList(viewPage);
+			}
+		})
 	}
 </script>

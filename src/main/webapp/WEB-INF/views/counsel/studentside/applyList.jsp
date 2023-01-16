@@ -81,7 +81,7 @@ cursor:pointer;
 						<tr class="text-center counselListTr">
 							<td data-value="${counselList.cnslCd}">${status.end-status.index }</td>
 							<td>${counselList.cnslCate }</td>
-							<td  >${fn:substring(counselList.cnslTtl,0,8) }</td>
+							<td class="text-left" >${counselList.cnslTtl }</td>
 							<td><fmt:formatDate value="${counselList.cnslDt }" pattern="yy/MM/dd" /></td>
 							<c:if test="${counselList.cnslYn eq 'AP001' }"><td class="acceptHover" style="color:blue;">승인완료</td>
 							<td class="acceptHovered" style="display:none;color:blue;background-color:white;">상담기록</td>
@@ -111,7 +111,7 @@ cursor:pointer;
 						<tr class="text-center nonFaceCounselListTr" data-toggle="modal" data-target="#modifyCounsel">
 							<td data-value="${nonFaceCounselList.cnslCd}">${status.end-status.index }</td>
 							<td>${nonFaceCounselList.cnslCate }</td>
-							<td  >${fn:substring(nonFaceCounselList.cnslTtl,0,8) }</td>
+							<td class="text-left" >${nonFaceCounselList.cnslTtl }</td>
 							<c:if test="${nonFaceCounselList.cnslYn eq 'AP001' }"><td style="color:blue;">승인완료</td></c:if>
 							<c:if test="${nonFaceCounselList.cnslYn eq 'AP002' }"><td style="color:black;">승인대기</td></c:if>
 							<c:if test="${nonFaceCounselList.cnslYn eq 'AP003' }"><td style="color:red;">반려</td></c:if>
@@ -137,7 +137,7 @@ cursor:pointer;
 	style="display: none; padding-right: 17px;" aria-modal="true"
 	role="dialog">
 	<div class="modal-dialog">
-		<div class="modal-content" style="top:50px;">
+		<div class="modal-content">
 			<div class="modal-header" style="background-color: #001F3F;color:white;">
 				<h5 class="modal-title">상담 신청서 작성</h5>
 				<button type="button" class="close" data-dismiss="modal"
@@ -239,8 +239,8 @@ cursor:pointer;
 							<label>상담 할 내용*</label>
 						</div>
 					</div>
-					<div class="row" style="height:300px;max-height:400px;">
-						<textarea id="cnslCon"name="cnslCon" rows="3" class="col-10 ml-2 h-100 form-control"></textarea>
+					<div class="row" style="height:100px;max-height:200px;">
+						<textarea id="cnslCon"name="cnslCon" rows="3" class="col-10 ml-2 h-60 form-control"></textarea>
 					</div>
 				</div>
 				<div class="col-4" style="display: inherit; padding-top: 20px;">
@@ -253,6 +253,7 @@ cursor:pointer;
 				<!-- 모달바디 -->
 			</div>
 			<div class="modal-footer justify-content-align">
+			<button type="button" id="insertData" class="btn btn-outline-primary">자동 입력</button>
 				<button onclick="checkInsertData()" type="button"  class="btn btn-outline-primary">등록</button>
 				<a onclick="dataReset()" class="btn btn-outline-secondary">취소</a>
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -788,4 +789,9 @@ $("input:radio[name='cnslType']").change(function() {
 		$("#cnslDt").removeAttr("required", "required");
 	}
 });
+
+$("#insertData").on("click",function(){
+    $("input[name='cnslTtl']").val("건강상의 이유로 1년 휴학 신청합니다.");
+	$("#cnslCon").val("입원 및 치료를 목적 으로 질병 휴학 1년 신청 합니다.");					
+})
 </script>

@@ -231,9 +231,12 @@
 			     	</div>
 			     
 			     </div>
-				
-				<a href="/lectureBoard/test/studentTest?lecaCd=${data.lecaCd }" class="btn btn-light btn-sm" style="float: left;">목록</a>
-				
+				<div class="row" align="right">
+				<div class="col-sm-11"></div>
+				<div class="col-sm-1">
+				<a href="/lectureBoard/test/studentTest?lecaCd=${data.lecaCd }" class="btn btn-outline-primary btn-sm">목록</a>
+				</div>
+				</div>
 			</div>
 		</div>
 </div>

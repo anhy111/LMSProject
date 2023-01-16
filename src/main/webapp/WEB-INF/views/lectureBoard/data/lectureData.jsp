@@ -9,6 +9,7 @@
 <title>Home</title>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.js"></script>
 <style type="text/css">
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -94,9 +95,9 @@ table {
 				<div class="row">
 					<br>
 				</div>
-				<h2>
-					<strong id="">${lecture.lecApply.lecaNm} - 강의자료실</strong>
-				</h2>
+				<h4>
+					<strong id="">${lecaNm} 강의자료실</strong>
+				</h4>
 			</div>
 			<div class="col-sm-12">
 				<section class="notice">
@@ -118,16 +119,23 @@ table {
 									</tr>
 								</thead>
 								<tbody>
+									<c:if test="${empty lecData}">
+										<tr>
+											<td colspan="5">등록된 자료가 없습니다.</td>
+										</tr>
+									</c:if>
+									<c:if test="${!empty lecData}">
 									<c:forEach var="row" items="${lecData}" varStatus="stat">
 										<tr class="odd">
 											<td class="dtr-control sorting_1" tabindex="0">${stat.count}</td>
 											<td class="td-title"><a href="/lectureBoard/data/dataDetail?ldtCd=${row.ldtCd}&&lecaCd=${row.lecaCd}"><B>${row.ldtTtl}</B></a></td>
 											<td>${row.ldtWriter}</td>
 											<td><fmt:formatDate value="${row.ldtReg}"
-													pattern="yyyy-mm-dd" /></td>
+													pattern="yyyy/MM/dd" /></td>
 											<td>${row.ldtCount}</td>
 										</tr>
 									</c:forEach>
+									</c:if>
 								</tbody>
 							</table>
 						</div>
@@ -139,12 +147,12 @@ table {
 								<div class="col-md-10 offset-md-1">
 									<div class="form-group">
 										<div class="input-group input-group-lg">
-											<select name="category">
+											<select name="category" class="form-control col-1">
 												<option value="1">전체</option>
 												<option value="2">제목</option>
 												<option value="3">작성자</option>
 											</select> <input type="hidden" name="lecaCd" value="${param.lecaCd}">
-											<input type="search" class="form-control form-control-lg"
+											<input type="search" class="col-4 form-control form-control"
 												placeholder="검색어를 입력하세요" id="keyword" name="keyWord"
 												value="${keyWord}">
 											<div class="input-group-append">
@@ -161,9 +169,11 @@ table {
 				</section>
 			</div>
 	<%--                    페이지--%>
+	<div class="col-12 text-center">
 	<c:forEach var="pageNumber" begin="1" end="${totalPage}">
 		<a href="lectureData?viewPage=${pageNumber}&&lecaCd=${param.lecaCd}" class="btn btn-primary">${pageNumber}</a>
 	</c:forEach>
+	</div>
 
 </body>
 </html>

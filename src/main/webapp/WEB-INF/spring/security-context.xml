@@ -20,7 +20,6 @@
 	
 	</bean>
 		
-	
 	<!-- xmlns : xml namespace의 약자 -->
 	<security:http>
 	

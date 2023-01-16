@@ -581,35 +581,35 @@
 	// 자동 채우기
 	function insertData() {
 		$('#lecaYr').val('2023');
-		$('#lecaSem').val('2');
-		$('#lecaNm').val('고급 JAVA 프로그래밍');
-		$('#lecaCon').val('자바 프로그래밍의 기초적인 내용에 대해 학습함으로써 컴퓨터공학과 프로그래밍의 기본 원리를 이해한다.');
+		$('#lecaSem').val('1');
+		$('#lecaNm').val('케인즈는 왜 위대한가?');
+		$('#lecaCon').val('경제학의 위대한 업적을 남긴 케인스주의에 대해 이해하는것에 중점을 두었다.');
 		$('#lecaTrg').val('3');
 		$('#lecaCrd').val('3');
 		$('#subNm').val('경제학');
 		$('#subCd').val('1');
 		$('#lecaCap').val('20');
-		$('#lecaBook').val('교재 : 명품 JAVA Programming  / 황기태·김효수 저 / 생능출판');
+		$('#lecaBook').val('교재 : 케인스의 일반이론  / 존 메이너드 케인스·류동민 저 / 두리미디어');
 		$('#lecaCate').val('전공필수');
 		$('#lecaGrade').val('1');
 		$('#lecaMp').val('30');
 		$('#lecaFp').val('30');
 		$('#lecaTp').val('10');
 		$('#lecaAp').val('30').trigger("change");
-		$('#weekPlan1').val('자바에 대한 동기 유발');
-		$('#weekPlan2').val('Java 개발 환경 이해');
-		$('#weekPlan3').val('반복문과 배열 그리고 예외처리');
-		$('#weekPlan4').val('클래스와 객체');
-		$('#weekPlan5').val('상속');
-		$('#weekPlan6').val('모듈과 패키지 개념, 자바 기본 패키지');
-		$('#weekPlan7').val('제네릭과 컬렉션');
-		$('#weekPlan9').val('입출력 스트림과 파일 입출력');
-		$('#weekPlan10').val('GUI 프로그래밍');
-		$('#weekPlan11').val('자바의 이벤트 처리');
-		$('#weekPlan12').val('기본적인 스윙 컴포넌트와 활용');
-		$('#weekPlan13').val('그래픽');
-		$('#weekPlan14').val('프로젝트');
-		$('#weekPlan15').val('프로젝트');
+		$('#weekPlan1').val('경제학의 시초란?');
+		$('#weekPlan2').val('케인스가 태어난 시기의 세계정세');
+		$('#weekPlan3').val('왜 자유방임주의가 잘못되었나');
+		$('#weekPlan4').val('수정자본주의의 중요성');
+		$('#weekPlan5').val('거시경제학의 기초가 된 이유');
+		$('#weekPlan6').val('거시경제와 미시경제의 차이점');
+		$('#weekPlan7').val('케인스주의와 거시경제의 연관점이 어찌 되는가');
+		$('#weekPlan9').val('오늘날 자유방임주의로 다시 돌아서는 이유');
+		$('#weekPlan10').val('수정자본주의의 한계점');
+		$('#weekPlan11').val('새로운 패러다임의 경제이론');
+		$('#weekPlan12').val('신자유주의와 수정자본주의의 충돌');
+		$('#weekPlan13').val('케인스주의가 실패한 이론인가');
+		$('#weekPlan14').val('기말과제');
+		$('#weekPlan15').val('기말과제');
 		$('#weekPlan16').val('기말고사');
 	}
 	

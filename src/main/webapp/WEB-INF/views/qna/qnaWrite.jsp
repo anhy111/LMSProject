@@ -36,60 +36,59 @@
     }
 </style>
 
-<script type="text/javascript" defer="defer">
+<%--<script type="text/javascript" defer="defer">--%>
 
-    $(function () {
-        let header = "${_csrf.headerName}";
-        let token = "${_csrf.token}";
+<%--    $(function () {--%>
+<%--        let header = "${_csrf.headerName}";--%>
+<%--        let token = "${_csrf.token}";--%>
 
-        $("#insertBtn").on('click', function () {
+<%--        $("#insertBtn").on('click', function () {--%>
 
-            if ($("#title").val().trim() == '') {
-                alert("제목을 입력하세요");
-                $('#title').focus();
-                return;
-            }
-            if ($("#content").val().trim() == '') {
-                alert("내용이 입력되지 않았습니다.");
-                $('#qnaContent').focus();
-                return;
-            }
+<%--            if ($("#title").val().trim() == '') {--%>
+<%--                alert("제목을 입력하세요");--%>
+<%--                $('#title').focus();--%>
+<%--                return;--%>
+<%--            }--%>
+<%--            if ($("#content").val().trim() == '') {--%>
+<%--                alert("내용이 입력되지 않았습니다.");--%>
+<%--                $('#qnaContent').focus();--%>
+<%--                return;--%>
+<%--            }--%>
 
-            let memberNumber = $('#memberNumber').val();
-            let title = $('#title').val();
-            let content = $('#content').val();
-            let accessType = $('#accessType').val();
+<%--            let memberNumber = $('#memberNumber').val();--%>
+<%--            let title = $('#title').val();--%>
+<%--            let content = $('#content').val();--%>
+<%--            let accessType = $('#accessType').val();--%>
 
-            $.ajax({
-                url: "/qna/qnaWrite",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    memberNumber: memberNumber,
-                    title: title,
-                    content: content,
-                    accessType: accessType
-                },
+<%--            $.ajax({--%>
+<%--                url: "/qna/qnaWrite",--%>
+<%--                type: "POST",--%>
+<%--                dataType: "json",--%>
+<%--                data: {--%>
+<%--                    memberNumber: memberNumber,--%>
+<%--                    title: title,--%>
+<%--                    content: content,--%>
+<%--                    accessType: accessType--%>
+<%--                },--%>
 
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
+<%--                beforeSend: function (xhr) {--%>
+<%--                    xhr.setRequestHeader(header, token);--%>
+<%--                },--%>
 
-                success: function (res) {
-                    if (res == 1) {
-                        alert("등록되었습니다.");
-                        location.replace("/qna/main");
-                    } else {
-                        alert("등록에 실패하였습니다.");
-                        location.reload();
-                    }
-                }
+<%--                success: function (res) {--%>
+<%--                    if (res == 1) {--%>
+<%--                        alert("등록되었습니다.");--%>
+<%--                        location.replace("/qna/main");--%>
+<%--                    } else {--%>
+<%--                        alert("등록에 실패하였습니다.");--%>
+<%--                        location.reload();--%>
+<%--                    }--%>
+<%--                }--%>
 
-            })
-        })
-    })
-
-</script>
+<%--            })--%>
+<%--        })--%>
+<%--    })--%>
+<%--</script>--%>
 
 <div class="allRound">
     <h3>문의게시판</h3>
@@ -99,7 +98,7 @@
             <br>
             등록된 질문에 대해서는 차례대로 답변을 남겨드립니다.
             <br>
-            작성자의 정보는 관리자만 볼 수 있으며, 글은 비공개 처리여부를 선택할 수 있습니다.
+            작성자의 정보는 모든 사용자가 볼 수 있으며, 글은 답변완료 후 수정/삭제가 불가 합니다.
         </p>
     </div>
 
@@ -119,9 +118,18 @@
 <%--        </div>--%>
         <input type="hidden" name="memberNumber" value="${memberNumber}" id="memberNumber"/>
         <div id="btnRound">
+            <input type="button" onclick="autoFill()" class="btn btn-primary" value="자동완성">
             <input type="submit" id="insertBtn" class="btn btn-primary" value="등록">
             <input type="button" onclick="history.back()" id="cancelBtn" class="btn btn-primary" value="취소">
         </div>
         <sec:csrfInput/>
     </form>
+
 </div>
+
+<script>
+    function autoFill() {
+        $('#title').val("질문있습니다.");
+        $('#content').val('학적 수정에서 계좌번호를 변경할 수 없어요.');
+    }
+</script>

@@ -31,11 +31,8 @@
 	
 	<insert id="register" parameterType="evaluation">
 	
-		<selectKey order="BEFORE" keyProperty="evlqCd" resultType="int">
-			SELECT NVL(MAX(EVLQ_CD),0)+1 FROM EVALUATION
-		</selectKey>
-		INSERT INTO EVALUATION(EVLQ_CD, STU_NO, LECA_CD, EVL_SCORE, EVL_ETC)
-           	VALUES(#{evlqCd}, #{stuNo}, #{lecaCd}, #{evlScore}, #{evlEtc})
+		INSERT INTO EVALUATION( STU_NO, LECA_CD, EVL_SCORE, EVL_ETC)
+           	VALUES(#{stuNo}, #{lecaCd}, #{evlScore}, #{evlEtc})
 	</insert>
 	
 </mapper>

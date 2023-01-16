@@ -222,4 +222,10 @@ public class LectureBoardServiceImpl implements LectureBoardService{
 	public int getLectureBoardTotalRow(int lecaCd) {
 		return lectureBoardMapper.getLectureBoardTotalRow(lecaCd);
 	}
+	
+	//학생상세
+	@Override
+	public Student stuDetail(int stuNo) {
+		return lectureBoardMapper.stuDetail(stuNo);
+	}
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class Evaluation {
-	private int evlqCd;	//평가항목코드
 	private int stuNo;	//학번
 	private int lecaCd;	//강의코드
 	private double evlScore;//평가점수

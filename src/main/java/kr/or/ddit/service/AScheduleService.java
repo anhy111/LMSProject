@@ -13,4 +13,10 @@ public interface AScheduleService {
 	
 	// 일정 조회
 	public List<ASchedule> loadScheduleForMonth(ASchedule aSchedule);
+	
+	// 일정 수정
+	public int updateSch(ASchedule aSchedule);
+	
+	// 일정 삭제
+	public int deleteSch(ASchedule aSchedule);
 }

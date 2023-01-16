@@ -73,11 +73,12 @@ public class CustomLoginSuccessHandler extends
 				session.setAttribute("position", readProfessor.getProPos());
 				session.setAttribute("department", readProfessor.getDepCd());
 				session.setAttribute("depCd", readProfessor.getDepCd());
-
+				return;
 			} else {
 				redirectStrategy.sendRedirect(request, response, "/aschedule/calendar");
 				session.setAttribute("position", readManager.getEmpPos());
 				session.setAttribute("division", readManager.getEmpDiv());
+				return;
 			}
 		} else {
 			session.setAttribute("name", readStudent.getStuNm());

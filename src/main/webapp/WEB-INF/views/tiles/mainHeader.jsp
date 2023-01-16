@@ -52,19 +52,6 @@ function time_format(s) {
 	return nMin+":"+nSec;
 }
 
-// function onMessage(evt){
-//     var data = evt.data;
-//     // toast
-//     let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-//     toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-//     toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
-//     toast += "<span aria-hidden='true'>&times;</span></button>";
-//     toast += "</div> <div class='toast-body'>" + data + "</div></div>";
-//     $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
-//     $(".toast").toast({"animation": true, "autohide": false});
-//     $('.toast').toast('show');
-// };	
-
 	
 $(function(){
 	let header = "${_csrf.headerName}";
@@ -212,7 +199,7 @@ $(function(){
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: rgb(0, 31, 63, 1);height:70px;">
 	    <ul class="navbar-nav mr-auto">
-			<a href="/test/home" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
+			<a href="/" class="brand-link bg-navy" style="text-align:left;padding-top: 0px;padding-bottom: 23px;height: 69px;">
 				<img src="/upload/연수대로고헤드수정.jpg" alt="AdminLTE Logo" class="brand-image img-circle" style="opacity:1;width: 200px;height: 70px;max-height:70px;">
 			</a>
 	    <sec:authorize access="hasRole('ROLE_STUDENT')">
@@ -241,7 +228,7 @@ $(function(){
 	     </sec:authorize>
 	    </ul>
 	<!-- Right navbar links -->
-	<ul class="navbar-nav ml-auto">
+	<ul class="navbar-nav ml-auto mt-4">
 	
 		<!-- 로그인 하지 않은 경우 -->
 		<sec:authorize access="isAnonymous()">

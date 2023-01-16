@@ -14,7 +14,7 @@ public interface QnaService {
     void qnaSave(Qna qna);
 
     //문의게시판/검색결과 리스트 출력
-    List<Qna> showList();
+    List<Qna> showList(int viewPage);
 
     // 문의게시판 게시글 검색
     Qna findOne(Long qnaCd);

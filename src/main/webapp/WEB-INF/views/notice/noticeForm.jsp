@@ -2,8 +2,31 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
+<head>
+    <style>
+        .drop-zone {
+            width: 500px;
+            height: 250px;
+            background-color: #ffffff;
+            margin-top: 20px;
+            position: relative;
+            padding: 50px;
+            border-radius: 15px;
+            border: 3px dashed #71748d;
+            font-size: 15px;
+        }
+
+        #fileUpload {
+        }
+
+        .drop-zone-dragenter, .drop-zone-dragover {
+            background-color: #dbdbe7;
+            /*     border: 3px solid pink; */
+        }
+    </style>
+</head>
 
 <!-- 게시판상세 -->
 <!-- ================================================= -->
@@ -14,62 +37,84 @@
     <!-- 111111 -->
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <h2 class="card-header">공지사항 등록하기</h2>
+            <div class="card">
+                <h2 class="card-header">공지사항 등록하기</h2>
 
 
-            <div class="card-body">
-                <form action="/notice/noticeForm" method="post" enctype="multipart/form-data" name="form">
-                    <sec:csrfInput/>
-                    <div class="row">
-                        <table class="table table-bordered">
-                            <tbody>
-                            <tr>
-                                <th>제목</th>
-                                <td class="table-title"><input class="form-control"
-                                                               id="title" name="title" type="text"
-                                                               style="width:100%"/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="content"></label>
-                                <textarea class="textarea" name="content" id="content"
-                                          rows="40" placeholder="1000자 내외로 작성하세요."
-                                          style="display: none;">
-                                    </textarea>
+                <div class="card-body">
+                    <form role="form" action="/notice/noticeForm" method="post" name="form">
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th>제목</th>
+                                    <td class="table-title"><input class="form-control"
+                                                                   id="title" name="title" type="text"
+                                                                   style="width:100%"/>
+                                    </td>
+                                    <th>중요공지여부</th>
+                                    <td class="table-title">
+                                        <div style="width:10%">
+
+                                            <input type="checkbox" id="input_check" value='imp'
+                                                   style=position:relative;left:50px;>
+                                        </div>
+                                        <div id="wrapper" style="margin-top: -1px;"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!-- <th>마감날짜</th>
+                                    <td class="table-title">
+                                        <div
+                                            class="tui-datepicker-input tui-datetime-input tui-has-focus">
+                                            <input type="text" id="datepicker-input-1" name="dueDate"
+                                                aria-label="Date-Time"> <span class="tui-ico-date"></span>
+                                        </div>
+                                        <div id="wrapper-1" style="margin-top: -1px;"></div>
+
+                                    </td> -->
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label for="content"></label>
+                                    <textarea class="textarea" name="content" id="content"
+                                              rows="20" placeholder="1000자 내외로 작성하세요."
+                                              style="display: none;"></textarea>
+
+                                </div>
+<%--                                <textarea class="textarea" name="content" id="content"--%>
+<%--                                          rows="40" placeholder="1000자 내외로 작성하세요."--%>
+<%--                                          style="display: none;">--%>
+<%--                                </textarea>--%>
                             </div>
                         </div>
                         <input type="file" name="files2" multiple>
                     </div>
-                    <button type="submit">등록</button>
+<%--                    <button type="submit">등록</button>--%>
+                    <div class="row justify-content-end mt-3"
+                         style="padding-right: 30px; padding-bottom: 50px;">
+                        <button class="btn btn-outline-primary" type="button"
+                                onclick="autoFill();">자동완성
+                        </button>&nbsp;&nbsp;
+                        <button class="btn btn-outline-primary" type="submit" id="registBtn">등록
+                        </button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-outline-danger" type="button"
+                                onclick="f_alert();">취소
+                        </button>
+                    </div>
                 </form>
-                <div class="row justify-content-end mt-3"
-                     style="padding-right: 30px; padding-bottom: 50px;">
-                    <button class="btn btn-outline-primary" type="button"
-                            onclick="autoFill();">자동완성
-                    </button>&nbsp;&nbsp;
-                    <button class="btn btn-outline-primary" type="submit" id="registBtn">등록
-                    </button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-outline-danger" type="button"
-                            onclick="f_alert();">취소
-                    </button>
-                </div>
+
 
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    window.onload = () => {
-        summernote_go($('#content'), '<%=request.getContextPath()%>');
-    }
-</script>
 
 <script>
     const f_alert = () => {
@@ -111,8 +156,16 @@
     }
 
     function autoFill() {
-        $('#title').val("중요공지사항입니다!!!");
-        $('#content').summernote('pasteHTML', '중요 공지 내용 입니다.');
+        $('#title').val("제9회 연수대학교 인문학 캠프 개최안내");
+        $('#content').val("" +
+            "[SNU 고교-대학 연계 고교생 아카데미]" +
+            "가. 대 상 : 전국 고등학교 예비 2,3학년(現 1,2학년) 재학생 80명" +
+            "나. 일 정 : 2023.1.17.(화) 10:00 ~ 17:00" +
+            "다. 장 소 : 인문대학 동 B101호 대강의실 및 조별 활동용 인문대학 강의실" +
+            "라. 접수방법 : 온라인 접수(https://hedu.snu.ac.kr/camp2023)" +
+            "마. 접수기간 :  2023.1.2.(월) 17시까지 (선착순 100명 접수)    ※중복접수는 선발대상에서 제외" +
+            "바. 선발방법 : 선착순 100명 접수 후 서류 심사를 통해 최종 80명 선발" +
+            "사. 선발결과 발표 :  2023.1.9.(월) 17:00 이후 서울대학교 인문대학 홈페이지 게재 예정 (인문소식 - 공지사항)");
     }
 
 </script>
