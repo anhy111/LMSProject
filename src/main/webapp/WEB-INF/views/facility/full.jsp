@@ -9,7 +9,7 @@
 
 <html lang="ko">
 <link rel="stylesheet" type="text/css" href="/resources/css/inputModalTemplate.css">
-<head>
+<head> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
     <!-- fullcalender -->
@@ -136,7 +136,26 @@
     <!-- 시설선택 후 출력  -->
     <script>
     $(function(){
-
+    	 const radioInputs = document.querySelectorAll('input[type="radio"]');
+    	 const labels = document.querySelectorAll('.my-label');
+    	 $('input[type="radio"]:first').prop('checked', true);
+    	 labels[0].style.backgroundColor = 'navy';
+    	 labels[0].style.color = 'white';
+    	 radioInputs.forEach((radioInput, index) => {
+    	   radioInput.addEventListener('change', function() {
+    			 labels[0].style.backgroundColor = 'white';
+    	    	 labels[0].style.color = 'navy';
+    	     if (this.checked) {
+    	       labels[index].style.backgroundColor = 'navy';
+    	       labels[index].style.color = 'white';
+    	       setTimeout(function() {
+    	    	   labels[index].style.backgroundColor = 'white';
+        	       labels[index].style.color = 'navy';
+    	    					}, 1000);
+    	     } 
+    	   });
+    	 });
+    	 
         $('.facility').on('change', () => {
 //         	alert("라디오바뀌었다")
             let facilityCode = $("input:radio[name='facility']:checked").val();
@@ -246,7 +265,7 @@
 
     	   <div class="mt-3 row segmented-control2">
   <c:forEach var="item" items="${facility }" varStatus="status" end="${facility.size() }">
-      <label class="segmented-control__${3 + status.end-status.index }" for="facility${status.end-status.index }" style="width:25%;">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label> 
+      <label class="segmented-control__${3 + status.end-status.index }  my-label" for="facility${status.end-status.index }" style="width:25%;">${item.facNm}<input class="facility btn-check" name="facility" type="radio" value="${item.facCd}" id="facility${status.end-status.index }"></label> 
        </c:forEach>
 	
 					<div class="segmented-control__color2"></div>
@@ -582,7 +601,7 @@ $(function(){
 
             data = {
                 memNo: '<%=sessionId%>',
-                facCd: $('.facility').val(),
+                facCd: $("input:radio[name='facility']:checked").val(),
                 rsvSt: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
                 rsvEn: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
                 backgroundColor: $("#backgroundColor").val()
