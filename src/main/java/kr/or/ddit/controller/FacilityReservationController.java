@@ -47,14 +47,14 @@ public class FacilityReservationController {
     @ResponseBody
     @PostMapping("/full")
     public List<FacilityScheduleVO> fullPost(@RequestParam("facCd") int facCd) {
-
+    	
         return facilityMemberService.listSch(facCd);
     }
 
     @ResponseBody
     @PostMapping("/insertSch")
     public int insertSch (@RequestBody FacilityScheduleVO facilityScheduleVO) {
-
+    	log.info("facCd: " + facilityScheduleVO.getFacCd());
         facilityMemberService.insertSch(facilityScheduleVO);
 
         return SUCCESS;

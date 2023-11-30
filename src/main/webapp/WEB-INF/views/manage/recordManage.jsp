@@ -120,10 +120,10 @@ $(function(){
 	$(document).on("click", ".btnDetail", function(){
 		btnsFather = this.parentNode;
 		tdsFather = btnsFather.parentNode;
-		if(tdsFather.children[5].innerHTML == "승인대기" || tdsFather.children[5].innerHTML == "반려"){
+		if(tdsFather.children[5].innerHTML == "승인대기"){
 			 Swal.fire(
 	                    '처리 실패',
-	                    '승인되지 않은 신청은 처리 할 수 없습니다.',
+	                    '승인대기 상태의 학적은 처리 할 수 없습니다.',
 	                    'error'
          ).then(function(){
         	 $("#modalClose").click();    	
