@@ -29,9 +29,9 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url"
-			value="jdbc:oracle:thin:@112.220.114.130:1521:xe" />
-		<property name="username" value="team2_202206F" />
-		<property name="password" value="java" />
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="LMS_Project" />
+		<property name="password" value="1234" />
 	</bean>
 
 	<bean id="sqlSessionFactory"

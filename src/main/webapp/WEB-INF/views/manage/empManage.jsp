@@ -32,7 +32,7 @@ function fn_add(data){
 }
 
 $(function(){
-	
+
 	$("input[type='file']").on('change',function(){
 	    $(this).next('.custom-file-label').html(event.target.files[0].name);
 	});
@@ -170,8 +170,9 @@ $(function(){
 	$("#updateEmp").on("click",function(){
 		
 // 		alert("오나요,,")
-// 		$('input#stuPic')[0].files[0] 
-		
+// 		$('input#stuPic')[0].files[0]
+
+
 		let empNo = $("#empNo").val();
 		let empNm = $("#empNm").val();
 		let empNme = $("#empNme").val();
@@ -200,7 +201,7 @@ $(function(){
 		let inputFile = $("input[name='empPic']");
 		let files = inputFile[0].files;
 		
-		console.log("files : " + files);
+		console.log("files : ",files);
 		
 		//가상폼인 formdata에 각각의 이미지를 넣쟈
 		for(let i=0;i<files.length;i++){

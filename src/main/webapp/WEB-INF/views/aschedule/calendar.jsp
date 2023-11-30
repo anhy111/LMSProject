@@ -327,8 +327,9 @@
 	function loadEvent() {
 
         let start = calendar.view.currentStart;
-        let end = endDateFormat(calendar.view.currentEnd,"-");
-        
+        // let end = endDateFormat(calendar.view.currentEnd,"-");
+        let end = calendar.view.currentEnd;
+
         let data = {
         		aschSt : new Date(start),
         		aschEn : new Date(end)
@@ -349,6 +350,8 @@
             	monthSch = [];
             	
                 for (var i = 0; i < list.length; i++) {
+					console.log("시작일", list[i]['aschSt']);
+					console.log("종료일", list[i]['aschEn']);
                 	let data = {
                         title: list[i]['aschTtl'],
                         content: list[i]['aschCon'],
@@ -383,7 +386,8 @@
             $('#aschCd').val(calendarData.event.extendedProps.aschCd);
             $('#aschStDay').val(dateFormat(calendarData.event.start,"-"));
             $('#aschStTime').val(timeFormat(calendarData.event.start)).attr("selected","selected");
-            $('#aschEnDay').val(endDateFormat(calendarData.event.end,"-"));
+            // $('#aschEnDay').val(endDateFormat(calendarData.event.end,"-"));
+            $('#aschEnDay').val(dateFormat(calendarData.event.end,"-"));
             $('#aschEnTime').val(timeFormat(calendarData.event.end));
 			$("#aschTtl").val(calendarData.event.title);
 			$("#aschCon").val(calendarData.event.extendedProps.content);
@@ -475,7 +479,7 @@
         	aschCon : $("#aschCon").val()
         }
         
-        if (data.aschSt >= data.aschEn) {
+        if (data.aschSt.getTime() >= data.aschEn.getTime()) {
         	errorSwal('종료시간을 시작시간보다 크게 선택해주세요');
             return;
         }
@@ -504,7 +508,8 @@
         }); // end ajax
         
     } // end function 
-	
+
+	// 일정수정------------------------------------------------------------------------------------
    	function updateSch(arg){
    		if($("#aschTtl").val() == ""){
 			errorSwal('제목을 입력해주세요.');
@@ -513,7 +518,8 @@
 			errorSwal("내용을 입력해주세요.");
 			return;
 		}
-   		
+
+
    		data = {
    	            empNo: empNo,
    	            aschCd : $("#aschCd").val(),
@@ -522,8 +528,12 @@
    	            aschTtl : $("#aschTtl").val(),
    	        	aschCon : $("#aschCon").val()
  	    }
-   		console.log(data);
-   		
+
+		if (data.aschSt.getTime() >= data.aschEn.getTime()) {
+			errorSwal('종료시간을 시작시간보다 크게 선택해주세요');
+			return;
+		}
+
    		$.ajax({
             url: "/aschedule/updateSch",
             type: "POST",

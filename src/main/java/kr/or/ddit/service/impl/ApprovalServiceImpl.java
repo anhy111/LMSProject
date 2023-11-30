@@ -20,7 +20,6 @@ import kr.or.ddit.service.LectureApplyService;
 import kr.or.ddit.service.LectureService;
 import kr.or.ddit.service.ScholarshipService;
 import lombok.extern.slf4j.Slf4j;
-import sun.util.logging.resources.logging;
 
 @Slf4j
 @Service

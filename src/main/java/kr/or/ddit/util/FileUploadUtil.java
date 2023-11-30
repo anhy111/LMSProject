@@ -301,8 +301,9 @@ public class FileUploadUtil {
 	public int empFileUpdate(MultipartFile multipartFiles, HttpServletRequest req, Employee emp) {
 
 		// 업로드 폴더 설정
-		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
-		
+//		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
+		uploadFolder = "\\\\C:\\upload";
+
 
 		// 연월일 폴더 생성
 		File uploadPath = new File(uploadFolder, getFolder());
