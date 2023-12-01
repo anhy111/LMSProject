@@ -41,7 +41,8 @@ public class FileUploadUtil {
 //		uploadFolder = req.getRealPath("\\") + "\\resources\\upload";
 		//uploadFolder = "C:\\Users\\PC-19\\git\\LMSProjectDDIT\\src\\main\\webapp\\resources\\upload";
 		//log.info(uploadFolder);
-		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
+//		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
+		uploadFolder = "\\\\C:\\upload";
 		log.info("uploadFolder : " + uploadFolder);
 		
 		List<Attach> attachList = new ArrayList<Attach>();
@@ -165,8 +166,9 @@ public class FileUploadUtil {
 	public int stuFileUpload(MultipartFile multipartFiles, HttpServletRequest req, Student stu) {
 
 		// 업로드 폴더 설정
-		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
-		
+//		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
+		uploadFolder = "\\\\C:\\upload";
+
 
 		// 연월일 폴더 생성
 		File uploadPath = new File(uploadFolder, getFolder());
@@ -233,8 +235,9 @@ public class FileUploadUtil {
 	public int empFileUpload(MultipartFile multipartFiles, HttpServletRequest req, Employee employee) {
 		
 		// 업로드 폴더 설정
-		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
-		
+//		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
+		uploadFolder = "\\\\C:\\upload";
+
 		
 		// 연월일 폴더 생성
 		File uploadPath = new File(uploadFolder, getFolder());

@@ -61,7 +61,7 @@ public class HomeController {
         model.addAttribute("qnaList", showList);
         model.addAttribute("noticeBasicList", noticeBasicList);
 		model.addAttribute("memPortlet", memPortlet);
-		
+		log.info("루트 페이지");
 		return "main/mainPage";
 	}
 	

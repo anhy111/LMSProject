@@ -99,10 +99,8 @@ let token = "${_csrf.token}";
 var serialized_data = [];
 
 $(function() {
-	
 	let myPortlet = '${memPortlet}';
 	console.log("첫 포틀릿 오나..?!", myPortlet);
-	
 	if(myPortlet == null || myPortlet == ''){
 		serialized_data = [
 			 { id: 1, name: "학사 일정", x: 0, y: 0, width: 2, height: 6, active: true },

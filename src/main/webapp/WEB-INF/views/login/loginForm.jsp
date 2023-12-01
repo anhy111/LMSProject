@@ -132,13 +132,13 @@ $(function(){
 	//학생 자동 로그인
 	function stuAutoLogin() {
 		$('#memCd').val('21715032');
-		$('#memPass').val('asdfasdf');
+		$('#memPass').val('990119');
 		$('#frm').submit();
 	}
 	//교수 자동 로그인
 	function proAutoLogin() {
-		$('#memCd').val('1');
-		$('#memPass').val('1');
+		$('#memCd').val('202301002');
+		$('#memPass').val('890116');
 		$('#frm').submit();
 	}
 	//관리자 자동 로그인
