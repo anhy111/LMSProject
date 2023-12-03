@@ -588,12 +588,12 @@
 					str = "<tr class='text-center p-0'>";
 					str += "<td colspan='11'>신청된 강의가 없습니다.</td>";
 					str += "</tr>";
-					$("#completeApplyLecture").html(function(){
-						return str;
-					});
+					$("#completeApplyLecture").html(str);
 					$("#creditState").val(credit);
 					$("#creditRemainder").val($("#maxCredit").val() - credit);
+					return;
 				}
+
 				$.each(result,function(p_inx, lecture){
 					credit += lecture.lecApply.lecaCrd;
 					str += `<tr class="text-center">

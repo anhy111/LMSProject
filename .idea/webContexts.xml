@@ -7,6 +7,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/lectureBoard/data/dataDetail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/lectureBoard/data" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/lectureBoard/score/totalScore2.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/lectureBoard/score" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/notice/noticeForm.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/notice" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/student/lectureApply/lectureList.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/student/lectureApply" />
       </map>
     </option>
   </component>
