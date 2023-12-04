@@ -489,7 +489,6 @@ $(function(){
         g_arg = arg;
         //값이 있는경우 세팅
         if (g_arg.event != undefined) {
-
             $('.insertModal #rsvCd').val(g_arg.event.extendedProps.rsvCd);
             $('.insertModal #facCd').val(g_arg.event.extendedProps.facCd);
             $(".insertModal .deleteBtn").css('display', 'inline');
@@ -561,15 +560,6 @@ $(function(){
 
         // 등록
         if (arg.event === undefined) {
-            if (arg.startStr.substring(0, 10) != arg.endStr.substring(0, 10)) {
-            } else {
-                if ($('.insertModal #rsvEn').val() <= $('.insertModal #rsvSt').val()) {
-                    alert('종료시간을 시작시간보다 크게 선택해주세요');
-                    $('.insertModal #rsvEn').focus();
-                    return;
-                }
-            }
-
             var data;
             //구간이벤트면(종일이벤트 X)
             var m_start = new Date(arg.startStr.substr(0, 4), arg.startStr.substr(5, 2) - 1, arg.startStr.substr(8, 2));
@@ -592,59 +582,76 @@ $(function(){
             }
 
             var m_date = m_end.getDate();
-            arg.endStr = m_end.getFullYear() + '-' + stringFormat(m_month) + '-' + stringFormat(m_date);
+
+            let endStr = m_end.getFullYear() + '-' + stringFormat(m_month) + '-' + stringFormat(m_date);
+            let startStr = arg.startStr;
 
             if (arg.startStr.length > 10) {
                 //일자만 추출
-                arg.startStr = arg.startStr.substr(0, 10);
+                startStr = arg.startStr.substr(0, 10);
             }
 
             data = {
                 memNo: '<%=sessionId%>',
                 facCd: $("input:radio[name='facility']:checked").val(),
-                rsvSt: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
-                rsvEn: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
+                rsvSt: endStr + ' ' + $('.' + modal + ' #rsvSt').val(),
+                rsvEn: startStr + ' ' + $('.' + modal + ' #rsvEn').val(),
                 backgroundColor: $("#backgroundColor").val()
             }
 
-            if (data.rsvSt >= data.rsvEn) {
+            let consoleStartTm = new Date(data.rsvSt);
+            let consoleEndTm = new Date(data.rsvEn);
+
+            console.log("시작시간:", consoleStartTm.getHours() , consoleStartTm.getMinutes())
+            console.log("종료시간:", consoleEndTm.getHours() , consoleEndTm.getMinutes())
+            if (new Date(data.rsvSt).getTime() >= new Date(data.rsvEn).getTime()) {
                 alert('종료시간을 시작시간보다 크게 선택해주세요');
                 return;
             }
 
-            let header = "${_csrf.headerName}";
-            let token = "${_csrf.token}";
 
-            //DB 삽입
-            $.ajax({
-                url: "/facility/insertSch",
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: "JSON",
-                contentType: 'application/json',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                traditional: true,
-                success: function (data, status, xhr) {
+            console.log("일정 등록 data:", data);
+            if (data.backgroundColor == null || data.backgroundColor === '') {
+                alert("배경색을 설정해주세요");
+                return;
+            }
 
-                    calendar.addEvent({
-                        rsvCd: $('#rsvCd').val(),
-                        facCd: $('#facCd').val(),
-                        start: arg.startStr + 'T' + $('.' + modal + ' #rsvSt').val(),
-                        end: arg.endStr + 'T' + $('.' + modal + ' #rsvEn').val(),
-                        backgroundColor: $("#backgroundColor").val(),
-                        borderColor: $("#backgroundColor").val(),
-                        memNo: '<%=sessionId%>'
-                    });
+                let header = "${_csrf.headerName}";
+                let token = "${_csrf.token}";
 
-                    initModal(modal, arg);
-                },
-                error: function (xhr, status, error) {
-                    alert('일정 등록 실패\n새로고침 후 재시도 해주세요');
-                }
-            });
-        }
+                //DB 삽입
+                $.ajax({
+                    url: "/facility/insertSch",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    contentType: 'application/json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    traditional: true,
+                    success: function (data, status, xhr) {
+
+                        arg.startStr = startStr;
+                        arg.endStr = endStr;
+
+                        calendar.addEvent({
+                            rsvCd: $('#rsvCd').val(),
+                            facCd: $('#facCd').val(),
+                            start: arg.startStr + ' ' + $('.' + modal + ' #rsvSt').val(),
+                            end: arg.endStr + ' ' + $('.' + modal + ' #rsvEn').val(),
+                            backgroundColor: $("#backgroundColor").val(),
+                            borderColor: $("#backgroundColor").val(),
+                            memNo: '<%=sessionId%>'
+                        });
+
+                        initModal(modal, arg);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('일정 등록 실패\n새로고침 후 재시도 해주세요');
+                    }
+                });
+            }
     }
 
 </script>

@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/notice")
 @RequiredArgsConstructor // 어노테이션이 궁금하면 생성자 주입과 관련해서 찾아보시길..!
-@PreAuthorize("hasRole('ROLE_PROFESSOR') or hasRole('ROLE_STUDENT') or hasRole('ROLE_MANAGER')")
+@PreAuthorize("hasAnyRole('ROLE_PROFESSOR', 'ROLE_STUDENT', 'ROLE_MANAGER')")
 public class NoticeBasicController {
 
     /**
@@ -123,7 +123,7 @@ public class NoticeBasicController {
 
         // 공지사항 등록을 위한 폼(제목, 내용)을 전달.
         model.addAttribute("form", new NoticeForm());
-
+        log.info("공지사항 등록 폼");
         return "notice/noticeForm";
     }
 
@@ -131,10 +131,11 @@ public class NoticeBasicController {
     @PostMapping("/noticeForm")
     public String createNotice(NoticeForm form,
                                @RequestParam MultipartFile[] files2) {
-
+        log.info("공지사항 등록 post");
         // 공지사항 등록을 위한 폼(제목, 내용)에 담아온 값을 꺼내어, NoticeBasic객체에 생성자로 세팅해준다. Setter로 값을 넣어주는 방법은 지양하는게 좋다.
         NoticeBasic noticeBasic = new NoticeBasic(form.getTitle(), form.getContent());
 
+        log.info("noticeForm: {}", form);
         // NoticeBasic객체를 save메서드를 호출하여, 서비스로직 실행.
         if (files2[0].getSize() > 0) {
             fileUploadUtil.fileUploadAction(files2);

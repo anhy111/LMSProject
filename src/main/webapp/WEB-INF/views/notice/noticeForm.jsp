@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
 <head>
@@ -42,7 +43,7 @@
 
 
                 <div class="card-body">
-                    <form role="form" action="/notice/noticeForm" method="post" name="form">
+                    <form role="form" action="/notice/noticeForm" method="post" name="form" enctype="multipart/form-data">
                         <div class="row">
                             <table class="table table-bordered">
                                 <tbody>
@@ -101,13 +102,14 @@
                         <button class="btn btn-outline-primary" type="button"
                                 onclick="autoFill();">자동완성
                         </button>&nbsp;&nbsp;
-                        <button class="btn btn-outline-primary" type="submit" id="registBtn">등록
+                        <button class="btn btn-outline-primary" type="button" onclick="regist_go()" id="registBtn">등록
                         </button>
                         &nbsp;&nbsp;
                         <button class="btn btn-outline-danger" type="button"
                                 onclick="f_alert();">취소
                         </button>
                     </div>
+                    <sec:csrfInput/>
                 </form>
 
 

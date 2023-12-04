@@ -26,8 +26,8 @@
          #{memNo}
         ,#{rsvCd}
         ,#{facCd}
-        ,#{rsvSt}
-        ,#{rsvEn}
+        ,TO_DATE(#{rsvSt},'YYYY-MM-DD hh24:mi')
+        ,TO_DATE(#{rsvEn},'YYYY-MM-DD hh24:mi')
         ,#{backgroundColor}
         ,SYSDATE
         )

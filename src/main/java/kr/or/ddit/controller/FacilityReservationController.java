@@ -32,7 +32,9 @@ public class FacilityReservationController {
 
     @GetMapping("/full")
     public String fullGet(Principal principal, HttpServletRequest request, Model model) {
-
+        if (principal == null) {
+            return "redirect:/";
+        }
         String id = principal.getName();
         HttpSession session = request.getSession();
         session.setAttribute("memNo", id);
@@ -55,15 +57,16 @@ public class FacilityReservationController {
     @PostMapping("/insertSch")
     public int insertSch (@RequestBody FacilityScheduleVO facilityScheduleVO) {
     	log.info("facCd: " + facilityScheduleVO.getFacCd());
+        log.info("facilityScheduleVO: {}", facilityScheduleVO);
         facilityMemberService.insertSch(facilityScheduleVO);
 
-        return SUCCESS;
+        return facilityScheduleVO.getRsvCd();
     }
 
     @ResponseBody
     @PostMapping("/deleteSch")
     public int deleteSch (@RequestBody FacilityScheduleVO facilityScheduleVO) {
-
+        log.info("facilityScheduleVO: {}", facilityScheduleVO);
         facilityMemberService.deleteSch(facilityScheduleVO);
 
         return SUCCESS;
