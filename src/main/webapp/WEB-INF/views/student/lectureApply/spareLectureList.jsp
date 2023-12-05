@@ -46,11 +46,11 @@
 			</td>
 			<th>총학점</th>
 			<td>
-				<input type="text" class="infoText" value="${studentCurrentCredit.crdAc}" readonly="readonly">
+				<input type="text" class="infoText" value="${studentCurrentCredit.crdAc != null ? studentCurrentCredit.crdAc : 0}" readonly="readonly">
 			</td>
 			<th>신청가능학점</th>
 			<td>
-				<input type="text" class="infoText" id="maxCredit" value="${graduateCredit.rdcReqCrd}" readonly="readonly">
+				<input type="text" class="infoText" id="maxCredit" value="${graduateCredit.rdcReqCrd != null ? graduateCredit.rdcReqCrd : 0}" readonly="readonly">
 			</td>
 			<th></th>
 		</tr>
@@ -60,19 +60,19 @@
 		<tr>
 			<th>전공필수</th>
 			<td>
-				<input type="text" class="infoText" name="depNm" id="depNm" value="${studentCurrentCredit.crdMrc}" readonly="readonly">
+				<input type="text" class="infoText" name="depNm" id="depNm" value="${studentCurrentCredit.crdMrc != null ? studentCurrentCredit.crdMrc : 0}" readonly="readonly">
 			</td>
 			<th>전공선택</th>
 			<td>
-				<input type="text" class="infoText" name="yrNsem" id="yrNsem" value="${studentCurrentCredit.crdMoc}" readonly="readonly">
+				<input type="text" class="infoText" name="yrNsem" id="yrNsem" value="${studentCurrentCredit.crdMoc != null ? studentCurrentCredit.crdMoc : 0}" readonly="readonly">
 			</td>
 			<th>교양필수</th>
 			<td>
-				<input type="text" class="infoText" name="stuSem" id="stuSem" value="${studentCurrentCredit.crdCrc}" readonly="readonly">
+				<input type="text" class="infoText" name="stuSem" id="stuSem" value="${studentCurrentCredit.crdCrc != null ? studentCurrentCredit.crdCrc : 0}" readonly="readonly">
 			</td>
 			<th>교양선택</th>
 			<td>
-				<input type="text" class="infoText" name="stuBir" id="stuBir" value="${studentCurrentCredit.crdCoc}" readonly="readonly">
+				<input type="text" class="infoText" name="stuBir" id="stuBir" value="${studentCurrentCredit.crdCoc != null ? studentCurrentCredit.crdCoc : 0}" readonly="readonly">
 			</td>
 			<th></th>
 		</tr>
@@ -623,6 +623,7 @@
 							$("#s"+dayWeek+allocation.altTt).css("backgroundColor",color[lecaCdArr.indexOf(allocation.lecaCd)])
 											.css("color","white")
 											.css("borderTop","none")
+											.css("borderBottom","none")
 											.val(allocation.lecaCd);
 						}
 							

@@ -132,7 +132,7 @@
 						<td>기타</td>
 						<td class="text-left p-2 " colspan="6">
 							이 강의에서 좋았던 점이나 개선할 점이 있다면 자유롭게 작성해주세요<br>
-							<textarea id="cont" rows="6" style="width: 100%"></textarea>
+							<textarea class="mt-2" id="cont" rows="6" style="width: 100%"></textarea>
 						</td>
 					</tr>
 				</tbody>

@@ -85,6 +85,11 @@ cursor:pointer;
 					</c:if>
 				</tr>
 			</c:forEach>
+			<c:if test="${recordsList == null || recordsList.size() == 0}">
+				<tr>
+					<td colspan="7">학적 변동 내역이 없습니다.</td>
+				</tr>
+			</c:if>
 		</tbody>
 	</table>
 <!-- </div> -->
