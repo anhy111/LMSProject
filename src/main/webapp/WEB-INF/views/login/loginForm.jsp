@@ -252,14 +252,14 @@ $(function(){
 
 
 	$('#idInfoInsertBtn').on('click',function(){
-		$('#memNm').attr('value','이승연');
+		$('#memNm').attr('value','하승인');
 		$('#memBir').attr('value','990119');
-		$('#memTel').attr('value','01033157700');
+		$('#memTel').attr('value','01094366849');
 	})
 	
 	$('#passInfoInsertBtn').on('click',function(){
 		$('#memNo').attr('value','21715032');
-		$('#tel').attr('value','01033157700');
+		$('#tel').attr('value','01094366849');
 	})
 	
 });

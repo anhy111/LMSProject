@@ -49,6 +49,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/student/lectureApply")
 @Slf4j
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_PROFESSOR', 'ROLE_STUDENT', 'ROLE_MANAGER')")
 public class StudentLectureApplyController {
 
 	@Autowired

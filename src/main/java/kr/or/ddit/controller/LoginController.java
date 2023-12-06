@@ -62,12 +62,7 @@ public class LoginController {
 		
 		return "login/loginForm";
 	}
-	
-	@GetMapping("/login/findID")
-	public String findId() {
-		return "login/findID";
-	}
-	
+
 	@PostMapping("/login/searchId")
 	@ResponseBody
 	public ResponseEntity<String> searchId(HttpServletRequest request) {

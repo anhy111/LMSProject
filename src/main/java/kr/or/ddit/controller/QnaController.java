@@ -5,6 +5,7 @@ import kr.or.ddit.domain.qna.qnareply.QnaReply;
 import kr.or.ddit.service.QnaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/qna")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ROLE_PROFESSOR', 'ROLE_STUDENT', 'ROLE_MANAGER')")
 public class QnaController {
 
     private final QnaService qnaService;

@@ -20,6 +20,7 @@ import kr.or.ddit.service.MemberService;
 
 @RequestMapping("/professor/evaluation")
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_PROFESSOR', 'ROLE_STUDENT', 'ROLE_MANAGER')")
 public class ProfessorEvaluationController {
 	
 	@Autowired
