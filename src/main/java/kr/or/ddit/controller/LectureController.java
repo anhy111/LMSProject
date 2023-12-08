@@ -217,7 +217,7 @@ public class LectureController {
 		int taskCd = taskSubmit.getTaskCd();
 		log.info(taskSubmit.toString());
 		log.info(files.length+"sssssssssssssssssssssssssss");
-		if (files.length > 0) {
+		if (files.length > 0 && files[0].getSize() > 0) {
 			log.info("첨부파일 있다.");
 			this.fileUploadUtil.fileUploadAction(files);
 //

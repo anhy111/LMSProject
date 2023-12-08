@@ -419,6 +419,7 @@
 	
 	// 이미 존재하는 시간표를 ajax로 불러옴
 	function loadAlreadyTimeTable(){
+		console.log("이미 존재하는 시간표들 불러오기")
 		let lecaSem = $("#lecaSem").val();
 		let lecaYr = $("#lecaYr").val();
 		if( lecaSem == "" || lecaYr == "" ){
@@ -557,13 +558,16 @@
 	
 	// 강의실 변경시 테이블 비워주고, 입력 또는 이미 존재하는 시간표 표시하기
 	function timeTableInit(){
+		console.log("강의실 변경?")
 		$('#timeTableChoice td').removeClass("highlighted")
 								.removeClass("approve")
 								.removeClass("pendingApprove");
 		
 		// 기존에 선택된 교시는 색칠해주기
 		displayTimeTable(lecTimeTable,"highlighted");
+		console.log('alreadyLecApplyList: ', alreadyLecApplyList);
 		$.each(alreadyLecApplyList,function(p_inx, lecApply){
+			console.log(lecApply);
 			if(lecApply.lecaApproval == '승인대기'){
 				displayTimeTable(JSON.parse(lecApply.lecaTt),"pendingApprove");
 			}else if(lecApply.lecaApproval == '승인'){
@@ -581,7 +585,7 @@
 	// 자동 채우기
 	function insertData() {
 		$('#lecaYr').val('2023');
-		$('#lecaSem').val('1');
+		$('#lecaSem').val('1').trigger('change');
 		$('#lecaNm').val('케인즈는 왜 위대한가?');
 		$('#lecaCon').val('경제학의 위대한 업적을 남긴 케인스주의에 대해 이해하는것에 중점을 두었다.');
 		$('#lecaTrg').val('3');

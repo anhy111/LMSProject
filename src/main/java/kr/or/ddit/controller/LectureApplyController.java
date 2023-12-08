@@ -508,7 +508,9 @@ public class LectureApplyController {
 	@GetMapping("/lecApplyForm/alreadyTimeTableList")
 	public List<LecApply> alreadyTimeTableList(LecApply lecApply){
 		log.info("alreadyTimeTableList.lecApply : " + lecApply);
-		return this.lectureApplyService.alreadyTimeTableList(lecApply);
+		final List<LecApply> alreadyTimeTableList = this.lectureApplyService.alreadyTimeTableList(lecApply);
+		log.info("alreadyTimeTableList 이미 존재하는 시간들: {}", alreadyTimeTableList);
+		return alreadyTimeTableList;
 	}
 	
 }
