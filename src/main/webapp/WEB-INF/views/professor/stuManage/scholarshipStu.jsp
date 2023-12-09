@@ -128,8 +128,8 @@ $(function(){
 // 		alert("오나요?");
 		
 		let stuDetail = $(this).val();
-		let sclhCd = stuDetail.substr(0,5)
-		let stuNo = stuDetail.substr(7,10)
+		let sclhCd = stuDetail.split(',')[0];
+		let stuNo = stuDetail.split(',')[1];
 		let myData = {
 			"sclhCd":sclhCd,
 			"detailStu":stuNo

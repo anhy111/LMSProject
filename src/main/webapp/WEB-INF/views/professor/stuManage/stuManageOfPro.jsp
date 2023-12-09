@@ -220,8 +220,8 @@ $(function(){
 			                    'success'
 			                ).then(function(){
 			                	$("#sclhRcmd").html("");
-					        	window.location.reload(true);			        	
-					        });
+					        	window.location.reload(true);
+							});
 				            
 						},
 						error:function(request, status, error){
