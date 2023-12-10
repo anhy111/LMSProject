@@ -365,7 +365,7 @@ $(function(){
 										</div>
 										<div class="col-6">
 											<label for="stuNm" class="form-label">직전학기 성적</label> 
-											<input type="text" class="form-control stu stuNm" id="" name="" readonly />
+											<input type="text" class="form-control stu stuNm" id="" name="" value="-" readonly />
 										</div>
 									</div>
 									<div class="row mb-2">
