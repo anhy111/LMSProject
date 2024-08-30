@@ -34,6 +34,18 @@ public class FileUploadUtil {
 	@Autowired
 	ManageService manageService;
 
+	private static final String UPLOAD_FOLDER = getUploadFolder();
+
+	// 업로드 폴더 경로
+	public static String getUploadFolder() {
+		final String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("win")) {
+			return "\\\\C:\\upload";
+		} else {
+			return File.separator + "home" + File.separator + "ec2-user" + File.separator + "LMS_file";
+		}
+	}
+
 	//파일 업로드 실행 + DB처리
 	public int fileUploadAction(MultipartFile[] multipartFiles) {
 		log.info("파일 업로드를 수행합니다.");
@@ -42,14 +54,15 @@ public class FileUploadUtil {
 		//uploadFolder = "C:\\Users\\PC-19\\git\\LMSProjectDDIT\\src\\main\\webapp\\resources\\upload";
 		//log.info(uploadFolder);
 //		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
-		uploadFolder = "\\\\C:\\upload";
-		log.info("uploadFolder : " + uploadFolder);
+
+
+		log.info("UPLOAD_FOLDER : " + UPLOAD_FOLDER);
 		
 		List<Attach> attachList = new ArrayList<Attach>();
 
 		//1) 파일 업로드 수행(연/월/일, UUID)
 		//1-1) 연/월/일
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(UPLOAD_FOLDER, getFolder());
 		if(uploadPath.exists()==false) {
 			uploadPath.mkdirs();
 		}
@@ -81,7 +94,7 @@ public class FileUploadUtil {
 
 				Attach attach = new Attach();
 				attach.setFileSn(fileSn++);
-				attach.setFileStreCours(uploadFolder.replace("\\", "/")+"/" + getFolder().replace("\\", "/") + "/" + uploadFileName);
+				attach.setFileStreCours(UPLOAD_FOLDER.replace("\\", "/")+"/" + getFolder().replace("\\", "/") + "/" + uploadFileName);
 				//getFolder() : 연/월/일
 				//uploadFileName : UUID + 파일명
 				//윈도 경로 => \\2022\\10\\31\\aoisonsppois_image01.jpg
@@ -167,11 +180,10 @@ public class FileUploadUtil {
 
 		// 업로드 폴더 설정
 //		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
-		uploadFolder = "\\\\C:\\upload";
 
 
 		// 연월일 폴더 생성
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(UPLOAD_FOLDER, getFolder());
 		log.info("upload Path : " + uploadPath);
 
 		// 만약 연/월/일 해당 폴더가 없으면 생성
@@ -236,11 +248,10 @@ public class FileUploadUtil {
 		
 		// 업로드 폴더 설정
 //		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
-		uploadFolder = "\\\\C:\\upload";
 
 		
 		// 연월일 폴더 생성
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(UPLOAD_FOLDER, getFolder());
 		log.info("upload Path : " + uploadPath);
 		
 		// 만약 연/월/일 해당 폴더가 없으면 생성
@@ -305,11 +316,10 @@ public class FileUploadUtil {
 
 		// 업로드 폴더 설정
 //		uploadFolder = "\\\\192.168.142.3\\공유폴더\\0000000.최종프로젝트\\team2\\upload";
-		uploadFolder = "\\\\C:\\upload";
 
 
 		// 연월일 폴더 생성
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(UPLOAD_FOLDER, getFolder());
 		log.info("upload Path : " + uploadPath);
 
 		// 만약 연/월/일 해당 폴더가 없으면 생성

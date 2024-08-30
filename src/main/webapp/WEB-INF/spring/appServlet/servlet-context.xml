@@ -70,9 +70,9 @@ https://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</beans:bean>
 	
-	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>
-	</beans:bean>
+<!--	<beans:bean id="uploadPath" class="java.lang.String">-->
+<!--		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>-->
+<!--	</beans:bean>-->
 	
 	<!-- Tiles 설정 시작 -->
    <beans:bean id="tilesConfigurer" 
